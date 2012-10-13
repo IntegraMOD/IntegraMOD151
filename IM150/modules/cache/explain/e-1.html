@@ -1,0 +1,817 @@
+<pre>Query:	SELECT COUNT(user_id) AS total
+	FROM phpbb_users
+	WHERE user_id &lt;&gt; -1
+
+Time before:  0.262886047363
+Time after:   0.263485908508
+Elapsed time: <b>0.00059986114502</b>
+</pre><table width=100% border=1 cellpadding=2 cellspacing=1>
+<tr>
+<td><b>id</b></td>
+<td><b>select_type</b></td>
+<td><b>table</b></td>
+<td><b>type</b></td>
+<td><b>possible_keys</b></td>
+<td><b>key</b></td>
+<td><b>key_len</b></td>
+<td><b>ref</b></td>
+<td><b>rows</b></td>
+<td><b>affected_rows</b></td>
+<td><b>Extra</b></td>
+</tr>
+<tr>
+<td>1&nbsp;</td>
+<td>SIMPLE&nbsp;</td>
+<td>phpbb_users&nbsp;</td>
+<td>range&nbsp;</td>
+<td>PRIMARY&nbsp;</td>
+<td>PRIMARY&nbsp;</td>
+<td>3&nbsp;</td>
+<td>&nbsp;</td>
+<td>7&nbsp;</td>
+<td>1&nbsp;</td>
+<td>Using where; Using index&nbsp;</td>
+</tr>
+</table><br><hr>
+<pre>Query:	SELECT SUM(forum_topics) AS topic_total, SUM(forum_posts) AS post_total
+	FROM phpbb_forums
+
+Time before:  0.263989925385
+Time after:   0.266130924225
+Elapsed time: <b>0.00214099884033</b>
+</pre><table width=100% border=1 cellpadding=2 cellspacing=1>
+<tr>
+<td><b>id</b></td>
+<td><b>select_type</b></td>
+<td><b>table</b></td>
+<td><b>type</b></td>
+<td><b>possible_keys</b></td>
+<td><b>key</b></td>
+<td><b>key_len</b></td>
+<td><b>ref</b></td>
+<td><b>rows</b></td>
+<td><b>affected_rows</b></td>
+<td><b>Extra</b></td>
+</tr>
+<tr>
+<td>1&nbsp;</td>
+<td>SIMPLE&nbsp;</td>
+<td>phpbb_forums&nbsp;</td>
+<td>ALL&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>3&nbsp;</td>
+<td>1&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+</table><br><hr>
+<pre>Query:	SELECT user_id, username
+	FROM phpbb_users
+	WHERE user_id &lt;&gt; -1
+	ORDER BY user_id DESC
+	LIMIT 1
+
+Time before:  0.266587972641
+Time after:   0.267215013504
+Elapsed time: <b>0.000627040863037</b>
+</pre><table width=100% border=1 cellpadding=2 cellspacing=1>
+<tr>
+<td><b>id</b></td>
+<td><b>select_type</b></td>
+<td><b>table</b></td>
+<td><b>type</b></td>
+<td><b>possible_keys</b></td>
+<td><b>key</b></td>
+<td><b>key_len</b></td>
+<td><b>ref</b></td>
+<td><b>rows</b></td>
+<td><b>affected_rows</b></td>
+<td><b>Extra</b></td>
+</tr>
+<tr>
+<td>1&nbsp;</td>
+<td>SIMPLE&nbsp;</td>
+<td>phpbb_users&nbsp;</td>
+<td>range&nbsp;</td>
+<td>PRIMARY&nbsp;</td>
+<td>PRIMARY&nbsp;</td>
+<td>3&nbsp;</td>
+<td>&nbsp;</td>
+<td>7&nbsp;</td>
+<td>1&nbsp;</td>
+<td>Using where&nbsp;</td>
+</tr>
+</table><br><hr>
+<pre>Query:	SELECT user_regdate
+	FROM phpbb_users
+	WHERE user_id = 7
+	LIMIT 1
+
+Time before:  0.500533103943
+Time after:   0.501239061356
+Elapsed time: <b>0.00070595741272</b>
+</pre><table width=100% border=1 cellpadding=2 cellspacing=1>
+<tr>
+<td><b>id</b></td>
+<td><b>select_type</b></td>
+<td><b>table</b></td>
+<td><b>type</b></td>
+<td><b>possible_keys</b></td>
+<td><b>key</b></td>
+<td><b>key_len</b></td>
+<td><b>ref</b></td>
+<td><b>rows</b></td>
+<td><b>affected_rows</b></td>
+<td><b>Extra</b></td>
+</tr>
+<tr>
+<td>1&nbsp;</td>
+<td>SIMPLE&nbsp;</td>
+<td>phpbb_users&nbsp;</td>
+<td>const&nbsp;</td>
+<td>PRIMARY&nbsp;</td>
+<td>PRIMARY&nbsp;</td>
+<td>3&nbsp;</td>
+<td>const&nbsp;</td>
+<td>1&nbsp;</td>
+<td>1&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+</table><br><hr>
+<pre>Query:	SELECT *
+	FROM phpbb_config
+	WHERE config_name = 'record_online_users' OR config_name = 'record_online_date'
+
+Time before:  0.501880884171
+Time after:   0.502574920654
+Elapsed time: <b>0.000694036483765</b>
+</pre><table width=100% border=1 cellpadding=2 cellspacing=1>
+<tr>
+<td><b>id</b></td>
+<td><b>select_type</b></td>
+<td><b>table</b></td>
+<td><b>type</b></td>
+<td><b>possible_keys</b></td>
+<td><b>key</b></td>
+<td><b>key_len</b></td>
+<td><b>ref</b></td>
+<td><b>rows</b></td>
+<td><b>affected_rows</b></td>
+<td><b>Extra</b></td>
+</tr>
+<tr>
+<td>1&nbsp;</td>
+<td>SIMPLE&nbsp;</td>
+<td>phpbb_config&nbsp;</td>
+<td>range&nbsp;</td>
+<td>PRIMARY&nbsp;</td>
+<td>PRIMARY&nbsp;</td>
+<td>255&nbsp;</td>
+<td>&nbsp;</td>
+<td>2&nbsp;</td>
+<td>2&nbsp;</td>
+<td>Using where&nbsp;</td>
+</tr>
+</table><br><hr>
+<pre>Query:	SELECT topic_id, forum_id, topic_title, topic_replies
+	FROM phpbb_topics
+	WHERE (topic_status &lt;&gt; 2) AND (topic_replies &gt; 0)
+	ORDER BY topic_replies DESC
+	LIMIT 10
+
+Time before:  0.538674116135
+Time after:   0.539087057114
+Elapsed time: <b>0.000412940979004</b>
+</pre><table width=100% border=1 cellpadding=2 cellspacing=1>
+<tr>
+<td><b>id</b></td>
+<td><b>select_type</b></td>
+<td><b>table</b></td>
+<td><b>type</b></td>
+<td><b>possible_keys</b></td>
+<td><b>key</b></td>
+<td><b>key_len</b></td>
+<td><b>ref</b></td>
+<td><b>rows</b></td>
+<td><b>affected_rows</b></td>
+<td><b>Extra</b></td>
+</tr>
+<tr>
+<td>1&nbsp;</td>
+<td>SIMPLE&nbsp;</td>
+<td>phpbb_topics&nbsp;</td>
+<td>ALL&nbsp;</td>
+<td>topic_status&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>2&nbsp;</td>
+<td>0&nbsp;</td>
+<td>Using where; Using filesort&nbsp;</td>
+</tr>
+</table><br><hr>
+<pre>Query:	SELECT forum_id, topic_id, topic_title, topic_views
+	FROM phpbb_topics
+	WHERE (topic_status &lt;&gt; 2) AND (topic_views &gt; 0)
+	ORDER BY topic_views DESC
+	LIMIT 10
+
+Time before:  0.542922973633
+Time after:   0.543612957001
+Elapsed time: <b>0.00068998336792</b>
+</pre><table width=100% border=1 cellpadding=2 cellspacing=1>
+<tr>
+<td><b>id</b></td>
+<td><b>select_type</b></td>
+<td><b>table</b></td>
+<td><b>type</b></td>
+<td><b>possible_keys</b></td>
+<td><b>key</b></td>
+<td><b>key_len</b></td>
+<td><b>ref</b></td>
+<td><b>rows</b></td>
+<td><b>affected_rows</b></td>
+<td><b>Extra</b></td>
+</tr>
+<tr>
+<td>1&nbsp;</td>
+<td>SIMPLE&nbsp;</td>
+<td>phpbb_topics&nbsp;</td>
+<td>ALL&nbsp;</td>
+<td>topic_status&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>2&nbsp;</td>
+<td>2&nbsp;</td>
+<td>Using where; Using filesort&nbsp;</td>
+</tr>
+</table><br><hr>
+<pre>Query:	SELECT SUM(user_posts) as total_posts FROM phpbb_users WHERE user_id &lt;&gt; -1
+
+Time before:  0.550359010696
+Time after:   0.550822019577
+Elapsed time: <b>0.000463008880615</b>
+</pre><table width=100% border=1 cellpadding=2 cellspacing=1>
+<tr>
+<td><b>id</b></td>
+<td><b>select_type</b></td>
+<td><b>table</b></td>
+<td><b>type</b></td>
+<td><b>possible_keys</b></td>
+<td><b>key</b></td>
+<td><b>key_len</b></td>
+<td><b>ref</b></td>
+<td><b>rows</b></td>
+<td><b>affected_rows</b></td>
+<td><b>Extra</b></td>
+</tr>
+<tr>
+<td>1&nbsp;</td>
+<td>SIMPLE&nbsp;</td>
+<td>phpbb_users&nbsp;</td>
+<td>ALL&nbsp;</td>
+<td>PRIMARY&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>7&nbsp;</td>
+<td>1&nbsp;</td>
+<td>Using where&nbsp;</td>
+</tr>
+</table><br><hr>
+<pre>Query:	SELECT user_id, username, user_posts
+	FROM phpbb_users
+	WHERE (user_id &lt;&gt; -1 ) AND (user_posts &gt; 0)
+	ORDER BY user_posts DESC
+	LIMIT 10
+
+Time before:  0.551251888275
+Time after:   0.551656007767
+Elapsed time: <b>0.000404119491577</b>
+</pre><table width=100% border=1 cellpadding=2 cellspacing=1>
+<tr>
+<td><b>id</b></td>
+<td><b>select_type</b></td>
+<td><b>table</b></td>
+<td><b>type</b></td>
+<td><b>possible_keys</b></td>
+<td><b>key</b></td>
+<td><b>key_len</b></td>
+<td><b>ref</b></td>
+<td><b>rows</b></td>
+<td><b>affected_rows</b></td>
+<td><b>Extra</b></td>
+</tr>
+<tr>
+<td>1&nbsp;</td>
+<td>SIMPLE&nbsp;</td>
+<td>phpbb_users&nbsp;</td>
+<td>ALL&nbsp;</td>
+<td>PRIMARY&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>7&nbsp;</td>
+<td>1&nbsp;</td>
+<td>Using where; Using filesort&nbsp;</td>
+</tr>
+</table><br><hr>
+<pre>Query:	SELECT * FROM phpbb_stats_smilies_info
+
+Time before:  0.563956022263
+Time after:   0.565836906433
+Elapsed time: <b>0.00188088417053</b>
+</pre><table width=100% border=1 cellpadding=2 cellspacing=1>
+<tr>
+<td><b>id</b></td>
+<td><b>select_type</b></td>
+<td><b>table</b></td>
+<td><b>type</b></td>
+<td><b>possible_keys</b></td>
+<td><b>key</b></td>
+<td><b>key_len</b></td>
+<td><b>ref</b></td>
+<td><b>rows</b></td>
+<td><b>affected_rows</b></td>
+<td><b>Extra</b></td>
+</tr>
+<tr>
+<td>1&nbsp;</td>
+<td>SIMPLE&nbsp;</td>
+<td>phpbb_stats_smilies_info&nbsp;</td>
+<td>system&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>1&nbsp;</td>
+<td>1&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+</table><br><hr>
+<pre>Query:	SELECT * FROM phpbb_stats_smilies_index
+
+Time before:  0.566694021225
+Time after:   0.567197084427
+Elapsed time: <b>0.000503063201904</b>
+</pre><table width=100% border=1 cellpadding=2 cellspacing=1>
+<tr>
+<td><b>id</b></td>
+<td><b>select_type</b></td>
+<td><b>table</b></td>
+<td><b>type</b></td>
+<td><b>possible_keys</b></td>
+<td><b>key</b></td>
+<td><b>key_len</b></td>
+<td><b>ref</b></td>
+<td><b>rows</b></td>
+<td><b>affected_rows</b></td>
+<td><b>Extra</b></td>
+</tr>
+<tr>
+<td>1&nbsp;</td>
+<td>SIMPLE&nbsp;</td>
+<td>phpbb_stats_smilies_index&nbsp;</td>
+<td>ALL&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>22&nbsp;</td>
+<td>22&nbsp;</td>
+<td>&nbsp;</td>
+</tr>
+</table><br><hr>
+<pre>Query:	SELECT max(post_id) as total FROM phpbb_posts
+
+Time before:  0.567898988724
+Time after:   0.568146944046
+Elapsed time: <b>0.000247955322266</b>
+</pre><table width=100% border=1 cellpadding=2 cellspacing=1>
+<tr>
+<td><b>id</b></td>
+<td><b>select_type</b></td>
+<td><b>table</b></td>
+<td><b>type</b></td>
+<td><b>possible_keys</b></td>
+<td><b>key</b></td>
+<td><b>key_len</b></td>
+<td><b>ref</b></td>
+<td><b>rows</b></td>
+<td><b>affected_rows</b></td>
+<td><b>Extra</b></td>
+</tr>
+<tr>
+<td>1&nbsp;</td>
+<td>SIMPLE&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>1&nbsp;</td>
+<td>Select tables optimized away&nbsp;</td>
+</tr>
+</table><br><hr>
+<pre>Query:	SELECT COUNT(post_id) as total FROM phpbb_posts
+
+Time before:  0.568500995636
+Time after:   0.568685054779
+Elapsed time: <b>0.000184059143066</b>
+</pre><table width=100% border=1 cellpadding=2 cellspacing=1>
+<tr>
+<td><b>id</b></td>
+<td><b>select_type</b></td>
+<td><b>table</b></td>
+<td><b>type</b></td>
+<td><b>possible_keys</b></td>
+<td><b>key</b></td>
+<td><b>key_len</b></td>
+<td><b>ref</b></td>
+<td><b>rows</b></td>
+<td><b>affected_rows</b></td>
+<td><b>Extra</b></td>
+</tr>
+<tr>
+<td>1&nbsp;</td>
+<td>SIMPLE&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>1&nbsp;</td>
+<td>Select tables optimized away&nbsp;</td>
+</tr>
+</table><br><hr>
+<pre>Query:	SELECT smile_url FROM phpbb_smilies GROUP BY smile_url
+
+Time before:  0.568990945816
+Time after:   0.583404064178
+Elapsed time: <b>0.0144131183624</b>
+</pre><table width=100% border=1 cellpadding=2 cellspacing=1>
+<tr>
+<td><b>id</b></td>
+<td><b>select_type</b></td>
+<td><b>table</b></td>
+<td><b>type</b></td>
+<td><b>possible_keys</b></td>
+<td><b>key</b></td>
+<td><b>key_len</b></td>
+<td><b>ref</b></td>
+<td><b>rows</b></td>
+<td><b>affected_rows</b></td>
+<td><b>Extra</b></td>
+</tr>
+<tr>
+<td>1&nbsp;</td>
+<td>SIMPLE&nbsp;</td>
+<td>phpbb_smilies&nbsp;</td>
+<td>ALL&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>42&nbsp;</td>
+<td>22&nbsp;</td>
+<td>Using temporary; Using filesort&nbsp;</td>
+</tr>
+</table><br><hr>
+<pre>Query:	SELECT COUNT(topic_id) as total_topics FROM phpbb_topics WHERE topic_status &lt;&gt; 2
+
+Time before:  0.601250886917
+Time after:   0.601632118225
+Elapsed time: <b>0.000381231307983</b>
+</pre><table width=100% border=1 cellpadding=2 cellspacing=1>
+<tr>
+<td><b>id</b></td>
+<td><b>select_type</b></td>
+<td><b>table</b></td>
+<td><b>type</b></td>
+<td><b>possible_keys</b></td>
+<td><b>key</b></td>
+<td><b>key_len</b></td>
+<td><b>ref</b></td>
+<td><b>rows</b></td>
+<td><b>affected_rows</b></td>
+<td><b>Extra</b></td>
+</tr>
+<tr>
+<td>1&nbsp;</td>
+<td>SIMPLE&nbsp;</td>
+<td>phpbb_topics&nbsp;</td>
+<td>ALL&nbsp;</td>
+<td>topic_status&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>2&nbsp;</td>
+<td>1&nbsp;</td>
+<td>Using where&nbsp;</td>
+</tr>
+</table><br><hr>
+<pre>Query:	SELECT u.user_id, u.username, COUNT(t.topic_poster) num_topics
+	FROM phpbb_users u, phpbb_topics t
+	WHERE (t.topic_poster &lt;&gt; -1) AND (u.user_posts &gt; 0) AND (u.user_id = t.topic_poster)
+	GROUP BY t.topic_poster ORDER BY num_topics DESC
+	LIMIT 10
+
+Time before:  0.602092027664
+Time after:   0.602696895599
+Elapsed time: <b>0.000604867935181</b>
+</pre><table width=100% border=1 cellpadding=2 cellspacing=1>
+<tr>
+<td><b>id</b></td>
+<td><b>select_type</b></td>
+<td><b>table</b></td>
+<td><b>type</b></td>
+<td><b>possible_keys</b></td>
+<td><b>key</b></td>
+<td><b>key_len</b></td>
+<td><b>ref</b></td>
+<td><b>rows</b></td>
+<td><b>affected_rows</b></td>
+<td><b>Extra</b></td>
+</tr>
+<tr>
+<td>1&nbsp;</td>
+<td>SIMPLE&nbsp;</td>
+<td>t&nbsp;</td>
+<td>ALL&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>2&nbsp;</td>
+<td>1&nbsp;</td>
+<td>Using where; Using temporary; Using filesort&nbsp;</td>
+</tr>
+<tr>
+<td>1&nbsp;</td>
+<td>SIMPLE&nbsp;</td>
+<td>u&nbsp;</td>
+<td>eq_ref&nbsp;</td>
+<td>PRIMARY&nbsp;</td>
+<td>PRIMARY&nbsp;</td>
+<td>3&nbsp;</td>
+<td>fiteam_phpbb3.t.topic_poster&nbsp;</td>
+<td>1&nbsp;</td>
+<td>&nbsp;</td>
+<td>Using where&nbsp;</td>
+</tr>
+</table><br><hr>
+<pre>Query:	SELECT YEAR(FROM_UNIXTIME(post_time)) as year_post, MONTH(FROM_UNIXTIME(post_time)) as month_post, COUNT(*) AS num_posts
+	FROM phpbb_posts
+	GROUP BY YEAR(FROM_UNIXTIME(post_time)), MONTH(FROM_UNIXTIME(post_time))
+	ORDER BY post_time
+
+Time before:  0.607244968414
+Time after:   0.608026981354
+Elapsed time: <b>0.000782012939453</b>
+</pre><table width=100% border=1 cellpadding=2 cellspacing=1>
+<tr>
+<td><b>id</b></td>
+<td><b>select_type</b></td>
+<td><b>table</b></td>
+<td><b>type</b></td>
+<td><b>possible_keys</b></td>
+<td><b>key</b></td>
+<td><b>key_len</b></td>
+<td><b>ref</b></td>
+<td><b>rows</b></td>
+<td><b>affected_rows</b></td>
+<td><b>Extra</b></td>
+</tr>
+<tr>
+<td>1&nbsp;</td>
+<td>SIMPLE&nbsp;</td>
+<td>phpbb_posts&nbsp;</td>
+<td>index&nbsp;</td>
+<td>&nbsp;</td>
+<td>post_time&nbsp;</td>
+<td>4&nbsp;</td>
+<td>&nbsp;</td>
+<td>2&nbsp;</td>
+<td>2&nbsp;</td>
+<td>Using index; Using temporary; Using filesort&nbsp;</td>
+</tr>
+</table><br><hr>
+<pre>Query:	SELECT YEAR(FROM_UNIXTIME(topic_time)) as year_topic, MONTH(FROM_UNIXTIME(topic_time)) as month_topic, COUNT(*) AS num_topics
+	FROM phpbb_topics
+	GROUP BY YEAR(FROM_UNIXTIME(topic_time)), MONTH(FROM_UNIXTIME(topic_time))
+	ORDER BY topic_time
+
+Time before:  0.612972021103
+Time after:   0.613507032394
+Elapsed time: <b>0.000535011291504</b>
+</pre><table width=100% border=1 cellpadding=2 cellspacing=1>
+<tr>
+<td><b>id</b></td>
+<td><b>select_type</b></td>
+<td><b>table</b></td>
+<td><b>type</b></td>
+<td><b>possible_keys</b></td>
+<td><b>key</b></td>
+<td><b>key_len</b></td>
+<td><b>ref</b></td>
+<td><b>rows</b></td>
+<td><b>affected_rows</b></td>
+<td><b>Extra</b></td>
+</tr>
+<tr>
+<td>1&nbsp;</td>
+<td>SIMPLE&nbsp;</td>
+<td>phpbb_topics&nbsp;</td>
+<td>ALL&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>2&nbsp;</td>
+<td>2&nbsp;</td>
+<td>Using temporary; Using filesort&nbsp;</td>
+</tr>
+</table><br><hr>
+<pre>Query:	SELECT a.post_id, p.forum_id as post_forum_id, t.topic_title, d.*
+	FROM phpbb_attachments a, phpbb_attachments_desc d, phpbb_posts p, phpbb_topics t
+	WHERE (a.post_id = p.post_id) AND (p.topic_id = t.topic_id) AND (a.attach_id = d.attach_id) ORDER BY download_count DESC LIMIT 10
+
+Time before:  0.636568069458
+Time after:   0.637516975403
+Elapsed time: <b>0.000948905944824</b>
+</pre><table width=100% border=1 cellpadding=2 cellspacing=1>
+<tr>
+<td><b>id</b></td>
+<td><b>select_type</b></td>
+<td><b>table</b></td>
+<td><b>type</b></td>
+<td><b>possible_keys</b></td>
+<td><b>key</b></td>
+<td><b>key_len</b></td>
+<td><b>ref</b></td>
+<td><b>rows</b></td>
+<td><b>affected_rows</b></td>
+<td><b>Extra</b></td>
+</tr>
+<tr>
+<td>1&nbsp;</td>
+<td>SIMPLE&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>0&nbsp;</td>
+<td>Impossible WHERE noticed after reading const tables&nbsp;</td>
+</tr>
+</table><br><hr>
+<pre>Query:	SELECT u.user_id, u.username, count(u.user_id) as user_posts
+	FROM phpbb_users u, phpbb_posts p
+	WHERE (u.user_id = p.poster_id) AND (p.post_time &gt; '1201852800') AND (u.user_id &lt;&gt; -1)
+	GROUP BY user_id, username
+	ORDER BY user_posts DESC
+	LIMIT 10
+
+Time before:  0.642384052277
+Time after:   0.643007993698
+Elapsed time: <b>0.000623941421509</b>
+</pre><table width=100% border=1 cellpadding=2 cellspacing=1>
+<tr>
+<td><b>id</b></td>
+<td><b>select_type</b></td>
+<td><b>table</b></td>
+<td><b>type</b></td>
+<td><b>possible_keys</b></td>
+<td><b>key</b></td>
+<td><b>key_len</b></td>
+<td><b>ref</b></td>
+<td><b>rows</b></td>
+<td><b>affected_rows</b></td>
+<td><b>Extra</b></td>
+</tr>
+<tr>
+<td>1&nbsp;</td>
+<td>SIMPLE&nbsp;</td>
+<td>p&nbsp;</td>
+<td>range&nbsp;</td>
+<td>poster_id,post_time&nbsp;</td>
+<td>post_time&nbsp;</td>
+<td>4&nbsp;</td>
+<td>&nbsp;</td>
+<td>1&nbsp;</td>
+<td>0&nbsp;</td>
+<td>Using where; Using temporary; Using filesort&nbsp;</td>
+</tr>
+<tr>
+<td>1&nbsp;</td>
+<td>SIMPLE&nbsp;</td>
+<td>u&nbsp;</td>
+<td>eq_ref&nbsp;</td>
+<td>PRIMARY&nbsp;</td>
+<td>PRIMARY&nbsp;</td>
+<td>3&nbsp;</td>
+<td>fiteam_phpbb3.p.poster_id&nbsp;</td>
+<td>1&nbsp;</td>
+<td>&nbsp;</td>
+<td>Using where&nbsp;</td>
+</tr>
+</table><br><hr>
+<pre>Query:	SELECT u.user_id, u.username, count(u.user_id) as user_posts
+	FROM phpbb_users u, phpbb_posts p
+	WHERE (u.user_id = p.poster_id) AND (p.post_time &gt; '1203321600') AND (u.user_id &lt;&gt; -1)
+	GROUP BY user_id, username
+	ORDER BY user_posts DESC
+	LIMIT 10
+
+Time before:  0.647522926331
+Time after:   0.648030042648
+Elapsed time: <b>0.000507116317749</b>
+</pre><table width=100% border=1 cellpadding=2 cellspacing=1>
+<tr>
+<td><b>id</b></td>
+<td><b>select_type</b></td>
+<td><b>table</b></td>
+<td><b>type</b></td>
+<td><b>possible_keys</b></td>
+<td><b>key</b></td>
+<td><b>key_len</b></td>
+<td><b>ref</b></td>
+<td><b>rows</b></td>
+<td><b>affected_rows</b></td>
+<td><b>Extra</b></td>
+</tr>
+<tr>
+<td>1&nbsp;</td>
+<td>SIMPLE&nbsp;</td>
+<td>p&nbsp;</td>
+<td>range&nbsp;</td>
+<td>poster_id,post_time&nbsp;</td>
+<td>post_time&nbsp;</td>
+<td>4&nbsp;</td>
+<td>&nbsp;</td>
+<td>1&nbsp;</td>
+<td>0&nbsp;</td>
+<td>Using where; Using temporary; Using filesort&nbsp;</td>
+</tr>
+<tr>
+<td>1&nbsp;</td>
+<td>SIMPLE&nbsp;</td>
+<td>u&nbsp;</td>
+<td>eq_ref&nbsp;</td>
+<td>PRIMARY&nbsp;</td>
+<td>PRIMARY&nbsp;</td>
+<td>3&nbsp;</td>
+<td>fiteam_phpbb3.p.poster_id&nbsp;</td>
+<td>1&nbsp;</td>
+<td>&nbsp;</td>
+<td>Using where&nbsp;</td>
+</tr>
+</table><br><hr>
+<pre>Query:	SELECT YEAR(FROM_UNIXTIME(user_regdate)) as year_regdate, MONTH(FROM_UNIXTIME(user_regdate)) as month_regdate, COUNT(*) AS num_user
+	FROM phpbb_users
+	WHERE (user_id &lt;&gt; -1 )
+	GROUP BY YEAR(FROM_UNIXTIME(user_regdate)), MONTH(FROM_UNIXTIME(user_regdate))
+	ORDER BY user_regdate
+
+Time before:  0.652443885803
+Time after:   0.65332198143
+Elapsed time: <b>0.000878095626831</b>
+</pre><table width=100% border=1 cellpadding=2 cellspacing=1>
+<tr>
+<td><b>id</b></td>
+<td><b>select_type</b></td>
+<td><b>table</b></td>
+<td><b>type</b></td>
+<td><b>possible_keys</b></td>
+<td><b>key</b></td>
+<td><b>key_len</b></td>
+<td><b>ref</b></td>
+<td><b>rows</b></td>
+<td><b>affected_rows</b></td>
+<td><b>Extra</b></td>
+</tr>
+<tr>
+<td>1&nbsp;</td>
+<td>SIMPLE&nbsp;</td>
+<td>phpbb_users&nbsp;</td>
+<td>ALL&nbsp;</td>
+<td>PRIMARY&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>&nbsp;</td>
+<td>7&nbsp;</td>
+<td>5&nbsp;</td>
+<td>Using where; Using temporary; Using filesort&nbsp;</td>
+</tr>
+</table><br><hr>
+<pre><b>The Statistics Mod generated 22 queries,
+spending 0.0292282104492 doing MySQL queries and 0.62876868248 doing PHP things.</b></pre>

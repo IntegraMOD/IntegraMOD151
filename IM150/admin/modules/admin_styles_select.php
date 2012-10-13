@@ -1,0 +1,27 @@
+<?php
+/***************************************************************************
+ *                             admin_styles_select.php
+ *                            -------------------------
+ *   begin                : Monday, Jan 6, 2003
+ *   author               : CRLin
+ *   url                  : http://mail.dhjh.tcc.edu.tw/~gzqbyr/
+ *
+ ***************************************************************************/
+
+/***************************************************************************
+ *
+ *   This program is free software; you can redistribute it and/or modify
+ *   it under the terms of the GNU General Public License as published by
+ *   the Free Software Foundation; either version 2 of the License, or
+ *   (at your option) any later version.
+ *
+ ***************************************************************************/
+
+if( !empty($setmodules) )
+{
+	$file = basename(__FILE__);
+	$module['Styles']['Style_select_manage'] = $file;
+	return;
+}
+
+?>

@@ -1,0 +1,965 @@
+<?php
+
+/***************************************************************************
+ *                            lang_admin.php [Hebrew]
+ *                              -------------------
+ *     begin                : Sat Dec 16 2000
+ *     copyright            : (C) 2001 The phpBB Group
+ *     email                : support@phpbb.com
+ *
+ *
+ ****************************************************************************/
+
+/***************************************************************************
+ *
+ *   This program is free software; you can redistribute it and/or modify
+ *   it under the terms of the GNU General Public License as published by
+ *   the Free Software Foundation; either version 2 of the License, or
+ *   (at your option) any later version.
+ *
+ ***************************************************************************/
+
+/* CONTRIBUTORS
+	2002-12-15	Philip M. White (pwhite@mailhaven.com)
+		Fixed many minor grammatical mistakes
+*/
+
+//
+// Format is same as lang_main
+//
+
+//
+// Modules, this replaces the keys used
+// in the modules[][] arrays in each module file
+//
+
+// Admin menu titles
+$lang['approve_admin_approval'] = 'אישורים';
+$lang['approve_admin_approve_index'] = 'אינדקס אישורים';
+$lang['approve_admin_user_moderation'] = 'משתמשים';
+$lang['approve_admin_topic_moderation'] = 'נושאים';
+$lang['approve_admin_post_moderation'] = 'הודעות';
+$lang['approve_admin_forum_moderation'] = 'פורומים';
+$lang['approve_admin_edit_forums'] = 'ערוך פורומים';
+
+$lang['Admin_Index'] = 'אינדקס ניהול';
+$lang['Main_index'] = 'אינדקס הפורומים';
+$lang['Preview_forum'] = 'צפה בפורום';
+$lang['Portal_index'] = 'עמוד הבית';
+$lang['Preview_portal'] = 'צפה בעמוד הבית';
+
+$lang['.: Security :.'] = '.: Security :.'; 
+$lang['Info: gdlib'] = 'Info: gdlib'; 
+$lang['Info: phpinfo'] = 'Info: phpinfo'; 
+$lang['Member Tries'] = 'Member Tries'; 
+$lang['Quick Search'] = 'Quick Search'; 
+$lang['Special'] = 'Special'; 
+$lang['Styles_Management'] = 'Styles Management'; 
+$lang['Database cleaning'] = 'Database cleaning'; 
+$lang['Forum_Tour'] = 'Forum Tour'; 
+$lang['Upload_Smilies'] = 'Upload Smilies'; 
+$lang['Photo_Album'] = 'Photo Album'; 
+$lang['CLowN_SP_Config'] = 'CLowN SP Config'; 
+$lang['Package_Module'] = 'Package Module'; 
+$lang['Banner'] = 'Banner'; 
+$lang['Menu'] = 'Menu'; 
+$lang['IPN_LOG'] = 'IPN LOG'; 
+$lang['PHP Info'] = 'PHP Info'; 
+$lang['Admins & Mod\'s'] = 'Admins & Mod\'s';
+
+$lang['APMR Admin'] = ' עבור לניהול ההודעות הפרטיות';
+$lang['eXtreme Styles'] = 'עיצובים אקסטרים';
+$lang['FTR: Config'] = 'הגדרות דרישת קריאה';
+$lang['FTR: Users'] = 'משתמשי דרישת קריאה';
+$lang['FTR Admin'] = 'ניהול דרישת קריאה';
+$lang['IM_Portal'] = 'פורטל IMHeb';
+$lang['Userlist'] = 'רשימת משתמשים';
+$lang['Subscription_Admin'] = 'חברויות';
+$lang['News Admin'] = 'ניהול חדשות';
+$lang['Subscription'] = 'חברות';
+$lang['Permissions_List'] = 'רשימת גישות';
+$lang['Currency_Management'] = 'ניהול מטבעות';
+$lang['L_IPN_subscription'] = 'חברות IPN';
+$lang['DB_Maintenance'] = 'תחזוקת בסיס הנתונים';
+$lang['Manage_Bots'] = 'ניהול בוטים';
+$lang['Optimize_DB'] = 'יעל בסיס נתונים';
+$lang['PM_Settings'] = 'הודעת ברוך הבא';
+$lang['Rating_System'] = 'מערכת דירוגים';
+$lang['Rebuild Search'] = 'בניית החיפוש מחדש';
+$lang['Control_Panel'] = 'לוח בקרה';
+$lang['Shadow_attachments'] = 'עותקי קבצים';
+$lang['Forbidden_extensions'] = 'סיומות אסורות';
+$lang['Extension_control'] = 'ניהול סיומות';
+$lang['Extension_group_manage'] = 'ניהול קבוצות סיומות';
+$lang['Special_categories'] = 'קטגוריות מיוחדות';
+$lang['Sync_attachments'] = 'סנקרון קבצים';
+$lang['Quota_limits'] = 'הגבלת כמות';
+$lang['Group_extend'] = 'הגדרת קבוצה';
+$lang['Blocks Management'] = 'ניהול בלוקים';
+$lang['Blocks Variables'] = 'משתני בלוקים';
+$lang['Blocks_Position_Tag'] = 'תגי מיקום בלוקים';
+$lang['Delete_Cache_Files'] = 'מחק קבצי זכרון';
+$lang['Page_Management'] = 'ניהול עמודים';
+$lang['Portal_Configuration'] = 'הגדרות הפורטל';
+$lang['Clear_Cache'] = 'הסר זכרון';
+$lang['Personal_Galleries'] = 'גלרייות אישיות';
+$lang['Message Log'] = 'יומן הודעות';
+$lang['Network Messaging'] = 'דיבור ברשת';
+$lang['User Admin'] = 'ניהול משתמשים';
+$lang['Cron Configuration'] = 'הגדרות Cron';
+$lang['Package Module'] = 'חבילת מודולים';
+$lang['Tools'] = 'כלים';
+$lang['IP_Search'] = 'חיפוש IP';
+$lang['Points_Configuration'] = 'הגדרות נקודות';
+
+$lang['Configuration'] = 'הגדרות';
+$lang['Permissions'] = 'גישות';
+$lang['Manage'] = 'ניהול';
+$lang['Disallow'] = 'שמות בלתי מורשים';
+$lang['Prune'] = 'איפוס';
+$lang['Mass_Email'] = 'שלח דואר';
+$lang['Ranks'] = 'דירוגים';
+
+$lang['General'] = 'ניהול כללי';
+$lang['Users'] = 'ניהול משתמשים';
+$lang['Groups'] = 'ניהול קבוצות';
+$lang['Forums'] = 'ניהול פורומים';
+$lang['Styles'] = 'ניהול עיצובים';
+$lang['Mod_Complete_Import'] = 'Import Language Pack';
+//// end admin menu titles
+
+$lang['YES'] = 'Yes';
+$lang['NO'] = 'No';
+$lang['ON'] = 'פעיל'; // This is for GZip compression
+$lang['OFF'] = 'גבוי'; 
+
+$lang['Smilies'] = 'סמיילים';
+$lang['Ban_Management'] = 'בקרת חסימות';
+$lang['Word_Censor'] = 'צנזור מילים';
+$lang['Export'] = 'יצא';
+$lang['Create_new'] = 'צור';
+$lang['Add_new'] = 'הוסף';
+$lang['Backup_DB'] = 'גבה בסיס נתונים';
+$lang['Restore_DB'] = 'שחזר בסיס נתונים';
+
+//
+// Index
+//
+$lang['Admin'] = 'ניהול ראשי';
+$lang['Not_admin'] = 'אתה לא רשאי לנהל מערכת זו';
+$lang['Welcome_phpBB'] = 'ברוך הבא ל-phpBB';
+$lang['Admin_intro'] = 'תודה שבחרת ב-phpBB כפיתרון לפורום שלך. מסך זה יתן לך מבט מהיר של כל הסטטיסטיקות השונות על המערכת שלך. אתה יכול לחזור לעמוד זה על-ידי לחיצה על הקישור <u>אינדקס ניהול</u> בצד ימין. כדי לחזור לאינדקס המערכת שלך, לחץ על הלוגו של phpBB שנמצא גם בצד ימין. הקישורים האחרים בצד ימין של מסך זה יאפשרו לך לנהל כל חלק של הפורום שלך. לכל מסך יש הוראות משלו על איך להשתמש בכליו.';
+//
+$lang['Forum_stats'] = 'סטטיסטיקות הפורומים';
+
+$lang['Click_return_admin_index'] = 'לחץ %sכאן%s כדי לחזור לאינדקס הניהול';
+
+$lang['Statistic'] = 'סטטיסטיקה';
+$lang['Value'] = 'ערך';
+$lang['Number_posts'] = 'מספר הודעות';
+$lang['Posts_per_day'] = 'הודעות ליום';
+$lang['Number_topics'] = 'מספר נושאים';
+$lang['Topics_per_day'] = 'נושאים ליום';
+$lang['Number_users'] = 'מספר משתמשים';
+$lang['Users_per_day'] = 'משתמשים ליום';
+$lang['Board_started'] = 'התחלת המערכת';
+$lang['Avatar_dir_size'] = 'גודל תיקיית הסמלים האישיים';
+$lang['Database_size'] = 'גודל בסיס הנתונים';
+$lang['Gzip_compression'] ='דחיסת Gzip';
+$lang['Not_available'] = 'לא זמין';
+
+$lang['Viewing_Portal'] = 'צופה בפורטל';
+
+//
+// DB Utils
+//
+$lang['Database_Utilities'] = 'שירותי בסיס הנתונים';
+
+$lang['Restore'] = 'שחזר';
+$lang['Backup'] = 'גבה';
+$lang['Restore_explain'] = 'הפעולה תבצע שחזור מלא של כל טבלאות ה-phpBB מקובץ שמור. אם השרת שלך תומך בזאת, אתה יכול להעלות קובץ טקסט דחוס בדחיסת gzip ובכך יחסך עומס אוטומטית. <b>אזהרה</b>: בפעולה תכתוב על כל הנתונים הקיימים. השחזור יכול לקחת זמן רב לעיבוד, אז אל תעבור מעמוד זה עד שהתהליך יושלם.';
+$lang['Backup_explain'] = 'כאן אתה יכול לגבות את כל הנתונים המיוחסים ל-phpBB. אם יש לך טבלאות מותאמות נוספות באותו בסיס נתונים עם phpBB שאתה רוצה לגבות גם כן, אנא הקלד את שמותיהם, מופרדים על-ידי פסיקים, בתיבת הטקסט טבלאות נוספות שלמטה. אם השרת שלך תומך בזאת אתה יכול גם לדחוס את הקובץ בדחיסת gzip כדי להקטין את גודלו לפני ההורדה.';
+
+$lang['Backup_options'] = 'אפשרויות גיבוי';
+$lang['Start_backup'] = 'התחל גיבוי';
+$lang['Full_backup'] = 'גיבוי מלא';
+$lang['Structure_backup'] = 'גבה מבנה בלבד';
+$lang['Data_backup'] = 'גבה נתונים בלבד';
+$lang['Additional_tables'] = 'טבלאות נוספות';
+$lang['Gzip_compress'] = 'קובץ דחוס ב-Gzip';
+$lang['Select_file'] = 'בחר קובץ';
+$lang['Start_Restore'] = 'התחל שחזור';
+
+$lang['Restore_success'] = 'בסיס הנתונים שוחזר בהצלחה.<br /><br />המערכת שלך צריכה לחזור למצב שבו הייתה לפני שהגיבוי נעשה.';
+$lang['Backup_download'] = 'ההורדה שלך תחל בקרוב; אנא המתן עד להתחלתה.';
+$lang['Backups_not_supported'] = 'סליחה, אבל גיבויי בסיס הנתונים לא נתמכים כרגע למערכת בסיס הנתונים שלך.';
+
+$lang['Restore_Error_uploading'] = 'שגיאה בהעלאת קובץ הגיבוי';
+$lang['Restore_Error_filename'] = 'בעייה בשם הקובץ; נסה קובץ חלופי';
+$lang['Restore_Error_decompress'] = 'לא ניתן לחלץ את הקובץ מה-gzip; העלה גרסת טקסט פשוטה';
+$lang['Restore_Error_no_file'] = 'אין קובץ שהועלה';
+
+
+//
+// Auth pages
+//
+$lang['Select_a_User'] = 'בחר משתמש';
+$lang['Select_a_Group'] = 'בחר קבוצה';
+$lang['Select_a_Forum'] = 'בחר פורום';
+$lang['Auth_Control_User'] = 'בקרת גישות המשתמש'; 
+$lang['Auth_Control_Group'] = 'בקרת גישות הקבוצה'; 
+$lang['Auth_Control_Forum'] = 'בקרת גישות הפורום'; 
+$lang['Auth_Control_Category'] = 'בקרת גישות הקטגוריה'; // Added by Permissions List MOD
+$lang['Look_up_User'] = 'אתר משתמש'; 
+$lang['Look_up_Group'] = 'אתר קבוצה'; 
+$lang['Look_up_Forum'] = 'אתר פורום'; 
+
+$lang['Group_auth_explain'] = 'כאן אתה יכול לשנות את הגישות ומצב המנהל הנקבע לכל קבוצת משתמש. לא לשכוח ששינוי גישות הקבוצה שמנוגדות לגישות המשתמש עדיין יאפשרו למשתמש להיכנס לפורומים, וכדומה. אתה תוזהר אם מקרה כזה יקרה.';
+$lang['User_auth_explain'] = 'כאן אתה יכול לשנות את הגישות ומצב המנהל שנקבע לכל משתמש יחיד. לא לשכוח ששינוי גישות המשתמש המנוגדות לגישות הקבוצה, גישות הקבוצה עדיין יכולות לאפשר למשתמש להיכנס לפורומים, וכדומה. אתה תוזהר אם מקרה כזה יקרה.';
+$lang['Forum_auth_explain'] = 'כאן אתה יכול לשנות את רמות הגישה לכל פורום. תוכל לבחור בין שני מצבים כדי לעשות זאת, מצב פשוט ומתקדם, כאשר מצב מתקדם מציע ניהול גבוה יותר לכל פורום. זכור ששינוי רמת הגישה של הפורומים ישפיע על המשתמשים שיכולים לבצע את הפעולות השונות בתוכם.';
+$lang['Forum_auth_list_explain'] = 'עמוד זה מספר סיכום של כל רמות הגישה לכל פורום. אתה יכול לערוך אותן גישות, בעזרת שיטה פשוטה או מתקדמת על-ידי לחיצה על שם הפורום. זכור ששינוי רמת הגישה של הפורומים ישפיע על המשתמשים שיכולים לבצע את הפעולות השונות בתוכם.'; // Added by Permissions List MOD
+$lang['Cat_auth_list_explain'] = 'עמוד זה מספק סיכום של רמות הגישה של כל פורום בקטגוריה זו. אתה יכול לערוך את הגישות של הפורומים המסויימים, בעזרת שיטה פשוטה או מתקדמת על-ידי לחיצה על שם הפורום. לחילופין, אתה יכול לקבוע את הגישות של כל הפורומים בקטגוריה זו על-ידי שימוש בתפריטי הרשימה הנגללת בתחתית העמוד. זכור ששינוי רמת הגישה של הפורומים ישפיע על המשתמשים שיכולים לבצע את הפעולות השונות בתוכם.'; // Added by Permissions List MOD
+
+$lang['Simple_mode'] = 'מצב פשוט';
+$lang['Advanced_mode'] = 'מצב מתקדם';
+$lang['Moderator_status'] = 'מצב מנהל';
+
+$lang['Allowed_Access'] = 'גישה מאופשרת';
+$lang['Disallowed_Access'] = 'גישה לא מאופשרת';
+$lang['Is_Moderator'] = 'מנהל';
+$lang['Not_Moderator'] = 'לא מנהל';
+
+$lang['Conflict_warning'] = 'אזהרת התנגשות גישות';
+$lang['Conflict_access_userauth'] = 'משתמש זה עדיין בעל זכויות הגישה לפורום זה דרך מנוי הקבוצה. אתה יכול לשנות את גישות הקבוצה או להסיר משתמש זה מהקבוצה לגמרי כדי למנוע ממנו את זכויות הגישה. הקבוצות בעלות הזכויות (והפורומים נכללים) רשומות למטה.';
+$lang['Conflict_mod_userauth'] = 'משתמש זה עדיין בעל זכויות מנהל לפורום זה דרך מנוי הקבוצה. אתה יכול לשנות את גישות הקבוצה או להסיר משתמש זה מהקבוצה לגמרי כדי למנוע ממנו את זכויות המנהל. הקבוצות בעלות הזכויות (והפורומים נכללים) רשומות למטה.';
+
+$lang['Conflict_access_groupauth'] = 'המשתמש הבא (או המשתמשים) עדיין בעל זכויות הגישה לפורום זה דרך הגדרות גישות המשתמש שלו. אתה יכול לשנות את גישות המשתמש לגמרי כדי למנוע ממנו את זכויות הגישה. המשתמשים בעלי הזכויות (והפורומים נכללים) רשומים למטה.';
+$lang['Conflict_mod_groupauth'] = 'המשתמש הבא (או המשתמשים) עדיין בעל זכויות מנהל לפורום זה דרך הגדרות גישות המשתמש שלו. אתה יכול לשנות את גישות המשתמש לגמרי כדי למנוע ממנו את זכויות המנהל. המשתמשים בעלי הזכויות (והפורומים נכללים) רשומים למטה.';
+
+$lang['Public'] = 'ציבורי';
+$lang['Private'] = 'פרטי';
+$lang['Registered'] = 'רשומים';
+$lang['Administrators'] = 'מנהלים ראשיים';
+$lang['Hidden'] = 'מוסתר';
+
+// These are displayed in the drop down boxes for advanced
+// mode forum auth, try and keep them short!
+$lang['Forum_ALL'] = 'כולם';
+$lang['Forum_REG'] = 'רשומים';
+$lang['Forum_PRIVATE'] = 'פרטי';
+$lang['Forum_MOD'] = 'מנהלים';
+$lang['Forum_ADMIN'] = 'מנהלים ראשיים';
+
+$lang['View'] = 'לצפות';
+$lang['Read'] = 'לקרוא';
+$lang['Post'] = 'לשלוח';
+$lang['Reply'] = 'להגיב';
+$lang['Edit'] = 'לערוך';
+$lang['Delete'] = 'למחוק';
+$lang['Sticky'] = 'להדביק';
+$lang['Announce'] = 'להכריז'; 
+$lang['Vote'] = 'להצביע';
+$lang['Pollcreate'] = 'ליצור סקר';
+
+$lang['Permissions'] = 'גישות';
+$lang['Simple_Permission'] = 'גישות פשוטות';
+$lang['Permissions_List'] = 'רשימת גישות'; // Added by Permissions List MOD
+
+$lang['User_Level'] = 'רמת משתמש'; 
+$lang['Auth_User'] = 'משתמש';
+$lang['Auth_Admin'] = 'מנהל ראשי';
+$lang['Group_memberships'] = 'חברויות קבוצת המשתמש';
+$lang['Pending_memberships'] = 'Pending memberships';
+$lang['Usergroup_members'] = 'בקבוצה זו יש את החברים הבאים';
+$lang['Pending_members'] = 'This group has the following pending members';
+
+$lang['Forum_auth_updated'] = 'גישות הפורום עודכנו';
+$lang['User_auth_updated'] = 'גישות המשתמש עודכנו';
+$lang['Group_auth_updated'] = 'גישות הקבוצה עודכנו';
+
+$lang['Auth_updated'] = 'הגישות עודכנו';
+$lang['Click_return_userauth'] = 'לחץ %sכאן%s כדי לחזור לגישות המשתמש';
+$lang['Click_return_groupauth'] = 'לחץ %sכאן%s כדי לחזור לגישות הקבוצה';
+$lang['Click_return_forumauth'] = 'לחץ %sכאן%s כדי לחזור לגישות הפורום';
+
+//Don't know if this is still used? //OKKI
+// Added by Permissions List MOD
+$lang['Forum_auth_list_explain_ALL'] = 'Alle gebruikers';
+$lang['Forum_auth_list_explain_REG'] = 'Alle geregistreerde gebruikers';
+$lang['Forum_auth_list_explain_PRIVATE'] = 'Gebruikers met speciale Rechten';
+$lang['Forum_auth_list_explain_MOD'] = 'Alleen moderators van dit forum';
+$lang['Forum_auth_list_explain_ADMIN'] = 'Alleen Beheerders';
+
+$lang['Forum_auth_list_explain_auth_view'] = '%s kan dit forum bekijken';
+$lang['Forum_auth_list_explain_auth_read'] = '%s kan berichten in dit forum lezen';
+$lang['Forum_auth_list_explain_auth_post'] = '%s kan berichten plaatsen in dit forum';
+$lang['Forum_auth_list_explain_auth_reply'] = '%s kan berichten beantwoorden in dit forum';
+$lang['Forum_auth_list_explain_auth_edit'] = '%s kan berichten aanpassen in dit forum';
+$lang['Forum_auth_list_explain_auth_delete'] = '%s kan berichten verwijderen uit dit forum';
+$lang['Forum_auth_list_explain_auth_sticky'] = '%s kan sticky onderwerpen maken in dit forum';
+$lang['Forum_auth_list_explain_auth_announce'] = '%s kan aankondigingen maken in dit forum';
+$lang['Forum_auth_list_explain_auth_vote'] = '%s kan stemmen in Opinieoonderzoeken in dit forum';
+$lang['Forum_auth_list_explain_auth_pollcreate'] = '%s kan Opinieoonderzoeken maken in dit forum';
+// End addition by Permissions List MOD
+
+
+//
+// Banning
+//
+$lang['Ban_control'] = 'בקרת חסימות';
+$lang['Ban_explain'] = 'כאן אתה יכול לנהל את החסימות של המשתמשים. אתה יכול לעשות זאת על-ידי חסימה של משתמש מסויים או טווח של כתובות IP או שמות שרתים. שיטות אלו מונעות מהמשתמש מלהגיע אפילו לעמוד האינדקס של המערכת שלך. כדי למנוע מהמשתמש להרשם תחת שם משתמש שונה אתה יכול גם לציין כתובת דואר אלקטרוני חסומה. שים לב שחסימת כתובת דואר אלקטרוני לבד לא תמנע מהמשתמש מלהתחבר או לשלוח בפורומים שלך. אתה תצטרך להשמתמש באחת משתי השיטות הראשונות כדי לעשות זאת.';
+$lang['Ban_explain_warn'] = 'שים לב שהקלדת טווח של כתובות IP, כל הכתובות שנמצאות בין ההתחלה והסיום יתווספו לרשימת החסומים. נסה להקליד מספר כמה שיותר קטן של כתובות שיתווסף לבסיס הנתונים על ידי הצגת סימנים כוללים אוטומטית היכן שמתאים. אם אתה באמת חייב להקליד טווח, נסה אותו כמה שיותר קטן או הכי טוב שתציין כתובת מסויימת.';
+
+$lang['Select_username'] = 'בחר שם משתמש';
+$lang['Select_ip'] = 'בחר כתובת IP';
+$lang['Select_email'] = 'בחר כתובת דואר אלקטרוני';
+
+$lang['Ban_username'] = 'חסימה אחת או יותר למשתמשים מסויימים';
+$lang['Ban_username_explain'] = 'אתה יכול לחסום כמה משתמשים במהלך אחד בעזרת השילוב המתאים של העכבר והמקלדת של המחשב שלך ושל הדפדפן';
+
+$lang['Ban_IP'] = 'חסימה אחת או יותר לכתובות IP או שמות שרתים';
+$lang['IP_hostname'] = 'כתובות IP או שמות שרתים';
+$lang['Ban_IP_explain'] = 'כדי לציין כמה כתובות IP או שמות שרתים שונים הפרד אותם עם פסיקים. כדי לציין טווח של כתובות IP, הפרד את ההתחלה והסיום עם מקף (-); כדי לציין סימן כולל, השתמש בכוכבית (*).';
+
+$lang['Ban_email'] = 'חסימה אחת או יותר של כתובות דואר אלקטרוני';
+$lang['Ban_email_explain'] = 'כדי לציין יותר מכתובת דואר אלקטרוני אחת, הפרד אותם עם פסיקים. כדי לציין סימן כולל לשם שרת, השתמש ב-* כמו *@hotmail.com';
+
+$lang['Unban_username'] = 'בטל חסימה אחת או יותר למשתמשים מסויימים';
+$lang['Unban_username_explain'] = 'אתה יכול לבטל חסימה לכמה משתמשים במהלך אחד בעזרת השילוב המתאים של העכבר והמקלדת של המחשב שלך והדפדפן';
+
+$lang['Unban_IP'] = 'בטח חסימה אחת או יותר לכתובות IP';
+$lang['Unban_IP_explain'] = 'אתה יכול לבטל חסימה לכמה כתובות IP במהלך אחד בעזרת השילוב המתאים של העכבר והמקלדת של המחשב שלך והדפדפן';
+
+$lang['Unban_email'] = 'בטל חסימה אחת או יותר לכתובות דואר אלקטרוני';
+$lang['Unban_email_explain'] = 'אתה יכול לבטל חסימה לכמה כתובות דואר אלקטרוני במהלך אחד בעזרת השילוב המתאים של העכבר והמקלדת של המחשב שלך והדפדפן';
+
+$lang['No_banned_users'] = 'אין שמות משתמשים חסומים';
+$lang['No_banned_ip'] = 'אין כתובות IP חסומות';
+$lang['No_banned_email'] = 'אין כתובות דואר אלקטרוני חסומות';
+
+$lang['Ban_update_sucessful'] = 'רשימת החסומים עודכנה בהצלחה';
+$lang['Click_return_banadmin'] = 'לחץ %sכאן%s כדי לחזור לבקרת החסימות';
+
+
+//
+// Configuration
+//
+$lang['General_Config'] = 'הגדרות כלליות';
+$lang['Config_explain'] = 'הטופס הבא יאפשר לך לשנות את כל אפשרויות המערכת הכלליות. להגדרות משתמש ופורום השתמש בקישורים המסופקים בצד ימין.';
+
+$lang['Click_return_config'] = 'לחץ %sכאן%s כדי לחזור להגדרות הכלליות';
+
+$lang['General_settings'] = 'הגדרות מערכת כלליות';
+$lang['Server_name'] = 'שם מתחם';
+$lang['Server_name_explain'] = 'שם המתחם שממנו המערכת פועלת';
+$lang['Script_path'] = 'נתיב המערכת';
+$lang['Script_path_explain'] = 'הנתיב שבו phpBB2 נמצאת יחסית לשם המתחם';
+$lang['Server_port'] = 'יציאת שרת';
+$lang['Server_port_explain'] = 'יציאת השרת שלך בזמן פעולה, בדרך כלל 80. שנה רק אם שונה';
+$lang['Site_name'] = 'שם האתר';
+$lang['Site_desc'] = 'תיאור האתר';
+$lang['Board_disable'] = 'כבה מערכת';
+$lang['Board_disable_explain'] = 'הגדרה זו תהפוך את המערכת לבלתי זמינה למשתמשים. מנהלים ראשיים יוכלו לגשת ללוח הניהול בזמן שהמערכת כבויה.';
+$lang['Board_disable_msg'] = 'הודעת כיבוי המערכת';
+$lang['Board_disable_msg_explain'] = 'טקסט זה יוצג אם "כבה מערכת" נקבע ל "כן".';
+$lang['Acct_activation'] = 'הפעל הפעלת חשבונות';
+$lang['Acc_None'] = 'ללא'; // These three entries are the type of activation
+$lang['Acc_User'] = 'משתמש';
+$lang['Acc_Admin'] = 'מנהל ראשי';
+
+$lang['Abilities_settings'] = 'הגדרות בסיסיות למשתמש ופורום';
+$lang['Max_poll_options'] = 'מספר מירבי של אפשרויות סקר';
+$lang['Flood_Interval'] = 'השהיית הצפה';
+$lang['Flood_Interval_explain'] = 'מספר שניות שמשתמש חייב להמתין בין הודעות'; 
+$lang['Board_email_form'] = 'שליחת דואר למשתמש דרך המערכת';
+$lang['Board_email_form_explain'] = 'משתמשים שולחים דואר למשתמשים אחרים דרך המערכת';
+$lang['Topics_per_page'] = 'נושאים לעמוד';
+$lang['Posts_per_page'] = 'הודעות לעמוד';
+$lang['Hot_threshold'] = 'הודעות לסף פופולרי';
+$lang['Default_style'] = 'עיצוב ברירת מחדל';
+$lang['Override_style'] = 'עלה על עיצוב המשתמש';
+$lang['Override_style_explain'] = 'מחליף למשתמשים את העיצוב עם ברירת המחדל';
+$lang['Default_language'] = 'שפת ברירת מחדל';
+$lang['Date_format'] = 'תבנית התאריך';
+$lang['System_timezone'] = 'איזור זמן המערכת';
+$lang['Enable_gzip'] = 'הפעל דחיסת GZip';
+$lang['Enable_prune'] = 'הפעל איפוס פורום';
+$lang['Allow_HTML'] = 'אפשר HTML';
+$lang['Allow_BBCode'] = 'אפשר BBCode';
+$lang['Allowed_tags'] = 'תגי HTML מאופשרים';
+$lang['Allowed_tags_explain'] = 'הפרד תגים עם פסיקים';
+$lang['Allow_smilies'] = 'אפשר סמיילים';
+$lang['Smilies_path'] = 'נתיב אחסון הסמיילים';
+$lang['Smilies_path_explain'] = 'נתיב תחת התיקייה הראשית של phpBB שלך, למשל images/smiles';
+$lang['Allow_sig'] = 'אפשר חתימות';
+$lang['Max_sig_length'] = 'אורך חתימה מירבי';
+$lang['Max_sig_length_explain'] = 'מספר מירבי של תווים בחתימות המשתמשים';
+$lang['Allow_name_change'] = 'אפשר שינוי שם משתמש';
+
+$lang['Avatar_settings'] = 'הגדרות סמל אישי';
+$lang['Allow_local'] = 'הפעל גלריית סמלים אישיים';
+$lang['Allow_remote'] = 'הפעל סמלים אישיים רחוקים';
+$lang['Allow_remote_explain'] = 'סמלים אישיים שקושרו מאתר אחר';
+$lang['Allow_upload'] = 'הפעל העלאת סמל אישי';
+$lang['Max_filesize'] = 'גודל קובץ מירבי לסמל האישי';
+$lang['Max_filesize_explain'] = 'לקבצי סמלים אישיים שהועלו';
+$lang['Max_avatar_size'] = 'מימדים מירביים לסמל האישי';
+$lang['Max_avatar_size_explain'] = '(גובה x רוחב בפיקסלים)';
+$lang['Avatar_storage_path'] = 'נתיב אחסון הסמלים האישיים';
+$lang['Avatar_storage_path_explain'] = 'נתיב תחת התיקייה הראשית של phpBB שלך, למשל images/avatars';
+$lang['Avatar_gallery_path'] = 'נתיב גלריית הסמלים האישיים';
+$lang['Avatar_gallery_path_explain'] = 'נתיב תחת התיקייה הראשית של phpBB לטעינה מוקדמת של התמונות, למשל images/avatars/gallery';
+
+$lang['COPPA_settings'] = 'הגדרות COPPA';
+$lang['COPPA_fax'] = 'מספר פקס';
+$lang['COPPA_mail'] = 'כתובת דואר';
+$lang['COPPA_mail_explain'] = 'זוהי כתובת הדואר שאליה ישלחו ההורים את טפסי ההרשמה';
+
+$lang['Email_settings'] = 'הגדרות דואר אלקטרוני';
+$lang['Admin_email'] = 'כתובת הדואר האלקטרוני של המנהל הראשי';
+$lang['Email_sig'] = 'חתימת הדואר האלקטרוני';
+$lang['Email_sig_explain'] = 'טקסט זה יצורף לכל ההודעות שהמערכת שולחת';
+$lang['Use_SMTP'] = 'השתמש בשרת SMTP לדואר אלקטרוני';
+$lang['Use_SMTP_explain'] = 'סמן כן אם אתה רוצה או צריך לשלוח דואר אלקטרוני דרך שרת קרוא במקופ פונקציית הדואר המקומית';
+$lang['SMTP_server'] = 'כתובת שרת ה-SMTP';
+$lang['SMTP_username'] = 'שם משתמש ל-SMTP';
+$lang['SMTP_username_explain'] = 'הקלד שם משתמש רק אם שרת ה-SMTP שלך דורש זאת';
+$lang['SMTP_password'] = 'סיסמא ל-SMTP';
+$lang['SMTP_password_explain'] = 'הקלד סיסמא רק אם שרת ה-SMTP שלך דורש זאת';
+
+$lang['Disable_privmsg'] = 'הודעות פרטיות';
+$lang['Inbox_limits'] = 'הודעות מירביות בתיבת הדואר הנכנס';
+$lang['Sentbox_limits'] = 'הודעות מירביות בתיבת הדואר שנשלח';
+$lang['Savebox_limits'] = 'הודעות מירביות בתיבת הדואר השמור';
+
+$lang['Cookie_settings'] = 'הגדרות עוגייה'; 
+$lang['Cookie_settings_explain'] = 'פרטים אלו מגדירים כיצד העוגייה נשלחת לדפדפני המשתמשים. ברוב המקרים ערכי ברירת המחדל להגדרות העוגייה צריכים להספיק, אבל אם אתה צריך לשנות אותם עשה זאת בזהירות -- הגדרות שגויות יכולות למנוע מהמשתמשים מלהתחבר';
+$lang['Cookie_domain'] = 'מתחם העוגייה';
+$lang['Cookie_name'] = 'שם העוגייה';
+$lang['Cookie_path'] = 'נתיב העוגייה';
+$lang['Cookie_secure'] = 'אבטחת עוגייה';
+$lang['Cookie_secure_explain'] = 'אם השרת שלך פועל דרך SSL, קבע זאת לפעיל, אחרת השאר ככבוי';
+$lang['Session_length'] = 'אורך עונה [ שניות ]';
+
+// Visual Confirmation
+$lang['Visual_confirm'] = 'הפעל אישור חזותי';
+$lang['Visual_confirm_explain'] = 'דורש מהמשתמשים להקליד קוד המוגדר על-ידי תמונה בזמן ההרשמה.';
+
+//
+// Forum Management
+//
+$lang['Forum_admin'] = 'ניהול פורומים';
+$lang['Forum_admin_explain'] = 'מלוח זה אתה יכול להוסיף, למחוק, לערוך, לסדר מחדש ולסנכרן מחדש קטגוריות ופורומים';
+$lang['Edit_forum'] = 'ערוך פורום';
+$lang['Create_forum'] = 'צור פורום חדש';
+$lang['Create_category'] = 'צור קטגוריה חדשה';
+$lang['Remove'] = 'הסר';
+$lang['Action'] = 'פעולה';
+$lang['Update_order'] = 'עדכן סידור';
+$lang['Config_updated'] = 'הגדרות הפורום עודכנו בהצלחה';
+$lang['Edit'] = 'ערוך';
+$lang['Delete'] = 'מחק';
+$lang['Move_up'] = 'העבר למעלה';
+$lang['Move_down'] = 'העבר למטה';
+$lang['Resync'] = 'סנכרן מחדש';
+$lang['No_mode'] = 'אין מצב שנקבע';
+$lang['Forum_edit_delete_explain'] = 'הטופס הבא יאפשר לך לשנות את כל אפשרויות המערכת הכלליות. להגדרות משתמש ופורום השתמש בקישורים המסופקים בצד ימין';
+
+$lang['Move_contents'] = 'העבר את כל התוכן';
+$lang['Forum_delete'] = 'מחק פורום';
+$lang['Forum_delete_explain'] = 'הטופס הבא יאפשר לך למחוק פורום (או קטגוריה) ולהחליט היכן אתה רוצה לשים את כל הנושאים (או הפורומים) שהיא מכיל.';
+
+$lang['Status_locked'] = 'נעול';
+$lang['Status_unlocked'] = 'לא נעול';
+$lang['Forum_settings'] = 'הגדרות פורום כלליות';
+$lang['Forum_name'] = 'שם הפורום';
+$lang['Forum_desc'] = 'תיאור';
+$lang['Forum_status'] = 'מצב הפורום';
+$lang['Forum_pruning'] = 'איפוס אוטומטי';
+
+$lang['prune_freq'] = 'בדוק את גיל הנושא כל';
+$lang['prune_days'] = 'הסר נושאים שלא קיבלו תגובה';
+$lang['Set_prune_data'] = 'הפעלת איפוס אוטומטי לפורום זה אבל לא קבעת תדירות או מספר ימים לאיפוס. חזור ועשה זאת.';
+
+$lang['Move_and_Delete'] = 'העבר ומחק';
+
+$lang['Delete_all_posts'] = 'מחק את כל ההודעות';
+$lang['Nowhere_to_move'] = 'אין מקום להעביר';
+
+$lang['Edit_Category'] = 'ערוך קטגוריה';
+$lang['Edit_Category_explain'] = 'השתמש בטופס זה כדי לשנות את שם הקטגוריה.';
+
+$lang['Forums_updated'] = 'פרטי הפורום והקטגוריה עודכנו בהצלחה';
+
+$lang['Must_delete_forums'] = 'אתה צריך למחוק את כל הפורומים לפני שתוכל למחוק קטגוריה זו';
+
+$lang['Click_return_forumadmin'] = 'לחץ %sכאן%s כדי לחזור לניהול הפורומים';
+
+
+//
+// Smiley Management
+//
+$lang['smiley_title'] = 'שירות עריכת סמיילים';
+$lang['smile_desc'] = 'מעמוד זה אתה יכול להוסיף, להסיר ולערוך את ההבעות או הסמיילים שהמשתמשים שלך משתמשים בהם בהודעות ובהודעות הפרטיות שלהם.';
+
+$lang['smiley_config'] = 'הגדרות הסמיילי';
+$lang['smiley_code'] = 'קוד הסמיילי';
+$lang['smiley_url'] = 'קובץ תמונת הסמיילי';
+$lang['smiley_emot'] = 'הבעת הסמיילי';
+$lang['smile_add'] = 'הוסף סמיילי חדש';
+$lang['Smile'] = 'סמיילי';
+$lang['Emotion'] = 'הבעה';
+
+$lang['Select_pak'] = 'בחר קובץ חבילה (.pak)';
+$lang['replace_existing'] = 'החלף בסמיילי הקיים';
+$lang['keep_existing'] = 'שמור את הסמיילי הקיים';
+$lang['smiley_import_inst'] = 'אתה צריך לחלץ את חבילת הסמיילים ולהעלות את כל הקבצים לתיקיית הסמיילים המתאימה להתקנה שלך. אחר כך בחר את המידע הנכון בטופס זה כדי ליבא את חבילת הסמיילים.';
+$lang['smiley_import'] = 'יבא חבילת סמיילים';
+$lang['choose_smile_pak'] = 'בחר קובץ חבילת סמיילים .pak';
+$lang['import'] = 'יבא סמיילים';
+$lang['smile_conflicts'] = 'מה צריך לעשות במקרה של התנגשויות';
+$lang['del_existing_smileys'] = 'מחק את הסמיילים הקיימים לפני הייבוא';
+$lang['import_smile_pack'] = 'יבא חבילת סמיילים';
+$lang['export_smile_pack'] = 'צור חבילת סמיילים';
+$lang['export_smiles'] = 'כדי ליצור חבילת סמיילים מהסמיילים המותקנים הנוכחיים שלך, לחץ %sכאן%s כדי להוריד את הקובץ smiles.pak. שנה את שם הקובץ באופן מתאים וודא לשמור את סיומת הקובץ .pak.  אחר כך צור קובץ zip המכיל את כל תמונות הסמיילים שלך פלוס קובץ הגדרות .pak זה.';
+
+$lang['smiley_add_success'] = 'הסמיילי נוסף בהצלחה';
+$lang['smiley_edit_success'] = 'הסמיילי עודכן בהצלחה';
+$lang['smiley_import_success'] = 'חבילת הסמיילים הובאה בהצלחה!';
+$lang['smiley_del_success'] = 'הסמיילי הוסר בהצלחה';
+$lang['Click_return_smileadmin'] = 'לחץ %sכאן%s כדי לחזור לניהול הסמיילים';
+
+
+//
+// User Management
+//
+$lang['User_admin'] = 'ניהול משתמשים';
+$lang['User_admin_explain'] = 'כאן אתה יכול לשנות את פרטי המשתמשים ואפשרויות מיוחדות. כדי לשנות את גישות המשתמשים, השתמש במערכת גישות המשתמש הקבוצה.';
+
+$lang['Look_up_user'] = 'אתר משתמש';
+
+$lang['Admin_user_fail'] = 'לא ניתן לעדכן את פרופיל המשתמש.';
+$lang['Admin_user_updated'] = 'פרופיל המשתמש עודכן בהצלחה.';
+$lang['Click_return_useradmin'] = 'לחץ %sכאן%s כדי לחזור לניהול המשתמשים';
+
+$lang['User_delete'] = 'מחק משתמש זה';
+$lang['User_delete_explain'] = 'לחץ כאן כדי למחוק משתמש זה; לא ניתן לשחזר את הפעולה.';
+$lang['User_deleted'] = 'המשתמש נמחק בהצלחה.';
+
+$lang['User_status'] = 'המשתמש פעיל';
+$lang['User_allowpm'] = 'יכול לשלוח הודעות פרטיות';
+$lang['User_allowavatar'] = 'יכול להציג סמל אישי';
+
+$lang['Admin_avatar_explain'] = 'כאן אתה יכול לראות ולמחוק את הסמל האישי הנוכחי של המשתמש.';
+
+$lang['User_special'] = 'שדות מיוחדים למנהלים ראשיים בלבד';
+$lang['User_special_explain'] = 'שדות אלו לא ניתנות לשינוי על-ידי המשתמשים.  כאן אתה יכול לקבוע את המצב שלהם ואפשרויות אחרות שלא ניתנות למשתמשים.';
+
+
+//
+// Group Management
+//
+$lang['Group_administration'] = 'ניהול קבוצות';
+$lang['Group_admin_explain'] = 'מלוח זה אתה יכול לנהל את כל קבוצות המשתמשים שלך. אתה יכול למחוק, ליצור ולערוך קבוצות קיימות. אתה יכול לבחור מנהלים, להחליף בין מצב הקבוצה פתוחה/סגורה ולקבוע את שם הקבוצה והתיאור שלה';
+$lang['Error_updating_groups'] = 'התרחשה שגיאה בזמן עדכון הקבוצות';
+$lang['Updated_group'] = 'הקבוצה עודכנה בהצלחה';
+$lang['Added_new_group'] = 'הקבוצה החדשה נוצרה בהצלחה';
+$lang['Deleted_group'] = 'הקבוצה נמחקה בהצלחה';
+$lang['New_group'] = 'צור קבוצה חדשה';
+$lang['Edit_group'] = 'ערוך קבוצה';
+$lang['group_name'] = 'שם הקבוצה';
+$lang['group_description'] = 'תיאור הקבוצה';
+$lang['group_moderator'] = 'מנהל הקבוצה';
+$lang['group_status'] = 'מצב הקבוצה';
+$lang['group_open'] = 'קבוצה פתוחה';
+$lang['group_closed'] = 'קבוצה סגורה';
+$lang['group_hidden'] = 'קבוצה מוסתרת';
+$lang['group_auto'] = 'קבוצה בעלת הצטרפות אוטומטית';
+$lang['group_delete'] = 'מחק קבוצה';
+$lang['group_delete_check'] = 'מחק קבוצה זו';
+$lang['submit_group_changes'] = 'שלח שינויים';
+$lang['reset_group_changes'] = 'אפס שינויים';
+$lang['No_group_name'] = 'אתה חייב לציין שם לקבוצה זו';
+$lang['No_group_moderator'] = 'אתה חייב לציין מנהל לקבוצה זו';
+$lang['No_group_mode'] = 'אתה חייב לציין מצב לקבוצה זו, פתוחה או סגורה';
+$lang['No_group_action'] = 'אין פעולה שצויינה';
+$lang['delete_group_moderator'] = 'מחק את מנהל הקבוצה הקודם?';
+$lang['delete_moderator_explain'] = 'אם אתה משנה את מנהל הקבוצה, סמן תיבה זו כדי להסיר את המנהל הקודם מהקבוצה.  אחרת, אם לא תסמן, המשתמש יהפוך לחבר רגיל של הקבוצה.';
+$lang['Click_return_groupsadmin'] = 'לחץ %sכאן%s כדי לחזור לניהול הקבוצות.';
+$lang['Select_group'] = 'בחר קבוצה';
+$lang['Look_up_group'] = 'אתר קבוצה';
+
+
+//
+// Prune Administration
+//
+$lang['Forum_Prune'] = 'איפוס פורום';
+$lang['Forum_Prune_explain'] = 'הפעולה תמחק כל נושא שלא קיבל תגובה בתוך מספר הימים שאתה בוחר. אם אתה לא מקליד מספר אז כל הנושאים ימחקו. הפעולה לא תסיר נושאים אשר יש בהם סקרים שעדיין פעילים ולא תסיר הכרזות. אתה תצטרך להסיר את הנושאים האלו בעצמך.';
+$lang['Do_Prune'] = 'בצע איפוס';
+$lang['All_Forums'] = 'כל הפורומים';
+$lang['Prune_topics_not_posted'] = 'איפוס נושאים ללא תגובות בתוך כמות ימים זו';
+$lang['Topics_pruned'] = 'נושאים שאופסו';
+$lang['Posts_pruned'] = 'הודעות שאופסו';
+$lang['Prune_success'] = 'איפוס הפורומים הצליח';
+
+
+//
+// Word censor
+//
+$lang['Words_title'] = 'צנזור מילים';
+$lang['Words_explain'] = 'מלוח בקרה זה אתה יכול להוסיף, לערוך, ולהסיר מילים שיצונזרו אוטומטית בפורומים שלך. בנוסף אנשים לא יהיו מאופשרים להרשם עם שמות משתמשים המכילים מילים אלו. סימנים כוללים (*) מקובלים בשדה המילה. לדוגמא, *בדיקה* יתאים ל אבגבדיקהאבג, בדיקה* יתאים לבדיקהאבג, *בדיקה יתאים לאבגבדיקה.';
+$lang['Word'] = 'מילה';
+$lang['Edit_word_censor'] = 'ערוך מילה מצונזרת';
+$lang['Replacement'] = 'תחליף';
+$lang['Add_new_word'] = 'הוסף מילה חדשה';
+$lang['Update_word'] = 'עדכן מילה מצונזרת';
+
+$lang['Must_enter_word'] = 'אתה חייב להקליד את המילה ואת תחליפה';
+$lang['No_word_selected'] = 'אין מילה שנבחרה לעריכה';
+
+$lang['Word_updated'] = 'המילה המצונזרת שנבחרה עודכנה בהצלחה';
+$lang['Word_added'] = 'המילה המצונזרת נוספה בהצלחה';
+$lang['Word_removed'] = 'המילה המצונזרת שנבחרה הוסרה בהצלחה';
+
+$lang['Click_return_wordadmin'] = 'לחץ %sכאן%s כדי לחזור לניהול הצנזור מילים';
+
+
+//
+// Mass Email
+//
+$lang['Mass_email_explain'] = 'כאן אתה יכול לשלוח הודעה לכל המשתמשים שלך או לכל המשתמשים של קבוצה מסויימת.  כדי לעשות זאת, הודעה תשלח לכתובת הדואר האלקטרוני של הניהול שסופקה, עם עותק חסוי שנשלח לכל הנמענים. אם אתה שולח לקבוצה גדולה של אנשים אנא חכה בסבלנות לאחר השליחה ואל תעצור את העמוד במחצית העיבוד. זה נורמלי לשליחת דואר לקחת זמן רב ואתה תקבל הודעה כאשר השליחה תושלם';
+$lang['Compose'] = 'חלון שליחת הודעה'; 
+
+$lang['Recipients'] = 'נמענים'; 
+$lang['All_users'] = 'כל המשתמשים';
+
+$lang['Email_successfull'] = 'הודעתך נשלחה';
+$lang['Click_return_massemail'] = 'לחץ %sכאן%s כדי לחזור לטופס שליחת הדואר';
+
+
+//
+// Ranks admin
+//
+$lang['Ranks_title'] = 'ניהול דירוגים';
+$lang['Ranks_explain'] = 'בעזרת טופס זה אתה יכול להוסיף, לערוך, לצפות ולמחוק דירוגים. אתה יכול גם ליצור דירוגים מותאמים שיכולים להופיע למשתמש דרך שירות ניהול המשתמשים';
+
+$lang['Add_new_rank'] = 'הוסף דירוג חדש';
+
+$lang['Rank_title'] = 'כותרת הדירוג';
+$lang['Rank_special'] = 'קבע כדירוג מיוחד';
+$lang['Rank_minimum'] = 'מינימום הודעות';
+$lang['Rank_maximum'] = 'מקסימום הודעות';
+$lang['Rank_image'] = 'תמונת הדירוג (יחסי לנתיב התיקייה של phpBB2)';
+$lang['Rank_image_explain'] = 'השתמש השדה זה כדי להגדיר תמונה קטנה שנקבעת עם הדירוג';
+
+$lang['Must_select_rank'] = 'אתה חייב לבחור דירוג';
+$lang['No_assigned_rank'] = 'אין דירוג מיוחד שנקבע';
+
+$lang['Rank_updated'] = 'הדירוג עודכן בהצלחה';
+$lang['Rank_added'] = 'הדירוג נוסף בהצלחה';
+$lang['Rank_removed'] = 'הדירוג נמחק בהצלחה';
+$lang['No_update_ranks'] = 'הדירוג נמחק בהצלחה. אך חשבונות המשתמשים עדיין משתמשים בדירוג זה כאשר הוא לא עודכן.  תצטרך לאפס את הדירוג בעצמך שלא אותם חשבונות';
+
+$lang['Click_return_rankadmin'] = 'לחץ %sכאן%s כדי לחזור לניהול הדירוגים';
+
+
+//
+// Disallow Username Admin
+//
+$lang['Disallow_control'] = 'בקרת שמות משתמשים בלתי מורשים';
+$lang['Disallow_explain'] = 'כאן אתה יכול לנהל שמות משתמשים שלא יהיו מורשים להיות בשימוש.  שמות משתמשים בלתי מורשים מאופשרים להכיל תו סימן כולל של *.  שים לב שאתה לא תהיה מאופשר לציין כל שם משתמש שכבר שייך למשתמש רשום. אתה חייב דבר ראשון למחוק אותו שם שלא תאפשר.';
+
+$lang['Delete_disallow'] = 'מחק';
+$lang['Delete_disallow_title'] = 'הסר שם משתמש בלתי מורשה';
+$lang['Delete_disallow_explain'] = 'אתה יכול להסיר שם משתמש בלתי מורשה על-ידי בחירת שם המשתמש מרשימה זו ולחיצה על שליחה';
+
+$lang['Add_disallow'] = 'הוסף';
+$lang['Add_disallow_title'] = 'הוסף שם משתמש בלתי מורשה';
+$lang['Add_disallow_explain'] = 'אתה יכול לא לאפשר שם משתמש בעזרת תו הסמימן הכולל * כדי להתאים כל תו';
+
+$lang['No_disallowed'] = 'אין שמות משתמשים בלתי מורשים';
+
+$lang['Disallowed_deleted'] = 'השם משתמש הבלתי מורשה הוסר בהצלחה';
+$lang['Disallow_successful'] = 'השם משתמש בלתי מורשה נוסף בהצלחה';
+$lang['Disallowed_already'] = 'השם שהקלדת לא יכול להיות בלתי מורשה. או שהוא כבר נמצא ברשימה, נמצא ברשימת המילים המצונזרות, או שיש שם משתמש מותאם כרגע.';
+
+$lang['Click_return_disallowadmin'] = 'לחץ %sכאן%s כדי לחזור לניהול שמות משתמשים בלתי מורשים';
+
+/*
+//
+// Styles Admin
+//
+$lang['Styles_admin'] = 'Styles Administration';
+$lang['Styles_explain'] = 'Using this facility you can add, remove and manage styles (templates and themes) available to your users';
+$lang['Styles_addnew_explain'] = 'The following list contains all the themes that are available for the templates you currently have. The items on this list have not yet been installed into the phpBB database. To install a theme, simply click the install link beside an entry.';
+
+$lang['Select_template'] = 'Select a Template';
+
+$lang['Style'] = 'Style';
+$lang['Template'] = 'Template';
+$lang['Install'] = 'Install';
+$lang['Download'] = 'Download';
+
+$lang['Edit_theme'] = 'Edit Theme';
+$lang['Edit_theme_explain'] = 'In the form below you can edit the settings for the selected theme';
+
+$lang['Create_theme'] = 'Create Theme';
+$lang['Create_theme_explain'] = 'Use the form below to create a new theme for a selected template. When entering colors (for which you should use hexadecimal notation) you must not include the initial #, i.e.. CCCCCC is valid, #CCCCCC is not';
+
+$lang['Export_themes'] = 'Export Themes';
+$lang['Export_explain'] = 'In this panel you will be able to export the theme data for a selected template. Select the template from the list below and the script will create the theme configuration file and attempt to save it to the selected template directory. If it cannot save the file itself it will give you the option to download it. In order for the script to save the file you must give write access to the webserver for the selected template dir. For more information on this see the phpBB 2 users guide.';
+
+$lang['Theme_installed'] = 'The selected theme has been installed successfully';
+$lang['Style_removed'] = 'The selected style has been removed from the database. To fully remove this style from your system you must delete the appropriate style from your templates directory.';
+$lang['Theme_info_saved'] = 'The theme information for the selected template has been saved. You should now return the permissions on the theme_info.cfg (and if applicable the selected template directory) to read-only';
+$lang['Theme_updated'] = 'The selected theme has been updated. You should now export the new theme settings';
+$lang['Theme_created'] = 'Theme created. You should now export the theme to the theme configuration file for safe keeping or use elsewhere';
+
+$lang['Confirm_delete_style'] = 'Are you sure you want to delete this style?';
+
+$lang['Download_theme_cfg'] = 'The exporter could not write the theme information file. Click the button below to download this file with your browser. Once you have downloaded it you can transfer it to the directory containing the template files. You can then package the files for distribution or use elsewhere if you desire';
+$lang['No_themes'] = 'The template you selected has no themes attached to it. To create a new theme click the Create New link on the left hand panel';
+$lang['No_template_dir'] = 'Could not open the template directory. It may be unreadable by the webserver or may not exist';
+$lang['Cannot_remove_style'] = 'You cannot remove the style selected since it is currently the forum default. Please change the default style and try again.';
+$lang['Style_exists'] = 'The style name to selected already exists, please go back and choose a different name.';
+
+$lang['Click_return_styleadmin'] = 'Click %sHere%s to return to Style Administration';
+
+$lang['Theme_settings'] = 'Theme Settings';
+$lang['Theme_element'] = 'Theme Element';
+$lang['Simple_name'] = 'Simple Name';
+$lang['Value'] = 'Value';
+$lang['Save_Settings'] = 'Save Settings';
+
+$lang['Stylesheet'] = 'CSS Stylesheet';
+$lang['Background_image'] = 'Background Image';
+$lang['Background_color'] = 'Background Color';
+$lang['Theme_name'] = 'Theme Name';
+$lang['Link_color'] = 'Link Color';
+$lang['Text_color'] = 'Text Color';
+$lang['VLink_color'] = 'Visited Link Color';
+$lang['ALink_color'] = 'Active Link Color';
+$lang['HLink_color'] = 'Hover Link Color';
+$lang['Tr_color1'] = 'Table Row Color 1';
+$lang['Tr_color2'] = 'Table Row Color 2';
+$lang['Tr_color3'] = 'Table Row Color 3';
+$lang['Tr_class1'] = 'Table Row Class 1';
+$lang['Tr_class2'] = 'Table Row Class 2';
+$lang['Tr_class3'] = 'Table Row Class 3';
+$lang['Th_color1'] = 'Table Header Color 1';
+$lang['Th_color2'] = 'Table Header Color 2';
+$lang['Th_color3'] = 'Table Header Color 3';
+$lang['Th_class1'] = 'Table Header Class 1';
+$lang['Th_class2'] = 'Table Header Class 2';
+$lang['Th_class3'] = 'Table Header Class 3';
+$lang['Td_color1'] = 'Table Cell Color 1';
+$lang['Td_color2'] = 'Table Cell Color 2';
+$lang['Td_color3'] = 'Table Cell Color 3';
+$lang['Td_class1'] = 'Table Cell Class 1';
+$lang['Td_class2'] = 'Table Cell Class 2';
+$lang['Td_class3'] = 'Table Cell Class 3';
+$lang['fontface1'] = 'Font Face 1';
+$lang['fontface2'] = 'Font Face 2';
+$lang['fontface3'] = 'Font Face 3';
+$lang['fontsize1'] = 'Font Size 1';
+$lang['fontsize2'] = 'Font Size 2';
+$lang['fontsize3'] = 'Font Size 3';
+$lang['fontcolor1'] = 'Font Color 1';
+$lang['fontcolor2'] = 'Font Color 2';
+$lang['fontcolor3'] = 'Font Color 3';
+$lang['span_class1'] = 'Span Class 1';
+$lang['span_class2'] = 'Span Class 2';
+$lang['span_class3'] = 'Span Class 3';
+$lang['img_poll_size'] = 'Polling Image Size [px]';
+$lang['img_pm_size'] = 'Private Message Status size [px]';*/
+
+$lang['Rank'] = 'דירוג';
+$lang['Never'] = 'לעולם לא';
+$lang['Show'] = 'הצג';
+
+//
+// Acronyms
+//
+$lang['Acronyms'] = 'ראשי תיבות';
+
+// Start add - Prune users MOD
+$lang['Prune_users'] = 'איפוס משתמשים';
+
+// Start add - Yellow card admin MOD
+$lang['Greencard'] = 'בטל חסימה'; 
+$lang['Bluecard'] = 'שלח דווח'; 
+
+$lang['Rules'] = 'חוקים';
+$lang['board_faq'] = 'מערכת שאלות נפוצות';
+$lang['bbcode_faq'] = 'שאלות נפוצות של BBcode';
+$lang['attachment_faq'] = 'שאלות נפוצות של צירוף קבצים';
+$lang['prillian_faq'] = 'שאלות נפוצות של פריליאן';
+$lang['bid_faq'] = 'שאלות נפוצות של רשימת חברים אישית';
+$lang['Faq_manager'] = 'ניהול שאלות נפוצות';
+$lang['Mass_Email_Users']='שלח דואר והודעות פרטיות';
+$lang['PostDelayed'] = 'נושאים דחויים';	// MOD: Delayed Topics
+$lang['No_users_browsing'] = 'אין משתמשים הפעילים כרגע בפורום זה';
+$lang['Posting_message'] = 'שולח הודעה';
+$lang['Searching_forums'] = 'מחפש בפורומים';
+$lang['Viewing_online'] = 'צופה במי מחובר';
+$lang['Viewing_member_list'] = 'צופה ברשימת חברים';
+$lang['Viewing_priv_msgs'] = 'צופה הודעות פרטיות';
+$lang['Viewing_FAQ'] = 'צופה בשאלות נפוצות';
+$lang['Viewing_KB'] = 'צופה במאמרים';
+
+$lang['User_deleted_successfully'] = 'המשתמשים נמחקו בהצלחה!';
+$lang['User_add_group_successfully'] = 'המשתמשים נוספו לקבוצה בהצלחה!';
+$lang['group_payment'] = 'קבוצה בתשלום';
+$lang['L_GROUP_PAYMENTS_LW'] = 'התשלום להצטרפות לקבוצה הוא: (ב-%s)<br>אין צורך לקבוע את המידע הבא כאשר קבוצה זו לא דורשת תשלום להצטרפות.';
+
+$lang['L_DONATION_SETTINGS'] = 'הגדרות תרומה';
+$lang['L_LW_DISPLAY_X_DONORS'] = 'הצג כמה תורמים אחרונים: ';
+$lang['L_LW_DISPLAY_X_DONORS_EXPLAIN'] = 'הקלד את המספר של התורמים הכי חדשים שאתה רוצה להציג.';
+$lang['L_LW_DONATION_DESCRIPTION'] = 'סיבת התרומה: ';
+$lang['L_LW_DONATION_DESCRIPTION_EXPLAIN'] = 'הסיבה או התיאור של התרומה שלך, אם לא צריך, השאר זאת ריק.';
+$lang['L_LW_DONATION_GOAL'] = 'מטרתך לתרומה הנוכחית: ';
+$lang['L_LW_DONATION_GOAL_EXPLAIN'] = 'הקלד את כמות המזומנים שאתה רוצה לאסוף, אם אין מטרה, השאר את זה כ-0.';
+$lang['L_LW_DONATION_START'] = 'קבע את זמן ההתחלה של איסוף התרומה הנוכחית: ';
+$lang['L_LW_DONATION_START_EXPLAIN'] = 'תבנית הזמן חייב להיות yyyy/mm/dd, אם לא צריך, השאר זאת ריק.';
+$lang['L_LW_DONATION_END'] = 'קבע את זמן הסיום של איסוף התרומה הנוכחית: ';
+$lang['L_LW_DONATION_END_EXPLAIN'] = 'תבנית הזמן חייב להיות yyyy/mm/dd, אם לא צריך, השאר זאת ריק.';
+$lang['L_LW_DONATION_POINTS'] = 'קבע את הנקודות לנתינה לתורם לכל 1 ש"ח: ';
+$lang['L_LW_DONATION_POINTS_EXPLAIN'] = 'חשוב! אם אין לך את מוד נקודות אם שאתה לא רוצה לתת נקודות לתורמים, קבע זאת ל-0.';
+$lang['L_LW_PERSONAL_PAYPAL_ACCT'] = 'החשבון האישי שלך ב-PayPal: ';
+$lang['L_LW_PERSONAL_PAYPAL_ACCT_EXPLAIN'] = 'אם אין לך חשבון אישי, הקלד את אותו החשבון כחשבון הראשון/העסקי.';
+$lang['L_LW_BUSINESS_PAYPAL_ACCT'] = 'החשבון הראשון/העסקי שלך ב-PayPal: ';
+$lang['L_LW_BUSINESS_PAYPAL_ACCT_EXPLAIN'] = 'אם אין לך חשבון ראשון/עסקי, הקלד את אותו החשבון כחשבון העסקי שלך.';
+$lang['L_LW_PAYPAL_CURRENCY_CODE'] = 'קוד מטבע ה-PayPal שהחשבון שלך תומך: ';
+$lang['L_LW_PAYPAL_CURRENCY_CODE_EXPLAIN'] = 'לדוגמא אם החשבון שלך תומך בדואר אמריקאי, אז הקלד דולר אמריקאי.';
+$lang['L_LW_POSTS_COUNTS'] = 'קבע את כמות ההודעות לנתינה לתורם לכל 1 ש"ח: ';
+$lang['L_LW_POSTS_COUNTS_EXPLAIN'] = 'חשוב! אם אתה לא רוצה לתת כמות הודעות לתורמים, קבע זאת ל-0. <br />אתה יכול לבחור בין נקודות או כמות הודעות בלבד לנתינה לתורמים.';
+$lang['L_LW_TOP_DONORS'] = 'הצג את התורמים הגדולים: ';
+$lang['L_LW_TOP_DONORS_EXPLAIN'] = 'אם אתה רוצה להציג את התורמים הגדולים, הקלד 1; אם אתה רוצה להציג את התורמים האחרונים, הקלד 0.';
+//-- mod : Loewen Enterprise - Donation MOD v1.0.0.2 ----------------------------------------------------
+//-- add
+$lang['L_LW_DONATE_TOGRP_ONE'] = 'הקלד את ה-id של הקבוצה הראשונה שאליה התורם יצטרף:';
+$lang['L_LW_DONATE_TOGRP_ONE_EXPLAIN'] = 'הקלד 0 כדי ללא קבוצה ראשונה להצטרפות.';
+$lang['L_LW_TOGRPONE_AMOUNT'] = 'הקלד את מינימום הכמות לתרומה למשתמש כדי להצטרף:';
+$lang['L_LW_TOGRPONE_AMOUNT_EXPLAIN'] = 'התורם יכול להצטרף לקבוצה הראשונה אם הוא תרום יותר מהכמות המצויינת בלבד.';
+$lang['L_LW_DONATE_TOGRP_TWO'] = 'הקלד את ה-id של הקבוצה השנייה שאליה יצטרף התורם:';
+$lang['L_LW_DONATE_TOGRP_TWO_EXPLAIN'] = 'הקלד 0 כדי ללא קבוצה שנייה להצטרפות.';
+$lang['L_LW_TOGRPTWO_AMOUNT'] = 'הקלד את מינימום הכמות לתרומה לחבר שלך להצטרפות:';
+$lang['L_LW_TOGRPTWO_AMOUNT_EXPLAIN'] = 'המשתמש יכול להצטרף לקבוצה השנייה אם הוא תרם יותר מהכמות המצויינת בלבד.';
+
+$lang['L_LW_TORANK_ID'] = 'הקלד את ה-id של הדירוג:';
+$lang['L_LW_TORANK_ID_EXPLAIN'] = 'ה-id של הדירוג שאליו יקבע דירוג המשתמש לאחר התרומה.<br />הקלד 0 אם אתה לא מעוניין במאפיין זה.';
+
+
+$lang['L_LW_DONATES'] = 'מנהל ראשי לתורמים';
+$lang['Currency_Management'] = 'ניהול מטבעות';
+$lang['L_LW_DONATES_ADD'] = 'הוסף חדש';
+
+$lang['Users_Inactive'] = 'משתמשים בלתי פעילים';
+$lang['Users_Inactive_Explain'] = 'אם ב "הפעל הפעלת חשבונות" בחרת ב "משתמש" או "מנהל ראשי", ברשימה זו תראה את המשתמשים שלא הופעלו אף פעם.<br /><br />על-ידי לחיצה על "צור קשר" אתה תשלח הודעות יצירת קשר לכל המשתמשים הנבחרים.<br />על-ידי לחיצה על "הפעל" אצה תפעיל את כל המשתמשים הנבחרים.<br />על-ידי לחיצה על "מחק" אתה תשלח הודעה ותמחק את כל המשתמשים הנבחרים.';
+$lang['UI_Check_None'] = '"הפעל הפעלת חשבונות" נקבע ל <b>ללא</b>.';
+$lang['UI_Check_User'] = '"הפעל הפעלת חשבונות" נקבע ל <b>משתמש</b>';
+$lang['UI_Check_Admin'] = '"הפעל הפעלת חשבונות" נקבע ל <b>מנהל ראשי</b>.';
+$lang['UI_User'] = 'משתמש';
+$lang['UI_Registration_Date'] = 'תאריך הרשמה';
+$lang['UI_Last_Visit'] = 'ביקור אחרון';
+$lang['UI_Active'] = 'הפעל';
+$lang['UI_Email_Sents'] = 'שולח הודעה';
+$lang['UI_Last_Email_Sents'] = 'הודעה אחרונה';
+$lang['UI_CheckColor'] = 'סמן';
+$lang['UI_CheckAll'] = 'סמן הכל';
+$lang['UI_UncheckAll'] = 'בטל סימון של הכל';
+$lang['UI_InvertChecked'] = 'הסר סימון';
+$lang['UI_Contact_Users'] = 'צור קשר';
+$lang['UI_Delete_Users'] = 'מחק';
+$lang['UI_Activate_Users'] = 'הפעל';
+$lang['UI_select_user_first'] = 'אתה חייב לבחור משתמש לפני';
+$lang['UI_return'] = 'לחץ %sכאן%s כדי לחזור למשתמשים בלתי פעילים';
+$lang['UI_Deleted_Users'] = 'המשתמשים הוסרו';
+$lang['UI_Activated_Users'] = 'המשתמשים הופעלו';
+$lang['UI_Alert_Days'] = "ימים";
+$lang['UI_with_zero_messages'] = "עם אפס הודעות";
+$lang['UI_Alert_Every'] = "כל";
+$lang['UI_Alert_UpTo'] = "עד";
+$lang['UI_Alert_Over'] = "על";
+
+// Admin HTTP Referrers Mod
+$lang['HTTP_Referers_Title'] = 'מייחסי HTTP';
+$lang['HTTP_Referers_Explain'] = 'כאן אתה יעול לראות ולמחוק את מייחסי ה-Http לפורום';
+$lang['Referer_http'] = 'מייחס';
+$lang['Referer_hits'] = 'לחיצות';
+$lang['referer_del_success'] = 'מייחסי ה-Http הוסרו בהצלחה.';
+$lang['Confirm_delete_referer'] = 'אתה בטוח שאתה רוצה למחוק את מייחס HTTP זה?';
+$lang['Confirm_delete_referers'] = 'אתה בטוח שאתה רוצה למחוק את כל מייחסי ה-HTTP?';
+$lang['Click_return_referersadmin'] = 'לחץ %sכאן%s כדי לחזור לניהול מייחסי ה-Http';
+$lang['Referer_firstvisit'] = 'ביקור ראשון';
+$lang['Referer_lastvisit'] = 'ביקור אחרון';
+$lang['Extra_priv'] ='Extra priveliges';
+$lang['Extra_priv_explain'] ='אפשר למשתמש להעתיק וללחוץ לחיצה ימנית';
+$lang['Referer_urls_show'] = 'הצג את הכתובת שלו';
+$lang['Referer_urls_hide'] = 'הסתר את הכתובת שלו';
+$lang['Referer_ip'] = 'IP אחרון מיוחס';
+$lang['Referer_host'] = 'שרת מתייחס';
+$lang['Referer_url'] = 'כתובת מתייחסת';
+$lang['HTTP_Referers_Title'] = 'מייחסי HTTP';
+$lang['HTTP_Referers_Explain'] = 'כאן אתה יכול לראות את מייחסי ה-HTTP של הפורום ולהסיר אותם.';
+
+//
+// Version Check
+//
+$lang['Version_up_to_date'] = 'המערכת שלך מעודכנת, אין עדכונים זמינים לגרסת ה-phpBB שלך.';
+$lang['Version_not_up_to_date'] = 'המערכת שלך כנראה <b>לא</b> מעודכנת. עדכונים זמינים לגרסת ה-phpBB שלך, בקר ב <a href="http://www.phpbb.com/downloads.php" target="_new">http://www.phpbb.com/downloads.php</a> כדי לקבל את הגרסה האחרונה.';
+$lang['Latest_version_info'] = 'הגרסה האחרונה הזמינה היא <b>phpBB %s</b>.';
+$lang['Current_version_info'] = 'אתה מריץ את <b>phpBB %s</b>.';
+$lang['Connect_socket_error'] = 'לא ניתן לפתוח חיבור לשרת ה-phpBB, השגיאה שדווחה היא:<br />%s';
+$lang['Socket_functions_disabled'] = 'לא ניתן להשתמש בפונקציות socket.';
+$lang['Mailing_list_subscribe_reminder'] = 'For the latest information on updates to phpBB, why not <a href="http://www.phpbb.com/support/" target="_new">subscribe to our mailing list</a>.';
+$lang['Version_information'] = 'פרטי הגרסה';
+
+$lang['Ban'] = 'חסום'; // added by edwin
+//
+//IntegraMOD News Check
+//
+$lang['Connect_socket_error_integra'] = 'לא ניתן לפתוח חיבור לשרת IntegraMOD: <br />%s';
+$lang['integra_news'] = 'חדשות IntegraMOD';
+
+// Auto Language Detection
+$lang['Auto_language_detection'] = 'מחיקת שפה אוטומטית';
+$lang['auto_lang_title'] = 'מחיקת שפה אוטומטית לאורחים';
+$lang['auto_lang_edit_selected'] = 'ערוך נבחר';
+$lang['auto_lang_explain'] = 'בעמוד זה אתה יכול להגדיר את מאפיין מחיקת השפה אוטומטית.  להגדרות קוד שפה אפשריות בדוק את חלק ההעדפות השפה עם הדפדפן שלך. הערכים שצריך להשתמש בהם נראים כמו en, en-us, de, fr, il, וכדומה.';
+$lang['auto_lang_language_check'] = 'בחירה';
+$lang['auto_lang_language_code'] = 'קוד שפה';
+$lang['auto_lang_language_select'] = 'שפה משותפת';
+$lang['auto_lang_empty_lc'] = 'אנא ספק את קוד השפה';
+$lang['auto_lang_exists_lc'] = 'קוד השפה <strong>%s</strong> כבר קיים'; // %s inserts the language code
+$lang['auto_lang_notexists_lc'] = 'קוד השפה <strong>%s</strong> לא קיים'; // %s Inserts the language code
+$lang['auto_lang_not_exist'] = 'השפה <strong>%s</strong> לא קיימת במערכת phpBB.';
+$lang['auto_lang_invalid_characters'] = 'אנא השתמש בתווי האותיות ובסימן המינוס (-) רק לקוד השפה';
+
+// lang validation
+$lang['Lang_validate'] = 'אישור מפתחות השפה';
+
+//
+// That's all Folks!
+// -------------------------------------------------
+
+// Start add - User Class Mod
+$lang['color_founder'] = 'Founder Colour';
+$lang['color_admin'] = 'Admin Colour';
+$lang['color_main_mod'] = 'Main Mod Colour';
+$lang['color_mod'] = 'Mod Colour';
+$lang['color_support'] = 'Supporter Colour';
+$lang['color_vip'] = 'VIP Colour';
+$lang['color_bot'] = 'Bot Colour';
+$lang['color_user'] = 'User Colour';
+$lang['Auth_Main_Mod'] = 'Main Moderator';
+$lang['Auth_Support'] = 'Support Team';
+$lang['Auth_VIP'] = 'VIP';
+$lang['Auth_Bot'] = 'Bot';
+$lang['Forum_MAIN_MOD'] = 'MAIN_MOD';
+$lang['Forum_SUPPORT'] = 'SUPPORT';
+$lang['Forum_VIP'] = 'VIP';
+$lang['Forum_BOT'] = 'BOT';
+// End add - User Class Mod
+
+?>

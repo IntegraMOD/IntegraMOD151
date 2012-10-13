@@ -1,0 +1,83 @@
+##############################################################
+## MOD Title:	User Class
+## MOD Version:	1.0.2
+## Translation:	Français (French)
+## Rev date:	21/05/2005
+##
+## Translator:	kooky < [nospam]kooky@altern.org > (n/a) http://kooky06.free.fr/board/
+##
+##############################################################
+#
+#-----[ OPEN ]------------------------------------------------
+#
+language/lang_french/lang_admin.php
+
+#
+#-----[ FIND ]------------------------------------------------
+#
+?>
+#
+#-----[ BEFORE, ADD ]-----------------------------------------
+#
+// Start add - User Class Mod
+$lang['color_founder'] = 'Couleur du Fondateur';
+$lang['color_admin'] = 'Couleur de l\'Admin';
+$lang['color_main_mod'] = 'Couleur du Mod&eacute;rateur Principal';
+$lang['color_mod'] = 'Couleur du Mod&eacute;rateur';
+$lang['color_support'] = 'Couleur du Support Team';
+$lang['color_vip'] = 'Couleur du VIP';
+$lang['color_bot'] = 'Couleur du Robot';
+$lang['color_user'] = 'Couleur du Membre';
+$lang['Auth_Main_Mod'] = 'Mod&eacute;rateur Principal';
+$lang['Auth_Support'] = 'Support Team';
+$lang['Auth_VIP'] = 'VIP';
+$lang['Auth_Bot'] = 'Robot';
+$lang['Forum_MAIN_MOD'] = 'MOD_PRINC';
+$lang['Forum_SUPPORT'] = 'SUPPORT';
+$lang['Forum_VIP'] = 'VIP';
+$lang['Forum_BOT'] = 'ROB';
+// End add - User Class Mod
+
+#
+#-----[ OPEN ]------------------------------------------------
+#
+language/lang_french/lang_main.php
+
+#
+#-----[ FIND ]------------------------------------------------
+#
+?>
+#
+#-----[ BEFORE, ADD ]-----------------------------------------
+#
+// Start add - User Class Mod
+$lang['Legend'] = 'L&eacute;gende';
+$lang['Founder_online_color'] = '%sFondateur%s';
+$lang['Main_Mod_online_color'] = '%sMod&eacute;rateur Principal%s';
+$lang['Support_online_color'] = '%sSupport Team%s';
+$lang['VIP_online_color'] = '%sV.I.P%s';
+$lang['Bot_online_color'] = '%sRobot%s';
+$lang['User_online_color'] = '%sMembre%s';
+$lang['Auth_Main_Moderators'] = '<strong>Mod&eacute;rateurs Principaux</strong>';
+$lang['Auth_Supporters'] = '<strong>Supporters</strong>';
+$lang['Auth_VIP'] = '<strong>V.I.P</strong>';
+$lang['Auth_Bots'] = '<strong>Robots</strong>';
+$lang['Founder'] = 'Fondateur';
+$lang['Administrators'] = 'Administrateurs';
+$lang['Main_Moderators'] = 'Mod&eacute;rateurs Principaux';
+$lang['Support'] = 'Support Team';
+$lang['Supporters'] = 'Supporters';
+$lang['VIP'] = 'VIP';
+$lang['Bots'] = 'Robots';
+$lang['Users'] = 'Membres';
+
+$lang['Level_list'] = 'Liste des Niveaux';
+$lang['Messenger'] = 'Messagerie';
+$lang['No_match_found'] = 'Aucun r&eacute;sultat correspondant trouv&eacute;';
+$lang['Viewing_level_list'] = 'Regarde la page de Liste des Niveaux';
+// End add - User Class Mod
+
+#
+#-----[ SAVE/CLOSE ALL FILES ]--------------------------------
+#
+# EoM

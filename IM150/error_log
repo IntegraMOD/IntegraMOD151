@@ -1,0 +1,9 @@
+[30-Sep-2012 22:17:23 UTC] PHP Parse error:  syntax error, unexpected T_CONSTANT_ENCAPSED_STRING in /home/integra/public_html/integramod150/common.php on line 372
+[30-Sep-2012 22:27:21 UTC] PHP Fatal error:  Call to a member function assign_vars() on a non-object in /home/integra/public_html/integramod150/common.php on line 368
+[30-Sep-2012 22:27:22 UTC] PHP Fatal error:  Call to a member function assign_vars() on a non-object in /home/integra/public_html/integramod150/common.php on line 368
+[30-Sep-2012 22:27:23 UTC] PHP Fatal error:  Call to a member function assign_vars() on a non-object in /home/integra/public_html/integramod150/common.php on line 368
+[30-Sep-2012 22:27:34 UTC] PHP Fatal error:  Call to a member function assign_vars() on a non-object in /home/integra/public_html/integramod150/common.php on line 368
+[30-Sep-2012 22:27:37 UTC] PHP Fatal error:  Call to a member function assign_vars() on a non-object in /home/integra/public_html/integramod150/common.php on line 368
+[30-Sep-2012 22:28:09 UTC] PHP Parse error:  syntax error, unexpected T_DOUBLE_ARROW in /home/integra/public_html/integramod150/common.php on line 370
+[30-Sep-2012 22:28:11 UTC] PHP Parse error:  syntax error, unexpected T_DOUBLE_ARROW in /home/integra/public_html/integramod150/common.php on line 370
+[30-Sep-2012 22:42:10 UTC] PHP Parse error:  syntax error, unexpected T_STRING in /home/integra/public_html/integramod150/common.php on line 368

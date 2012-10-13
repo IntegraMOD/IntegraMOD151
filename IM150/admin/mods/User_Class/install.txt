@@ -1,0 +1,3101 @@
+##############################################################
+## MOD Title:		User Class
+## MOD Author:		kooky < [nospam]kooky@altern.org > (n/a) http://www.myphpbb.zaup.org/
+## MOD Description:	This mod will add new levels:
+##				- Main Moderator
+##				- Support Team
+##				- VIP (Very Important People)
+##				- Bot
+##			Main Mod can moderate all forums like Admin.
+##			Manage each level permissions via AdminCP (View, read...).
+##			Edit each color for each template you have in AdminCP.
+##			Set user level in User Admin/permissions (dropdown menu).
+##			Also show username color everywhere and other features...
+## MOD Version:		1.0.4
+##
+## Installation Level:	Easy
+## Installation Time:	~30 minutes (1 min with EasyMod)
+## Files To Edit:	30
+##			groupcp.php
+##			index.php
+##			memberlist.php
+##			modcp.php
+##			privmsg.php
+##			search.php
+##			viewforum.php
+##			viewonline.php
+##			viewtopic.php
+##			admin/admin_forumauth.php
+##			admin/admin_styles.php
+##			admin/admin_ug_auth.php
+##			admin/index.php
+##			admin/page_header_admin.php
+##			includes/auth.php
+##			includes/constants.php
+##			includes/functions.php
+##			includes/page_header.php
+##			includes/topic_review.php
+##			includes/usercp_viewprofile.php
+##			language/lang_english/lang_main.php
+##			templates/Default/groupcp_info_body.tpl
+##			templates/Default/groupcp_pending_info.tpl
+##			templates/Default/index_body.tpl
+##			templates/Default/memberlist_body.tpl
+##			templates/Default/modcp_viewip.tpl
+##			templates/Default/privmsgs_body.tpl
+##			templates/Default/viewonline_body.tpl
+##			templates/Default/admin/index_body.tpl
+##			templates/Default/admin/styles_edit_body.tpl
+## Included Files:	2
+##			level_list.php
+##			level_list_body.tpl
+##
+## License: http://opensource.org/licenses/gpl-license.php GNU Public License v2
+##############################################################
+## For security purposes, please check: http://www.phpbb.com/mods/
+## for the latest version of this MOD. Although MODs are checked
+## before being allowed in the MODs Database there is no guarantee
+## that there are no security problems within the MOD. No support
+## will be given for MODs not found within the MODs Database which
+## can be found at http://www.phpbb.com/mods/
+##############################################################
+## Author Notes:
+##
+## THIS IS AN ALPHA VERSION which mixes the username color and the
+## user level in one modification.
+## Code is almost unchanged, but next versions will be completely different.
+## The entire of the code will be rewritten for phpBB 3.x (maybe for 2.0.xx).
+##
+## 1. Copyright and special thanks!
+## -----------
+## This program is free software, you can redistribute it and/or modify
+## it under the terms of the GNU General Public License as published by
+## the Free Software Foundation.
+##
+## If you want to add this Mod to any database, please don't add
+## my e-mail address to a topic, just point to my website (see above).
+## (for spamming prevention)
+##
+## 2. Feature list
+## -----------
+## This MOD tries to enhance the username color and the user level.
+## - Display username in color everywhere
+## - Add Admin_user's profile link in viewtopic
+## - Add level group link on index (stats block)
+## - Set user's level in Users Permission (dropdown menu)
+## - Manage your levels colors in Admin Style
+##
+## 3. Compatibility / EasyMOD
+## -----------
+## This MOD is compatible with phpBB 2.0.3 - 2.0.18
+##
+## It is also compatible with EasyMOD of Nuttzy and can be
+## installed by it but is not yet certified EMC (EasyMOD Compliant)!
+## http://area51.phpbb.com/phpBB22/viewforum.php?sid=&f=15
+##
+## 4. Official last version link
+## -----------
+## Contact with email address quoted above without [nospam]
+## Check this official link for latest updates...
+## http://www.myphpbb.zaup.org/
+##
+##############################################################
+## MOD History:
+##
+## 2005/11/27 - Version 1.0.4
+##	- Updated to phpBB 2.0.18 (no changes)
+##	- Fixed few minor bugs (reported by users)
+##
+## 2005/05/28 - Version 1.0.3
+##	- Fixed small missing code in search.php
+##
+## 2005/05/15 - Version 1.0.2
+##	- Fixed small miscellaneous things in level_list.php
+##
+## 2005/05/15 - Version 1.0.1
+##	- Fixed missing code in constants.php
+##
+## 2005/04/23 - Version 1.0.0
+##	- Initial release
+##	- Added Founder color
+##	- Replaced old fontcolorX with color_"level"
+##	- Updated level_list.php
+##
+##############################################################
+## Before Adding This MOD To Your Forum, You Should Back Up All Files Related To This MOD
+##############################################################
+#
+#-----[ SQL ]------------------------------------------
+# If you use a beta release of EasyMOD, this instructions will be executed!
+# Please read author notes to update your database.
+#
+ALTER TABLE `phpbb_themes` ADD `color_founder` varchar(6) NOT NULL;
+ALTER TABLE `phpbb_themes` ADD `color_admin` varchar(6) NOT NULL;
+ALTER TABLE `phpbb_themes` ADD `color_main_mod` varchar(6) NOT NULL;
+ALTER TABLE `phpbb_themes` ADD `color_mod` varchar(6) NOT NULL;
+ALTER TABLE `phpbb_themes` ADD `color_support` varchar(6) NOT NULL;
+ALTER TABLE `phpbb_themes` ADD `color_vip` varchar(6) NOT NULL;
+ALTER TABLE `phpbb_themes` ADD `color_bot` varchar(6) NOT NULL;
+ALTER TABLE `phpbb_themes` ADD `color_user` varchar(6) NOT NULL;
+ALTER TABLE `phpbb_themes_name` ADD `color_founder_name` varchar(50) NOT NULL;
+ALTER TABLE `phpbb_themes_name` ADD `color_admin_name` varchar(50) NOT NULL;
+ALTER TABLE `phpbb_themes_name` ADD `color_main_mod_name` varchar(50) NOT NULL;
+ALTER TABLE `phpbb_themes_name` ADD `color_mod_name` varchar(50) NOT NULL;
+ALTER TABLE `phpbb_themes_name` ADD `color_support_name` varchar(50) NOT NULL;
+ALTER TABLE `phpbb_themes_name` ADD `color_vip_name` varchar(50) NOT NULL;
+ALTER TABLE `phpbb_themes_name` ADD `color_bot_name` varchar(50) NOT NULL;
+ALTER TABLE `phpbb_themes_name` ADD `color_user_name` varchar(50) NOT NULL;
+UPDATE `phpbb_themes` SET `color_founder` = 'FF00FF', `color_admin` = 'FFA34F', `color_main_mod` = 'FF0000', `color_mod` = '006600', `color_support` = '0000FF', `color_vip` = 'C675EC', `color_bot` = '000000', `color_user` = '006699' WHERE `themes_id` >= '1';
+
+#
+#-----[ COPY ]------------------------------------------
+#
+copy root/level_list.php to level_list.php
+copy root/templates/Default/level_list_body.tpl to templates/Default/level_list_body.tpl
+
+#
+#-----[ OPEN ]------------------------------------------
+#
+language/lang_english/lang_admin.php
+
+#
+#-----[ FIND ]------------------------------------------
+#
+?>
+#
+#-----[ BEFORE, ADD ]------------------------------------------
+#
+// Start add - User Class Mod
+$lang['color_founder'] = 'Founder Colour';
+$lang['color_admin'] = 'Admin Colour';
+$lang['color_main_mod'] = 'Main Mod Colour';
+$lang['color_mod'] = 'Mod Colour';
+$lang['color_support'] = 'Supporter Colour';
+$lang['color_vip'] = 'VIP Colour';
+$lang['color_bot'] = 'Bot Colour';
+$lang['color_user'] = 'User Colour';
+$lang['Auth_Main_Mod'] = 'Main Moderator';
+$lang['Auth_Support'] = 'Support Team';
+$lang['Auth_VIP'] = 'VIP';
+$lang['Auth_Bot'] = 'Bot';
+$lang['Forum_MAIN_MOD'] = 'MAIN_MOD';
+$lang['Forum_SUPPORT'] = 'SUPPORT';
+$lang['Forum_VIP'] = 'VIP';
+$lang['Forum_BOT'] = 'BOT';
+// End add - User Class Mod
+
+#
+#-----[ OPEN ]------------------------------------------
+#
+language/lang_english/lang_main.php
+
+#
+#-----[ FIND ]------------------------------------------
+#
+?>
+#
+#-----[ BEFORE, ADD ]------------------------------------------
+#
+// Start add - User Class Mod
+$lang['Legend'] = 'Legend';
+$lang['Founder_online_color'] = '%sFounder%s';
+$lang['Main_Mod_online_color'] = '%sMain Moderator%s';
+$lang['Support_online_color'] = '%sSupport Team%s';
+$lang['VIP_online_color'] = '%sV.I.P%s';
+$lang['Bot_online_color'] = '%sBot%s';
+$lang['User_online_color'] = '%sUser%s';
+$lang['Auth_Main_Moderators'] = '<strong>Main Moderators</strong>';
+$lang['Auth_Supporters'] = '<strong>Supporters</strong>';
+$lang['Auth_VIP'] = '<strong>V.I.P</strong>';
+$lang['Auth_Bots'] = '<strong>Bots</strong>';
+$lang['Founder'] = 'Founder';
+$lang['Administrators'] = 'Administrators';
+$lang['Main_Moderators'] = 'Main Moderators';
+$lang['Support'] = 'Support Team';
+$lang['Supporters'] = 'Supporters';
+$lang['VIP'] = 'VIP';
+$lang['Bots'] = 'Bots';
+$lang['Users'] = 'Users';
+
+$lang['Level_list'] = 'Level list';
+$lang['Messenger'] = 'Messenger';
+$lang['No_match_found'] = 'No matches found';
+$lang['Viewing_level_list'] = 'Viewing level list page';
+// End add - User Class Mod
+
+#
+#-----[ OPEN ]------------------------------------------
+#
+viewtopic.php
+
+#
+#-----[ FIND ]------------------------------------------
+#
+//
+// Go ahead and pull all data for this topic
+//
+$sql = "SELECT u.username, u.user_id
+#
+#-----[ IN-LINE FIND ]------------------------------------------
+#
+u.user_allowsmile
+#
+#-----[ IN-LINE AFTER, ADD ]------------------------------------------
+#
+, u.user_level
+#
+#-----[ FIND ]------------------------------------------
+#
+	//
+	// Editing information
+	//
+#
+#-----[ AFTER, ADD ]------------------------------------
+#
+	// Start add - User Class Mod
+	switch ($postrow[$i]['user_level'])
+	{
+		case ADMIN:
+			$poster_name = '<strong>' . $poster . '</strong>';
+			$style_color = ($poster_id == 2) ? ' style="color: #' . $theme['color_founder'] . '"' : ' style="color: #' . $theme['color_admin'] . '"';
+			break;
+		case MAIN_MOD:
+			$poster_name = '<strong>' . $poster . '</strong>';
+			$style_color = ' style="color: #' . $theme['color_main_mod'] . '"';
+			break;
+		case MOD:
+			$poster_name = '<strong>' . $poster . '</strong>';
+			$style_color = ' style="color: #' . $theme['color_mod'] . '"';
+			break;
+		case SUPPORT:
+			$poster_name = '<strong>' . $poster . '</strong>';
+			$style_color = ' style="color: #' . $theme['color_support'] . '"';
+			break;
+		case VIP:
+			$poster_name = '<strong>' . $poster . '</strong>';
+			$style_color = ' style="color: #' . $theme['color_vip'] . '"';
+			break;
+		case BOT:
+			$poster_name = '<strong>' . $poster . '</strong>';
+			$style_color = ' style="color: #' . $theme['color_bot'] . '"';
+			break;
+		case USER:
+			$poster_name = '<strong>' . $poster . '</strong>';
+			$style_color = ' style="color: #' . $theme['color_user'] . '"';
+			break;
+		default:
+			$poster_name = $poster;
+			$style_color = '';
+			break;
+	}
+
+	// Display profile link
+	if ($poster_id != ANONYMOUS)
+	{
+		switch ($userdata['user_level'])
+		{
+			case ADMIN:
+				$poster_name = '<a href="' . $phpbb_root_path . "admin/admin_users.$phpEx?mode=edit&amp;" . POST_USERS_URL . "=" . $poster_id . "&amp;sid=" . $userdata['session_id'] . '"' . $style_color . '>' . $poster_name . '</a>';
+				break;
+			// If the ModCP is installed, you can uncomment the code below
+			/*case MAIN_MOD:
+			case MOD:
+				$poster_name = '<a href="' . $phpbb_root_path . "modcp/admin_users.$phpEx?mode=edit&amp;" . POST_USERS_URL . "=" . $poster_id . "&amp;sid=" . $userdata['session_id'] . '"' . $style_color . '>' . $poster_name . '</a>';
+				break;*/
+			default:
+				$poster_name = '<a href="' . append_sid("profile.$phpEx?mode=viewprofile&amp;" . POST_USERS_URL . "=" . $poster_id) . '"' . $style_color . '>' . $poster_name . '</a>';
+				break;
+		}
+	}
+	// End add - User Class Mod
+#
+#-----[ FIND ]------------------------------------------
+#
+		$l_edited_by = '<br /><br />' . sprintf($l_edit_time_total
+#
+#-----[ IN-LINE FIND ]------------------------------------------
+#
+$poster
+#
+#-----[ IN-LINE REPLACE WITH ]------------------------------------------
+#
+$poster_name
+#
+#-----[ FIND ]------------------------------------------
+#
+		'POSTER_NAME' => $poster,
+#
+#-----[ REPLACE WITH ]------------------------------------------
+#
+		'POSTER_NAME' => $poster_name,
+#
+#-----[ OPEN ]------------------------------------------
+#
+groupcp.php
+
+#
+#-----[ FIND ]------------------------------------------
+#
+		if ( $userdata['user_level'] != ADMIN && $userdata['user_level'] == MOD )
+#
+#-----[ REPLACE WITH ]------------------------------------------
+#
+		if ( ( $userdata['user_level'] != MAIN_MOD || $userdata['user_level'] != ADMIN ) && $userdata['user_level'] == MOD )
+#
+#-----[ FIND ]------------------------------------------
+#
+					if ( $row['user_level'] != ADMIN && $row['user_level'] != MOD && $group_info['auth_mod'] )
+					{
+						$sql = "UPDATE " . USERS_TABLE . " 
+							SET user_level = " . MOD . " 
+							WHERE user_id = " . $row['user_id'];
+#
+#-----[ REPLACE WITH ]------------------------------------------
+#
+					if ( $row['user_level'] != ADMIN && $row['user_level'] != MAIN_MOD && $row['user_level'] != MOD && $group_info['auth_mod'] )
+					{
+						$sql = "UPDATE " . USERS_TABLE . "
+							SET user_level = " . MOD . "
+							WHERE user_id = " . $row['user_id'] . "
+							AND user_level NOT IN (" . BOT . ", " . VIP . ", " . SUPPORT . ")";
+#
+#-----[ FIND ]------------------------------------------
+#
+						if ( $group_info['auth_mod'] )
+						{
+							$sql = "UPDATE " . USERS_TABLE . " 
+								SET user_level = " . MOD . " 
+								WHERE user_id IN ($sql_in) 
+									AND user_level NOT IN (" . MOD . ", " . ADMIN . ")";
+#
+#-----[ REPLACE WITH ]------------------------------------------
+#
+						if ( $group_info['auth_mod'] )
+						{
+							$sql = "UPDATE " . USERS_TABLE . "
+								SET user_level = " . MOD . "
+								WHERE user_id IN ($sql_in)
+								AND user_level NOT IN (" . BOT . ", " . VIP . ", " . SUPPORT . ", " . MOD . ", " . MAIN_MOD . ", " . ADMIN . ")";
+#
+#-----[ FIND ]------------------------------------------
+#
+								if ( $remove_mod_sql != '' )
+								{
+									$sql = "UPDATE " . USERS_TABLE . " 
+										SET user_level = " . USER . " 
+										WHERE user_id IN ($remove_mod_sql) 
+											AND user_level NOT IN (" . ADMIN . ")";
+#
+#-----[ REPLACE WITH ]------------------------------------------
+#
+								if ( $remove_mod_sql != '' )
+								{
+									$sql = "UPDATE " . USERS_TABLE . "
+										SET user_level = " . USER . "
+										WHERE user_id IN ($remove_mod_sql)
+										AND user_level NOT IN (" . BOT . ", " . VIP . ", " . SUPPORT . "," . MAIN_MOD . ", " . ADMIN . ")";
+#
+#-----[ FIND ]------------------------------------------
+#
+	//
+	// Get moderator details for this group
+	//
+	$sql = "SELECT username
+#
+#-----[ IN-LINE FIND ]------------------------------------------
+#
+user_msnm
+#
+#-----[ IN-LINE AFTER, ADD ]------------------------------------------
+#
+, user_level
+#
+#-----[ FIND ]------------------------------------------
+#
+	//
+	// Get user information for this group
+	//
+	$sql = "SELECT u.username
+#
+#-----[ IN-LINE FIND ]------------------------------------------
+#
+ug.user_pending
+#
+#-----[ IN-LINE AFTER, ADD ]------------------------------------------
+#
+, u.user_level
+#
+#-----[ FIND ]------------------------------------------
+#
+	$members_count = count($group_members);
+	$db->sql_freeresult($result);
+
+	$sql = "SELECT u.username, u.user_id
+#
+#-----[ IN-LINE FIND ]------------------------------------------
+#
+u.user_msnm
+#
+#-----[ IN-LINE AFTER, ADD ]------------------------------------------
+#
+, u.user_level
+#
+#-----[ FIND ]------------------------------------------
+#
+	$user_id = $group_moderator['user_id'];
+#
+#-----[ AFTER, ADD ]------------------------------------------
+#
+	// Start add - User Class Mod
+	switch ( $group_moderator['user_level'] )
+	{
+		case ADMIN:
+			$mod_username_color = '<strong>' . $username . '</strong>';
+			$style_color = ($group_moderator['user_id'] == 2) ? ' style="color: #' . $theme['color_founder'] . '"' : ' style="color: #' . $theme['color_admin'] . '"';
+			break;
+		case MAIN_MOD:
+			$mod_username_color = '<strong>' . $username . '</strong>';
+			$style_color = ' style="color: #' . $theme['color_main_mod'] . '"';
+			break;
+		case MOD:
+			$mod_username_color = '<strong>' . $username . '</strong>';
+			$style_color = ' style="color: #' . $theme['color_mod'] . '"';
+			break;
+		case SUPPORT:
+			$mod_username_color = '<strong>' . $username . '</strong>';
+			$style_color = ' style="color: #' . $theme['color_support'] . '"';
+			break;
+		case VIP:
+			$mod_username_color = '<strong>' . $username . '</strong>';
+			$style_color = ' style="color: #' . $theme['color_vip'] . '"';
+			break;
+		case BOT:
+			$mod_username_color = '<strong>' . $username . '</strong>';
+			$style_color = ' style="color: #' . $theme['color_bot'] . '"';
+			break;
+		case USER:
+			$mod_username_color = '<strong>' . $username . '</strong>';
+			$style_color = ' style="color: #' . $theme['color_user'] . '"';
+			break;
+		default:
+			$mod_username_color = $username;
+			$style_color = '';
+			break;
+	}
+	$mod_username_color = '<a href="' . append_sid("profile.$phpEx?mode=viewprofile&amp;" . POST_USERS_URL . "=" . $user_id) . '"' . $style_color . '>' . $mod_username_color . '</a>';
+	// End add - User Class Mod
+#
+#-----[ FIND ]------------------------------------------
+#
+		'MOD_USERNAME' => $username,
+#
+#-----[ REPLACE WITH ]------------------------------------------
+#
+		'MOD_USERNAME' => $mod_username_color,
+#
+#-----[ FIND ]------------------------------------------
+#
+		'U_MOD_VIEWPROFILE' => append_sid("profile.$phpEx?mode=viewprofile&amp;" . POST_USERS_URL . "=$user_id"),
+#
+#-----[ REPLACE WITH ]------------------------------------------
+#
+		//'U_MOD_VIEWPROFILE' => append_sid("profile.$phpEx?mode=viewprofile&amp;" . POST_USERS_URL . "=$user_id"),
+#
+#-----[ FIND ]------------------------------------------
+#
+		$user_id = $group_members[$i]['user_id'];
+#
+#-----[ AFTER, ADD ]------------------------------------------
+#
+		// Start add - User Class Mod
+		switch ( $group_members[$i]['user_level'] )
+		{
+			case ADMIN:
+				$username_color = '<strong>' . $username . '</strong>';
+				$style_color = ($group_members[$i]['user_id'] == 2) ? ' style="color: #' . $theme['color_founder'] . '"' : ' style="color: #' . $theme['color_admin'] . '"';
+				break;
+			case MAIN_MOD:
+				$username_color = '<strong>' . $username . '</strong>';
+				$style_color = ' style="color: #' . $theme['color_main_mod'] . '"';
+				break;
+			case MOD:
+				$username_color = '<strong>' . $username . '</strong>';
+				$style_color = ' style="color: #' . $theme['color_mod'] . '"';
+				break;
+			case SUPPORT:
+				$username_color = '<strong>' . $username . '</strong>';
+				$style_color = ' style="color: #' . $theme['color_support'] . '"';
+				break;
+			case VIP:
+				$username_color = '<strong>' . $username . '</strong>';
+				$style_color = ' style="color: #' . $theme['color_vip'] . '"';
+				break;
+			case BOT:
+				$username_color = '<strong>' . $username . '</strong>';
+				$style_color = ' style="color: #' . $theme['color_bot'] . '"';
+				break;
+			case USER:
+				$username_color = '<strong>' . $username . '</strong>';
+				$style_color = ' style="color: #' . $theme['color_user'] . '"';
+				break;
+			default:
+				$username_color = $username;
+				$style_color = '';
+				break;
+		}
+		$username_color = '<a href="' . append_sid("profile.$phpEx?mode=viewprofile&amp;" . POST_USERS_URL . "=" . $user_id) . '"' . $style_color . '>' . $username_color . '</a>';
+		// End add - User Class Mod
+#
+#-----[ FIND ]------------------------------------------
+#
+				'USERNAME' => $username,
+#
+#-----[ REPLACE WITH ]------------------------------------------
+#
+				'USERNAME' => $username_color,
+#
+#-----[ FIND ]------------------------------------------
+#
+				'U_VIEWPROFILE' => append_sid("profile.$phpEx?mode=viewprofile&amp;" . POST_USERS_URL . "=$user_id"))
+#
+#-----[ REPLACE WITH ]------------------------------------------
+#
+				//'U_VIEWPROFILE' => append_sid("profile.$phpEx?mode=viewprofile&amp;" . POST_USERS_URL . "=$user_id")
+				)
+#
+#-----[ FIND ]------------------------------------------
+#
+				$username = $modgroup_pending_list[$i]['username'];
+				$user_id = $modgroup_pending_list[$i]['user_id'];
+#
+#-----[ AFTER, ADD ]------------------------------------------
+#
+				// Start add - User Class Mod
+				switch ( $modgroup_pending_list[$i]['user_level'] )
+				{
+					case ADMIN:
+						$username_color = '<strong>' . $username . '</strong>';
+						$style_color = ($user_id == 2) ? ' style="color: #' . $theme['color_founder'] . '"' : ' style="color: #' . $theme['color_admin'] . '"';
+						break;
+					case MAIN_MOD:
+						$username_color = '<strong>' . $username . '</strong>';
+						$style_color = ' style="color: #' . $theme['color_main_mod'] . '"';
+						break;
+					case MOD:
+						$username_color = '<strong>' . $username . '</strong>';
+						$style_color = ' style="color: #' . $theme['color_mod'] . '"';
+						break;
+					case SUPPORT:
+						$username_color = '<strong>' . $username . '</strong>';
+						$style_color = ' style="color: #' . $theme['color_support'] . '"';
+						break;
+					case VIP:
+						$username_color = '<strong>' . $username . '</strong>';
+						$style_color = ' style="color: #' . $theme['color_vip'] . '"';
+						break;
+					case BOT:
+						$username_color = '<strong>' . $username . '</strong>';
+						$style_color = ' style="color: #' . $theme['color_bot'] . '"';
+						break;
+					case USER:
+						$username_color = '<strong>' . $username . '</strong>';
+						$style_color = ' style="color: #' . $theme['color_user'] . '"';
+						break;
+					default:
+						$username_color = $username;
+						$style_color = '';
+						break;
+				}
+				$username_color = '<a href="' . append_sid("profile.$phpEx?mode=viewprofile&amp;" . POST_USERS_URL . "=$user_id") . '"' . $style_color . '>' . $username_color . '</a>';
+				// End add - User Class Mod
+#
+#-----[ FIND ]------------------------------------------
+#
+					'USERNAME' => $username,
+#
+#-----[ REPLACE WITH ]------------------------------------------
+#
+					'USERNAME' => $username_color,
+#
+#-----[ FIND ]------------------------------------------
+#
+					'U_VIEWPROFILE' => append_sid("profile.$phpEx?mode=viewprofile&amp;" . POST_USERS_URL . "=$user_id"))
+#
+#-----[ REPLACE WITH ]------------------------------------------
+#
+					//'U_VIEWPROFILE' => append_sid("profile.$phpEx?mode=viewprofile&amp;" . POST_USERS_URL . "=$user_id")
+					)
+#
+#-----[ OPEN ]------------------------------------------
+#
+index.php
+
+#
+#-----[ FIND ]------------------------------------------
+#
+$newest_uid = $newest_userdata['user_id'];
+#
+#-----[ AFTER, ADD ]------------------------------------------
+#
+$newest_level = $newest_userdata['user_level'];
+#
+#-----[ FIND ]------------------------------------------
+#
+		case 'postgresql':
+			$sql = "SELECT f.*, p.post_time, p.post_username, u.username, u.user_id
+#
+#-----[ IN-LINE FIND ]------------------------------------------
+#
+u.user_id
+#
+#-----[ IN-LINE AFTER, ADD ]------------------------------------------
+#
+, u.user_level
+#
+#-----[ FIND ]------------------------------------------
+#
+		case 'oracle':
+			$sql = "SELECT f.*, p.post_time, p.post_username, u.username, u.user_id
+#
+#-----[ IN-LINE FIND ]------------------------------------------
+#
+u.user_id
+#
+#-----[ IN-LINE AFTER, ADD ]------------------------------------------
+#
+, u.user_level
+#
+#-----[ FIND ]------------------------------------------
+#
+		default:
+			$sql = "SELECT f.*, p.post_time, p.post_username, u.username, u.user_id
+#
+#-----[ IN-LINE FIND ]------------------------------------------
+#
+u.user_id
+#
+#-----[ IN-LINE AFTER, ADD ]------------------------------------------
+#
+, u.user_level
+#
+#-----[ FIND ]------------------------------------------
+#
+	//
+	// Obtain list of moderators of each forum
+	// First users, then groups ... broken into two queries
+	//
+	$sql = "SELECT aa.forum_id
+#
+#-----[ IN-LINE FIND ]------------------------------------------
+#
+u.username
+#
+#-----[ IN-LINE AFTER, ADD ]------------------------------------------
+#
+, u.user_level
+#
+#-----[ FIND ]------------------------------------------
+#
+		$forum_moderators[$row['forum_id']][] = '<a href="' . append_sid("profile.$phpEx?mode=viewprofile&amp;" . POST_USERS_URL . "=" . $row['user_id']) . '">' . $row['username'] . '</a>';
+#
+#-----[ REPLACE WITH ]------------------------------------------
+#
+		// Start add - User Class Mod
+		switch ( $row['user_level'] )
+		{
+			case ADMIN:
+				$mod_username_color = '<strong>' . $row['username'] . '</strong>';
+				$style_color = ($row['user_id'] == 2) ? ' style="color: #' . $theme['color_founder'] . '"' : ' style="color: #' . $theme['color_admin'] . '"';
+				break;
+			case MAIN_MOD:
+				$mod_username_color = '<strong>' . $row['username'] . '</strong>';
+				$style_color = ' style="color: #' . $theme['color_main_mod'] . '"';
+				break;
+			case MOD:
+				$mod_username_color = '<strong>' . $row['username'] . '</strong>';
+				$style_color = ' style="color: #' . $theme['color_mod'] . '"';
+				break;
+			case SUPPORT:
+				$mod_username_color = '<strong>' . $row['username'] . '</strong>';
+				$style_color = ' style="color: #' . $theme['color_support'] . '"';
+				break;
+			case VIP:
+				$mod_username_color = '<strong>' . $row['username'] . '</strong>';
+				$style_color = ' style="color: #' . $theme['color_vip'] . '"';
+				break;
+			case BOT:
+				$mod_username_color = '<strong>' . $row['username'] . '</strong>';
+				$style_color = ' style="color: #' . $theme['color_bot'] . '"';
+				break;
+			case USER:
+				$mod_username_color = '<strong>' . $row['username'] . '</strong>';
+				$style_color = ' style="color: #' . $theme['color_user'] . '"';
+				break;
+			default:
+				$mod_username_color = $row['username'];
+				$style_color = '';
+				break;
+		}
+		$forum_moderators[$row['forum_id']][] = '<a href="' . append_sid("profile.$phpEx?mode=viewprofile&amp;" . POST_USERS_URL . "=" . $row['user_id']) . '"' . $style_color . '>' . $mod_username_color . '</a>';
+		// End add - User Class Mod
+#
+#-----[ FIND ]------------------------------------------
+#
+	$template->set_filenames(array(
+		'body' => 'index_body.tpl')
+	);
+#
+#-----[ AFTER, ADD ]------------------------------------------
+#
+	// Start add - User Class Mod
+	switch ( $newest_level )
+	{
+		case ADMIN:
+			$style_color = ($newest_uid == 2) ? ' style="color: #' . $theme['color_founder'] . '"' : ' style="color: #' . $theme['color_admin'] . '"';
+			break;
+		case MAIN_MOD:
+			$style_color = ' style="color: #' . $theme['color_main_mod'] . '"';
+			break;
+		case MOD:
+			$style_color = ' style="color: #' . $theme['color_mod'] . '"';
+			break;
+		case SUPPORT:
+			$style_color = ' style="color: #' . $theme['color_support'] . '"';
+			break;
+		case VIP:
+			$style_color = ' style="color: #' . $theme['color_vip'] . '"';
+			break;
+		case BOT:
+			$style_color = ' style="color: #' . $theme['color_bot'] . '"';
+			break;
+		case USER:
+			$style_color = ' style="color: #' . $theme['color_user'] . '"';
+			break;
+		default:
+			$style_color = '';
+			break;
+	}
+	// End add - User Class Mod
+#
+#-----[ FIND ]------------------------------------------
+#
+		'NEWEST_USER' => sprintf($lang['Newest_user'], '<a href="' . append_sid("profile.$phpEx?mode=viewprofile&amp;" . POST_USERS_URL . "=$newest_uid") . '">', $newest_user, '</a>'), 
+#
+#-----[ IN-LINE FIND ]------------------------------------------
+#
+$newest_uid") . '"
+#
+#-----[ IN-LINE AFTER, ADD ]------------------------------------------
+#
+' . $style_color . '
+#
+#-----[ FIND ]------------------------------------------
+#
+							$topics = $forum_data[$j]['forum_topics'];
+#
+#-----[ AFTER, ADD ]------------------------------------------
+#
+							// Start add - User Class Mod
+							switch ( $forum_data[$j]['user_level'] )
+							{
+								case ADMIN:
+									$username_color = '<strong>' . $forum_data[$j]['username'] . '</strong>';
+									$style_color = ($forum_data[$j]['user_id'] == 2) ? ' style="color: #' . $theme['color_founder'] . '"' : ' style="color: #' . $theme['color_admin'] . '"';
+									break;
+								case MAIN_MOD:
+									$username_color = '<strong>' . $forum_data[$j]['username'] . '</strong>';
+									$style_color = ' style="color: #' . $theme['color_main_mod'] . '"';
+									break;
+								case MOD:
+									$username_color = '<strong>' . $forum_data[$j]['username'] . '</strong>';
+									$style_color = ' style="color: #' . $theme['color_mod'] . '"';
+									break;
+								case SUPPORT:
+									$username_color = '<strong>' . $forum_data[$j]['username'] . '</strong>';
+									$style_color = ' style="color: #' . $theme['color_support'] . '"';
+									break;
+								case VIP:
+									$username_color = '<strong>' . $forum_data[$j]['username'] . '</strong>';
+									$style_color = ' style="color: #' . $theme['color_vip'] . '"';
+									break;
+								case BOT:
+									$username_color = '<strong>' . $forum_data[$j]['username'] . '</strong>';
+									$style_color = ' style="color: #' . $theme['color_bot'] . '"';
+									break;
+								case USER:
+									$username_color = '<strong>' . $forum_data[$j]['username'] . '</strong>';
+									$style_color = ' style="color: #' . $theme['color_user'] . '"';
+									break;
+								default:
+									$username_color = $forum_data[$j]['username'];
+									$style_color = '';
+									break;
+							}
+							// End add - User Class Mod
+#
+#-----[ FIND ]------------------------------------------
+#
+								$last_post .= ( $forum_data[$j]['user_id'] == ANONYMOUS ) ? ( ($forum_data[$j]['post_username'] != '' ) ? $forum_data[$j]['post_username'] . ' ' : $lang['Guest'] . ' ' ) : '<a href="' . append_sid("profile.$phpEx?mode=viewprofile&amp;" . POST_USERS_URL . '='  . $forum_data[$j]['user_id']) . '">' . $forum_data[$j]['username'] . '</a> ';
+#
+#-----[ REPLACE WITH ]------------------------------------------
+#
+								$last_post .= ( $forum_data[$j]['user_id'] == ANONYMOUS ) ? ( ($forum_data[$j]['post_username'] != '' ) ? $forum_data[$j]['post_username'] . ' ' : $lang['Guest'] . ' ' ) : '<a href="' . append_sid("profile.$phpEx?mode=viewprofile&amp;" . POST_USERS_URL . '='  . $forum_data[$j]['user_id']) . '"' . $style_color . '>' . $username_color . '</a> ';
+#
+#-----[ OPEN ]------------------------------------------
+#
+memberlist.php
+
+#
+#-----[ FIND ]------------------------------------------
+#
+$sql = "SELECT username, user_id, user_viewemail
+#
+#-----[ IN-LINE FIND ]------------------------------------------
+#
+user_allowavatar
+#
+#-----[ IN-LINE AFTER, ADD ]------------------------------------------
+#
+, user_level
+#
+#-----[ FIND ]------------------------------------------
+#
+		$search = '<a href="' . $temp_url . '">' . $lang['Search_user_posts'] . '</a>';
+#
+#-----[ AFTER, ADD ]------------------------------------------
+#
+		// Start add - User Class Mod
+		switch ( $row['user_level'] )
+		{
+			case ADMIN:
+				$username_color = '<strong>' . $username . '</strong>';
+				$style_color = ($row['user_id'] == 2) ? ' style="color: #' . $theme['color_founder'] . '"' : ' style="color: #' . $theme['color_admin'] . '"';
+				break;
+			case MAIN_MOD:
+				$username_color = '<strong>' . $username . '</strong>';
+				$style_color = ' style="color: #' . $theme['color_main_mod'] . '"';
+				break;
+			case MOD:
+				$username_color = '<strong>' . $username . '</strong>';
+				$style_color = ' style="color: #' . $theme['color_mod'] . '"';
+				break;
+			case SUPPORT:
+				$username_color = '<strong>' . $username . '</strong>';
+				$style_color = ' style="color: #' . $theme['color_support'] . '"';
+				break;
+			case VIP:
+				$username_color = '<strong>' . $username . '</strong>';
+				$style_color = ' style="color: #' . $theme['color_vip'] . '"';
+				break;
+			case BOT:
+				$username_color = '<strong>' . $username . '</strong>';
+				$style_color = ' style="color: #' . $theme['color_bot'] . '"';
+				break;
+			case USER:
+				$username_color = '<strong>' . $username . '</strong>';
+				$style_color = ' style="color: #' . $theme['color_user'] . '"';
+				break;
+			default:
+				$username_color = $username;
+				$style_color = '';
+				break;
+		}
+		$username_color = '<a href="' . append_sid("profile.$phpEx?mode=viewprofile&amp;" . POST_USERS_URL . "=" . $user_id) . '"' . $style_color . '>' . $username_color . '</a>';
+		// End add - User Class Mod
+#
+#-----[ FIND ]------------------------------------------
+#
+			'USERNAME' => $username,
+#
+#-----[ REPLACE WITH ]------------------------------------------
+#
+			'USERNAME' => $username_color,
+#
+#-----[ FIND ]------------------------------------------
+#
+			'U_VIEWPROFILE' => append_sid("profile.$phpEx?mode=viewprofile&amp;" . POST_USERS_URL . "=$user_id"))
+#
+#-----[ REPLACE WITH ]------------------------------------------
+#
+			//'U_VIEWPROFILE' => append_sid("profile.$phpEx?mode=viewprofile&amp;" . POST_USERS_URL . "=$user_id")
+			)
+#
+#-----[ OPEN ]------------------------------------------
+#
+modcp.php
+
+#
+#-----[ FIND ]------------------------------------------
+#
+			$sql = "SELECT u.username
+#
+#-----[ IN-LINE FIND ]------------------------------------------
+#
+u.username
+#
+#-----[ IN-LINE AFTER, ADD ]------------------------------------------
+#
+, u.user_id , u.user_level
+#
+#-----[ FIND ]------------------------------------------
+#
+					$row_color = ( !($i % 2) ) ? $theme['td_color1'] : $theme['td_color2'];
+					$row_class = ( !($i % 2) ) ? $theme['td_class1'] : $theme['td_class2'];
+#
+#-----[ BEFORE, ADD ]------------------------------------
+#
+					// Start add - User Class Mod
+					switch ( $postrow[$i]['user_level'] )
+					{
+						case ADMIN:
+							$poster_name = ($postrow[$i]['user_id'] == 2) ? '<span style="color: #' . $theme['color_founder'] . '"><strong>' . $poster . '</strong></span>' : '<span style="color: #' . $theme['color_admin'] . '"><strong>' . $poster . '</strong></span>';
+							break;
+						case MAIN_MOD:
+							$poster_name = '<span style="color: #' . $theme['color_main_mod'] . '"><strong>' . $poster . '</strong></span>';
+							break;
+						case MOD:
+							$poster_name = '<span style="color: #' . $theme['color_mod'] . '"><strong>' . $poster . '</strong></span>';
+							break;
+						case SUPPORT:
+							$poster_name = '<span style="color: #' . $theme['color_support'] . '"><strong>' . $poster . '</strong></span>';
+							break;
+						case VIP:
+							$poster_name = '<span style="color: #' . $theme['color_vip'] . '"><strong>' . $poster . '</strong></span>';
+							break;
+						case BOT:
+							$poster_name = '<span style="color: #' . $theme['color_bot'] . '"><strong>' . $poster . '</strong></span>';
+							break;
+						case USER:
+							$poster_name = '<span style="color: #' . $theme['color_user'] . '"><strong>' . $poster . '</strong></span>';
+							break;
+						default:
+							$poster_name = $poster;
+							break;
+					}
+					// End add - User Class Mod
+#
+#-----[ FIND ]------------------------------------------
+#
+						'POSTER_NAME' => $poster,
+#
+#-----[ REPLACE WITH ]------------------------------------------
+#
+						'POSTER_NAME' => $poster_name,
+#
+#-----[ FIND ]------------------------------------------
+#
+		//
+		// Get other users who've posted under this IP
+		//
+		$sql = "SELECT u.user_id
+#
+#-----[ IN-LINE FIND ]------------------------------------------
+#
+u.username
+#
+#-----[ IN-LINE AFTER, ADD ]------------------------------------------
+#
+, u.user_level
+#
+#-----[ FIND ]------------------------------------------
+#
+				$username = ( $id == ANONYMOUS ) ? $lang['Guest'] : $row['username'];
+#
+#-----[ AFTER, ADD ]------------------------------------
+#
+				// Start add - User Class Mod
+				switch ( $row['user_level'] )
+				{
+					case ADMIN:
+						$username_color = '<strong>' . $username . '</strong>';
+						$style_color = ($row['user_id'] == 2) ? ' style="color: #' . $theme['color_founder'] . '"' : ' style="color: #' . $theme['color_admin'] . '"';
+						break;
+					case MAIN_MOD:
+						$username_color = '<strong>' . $username . '</strong>';
+						$style_color = ' style="color: #' . $theme['color_main_mod'] . '"';
+						break;
+					case MOD:
+						$username_color = '<strong>' . $username . '</strong>';
+						$style_color = ' style="color: #' . $theme['color_mod'] . '"';
+						break;
+					case SUPPORT:
+						$username_color = '<strong>' . $username . '</strong>';
+						$style_color = ' style="color: #' . $theme['color_support'] . '"';
+						break;
+					case VIP:
+						$username_color = '<strong>' . $username . '</strong>';
+						$style_color = ' style="color: #' . $theme['color_vip'] . '"';
+						break;
+					case BOT:
+						$username_color = '<strong>' . $username . '</strong>';
+						$style_color = ' style="color: #' . $theme['color_bot'] . '"';
+						break;
+					case USER:
+						$username_color = '<strong>' . $username . '</strong>';
+						$style_color = ' style="color: #' . $theme['color_user'] . '"';
+						break;
+					default:
+						$username_color = $username;
+						$style_color = '';
+						break;
+				}
+				// End add - User Class Mod
+#
+#-----[ FIND ]------------------------------------------
+#
+					'USERNAME' => $username,
+#
+#-----[ REPLACE WITH ]------------------------------------------
+#
+					'USERNAME' => ( $id == ANONYMOUS ) ? '<a href="' . "modcp.$phpEx?mode=ip&amp;" . POST_POST_URL . "=" . $post_id . "&amp;" . POST_TOPIC_URL . "=" . $topic_id . "&amp;sid=" . $userdata['session_id'] . '">' . $username . '</a>' : '<a href="' . append_sid("profile.$phpEx?mode=viewprofile&amp;" . POST_USERS_URL . "=$id") . '"' . $style_color . '>' . $username_color . '</a>',
+#
+#-----[ FIND ]------------------------------------------
+#
+					'U_PROFILE' => ($id == ANONYMOUS) ? "modcp.$phpEx?mode=ip&amp;" . POST_POST_URL . "=" . $post_id . "&amp;" . POST_TOPIC_URL . "=" . $topic_id . "&amp;sid=" . $userdata['session_id'] : append_sid("profile.$phpEx?mode=viewprofile&amp;" . POST_USERS_URL . "=$id"),
+#
+#-----[ REPLACE WITH ]------------------------------------------
+#
+					//'U_PROFILE' => ($id == ANONYMOUS) ? "modcp.$phpEx?mode=ip&amp;" . POST_POST_URL . "=" . $post_id . "&amp;" . POST_TOPIC_URL . "=" . $topic_id . "&amp;sid=" . $userdata['session_id'] : append_sid("profile.$phpEx?mode=viewprofile&amp;" . POST_USERS_URL . "=$id"),
+#
+#-----[ OPEN ]------------------------------------------
+#
+privmsg.php
+
+#
+#-----[ FIND ]------------------------------------------
+#
+	//
+	// Major query obtains the message ...
+	//
+	$sql = "SELECT u.username AS username_1,
+#
+#-----[ IN-LINE FIND ]------------------------------------------
+#
+u.user_avatar
+#
+#-----[ IN-LINE AFTER, ADD ]------------------------------------------
+#
+, u.user_level AS user_level_1, u2.user_level AS user_level_2
+#
+#-----[ FIND ]------------------------------------------
+#
+	$search = '<a href="' . $temp_url . '">' . sprintf($lang['Search_user_posts'], $username_from) . '</a>';
+#
+#-----[ AFTER, ADD ]------------------------------------------
+#
+	// Start add - User Class Mod
+	switch ( $privmsg['user_level_1'] )
+	{
+		case ADMIN:
+			$username_from_color = '<strong>' .  $username_from . '</strong>';
+			$style_color = ($privmsg['user_id_1'] == 2) ? ' style="color: #' . $theme['color_founder'] . '"' : ' style="color: #' . $theme['color_admin'] . '"';
+			break;
+		case MAIN_MOD:
+			$username_from_color = '<strong>' .  $username_from . '</strong>';
+			$style_color = ' style="color: #' . $theme['color_main_mod'] . '"';
+			break;
+		case MOD:
+			$username_from_color = '<strong>' .  $username_from . '</strong>';
+			$style_color = ' style="color: #' . $theme['color_mod'] . '"';
+			break;
+		case SUPPORT:
+			$username_from_color = '<strong>' .  $username_from . '</strong>';
+			$style_color = ' style="color: #' . $theme['color_support'] . '"';
+			break;
+		case VIP:
+			$username_from_color = '<strong>' .  $username_from . '</strong>';
+			$style_color = ' style="color: #' . $theme['color_vip'] . '"';
+			break;
+		case BOT:
+			$username_from_color = '<strong>' .  $username_from . '</strong>';
+			$style_color = ' style="color: #' . $theme['color_bot'] . '"';
+			break;
+		case USER:
+			$username_from_color = '<strong>' .  $username_from . '</strong>';
+			$style_color = ' style="color: #' . $theme['color_user'] . '"';
+			break;
+		default:
+			$username_from_color = $username_from;
+			$style_color = '';
+			break;
+	}
+	$username_from_color = '<a href="' . append_sid("profile.$phpEx?mode=viewprofile&amp;" . POST_USERS_URL . "=" . $user_id_from) . '"' . $style_color . '>' . $username_from_color . '</a>';
+	switch ( $privmsg['user_level_2'] )
+	{
+		case ADMIN:
+			$username_to_color = '<strong>' .  $username_to . '</strong>';
+			$style_color = ($privmsg['user_id_2'] == 2) ? ' style="color: #' . $theme['color_founder'] . '"' : ' style="color: #' . $theme['color_admin'] . '"';
+			break;
+		case MAIN_MOD:
+			$username_to_color = '<strong>' .  $username_to . '</strong>';
+			$style_color = ' style="color: #' . $theme['color_main_mod'] . '"';
+			break;
+		case MOD:
+			$username_to_color = '<strong>' .  $username_to . '</strong>';
+			$style_color = ' style="color: #' . $theme['color_mod'] . '"';
+			break;
+		case SUPPORT:
+			$username_to_color = '<strong>' .  $username_to . '</strong>';
+			$style_color = ' style="color: #' . $theme['color_support'] . '"';
+			break;
+		case VIP:
+			$username_to_color = '<strong>' .  $username_to . '</strong>';
+			$style_color = ' style="color: #' . $theme['color_vip'] . '"';
+			break;
+		case BOT:
+			$username_to_color = '<strong>' .  $username_to . '</strong>';
+			$style_color = ' style="color: #' . $theme['color_bot'] . '"';
+			break;
+		case USER:
+			$username_to_color = '<strong>' .  $username_to . '</strong>';
+			$style_color = ' style="color: #' . $theme['color_user'] . '"';
+			break;
+		default:
+			$username_to_color = $username_to;
+			$style_color = '';
+			break;
+	}
+	$username_to_color = '<a href="' . append_sid("profile.$phpEx?mode=viewprofile&amp;" . POST_USERS_URL . "=" . $user_id_to) . '"' . $style_color . '>' . $username_to_color . '</a>';
+	// End add - User Class Mod
+#
+#-----[ FIND ]------------------------------------------
+#
+		'MESSAGE_TO' => $username_to,
+		'MESSAGE_FROM' => $username_from,
+#
+#-----[ REPLACE WITH ]------------------------------------------
+#
+		'MESSAGE_TO' => $username_to_color,
+		'MESSAGE_FROM' => $username_from_color,
+#
+#-----[ FIND ]------------------------------------------
+#
+$sql = "SELECT pm.privmsgs_type, pm.privmsgs_id
+#
+#-----[ IN-LINE FIND ]------------------------------------------
+#
+u.username
+#
+#-----[ IN-LINE AFTER, ADD ]------------------------------------------
+#
+, u.user_level
+#
+#-----[ FIND ]------------------------------------------
+#
+		$u_from_user_profile = append_sid("profile.$phpEx?mode=viewprofile&amp;" . POST_USERS_URL . "=$msg_userid");
+#
+#-----[ REPLACE WITH ]------------------------------------------
+#
+		// Start add - User Class Mod
+		switch ( $row['user_level'] )
+		{
+			case ADMIN:
+				$msg_username_color = '<strong>' . $msg_username . '</strong>';
+				$style_color = ($row['user_id'] == 2) ? ' style="color: #' . $theme['color_founder'] . '"' : ' style="color: #' . $theme['color_admin'] . '"';
+				break;
+			case MAIN_MOD:
+				$msg_username_color = '<strong>' . $msg_username . '</strong>';
+				$style_color = ' style="color: #' . $theme['color_main_mod'] . '"';
+				break;
+			case MOD:
+				$msg_username_color = '<strong>' . $msg_username . '</strong>';
+				$style_color = ' style="color: #' . $theme['color_mod'] . '"';
+				break;
+			case SUPPORT:
+				$msg_username_color = '<strong>' . $msg_username . '</strong>';
+				$style_color = ' style="color: #' . $theme['color_support'] . '"';
+				break;
+			case VIP:
+				$msg_username_color = '<strong>' . $msg_username . '</strong>';
+				$style_color = ' style="color: #' . $theme['color_vip'] . '"';
+				break;
+			case BOT:
+				$msg_username_color = '<strong>' . $msg_username . '</strong>';
+				$style_color = ' style="color: #' . $theme['color_bot'] . '"';
+				break;
+			case USER:
+				$msg_username_color = '<strong>' . $msg_username . '</strong>';
+				$style_color = ' style="color: #' . $theme['color_user'] . '"';
+				break;
+			default:
+				$msg_username_color = $msg_username;
+				$style_color = '';
+				break;
+		}
+		$msg_username_color = '<a href="' . append_sid("profile.$phpEx?mode=viewprofile&amp;" . POST_USERS_URL . "=" . $msg_userid) . '"' . $style_color . '>' . $msg_username_color . '</a>';
+		//$u_from_user_profile = append_sid("profile.$phpEx?mode=viewprofile&amp;" . POST_USERS_URL . "=$msg_userid");
+		// End add - User Class Mod
+#
+#-----[ FIND ]------------------------------------------
+#
+			$msg_username = '<b>' . $msg_username . '</b>';
+#
+#-----[ REPLACE WITH ]------------------------------------------
+#
+			$msg_username_color = '<strong>' . $msg_username . '</strong>';
+#
+#-----[ FIND ]------------------------------------------
+#
+			'FROM' => $msg_username,
+#
+#-----[ REPLACE WITH ]------------------------------------------
+#
+			'FROM' => $msg_username_color,
+#
+#-----[ OPEN ]------------------------------------------
+#
+search.php
+
+#
+#-----[ FIND ]------------------------------------------
+#
+			$sql = "SELECT pt.post_text, pt.bbcode_uid
+#
+#-----[ IN-LINE FIND ]------------------------------------------
+#
+u.user_sig_bbcode_uid
+#
+#-----[ IN-LINE AFTER, ADD ]------------------------------------------
+#
+, u.user_level
+#
+#-----[ FIND ]------------------------------------------
+#
+			$sql = "SELECT t.*, f.forum_id, f.forum_name
+#
+#-----[ IN-LINE FIND ]------------------------------------------
+#
+u.user_id
+#
+#-----[ IN-LINE AFTER, ADD ]------------------------------------------
+#
+, u.user_level
+#
+#-----[ IN-LINE FIND ]------------------------------------------
+#
+u2.user_id as id2
+#
+#-----[ IN-LINE AFTER, ADD ]------------------------------------------
+#
+, u2.user_level as user_level2
+#
+#-----[ FIND ]------------------------------------------
+#
+					$message = str_replace("\n", '<br />', $message);
+
+				}
+#
+#-----[ AFTER, ADD ]------------------------------------------
+#
+				// Start add - User Class Mod
+				switch ( $searchset[$i]['user_level'] )
+				{
+					case ADMIN:
+						$post_username_color = '<strong>' . $searchset[$i]['post_username'] . '</strong>';
+						$style_color = ($searchset[$i]['user_id'] == 2) ? ' style="color: #' . $theme['color_founder'] . '"' : ' style="color: #' . $theme['color_admin'] . '"';
+						break;
+					case MAIN_MOD:
+						$post_username_color = '<strong>' . $searchset[$i]['post_username'] . '</strong>';
+						$style_color = ' style="color: #' . $theme['color_main_mod'] . '"';
+						break;
+					case MOD:
+						$post_username_color = '<strong>' . $searchset[$i]['post_username'] . '</strong>';
+						$style_color = ' style="color: #' . $theme['color_mod'] . '"';
+						break;
+					case SUPPORT:
+						$post_username_color = '<strong>' . $searchset[$i]['post_username'] . '</strong>';
+						$style_color = ' style="color: #' . $theme['color_support'] . '"';
+						break;
+					case VIP:
+						$post_username_color = '<strong>' . $searchset[$i]['post_username'] . '</strong>';
+						$style_color = ' style="color: #' . $theme['color_vip'] . '"';
+						break;
+					case BOT:
+						$post_username_color = '<strong>' . $searchset[$i]['post_username'] . '</strong>';
+						$style_color = ' style="color: #' . $theme['color_bot'] . '"';
+						break;
+					case USER:
+						$post_username_color = '<strong>' . $searchset[$i]['post_username'] . '</strong>';
+						$style_color = ' style="color: #' . $theme['color_user'] . '"';
+						break;
+					default:
+						$post_username_color = $searchset[$i]['post_username'];
+						$style_color = '';
+						break;
+				}
+				// End add - User Class Mod
+#
+#-----[ FIND ]------------------------------------------
+#
+				$poster = ( $searchset[$i]['user_id'] != ANONYMOUS ) ? '<a href="' . append_sid("profile.$phpEx?mode=viewprofile&amp;" . POST_USERS_URL . "=" . $searchset[$i]['user_id']) . '">' : '';
+#
+#-----[ REPLACE WITH ]------------------------------------------
+#
+				$poster = ( $searchset[$i]['user_id'] != ANONYMOUS ) ? '<a href="' . append_sid("profile.$phpEx?mode=viewprofile&amp;" . POST_USERS_URL . "=" . $searchset[$i]['user_id']) . '"' . $style_color . '>' : '';
+#
+#-----[ FIND ]------------------------------------------
+#
+				$poster .= ( $searchset[$i]['user_id'] != ANONYMOUS ) ? $searchset[$i]['username'] : ( ( $searchset[$i]['post_username'] != "" ) ? $searchset[$i]['post_username'] : $lang['Guest'] );
+#
+#-----[ REPLACE WITH ]------------------------------------------
+#
+				$poster .= ( $searchset[$i]['user_id'] != ANONYMOUS ) ? $searchset[$i]['username'] : ( ( $searchset[$i]['post_username'] != "" ) ? $post_username_color : $lang['Guest'] );
+
+#
+#-----[ FIND ]------------------------------------------
+#
+				$topic_author = ( $searchset[$i]['user_id'] != ANONYMOUS ) ? '<a href="' . append_sid("profile.$phpEx?mode=viewprofile&amp;" . POST_USERS_URL . '=' . $searchset[$i]['user_id']) . '">' : '';
+#
+#-----[ BEFORE, ADD ]------------------------------------------
+#
+				// Start add - User Class Mod
+				switch ( $searchset[$i]['user_level'] )
+				{
+					case ADMIN:
+						$username_color = '<strong>' . $searchset[$i]['username'] . '</strong>';
+						$style_color = ($searchset[$i]['user_id'] == 2) ? ' style="color: #' . $theme['color_founder'] . '"' : ' style="color: #' . $theme['color_admin'] . '"';
+						break;
+					case MAIN_MOD:
+						$username_color = '<strong>' . $searchset[$i]['username'] . '</strong>';
+						$style_color = ' style="color: #' . $theme['color_main_mod'] . '"';
+						break;
+					case MOD:
+						$username_color = '<strong>' . $searchset[$i]['username'] . '</strong>';
+						$style_color = ' style="color: #' . $theme['color_mod'] . '"';
+						break;
+					case SUPPORT:
+						$username_color = '<strong>' . $searchset[$i]['username'] . '</strong>';
+						$style_color = ' style="color: #' . $theme['color_support'] . '"';
+						break;
+					case VIP:
+						$username_color = '<strong>' . $searchset[$i]['username'] . '</strong>';
+						$style_color = ' style="color: #' . $theme['color_vip'] . '"';
+						break;
+					case BOT:
+						$username_color = '<strong>' . $searchset[$i]['username'] . '</strong>';
+						$style_color = ' style="color: #' . $theme['color_bot'] . '"';
+						break;
+					case USER:
+						$username_color = '<strong>' . $searchset[$i]['username'] . '</strong>';
+						$style_color = ' style="color: #' . $theme['color_user'] . '"';
+						break;
+					default:
+						$username_color = $searchset[$i]['username'];
+						$style_color = '';
+						break;
+				}
+				switch ( $searchset[$i]['user_level2'] )
+				{
+					case ADMIN:
+						$username_color2 = '<strong>' . $searchset[$i]['user2'] . '</strong>';
+						$style_color2 = ($searchset[$i]['id2'] == 2) ? ' style="color: #' . $theme['color_founder'] . '"' : ' style="color: #' . $theme['color_admin'] . '"';
+						break;
+					case MAIN_MOD:
+						$username_color2 = '<strong>' . $searchset[$i]['user2'] . '</strong>';
+						$style_color2 = ' style="color: #' . $theme['color_main_mod'] . '"';
+						break;
+					case MOD:
+						$username_color2 = '<strong>' . $searchset[$i]['user2'] . '</strong>';
+						$style_color2 = ' style="color: #' . $theme['color_mod'] . '"';
+						break;
+					case SUPPORT:
+						$username_color2 = '<strong>' . $searchset[$i]['user2'] . '</strong>';
+						$style_color2 = ' style="color: #' . $theme['color_support'] . '"';
+						break;
+					case VIP:
+						$username_color2 = '<strong>' . $searchset[$i]['user2'] . '</strong>';
+						$style_color2 = ' style="color: #' . $theme['color_vip'] . '"';
+						break;
+					case BOT:
+						$username_color2 = '<strong>' . $searchset[$i]['user2'] . '</strong>';
+						$style_color2 = ' style="color: #' . $theme['color_bot'] . '"';
+						break;
+					case USER:
+						$username_color2 = '<strong>' . $searchset[$i]['user2'] . '</strong>';
+						$style_color2 = ' style="color: #' . $theme['color_user'] . '"';
+						break;
+					default:
+						$username_color2 = $searchset[$i]['user2'];
+						$style_color2 = '';
+						break;
+				}
+				// End add - User Class Mod
+
+#
+#-----[ IN-LINE FIND ]------------------------------------------
+# Full line is in FIND above
+#
+$searchset[$i]['user_id']) . '"
+#
+#-----[ IN-LINE AFTER, ADD ]------------------------------------------
+#
+' . $style_color . '
+#
+#-----[ FIND ]------------------------------------------
+#
+				$topic_author .= ( $searchset[$i]['user_id'] != ANONYMOUS ) ? $searchset[$i]['username'] : ( ( $searchset[$i]['post_username'] != '' ) ? $searchset[$i]['post_username'] : $lang['Guest'] );
+#
+#-----[ REPLACE WITH ]------------------------------------------
+#
+				$topic_author .= ( $searchset[$i]['user_id'] != ANONYMOUS ) ? $username_color : ( ( $searchset[$i]['post_username'] != '' ) ? $searchset[$i]['post_username'] : $lang['Guest'] );
+#
+#-----[ FIND ]------------------------------------------
+#
+				$last_post_author = ( $searchset[$i]['id2'] == ANONYMOUS ) ? ( ($searchset[$i]['post_username2'] != '' ) ? $searchset[$i]['post_username2'] . ' ' : $lang['Guest'] . ' ' ) : '<a href="' . append_sid("profile.$phpEx?mode=viewprofile&amp;" . POST_USERS_URL . '='  . $searchset[$i]['id2']) . '">' . $searchset[$i]['user2'] . '</a>';
+#
+#-----[ REPLACE WITH ]------------------------------------------
+#
+				$last_post_author = ( $searchset[$i]['id2'] == ANONYMOUS ) ? ( ($searchset[$i]['post_username2'] != '' ) ? $searchset[$i]['post_username2'] . ' ' : $lang['Guest'] . ' ' ) : '<a href="' . append_sid("profile.$phpEx?mode=viewprofile&amp;" . POST_USERS_URL . '='  . $searchset[$i]['id2']) . '"' . $style_color2 . '>' . $username_color2 . '</a>';
+#
+#-----[ OPEN ]------------------------------------------
+#
+viewforum.php
+
+#
+#-----[ FIND ]------------------------------------------
+#
+//
+// Obtain list of moderators of each forum
+// First users, then groups ... broken into two queries
+//
+$sql = "SELECT u.user_id, u.username
+#
+#-----[ IN-LINE FIND ]------------------------------------------
+#
+u.username
+#
+#-----[ IN-LINE AFTER, ADD ]------------------------------------------
+#
+, u.user_level
+#
+#-----[ FIND ]------------------------------------------
+#
+	$moderators[] = '<a href="' . append_sid("profile.$phpEx?mode=viewprofile&amp;" . POST_USERS_URL . "=" . $row['user_id']) . '">' . $row['username'] . '</a>';
+#
+#-----[ REPLACE WITH ]------------------------------------------
+#
+	// Start add - User Class Mod
+	switch ( $row['user_level'] )
+	{
+		case ADMIN:
+			$mod_username_color = '<strong>' . $row['username'] . '</strong>';
+			$style_color = ($row['user_id'] == 2) ? ' style="color: #' . $theme['color_founder'] . '"' : ' style="color: #' . $theme['color_admin'] . '"';
+			break;
+		case MAIN_MOD:
+			$mod_username_color = '<strong>' . $row['username'] . '</strong>';
+			$style_color = ' style="color: #' . $theme['color_main_mod'] . '"';
+			break;
+		case MOD:
+			$mod_username_color = '<strong>' . $row['username'] . '</strong>';
+			$style_color = ' style="color: #' . $theme['color_mod'] . '"';
+			break;
+		case SUPPORT:
+			$mod_username_color = '<strong>' . $row['username'] . '</strong>';
+			$style_color = ' style="color: #' . $theme['color_support'] . '"';
+			break;
+		case VIP:
+			$mod_username_color = '<strong>' . $row['username'] . '</strong>';
+			$style_color = ' style="color: #' . $theme['color_vip'] . '"';
+			break;
+		case BOT:
+			$mod_username_color = '<strong>' . $row['username'] . '</strong>';
+			$style_color = ' style="color: #' . $theme['color_bot'] . '"';
+			break;
+		case USER:
+			$mod_username_color = '<strong>' . $row['username'] . '</strong>';
+			$style_color = ' style="color: #' . $theme['color_user'] . '"';
+			break;
+		default:
+			$mod_username_color = $row['username'];
+			$style_color = '';
+			break;
+	}
+	$moderators[] = '<a href="' . append_sid("profile.$phpEx?mode=viewprofile&amp;" . POST_USERS_URL . "=" . $row['user_id']) . '"' . $style_color . '>' . $mod_username_color . '</a>';
+	// End add - User Class Mod
+#
+#-----[ FIND ]------------------------------------------
+#
+//
+// All announcement data, this keeps announcements
+// on each viewforum page ...
+//
+$sql = "SELECT t.*, u.username, u.user_id,
+#
+#-----[ IN-LINE FIND ]------------------------------------------
+#
+u.user_id
+#
+#-----[ IN-LINE AFTER, ADD ]------------------------------------------
+#
+, u.user_level
+#
+#-----[ IN-LINE FIND ]------------------------------------------
+#
+u2.user_id as id2
+#
+#-----[ IN-LINE AFTER, ADD ]------------------------------------------
+#
+, u2.user_level as user_level2
+#
+#-----[ FIND ]------------------------------------------
+#
+//
+// Grab all the basic data (all topics except announcements)
+// for this forum
+//
+$sql = "SELECT t.*, u.username, u.user_id,
+#
+#-----[ IN-LINE FIND ]------------------------------------------
+#
+u.user_id
+#
+#-----[ IN-LINE AFTER, ADD ]------------------------------------------
+#
+, u.user_level
+#
+#-----[ IN-LINE FIND ]------------------------------------------
+#
+u2.user_id as id2
+#
+#-----[ IN-LINE AFTER, ADD ]------------------------------------------
+#
+, u2.user_level as user_level2
+#
+#-----[ FIND ]------------------------------------------
+#
+		$view_topic_url = append_sid("viewtopic.$phpEx?" . POST_TOPIC_URL . "=$topic_id");
+#
+#-----[ BEFORE, ADD ]------------------------------------
+#
+		// Start add - User Class Mod
+		switch ( $topic_rowset[$i]['user_level'] )
+		{
+			case ADMIN:
+				$username_color = '<strong>' . $topic_rowset[$i]['username'] . '</strong>';
+				$style_color = ($topic_rowset[$i]['user_id'] == 2) ? ' style="color: #' . $theme['color_founder'] . '"' : ' style="color: #' . $theme['color_admin'] . '"';
+				break;
+			case MAIN_MOD:
+				$username_color = '<strong>' . $topic_rowset[$i]['username'] . '</strong>';
+				$style_color = ' style="color: #' . $theme['color_main_mod'] . '"';
+				break;
+			case MOD:
+				$username_color = '<strong>' . $topic_rowset[$i]['username'] . '</strong>';
+				$style_color = ' style="color: #' . $theme['color_mod'] . '"';
+				break;
+			case SUPPORT:
+				$username_color = '<strong>' . $topic_rowset[$i]['username'] . '</strong>';
+				$style_color = ' style="color: #' . $theme['color_support'] . '"';
+				break;
+			case VIP:
+				$username_color = '<strong>' . $topic_rowset[$i]['username'] . '</strong>';
+				$style_color = ' style="color: #' . $theme['color_vip'] . '"';
+				break;
+			case BOT:
+				$username_color = '<strong>' . $topic_rowset[$i]['username'] . '</strong>';
+				$style_color = ' style="color: #' . $theme['color_bot'] . '"';
+				break;
+			case USER:
+				$username_color = '<strong>' . $topic_rowset[$i]['username'] . '</strong>';
+				$style_color = ' style="color: #' . $theme['color_user'] . '"';
+				break;
+			default:
+				$username_color = $topic_rowset[$i]['username'];
+				$style_color = '';
+				break;
+		}
+		switch ( $topic_rowset[$i]['user_level2'] )
+		{
+			case ADMIN:
+				$username_color2 = '<strong>' . $topic_rowset[$i]['user2'] . '</strong>';
+				$style_color2 = ($topic_rowset[$i]['id2'] == 2) ? ' style="color: #' . $theme['color_founder'] . '"' : ' style="color: #' . $theme['color_admin'] . '"';
+				break;
+			case MAIN_MOD:
+				$username_color2 = '<strong>' . $topic_rowset[$i]['user2'] . '</strong>';
+				$style_color2 = ' style="color: #' . $theme['color_main_mod'] . '"';
+				break;
+			case MOD:
+				$username_color2 = '<strong>' . $topic_rowset[$i]['user2'] . '</strong>';
+				$style_color2 = ' style="color: #' . $theme['color_mod'] . '"';
+				break;
+			case SUPPORT:
+				$username_color2 = '<strong>' . $topic_rowset[$i]['user2'] . '</strong>';
+				$style_color2 = ' style="color: #' . $theme['color_support'] . '"';
+				break;
+			case VIP:
+				$username_color2 = '<strong>' . $topic_rowset[$i]['user2'] . '</strong>';
+				$style_color2 = ' style="color: #' . $theme['color_vip'] . '"';
+				break;
+			case BOT:
+				$username_color2 = '<strong>' . $topic_rowset[$i]['user2'] . '</strong>';
+				$style_color2 = ' style="color: #' . $theme['color_bot'] . '"';
+				break;
+			case USER:
+				$username_color2 = '<strong>' . $topic_rowset[$i]['user2'] . '</strong>';
+				$style_color2 = ' style="color: #' . $theme['color_user'] . '"';
+				break;
+			default:
+				$username_color2 = $topic_rowset[$i]['user2'];
+				$style_color2 = '';
+				break;
+		}
+		// End add - User Class Mod
+#
+#-----[ FIND ]------------------------------------------
+#
+		$topic_author = ( $topic_rowset[$i]['user_id'] != ANONYMOUS ) ? '<a href="' . append_sid("profile.$phpEx?mode=viewprofile&amp;" . POST_USERS_URL . '=' . $topic_rowset[$i]['user_id']) . '">' : '';
+#
+#-----[ REPLACE WITH ]------------------------------------------
+#
+		$topic_author = ( $topic_rowset[$i]['user_id'] != ANONYMOUS ) ? '<a href="' . append_sid("profile.$phpEx?mode=viewprofile&amp;" . POST_USERS_URL . '=' . $topic_rowset[$i]['user_id']) . '"' . $style_color . '>' : '';
+#
+#-----[ FIND ]------------------------------------------
+#
+		$topic_author .= ( $topic_rowset[$i]['user_id'] != ANONYMOUS ) ? $topic_rowset[$i]['username'] : ( ( $topic_rowset[$i]['post_username'] != '' ) ? $topic_rowset[$i]['post_username'] : $lang['Guest'] );
+#
+#-----[ REPLACE WITH ]------------------------------------------
+#
+		$topic_author .= ( $topic_rowset[$i]['user_id'] != ANONYMOUS ) ? $username_color : ( ( $topic_rowset[$i]['post_username'] != '' ) ? $topic_rowset[$i]['post_username'] : $lang['Guest'] );
+#
+#-----[ FIND ]------------------------------------------
+#
+		$last_post_author = ( $topic_rowset[$i]['id2'] == ANONYMOUS ) ? ( ($topic_rowset[$i]['post_username2'] != '' ) ? $topic_rowset[$i]['post_username2'] . ' ' : $lang['Guest'] . ' ' ) : '<a href="' . append_sid("profile.$phpEx?mode=viewprofile&amp;" . POST_USERS_URL . '='  . $topic_rowset[$i]['id2']) . '">' . $topic_rowset[$i]['user2'] . '</a>';
+#
+#-----[ REPLACE WITH ]------------------------------------------
+#
+		$last_post_author = ( $topic_rowset[$i]['id2'] == ANONYMOUS ) ? ( ($topic_rowset[$i]['post_username2'] != '' ) ? $topic_rowset[$i]['post_username2'] . ' ' : $lang['Guest'] . ' ' ) : '<a href="' . append_sid("profile.$phpEx?mode=viewprofile&amp;" . POST_USERS_URL . '='  . $topic_rowset[$i]['id2']) . '"' . $style_color2 . '>' . $username_color2 . '</a>';
+#
+#-----[ OPEN ]------------------------------------------
+#
+viewonline.php
+
+#
+#-----[ FIND ]------------------------------------------
+#
+//
+// Get user list
+//
+$sql = "SELECT u.user_id, u.username
+#
+#-----[ IN-LINE FIND ]------------------------------------------
+#
+u.user_allow_viewonline
+#
+#-----[ IN-LINE AFTER, ADD ]------------------------------------------
+#
+, u.user_level
+#
+#-----[ FIND ]------------------------------------------
+#
+			$style_color = '';
+			if ( $row['user_level'] == ADMIN )
+			{
+				$username = '<b style="color:#' . $theme['fontcolor3'] . '">' . $username . '</b>';
+			}
+			else if ( $row['user_level'] == MOD )
+			{
+				$username = '<b style="color:#' . $theme['fontcolor2'] . '">' . $username . '</b>';
+			}
+#
+#-----[ REPLACE WITH ]------------------------------------------
+#
+			// Start add - User Class Mod
+			switch ( $row['user_level'] )
+			{
+				case ADMIN:
+					$username_color = '<strong>' . $username . '</strong>';
+					$style_color = ($row['user_id'] == 2) ? ' style="color: #' . $theme['color_founder'] . '"' : ' style="color: #' . $theme['color_admin'] . '"';
+					break;
+				case MAIN_MOD:
+					$username_color = '<strong>' . $username . '</strong>';
+					$style_color = ' style="color: #' . $theme['color_main_mod'] . '"';
+					break;
+				case MOD:
+					$username_color = '<strong>' . $username . '</strong>';
+					$style_color = ' style="color: #' . $theme['color_mod'] . '"';
+					break;
+				case SUPPORT:
+					$username_color = '<strong>' . $username . '</strong>';
+					$style_color = ' style="color: #' . $theme['color_support'] . '"';
+					break;
+				case VIP:
+					$username_color = '<strong>' . $username . '</strong>';
+					$style_color = ' style="color: #' . $theme['color_vip'] . '"';
+					break;
+				case BOT:
+					$username_color = '<strong>' . $username . '</strong>';
+					$style_color = ' style="color: #' . $theme['color_bot'] . '"';
+					break;
+				case USER:
+					$username_color = '<strong>' . $username . '</strong>';
+					$style_color = ' style="color: #' . $theme['color_user'] . '"';
+					break;
+				default:
+					$username_color = $username;
+					$style_color = '';
+					break;
+			}
+			$username_color = '<a href="' . append_sid("profile.$phpEx?mode=viewprofile&amp;" . POST_USERS_URL . '=' . $user_id) . '"' . $style_color . '>' . $username_color . '</a>';
+			// End add - User Class Mod
+#
+#-----[ FIND ]------------------------------------------
+#
+				$username = '<i>' . $username . '</i>';
+#
+#-----[ REPLACE WITH ]------------------------------------------
+#
+				$username_color = '<em>' . $username_color . '</em>';
+#
+#-----[ FIND ]------------------------------------------
+#
+			$username = $lang['Guest'];
+#
+#-----[ REPLACE WITH ]------------------------------------------
+#
+			$username_color = $lang['Guest'];
+#
+#-----[ FIND ]------------------------------------------
+#
+				case PAGE_FAQ:
+					$location = $lang['Viewing_FAQ'];
+					$location_url = "faq.$phpEx";
+					break;
+#
+#-----[ AFTER, ADD ]------------------------------------------
+#
+				case PAGE_USER_LEVEL:
+					$location = $lang['Viewing_level_list'];
+					$location_url = "user_level.$phpEx";
+					break;
+#
+#-----[ FIND ]------------------------------------------
+#
+			'USERNAME' => $username,
+#
+#-----[ REPLACE WITH ]------------------------------------------
+#
+			'USERNAME' => $username_color,
+#
+#-----[ FIND ]------------------------------------------
+#
+			'U_USER_PROFILE' => append_sid("profile.$phpEx?mode=viewprofile&amp;" . POST_USERS_URL . '=' . $user_id),
+#
+#-----[ REPLACE WITH ]------------------------------------------
+#
+			//'U_USER_PROFILE' => append_sid("profile.$phpEx?mode=viewprofile&amp;" . POST_USERS_URL . '=' . $user_id),
+#
+#-----[ OPEN ]------------------------------------------
+#
+includes/auth.php
+
+#
+#-----[ FIND ]------------------------------------------
+#
+	$is_admin = ( $userdata['user_level'] == ADMIN && $userdata['session_logged_in'] ) ? TRUE : 0;
+#
+#-----[ AFTER, ADD ]------------------------------------------
+#
+	// Start add - User Level Mod
+	$is_main_mod = ( $userdata['user_level'] == '3' && $userdata['session_logged_in'] ) ? TRUE : 0;
+	$is_support = ( $userdata['user_level'] == '4' && $userdata['session_logged_in'] ) ? TRUE : 0;
+	$is_vip = ( $userdata['user_level'] == '5' && $userdata['session_logged_in'] ) ? TRUE : 0;
+	$is_bot = ( $userdata['user_level'] == '99' && $userdata['session_logged_in'] ) ? TRUE : 0;
+	// End add - User Level Mod
+#
+#-----[ FIND ]------------------------------------------
+#
+				case AUTH_REG:
+					$auth_user[$key] = ( $userdata['session_logged_in'] ) ? TRUE : 0;
+					$auth_user[$key . '_type'] = $lang['Auth_Registered_Users'];
+					break;
+#
+#-----[ AFTER, ADD ]------------------------------------------
+#
+
+				case AUTH_BOT:
+					$auth_user[$key] = ( $userdata['session_logged_in'] ) ? auth_check_user(AUTH_MOD, 'auth_mod', $u_access, $is_bot || $is_vip || $is_support || $is_main_mod || $is_admin) : 0;
+					$auth_user[$key . '_type'] = $lang['Auth_Bots'];
+					break;
+
+				case AUTH_VIP:
+					$auth_user[$key] = ( $userdata['session_logged_in'] ) ? auth_check_user(AUTH_MOD, 'auth_mod', $u_access, $is_vip || $is_support || $is_main_mod || $is_admin) : 0;
+					$auth_user[$key . '_type'] = $lang['Auth_VIP'];
+					break;
+
+				case AUTH_SUPPORT:
+					$auth_user[$key] = ( $userdata['session_logged_in'] ) ? auth_check_user(AUTH_MOD, 'auth_mod', $u_access, $is_support || $is_main_mod || $is_admin) : 0;
+					$auth_user[$key . '_type'] = $lang['Auth_Supporters'];
+					break;
+#
+#-----[ FIND ]------------------------------------------
+#
+				case AUTH_ACL:
+					$auth_user[$key] = ( $userdata['session_logged_in'] )
+#
+#-----[ IN-LINE FIND ]------------------------------------------
+#
+$u_access,
+#
+#-----[ IN-LINE AFTER, ADD ]------------------------------------------
+#
+ $is_main_mod ||
+#
+#-----[ FIND ]------------------------------------------
+#
+				case AUTH_MOD:
+					$auth_user[$key] = ( $userdata['session_logged_in'] )
+#
+#-----[ IN-LINE FIND ]------------------------------------------
+#
+$u_access,
+#
+#-----[ IN-LINE AFTER, ADD ]------------------------------------------
+#
+ $is_main_mod ||
+#
+#-----[ FIND ]------------------------------------------
+#
+				case AUTH_ADMIN:
+					$auth_user[$key] = $is_admin;
+#
+#-----[ BEFORE, ADD ]------------------------------------------
+#
+				case AUTH_MAIN_MOD:
+					$auth_user[$key] = $is_main_mod || $is_admin;
+					$auth_user[$key . '_type'] = $lang['Auth_Main_Moderators'];
+					break;
+
+#
+#-----[ FIND ]------------------------------------------
+#
+					case AUTH_REG:
+						$auth_user[$f_forum_id][$key] = ( $userdata['session_logged_in'] ) ? TRUE : 0;
+						$auth_user[$f_forum_id][$key . '_type'] = $lang['Auth_Registered_Users'];
+						break;
+#
+#-----[ AFTER, ADD ]------------------------------------------
+#
+
+					case AUTH_BOT:
+						$auth_user[$f_forum_id][$key] = ( $userdata['session_logged_in'] ) ? auth_check_user(AUTH_MOD, 'auth_mod', $u_access[$f_forum_id], $is_bot || $is_vip || $is_support || $is_main_mod || $is_admin) : 0;
+						$auth_user[$f_forum_id][$key . '_type'] = $lang['Auth_Bots'];
+						break;
+
+					case AUTH_VIP:
+						$auth_user[$f_forum_id][$key] = ( $userdata['session_logged_in'] ) ? auth_check_user(AUTH_MOD, 'auth_mod', $u_access[$f_forum_id], $is_vip || $is_support || $is_main_mod || $is_admin) : 0;
+						$auth_user[$f_forum_id][$key . '_type'] = $lang['Auth_VIP'];
+						break;
+
+					case AUTH_SUPPORT:
+						$auth_user[$f_forum_id][$key] = ( $userdata['session_logged_in'] ) ? auth_check_user(AUTH_MOD, 'auth_mod', $u_access[$f_forum_id], $is_support || $is_main_mod || $is_admin) : 0;
+						$auth_user[$f_forum_id][$key . '_type'] = $lang['Auth_Supporters'];
+						break;
+#
+#-----[ FIND ]------------------------------------------
+#
+					case AUTH_ACL:
+						$auth_user[$f_forum_id][$key] = ( $userdata['session_logged_in'] )
+#
+#-----[ IN-LINE FIND ]------------------------------------------
+#
+$u_access[$f_forum_id],
+#
+#-----[ IN-LINE AFTER, ADD ]------------------------------------------
+#
+ $is_main_mod ||
+#
+#-----[ FIND ]------------------------------------------
+#
+					case AUTH_MOD:
+						$auth_user[$f_forum_id][$key] = ( $userdata['session_logged_in'] )
+#
+#-----[ IN-LINE FIND ]------------------------------------------
+#
+$u_access[$f_forum_id],
+#
+#-----[ IN-LINE AFTER, ADD ]------------------------------------------
+#
+ $is_main_mod ||
+#
+#-----[ FIND ]------------------------------------------
+#
+					case AUTH_ADMIN:
+						$auth_user[$f_forum_id][$key] = $is_admin;
+#
+#-----[ BEFORE, ADD ]------------------------------------------
+#
+					case AUTH_MAIN_MOD:
+						$auth_user[$f_forum_id][$key] = $is_main_mod || $is_admin;
+						$auth_user[$f_forum_id][$key . '_type'] = $lang['Auth_Main_Moderators'];
+						break;
+
+#
+#-----[ FIND ]------------------------------------------
+#
+		$auth_user['auth_mod'] = ( $userdata['session_logged_in'] )
+#
+#-----[ IN-LINE FIND ]------------------------------------------
+#
+$u_access,
+#
+#-----[ IN-LINE AFTER, ADD ]------------------------------------------
+#
+ $is_main_mod ||
+#
+#-----[ FIND ]------------------------------------------
+#
+			$auth_user[$f_forum_id]['auth_mod'] = ( $userdata['session_logged_in'] )
+#
+#-----[ IN-LINE FIND ]------------------------------------------
+#
+$u_access[$f_forum_id],
+#
+#-----[ IN-LINE AFTER, ADD ]------------------------------------------
+#
+ $is_main_mod ||
+#
+#-----[ FIND ]------------------------------------------
+#
+				case AUTH_MOD:
+					$result = $result || $u_access[$j]['auth_mod'];
+#
+#-----[ AFTER, ADD ]------------------------------------------
+#
+
+				case AUTH_MAIN_MOD:
+					$result = $result || $is_main_mod || $is_admin;
+					break;
+#
+#-----[ OPEN ]------------------------------------------
+#
+includes/constants.php
+
+#
+#-----[ FIND ]------------------------------------------
+#
+define('USER', 0);
+define('ADMIN', 1);
+define('MOD', 2);
+#
+#-----[ AFTER, ADD ]------------------------------------------
+#
+define('MAIN_MOD', 3);
+define('SUPPORT', 4);
+define('VIP', 5);
+define('BOT', 99);
+#
+#-----[ FIND ]------------------------------------------
+#
+define('PAGE_GROUPCP', -11);
+#
+#-----[ AFTER, ADD ]------------------------------------------
+#
+define('PAGE_LEVEL_LIST', -99);
+#
+#-----[ FIND ]------------------------------------------
+#
+define('AUTH_ADMIN', 5);
+#
+#-----[ REPLACE WITH ]------------------------------------------
+#
+define('AUTH_MAIN_MOD', 4);
+define('AUTH_ADMIN', 5);
+define('AUTH_SUPPORT', 6);
+define('AUTH_VIP', 7);
+define('AUTH_BOT', 8);
+#
+#-----[ OPEN ]------------------------------------------
+#
+includes/functions.php
+#
+#-----[ FIND ]------------------------------------------
+#
+		case 'newestuser':
+			$sql = "SELECT user_id, username
+#
+#-----[ IN-LINE FIND ]------------------------------------------
+#
+username
+#
+#-----[ IN-LINE AFTER, ADD ]------------------------------------------
+#
+, user_level
+#
+#-----[ OPEN ]------------------------------------------
+#
+includes/page_header.php
+
+#
+#-----[ FIND ]------------------------------------------
+#
+				$style_color = '';
+				if ( $row['user_level'] == ADMIN )
+				{
+					$row['username'] = '<b>' . $row['username'] . '</b>';
+					$style_color = 'style="color:#' . $theme['fontcolor3'] . '"';
+				}
+				else if ( $row['user_level'] == MOD )
+				{
+					$row['username'] = '<b>' . $row['username'] . '</b>';
+					$style_color = 'style="color:#' . $theme['fontcolor2'] . '"';
+				}
+#
+#-----[ REPLACE WITH ]------------------------------------------
+#
+				// Start add - User Level Mod
+				$style_color = '';
+				if ( $row['user_level'] == ADMIN )
+				{
+					$row['username'] = '<strong>' . $row['username'] . '</strong>';
+					$style_color = ($row['user_id'] == 2) ? ' style="color: #' . $theme['color_founder'] . '"' : ' style="color: #' . $theme['color_admin'] . '"';
+				}
+				else if ( $row['user_level'] == MAIN_MOD )
+				{
+					$row['username'] = '<strong>' . $row['username'] . '</strong>';
+					$style_color = ' style="color: #' . $theme['color_main_mod'] . '"';
+				}
+				else if ( $row['user_level'] == MOD )
+				{
+					$row['username'] = '<strong>' . $row['username'] . '</strong>';
+					$style_color = ' style="color: #' . $theme['color_mod'] . '"';
+				}
+				else if ( $row['user_level'] == SUPPORT )
+				{
+					$row['username'] = '<strong>' . $row['username'] . '</strong>';
+					$style_color = ' style="color: #' . $theme['color_support'] . '"';
+				}
+				else if ( $row['user_level'] == VIP )
+				{
+					$row['username'] = '<strong>' . $row['username'] . '</strong>';
+					$style_color = ' style="color: #' . $theme['color_vip'] . '"';
+				}
+				else if ( $row['user_level'] == BOT )
+				{
+					$row['username'] = '<strong>' . $row['username'] . '</strong>';
+					$style_color = ' style="color: #' . $theme['color_bot'] . '"';
+				}
+				else if ( $row['user_level'] == USER )
+				{
+					$row['username'] = '<strong>' . $row['username'] . '</strong>';
+					$style_color = ' style="color: #' . $theme['color_user'] . '"';
+				}
+				// End add - User Level Mod
+#
+#-----[ FIND ]------------------------------------------
+#
+	'L_WHOSONLINE_ADMIN' => sprintf($lang['Admin_online_color'], '<span style="color:#' . $theme['fontcolor3'] . '">', '</span>'),
+	'L_WHOSONLINE_MOD' => sprintf($lang['Mod_online_color'], '<span style="color:#' . $theme['fontcolor2'] . '">', '</span>'),
+#
+#-----[ REPLACE WITH ]------------------------------------------
+#
+	'L_WHOSONLINE_FOUNDER' => sprintf($lang['Founder_online_color'], '<a href="' . append_sid("level_list.$phpEx?level=100") . '" style="color: #' . $theme['color_founder'] . '">', '</a>'),
+	'L_WHOSONLINE_ADMIN' => sprintf($lang['Admin_online_color'], '<a href="' . append_sid("level_list.$phpEx?level=1") . '" style="color: #' . $theme['color_admin'] . '">', '</a>'),
+	'L_WHOSONLINE_MOD' => sprintf($lang['Mod_online_color'], '<a href="' . append_sid("level_list.$phpEx?level=2") . '" style="color: #' . $theme['color_mod'] . '">', '</a>'),
+#
+#-----[ FIND ]------------------------------------------
+#
+	'T_SPAN_CLASS3' => $theme['span_class3'],
+#
+#-----[ AFTER, ADD ]------------------------------------------
+#
+	// Start add - User Level Mod
+	'L_LEGEND' => $lang['Legend'],
+	'L_WHOSONLINE_MAIN_MOD' => sprintf($lang['Main_Mod_online_color'], '<a href="' . append_sid("level_list.$phpEx?level=3") . '" style="color: #' . $theme['color_main_mod'] . '">', '</a>'),
+	'L_WHOSONLINE_SUPPORT' => sprintf($lang['Support_online_color'], '<a href="' . append_sid("level_list.$phpEx?level=4") . '" style="color: #' . $theme['color_support'] . '">', '</a>'),
+	'L_WHOSONLINE_VIP' => sprintf($lang['VIP_online_color'], '<a href="' . append_sid("level_list.$phpEx?level=5") . '" style="color: #' . $theme['color_vip'] . '">', '</a>'),
+	'L_WHOSONLINE_BOT' => sprintf($lang['Bot_online_color'], '<a href="' . append_sid("level_list.$phpEx?level=99") . '" style="color: #' . $theme['color_bot'] . '">', '</a>'),
+	'L_WHOSONLINE_USER' => sprintf($lang['User_online_color'], '<a href="' . append_sid("level_list.$phpEx?level=0") . '" style="color: #' . $theme['color_user'] . '">', '</a>'),
+	'T_COLOR_ADMIN' => '#' . $theme['color_admin'],
+	'T_COLOR_MAIN_MOD' => '#' . $theme['color_main_mod'],
+	'T_COLOR_MOD' => '#' . $theme['color_mod'],
+	'T_COLOR_SUPPORT' => '#' . $theme['color_support'],
+	'T_COLOR_VIP' => '#' . $theme['color_vip'],
+	'T_COLOR_BOT' => '#' . $theme['color_bot'],
+	'T_COLOR_USER' => '#' . $theme['color_user'],
+	// End add - User Level Mod
+#
+#-----[ OPEN ]------------------------------------------
+#
+includes/topic_review.php
+
+#
+#-----[ FIND ]------------------------------------------
+#
+	$sql = "SELECT u.username, u.user_id
+#
+#-----[ IN-LINE FIND ]------------------------------------------
+#
+u.user_id
+#
+#-----[ IN-LINE AFTER, ADD ]------------------------------------------
+#
+, u.user_level
+#
+#-----[ FIND ]------------------------------------------
+#
+			$poster = $row['username'];
+#
+#-----[ AFTER, ADD ]------------------------------------------
+#
+			// Start add - User Class Mod
+			switch ( $row['user_level'] )
+			{
+				case ADMIN:
+					$poster_name = ($row['user_id'] == 2) ? '<span style="color: #' . $theme['color_founder'] . '"><strong>' . $poster . '</strong></span>' : '<span style="color: #' . $theme['color_admin'] . '"><strong>' . $poster . '</strong></span>';
+					break;
+				case MAIN_MOD:
+					$poster_name = '<span style="color: #' . $theme['color_main_mod'] . '"><strong>' . $poster . '</strong></span>';
+					break;
+				case MOD:
+					$poster_name = '<span style="color: #' . $theme['color_mod'] . '"><strong>' . $poster . '</strong></span>';
+					break;
+				case SUPPORT:
+					$poster_name = '<span style="color: #' . $theme['color_support'] . '"><strong>' . $poster . '</strong></span>';
+					break;
+				case VIP:
+					$poster_name = '<span style="color: #' . $theme['color_vip'] . '"><strong>' . $poster . '</strong></span>';
+					break;
+				case BOT:
+					$poster_name = '<span style="color: #' . $theme['color_bot'] . '"><strong>' . $poster . '</strong></span>';
+					break;
+				case USER:
+					$poster_name = '<span style="color: #' . $theme['color_user'] . '"><strong>' . $poster . '</strong></span>';
+					break;
+				default:
+					$poster_name = $poster;
+					break;
+			}
+			// End add - User Class Mod
+#
+#-----[ FIND ]------------------------------------------
+#
+				'POSTER_NAME' => $poster,
+#
+#-----[ REPLACE WITH ]------------------------------------------
+#
+				'POSTER_NAME' => $poster_name,
+#
+#-----[ OPEN ]------------------------------------------
+#
+includes/usercp_viewprofile.php
+
+#
+#-----[ FIND ]------------------------------------------
+#
+//
+// Generate page
+//
+$page_title = $lang['Viewing_profile'];
+include($phpbb_root_path . 'includes/page_header.'.$phpEx);
+#
+#-----[ BEFORE, ADD ]------------------------------------------
+#
+// Start add - User Class Mod
+switch ( $profiledata['user_level'] )
+{
+	case ADMIN:
+		$username_color = ($profiledata['user_id'] == 2) ? '<span style="color: #' . $theme['color_founder'] . '"><strong>' . $profiledata['username'] . '</strong></span>' : '<span style="color: #' . $theme['color_admin'] . '"><strong>' . $profiledata['username'] . '</strong></span>';
+		break;
+	case MAIN_MOD:
+		$username_color = '<span style="color: #' . $theme['color_main_mod'] . '"><strong>' . $profiledata['username'] . '</strong></span>';
+		break;
+	case MOD:
+		$username_color = '<span style="color: #' . $theme['color_mod'] . '"><strong>' . $profiledata['username'] . '</strong></span>';
+		break;
+	case SUPPORT:
+		$username_color = '<span style="color: #' . $theme['color_support'] . '"><strong>' . $profiledata['username'] . '</strong></span>';
+		break;
+	case VIP:
+		$username_color = '<span style="color: #' . $theme['color_vip'] . '"><strong>' . $profiledata['username'] . '</strong></span>';
+		break;
+	case BOT:
+		$username_color = '<span style="color: #' . $theme['color_bot'] . '"><strong>' . $profiledata['username'] . '</strong></span>';
+		break;
+	case USER:
+		$username_color = '<span style="color: #' . $theme['color_user'] . '"><strong>' . $profiledata['username'] . '</strong></span>';
+		break;
+	default:
+		$username_color = $profiledata['username'];
+		break;
+}
+// End add - User Class Mod
+#
+#-----[ FIND ]------------------------------------------
+#
+	'USERNAME' => $profiledata['username'],
+#
+#-----[ REPLACE WITH ]------------------------------------------
+#
+	'USERNAME' => $username_color,
+#
+#-----[ FIND ]------------------------------------------
+#
+	'L_VIEWING_PROFILE' => sprintf($lang['Viewing_user_profile'], $profiledata['username']), 
+#
+#-----[ REPLACE WITH ]------------------------------------------
+#
+	'L_VIEWING_PROFILE' => sprintf($lang['Viewing_user_profile'], $username_color),
+#
+#-----[ FIND ]------------------------------------------
+#
+	'L_ABOUT_USER' => sprintf($lang['About_user'], $profiledata['username']), 
+#
+#-----[ REPLACE WITH ]------------------------------------------
+#
+	'L_ABOUT_USER' => sprintf($lang['About_user'], $username_color),
+#
+#-----[ FIND ]------------------------------------------
+#
+	'L_SEARCH_USER_POSTS' => sprintf($lang['Search_user_posts'], $profiledata['username']), 
+#
+#-----[ REPLACE WITH ]------------------------------------------
+#
+	'L_SEARCH_USER_POSTS' => sprintf($lang['Search_user_posts'], $username_color),
+#
+#-----[ OPEN ]------------------------------------------
+#
+admin/admin_forumauth.php
+
+#
+#-----[ FIND ]------------------------------------------
+#
+	0  => array(AUTH_ALL, AUTH_ALL, AUTH_ALL, AUTH_ALL, AUTH_REG, AUTH_REG, AUTH_MOD, AUTH_MOD, AUTH_REG, AUTH_REG),
+	1  => array(AUTH_ALL, AUTH_ALL, AUTH_REG, AUTH_REG, AUTH_REG, AUTH_REG, AUTH_MOD, AUTH_MOD, AUTH_REG, AUTH_REG),
+	2  => array(AUTH_REG, AUTH_REG, AUTH_REG, AUTH_REG, AUTH_REG, AUTH_REG, AUTH_MOD, AUTH_MOD, AUTH_REG, AUTH_REG),
+	3  => array(AUTH_ALL, AUTH_ACL, AUTH_ACL, AUTH_ACL, AUTH_ACL, AUTH_ACL, AUTH_ACL, AUTH_MOD, AUTH_ACL, AUTH_ACL),
+	4  => array(AUTH_ACL, AUTH_ACL, AUTH_ACL, AUTH_ACL, AUTH_ACL, AUTH_ACL, AUTH_ACL, AUTH_MOD, AUTH_ACL, AUTH_ACL),
+	5  => array(AUTH_ALL, AUTH_MOD, AUTH_MOD, AUTH_MOD, AUTH_MOD, AUTH_MOD, AUTH_MOD, AUTH_MOD, AUTH_MOD, AUTH_MOD),
+	6  => array(AUTH_MOD, AUTH_MOD, AUTH_MOD, AUTH_MOD, AUTH_MOD, AUTH_MOD, AUTH_MOD, AUTH_MOD, AUTH_MOD, AUTH_MOD),
+#
+#-----[ REPLACE WITH ]------------------------------------------
+#
+	0  => array(AUTH_ALL, AUTH_ALL, AUTH_ALL, AUTH_ALL, AUTH_REG, AUTH_REG, AUTH_MOD, AUTH_MOD, AUTH_REG, AUTH_REG),
+	1  => array(AUTH_ALL, AUTH_ALL, AUTH_REG, AUTH_REG, AUTH_REG, AUTH_REG, AUTH_MOD, AUTH_MOD, AUTH_REG, AUTH_REG),
+	2  => array(AUTH_REG, AUTH_REG, AUTH_REG, AUTH_REG, AUTH_REG, AUTH_REG, AUTH_MOD, AUTH_MOD, AUTH_REG, AUTH_REG),
+	3  => array(AUTH_ALL, AUTH_BOT, AUTH_BOT, AUTH_BOT, AUTH_BOT, AUTH_BOT, AUTH_BOT, AUTH_MOD, AUTH_BOT, AUTH_BOT),
+	4  => array(AUTH_BOT, AUTH_BOT, AUTH_BOT, AUTH_BOT, AUTH_BOT, AUTH_BOT, AUTH_BOT, AUTH_MOD, AUTH_BOT, AUTH_BOT),
+	5  => array(AUTH_ALL, AUTH_VIP, AUTH_VIP, AUTH_VIP, AUTH_VIP, AUTH_VIP, AUTH_VIP, AUTH_MOD, AUTH_VIP, AUTH_VIP),
+	6  => array(AUTH_VIP, AUTH_VIP, AUTH_VIP, AUTH_VIP, AUTH_VIP, AUTH_VIP, AUTH_VIP, AUTH_MOD, AUTH_VIP, AUTH_VIP),
+	7  => array(AUTH_ALL, AUTH_SUPPORT, AUTH_SUPPORT, AUTH_SUPPORT, AUTH_SUPPORT, AUTH_SUPPORT, AUTH_SUPPORT, AUTH_MOD, AUTH_SUPPORT, AUTH_SUPPORT),
+	8  => array(AUTH_SUPPORT, AUTH_SUPPORT, AUTH_SUPPORT, AUTH_SUPPORT, AUTH_SUPPORT, AUTH_SUPPORT, AUTH_SUPPORT, AUTH_MOD, AUTH_SUPPORT, AUTH_SUPPORT),
+	9  => array(AUTH_ALL, AUTH_ACL, AUTH_ACL, AUTH_ACL, AUTH_ACL, AUTH_ACL, AUTH_ACL, AUTH_MOD, AUTH_ACL, AUTH_ACL),
+	10 => array(AUTH_ACL, AUTH_ACL, AUTH_ACL, AUTH_ACL, AUTH_ACL, AUTH_ACL, AUTH_ACL, AUTH_MOD, AUTH_ACL, AUTH_ACL),
+	11 => array(AUTH_ALL, AUTH_MOD, AUTH_MOD, AUTH_MOD, AUTH_MOD, AUTH_MOD, AUTH_MOD, AUTH_MOD, AUTH_MOD, AUTH_MOD),
+	12 => array(AUTH_MOD, AUTH_MOD, AUTH_MOD, AUTH_MOD, AUTH_MOD, AUTH_MOD, AUTH_MOD, AUTH_MOD, AUTH_MOD, AUTH_MOD),
+	13 => array(AUTH_ALL, AUTH_MAIN_MOD, AUTH_MAIN_MOD, AUTH_MAIN_MOD, AUTH_MAIN_MOD, AUTH_MAIN_MOD, AUTH_MAIN_MOD, AUTH_MAIN_MOD, AUTH_MAIN_MOD, AUTH_MAIN_MOD),
+	14 => array(AUTH_MAIN_MOD, AUTH_MAIN_MOD, AUTH_MAIN_MOD, AUTH_MAIN_MOD, AUTH_MAIN_MOD, AUTH_MAIN_MOD, AUTH_MAIN_MOD, AUTH_MAIN_MOD, AUTH_MAIN_MOD, AUTH_MAIN_MOD)
+#
+#-----[ FIND ]------------------------------------------
+#
+$simple_auth_types = array($lang['Public'], $lang['Registered'],
+#
+#-----[ IN-LINE FIND ]------------------------------------------
+#
+$lang['Registered'] . ' [' . $lang['Hidden'] . ']'
+#
+#-----[ IN-LINE AFTER, ADD ]------------------------------------------
+#
+, $lang['Bots'], $lang['Bots'] . ' [' . $lang['Hidden'] . ']' , $lang['VIP'], $lang['VIP'] . ' [' . $lang['Hidden'] . ']', $lang['Supporters'], $lang['Supporters'] . ' [' . $lang['Hidden'] . ']'
+#
+#-----[ IN-LINE FIND ]------------------------------------------
+#
+);
+#
+#-----[ IN-LINE BEFORE, ADD ]------------------------------------------
+#
+, $lang['Main_Moderators'], $lang['Main_Moderators'] . ' [' . $lang['Hidden'] . ']'
+#
+#-----[ FIND ]------------------------------------------
+#
+$forum_auth_levels = array('ALL', 'REG'
+#
+#-----[ IN-LINE FIND ]------------------------------------------
+#
+'REG'
+#
+#-----[ IN-LINE AFTER, ADD ]------------------------------------------
+#
+, 'BOT', 'VIP', 'SUPPORT'
+#
+#-----[ IN-LINE FIND ]------------------------------------------
+#
+, 'ADMIN'
+#
+#-----[ IN-LINE BEFORE, ADD ]------------------------------------------
+#
+, 'MAIN_MOD'
+#
+#-----[ FIND ]------------------------------------------
+#
+$forum_auth_const = array(AUTH_ALL, AUTH_REG
+#
+#-----[ IN-LINE FIND ]------------------------------------------
+#
+AUTH_REG
+#
+#-----[ IN-LINE AFTER, ADD ]------------------------------------------
+#
+, AUTH_BOT, AUTH_VIP, AUTH_SUPPORT
+#
+#-----[ IN-LINE FIND ]------------------------------------------
+#
+, AUTH_ADMIN
+#
+#-----[ IN-LINE BEFORE, ADD ]------------------------------------------
+#
+, AUTH_MAIN_MOD
+#
+#-----[ OPEN ]------------------------------------------
+#
+admin/admin_styles.php
+
+#
+#-----[ FIND ]------------------------------------------
+#
+			$updated_name['span_class3_name'] = $HTTP_POST_VARS['span_class3_name'];
+#
+#-----[ AFTER, ADD ]------------------------------------------
+#
+			// Start add - User Level Mod
+			$updated['color_founder'] = $HTTP_POST_VARS['color_founder'];
+			$updated_name['color_founder_name'] = $HTTP_POST_VARS['color_founder_name'];
+			$updated['color_admin'] = $HTTP_POST_VARS['color_admin'];
+			$updated_name['color_admin_name'] = $HTTP_POST_VARS['color_admin_name'];
+			$updated['color_main_mod'] = $HTTP_POST_VARS['color_main_mod'];
+			$updated_name['color_main_mod_name'] = $HTTP_POST_VARS['color_main_mod_name'];
+			$updated['color_mod'] = $HTTP_POST_VARS['color_mod'];
+			$updated_name['color_mod_name'] = $HTTP_POST_VARS['color_mod_name'];
+			$updated['color_support'] = $HTTP_POST_VARS['color_support'];
+			$updated_name['color_support_name'] = $HTTP_POST_VARS['color_support_name'];
+			$updated['color_vip'] = $HTTP_POST_VARS['color_vip'];
+			$updated_name['color_vip_name'] = $HTTP_POST_VARS['color_vip_name'];
+			$updated['color_bot'] = $HTTP_POST_VARS['color_bot'];
+			$updated_name['color_bot_name'] = $HTTP_POST_VARS['color_bot_name'];
+			$updated['color_user'] = $HTTP_POST_VARS['color_user'];
+			$updated_name['color_user_name'] = $HTTP_POST_VARS['color_user_name'];
+			// End add - User Level Mod
+#
+#-----[ FIND ]------------------------------------------
+#
+				"SPAN_CLASS3_NAME" => $selected['span_class3_name'],
+#
+#-----[ AFTER, ADD ]------------------------------------------
+#
+				// Start add - User Level Mod
+				"L_COLOR_FOUNDER" => $lang['color_founder'],
+				"L_COLOR_ADMIN" => $lang['color_admin'],
+				"L_COLOR_MAIN_MOD" => $lang['color_main_mod'],
+				"L_COLOR_MOD" => $lang['color_mod'],
+				"L_COLOR_SUPPORT" => $lang['color_support'],
+				"L_COLOR_VIP" => $lang['color_vip'],
+				"L_COLOR_BOT" => $lang['color_bot'],
+				"L_COLOR_USER" => $lang['color_user'],
+				"COLOR_FOUNDER" => $selected['color_founder'],
+				"COLOR_ADMIN" => $selected['color_admin'],
+				"COLOR_MAIN_MOD" => $selected['color_main_mod'],
+				"COLOR_MOD" => $selected['color_mod'],
+				"COLOR_SUPPORT" => $selected['color_support'],
+				"COLOR_VIP" => $selected['color_vip'],
+				"COLOR_BOT" => $selected['color_bot'],
+				"COLOR_USER" => $selected['color_user'],
+				"COLOR_FOUNDER_NAME" => $selected['color_founder_name'],
+				"COLOR_ADMIN_NAME" => $selected['color_admin_name'],
+				"COLOR_MAIN_MOD_NAME" => $selected['color_main_mod_name'],
+				"COLOR_MOD_NAME" => $selected['color_mod_name'],
+				"COLOR_SUPPORT_NAME" => $selected['color_support_name'],
+				"COLOR_VIP_NAME" => $selected['color_vip_name'],
+				"COLOR_BOT_NAME" => $selected['color_bot_name'],
+				"COLOR_USER_NAME" => $selected['color_user_name'],
+				// End add - User Level Mod
+#
+#-----[ OPEN ]------------------------------------------
+#
+admin/admin_ug_auth.php
+
+#
+#-----[ FIND ]------------------------------------------
+#
+				case AUTH_MOD:
+					$result = $result || $u_access[$j]['auth_mod'];
+#
+#-----[ AFTER, ADD ]------------------------------------------
+#
+
+				case AUTH_MAIN_MOD:
+					$result = $result || $is_main_mod;
+					break;
+#
+#-----[ FIND ]------------------------------------------
+#
+		$message = $lang['Auth_updated'] . '<br /><br />' . sprintf($lang['Click_return_userauth'], '<a href="' . append_sid("admin_ug_auth.$phpEx?mode=$mode") . '">', '</a>') . '<br /><br />' . sprintf($lang['Click_return_admin_index'], '<a href="' . append_sid("index.$phpEx?pane=right") . '">', '</a>');
+		message_die(GENERAL_MESSAGE, $message);
+	}
+#
+#-----[ AFTER, ADD ]------------------------------------------
+#
+	// Start add - User Level Mod
+	else if ( $mode == 'user' && $HTTP_POST_VARS['userlevel'] == 'main_mod' && $user_level != '3' )
+	{
+		// Make user a main moderator (if already user)
+		if ( $userdata['user_id'] != $user_id )
+		{
+			$sql = "UPDATE " . USERS_TABLE . "
+				SET user_level = 3
+				WHERE user_id = $user_id";
+			if ( !($result = $db->sql_query($sql)) )
+			{
+				message_die(GENERAL_ERROR, 'Could not update user level', '', __LINE__, __FILE__, $sql);
+			}
+
+			$sql = "DELETE FROM " . AUTH_ACCESS_TABLE . "
+				WHERE group_id = $group_id 
+					AND auth_mod = 0";
+			if ( !($result = $db->sql_query($sql)) )
+			{
+				message_die(GENERAL_ERROR, "Couldn't delete auth access info", "", __LINE__, __FILE__, $sql);
+			}
+
+			// Delete any entries in auth_access, they are not required if user is becoming a main mod
+			$sql = "UPDATE " . AUTH_ACCESS_TABLE . "
+				SET auth_view = 0, auth_read = 0, auth_post = 0, auth_reply = 0, auth_edit = 0, auth_delete = 0, auth_sticky = 0, auth_announce = 0
+				WHERE group_id = $group_id"; 
+			if ( !($result = $db->sql_query($sql)) )
+			{
+				message_die(GENERAL_ERROR, "Couldn't update auth access", "", __LINE__, __FILE__, $sql);
+			}
+		}
+		$message = $lang['Auth_updated'] . '<br /><br />' . sprintf($lang['Click_return_userauth'], '<a href="' . append_sid("admin_ug_auth.$phpEx?mode=$mode") . '">', '</a>') . '<br /><br />' . sprintf($lang['Click_return_admin_index'], '<a href="' . append_sid("index.$phpEx?pane=right") . '">', '</a>');
+		message_die(GENERAL_MESSAGE, $message);
+	}
+	// Support Team
+	else if ( $mode == 'user' && $HTTP_POST_VARS['userlevel'] == 'support' && $user_level != '4' )
+	{
+		// Make user a supporter (if already user)
+		if ( $userdata['user_id'] != $user_id )
+		{
+			$sql = "UPDATE " . USERS_TABLE . "
+				SET user_level = 4
+				WHERE user_id = $user_id";
+			if ( !($result = $db->sql_query($sql)) )
+			{
+				message_die(GENERAL_ERROR, 'Could not update user level', '', __LINE__, __FILE__, $sql);
+			}
+		}
+		$message = $lang['Auth_updated'] . '<br /><br />' . sprintf($lang['Click_return_userauth'], '<a href="' . append_sid("admin_ug_auth.$phpEx?mode=$mode") . '">', '</a>') . '<br /><br />' . sprintf($lang['Click_return_admin_index'], '<a href="' . append_sid("index.$phpEx?pane=right") . '">', '</a>');
+		message_die(GENERAL_MESSAGE, $message);
+	}
+	// V.I.P
+	else if ( $mode == 'user' && $HTTP_POST_VARS['userlevel'] == 'vip' && $user_level != '5' )
+	{
+		// Make user a VIP (if already user)
+		if ( $userdata['user_id'] != $user_id )
+		{
+			$sql = "UPDATE " . USERS_TABLE . "
+				SET user_level = 5
+				WHERE user_id = $user_id";
+			if ( !($result = $db->sql_query($sql)) )
+			{
+				message_die(GENERAL_ERROR, 'Could not update user level', '', __LINE__, __FILE__, $sql);
+			}
+		}
+		$message = $lang['Auth_updated'] . '<br /><br />' . sprintf($lang['Click_return_userauth'], '<a href="' . append_sid("admin_ug_auth.$phpEx?mode=$mode") . '">', '</a>') . '<br /><br />' . sprintf($lang['Click_return_admin_index'], '<a href="' . append_sid("index.$phpEx?pane=right") . '">', '</a>');
+		message_die(GENERAL_MESSAGE, $message);
+	}
+	// Bot
+	else if ( $mode == 'user' && $HTTP_POST_VARS['userlevel'] == 'bot' && $user_level != '99' )
+	{
+		// Make user a bot (if already user)
+		if ( $userdata['user_id'] != $user_id )
+		{
+			$sql = "UPDATE " . USERS_TABLE . "
+				SET user_level = 99
+				WHERE user_id = $user_id";
+			if ( !($result = $db->sql_query($sql)) )
+			{
+				message_die(GENERAL_ERROR, 'Could not update user level', '', __LINE__, __FILE__, $sql);
+			}
+		}
+		$message = $lang['Auth_updated'] . '<br /><br />' . sprintf($lang['Click_return_userauth'], '<a href="' . append_sid("admin_ug_auth.$phpEx?mode=$mode") . '">', '</a>') . '<br /><br />' . sprintf($lang['Click_return_admin_index'], '<a href="' . append_sid("index.$phpEx?pane=right") . '">', '</a>');
+		message_die(GENERAL_MESSAGE, $message);
+	}
+	// End add - User Level Mod
+#
+#-----[ FIND ]------------------------------------------
+#
+		if ( $mode == 'user' && $HTTP_POST_VARS['userlevel'] == 'user'
+#
+#-----[ IN-LINE FIND ]------------------------------------------
+#
+$user_level == ADMIN
+#
+#-----[ IN-LINE REPLACE WITH ]------------------------------------------
+#
+( $user_level == '99' || $user_level == '5' || $user_level == '4' || $user_level == '3' || $user_level == '1' )
+#
+#-----[ FIND ]------------------------------------------
+#
+		//
+		// Update user level to mod for appropriate users
+		// 
+		$sql = "SELECT u.user_id 
+			FROM " . AUTH_ACCESS_TABLE . " aa, " . USER_GROUP_TABLE . " ug, " . USERS_TABLE . " u  
+			WHERE ug.group_id = aa.group_id 
+				AND u.user_id = ug.user_id 
+				AND ug.user_pending = 0
+				AND u.user_level NOT IN
+#
+#-----[ IN-LINE FIND ]------------------------------------------
+#
+" . MOD . "
+#
+#-----[ IN-LINE REPLACE WITH ]------------------------------------------
+# Bot, VIP, Supporter can be a MOD (ignore this if you don't want it)
+#
+" . BOT . ", " . VIP . ", " . SUPPORT . ", " . MOD . ", " . MAIN_MOD . "
+#
+#-----[ FIND ]------------------------------------------
+#
+		switch ( SQL_LAYER )
+		{
+			case 'postgresql':
+				$sql = "SELECT u.user_id 
+					FROM " . USERS_TABLE . " u, " . USER_GROUP_TABLE . " ug, " . AUTH_ACCESS_TABLE . " aa
+					WHERE ug.user_id = u.user_id 
+						AND aa.group_id = ug.group_id 
+						AND u.user_level NOT IN (" . USER . ", " . ADMIN . ")
+					GROUP BY u.user_id 
+					HAVING SUM(aa.auth_mod) = 0 
+					UNION (
+						SELECT u.user_id  
+						FROM " . USERS_TABLE . " u 
+						WHERE NOT EXISTS ( 
+							SELECT aa.auth_mod 
+							FROM " . USER_GROUP_TABLE . " ug, " . AUTH_ACCESS_TABLE . " aa 
+							WHERE ug.user_id = u.user_id 
+								AND aa.group_id = ug.group_id
+						)
+						AND u.user_level NOT IN (" . USER . ", " . ADMIN . ")  
+						GROUP BY u.user_id
+					)";
+				break;
+			case 'oracle':
+				$sql = "SELECT u.user_id 
+					FROM " . USERS_TABLE . " u, " . USER_GROUP_TABLE . " ug, " . AUTH_ACCESS_TABLE . " aa 
+					WHERE ug.user_id = u.user_id(+)
+						AND aa.group_id = ug.group_id(+) 
+						AND u.user_level NOT IN (" . USER . ", " . ADMIN . ")
+					GROUP BY u.user_id 
+					HAVING SUM(aa.auth_mod) = 0";
+				break;
+			default:
+				$sql = "SELECT u.user_id 
+					FROM ( ( " . USERS_TABLE . " u  
+					LEFT JOIN " . USER_GROUP_TABLE . " ug ON ug.user_id = u.user_id ) 
+					LEFT JOIN " . AUTH_ACCESS_TABLE . " aa ON aa.group_id = ug.group_id ) 
+					WHERE u.user_level NOT IN (" . USER . ", " . ADMIN . ")
+					GROUP BY u.user_id 
+					HAVING SUM(aa.auth_mod) = 0";
+				break;
+		}
+#
+#-----[ REPLACE WITH ]------------------------------------------
+#
+		switch ( SQL_LAYER )
+		{
+			case 'postgresql':
+				$sql = "SELECT u.user_id
+					FROM " . USERS_TABLE . " u, " . USER_GROUP_TABLE . " ug, " . AUTH_ACCESS_TABLE . " aa
+					WHERE ug.user_id = u.user_id
+					AND aa.group_id = ug.group_id
+					AND u.user_level NOT IN (" . USER . ", " . BOT . ", " . VIP . ", " . SUPPORT . ", " . MAIN_MOD . ", " . ADMIN . ")
+					GROUP BY u.user_id
+					HAVING SUM(aa.auth_mod) = 0
+					UNION ( SELECT u.user_id
+						FROM " . USERS_TABLE . " u
+						WHERE NOT EXISTS ( SELECT aa.auth_mod
+							FROM " . USER_GROUP_TABLE . " ug, " . AUTH_ACCESS_TABLE . " aa
+							WHERE ug.user_id = u.user_id
+							AND aa.group_id = ug.group_id )
+						AND u.user_level NOT IN (" . USER . ", " . BOT . ", " . VIP . ", " . SUPPORT . ", " . MAIN_MOD . ", " . ADMIN . ")
+						GROUP BY u.user_id )";
+				break;
+			case 'oracle':
+				$sql = "SELECT u.user_id
+					FROM " . USERS_TABLE . " u, " . USER_GROUP_TABLE . " ug, " . AUTH_ACCESS_TABLE . " aa
+					WHERE ug.user_id = u.user_id(+)
+					AND aa.group_id = ug.group_id(+)
+					AND u.user_level NOT IN (" . USER . ", " . BOT . ", " . VIP . ", " . SUPPORT . ", " . MAIN_MOD . ", " . ADMIN . ")
+					GROUP BY u.user_id HAVING SUM(aa.auth_mod) = 0";
+				break;
+			default:
+				$sql = "SELECT u.user_id
+					FROM ( ( " . USERS_TABLE . " u
+						LEFT JOIN " . USER_GROUP_TABLE . " ug ON ug.user_id = u.user_id )
+						LEFT JOIN " . AUTH_ACCESS_TABLE . " aa ON aa.group_id = ug.group_id )
+					WHERE u.user_level NOT IN (" . USER . ", " . BOT . ", " . VIP . ", " . SUPPORT . ", " . MAIN_MOD . ", " . ADMIN . ")
+					GROUP BY u.user_id HAVING SUM(aa.auth_mod) = 0";
+				break;
+		}
+#
+#-----[ FIND ]------------------------------------------
+#
+	$is_admin = ( $mode == 'user' ) ? ( ( $ug_info[0]['user_level'] == ADMIN && $ug_info[0]['user_id'] != ANONYMOUS ) ? 1 : 0 ) : 0;
+#
+#-----[ AFTER, ADD ]------------------------------------------
+#
+	// Start add - User Level Mod
+	$is_main_mod = ( $mode == 'user' ) ? ( ( $ug_info[0]['user_level'] == MAIN_MOD && $ug_info[0]['user_id'] != ANONYMOUS ) ? 1 : 0 ) : 0;
+	$is_support = ( $mode == 'user' ) ? ( ( $ug_info[0]['user_level'] == SUPPORT && $ug_info[0]['user_id'] != ANONYMOUS ) ? 1 : 0 ) : 0;
+	$is_vip = ( $mode == 'user' ) ? ( ( $ug_info[0]['user_level'] == VIP && $ug_info[0]['user_id'] != ANONYMOUS ) ? 1 : 0 ) : 0;
+	$is_bot = ( $mode == 'user' ) ? ( ( $ug_info[0]['user_level'] == BOT && $ug_info[0]['user_id'] != ANONYMOUS ) ? 1 : 0 ) : 0;
+	$is_user = ( $mode == 'user' ) ? ( ( $ug_info[0]['user_level'] == USER || $ug_info[0]['user_level'] == MOD && $ug_info[0]['user_id'] != ANONYMOUS ) ? 1 : 0 ) : 0;
+	// End add - User Level Mod
+#
+#-----[ FIND ]------------------------------------------
+#
+				case AUTH_REG:
+					$auth_ug[$forum_id][$key] = 1;
+					break;
+#
+#-----[ AFTER, ADD ]------------------------------------------
+#
+
+				case AUTH_BOT:
+					$auth_ug[$forum_id][$key] = ( !empty($auth_access_count[$forum_id]) ) ? check_auth(AUTH_MOD, $key, $auth_access[$forum_id], $is_bot || $is_vip || $is_support || $is_main_mod || $is_admin) : 0;
+					break;
+
+				case AUTH_VIP:
+					$auth_ug[$forum_id][$key] = ( !empty($auth_access_count[$forum_id]) ) ? check_auth(AUTH_MOD, $key, $auth_access[$forum_id], $is_vip || $is_support || $is_main_mod || $is_admin) : 0;
+					break;
+
+				case AUTH_SUPPORT:
+					$auth_ug[$forum_id][$key] = ( !empty($auth_access_count[$forum_id]) ) ? check_auth(AUTH_MOD, $key, $auth_access[$forum_id], $is_support || $is_main_mod || $is_admin) : 0;
+					break;
+#
+#-----[ FIND ]------------------------------------------
+#
+				case AUTH_ACL:
+					$auth_ug[$forum_id][$key] = ( !empty($auth_access_count[$forum_id]) )
+#
+#-----[ IN-LINE FIND ]------------------------------------------
+#
+$auth_access[$forum_id],
+#
+#-----[ IN-LINE AFTER, ADD ]------------------------------------------
+#
+ $is_main_mod ||
+#
+#-----[ FIND ]------------------------------------------
+#
+				case AUTH_MOD:
+					$auth_ug[$forum_id][$key] = ( !empty($auth_access_count[$forum_id]) )
+#
+#-----[ IN-LINE FIND ]------------------------------------------
+#
+$auth_access[$forum_id],
+#
+#-----[ IN-LINE AFTER, ADD ]------------------------------------------
+#
+ $is_main_mod ||
+#
+#-----[ FIND ]------------------------------------------
+#
+				case AUTH_ADMIN:
+					$auth_ug[$forum_id][$key] = $is_admin;
+					break;
+#
+#-----[ BEFORE, ADD ]------------------------------------------
+#
+				case AUTH_MAIN_MOD:
+					$auth_ug[$forum_id][$key] = $is_main_mod || $is_admin;
+					break;
+
+#
+#-----[ FIND ]------------------------------------------
+#
+				if ( $is_admin || $user_ary['auth_mod'] )
+#
+#-----[ IN-LINE FIND ]------------------------------------------
+#
+ $is_admin
+#
+#-----[ IN-LINE BEFORE, ADD ]------------------------------------------
+#
+ $is_main_mod ||
+#
+#-----[ FIND ]------------------------------------------
+#
+							if( isset($auth_field_acl[$forum_id][$field_name]) && !($is_admin
+#
+#-----[ IN-LINE FIND ]------------------------------------------
+#
+$is_admin
+#
+#-----[ IN-LINE BEFORE, ADD ]------------------------------------------
+#
+$is_main_mod || 
+#
+#-----[ FIND ]------------------------------------------
+#
+								if( $is_admin || $user_ary['auth_mod'] )
+#
+#-----[ IN-LINE FIND ]------------------------------------------
+#
+ $is_admin
+#
+#-----[ IN-LINE BEFORE, ADD ]------------------------------------------
+#
+ $is_main_mod ||
+#
+#-----[ FIND ]------------------------------------------
+#
+		$s_user_type = ( $is_admin ) ? '<select name="userlevel"><option value="admin" selected="selected">' . $lang['Auth_Admin'] . '</option><option value="user">' . $lang['Auth_User'] . '</option></select>' : '<select name="userlevel"><option value="admin">' . $lang['Auth_Admin'] . '</option><option value="user" selected="selected">' . $lang['Auth_User'] . '</option></select>';
+#
+#-----[ REPLACE WITH ]------------------------------------------
+#
+		// Start add - User Level Mod
+		$s_user_type = '<select name="userlevel">';
+		$s_user_type .= ( $is_admin ) ? '<option value="admin" selected="selected">' . $lang['Auth_Admin'] . '</option>' : '<option value="admin">' . $lang['Auth_Admin'] . '</option>';
+		$s_user_type .= ( $is_main_mod ) ? '<option value="main_mod" selected="selected">' . $lang['Auth_Main_Mod'] . '</option>' : '<option value="main_mod">' . $lang['Auth_Main_Mod'] . '</option>';
+		$s_user_type .= ( $is_support ) ? '<option value="support" selected="selected">' . $lang['Auth_Support'] . '</option>' : '<option value="support">' . $lang['Auth_Support'] . '</option>';
+		$s_user_type .= ( $is_vip ) ? '<option value="vip" selected="selected">' . $lang['Auth_VIP'] . '</option>' : '<option value="vip">' . $lang['Auth_VIP'] . '</option>';
+		$s_user_type .= ( $is_bot ) ? '<option value="bot" selected="selected">' . $lang['Auth_Bot'] . '</option>' : '<option value="bot">' . $lang['Auth_Bot'] . '</option>';
+		$s_user_type .= ( $is_user ) ? '<option value="user" selected="selected">' . $lang['Auth_User'] . '</option>' : '<option value="user">' . $lang['Auth_User'] . '</option>';
+		$s_user_type .= '</select>';
+		// End add - User Level Mod
+#
+#-----[ OPEN ]------------------------------------------
+#
+admin/index.php
+
+#
+#-----[ FIND ]------------------------------------------
+#
+	//
+	// Get users online information.
+	//
+	$sql = "SELECT u.user_id
+#
+#-----[ IN-LINE FIND ]------------------------------------------
+#
+u.user_session_time
+#
+#-----[ IN-LINE AFTER, ADD ]------------------------------------------
+#
+, u.user_allow_viewonline , u.user_level
+#
+#-----[ FIND ]------------------------------------------
+#
+						case PAGE_FAQ:
+							$location = $lang['Viewing_FAQ'];
+							$location_url = "index.$phpEx?pane=right";
+							break;
+#
+#-----[ AFTER, ADD ]------------------------------------------
+#
+						case PAGE_USER_LEVEL:
+							$location = $lang['Viewing_level_list'];
+							$location_url = "index.$phpEx?pane=right";
+							break;
+#
+#-----[ FIND ]------------------------------------------
+#
+				$row_color = ( $registered_users % 2 ) ? $theme['td_color1'] : $theme['td_color2'];
+				$row_class = ( $registered_users % 2 ) ? $theme['td_class1'] : $theme['td_class2'];
+#
+#-----[ BEFORE, ADD ]------------------------------------------
+#
+				// Start add - User Class Mod
+				switch ( $onlinerow_reg[$i]['user_level'] )
+				{
+					case ADMIN:
+						$username_color = '<strong>' . $onlinerow_reg[$i]['username'] . '</strong>';
+						$style_color = ($onlinerow_reg[$i]['user_id'] == 2) ? ' style="color: #' . $theme['color_founder'] . '"' : ' style="color: #' . $theme['color_admin'] . '"';
+						break;
+					case MAIN_MOD:
+						$username_color = '<strong>' . $onlinerow_reg[$i]['username'] . '</strong>';
+						$style_color = ' style="color: #' . $theme['color_main_mod'] . '"';
+						break;
+					case MOD:
+						$username_color = '<strong>' . $onlinerow_reg[$i]['username'] . '</strong>';
+						$style_color = ' style="color: #' . $theme['color_mod'] . '"';
+						break;
+					case SUPPORT:
+						$username_color = '<strong>' . $onlinerow_reg[$i]['username'] . '</strong>';
+						$style_color = ' style="color: #' . $theme['color_support'] . '"';
+						break;
+					case VIP:
+						$username_color = '<strong>' . $onlinerow_reg[$i]['username'] . '</strong>';
+						$style_color = ' style="color: #' . $theme['color_vip'] . '"';
+						break;
+					case BOT:
+						$username_color = '<strong>' . $onlinerow_reg[$i]['username'] . '</strong>';
+						$style_color = ' style="color: #' . $theme['color_bot'] . '"';
+						break;
+					case USER:
+						$username_color = '<strong>' . $onlinerow_reg[$i]['username'] . '</strong>';
+						$style_color = ' style="color: #' . $theme['color_user'] . '"';
+						break;
+					default:
+						$username_color = $onlinerow_reg[$i]['username'];
+						$style_color = '';
+						break;
+				}
+				if ( !$onlinerow_reg[$i]['user_allow_viewonline'] )
+				{
+					$username_color = '<em>' . $username_color . '</em>';
+				}
+				$username_color = '<a href="' . append_sid("admin_users.$phpEx?mode=edit&amp;" . POST_USERS_URL . "=" . $onlinerow_reg[$i]['user_id']) . '"' . $style_color . '>' . $username_color . '</a>';
+				// End add - User Class Mod
+#
+#-----[ FIND ]------------------------------------------
+#
+					"USERNAME" => $username,
+#
+#-----[ REPLACE WITH ]------------------------------------------
+#
+					"USERNAME" => $username_color,
+#
+#-----[ FIND ]------------------------------------------
+#
+					"U_USER_PROFILE" => append_sid("admin_users.$phpEx?mode=edit&amp;" . POST_USERS_URL . "=" . $onlinerow_reg[$i]['user_id']),
+#
+#-----[ REPLACE WITH ]------------------------------------------
+#
+					//"U_USER_PROFILE" => append_sid("admin_users.$phpEx?mode=edit&amp;" . POST_USERS_URL . "=" . $onlinerow_reg[$i]['user_id']),
+#
+#-----[ FIND ]------------------------------------------
+#
+					case PAGE_FAQ:
+						$location = $lang['Viewing_FAQ'];
+						$location_url = "index.$phpEx?pane=right";
+						break;
+#
+#-----[ AFTER, ADD ]------------------------------------------
+#
+					case PAGE_USER_LEVEL:
+						$location = $lang['Viewing_level_list'];
+						$location_url = "index.$phpEx?pane=right";
+						break;
+#
+#-----[ OPEN ]------------------------------------------
+#
+admin/page_header_admin.php
+#
+#-----[ FIND ]------------------------------------------
+#
+	'T_FONTCOLOR3' => '#'.$theme['fontcolor3'],
+#
+#-----[ AFTER, ADD ]------------------------------------------
+#
+	// Start add - User Level Mod
+	'T_COLOR_FOUNDER' => '#' . $theme['color_founder'],
+	'T_COLOR_ADMIN' => '#' . $theme['color_admin'],
+	'T_COLOR_MAIN_MOD' => '#' . $theme['color_main_mod'],
+	'T_COLOR_MOD' => '#' . $theme['color_mod'],
+	'T_COLOR_SUPPORT' => '#' . $theme['color_support'],
+	'T_COLOR_VIP' => '#' . $theme['color_vip'],
+	'T_COLOR_BOT' => '#' . $theme['color_bot'],
+	'T_COLOR_USER' => '#' . $theme['color_user'],
+	// End add - User Level Mod
+#
+#-----[ OPEN ]------------------------------------------
+#
+templates/Default/index_body.tpl
+
+#
+#-----[ FIND ]------------------------------------------
+# rowspan value might be different if other mods installed
+#
+	<td class="row1" align="center" valign="middle" rowspan="{%:1}">
+#
+#-----[ INCREMENT ]------------------------------------------
+#
+{%:1} +1
+#
+#-----[ FIND ]------------------------------------------
+#
+	<td class="row1" align="left" width="100%"><span class="gensmall">{TOTAL_POSTS}
+#
+#-----[ IN-LINE FIND ]------------------------------------------
+#
+{TOTAL_USERS}
+#
+#-----[ IN-LINE REPLACE WITH ]------------------------------------------
+#
+{TOTAL_USERS} :: {NEWEST_USER}
+#
+#-----[ FIND ]------------------------------------------
+#
+  <tr> 
+	<td class="row1" align="left"><span class="gensmall">{TOTAL_USERS_ONLINE} &nbsp; [ {L_WHOSONLINE_ADMIN} ] &nbsp; [ {L_WHOSONLINE_MOD} ]<br />{RECORD_USERS}<br />{LOGGED_IN_USER_LIST}</span></td>
+  </tr>
+#
+#-----[ REPLACE WITH ]------------------------------------------
+#
+	<tr>
+		<td class="row1" align="left"><span class="gensmall">{TOTAL_USERS_ONLINE}
+			<hr />
+			{LOGGED_IN_USER_LIST}</span></td>
+	</tr>
+	<tr>
+		<td class="row1" align="left"><span class="gensmall">{L_LEGEND}:&nbsp;[ {L_WHOSONLINE_FOUNDER} ]&nbsp;[ {L_WHOSONLINE_ADMIN} ]&nbsp;[ {L_WHOSONLINE_MAIN_MOD} ]&nbsp;[ {L_WHOSONLINE_MOD} ]&nbsp;[ {L_WHOSONLINE_SUPPORT} ]&nbsp;[ {L_WHOSONLINE_VIP} ]&nbsp;[ {L_WHOSONLINE_BOT} ]&nbsp;[ {L_WHOSONLINE_USER} ]</span></td>
+	</tr>
+#
+#-----[ OPEN ]------------------------------------------
+#
+templates/Default/groupcp_info_body.tpl
+
+#
+#-----[ FIND ]------------------------------------------
+#
+	  <td class="row1" align="center"><span class="gen"><a href="{U_MOD_VIEWPROFILE}" class="gen">{MOD_USERNAME}</a></span></td>
+#
+#-----[ REPLACE WITH ]------------------------------------------
+#
+	  <td class="row1" align="center"><span class="gen">{MOD_USERNAME}</span></td>
+#
+#-----[ FIND ]------------------------------------------
+#
+	  <td class="{member_row.ROW_CLASS}" align="center"><span class="gen"><a href="{member_row.U_VIEWPROFILE}" class="gen">{member_row.USERNAME}</a></span></td>
+#
+#-----[ REPLACE WITH ]------------------------------------------
+#
+	  <td class="{member_row.ROW_CLASS}" align="center"><span class="gen">{member_row.USERNAME}</span></td>
+#
+#-----[ OPEN ]------------------------------------------
+#
+templates/Default/groupcp_pending_info.tpl
+
+#
+#-----[ FIND ]------------------------------------------
+#
+	  <td class="{pending_members_row.ROW_CLASS}" align="center"><span class="gen"><a href="{pending_members_row.U_VIEWPROFILE}" class="gen">{pending_members_row.USERNAME}</a></span></td>
+#
+#-----[ REPLACE WITH ]------------------------------------------
+#
+	  <td class="{pending_members_row.ROW_CLASS}" align="center"><span class="gen">{pending_members_row.USERNAME}</span></td>
+#
+#-----[ OPEN ]------------------------------------------
+#
+templates/Default/memberlist_body.tpl
+
+#
+#-----[ FIND ]------------------------------------------
+#
+	  <td class="{memberrow.ROW_CLASS}" align="center"><span class="gen"><a href="{memberrow.U_VIEWPROFILE}" class="gen">{memberrow.USERNAME}</a></span></td>
+#
+#-----[ REPLACE WITH ]------------------------------------------
+#
+	  <td class="{memberrow.ROW_CLASS}" align="center"><span class="gen">{memberrow.USERNAME}</span></td>
+#
+#-----[ OPEN ]------------------------------------------
+#
+templates/Default/modcp_viewip.tpl
+
+#
+#-----[ FIND ]------------------------------------------
+#
+		  <td>&nbsp;<span class="gen"><a href="{userrow.U_PROFILE}">{userrow.USERNAME}</a> [ {userrow.POSTS} ]</span></td>
+#
+#-----[ REPLACE WITH ]------------------------------------------
+#
+		  <td>&nbsp;<span class="gen">{userrow.USERNAME} [ {userrow.POSTS} ]</span></td>
+#
+#-----[ OPEN ]------------------------------------------
+#
+templates/Default/privmsgs_body.tpl
+
+#
+#-----[ FIND ]------------------------------------------
+#
+	  <td width="20%" valign="middle" align="center" class="{listrow.ROW_CLASS}"><span class="name">&nbsp;<a href="{listrow.U_FROM_USER_PROFILE}" class="name">{listrow.FROM}</a></span></td>
+#
+#-----[ REPLACE WITH ]------------------------------------------
+#
+	  <td width="20%" valign="middle" align="center" class="{listrow.ROW_CLASS}"><span class="name">&nbsp;{listrow.FROM}</span></td>
+#
+#-----[ OPEN ]------------------------------------------
+#
+templates/Default/viewonline_body.tpl
+
+#
+#-----[ FIND ]------------------------------------------
+#
+	<td width="35%" class="{reg_user_row.ROW_CLASS}">&nbsp;<span class="gen"><a href="{reg_user_row.U_USER_PROFILE}" class="gen">{reg_user_row.USERNAME}</a></span>&nbsp;</td>
+#
+#-----[ REPLACE WITH ]------------------------------------------
+#
+	<td width="35%" class="{reg_user_row.ROW_CLASS}">&nbsp;<span class="gen">{reg_user_row.USERNAME}</span>&nbsp;</td>
+#
+#-----[ OPEN ]------------------------------------------
+#
+templates/Default/admin/styles_edit_body.tpl 
+
+#
+#-----[ FIND ]------------------------------------------
+#
+	<tr>
+		<td class="row1">{L_FONTCOLOR_3}:</td>
+		<td class="row2"><input class="post" type="text" size="6" maxlength="6" name="fontcolor3" value="{FONTCOLOR3}"></td>
+		<td class="row2"><input class="post" type="text" size="25" maxlength="100" name="fontcolor3_name" value="{FONTCOLOR3_NAME}">
+	</tr>
+#
+#-----[ AFTER, ADD ]------------------------------------------
+#
+	<tr>
+		<td class="row1">{L_COLOR_FOUNDER}:</td>
+		<td class="row2"><input class="post" type="text" size="6" maxlength="6" name="color_founder" value="{COLOR_FOUNDER}" /></td>
+		<td class="row2"><input class="post" type="text" size="25" maxlength="100" name="color_founder_name" value="{COLOR_FOUNDER_NAME}" />
+	</tr>
+	<tr>
+		<td class="row1">{L_COLOR_ADMIN}:</td>
+		<td class="row2"><input class="post" type="text" size="6" maxlength="6" name="color_admin" value="{COLOR_ADMIN}" /></td>
+		<td class="row2"><input class="post" type="text" size="25" maxlength="100" name="color_admin_name" value="{COLOR_ADMIN_NAME}" />
+	</tr>
+	<tr>
+		<td class="row1">{L_COLOR_MAIN_MOD}:</td>
+		<td class="row2"><input class="post" type="text" size="6" maxlength="6" name="color_main_mod" value="{COLOR_MAIN_MOD}" /></td>
+		<td class="row2"><input class="post" type="text" size="25" maxlength="100" name="color_main_mod_name" value="{COLOR_MAIN_MOD_NAME}" />
+	</tr>
+	<tr>
+		<td class="row1">{L_COLOR_MOD}:</td>
+		<td class="row2"><input class="post" type="text" size="6" maxlength="6" name="color_mod" value="{COLOR_MOD}" /></td>
+		<td class="row2"><input class="post" type="text" size="25" maxlength="100" name="color_mod_name" value="{COLOR_MOD_NAME}" />
+	</tr>
+	<tr>
+		<td class="row1">{L_COLOR_SUPPORT}:</td>
+		<td class="row2"><input class="post" type="text" size="6" maxlength="6" name="color_support" value="{COLOR_SUPPORT}" /></td>
+		<td class="row2"><input class="post" type="text" size="25" maxlength="100" name="color_support_name" value="{COLOR_SUPPORT_NAME}" />
+	</tr>
+	<tr>
+		<td class="row1">{L_COLOR_VIP}:</td>
+		<td class="row2"><input class="post" type="text" size="6" maxlength="6" name="color_vip" value="{COLOR_VIP}" /></td>
+		<td class="row2"><input class="post" type="text" size="25" maxlength="100" name="color_vip_name" value="{COLOR_VIP_NAME}" />
+	</tr>
+	<tr>
+		<td class="row1">{L_COLOR_BOT}:</td>
+		<td class="row2"><input class="post" type="text" size="6" maxlength="6" name="color_bot" value="{COLOR_BOT}" /></td>
+		<td class="row2"><input class="post" type="text" size="25" maxlength="100" name="color_bot_name" value="{COLOR_BOT_NAME}" />
+	</tr>
+	<tr>
+		<td class="row1">{L_COLOR_USER}:</td>
+		<td class="row2"><input class="post" type="text" size="6" maxlength="6" name="color_user" value="{COLOR_USER}" /></td>
+		<td class="row2"><input class="post" type="text" size="25" maxlength="100" name="color_user_name" value="{COLOR_USER_NAME}" />
+	</tr>
+#
+#-----[ OPEN ]------------------------------------------
+#
+templates/Default/admin/index_body.tpl
+
+#
+#-----[ FIND ]------------------------------------------
+#
+	<td width="20%" class="{reg_user_row.ROW_CLASS}">&nbsp;<span class="gen"><a href="{reg_user_row.U_USER_PROFILE}" class="gen">{reg_user_row.USERNAME}</a></span>&nbsp;</td>
+#
+#-----[ REPLACE WITH ]------------------------------------------
+#
+	<td width="20%" class="{reg_user_row.ROW_CLASS}">&nbsp;<span class="gen">{reg_user_row.USERNAME}</span>&nbsp;</td>
+#
+#-----[ SAVE/CLOSE ALL FILES ]----------------------------------------
+#
+# EoM
