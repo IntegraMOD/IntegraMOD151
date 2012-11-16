@@ -274,7 +274,7 @@ if ( !$print_version && !$reader_mode )
 if ( ( $userdata['user_id'] == $author_id && $kb_is_auth['auth_edit'] ) || $kb_is_auth['auth_mod'] )
 {
 	$temp_url = append_sid( this_kb_mxurl( "mode=edit&amp;k=" . $article_id ) );
-	$edit_img = '<a href="' . $temp_url . '"><img src="' . $phpbb_root_path . $images['icon_edit'] . '" alt="' . $lang['Edit_delete_post'] . '" title="' . $lang['Edit_delete_post'] . '" border="0" /></a>';
+	$edit_img = '<a class="icon_edit" href="' . $temp_url . '" title="' . $lang['Edit'] . '"><span>' . $lang['Edit'] . '</span></a>';
 	$edit = '<a href="' . $temp_url . '">' . $lang['Edit_delete_post'] . '</a>';
 }
 else

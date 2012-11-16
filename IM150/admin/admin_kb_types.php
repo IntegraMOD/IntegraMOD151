@@ -305,7 +305,7 @@ switch ( $mode )
 			$type_name = $type['type'];
 
 			$temp_url = append_sid( $module_root_path . "admin/admin_kb_types.$phpEx?mode=edit&amp;cat=$type_id" );
-			$edit = '<a href="' . $temp_url . '"><img src="' . $phpbb_root_path . $images['icon_edit'] . '" border="0" alt="' . $lang['Edit'] . '"></a>';
+			$edit = '<a class="icon_edit" href="' . $temp_url . '" title="' . $lang['Edit'] . '"><span>' . $lang['Edit'] . '</span></a>';
 
 			$temp_url = append_sid( $module_root_path . "admin/admin_kb_types.$phpEx?mode=delete&amp;cat=$type_id" );
 			$delete = '<a href="' . $temp_url . '"><img src="' . $phpbb_root_path . $images['icon_delpost'] . '" border="0" alt="' . $lang['Delete'] . '"></a>';
