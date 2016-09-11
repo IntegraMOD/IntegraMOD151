@@ -13,4 +13,4 @@ I do not have it in my power to update all the code to make it work. I REALLY wi
 
 If I can get this installed and workking, I will come back and post a complete list of mods it has preinstalled. Maybe you have or can update one of the non working mods and we can get this project back on track again...... As far as it can go with being phpBB2.
 
-For more information, I can be found over at Icy Phoenix website. That is a classy CMS that works a treat! Come on over and give it a try and we can discuss this project in private if you wish.
+Come to my GIt page for further details I can be found at MWE001
