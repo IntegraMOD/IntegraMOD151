@@ -316,7 +316,7 @@ class pafiledb_functions
 			$path = $url['path']; 
 			$port = (!empty($url['port'])) ? $url['port'] : 80;
 
-			$fp = @fsockopen($host, $port, &$errno, &$errstr, 20);
+			$fp = fsockopen($host, $port, $errno, $errstr, 20);
 		
 			if(!$fp)
 			{ 
