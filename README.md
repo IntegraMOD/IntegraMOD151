@@ -14,4 +14,6 @@ I do not have it in my power to update all the code to make it work. I REALLY wi
 
 If I can get this installed and working, I will come back and post a complete list of mods it has preinstalled. Maybe you have or can update one of the non working mods and we can get this project back on track again...... As far as it can go with being phpBB2.
 
-Come to my GIt page for further details I can be found at MWE001
+**UPDATE**
+
+Some fixes were put in place today that made the package work again. I will be trying it out in the morning. Hopefully I have good news.
