@@ -95,7 +95,7 @@ include_once( $phpbb_root_path . 'chatspot/chatspot_config.' . $phpEx );
 		</tr>
 		<tr>
 		<td>
-		<a href="javascript:void(0);" onClick="javascript:window.parent.scripts.restore_frames(); return false;"><? echo $lang['Return_2_chat']; ?></a>
+		<a href="javascript:void(0);" onClick="javascript:window.parent.scripts.restore_frames(); return false;"><?php echo $lang['Return_2_chat']; ?></a>
 		</td>
 		</tr>
 		</table>

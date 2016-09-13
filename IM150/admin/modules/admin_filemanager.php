@@ -1,4 +1,4 @@
-<?
+<?php
 /*********************************************************************************************************
  This code is part of the FileManager software (www.gerd-tentler.de/tools/filemanager), copyright by
  Gerd Tentler. Obtain permission before selling this code or hosting it on a commercial website or

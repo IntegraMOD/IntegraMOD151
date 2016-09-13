@@ -22,7 +22,7 @@
 
 define('IN_PHPBB', true);
 define('CT_SECLEVEL', 'MEDIUM');
-$ct_ignorepvar = array('search_keywords','long_desc','author','short_desc');
+$ct_ignorepvar = array('search_keywords','long_desc','author','short_desc','helpbox');
 define('IN_DOWNLOAD', true);
 $phpbb_root_path = './';
 include($phpbb_root_path . 'extension.inc');
