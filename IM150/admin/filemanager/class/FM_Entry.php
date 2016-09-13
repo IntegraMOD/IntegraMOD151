@@ -151,8 +151,8 @@ class FM_Entry {
 	 * @return FM_Entry
 	 */
 	function FM_Entry(&$Listing, $isLocalFile = false) {
-		$this->Listing =& $Listing;
-		$this->FileManager =& $this->Listing->FileManager;
+		$this->Listing = $Listing;
+		$this->FileManager = $this->Listing->FileManager;
 		$this->_isLocalFile = $isLocalFile;
 	}
 

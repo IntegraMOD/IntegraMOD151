@@ -96,9 +96,9 @@ class FM_FileSystem {
 	 * @return FM_FileSystem
 	 */
 	function FM_FileSystem(&$FileManager, $useUtf8 = false) {
-		$this->_FileManager =& $FileManager;
+		$this->_FileManager = $FileManager;
 		$this->useUtf8 = $useUtf8;
-		$this->_Log =& $this->_FileManager->Log;
+		$this->_Log = $this->_FileManager->Log;
 	}
 
 	/**

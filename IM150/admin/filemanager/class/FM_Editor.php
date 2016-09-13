@@ -43,7 +43,7 @@ class FM_Editor {
 	 * @return FM_Editor
 	 */
 	function FM_Editor(&$FileManager, $readOnly = false) {
-		$this->_FileManager =& $FileManager;
+		$this->_FileManager = $FileManager;
 		$this->_readOnly = $readOnly;
 	}
 
