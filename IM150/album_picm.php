@@ -216,12 +216,13 @@ else
 		{
 			case '.gif':
 			case '.jpg':
+      case '.jpeg':
 				header('Content-type: image/jpeg');
-				header("Content-Disposition: filename=mid_" . ereg_replace("[^A-Za-z0-9]", "_", $thispic['pic_title']) . $pic_filetype);
+				header("Content-Disposition: filename=mid_" . preg_replace("[^A-Za-z0-9]", "_", $thispic['pic_title']) . $pic_filetype);
 				break;
 			case '.png':
 				header('Content-type: image/png');
-				header("Content-Disposition: filename=mid_" . ereg_replace("[^A-Za-z0-9]", "_", $thispic['pic_title']) . $pic_filetype);
+				header("Content-Disposition: filename=mid_" . preg_replace("[^A-Za-z0-9]", "_", $thispic['pic_title']) . $pic_filetype);
 				break;
 		}
 
@@ -352,7 +353,7 @@ else
 		{
 			case '.gif':
 			case '.jpg':
-				@imagejpeg($thumbnail, '', $album_config['thumbnail_quality']);
+				@imagejpeg($thumbnail, NULL, $album_config['thumbnail_quality']);
 				break;
 			case '.png':
 				@imagepng($thumbnail);

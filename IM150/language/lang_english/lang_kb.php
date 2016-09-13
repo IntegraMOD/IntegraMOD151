@@ -389,7 +389,7 @@ $lang['Formatting_fixup_explain'] = 'I enabled, the article text is reformatted:
 
 $lang['Addtional_field'] = 'More information (optional)';
 
-$lang['No_cat_comments_forum_id'] = 'Comments are enabled but you have not specified the target phpBB forum category in the KB adminCP - Cateogries';
+$lang['No_cat_comments_forum_id'] = 'Comments are enabled but you have not specified the target phpBB forum category in the KB adminCP - Categories';
 
 // Quick Nav
 $lang['Quick_nav'] = 'Quick KB Navigation';

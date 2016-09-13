@@ -136,7 +136,7 @@ if(isset($_REQUEST['sessionid']))
 		<script language="JavaScript" type="text/javascript">
 			<!--
 				document.getElementById("progress1").width = "<?php print $percent_done; ?>%";
-				document.getElementById("progress2").innerHTML = '<? echo $current_size; ?>/<? echo $total_size; ?> (<? echo $percent_done; ?>%) <? echo printf("%.2f",$speed/1024); ?> kbit/s<br><? echo $lang['time_elapsed'] . ": " . $time_elapsed_str; ?><br><? echo $lang['time_remaining'] . ": " . $time_remain_str; ?>';
+				document.getElementById("progress2").innerHTML = '<?php echo $current_size; ?>/<?php echo $total_size; ?> (<?php echo $percent_done; ?>%) <?php echo printf("%.2f",$speed/1024); ?> kbit/s<br><?php echo $lang['time_elapsed'] . ": " . $time_elapsed_str; ?><br><?php echo $lang['time_remaining'] . ": " . $time_remain_str; ?>';
 			// -->
 		</script>
 <?php
