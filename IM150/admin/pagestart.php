@@ -24,7 +24,10 @@ if (!defined('IN_PHPBB'))
 	die("Hacking attempt");
 }
 
-define('IN_ADMIN', true);
+if (!defined('IN_ADMIN'))
+{
+  define('IN_ADMIN', true);
+}
 // Include files
 include($phpbb_root_path . 'common.'.$phpEx);
 
