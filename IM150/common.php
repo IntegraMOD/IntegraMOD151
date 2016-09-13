@@ -33,6 +33,7 @@ $starttime = $mtime;
 
 error_reporting  (E_ERROR | E_WARNING | E_PARSE); // This will NOT report uninitialized variables
 set_magic_quotes_runtime(0); // Disable magic_quotes_runtime
+date_default_timezone_set(@date_default_timezone_get());
 
 // The following code (unsetting globals)
 // Thanks to Matt Kavanagh and Stefan Esser for providing feedback as well as patch files
