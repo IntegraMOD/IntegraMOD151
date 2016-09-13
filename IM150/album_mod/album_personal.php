@@ -352,16 +352,17 @@ else
 // Check if we should show the upload picture image/icon
 // ------------------------------------------------------------------------
 $upload_img = $images['upload_pic'];
-$upload_link = append_sid(album_append_uid("album_upload.$phpEx?cat_id=" . intval($cat_id)));
-$upload_full_link = '<a class="button_main" href="' . $upload_link . '"><span>' . $lang['Upload_Pic'] . '</span></a>';
+$upload_link = append_sid(album_append_uid("album_upload.$phpEx?cat_id=$cat_id"));
+$upload_full_link = '<a href="' . $upload_link . '"><img src="' . $upload_img .'" border="0" alt="' . $lang['Upload_Pic'] . '" title="' . $lang['Upload_Pic'] . '" align="absmiddle" /></a>';
 
 $download_img = $images['download_pic'];
-$download_link = append_sid(album_append_uid('album_download.' . $phpEx . '?cat_id=' . intval($cat_id) . ( ($sort_method != '') ? '&sort_method=' . $sort_method : '' ) . ( ($sort_order != '') ? '&sort_order=' . $sort_order : '' ) . ( ($start != '') ? '&start=' . $start : '' )));
-$download_full_link = '<a class="button_main" href="' . $download_link . '" title="' . $lang['Download_page'] . '"><span>' . $lang['Download'] . '</span></a>';
+$download_link = append_sid(album_append_uid('album_download.' . $phpEx . '?cat_id=' . $cat_id . ( ($sort_method != '') ? '&sort_method=' . $sort_method : '' ) . ( ($sort_order != '') ? '&sort_order=' . $sort_order : '' ) . ( ($start != '') ? '&start=' . $start : '' )));
+$download_full_link = '<a href="' . $download_link . '"><img src="' . $download_img . '" border="0" alt="' . $lang['Download_page'] . '" title="' . $lang['Download_page'] . '" align="absmiddle" /></a>';
 
-if( ((album_check_permission($auth_data, ALBUM_AUTH_UPLOAD) == true) && ($enable_picture_upload_switch == false)) || ($no_personal_gallery = false) )
+if( $auth_data['upload'] == true )
 {
-	$template->assign_block_vars('enable_picture_upload_pg', array());
+	$enable_picture_upload_switch = true;
+	$template->assign_block_vars('enable_picture_upload', array());
 }
 
 // Enable download only for own personal galleries
