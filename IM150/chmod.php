@@ -1,4 +1,5 @@
 <?php
+error_reporting  (E_ERROR | E_WARNING | E_PARSE); // This will NOT report uninitialized variables
 
 // Version 2.02_beta by Evolver
 // Version 0.13_beta
