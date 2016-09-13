@@ -286,7 +286,7 @@ function get_kb_articles( $id = false, $approve, $block_name, $start = -1, $arti
 
 		$article_title = $article['article_title'];
 		$temp_url = append_sid( this_kb_mxurl( "mode=article&amp;k=$article_id" ) );
-		$article = '<a href="' . $temp_url . '" class="gen">' . $article_title . '</a>';
+		$article_link = '<a href="' . $temp_url . '" class="gen">' . $article_title . '</a>';
 
 		$approve = '';
 		$delete = '';
@@ -356,8 +356,8 @@ function get_kb_articles( $id = false, $approve, $block_name, $start = -1, $arti
 		// Newssuite operation mode
 		// if ( ns_auth_item($article_cat, $type_id) && ns_auth_cat($article_cat))
 		// {
-		$template->assign_block_vars( $block_name, array( 'ARTICLE' => $article ,
-				'ARTICLE_DESCRIPTION' => $article_description,
+		$template->assign_block_vars($block_name, array(
+				'ARTICLE' => $article_link,
 				'ARTICLE_TYPE' => $article_type,
 				'ARTICLE_DATE' => $article_date,
 				'ARTICLE_AUTHOR' => $author,
@@ -451,7 +451,7 @@ function get_kb_stats( $type = false, $approve, $block_name, $start = -1, $artic
 
 		$article_title = $article['article_title'];
 		$temp_url = append_sid( this_kb_mxurl( "mode=article&amp;k=$article_id" ) );
-		$article = '<a href="' . $temp_url . '" class="gen">' . $article_title . '</a>';
+		$article_link = '<a href="' . $temp_url . '" class="gen">' . $article_title . '</a>';
 
 		$approve = '';
 		$delete = '';
@@ -501,8 +501,8 @@ function get_kb_stats( $type = false, $approve, $block_name, $start = -1, $artic
 		if ( ns_auth_item( $article_cat, $type_id ) && ns_auth_cat( $article_cat )  && $kb_is_auth[$article_cat]['auth_view'])
 		{
 			$i++;
-			$template->assign_block_vars( $block_name, array( 'ARTICLE' => $article ,
-					'ARTICLE_DESCRIPTION' => $article_description,
+			$template->assign_block_vars($block_name, array(
+					'ARTICLE' => $article_link,
 					'ARTICLE_TYPE' => $article_type,
 					'ARTICLE_DATE' => $article_date,
 					'ARTICLE_AUTHOR' => $author,
