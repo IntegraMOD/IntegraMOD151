@@ -78,7 +78,7 @@ class NewsModule
         'ROOT_PATH' => $this->root_path
         ));
 
-    $this->data =& new NewsDataAccess( $root_path );
+    $this->data = new NewsDataAccess( $root_path );
   }
 
   /**
