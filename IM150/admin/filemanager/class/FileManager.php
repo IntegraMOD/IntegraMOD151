@@ -308,7 +308,7 @@ class FileManager {
 	 */
 	function &getListing() {
 		if(!$this->_Listing) {
-			$this->_Listing =& new FM_Listing($this);
+			$this->_Listing = new FM_Listing($this);
 		}
 		return $this->_Listing;
 	}

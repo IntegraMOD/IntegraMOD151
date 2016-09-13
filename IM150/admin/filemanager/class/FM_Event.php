@@ -46,8 +46,8 @@ class FM_Event {
 	 * @return FM_Event
 	 */
 	function FM_Event(&$FileManager) {
-		$this->_FileManager =& $FileManager;
-		$this->_Listing =& $FileManager->getListing();
+		$this->_FileManager = $FileManager;
+		$this->_Listing = $FileManager->getListing();
 	}
 
 	/**
@@ -180,7 +180,7 @@ class FM_Event {
 	 * @return string
 	 */
 	function _openDir($id) {
-		if($Entry =& $this->_Listing->getEntry($id)) {
+		if($Entry = $this->_Listing->getEntry($id)) {
 			if($Entry->isDir()) {
 				$this->_Listing->curDir = $Entry->path;
 				$this->_Listing->searchString = '';
@@ -233,7 +233,7 @@ class FM_Event {
 	function _rename($id, $name) {
 		$error = '';
 		if($this->_FileManager->enableRename && $name != '' && $id != '') {
-			if($Entry =& $this->_Listing->getEntry($id)) {
+			if($Entry = $this->_Listing->getEntry($id)) {
 				$path = FM_Tools::dirname($Entry->path);
 				if(get_magic_quotes_gpc()) $name = stripslashes($name);
 				$name = FM_Tools::basename($name);
@@ -258,7 +258,7 @@ class FM_Event {
 		$errors = array();
 		if($this->_FileManager->enableDelete && $ids != '') {
 			foreach(explode(',', $ids) as $id) {
-				if($Entry =& $this->_Listing->getEntry($id)) {
+				if($Entry = $this->_Listing->getEntry($id)) {
 					if($Entry->isDir()) {
 						if(!$this->_Listing->remDir($Entry->path)) {
 							$errors[] = FM_Tools::getMsg('errDelete', $Entry->name);
@@ -285,7 +285,7 @@ class FM_Event {
 		$errors = array();
 		if($this->_FileManager->enableRestore && $ids != '') {
 			foreach(explode(',', $ids) as $id) {
-				if($Entry =& $this->_Listing->getEntry($id)) {
+				if($Entry = $this->_Listing->getEntry($id)) {
 					if(!$Entry->restoreFile()) {
 						$errors[] = FM_Tools::getMsg('errRestore', $Entry->name);
 					}
@@ -523,7 +523,7 @@ class FM_Event {
 		$errors = array();
 		if($this->_FileManager->enablePermissions && is_array($perms) && $ids != '') {
 			foreach(explode(',', $ids) as $id) {
-				if($Entry =& $this->_Listing->getEntry($id)) {
+				if($Entry = $this->_Listing->getEntry($id)) {
 					$mode = '';
 					for($i = 0; $i < 9; $i++) {
 						$mode .= $perms[$i] ? 1 : 0;
@@ -546,7 +546,7 @@ class FM_Event {
 	 */
 	function _editFile($id) {
 		if($this->_FileManager->enableEdit && $id != '') {
-			if($Entry =& $this->_Listing->getEntry($id)) {
+			if($Entry = $this->_Listing->getEntry($id)) {
 				$fmText = FM_Tools::utf8Decode($_POST['fmText'], $this->_FileManager->encoding);
 				if($fmText != '') {
 					if(!$Entry->saveFile($fmText)) {
@@ -648,7 +648,7 @@ class FM_Event {
 	 * @param integer $id
 	 */
 	function _getThumbnail($id) {
-		if($Entry =& $this->_Listing->getEntry($id)) {
+		if($Entry = $this->_Listing->getEntry($id)) {
 			$width = $_REQUEST['width'] ? $_REQUEST['width'] : $this->_FileManager->thumbMaxWidth;
 			$height = $_REQUEST['height'] ? $_REQUEST['height'] : $this->_FileManager->thumbMaxHeight;
 			$Entry->sendImage($width, $height);
@@ -685,7 +685,7 @@ class FM_Event {
 	 */
 	function _getFile($id, $disp = '', $enabled = true) {
 		if($enabled && $id != '') {
-			if($Entry =& $this->_Listing->getEntry($id)) {
+			if($Entry = $this->_Listing->getEntry($id)) {
 				$Entry->sendFile($disp);
 			}
 		}
@@ -702,7 +702,7 @@ class FM_Event {
 
 		if($this->_FileManager->enableDownload) {
 			if(is_array($ids)) foreach($ids as $id) {
-				if($Entry =& $this->_Listing->getEntry($id)) {
+				if($Entry = $this->_Listing->getEntry($id)) {
 					if($Entry->isDir()) $dirs[] = $Entry;
 					else $files[] = $Entry;
 				}
@@ -778,7 +778,7 @@ class FM_Event {
 	 */
 	function _readTextFile($id) {
 		if($id != '') {
-			if($Entry =& $this->_Listing->getEntry($id)) {
+			if($Entry = $this->_Listing->getEntry($id)) {
 				$Editor = new FM_Editor($this->_FileManager, true);
 				$Editor->view($Entry);
 			}
@@ -847,7 +847,7 @@ class FM_Event {
 	function _rotateImage($id, $angle) {
 		$error = '';
 		if($this->_FileManager->enableImageRotation) {
-			if($Entry =& $this->_Listing->getEntry($id)) {
+			if($Entry = $this->_Listing->getEntry($id)) {
 				$error = $Entry->rotateImage($angle);
 			}
 		}
