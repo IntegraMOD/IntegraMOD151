@@ -31,4 +31,7 @@
     <![CDATA[{articles.BODY}]]>
     </description>
     <comments>{articles.U_COMMENTS}</comments>
-  
+      </item>
+  <!-- END articles -->
+ </channel>
+</rss>
