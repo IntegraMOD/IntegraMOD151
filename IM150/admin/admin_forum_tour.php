@@ -32,7 +32,7 @@ if( !empty($setmodules) )
 $no_page_header = TRUE;
 $phpbb_root_path = './../';
 require($phpbb_root_path . 'extension.inc');
-define('CT_SECLEVEL', 'MEDIUM');
+define('CT_SECLEVEL', 'LOW');
 $ct_ignorepvar = array('helpbox');
 require('./pagestart.' . $phpEx);
 include($phpbb_root_path . 'includes/bbcode.'.$phpEx);
