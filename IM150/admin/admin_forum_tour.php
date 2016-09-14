@@ -123,7 +123,7 @@ switch ( $mode  )
 	case 'submit':
 		$subject = stripslashes(trim($HTTP_POST_VARS['subject']));
 		$message = stripslashes(trim($HTTP_POST_VARS['message']));
-		$page_access = $HTTP_POST_VARS['page_access'];
+		$page_access = intval($HTTP_POST_VARS['page_access']);
 
 		$error = FALSE;
 		$error_msg = '';
@@ -165,7 +165,7 @@ switch ( $mode  )
 			$message = prepare_message(trim($message), 1, 1, 1, $bbcode_uid);
 
 			$sql = "UPDATE " . FORUM_TOUR_TABLE . "
-				SET page_subject = '$subject', page_text = '$message', page_access = '$page_access'
+				SET page_subject = '$subject', page_text = '$message', page_access = $page_access
 				WHERE page_id = $id";
 			if ( !($result = $db->sql_query($sql)) )
 			{
@@ -192,7 +192,7 @@ switch ( $mode  )
 			$message = prepare_message(trim($message), 0, 1, 1, $bbcode_uid);
 
 			$sql = "INSERT INTO " . FORUM_TOUR_TABLE . " (page_id, page_subject, page_text, page_sort, bbcode_uid, page_access)
-				VALUES ($id, '$subject', '$message', $page, '$bbcode_uid', '$page_access')";
+				VALUES ($id, '$subject', '$message', $page, '$bbcode_uid', $page_access)";
 			if ( !($result = $db->sql_query($sql)) )
 			{
 				message_die(GENERAL_ERROR, 'Could not insert forum tour page', '', __LINE__, __FILE__, $sql);
