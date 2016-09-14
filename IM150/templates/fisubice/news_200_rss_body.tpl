@@ -25,7 +25,7 @@
     <title>{articles.L_TITLE}</title>
     <pubDate>{articles.RFC_POST_DATE}</pubDate>
     <link>{INDEX_FILE}?topic_id={articles.ID}</link>
-	<guid>{INDEX_FILE}?topic_id={articles.ID}</guid>
+    <guid>{INDEX_FILE}?topic_id={articles.ID}</guid>
     <category>{articles.FORUM_NAME}</category>
     <description>
     <![CDATA[{articles.BODY}]]>
