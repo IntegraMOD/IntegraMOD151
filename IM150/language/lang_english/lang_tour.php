@@ -25,7 +25,7 @@
 // Forum Tour
 $lang['Forum_tour'] = 'Forum Tour';
 $lang['Tour_page'] = 'Goto page ';
-$lang['No_forum_tour'] = 'Sorry, the Forum Tour is not avaible. Please try again later.';
+$lang['No_forum_tour'] = 'Sorry, the Forum Tour is unavailable. Please try again later.';
 $lang['Tour_close'] = 'Close Forum Tour';
 $lang['First_page'] = 'Content';
 ?>
