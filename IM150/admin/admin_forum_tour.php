@@ -32,6 +32,8 @@ if( !empty($setmodules) )
 $no_page_header = TRUE;
 $phpbb_root_path = './../';
 require($phpbb_root_path . 'extension.inc');
+define('CT_SECLEVEL', 'MEDIUM');
+$ct_ignorepvar = array('helpbox');
 require('./pagestart.' . $phpEx);
 include($phpbb_root_path . 'includes/bbcode.'.$phpEx);
 include($phpbb_root_path . 'includes/functions_post.'.$phpEx);
@@ -163,7 +165,7 @@ switch ( $mode  )
 			$message = prepare_message(trim($message), 1, 1, 1, $bbcode_uid);
 
 			$sql = "UPDATE " . FORUM_TOUR_TABLE . "
-				SET page_subject = '$subject', page_text = '$message', page_access = $page_access
+				SET page_subject = '$subject', page_text = '$message', page_access = '$page_access'
 				WHERE page_id = $id";
 			if ( !($result = $db->sql_query($sql)) )
 			{
@@ -190,7 +192,7 @@ switch ( $mode  )
 			$message = prepare_message(trim($message), 0, 1, 1, $bbcode_uid);
 
 			$sql = "INSERT INTO " . FORUM_TOUR_TABLE . " (page_id, page_subject, page_text, page_sort, bbcode_uid, page_access)
-				VALUES ($id, '$subject', '$message', $page, '$bbcode_uid', $page_access)";
+				VALUES ($id, '$subject', '$message', $page, '$bbcode_uid', '$page_access')";
 			if ( !($result = $db->sql_query($sql)) )
 			{
 				message_die(GENERAL_ERROR, 'Could not insert forum tour page', '', __LINE__, __FILE__, $sql);
