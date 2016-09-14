@@ -123,7 +123,7 @@ switch ( $mode  )
 	case 'submit':
 		$subject = stripslashes(trim($_POST['subject']));
 		$message = stripslashes(trim($_POST['message']));
-		$page_access = $_POST['page_access'];
+		$page_access = intval($_POST['page_access']);
 
 		$error = FALSE;
 		$error_msg = '';
