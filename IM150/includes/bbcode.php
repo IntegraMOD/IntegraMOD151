@@ -467,19 +467,9 @@ function bbencode_second_pass($text, $uid)
 	$patterns[] = "#\[email\]([a-z0-9&\-_.]+?@[\w\-]+\.([\w\-\.]+\.)?[\w]+)\[/email\]#si";
 	$replacements[] = $bbcode_tpl['email'];
 
-<<<<<<< b90194ed667f6ba2e30478bbd5a27ff56a9e258b
-	// [GVideo]GVideo URL[/GVideo] code..
-    $patterns[] = "#\[GVideo\]http://video.google.[A-Za-z0-9.]{2,5}/videoplay\?docid=([0-9A-Za-z-_]*)[^[]*\[/GVideo\]#is";
-    $replacements[] = $bbcode_tpl['GVideo'];
-
     // [youtube]YouTube URL[/youtube] code..
     $patterns[] = "#\[youtube\](?:http|https)?://(?:www\.)?(youtube.com|youtu.be|gaming.youtube.com|m.youtube.com)/(watch\?v=|v/|)([0-9A-Za-z-_]{11})[^[]*\[/youtube\]#is";
     $replacements[] = $bbcode_tpl['youtube']; 
-=======
-      // [youtube]YouTube URL[/youtube] code..
-      $patterns[] = "#\[youtube\]http://(?:www\.)?youtube.com/watch\?v=([0-9A-Za-z-_]{11})[^[]*\[/youtube\]#is";
-      $replacements[] = $bbcode_tpl['youtube']; 
->>>>>>> IM151
 
 	// [google]string for search[/google] code..
 	$patterns[] = "#\[google\](.*?)\[/google\]#ise";
