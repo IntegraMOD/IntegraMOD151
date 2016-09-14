@@ -5,7 +5,7 @@
 //
 // FILENAME  : bbcode.php
 // STARTED   : Sat Feb 13, 2001
-// COPYRIGHT : © 2001, 2005 phpBB Group
+// COPYRIGHT : Â© 2001, 2005 phpBB Group
 // WWW       : http://www.phpbb.com/
 // LICENCE   : GPL vs2.0 [ see /docs/COPYING ]
 //
@@ -139,7 +139,7 @@ function prepare_bbcode_template($bbcode_tpl)
 
 	$bbcode_tpl['email'] = str_replace('{EMAIL}', '\\1', $bbcode_tpl['email']);
     $bbcode_tpl['GVideo'] = str_replace('{GVIDEOLINK}', $lang['GVideo_link'], $bbcode_tpl['GVideo']);
-    $bbcode_tpl['youtube'] = str_replace('{YOUTUBEID}', '\\1', $bbcode_tpl['youtube']);
+    $bbcode_tpl['youtube'] = str_replace('{YOUTUBEID}', '\\3', $bbcode_tpl['youtube']);
     $bbcode_tpl['youtube'] = str_replace('{YOUTUBELINK}', $lang['youtube_link'], $bbcode_tpl['youtube']); 
 
 	$bbcode_tpl['acronym_open'] = str_replace('{DESCRIPTION}', '\\1', $bbcode_tpl['acronym_open']);
@@ -473,7 +473,7 @@ function bbencode_second_pass($text, $uid)
     $replacements[] = $bbcode_tpl['GVideo'];
 
     // [youtube]YouTube URL[/youtube] code..
-    $patterns[] = "#\[youtube\]http://(?:www\.)?youtube.com/watch\?v=([0-9A-Za-z-_]{11})[^[]*\[/youtube\]#is";
+    $patterns[] = "#\[youtube\](?:http|https)?://(?:www\.)?(youtube.com|youtu.be|gaming.youtube.com|m.youtube.com)/(watch\?v=|v/|)([0-9A-Za-z-_]{11})[^[]*\[/youtube\]#is";
     $replacements[] = $bbcode_tpl['youtube']; 
 
 	// [google]string for search[/google] code..
