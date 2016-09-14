@@ -1,5 +1,5 @@
 <script language="JavaScript" type="text/javascript" src="templates/post_message.js"></script>
-{JAVASCRIPT_BBCODE_BOX}
+<script language="javascript" type="text/javascript" src="mods/bbcode_box/bbcode_box.js"></script>
 <script language='javascript' src='spelling/spellmessage.js'></script>
 
 <script language="JavaScript" type="text/javascript">
