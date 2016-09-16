@@ -1,278 +1,204 @@
-<script language="JavaScript" type="text/javascript">
-<!--
-// bbCode control by
-// subBlue design
-// www.subBlue.com
-
-// Startup variables
-var imageTag = false;
-var theSelection = false;
-
-// Check for Browser & Platform for PC & IE specific bits
-// More details from: http://www.mozilla.org/docs/web-developer/sniffer/browser_type.html
-var clientPC = navigator.userAgent.toLowerCase(); // Get client info
-var clientVer = parseInt(navigator.appVersion); // Get browser version
-
-var is_ie = ((clientPC.indexOf("msie") != -1) && (clientPC.indexOf("opera") == -1));
-var is_nav = ((clientPC.indexOf('mozilla')!=-1) && (clientPC.indexOf('spoofer')==-1)
-                && (clientPC.indexOf('compatible') == -1) && (clientPC.indexOf('opera')==-1)
-                && (clientPC.indexOf('webtv')==-1) && (clientPC.indexOf('hotjava')==-1));
-var is_moz = 0;
-
-var is_win = ((clientPC.indexOf("win")!=-1) || (clientPC.indexOf("16bit") != -1));
-var is_mac = (clientPC.indexOf("mac")!=-1);
-
-// Define the BBCode tags
-bbcode = new Array();
-bbtags = new Array('[b]','[/b]','[i]','[/i]','[u]','[/u]','[img]','[/img]','[url=','][/url]','[center]','[/center]','[quote]','[/quote]','[code]','[/code]');
-imageTag = false;
-
-// Shows the help messages in the helpline window
-function helpline(help) {
-	document.post.helpbox.value = eval(help + "_help");
-}
-
-
-// Replacement for arrayname.length property
-function getarraysize(thearray) {
-	for (i = 0; i < thearray.length; i++) {
-		if ((thearray[i] == "undefined") || (thearray[i] == "") || (thearray[i] == null))
-			return i;
-		}
-	return thearray.length;
-}
-
-// Replacement for arrayname.push(value) not implemented in IE until version 5.5
-// Appends element to the array
-function arraypush(thearray,value) {
-	thearray[ getarraysize(thearray) ] = value;
-}
-
-// Replacement for arrayname.pop() not implemented in IE until version 5.5
-// Removes and returns the last element of an array
-function arraypop(thearray) {
-	thearraysize = getarraysize(thearray);
-	retval = thearray[thearraysize - 1];
-	delete thearray[thearraysize - 1];
-	return retval;
-}
-
-
-function checkForm() {
-
-	formErrors = false;
-
-	if (document.post.message.value.length < 2) {
-		formErrors = "{L_EMPTY_MESSAGE}";
-	}
-
-	if (formErrors) {
-		alert(formErrors);
-		return false;
-	} else {
-		bbstyle(-1);
-		//formObj.preview.disabled = true;
-		//formObj.submit.disabled = true;
-		return true;
-	}
-}
-
-function emoticon(text) {
-	var txtarea = document.post.message;
-	text = ' ' + text + ' ';
-	if (txtarea.createTextRange && txtarea.caretPos) {
-		var caretPos = txtarea.caretPos;
-		caretPos.text = caretPos.text.charAt(caretPos.text.length - 1) == ' ' ? caretPos.text + text + ' ' : caretPos.text + text;
-		txtarea.focus();
-	} else {
-		txtarea.value  += text;
-		txtarea.focus();
-	}
-}
-
-function bbfontstyle(bbopen, bbclose) {
-	var txtarea = document.post.message;
-
-	if ((clientVer >= 4) && is_ie && is_win) {
-		theSelection = document.selection.createRange().text;
-		if (!theSelection) {
-			txtarea.value += bbopen + bbclose;
-			txtarea.focus();
-			return;
-		}
-		document.selection.createRange().text = bbopen + theSelection + bbclose;
-		txtarea.focus();
-		return;
-	}
-	else if (txtarea.selectionEnd && (txtarea.selectionEnd - txtarea.selectionStart > 0))
-	{
-		mozWrap(txtarea, bbopen, bbclose);
-		return;
-	}
-	else
-	{
-		txtarea.value += bbopen + bbclose;
-		txtarea.focus();
-	}
-	storeCaret(txtarea);
-}
-
-
-function bbstyle(bbnumber) {
-	var txtarea = document.post.message;
-
-	txtarea.focus();
-
-	donotinsert = false;
-	theSelection = false;
-	bblast = 0;
-
-	if (bbnumber == -1) { // Close all open tags & default button names
-		while (bbcode[0]) {
-			butnumber = arraypop(bbcode) - 1;
-			txtarea.value += bbtags[butnumber + 1];
-			buttext = eval('document.post.addbbcode' + butnumber + '.value');
-			eval('document.post.addbbcode' + butnumber + '.value ="' + buttext.substr(0,(buttext.length - 1)) + '"');
-		}
-		imageTag = false; // All tags are closed including image tags :D
-		txtarea.focus();
-		return;
-	}
-
-	if ((clientVer >= 4) && is_ie && is_win)
-	{
-		theSelection = document.selection.createRange().text; // Get text selection
-		if (theSelection) {
-			// Add tags around selection
-			document.selection.createRange().text = bbtags[bbnumber] + theSelection + bbtags[bbnumber+1];
-			txtarea.focus();
-			theSelection = '';
-			return;
-		}
-	}
-	else if (txtarea.selectionEnd && (txtarea.selectionEnd - txtarea.selectionStart > 0))
-	{
-		mozWrap(txtarea, bbtags[bbnumber], bbtags[bbnumber+1]);
-		return;
-	}
-
-	// Find last occurance of an open tag the same as the one just clicked
-	for (i = 0; i < bbcode.length; i++) {
-		if (bbcode[i] == bbnumber+1) {
-			bblast = i;
-			donotinsert = true;
-		}
-	}
-
-	if (donotinsert) {		// Close all open tags up to the one just clicked & default button names
-		while (bbcode[bblast]) {
-				butnumber = arraypop(bbcode) - 1;
-				txtarea.value += bbtags[butnumber + 1];
-				buttext = eval('document.post.addbbcode' + butnumber + '.value');
-				eval('document.post.addbbcode' + butnumber + '.value ="' + buttext.substr(0,(buttext.length - 1)) + '"');
-				imageTag = false;
-			}
-			txtarea.focus();
-			return;
-	} else { // Open tags
-
-		if (imageTag && (bbnumber != 14)) {		// Close image tag before adding another
-			txtarea.value += bbtags[15];
-			lastValue = arraypop(bbcode) - 1;	// Remove the close image tag from the list
-			document.post.addbbcode14.value = "Img";	// Return button back to normal state
-			imageTag = false;
-		}
-
-		// Open tag
-		txtarea.value += bbtags[bbnumber];
-		if ((bbnumber == 14) && (imageTag == false)) imageTag = 1; // Check to stop additional tags after an unclosed image tag
-		arraypush(bbcode,bbnumber+1);
-		eval('document.post.addbbcode'+bbnumber+'.value += "*"');
-		txtarea.focus();
-		return;
-	}
-	storeCaret(txtarea);
-}
-
-// Insert at Claret position. Code from
-// http://www.faqts.com/knowledge_base/view.phtml/aid/1052/fid/130
-function storeCaret(textEl) {
-	if (textEl.createTextRange) textEl.caretPos = document.selection.createRange().duplicate();
-}
-
-//-->
-</script>
+<script language="JavaScript" type="text/javascript" src="../templates/post_message.js"></script>
+<script language="javascript" type="text/javascript" src="../mods/bbcode_box/bbcode_box_a.js"></script>
+<script language='javascript' src='../spelling/spelladmin.js'></script>
 <script language="JavaScript" type="text/javascript">
 <!--
 function forum_links() {
- window.open("{USID}", "_forums", "width=400,height=500,scrollbars,resizable=yes");
+ window.open("./forum_tour_links.php?sid={SID}", "_forums", "width=400,height=500,scrollbars,resizable=yes");
 }
 //-->
 </script>
 
-<form action="{S_POST_ACTION}" method="post" name="post">
+<style type="text/css">
+.postimage {
+	cursor: pointer;
+	cursor: hand;
+}
+</style>
 
+<form action="{S_POST_ACTION}" method="post" name="post">
 <table border="0" cellpadding="3" cellspacing="1" width="100%" class="forumline">
 	<tr>
-	  <th class="cattitle" width="20%" colspan="2" align="center"><span class="mainmenu">{L_MODE}</span></th>
+		<th class="cattitle" width="20%" colspan="2" align="center"><span class="mainmenu">{L_MODE}</span></th>
 	</tr>
 	<tr>
-	  <td class="row1" width="20%"><span class="gen"><b>{L_SUBJECT}</b></span></td>
-	  <td class="row2" width="80%"> <span class="gen">
-		<input type="text" name="subject" size="45" maxlength="60" style="width:450px" tabindex="2" class="post" value="{SUBJECT}" /></span></td>
+		<td class="row1" width="20%"><span class="gen"><b>{L_SUBJECT}</b></span></td>
+		<td class="row2" width="80%"> <span class="gen">
+			<input type="text" name="subject" size="45" maxlength="60" style="width:450px" tabindex="2" class="post" value="{SUBJECT}" /></span>
+		</td>
 	</tr>
-  <tr>
-	<td class="row1" width="20%" valign="top"><span class="gen"><b>BBCode</b></span></td>
-	<td class="row2" width="80%">
-		<span class="genmed">
-		<input type="button" class="button" name="addbbcode0" value=" b " style="font-weight:bold" onClick="bbstyle(0)" />&nbsp;&nbsp;&nbsp;
-		<input type="button" class="button" name="addbbcode2" value=" i " style="font-style:italic" onClick="bbstyle(2)" />&nbsp;&nbsp;&nbsp;
-		<input type="button" class="button" name="addbbcode4" value=" u " style="text-decoration:underline" onClick="bbstyle(4)" />&nbsp;&nbsp;&nbsp;
-		<input type="button" class="button" name="addbbcode6" value="IMG" onClick="bbstyle(6)" />&nbsp;&nbsp;&nbsp;
-		<input type="button" class="button" name="addbbcode8" value="URL" onClick="bbstyle(8)" />&nbsp;&nbsp;&nbsp;
-		<input type="button" class="button" name="addbbcode10" value="Center" onClick="bbstyle(10)" />&nbsp;&nbsp;&nbsp;
-		<input type="button" class="button" name="addbbcode12" value="Quote" onClick="bbstyle(12)" />&nbsp;&nbsp;&nbsp;
-		<input type="button" class="button" name="addbbcode14" value="Code" onClick="bbstyle(14)" />&nbsp;&nbsp;&nbsp;
-		<br /><br />{L_FONT_COLOR}:
-		<select name="addbbcode16" onChange="bbfontstyle('[color=' + this.form.addbbcode16.options[this.form.addbbcode16.selectedIndex].value + ']', '[/color]')" >
-		  <option style="color:darkred;" value="darkred" class="genmed">{L_COLOR_DARK_RED}</option>
-		  <option style="color:red;" value="red" class="genmed">{L_COLOR_RED}</option>
-		  <option style="color:orange;" value="orange" class="genmed">{L_COLOR_ORANGE}</option>
-		  <option style="color:brown;" value="brown" class="genmed">{L_COLOR_BROWN}</option>
-		  <option style="color:yellow;" value="yellow" class="genmed">{L_COLOR_YELLOW}</option>
-		  <option style="color:green;" value="green" class="genmed">{L_COLOR_GREEN}</option>
-		  <option style="color:olive;" value="olive" class="genmed">{L_COLOR_OLIVE}</option>
-		  <option style="color:cyan;" value="cyan" class="genmed">{L_COLOR_CYAN}</option>
-		  <option style="color:blue;" value="blue" class="genmed">{L_COLOR_BLUE}</option>
-		  <option style="color:darkblue;" value="darkblue" class="genmed">{L_COLOR_DARK_BLUE}</option>
-		  <option style="color:indigo;" value="indigo" class="genmed">{L_COLOR_INDIGO}</option>
-		  <option style="color:violet;" value="violet" class="genmed">{L_COLOR_VIOLET}</option>
-		  <option style="color:white;" value="white" class="genmed">{L_COLOR_WHITE}</option>
-		  <option style="color:black;" value="black" class="genmed">{L_COLOR_BLACK}</option>
-		</select>
-		&nbsp;&nbsp;&nbsp;{L_FONT_SIZE}:
-		<select name="addbbcode18" onChange="bbfontstyle('[size=' + this.form.addbbcode18.options[this.form.addbbcode18.selectedIndex].value + ']', '[/size]')" >
-		  <option value="1" class="genmed">size 1</option>
-		  <option value="2" class="genmed">size 2</option>
-		  <option value="3" selected class="genmed">size 3 (*)</option>
-		  <option value="4" class="genmed">size 4</option>
-		  <option  value="5" class="genmed">size 5</option>
-		  <option  value="6" class="genmed">size 6</option>
-		  <option  value="7" class="genmed">size 7</option>
-		</select>&nbsp;&nbsp;&nbsp;<a href="{FORUM_LIST}" class="nav">{L_INDEX}</a></span>
-	</td>
-  </tr>
-  <tr>
-	<td class="row1" valign="top" width="20%"><span class="gen"><b>{L_ACCESS}</b></span></td>
-	<td class="row2" valign="top" width="80%"><span class="gen">{PAGE_ACCESS}</span></td>
-  </tr>
-  <tr>
-	<td class="row1" valign="top" width="20%"><span class="gen"><b>{L_MESSAGE}</b></span><br /><br /><br />
-		<span  class="nav"><a href="{U_SMILIES}" onclick="window.open('{U_SMILIES}', '_phpbbsmilies', 'HEIGHT=400,resizable=yes,scrollbars=yes,WIDTH=600');return false;" target="_phpbbsmilies" class="nav">{L_SMILIES}</a></span></td>
-	<td class="row2" valign="top" width="80%"><span class="gen"><textarea name="message" rows="30" cols="100" wrap="virtual" tabindex="3" class="post" onselect="storeCaret(this);" onclick="storeCaret(this);" onkeyup="storeCaret(this);">{MESSAGE}</textarea></span></td>
-  </tr>
-  <tr>
-	<td class="catBottom" colspan="2" align="center" height="28"><input type="hidden" name="bbcode_uid" value="{BBCODE_UID}"><input type="submit" name="submit" class="mainoption" value="{L_SUBMIT}" />&nbsp;&nbsp;&nbsp;<input type="submit" name="cancel" class="liteoption" value="{L_CLOSE}" /></td>
-  </tr>
+	<tr>
+		<td class="row1" width="20%" valign="top"><span class="gen"><b>BBCode</b><br /><br /><br /><span align="center"><a href="{FORUM_LIST}" class="nav">{L_INDEX}</a></span>&nbsp;&nbsp;&nbsp;<br /><br /><span align="center"><a href="{U_SMILIES}" onclick="window.open('{U_SMILIES}', '_phpbbsmilies', 'HEIGHT=400,resizable=yes,scrollbars=yes,WIDTH=600');return false;" target="_phpbbsmilies" class="nav">{L_SMILIES}</a></span></td>
+		<td class="row2" width="80%">
+	
+<table id="posttable" cellspacing="0" cellpadding="0" border="0" width="80%" style="border-collapse: collapse;">
+	<tr>
+		<td>
+			<table cellspacing="0" cellpadding="0" border="0" width="100%" style="border-collapse: collapse;">
+				<tr>
+					<td width="7"><img src="../mods/bbcode_box/images/bar-left.gif" width="7" height="25" border="0" alt="" /></td>
+					<td background="../mods/bbcode_box/images/bar-bg.gif">
+						<table cellspacing="0" cellpadding="0" border="0" width="100%" style="border-collapse: collapse;">
+							<tr>
+								<td width="23"><img border="0" height="22" width="23" src="../mods/bbcode_box/images/ltr.gif" class="postimage" name="dirltr" onClick="BBCdir('ltr')" onMouseOver="helpline('ltr')" alt="Left to Right" /></td>
+								<td width="23"><img border="0" height="22" width="23" src="../mods/bbcode_box/images/rtl.gif" class="postimage" name="dirrtl" onClick="BBCdir('rtl')" onMouseOver="helpline('rtl')" alt="Right to Left" /></td>
+								<td width="6"><img border="0" height="25" width="6" src="../mods/bbcode_box/images/bar-div.gif" alt="" /></td>
+								<td width="23"><img border="0" height="22" width="23" src="../mods/bbcode_box/images/plain.gif" class="postimage" name="plain" onClick="BBCplain()" onMouseOver="helpline('plain')" alt="Remove BBcode" />
+								<td width="6"><img border="0" height="25" width="6" src="../mods/bbcode_box/images/bar-div.gif" alt="" /></td>
+								<td width="23"><input border="0" height="22" width="23" src="../mods/bbcode_box/images/spell.gif" class="postimage" value="SpellCheck" name="button" type="image" onclick="openspell();return false;" onMouseOver="helpline('spell')" /></td>
+								<td width="6"><img border="0" height="25" width="6" src="../mods/bbcode_box/images/bar-div.gif" alt="" /></td>
+								<td align="right"><a href="http://www.tactic.be" class="gensmall" title="BBCode Box MOD" target="blank">Advanced BBCode Box v5.1.1</a>&nbsp;</td>
+							</tr>
+						</table>
+					</td>
+					<td width="13"><img src="../mods/bbcode_box/images/bar-right.gif" width="13" height="25" border="0" alt="" /></td>
+				</tr>
+				<tr>
+					<td width="7"><img src="../mods/bbcode_box/images/bar-left.gif" width="7" height="25" border="0" alt="" /></td>
+					<td background="../mods/bbcode_box/images/bar-bg.gif">
+						<table cellspacing="0" cellpadding="0" border="0" style="border-collapse: collapse;">
+							<tr>
+								<td><img src="../mods/bbcode_box/images/font.gif" width="23" height="22" border="0" alt="Font" /></td>
+								<td style="white-space: nowrap;">
+									<select style="height: 20px;" name="ft" onChange="BBCft()" onMouseOver="helpline('ft')">
+										<option style="font-weight : bold;" selected="selected">Font type</option>
+										<option style="color:black; background-color: #FFFFFF; font-family: Arial;" value="Arial" class="genmed">Arial</option>
+										<option style="color:black; background-color: #FFFFFF; font-family: Arial Black;" value="Arial Black" class="genmed">Arial Black</option>
+										<option style="color:black; background-color: #FFFFFF; font-family: Century Gothic;" value="Century Gothic" class="genmed">Century Gothic</option>
+										<option style="color:black; background-color: #FFFFFF; font-family: Comic Sans MS;" value="Comic Sans MS" class="genmed">Comic Sans MS</option>
+										<option style="color:black; background-color: #FFFFFF; font-family: Courier New;" value="Courier New" class="genmed">Courier New</option>
+										<option style="color:black; background-color: #FFFFFF; font-family: Georgia;" value="Georgia" class="genmed">Georgia</option>
+										<option style="color:black; background-color: #FFFFFF; font-family: Lucida Console;"value="Lucida Console">Lucida Console</option>
+										<option style="color:black; background-color: #FFFFFF; font-family: Microsoft Sans Serif;" value="Microsoft Sans Serif" class="genmed">Microsoft Sans Serif</option>
+										<option style="color:black; background-color: #FFFFFF; font-family: Symbol;" value="Symbol" class="genmed">Symbol</option>
+										<option style="color:black; background-color: #FFFFFF; font-family: Tahoma;" value="Tahoma" class="genmed">Tahoma</option>
+										<option style="color:black; background-color: #FFFFFF; font-family: Trebuchet;" value="Trebuchet" class="genmed">Trebuchet</option>
+										<option style="color:black; background-color: #FFFFFF; font-family: Times New Roman;" value="Times New Roman" class="genmed">Times New Roman</option>
+										<option style="color:black; background-color: #FFFFFF; font-family: Verdana;" value="Verdana" class="genmed">Verdana</option>
+									</select>
+									<select style="height: 20px;" name="fs" onChange="BBCfs()" onMouseOver="helpline('fs')">
+										<option style="font-weight : bold;" selected="selected">Font Size</option>
+										<option style="color:black; font-size: 8;" value="8" class="genmed">{L_FONT_TINY}</option>
+										<option style="color:black; font-size: 10;" value="10" class="genmed">{L_FONT_SMALL}</option>
+										<option style="color:black; font-size: 12;" value="12" class="genmed">{L_FONT_NORMAL}</option>
+										<option style="color:black; font-size: 18;" value="18" class="genmed">{L_FONT_LARGE}</option>
+										<option style="color:black; font-size: 24;" value="24" class="genmed">{L_FONT_HUGE}</option>
+									</select>
+									<select style="height: 20px;" name="fc" onChange="BBCfc()" onMouseOver="helpline('fc')">
+										<option style="font-weight: bold;" selected="selected">Font Color</option>
+										<option style="color:red; background-color: {T_TD_COLOR1}" value="red" class="genmed">{L_COLOR_RED}</option>
+										<option style="color:orange; background-color: {T_TD_COLOR1}" value="orange" class="genmed">{L_COLOR_ORANGE}</option>
+										<option style="color:brown; background-color: {T_TD_COLOR1}" value="brown" class="genmed">{L_COLOR_BROWN}</option>
+										<option style="color:yellow; background-color: {T_TD_COLOR1}" value="yellow" class="genmed">{L_COLOR_YELLOW}</option>
+										<option style="color:green; background-color: {T_TD_COLOR1}" value="green" class="genmed">{L_COLOR_GREEN}</option>
+										<option style="color:olive; background-color: {T_TD_COLOR1}" value="olive" class="genmed">{L_COLOR_OLIVE}</option>
+										<option style="color:cyan; background-color: {T_TD_COLOR1}" value="cyan" class="genmed">{L_COLOR_CYAN}</option>
+										<option style="color:blue; background-color: {T_TD_COLOR1}" value="blue" class="genmed">{L_COLOR_BLUE}</option>
+										<option style="color:darkblue; background-color: {T_TD_COLOR1}" value="darkblue" class="genmed">{L_COLOR_DARK_BLUE}</option>
+										<option style="color:indigo; background-color: {T_TD_COLOR1}" value="indigo" class="genmed">{L_COLOR_INDIGO}</option>
+										<option style="color:violet; background-color: {T_TD_COLOR1}" value="violet" class="genmed">{L_COLOR_VIOLET}</option>
+										<option style="color:white; background-color: {T_TD_COLOR1}" value="white" class="genmed">{L_COLOR_WHITE}</option>
+										<option style="color:black; background-color: {T_TD_COLOR1}" value="black" class="genmed">{L_COLOR_BLACK}</option>
+									</select>
+								</td>
+								<td><img border="0" height="25" width="6" src="../mods/bbcode_box/images/bar-div.gif" alt="" /></td>
+								<td><img border="0" height="22" width="23" src="../mods/bbcode_box/images/fade.gif" class="postimage" name="fade" onClick="BBCfade()" onMouseOver="helpline('fade')" alt="Fade" /></td>
+								<td><img border="0" height="22" width="23" src="../mods/bbcode_box/images/grad.gif" class="postimage" name="grad" onClick="BBCgrad()" onMouseOver="helpline('grad')" alt="Gradient" /></td>
+								<td><img border="0" height="25" width="6" src="../mods/bbcode_box/images/bar-div.gif" alt="" /></td>
+								<td><img border="0" height="22" width="23" src="../mods/bbcode_box/images/list.gif" class="postimage" name="listdf" onClick="BBClist()" onMouseOver="helpline('list')" alt="List" /></td>
+							</tr>
+						</table>
+					</td>
+					<td width="13"><img src="../mods/bbcode_box/images/bar-right.gif" width="13" height="25" border="0" alt="" /></td>
+				</tr>
+				<tr>
+					<td width="7"><img src="../mods/bbcode_box/images/bar-left.gif" width="7" height="25" border="0" alt="" /></td>
+					<td background="../mods/bbcode_box/images/bar-bg.gif">
+						<table cellspacing="0" cellpadding="0" border="0" style="border-collapse: collapse;">
+							<tr>
+								<td><img border="0" height="22" width="23" src="../mods/bbcode_box/images/left.gif" class="postimage" name="left" onClick="BBCleft()" onMouseOver="helpline('left')" alt="Left" /></td>
+								<td><img border="0" height="22" width="23" src="../mods/bbcode_box/images/center.gif" class="postimage" name="center" onClick="BBCcenter()" onMouseOver="helpline('center')" alt="Center" /></td>
+								<td><img border="0" height="22" width="23" src="../mods/bbcode_box/images/right.gif" class="postimage" name="right" onClick="BBCright()" onMouseOver="helpline('right')" alt="Right" /></td>
+								<td><img border="0" height="22" width="23" src="../mods/bbcode_box/images/justify.gif" class="postimage" name="justify" onClick="BBCjustify()" onMouseOver="helpline('justify')" alt="Justify" /></td>
+								<td><img border="0" height="25" width="6" src="../mods/bbcode_box/images/bar-div.gif" alt="" /></td>
+								<td><img border="0" height="22" width="23" src="../mods/bbcode_box/images/bold.gif" class="postimage" name="bold" onClick="BBCbold()" onMouseOver="helpline('b')" alt="Bold" /></td>
+								<td><img border="0" height="22" width="23" src="../mods/bbcode_box/images/italic.gif" class="postimage" name="italic" onClick="BBCitalic()" onMouseOver="helpline('i')" alt="Italic" /></td>
+								<td><img border="0" height="22" width="23" src="../mods/bbcode_box/images/under.gif" class="postimage" name="under" onClick="BBCunder()" onMouseOver="helpline('u')" alt="Underline" /></td>
+								<td><img border="0" height="22" width="23" src="../mods/bbcode_box/images/strike.gif" class="postimage" name="strik" onClick="BBCstrike()" onMouseOver="helpline('strike')" alt="Strike-through" /></td>
+								<td><img border="0" height="22" width="23" src="../mods/bbcode_box/images/sup.gif" class="postimage" name="supscript" onClick="BBCsup()" onMouseOver="helpline('sup')" alt="Superscript" /></td>
+								<td><img border="0" height="22" width="23" src="../mods/bbcode_box/images/sub.gif" class="postimage" name="subs" onClick="BBCsub()" onMouseOver="helpline('sub')" alt="Subscript" /></td>
+								<td><img border="0" height="25" width="6" src="../mods/bbcode_box/images/bar-div.gif" alt="" /></td>
+								<td><img border="0" height="22" width="23" src="../mods/bbcode_box/images/marqd.gif" class="postimage" name="marqd" onClick="BBCmarqd()" onMouseOver="helpline('marqd')" alt="Marquee Down" /></td>
+								<td><img border="0" height="22" width="23" src="../mods/bbcode_box/images/marqu.gif" class="postimage" name="marqu" onClick="BBCmarqu()" onMouseOver="helpline('marqu')" alt="Marquee Up" /></td>
+								<td><img border="0" height="22" width="23" src="../mods/bbcode_box/images/marql.gif" class="postimage" name="marql" onClick="BBCmarql()" onMouseOver="helpline('marql')" alt="Marquee Left" /></td>
+								<td><img border="0" height="22" width="23" src="../mods/bbcode_box/images/marqr.gif" class="postimage" name="marqr" onClick="BBCmarqr()" onMouseOver="helpline('marqr')" alt="Marquee Right" /></td>
+								<td><img border="0" height="25" width="6" src="../mods/bbcode_box/images/bar-div.gif" alt="" /></td>
+								<td><img border="0" height="22" width="23" src="../mods/bbcode_box/images/code.gif" class="postimage" name="code" onClick="BBCcode()" onMouseOver="helpline('code')" alt="Code" /></td>
+								<td><img border="0" height="22" width="23" src="../mods/bbcode_box/images/php.gif" class="postimage" name="php" onClick="BBCphp()" onMouseOver="helpline('php')" alt="PHP" /></td>
+								<td><img border="0" height="22" width="23" src="../mods/bbcode_box/images/quote.gif" class="postimage" name="quote" onClick="BBCquote()" onMouseOver="helpline('quote')" alt="Quote" /></td>
+								<td><img border="0" height="22" width="23" src="../mods/bbcode_box/images/spoil.gif" class="postimage" name="spoil" onClick="BBCspoil()" onMouseOver="helpline('spoil')" alt="Spoilers" /></td>
+							</tr>
+						</table>
+					</td>
+					<td width="13"><img src="../mods/bbcode_box/images/bar-right.gif" width="13" height="25" border="0" alt="" /></td>
+				</tr>
+				<tr>
+					<td width="7"><img src="../mods/bbcode_box/images/bar-left.gif" width="7" height="25" border="0" alt="" /></td>
+					<td background="../mods/bbcode_box/images/bar-bg.gif">
+						<table cellspacing="0" cellpadding="0" border="0" style="border-collapse: collapse;">
+							<tr>
+								<td><img border="0" height="22" width="23" src="../mods/bbcode_box/images/anchor.gif" class="postimage" name="anchor" onClick="BBCanchor()" onMouseOver="helpline('anchor')" alt="Anchor" /></td>
+								<td><img border="0" height="22" width="23" src="../mods/bbcode_box/images/url.gif" class="postimage" name="url" onClick="BBCurl()" onMouseOver="helpline('url')" alt="URL" /></td>
+								<td><img border="0" height="22" width="23" src="../mods/bbcode_box/images/email.gif" class="postimage" name="email" onClick="BBCmail()" onMouseOver="helpline('mail')" alt="Email" /></td>
+								<td><img border="0" height="22" width="23" src="../mods/bbcode_box/images/gotopost.gif" class="postimage" name="gotopost" onClick="BBCgotopost()" onMouseOver="helpline('gotopost')" alt="Gotopost" /></td>
+								<td><img border="0" height="25" width="6" src="../mods/bbcode_box/images/bar-div.gif" alt="" /></td>
+								<td><img border="0" height="22" width="23" src="../mods/bbcode_box/images/search.gif" class="postimage" name="search" onClick="BBCsearch()" onMouseOver="helpline('search')" alt="Search" /></td>
+								<td><img border="0" height="22" width="23" src="../mods/bbcode_box/images/google.gif" class="postimage" name="you" onClick="BBCgoogle()" onMouseOver="helpline('google')" alt="Google" /></td>
+								<td><img border="0" height="25" width="6" src="../mods/bbcode_box/images/bar-div.gif" alt="" /></td>
+								<td><img border="0" height="22" width="23" src="../mods/bbcode_box/images/img.gif" class="postimage" name="img" onClick="BBCimg()" onMouseOver="helpline('img')" alt="Image" /></td>
+								<td><img border="0" height="22" width="23" src="../mods/bbcode_box/images/flash.gif" class="postimage" name="flash" onClick="BBCflash()" onMouseOver="helpline('flash')" alt="Flash" /></td>
+								<td><img border="0" height="22" width="23" src="../mods/bbcode_box/images/sound.gif" class="postimage" name="stream" onClick="BBCstream()" onMouseOver="helpline('stream')" alt="Stream" /></td>
+								<td><img border="0" height="22" width="23" src="../mods/bbcode_box/images/ram.gif" class="postimage" name="ram" onClick="BBCram()" onMouseOver="helpline('ram')" alt="Real Media" /></td>
+								<td><img border="0" height="22" width="23" src="../mods/bbcode_box/images/video.gif" class="postimage" name="video" onClick="BBCvideo()" onMouseOver="helpline('video')" alt="Video" /></td>
+						        <td><img border="0" height="22" width="23" src="../mods/bbcode_box/images/gvideo.gif" class="postimage" name="GVideo" onClick="BBCGVideo()" onMouseOver="helpline('googlevid')" alt="GoogleVid"></td>
+						        <td><img border="0" height="22" width="23" src="../mods/bbcode_box/images/youtube.gif" class="postimage" name="youtube" onClick="BBCyoutube()" onMouseOver="helpline('youtube')" alt="YouTube" /></td>
+								<td><img border="0" height="25" width="6" src="../mods/bbcode_box/images/bar-div.gif" alt="" /></td>
+								<td><img border="0" height="22" width="23" src="../mods/bbcode_box/images/tab.gif" class="postimage" name="tab" onClick="BBCtab()" onMouseOver="helpline('tab')" alt="Tab" /></td>
+								<td><img border="0" height="22" width="23" src="../mods/bbcode_box/images/nbsp.gif" class="postimage" name="nbsp" onClick="BBCnbsp()" onMouseOver="helpline('nbsp')" alt="NBSP" /></td>
+								<td><img border="0" height="22" width="23" src="../mods/bbcode_box/images/hr.gif" class="postimage" name="hr" onClick="BBChr()" onMouseOver="helpline('hr')" alt="H-Line" /></td>
+								<td><img border="0" height="22" width="23" src="../mods/bbcode_box/images/you.gif" class="postimage" name="you" onClick="BBCyou()" onMouseOver="helpline('you')" alt="You" /></td>
+								<td><img border="0" height="25" width="6" src="../mods/bbcode_box/images/bar-div.gif" alt="" /></td>
+								<td><img border="0" height="22" width="23" src="../mods/bbcode_box/images/web.gif" class="postimage" name="web" onClick="BBCweb()" onMouseOver="helpline('web')" alt="Web Page" /></td>
+								<td><img border="0" height="22" width="23" src="../mods/bbcode_box/images/table.gif" class="postimage" name="table" onClick="BBCtable()" onMouseOver="helpline('table')" alt="Table" /></td>
+							</tr>
+						</table>
+					</td>
+					<td width="13"><img src="../mods/bbcode_box/images/bar-right.gif" width="13" height="25" border="0" alt="" /></td>
+				</tr>
+				<tr>
+					<td width="7"><img src="../mods/bbcode_box/images/bar-left.gif" width="7" height="25" border="0" alt="" /></td>
+					<td background="../mods/bbcode_box/images/bar-bg.gif">
+						<table cellspacing="0" cellpadding="0" border="0" style="border-collapse: collapse;">
+							<tr>
+								<td><img src="../mods/bbcode_box/images/help.gif" width="23" height="22" border="0" alt="Help" /></td>
+								<td><input type="text" name="helpbox" size="45" maxlength="100" style="width:395px; font-size:10px" value="Tip: Styles can be applied quickly to selected text." /></td>
+							</tr>
+						</table>
+					</td>
+					<td width="13"><img src="../mods/bbcode_box/images/bar-right.gif" width="13" height="25" border="0" alt="" /></td>
+				</tr>
+				<tr>
+					<td colspan="3"><textarea name="message" rows="15" cols="35" style="width:100%" tabindex="3" class="post" onselect="storeCaret(this);" onclick="storeCaret(this);" onkeyup="storeCaret(this); typeQuietly(this, event);">{MESSAGE}</textarea></td>
+				</tr>
+			</table>
+		</td>
+	</tr>
+</table>
+			
+		</td>
+	</tr>
+	<tr>
+		<td class="cat" colspan="2" align="center" height="28"><input type="submit" name="submit" class="mainoption" value="{L_SUBMIT}" />&nbsp;&nbsp;&nbsp;<input type="submit" name="cancel" class="liteoption" value="{L_CLOSE}" />{S_HIDDEN_FIELDS}</td>
+	</tr>
 </table>
 </form>
