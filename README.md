@@ -17,3 +17,5 @@ If I can get this installed and working, I will come back and post a complete li
 **UPDATE**
 
 Some fixes were put in place today that made the package work again. I will be trying it out in the morning. Hopefully I have good news.
+
+Well the news is, it actually works and could easily be used in production again. The bad news is, it still loves its resources ;-) and it has has error or two we are working to resolve. Some of the templates needs tweaked too.
