@@ -169,7 +169,7 @@ define('KEEP_UNREAD_DB', true);
 
 function read_cookies($userdata)
 {
-	global $board_config, $HTTP_COOKIE_VARS;
+	global $board_config, $_COOKIE;
 
 	// do we use the tracking ?
 	if ( !isset($board_config['keep_unreads']) )
@@ -198,7 +198,7 @@ function read_cookies($userdata)
 	// get the anonymous last visit date
 	if ( !$userdata['session_logged_in'] )
 	{
-		$board_config['guest_lastvisit'] = intval($HTTP_COOKIE_VARS[$base_name . '_lastvisit']);
+		$board_config['guest_lastvisit'] = intval($_COOKIE[$base_name . '_lastvisit']);
 		if ( $board_config['guest_lastvisit'] < (time()-300) )
 		{
 			$board_config['guest_lastvisit'] = time();
@@ -207,9 +207,9 @@ function read_cookies($userdata)
 	}
 
 	// read the user cookies
-	$board_config['tracking_all']		= isset($HTTP_COOKIE_VARS[$base_name . '_f_all']) ? intval($HTTP_COOKIE_VARS[$base_name . '_f_all']) : 0;
-	$board_config['tracking_forums']	= isset($HTTP_COOKIE_VARS[$base_name . '_f']) ? unserialize($HTTP_COOKIE_VARS[$base_name . '_f']) : array();
-	$board_config['tracking_topics']	= isset($HTTP_COOKIE_VARS[$base_name . '_t']) ? unserialize($HTTP_COOKIE_VARS[$base_name . '_t']) : array();
+	$board_config['tracking_all']		= isset($_COOKIE[$base_name . '_f_all']) ? intval($_COOKIE[$base_name . '_f_all']) : 0;
+	$board_config['tracking_forums']	= isset($_COOKIE[$base_name . '_f']) ? unserialize($_COOKIE[$base_name . '_f']) : array();
+	$board_config['tracking_topics']	= isset($_COOKIE[$base_name . '_t']) ? unserialize($_COOKIE[$base_name . '_t']) : array();
 
 	// get the unreads topics
 	$board_config['tracking_unreads'] = array();
@@ -217,10 +217,10 @@ function read_cookies($userdata)
 	{
 		if ( !$board_config['keep_unreads_db'] )
 		{
-			$board_config['tracking_unreads'] = isset($HTTP_COOKIE_VARS[$base_name . '_u']) ? unserialize($HTTP_COOKIE_VARS[$base_name . '_u']) : array();
+			$board_config['tracking_unreads'] = isset($_COOKIE[$base_name . '_u']) ? unserialize($_COOKIE[$base_name . '_u']) : array();
 
 			// the tracking floor (min time value) allows to reduce the size of the time data, so the size of the cookie
-			$tracking_floor = intval($HTTP_COOKIE_VARS[$base_name . '_uf']);
+			$tracking_floor = intval($_COOKIE[$base_name . '_uf']);
 			if ( $tracking_floor > 0 )
 			{
 				@reset( $board_config['tracking_unreads'] );
@@ -248,7 +248,7 @@ function read_cookies($userdata)
 
 function write_cookies($userdata)
 {
-	global $board_config, $HTTP_COOKIE_VARS, $db;
+	global $board_config, $_COOKIE, $db;
 
 	// do we use the tracking ?
 	if ( !isset($board_config['keep_unreads']) )
@@ -671,7 +671,7 @@ function make_jumpbox($action, $match_forum_id = 0)
 function init_userprefs($userdata)
 {
 	// BEGIN Style Select MOD
-	global $HTTP_GET_VARS, $HTTP_POST_VARS, $HTTP_COOKIE_VARS;
+	global $_GET, $_POST, $_COOKIE;
 	// END Style Select MOD
 	global $is_called;
 	if ( $is_called == FALSE )
@@ -867,9 +867,9 @@ function init_userprefs($userdata)
 	// BEGIN Style Select MOD
 	
 	// Security update 02 September 2006 B starts// 
-	if ( (int)isset($HTTP_POST_VARS[STYLE_URL]) || (int)isset($HTTP_GET_VARS[STYLE_URL]) ) 
+	if ( (int)isset($_POST[STYLE_URL]) || (int)isset($_GET[STYLE_URL]) ) 
 	{
-		(int)$style = urldecode( (isset($HTTP_POST_VARS[STYLE_URL])) ? $HTTP_POST_VARS[STYLE_URL] : (int)$HTTP_GET_VARS[STYLE_URL] );
+		(int)$style = urldecode( (isset($_POST[STYLE_URL])) ? $_POST[STYLE_URL] : (int)$_GET[STYLE_URL] );
 		if($style == 0) { die('Hacking attempt'); exit; }
 		if ( $theme = setup_style((int)$style) )
 		{
@@ -878,9 +878,9 @@ function init_userprefs($userdata)
 		}
 	}
 
-	if ( isset($HTTP_COOKIE_VARS[$board_config['cookie_name'] . '_style']) )
+	if ( isset($_COOKIE[$board_config['cookie_name'] . '_style']) )
 	{
-		$style = $HTTP_COOKIE_VARS[$board_config['cookie_name'] . '_style'];
+		$style = $_COOKIE[$board_config['cookie_name'] . '_style'];
 		if ( $theme = setup_style((int)$style) )
 		{
 			return;
@@ -1599,7 +1599,7 @@ function message_die($msg_code, $msg_text = '', $msg_title = '', $err_line = '',
 	global $db, $template, $board_config, $theme, $lang, $phpEx, $phpbb_root_path, $nav_links, $gen_simple_header, $images;
 	global $userdata, $user_ip, $session_length;
 	global $starttime;
-	global $HTTP_COOKIE_VARS;
+	global $_COOKIE;
 	//-- mod : profile cp ------------------------------------------------------------------------------
 //-- add
 	global $admin_level, $level_prior;
@@ -1977,14 +1977,14 @@ function serverload() {
 // 
 function is_robot() 
 { 
-	global $db, $HTTP_SERVER_VARS, $table_prefix;
+	global $db, $_SERVER, $table_prefix;
 
 	// define bots table - for the users who are to lazy to edit constants.php hehehe!
 	define('BOTS_TABLE', $table_prefix . "bots");
 
 	// get required user data
-	$user_ip = $HTTP_SERVER_VARS['REMOTE_ADDR'];
-	$user_agent = $HTTP_SERVER_VARS['HTTP_USER_AGENT'];
+	$user_ip = $_SERVER['REMOTE_ADDR'];
+	$user_agent = $_SERVER['HTTP_USER_AGENT'];
 
 	// get bot table data
 	$sql = "SELECT bot_agent, bot_ip, bot_id, bot_visits, last_visit, bot_pages 

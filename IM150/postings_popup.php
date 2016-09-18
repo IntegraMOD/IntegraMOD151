@@ -16,7 +16,7 @@ include($phpbb_root_path . 'language/lang_' . $board_config['default_lang'] . '/
 
 // Start initial var setup
 
-$topic_id = intval($HTTP_GET_VARS[POST_TOPIC_URL]);
+$topic_id = intval($_GET[POST_TOPIC_URL]);
 
 // Load templates
 

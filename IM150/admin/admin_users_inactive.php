@@ -58,11 +58,11 @@ $alert_color4 = "#FF9900";
 $alert_color5 = "#FF6600";
 $alert_color_over = "#FF0000";
 
-if(!isset($HTTP_POST_VARS['inactive_users_do']))
+if(!isset($_POST['inactive_users_do']))
 {
 
-	$alert_days = ( !empty($HTTP_POST_VARS['alert_days']) ) ? ( intval($HTTP_POST_VARS['alert_days']) != 0 ? intval($HTTP_POST_VARS['alert_days']) : 5 ) : 5;
-	$zero_messages = isset( $HTTP_POST_VARS['zero_messages'] ) ? "checked" : "";
+	$alert_days = ( !empty($_POST['alert_days']) ) ? ( intval($_POST['alert_days']) != 0 ? intval($_POST['alert_days']) : 5 ) : 5;
+	$zero_messages = isset( $_POST['zero_messages'] ) ? "checked" : "";
 
 	$template->set_filenames(array(
 		'body' => 'admin/user_inactive_body.tpl')
@@ -270,12 +270,12 @@ else
 	
 {
 
-switch ($HTTP_GET_VARS['mode']) {
+switch ($_GET['mode']) {
 
 	
 	case "contact":
 	
-	if ( $HTTP_POST_VARS['selected_usr'] != "")
+	if ( $_POST['selected_usr'] != "")
 	{
 	
 	$date = time();
@@ -283,7 +283,7 @@ switch ($HTTP_GET_VARS['mode']) {
 	//
 	//Contact to Inactive Users
 	//
-	foreach ($HTTP_POST_VARS['selected_usr'] as $to_userdata)
+	foreach ($_POST['selected_usr'] as $to_userdata)
 	{
 
 		//
@@ -363,13 +363,13 @@ switch ($HTTP_GET_VARS['mode']) {
 
 	case "activate":
 	
-	if ( $HTTP_POST_VARS['selected_usr'] != "")
+	if ( $_POST['selected_usr'] != "")
 	{
 	
 	//
 	//Activate Users
 	//
-	foreach ($HTTP_POST_VARS['selected_usr'] as $to_userdata)
+	foreach ($_POST['selected_usr'] as $to_userdata)
 	{
 
 		$sql = "UPDATE " . USERS_TABLE . " SET user_active = 1, user_actkey = '' WHERE user_id=$to_userdata AND user_id <> " . ANONYMOUS ;
@@ -444,13 +444,13 @@ switch ($HTTP_GET_VARS['mode']) {
 
 	case "delete":
 		
-		if ( $HTTP_POST_VARS['selected_usr'] != "")
+		if ( $_POST['selected_usr'] != "")
 		{
 		
 		//
 		//Delete Inactive Users
 		//
-		foreach ($HTTP_POST_VARS['selected_usr'] as $to_userdata)
+		foreach ($_POST['selected_usr'] as $to_userdata)
 		{
 			
 		//

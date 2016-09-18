@@ -542,9 +542,9 @@ $fields_table = pcp_get_userfields_table();
 
 //  get parameters
 $mode = '';
-if (isset($HTTP_POST_VARS['mode']) || isset($HTTP_GET_VARS['mode']) )
+if (isset($_POST['mode']) || isset($_GET['mode']) )
 {
-	$mode = isset($HTTP_POST_VARS['mode']) ? $HTTP_POST_VARS['mode'] : $HTTP_GET_VARS['mode'];
+	$mode = isset($_POST['mode']) ? $_POST['mode'] : $_GET['mode'];
 }
 if ( !in_array($mode, array('edit', 'create', 'delete', 'sqledit', 'sqlcreate', 'sqldelete')) )
 {
@@ -553,9 +553,9 @@ if ( !in_array($mode, array('edit', 'create', 'delete', 'sqledit', 'sqlcreate', 
 
 // sort
 $sort = '';
-if (isset($HTTP_POST_VARS['sort']) || isset($HTTP_GET_VARS['sort']) )
+if (isset($_POST['sort']) || isset($_GET['sort']) )
 {
-	$sort = isset($HTTP_POST_VARS['sort']) ? $HTTP_POST_VARS['sort'] : $HTTP_GET_VARS['sort'];
+	$sort = isset($_POST['sort']) ? $_POST['sort'] : $_GET['sort'];
 }
 if ( !in_array($sort, $sort_list) )
 {
@@ -564,9 +564,9 @@ if ( !in_array($sort, $sort_list) )
 
 // order
 $order = '';
-if (isset($HTTP_POST_VARS['order']) || isset($HTTP_GET_VARS['order']) )
+if (isset($_POST['order']) || isset($_GET['order']) )
 {
-	$order = isset($HTTP_POST_VARS['order']) ? $HTTP_POST_VARS['order'] : $HTTP_GET_VARS['order'];
+	$order = isset($_POST['order']) ? $_POST['order'] : $_GET['order'];
 }
 if ( !in_array($order, $order_list) )
 {
@@ -575,9 +575,9 @@ if ( !in_array($order, $order_list) )
 
 // field name
 $field = '';
-if (isset($HTTP_POST_VARS['field']) || isset($HTTP_GET_VARS['field']) )
+if (isset($_POST['field']) || isset($_GET['field']) )
 {
-	$field = isset($HTTP_POST_VARS['field']) ? $HTTP_POST_VARS['field'] : $HTTP_GET_VARS['field'];
+	$field = isset($_POST['field']) ? $_POST['field'] : $_GET['field'];
 }
 if ( !empty($field) )
 {
@@ -590,9 +590,9 @@ if ( !empty($field) )
 
 // old field name
 $old = '';
-if (isset($HTTP_POST_VARS['old']) || isset($HTTP_GET_VARS['old']) )
+if (isset($_POST['old']) || isset($_GET['old']) )
 {
-	$old = isset($HTTP_POST_VARS['old']) ? $HTTP_POST_VARS['old'] : $HTTP_GET_VARS['old'];
+	$old = isset($_POST['old']) ? $_POST['old'] : $_GET['old'];
 }
 if ( !empty($old) )
 {
@@ -604,10 +604,10 @@ if ( !empty($old) )
 }
 
 // buttons
-$submit = isset($HTTP_POST_VARS['submit']);
-$create = isset($HTTP_POST_VARS['create']);
-$delete = isset($HTTP_POST_VARS['delete']);
-$confirm = isset($HTTP_POST_VARS['confirm']);
+$submit = isset($_POST['submit']);
+$create = isset($_POST['create']);
+$delete = isset($_POST['delete']);
+$confirm = isset($_POST['confirm']);
 if ( empty($field) && $delete )
 {
 	$delete = false;
@@ -635,13 +635,13 @@ if ( ($mode == 'sqlcreate') || ($mode == 'sqledit') )
 	$default_null	= ($w_field['default'] == NULL);
 
 	// get values from the form
-	$type			= isset($HTTP_POST_VARS['type']) ? $HTTP_POST_VARS['type'] : $type;
-	$length			= isset($HTTP_POST_VARS['length']) ? $HTTP_POST_VARS['length'] : $length;
-	$decimal		= isset($HTTP_POST_VARS['decimal']) ? $HTTP_POST_VARS['decimal'] : $decimal;
-	$unsigned		= isset($HTTP_POST_VARS['unsigned']) ? $HTTP_POST_VARS['unsigned'] : $unsigned;
-	$not_null		= isset($HTTP_POST_VARS['not_null']) ? $HTTP_POST_VARS['not_null'] : $not_null;
-	$default		= isset($HTTP_POST_VARS['default']) ? $HTTP_POST_VARS['default'] : $default;
-	$default_null	= isset($HTTP_POST_VARS['default_null']) ? true : (isset($HTTP_POST_VARS['default']) ? false : $default_null);
+	$type			= isset($_POST['type']) ? $_POST['type'] : $type;
+	$length			= isset($_POST['length']) ? $_POST['length'] : $length;
+	$decimal		= isset($_POST['decimal']) ? $_POST['decimal'] : $decimal;
+	$unsigned		= isset($_POST['unsigned']) ? $_POST['unsigned'] : $unsigned;
+	$not_null		= isset($_POST['not_null']) ? $_POST['not_null'] : $not_null;
+	$default		= isset($_POST['default']) ? $_POST['default'] : $default;
+	$default_null	= isset($_POST['default_null']) ? true : (isset($_POST['default']) ? false : $default_null);
 
 	if ($cancel)
 	{
@@ -868,11 +868,11 @@ if ( $mode == 'sqldelete' )
 if ( $mode == 'edit' )
 {
 	// which field cat is displayed ?
-	$cur_cat = isset($HTTP_POST_VARS['cur_cat']) ? $HTTP_POST_VARS['cur_cat'] : '';
+	$cur_cat = isset($_POST['cur_cat']) ? $_POST['cur_cat'] : '';
 	@reset($field_cat);
 	while ( list($cat_name, $cat_data) = @each($field_cat) )
 	{
-		if ( isset($HTTP_POST_VARS['select_field_cat_' . $cat_name]) )
+		if ( isset($_POST['select_field_cat_' . $cat_name]) )
 		{
 			$cur_cat = $cat_name;
 		}
@@ -899,7 +899,7 @@ if ( $mode == 'edit' )
 		}
 
 		// get values from form
-		$field_det[$def_key] = isset($HTTP_POST_VARS['field_det_' . $def_key]) ? $HTTP_POST_VARS['field_det_' . $def_key] : $field_det[$def_key];
+		$field_det[$def_key] = isset($_POST['field_det_' . $def_key]) ? $_POST['field_det_' . $def_key] : $field_det[$def_key];
 	}
 	$field_name = $field_det['field_name'];
 
@@ -938,7 +938,7 @@ if ( $mode == 'edit' )
 			pcp_check_sql_actions($field, $fields, $fields_table, $sql_create, $sql_modify, $sql_delete);
 			if ($sql_delete)
 			{
-				$do_sql = isset($HTTP_POST_VARS['delete_sql']) && ($HTTP_POST_VARS['delete_sql'] == 1);
+				$do_sql = isset($_POST['delete_sql']) && ($_POST['delete_sql'] == 1);
 			}
 
 			// delete field definition

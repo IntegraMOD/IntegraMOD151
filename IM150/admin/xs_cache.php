@@ -55,10 +55,10 @@ $skip_files = array(
 //
 // clear cache
 //
-if(isset($HTTP_GET_VARS['clear']) && !defined('DEMO_MODE'))
+if(isset($_GET['clear']) && !defined('DEMO_MODE'))
 {
 	@set_time_limit(XS_MAX_TIMEOUT);
-	$clear = $HTTP_GET_VARS['clear'];
+	$clear = $_GET['clear'];
 	if(!$clear)
 	{
 		// clear all cache
@@ -128,9 +128,9 @@ if(isset($HTTP_GET_VARS['clear']) && !defined('DEMO_MODE'))
 //
 // compile cache
 //
-if(isset($HTTP_GET_VARS['compile']) && !defined('DEMO_MODE'))
+if(isset($_GET['compile']) && !defined('DEMO_MODE'))
 {
-	$tpl = $HTTP_GET_VARS['compile'];
+	$tpl = $_GET['compile'];
 	@set_time_limit(XS_MAX_TIMEOUT);
 	$num_errors = 0;
 	$num_compiled = 0;

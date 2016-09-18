@@ -37,15 +37,15 @@ if ( $board_config['cash_adminnavbar'] )
 	include('./admin_cash.'.$phpEx);
 }
 
-if ( isset($HTTP_POST_VARS['submit']) )
+if ( isset($_POST['submit']) )
 {
-	switch($HTTP_POST_VARS['submit'])
+	switch($_POST['submit'])
 	{
 		case $lang['Update']:
-			$HTTP_POST_VARS['set'] = 'updatecurrency';
+			$_POST['set'] = 'updatecurrency';
 			break;
 		case $lang['Delete']:
-			$HTTP_POST_VARS['set'] = 'deletecurrency';
+			$_POST['set'] = 'deletecurrency';
 			break;
 	}
 }
@@ -55,12 +55,12 @@ $good_order = true;
 //
 // Pull all config data
 //
-if ( isset($HTTP_POST_VARS['set']) )
+if ( isset($_POST['set']) )
 {
-	switch ( $HTTP_POST_VARS['set'] )
+	switch ( $_POST['set'] )
 	{
 		case 'updatecurrency': // Change Currency Name
-			if ( isset($HTTP_POST_VARS['cid']) && is_numeric($HTTP_POST_VARS['cid']) && $cash->currency_exists(intval($HTTP_POST_VARS['cid'])) )
+			if ( isset($_POST['cid']) && is_numeric($_POST['cid']) && $cash->currency_exists(intval($_POST['cid'])) )
 			{
 				/*
 					This update works on several levels. If it's just a name change, it's simple... update the value in the Cash Table.
@@ -69,10 +69,10 @@ if ( isset($HTTP_POST_VARS['set']) )
 					(by default, we want to _not_ run redundant updates on the system)
 					Note: if the DBMS doesn't use a decimal-specific float field, we don't need to update it.
 				*/
-				$c_cur = $cash->currency(intval($HTTP_POST_VARS['cid']));
-				$newname = $HTTP_POST_VARS['rename_value'];
-				$newdefault = intval($HTTP_POST_VARS['default_value']);
-				$newdecimal = intval($HTTP_POST_VARS['decimal_value']);
+				$c_cur = $cash->currency(intval($_POST['cid']));
+				$newname = $_POST['rename_value'];
+				$newdefault = intval($_POST['default_value']);
+				$newdecimal = intval($_POST['decimal_value']);
 				$update_name = ($c_cur->data('cash_name') != $newname);
 				$update_default = ($c_cur->data('cash_default') != $newdefault);
 				$update_decimal = ($c_cur->data('cash_decimal') != $newdecimal);
@@ -146,10 +146,10 @@ if ( isset($HTTP_POST_VARS['set']) )
 			}
 			break;
 		case 'deletecurrency': // Delete Currency
-			if ( isset($HTTP_POST_VARS['cid']) && !isset($HTTP_POST_VARS['cancel']) && is_numeric($HTTP_POST_VARS['cid']) && $cash->currency_exists(intval($HTTP_POST_VARS['cid'])) )
+			if ( isset($_POST['cid']) && !isset($_POST['cancel']) && is_numeric($_POST['cid']) && $cash->currency_exists(intval($_POST['cid'])) )
 			{
-				$c_cur = $cash->currency(intval($HTTP_POST_VARS['cid']));
-				if ( !isset($HTTP_POST_VARS['confirm']) )
+				$c_cur = $cash->currency(intval($_POST['cid']));
+				if ( !isset($_POST['confirm']) )
 				{
 					$s_hidden_fields = '<input type="hidden" name="set" value="deletecurrency" />';
 					$s_hidden_fields .= '<input type="hidden" name="cid" value="' . $c_cur->id() . '" />';
@@ -232,23 +232,23 @@ if ( isset($HTTP_POST_VARS['set']) )
 									$c_cur->name(true)
 						);
 					cash_create_log( CASH_LOG_ADMIN_DELETE_CURRENCY , $action );
-					$HTTP_POST_VARS['submit'] = true;
+					$_POST['submit'] = true;
 				}
 			}
 			break;
 		case 'copycurrency': // Copy Currency
-			if ( !isset($HTTP_POST_VARS['cancel']) &&
-				isset($HTTP_POST_VARS['cid1']) &&
-				is_numeric($HTTP_POST_VARS['cid1']) &&
-				$cash->currency_exists(intval($HTTP_POST_VARS['cid1'])) &&
-				isset($HTTP_POST_VARS['cid2']) &&
-				is_numeric($HTTP_POST_VARS['cid2']) &&
-				$cash->currency_exists(intval($HTTP_POST_VARS['cid2'])) &&
-				(intval($HTTP_POST_VARS['cid1']) != intval($HTTP_POST_VARS['cid2'])) )
+			if ( !isset($_POST['cancel']) &&
+				isset($_POST['cid1']) &&
+				is_numeric($_POST['cid1']) &&
+				$cash->currency_exists(intval($_POST['cid1'])) &&
+				isset($_POST['cid2']) &&
+				is_numeric($_POST['cid2']) &&
+				$cash->currency_exists(intval($_POST['cid2'])) &&
+				(intval($_POST['cid1']) != intval($_POST['cid2'])) )
 			{
-				$c_cur1 = $cash->currency(intval($HTTP_POST_VARS['cid1']));
-				$c_cur2 = $cash->currency(intval($HTTP_POST_VARS['cid2']));
-				if ( !isset($HTTP_POST_VARS['confirm']) )
+				$c_cur1 = $cash->currency(intval($_POST['cid1']));
+				$c_cur2 = $cash->currency(intval($_POST['cid2']));
+				if ( !isset($_POST['confirm']) )
 				{
 					$s_hidden_fields = '<input type="hidden" name="set" value="copycurrency" />';
 					$s_hidden_fields .= '<input type="hidden" name="cid1" value="' . $c_cur1->id() . '" />';
@@ -292,19 +292,19 @@ if ( isset($HTTP_POST_VARS['set']) )
 			}
 			break;
 		case 'newcurrency': // Create Currency
-			if ( isset($HTTP_POST_VARS['currency_name']) &&
-			     isset($HTTP_POST_VARS['currency_dbfield']) &&
-			     isset($HTTP_POST_VARS['currency_decimals']) &&
-			     isset($HTTP_POST_VARS['currency_default']) &&
-			     is_numeric($HTTP_POST_VARS['currency_decimals']) &&
-			     is_numeric($HTTP_POST_VARS['currency_default']) )
+			if ( isset($_POST['currency_name']) &&
+			     isset($_POST['currency_dbfield']) &&
+			     isset($_POST['currency_decimals']) &&
+			     isset($_POST['currency_default']) &&
+			     is_numeric($_POST['currency_decimals']) &&
+			     is_numeric($_POST['currency_default']) )
 			{
 				$regex = "/^user_[a-z]+$/";
-				$new_name = stripslashes($HTTP_POST_VARS['currency_name']);
-				$new_field = stripslashes($HTTP_POST_VARS['currency_dbfield']);
-				$new_decimals = intval(max(0,intval($HTTP_POST_VARS['currency_decimals'])));
+				$new_name = stripslashes($_POST['currency_name']);
+				$new_field = stripslashes($_POST['currency_dbfield']);
+				$new_decimals = intval(max(0,intval($_POST['currency_decimals'])));
 				$factor = pow(10,$new_decimals);
-				$new_default = ( $new_decimals > 0 ) ? (intval($HTTP_POST_VARS['currency_default'] * $factor) / $factor) : intval($HTTP_POST_VARS['currency_default']);
+				$new_default = ( $new_decimals > 0 ) ? (intval($_POST['currency_default'] * $factor) / $factor) : intval($_POST['currency_default']);
 				$new_order = $cash->currency_count() + 1;
 				//
 				// Make sure it matches a valid database field... "user_word"
@@ -407,18 +407,18 @@ if ( isset($HTTP_POST_VARS['set']) )
 	}
 }
 
-if ( isset($HTTP_POST_VARS['submit']) )
+if ( isset($_POST['submit']) )
 {
 	$message = $lang['Cash_currencies_updated'] . "<br /><br />" . sprintf($lang['Click_return_cash_currencies'], "<a href=\"" . append_sid("cash_currencies.$phpEx") . "\">", "</a>") . "<br /><br />" . sprintf($lang['Click_return_admin_index'], "<a href=\"" . append_sid("index.$phpEx?pane=right") . "\">", "</a>");
 
 	message_die(GENERAL_MESSAGE, $message);
 }
 
-if ( isset($HTTP_GET_VARS['set']) && isset($HTTP_GET_VARS['cord']) && is_numeric($HTTP_GET_VARS['cord']) )
+if ( isset($_GET['set']) && isset($_GET['cord']) && is_numeric($_GET['cord']) )
 {
-	$cord = intval($HTTP_GET_VARS['cord']);
+	$cord = intval($_GET['cord']);
 	$old = $new = 0;
-	switch ( $HTTP_GET_VARS['set'] )
+	switch ( $_GET['set'] )
 	{
 		case "up":
 			$old = $cord;

@@ -57,7 +57,7 @@ include_once($phpbb_root_path . 'language/lang_' . $board_config['default_lang']
 include_once($phpbb_root_path . 'includes/functions_selects.'.$phpEx);
 include_once($phpbb_root_path . 'includes/functions_digests.'.$phpEx);
 
-if ($HTTP_SERVER_VARS['REQUEST_METHOD'] == 'GET') {
+if ($_SERVER['REQUEST_METHOD'] == 'GET') {
 	// get current subscription data for this user, if any
 	$sql = 'SELECT count(*) AS count FROM ' . DIGEST_TABLE . ' WHERE user_id = ' . $view_userdata['user_id'];
 	if ( !($result = $db->sql_query($sql))){
@@ -280,7 +280,7 @@ if ($HTTP_SERVER_VARS['REQUEST_METHOD'] == 'GET') {
 		$text_length = stripslashes($text_lengh);
 	}
 
-	if ($HTTP_POST_VARS['digest_frequency'] == 0) {
+	if ($_POST['digest_frequency'] == 0) {
 		// user no longer wants a digest
 		// first remove all individual forum subscriptions
 		$sql = 'DELETE FROM ' . DIGEST_FORUMS_TABLE . ' WHERE user_id = ' . $view_userdata['user_id'];
@@ -298,27 +298,27 @@ if ($HTTP_SERVER_VARS['REQUEST_METHOD'] == 'GET') {
 	} else {
 		// In all other cases a digest has to be either created or updated
 		// first, create or update the subscription
-		if ($HTTP_POST_VARS['create_new'] == '1'){// new digest
+		if ($_POST['create_new'] == '1'){// new digest
 			$sql = 'INSERT INTO ' . DIGEST_TABLE . ' (user_id, digest_frequency, last_digest, format, show_text, show_mine, new_only, send_on_no_messages, text_length) VALUES (' .
 				intval($view_userdata['user_id']) . ', ' .
-				"'" . htmlspecialchars($HTTP_POST_VARS['digest_frequency']) . "', " .
+				"'" . htmlspecialchars($_POST['digest_frequency']) . "', " .
 				"'" . time() . "', " .
-				"'" . htmlspecialchars($HTTP_POST_VARS['format']) . "', " .
-				"'" . htmlspecialchars($HTTP_POST_VARS['show_text']) . "', " .
-				"'" . htmlspecialchars($HTTP_POST_VARS['show_mine']) . "', " .
-				"'" . htmlspecialchars($HTTP_POST_VARS['new_only']) . "', " .
-				"'" . htmlspecialchars($HTTP_POST_VARS['send_on_no_messages']) . "', " .
-				intval($HTTP_POST_VARS['text_length']). ')';
+				"'" . htmlspecialchars($_POST['format']) . "', " .
+				"'" . htmlspecialchars($_POST['show_text']) . "', " .
+				"'" . htmlspecialchars($_POST['show_mine']) . "', " .
+				"'" . htmlspecialchars($_POST['new_only']) . "', " .
+				"'" . htmlspecialchars($_POST['send_on_no_messages']) . "', " .
+				intval($_POST['text_length']). ')';
 			$update_type = 'create';
 		} else {
 			$sql = 'UPDATE ' . DIGEST_TABLE . ' SET ' .
-				"digest_frequency = '" . htmlspecialchars($HTTP_POST_VARS['digest_frequency']) . "', " .
-				"format = '" . htmlspecialchars($HTTP_POST_VARS['format']) . "', " .
-				"show_text = '" . htmlspecialchars($HTTP_POST_VARS['show_text']) . "', " .
-				"show_mine = '" . htmlspecialchars($HTTP_POST_VARS['show_mine']) . "', " .
-				"new_only = '" . htmlspecialchars($HTTP_POST_VARS['new_only']) . "', " .
-				"send_on_no_messages = '" . htmlspecialchars($HTTP_POST_VARS['send_on_no_messages']) . "', " .
-				'text_length = ' . intval($HTTP_POST_VARS['text_length']) . ' ' . 
+				"digest_frequency = '" . htmlspecialchars($_POST['digest_frequency']) . "', " .
+				"format = '" . htmlspecialchars($_POST['format']) . "', " .
+				"show_text = '" . htmlspecialchars($_POST['show_text']) . "', " .
+				"show_mine = '" . htmlspecialchars($_POST['show_mine']) . "', " .
+				"new_only = '" . htmlspecialchars($_POST['new_only']) . "', " .
+				"send_on_no_messages = '" . htmlspecialchars($_POST['send_on_no_messages']) . "', " .
+				'text_length = ' . intval($_POST['text_length']) . ' ' . 
 				' WHERE user_id = ' . intval($view_userdata['user_id']);
 			$update_type = 'modify';
 		}
@@ -335,8 +335,8 @@ if ($HTTP_SERVER_VARS['REQUEST_METHOD'] == 'GET') {
 		// Note that if "all_forums" is checked, this is noted in the subscriptions table. It does not put
 		// each forum in the subscribed_forums table. This conserves disk space. "all_forums" means all 
 		// forums this user is allowed to access.
-		if ($HTTP_POST_VARS['all_forums'] !== 'on'){
-			foreach ($HTTP_POST_VARS as $key => $value){
+		if ($_POST['all_forums'] !== 'on'){
+			foreach ($_POST as $key => $value){
 				if (substr($key, 0, 6) == 'forum_'){
 					$sql = 'INSERT INTO ' . DIGEST_FORUMS_TABLE . ' (user_id, forum_id) VALUES (' .
 					$view_userdata['user_id'] . ', ' . htmlspecialchars(substr($key,6)) . ')';

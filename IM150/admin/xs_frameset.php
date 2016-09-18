@@ -39,9 +39,9 @@ define('IN_XS', true);
 define('NO_XS_HEADER', true);
 include_once('xs_include.' . $phpEx);
 
-$action = isset($HTTP_GET_VARS['action']) ? $HTTP_GET_VARS['action'] : '';
+$action = isset($_GET['action']) ? $_GET['action'] : '';
 $get_data = array();
-foreach($HTTP_GET_VARS as $var => $value)
+foreach($_GET as $var => $value)
 {
 	if($var !== 'action' && $var !== 'sid')
 	{
@@ -50,13 +50,13 @@ foreach($HTTP_GET_VARS as $var => $value)
 }
 
 // check for style download command
-if(isset($HTTP_POST_VARS['action']) && $HTTP_POST_VARS['action'] === 'web')
+if(isset($_POST['action']) && $_POST['action'] === 'web')
 {
 	$action = 'import';
-	$get_data[] = 'get_remote=' . urlencode(stripslashes($HTTP_POST_VARS['source']));
-	if(isset($HTTP_POST_VARS['return']))
+	$get_data[] = 'get_remote=' . urlencode(stripslashes($_POST['source']));
+	if(isset($_POST['return']))
 	{
-		$get_data[] = 'return=' . urlencode(stripslashes($HTTP_POST_VARS['return']));
+		$get_data[] = 'return=' . urlencode(stripslashes($_POST['return']));
 	}
 }
 

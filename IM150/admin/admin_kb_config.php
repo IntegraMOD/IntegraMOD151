@@ -90,9 +90,9 @@ else
 		$config_value = $row['config_value'];
 		$default_config[$config_name] = $config_value;
 
-		$new[$config_name] = ( isset( $HTTP_POST_VARS[$config_name] ) ) ? $HTTP_POST_VARS[$config_name] : $default_config[$config_name];
+		$new[$config_name] = ( isset( $_POST[$config_name] ) ) ? $_POST[$config_name] : $default_config[$config_name];
 
-		if ( isset( $HTTP_POST_VARS['submit'] ) )
+		if ( isset( $_POST['submit'] ) )
 		{
 			$sql = "UPDATE " . KB_CONFIG_TABLE . " SET
 				   		config_value = '" . str_replace( "\'", "''", $new[$config_name] ) . "'
@@ -104,7 +104,7 @@ else
 		}
 	}
 
-	if ( isset( $HTTP_POST_VARS['submit'] ) )
+	if ( isset( $_POST['submit'] ) )
 	{
 		$message = $lang['KB_config_updated'] . "<br /><br />" . sprintf( $lang['Click_return_kb_config'], "<a href=\"" . append_sid( "admin_kb_config.$phpEx?mode=config" ) . "\">", "</a>" ) . "<br /><br />" . sprintf( $lang['Click_return_admin_index'], "<a href=\"" . append_sid( $mx_root_path . "admin/index.$phpEx?pane=right" ) . "\">", "</a>" );
 

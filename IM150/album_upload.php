@@ -55,13 +55,13 @@ else
 // for this Upload script, we prefer POST to GET
 // ------------------------------------
 
-if( isset($HTTP_POST_VARS['user_id']) )
+if( isset($_POST['user_id']) )
 {
-	$album_user_id = intval($HTTP_POST_VARS['user_id']);
+	$album_user_id = intval($_POST['user_id']);
 }
-elseif( isset($HTTP_GET_VARS['user_id']) )
+elseif( isset($_GET['user_id']) )
 {
-	$album_user_id = intval($HTTP_GET_VARS['user_id']);
+	$album_user_id = intval($_GET['user_id']);
 }
 else
 {
@@ -69,13 +69,13 @@ else
 	$album_user_id = ALBUM_PUBLIC_GALLERY;
 }
 
-if( isset($HTTP_POST_VARS['cat_id']) )
+if( isset($_POST['cat_id']) )
 {
-	$cat_id = intval($HTTP_POST_VARS['cat_id']);
+	$cat_id = intval($_POST['cat_id']);
 }
-elseif( isset($HTTP_GET_VARS['cat_id']) )
+elseif( isset($_GET['cat_id']) )
 {
-	$cat_id = intval($HTTP_GET_VARS['cat_id']);
+	$cat_id = intval($_GET['cat_id']);
 }
 else
 {
@@ -83,7 +83,7 @@ else
 }
 
 // check if it's a 'fake' category id, which look like this -<user_id> (a minus sign followed by the userid)
-if( isset($HTTP_POST_VARS['pic_title']) ) // is it submitted?
+if( isset($_POST['pic_title']) ) // is it submitted?
 {
 	if (!album_validate_jumpbox_selection($cat_id))
 	{
@@ -270,7 +270,7 @@ else
 +----------------------------------------------------------
 */
 
-if( !isset($HTTP_POST_VARS['pic_title']) ) // is it not submitted?
+if( !isset($_POST['pic_title']) ) // is it not submitted?
 {
 	// --------------------------------
 	// Build categories select
@@ -461,13 +461,13 @@ else
 	// Check posted info
 	// --------------------------------
 
-	$pic_title = str_replace("\'", "''", htmlspecialchars(trim($HTTP_POST_VARS['pic_title'])));
+	$pic_title = str_replace("\'", "''", htmlspecialchars(trim($_POST['pic_title'])));
 
-	$pic_desc = str_replace("\'", "''", htmlspecialchars(substr(trim($HTTP_POST_VARS['pic_desc']), 0, $album_config['desc_length'])));
+	$pic_desc = str_replace("\'", "''", htmlspecialchars(substr(trim($_POST['pic_desc']), 0, $album_config['desc_length'])));
 
-	$pic_username = (!$userdata['session_logged_in']) ? substr(str_replace("\'", "''", htmlspecialchars(trim($HTTP_POST_VARS['pic_username']))), 0, 32) : str_replace("'", "''", $userdata['username']);
+	$pic_username = (!$userdata['session_logged_in']) ? substr(str_replace("\'", "''", htmlspecialchars(trim($_POST['pic_username']))), 0, 32) : str_replace("'", "''", $userdata['username']);
 
-	if( !isset($HTTP_POST_FILES['pic_file']) )
+	if( !isset($_FILES['pic_file']) )
 	{
 		message_die(GENERAL_ERROR, $lang['Bad_upload']);
 	}
@@ -480,8 +480,8 @@ else
 	// ----------------------------------------------------------------
 	$pic_count = 0;
 	$thumb_count = 0;
-	$upload_files = $HTTP_POST_FILES['pic_file'];
-	$thumbnail_upload_files = $HTTP_POST_FILES['pic_thumbnail']; 	
+	$upload_files = $_FILES['pic_file'];
+	$thumbnail_upload_files = $_FILES['pic_thumbnail']; 	
 	for($index = 0; $index < count($upload_files['name']);$index++)
 	{
 		if (was_file_uploaded($upload_files,$index) == true)
@@ -514,7 +514,7 @@ else
 
 	// check if we are uploading ONLY one picture, if so, then check for picture title
 	/*
-	if ( (count($HTTP_POST_FILES['pic_file']['name']) == 1 || $pic_count == 1) && empty($pic_title) )
+	if ( (count($_FILES['pic_file']['name']) == 1 || $pic_count == 1) && empty($pic_title) )
 	{
 		message_die(GENERAL_ERROR, $lang['Missed_pic_title']);
 	}
@@ -540,14 +540,14 @@ else
 
 
 	/*
-	//Structure of the $HTTP_POST_FILES ($_FILES) variable
+	//Structure of the $_FILES ($_FILES) variable
 	//This information it left here for other mod authors to use
 	
-	echo "<pre>\$HTTP_POST_FILES = ";
-	print_r($HTTP_POST_FILES);
+	echo "<pre>\$_FILES = ";
+	print_r($_FILES);
 	echo "</pre><br />";
 
-	$HTTP_POST_FILES = Array
+	$_FILES = Array
 	(
 		[pic_file] => Array
 			(
@@ -595,11 +595,10 @@ else
 	$time_end = getmicrotime();
 	$time_start = getmicrotime();
 	$time = $time_end - $time_start;
-	$ini_val = ( @phpversion() >= '4.0.0' ) ? 'ini_get' : 'get_cfg_var';
 
-	if ( @$ini_val(' max_execution_time') != '' )
+	if ( @ini_get(' max_execution_time') != '' )
 	{
-		$timeout = (@$ini_val(' max_execution_time')-$time );
+		$timeout = (@ini_get(' max_execution_time')-$time );
 	}
 	else
 	{
@@ -651,12 +650,9 @@ else
 			}
 			else
 			{
-				if (@phpversion() >= '4.2.0')
+				if ($thumbnail_upload_files['error'][$index] != $upload_files['error'][$index])
 				{
-					if ($thumbnail_upload_files['error'][$index] != $upload_files['error'][$index])
-					{
-						message_die(GENERAL_MESSAGE, sprintf($lang['Unknown_file_and_thumbnail_error_mismatch'], $upload_files['name'][$index], $thumbnail_upload_files['name'][$index]));
-					}
+					message_die(GENERAL_MESSAGE, sprintf($lang['Unknown_file_and_thumbnail_error_mismatch'], $upload_files['name'][$index], $thumbnail_upload_files['name'][$index]));
 				}
 			}
 		}
@@ -849,15 +845,8 @@ else
 		// Move this file to upload directory
 		// --------------------------------
 
-		$ini_val = ( @phpversion() >= '4.0.0' ) ? 'ini_get' : 'get_cfg_var';
-
-		if ( @$ini_val('open_basedir') != '' )
+		if ( @ini_get('open_basedir') != '' )
 		{
-			if ( @phpversion() < '4.0.3' )
-			{
-				message_die(GENERAL_ERROR, 'open_basedir is set and your PHP version does not allow move_uploaded_file<br /><br />Please contact your server admin', '', __LINE__, __FILE__);
-			}
-
 			if ($album_config['switch_nuffload'] == 1)
 			{
 				$move_file = 'rename';
@@ -1018,10 +1007,10 @@ else
 		// --------------------------------------
 		// Need to rotate before thumbnail cache
 		// --------------------------------------
-		if( ($pic_filetype != '.gif') && ($album_config['gd_version'] > 0) && ($HTTP_POST_VARS['rotation'] > 0) && (!$HotLinked) && ($album_config['switch_nuffload'] == 0) )
+		if( ($pic_filetype != '.gif') && ($album_config['gd_version'] > 0) && ($_POST['rotation'] > 0) && (!$HotLinked) && ($album_config['switch_nuffload'] == 0) )
 		{
 			// Uncomment the next line if you want to rotate clockwise and remember to change the language setting
-			//$HTTP_POST_VARS['rotation'] = $HTTP_POST_VARS['rotation'] * -1;
+			//$_POST['rotation'] = $_POST['rotation'] * -1;
 
 			$gd_errored = FALSE;
 			$jpeg_qual = 90;
@@ -1044,7 +1033,7 @@ else
 			}
 			else
 			{
-				$rotate = imagerotate($src, $HTTP_POST_VARS['rotation'], 0);
+				$rotate = imagerotate($src, $_POST['rotation'], 0);
 			}
 			if (!$gd_errored)
 			{

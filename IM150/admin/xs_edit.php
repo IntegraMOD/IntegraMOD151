@@ -40,12 +40,12 @@ include_once('xs_include.' . $phpEx);
 
 
 // check filter
-$filter = isset($HTTP_GET_VARS['filter']) ? stripslashes($HTTP_GET_VARS['filter']) : (isset($HTTP_POST_VARS['filter']) ? stripslashes($HTTP_POST_VARS['filter']) : '');
-if(isset($HTTP_POST_VARS['filter_update']))
+$filter = isset($_GET['filter']) ? stripslashes($_GET['filter']) : (isset($_POST['filter']) ? stripslashes($_POST['filter']) : '');
+if(isset($_POST['filter_update']))
 {
 	$filter_data = array(
-		'ext'	=> trim(stripslashes($HTTP_POST_VARS['filter_ext'])),
-		'data'	=> trim(stripslashes($HTTP_POST_VARS['filter_data']))
+		'ext'	=> trim(stripslashes($_POST['filter_ext'])),
+		'data'	=> trim(stripslashes($_POST['filter_data']))
 		);
 	 $filter = serialize($filter_data);
 }
@@ -69,7 +69,7 @@ $template->assign_block_vars('nav_left',array('ITEM' => '&raquo; <a href="' . ap
 $editable = array('.htm', '.html', '.tpl', '.css', '.txt', '.cfg', '.xml', '.php', '.htaccess');
 
 // get current directory
-$current_dir = isset($HTTP_GET_VARS['dir']) ? stripslashes($HTTP_GET_VARS['dir']) : (isset($HTTP_POST_VARS['dir']) ? stripslashes($HTTP_POST_VARS['dir']) : 'templates');
+$current_dir = isset($_GET['dir']) ? stripslashes($_GET['dir']) : (isset($_POST['dir']) ? stripslashes($_POST['dir']) : 'templates');
 $current_dir = xs_fix_dir($current_dir);
 if(defined('DEMO_MODE') && substr($current_dir, 0, 9) !== 'templates')
 {	// limit access to "templates" in demo mode
@@ -104,20 +104,20 @@ $template->assign_vars(array(
 /*
 * show edit form
 */
-if(isset($HTTP_GET_VARS['edit']) && !empty($HTTP_GET_VARS['restore']))
+if(isset($_GET['edit']) && !empty($_GET['restore']))
 {
-	$file = stripslashes($HTTP_GET_VARS['edit']);
+	$file = stripslashes($_GET['edit']);
 	$file = xs_fix_dir($file);
 	$fullfile = $current_dir_root . $file;
 	$localfile = '../' . $fullfile;
 	$hash = md5($localfile);
-	$backup_name = XS_TEMP_DIR . XS_BACKUP_PREFIX . $hash . '.' . intval($HTTP_GET_VARS['restore']) . XS_BACKUP_EXT;
+	$backup_name = XS_TEMP_DIR . XS_BACKUP_PREFIX . $hash . '.' . intval($_GET['restore']) . XS_BACKUP_EXT;
 	if(@file_exists($backup_name))
 	{
 		// restore file
-		$HTTP_POST_VARS['edit'] = $HTTP_GET_VARS['edit'];
-		$HTTP_POST_VARS['content'] = addslashes(implode('', @file($backup_name)));
-		unset($HTTP_GET_VARS['edit']);
+		$_POST['edit'] = $_GET['edit'];
+		$_POST['content'] = addslashes(implode('', @file($backup_name)));
+		unset($_GET['edit']);
 		$return_file = str_replace('{URL}', append_sid('xs_edit.'.$phpEx.$filter_str.'&dir='.urlencode($current_dir).'&edit='.urlencode($file)), $lang['xs_edittpl_back_edit']);
 		$return_url = $return_file . '<br /><br />' . $return_dir;
 	}
@@ -127,19 +127,19 @@ if(isset($HTTP_GET_VARS['edit']) && !empty($HTTP_GET_VARS['restore']))
 /*
 * save modified file
 */
-if(isset($HTTP_POST_VARS['edit']) && !defined('DEMO_MODE'))
+if(isset($_POST['edit']) && !defined('DEMO_MODE'))
 {
-	$file = stripslashes($HTTP_POST_VARS['edit']);
-	$content = stripslashes($HTTP_POST_VARS['content']);
+	$file = stripslashes($_POST['edit']);
+	$content = stripslashes($_POST['content']);
 	$fullfile = $current_dir_root . $file;
 	$localfile = '../' . $fullfile;
-	if(!empty($HTTP_POST_VARS['trim']))
+	if(!empty($_POST['trim']))
 	{
 		$content = trim($content);
 	}
-	if(!empty($HTTP_POST_FILES['upload']['tmp_name']) && @file_exists($HTTP_POST_FILES['upload']['tmp_name']))
+	if(!empty($_FILES['upload']['tmp_name']) && @file_exists($_FILES['upload']['tmp_name']))
 	{
-		$content = @implode('', @file($HTTP_POST_FILES['upload']['tmp_name']));
+		$content = @implode('', @file($_FILES['upload']['tmp_name']));
 	}
 	$params = array(
 		'edit'		=> $file,
@@ -212,9 +212,9 @@ if(isset($HTTP_POST_VARS['edit']) && !defined('DEMO_MODE'))
 /*
 * show edit form
 */
-if(isset($HTTP_GET_VARS['edit']))
+if(isset($_GET['edit']))
 {
-	$file = stripslashes($HTTP_GET_VARS['edit']);
+	$file = stripslashes($_GET['edit']);
 	$file = xs_fix_dir($file);
 	$fullfile = $current_dir_root . $file;
 	$localfile = '../' . $fullfile;
@@ -229,14 +229,14 @@ if(isset($HTTP_GET_VARS['edit']))
 		xs_error($lang['xs_edit_not_found'] . '<br /><br />' . $return_url);
 	}
 	$content = implode('', $content);
-	if(isset($HTTP_GET_VARS['download']) && !defined('DEMO_MODE'))
+	if(isset($_GET['download']) && !defined('DEMO_MODE'))
 	{
 		xs_download_file($file, $content);
 		xs_exit();
 	}
-	if(isset($HTTP_GET_VARS['downloadbackup']) && !defined('DEMO_MODE'))
+	if(isset($_GET['downloadbackup']) && !defined('DEMO_MODE'))
 	{
-		$backup_name = XS_TEMP_DIR . XS_BACKUP_PREFIX . $hash . '.' . intval($HTTP_GET_VARS['downloadbackup']) . XS_BACKUP_EXT;
+		$backup_name = XS_TEMP_DIR . XS_BACKUP_PREFIX . $hash . '.' . intval($_GET['downloadbackup']) . XS_BACKUP_EXT;
 		xs_download_file($file, implode('', @file($backup_name)));
 		xs_exit();
 	}
@@ -284,9 +284,9 @@ if(isset($HTTP_GET_VARS['edit']))
 	}
 
 	// view backup
-	if(!empty($HTTP_GET_VARS['viewbackup']) && !defined('DEMO_MODE'))
+	if(!empty($_GET['viewbackup']) && !defined('DEMO_MODE'))
 	{
-		$backup_name = XS_TEMP_DIR . XS_BACKUP_PREFIX . $hash . '.' . intval($HTTP_GET_VARS['viewbackup']) . XS_BACKUP_EXT;
+		$backup_name = XS_TEMP_DIR . XS_BACKUP_PREFIX . $hash . '.' . intval($_GET['viewbackup']) . XS_BACKUP_EXT;
 		$template->assign_vars(array(
 			'CONTENT'	=> implode('', @file($backup_name))
 			)
@@ -294,7 +294,7 @@ if(isset($HTTP_GET_VARS['edit']))
 	}
 
 	// save backup
-	if(isset($HTTP_GET_VARS['dobackup']) && !defined('DEMO_MODE'))
+	if(isset($_GET['dobackup']) && !defined('DEMO_MODE'))
 	{
 		$backup_name = XS_TEMP_DIR . XS_BACKUP_PREFIX . $hash . '.' . time() . XS_BACKUP_EXT;
 		$f = @fopen($backup_name, 'wb');
@@ -308,9 +308,9 @@ if(isset($HTTP_GET_VARS['edit']))
 	}
 
 	// delete backup
-	if(isset($HTTP_GET_VARS['delbackup']) && !defined('DEMO_MODE'))
+	if(isset($_GET['delbackup']) && !defined('DEMO_MODE'))
 	{
-		$backup_name = XS_TEMP_DIR . XS_BACKUP_PREFIX . $hash . '.' . intval($HTTP_GET_VARS['delbackup']) . XS_BACKUP_EXT;
+		$backup_name = XS_TEMP_DIR . XS_BACKUP_PREFIX . $hash . '.' . intval($_GET['delbackup']) . XS_BACKUP_EXT;
 		@unlink($backup_name);
 	}
 

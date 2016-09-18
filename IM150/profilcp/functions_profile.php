@@ -416,8 +416,6 @@ function pcp_user_avatar_upload($avatar_mode, &$current_avatar, &$current_type, 
 {
 	global $board_config, $db, $lang;
 
-	$ini_val = ( @phpversion() >= '4.0.0' ) ? 'ini_get' : 'get_cfg_var';
-
 	$width = $height = 0;
 	$type = '';
 
@@ -467,7 +465,7 @@ function pcp_user_avatar_upload($avatar_mode, &$current_avatar, &$current_type, 
 		{
 			$avatar_data = substr($avatar_data, strlen($avatar_data) - $avatar_filesize, $avatar_filesize);
 
-			$tmp_path = ( !@$ini_val('safe_mode') ) ? '/tmp' : './' . $board_config['avatar_path'] . '/tmp';
+			$tmp_path = ( !@ini_get('safe_mode') ) ? '/tmp' : './' . $board_config['avatar_path'] . '/tmp';
 			$tmp_filename = tempnam($tmp_path, uniqid(rand()) . '-');
 
 			$fptr = @fopen($tmp_filename, 'wb');
@@ -568,13 +566,8 @@ function pcp_user_avatar_upload($avatar_mode, &$current_avatar, &$current_type, 
 		}
 		else
 		{
-			if ( @$ini_val('open_basedir') != '' )
+			if ( @ini_get('open_basedir') != '' )
 			{
-				if ( @phpversion() < '4.0.3' )
-				{
-					message_die(GENERAL_ERROR, 'open_basedir is set and your PHP version does not allow move_uploaded_file', '', __LINE__, __FILE__);
-				}
-
 				$move_file = 'move_uploaded_file';
 			}
 			else
@@ -691,8 +684,6 @@ function pcp_user_photo_upload($photo_mode, &$current_photo, &$current_type, &$e
 {
 	global $board_config, $db, $lang;
 
-	$ini_val = ( @phpversion() >= '4.0.0' ) ? 'ini_get' : 'get_cfg_var';
-
 	if ( $photo_mode == 'remote' && preg_match('/^(http:\/\/)?([\w\-\.]+)\:?([0-9]*)\/(.*)$/', $photo_filename, $url_ary) )
 	{
 		if ( empty($url_ary[4]) )
@@ -737,7 +728,7 @@ function pcp_user_photo_upload($photo_mode, &$current_photo, &$current_type, &$e
 		{
 			$photo_data = substr($photo_data, strlen($photo_data) - $photo_filesize, $photo_filesize);
 
-			$tmp_path = ( !@$ini_val('safe_mode') ) ? '/tmp' : './' . $board_config['photo_path'] . '/tmp';
+			$tmp_path = ( !@ini_get('safe_mode') ) ? '/tmp' : './' . $board_config['photo_path'] . '/tmp';
 			$tmp_filename = tempnam($tmp_path, uniqid(rand()) . '-');
 
 			$fptr = @fopen($tmp_filename, 'wb');
@@ -803,7 +794,7 @@ function pcp_user_photo_upload($photo_mode, &$current_photo, &$current_type, &$e
 		}
 		else
 		{
-			if ( @$ini_val('open_basedir') != '' )
+			if ( @ini_get('open_basedir') != '' )
 			{
 				if ( @phpversion() < '4.0.3' )
 				{

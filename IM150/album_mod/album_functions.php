@@ -560,14 +560,7 @@ function album_end()
 // ----------------------------------------------------------------
 function was_file_uploaded($files_array, $index)
 {
-	if ( @phpversion() < '4.2.0' )
-	{
-		return ( (empty($files_array['tmp_name'][$index]) || $files_array['tmp_name'][$index] == 'none') || $files_array['size'][$index] == 0 ) ? false : true;
-	}
-	else
-	{
-		return ( ((empty($files_array['tmp_name'][$index]) || $files_array['tmp_name'][$index] == 'none') || $files_array['size'][$index] == 0) || $files_array['error'][$index] == 4) ? false : true;
-	}
+	return ( ((empty($files_array['tmp_name'][$index]) || $files_array['tmp_name'][$index] == 'none') || $files_array['size'][$index] == 0) || $files_array['error'][$index] == 4) ? false : true;
 }
 
 // ----------------------------------------------------------------
@@ -576,22 +569,7 @@ function was_file_uploaded($files_array, $index)
 // ----------------------------------------------------------------
 function file_uploaded_exceeds_max_size($files_array, $index)
 {
-	// for some bizar reason I can't get the next few lines to work right 'error' is always = 0
-	if (@phpversion() >= '4.2.0')
-	{
-		// UPLOAD_ERR_INI_SIZE == 1 (was first defined in 4.3.0, so 1 here instead)
-		return ($files_array['error'][$index] == 1) ? true : false;
-	}
-	else
-	{
-		// earlier version of PHP (before 4.2.0) the error associated array didn't exist
-		// so we need to TRY to check if the file was too big
-		// the rule is the following (not fool proof):
-		//
-		// if 'name' isn't empty BUT 'tmp_name' and 'size' are empty (or for size = 0)
-		// then we must have exceeded our max file size (or another error occured)
-		return ( !empty($files_array['name'][$index]) && ( (empty($files_array['tmp_name'][$index]) || $files_array['tmp_name'][$index] == 'none') &&  $files_array['size'][$index] == 0 ) ) ? true : false;
-	}
+	return ($files_array['error'][$index] == 1);
 }
 
 // ----------------------------------------------------------------

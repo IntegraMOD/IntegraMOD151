@@ -45,38 +45,38 @@ include($album_root_path . 'album_common.'.$phpEx);
 // ------------------------------------
 
 $auth_view = 0;
-if( isset($HTTP_GET_VARS['cat_id']) )
+if( isset($_GET['cat_id']) )
 {
-	$cat_id = intval($HTTP_GET_VARS['cat_id']);
+	$cat_id = intval($_GET['cat_id']);
 	$album_user_access = album_user_access($cat_id, $thiscat, 1, 0, 0, 0, 0, 0); // VIEW
 	$auth_view = $album_user_access['view'];
 	//$auth_view = ($userdata['user_level'] == ADMIN);
 }
-elseif( isset($HTTP_GET_VARS['user_id']) )
+elseif( isset($_GET['user_id']) )
 {
-	$user_id = intval($HTTP_GET_VARS['user_id']);
+	$user_id = intval($_GET['user_id']);
 	$cat_id = PERSONAL_GALLERY . " AND pic_user_id = $user_id";
 	$personal_gallery_access = personal_gallery_access(1, 0);
 	$auth_view = $personal_gallery_access['view'];
 	//$auth_view = ( ($userdata['user_id'] == $user_id) || ($userdata['user_level'] > 0) ) ? 1 : 0;
 }
 
-if( isset($HTTP_GET_VARS['start']) )
+if( isset($_GET['start']) )
 {
-	$start = intval($HTTP_GET_VARS['start']);
+	$start = intval($_GET['start']);
 }
-elseif( isset($HTTP_POST_VARS['start']) )
+elseif( isset($_POST['start']) )
 {
-	$start = intval($HTTP_POST_VARS['start']);
+	$start = intval($_POST['start']);
 }
 else
 {
 	$start = 0;
 }
 
-if( isset($HTTP_GET_VARS['sort_method']) )
+if( isset($_GET['sort_method']) )
 {
-	switch ($HTTP_GET_VARS['sort_method'])
+	switch ($_GET['sort_method'])
 	{
 		case 'pic_title':
 			$sort_method = 'pic_title';
@@ -97,9 +97,9 @@ if( isset($HTTP_GET_VARS['sort_method']) )
 			$sort_method = $album_config['sort_method'];
 	}
 }
-elseif( isset($HTTP_POST_VARS['sort_method']) )
+elseif( isset($_POST['sort_method']) )
 {
-	switch ($HTTP_POST_VARS['sort_method'])
+	switch ($_POST['sort_method'])
 	{
 		case 'pic_title':
 			$sort_method = 'pic_title';
@@ -125,9 +125,9 @@ else
 	$sort_method = $album_config['sort_method'];
 }
 
-if( isset($HTTP_GET_VARS['sort_order']) )
+if( isset($_GET['sort_order']) )
 {
-	switch ($HTTP_GET_VARS['sort_order'])
+	switch ($_GET['sort_order'])
 	{
 		case 'ASC':
 			$sort_order = 'ASC';
@@ -139,9 +139,9 @@ if( isset($HTTP_GET_VARS['sort_order']) )
 			$sort_order = $album_config['sort_order'];
 	}
 }
-elseif( isset($HTTP_POST_VARS['sort_order']) )
+elseif( isset($_POST['sort_order']) )
 {
-	switch ($HTTP_POST_VARS['sort_order'])
+	switch ($_POST['sort_order'])
 	{
 		case 'ASC':
 			$sort_order = 'ASC';

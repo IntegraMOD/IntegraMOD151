@@ -95,9 +95,9 @@ if(!function_exists(imp_poll_block_func))
 
 				$user_voted = ( $db->sql_numrows($result) ) ? TRUE : 0;
 
-				if( isset($HTTP_GET_VARS['vote']) || isset($HTTP_POST_VARS['vote']) )
+				if( isset($_GET['vote']) || isset($_POST['vote']) )
 				{
-					$view_result = ( ( ( isset($HTTP_GET_VARS['vote']) ) ? $HTTP_GET_VARS['vote'] : $HTTP_POST_VARS['vote'] ) == "viewresult" ) ? TRUE : 0;
+					$view_result = ( ( ( isset($_GET['vote']) ) ? $_GET['vote'] : $_POST['vote'] ) == "viewresult" ) ? TRUE : 0;
 				}
 				else
 				{

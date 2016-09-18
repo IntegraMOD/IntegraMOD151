@@ -22,28 +22,13 @@ define('HEADER_INC', TRUE);
 $do_gzip_compress = FALSE;
 if ( $board_config['gzip_compress'] )
 {
-	$phpver = phpversion();
-
 	$useragent = (isset($_SERVER['HTTP_USER_AGENT']) ) ? $_SERVER['HTTP_USER_AGENT'] : '';
 
-	if ( $phpver >= '4.0.4pl1' && ( strstr($useragent, 'compatible') || strstr($useragent, 'Gecko') ) )
+	if ( ( strstr($useragent, 'compatible') || strstr($useragent, 'Gecko') ) )
 	{
 		if ( extension_loaded('zlib') )
 		{
 			ob_start('ob_gzhandler');
-		}
-	}
-	else if ( $phpver > '4.0' )
-	{
-		if ( strstr($_SERVER['HTTP_ACCEPT_ENCODING'], 'gzip') )
-		{
-			if ( extension_loaded('zlib') )
-			{
-				$do_gzip_compress = TRUE;
-				ob_start();
-				ob_implicit_flush(0);
-				header('Content-Encoding: gzip');
-			}
 		}
 	}
 }
@@ -114,7 +99,7 @@ $template->assign_vars(array(
 ));
 
 // Add no-cache control for cookies if they are set
-//$c_no_cache = (isset($HTTP_COOKIE_VARS[$board_config['cookie_name'] . '_sid']) || isset($HTTP_COOKIE_VARS[$board_config['cookie_name'] . '_data'])) ? 'no-cache="set-cookie", ' : '';
+//$c_no_cache = (isset($_COOKIE[$board_config['cookie_name'] . '_sid']) || isset($_COOKIE[$board_config['cookie_name'] . '_data'])) ? 'no-cache="set-cookie", ' : '';
 
 // Work around for "current" Apache 2 + PHP module which seems to not
 // cope with private cache control setting

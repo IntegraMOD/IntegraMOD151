@@ -28,7 +28,7 @@ $template->set_filenames(array(
 
 
 // First we look wich mode the user has selected
-$mode = $HTTP_GET_VARS['mode'];
+$mode = $_GET['mode'];
 
 // Reset used vars
 $uplink_values = array();
@@ -104,14 +104,7 @@ else
 ( count($ct_rules) >= 260 )         ? $testvalue[4] = $lang['ctracker_ma_active'] : $testvalue[4] = $lang['ctracker_ma_inactive'];
 
 // PHP Version test
-if ( @phpversion() >= '5.0.0' )
-{
-	($uplink_values[2] <= @phpversion())? $testvalue[5] = $lang['ctracker_ma_secure'] : $testvalue[5] = $lang['ctracker_ma_warning'];
-}
-else
-{
-	($uplink_values[1] <= @phpversion())? $testvalue[5] = $lang['ctracker_ma_secure'] : $testvalue[5] = $lang['ctracker_ma_warning'];
-}
+($uplink_values[2] <= @phpversion())? $testvalue[5] = $lang['ctracker_ma_secure'] : $testvalue[5] = $lang['ctracker_ma_warning'];
 
 // Safemode and Globals test
 $testvalue[6] = strtolower(@ini_get('safe_mode'));
@@ -313,7 +306,7 @@ $template->assign_vars(array(
 
 		'L_SEC_INFO_1'	 => $lang['ctracker_ma_scheck_1'],
 		'L_SEC_INFO_V1'	 => @phpversion(),
-		'L_SEC_INFO_OV1' => (@phpversion() >= '5.0.0')? $uplink_values[2] : $uplink_values[1],
+		'L_SEC_INFO_OV1' => $uplink_values[2],
 		'L_SEC_INFO_D1'	 => $testvalue[5],
 
 		'L_SEC_INFO_2'	 => $lang['ctracker_ma_scheck_2'],

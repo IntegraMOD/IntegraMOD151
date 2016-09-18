@@ -67,34 +67,34 @@ $modes_download = array('inline', 'physical');
 $types_category = array(IMAGE_CAT, STREAM_CAT, SWF_CAT);
 $modes_category = array($lang['Category_images'], $lang['Category_stream_files'], $lang['Category_swf_files']);
 
-if(isset($HTTP_GET_VARS['size']) || isset($HTTP_POST_VARS['size']))
+if(isset($_GET['size']) || isset($_POST['size']))
 {
-	$size = (isset($HTTP_POST_VARS['size'])) ? $HTTP_POST_VARS['size'] : $HTTP_GET_VARS['size'];
+	$size = (isset($_POST['size'])) ? $_POST['size'] : $_GET['size'];
 }
 else
 {
 	$size = '';
 }
 
-if( isset($HTTP_POST_VARS['mode']) || isset($HTTP_GET_VARS['mode']) )
+if( isset($_POST['mode']) || isset($_GET['mode']) )
 {
-	$mode = ( isset($HTTP_POST_VARS['mode']) ) ? $HTTP_POST_VARS['mode'] : $HTTP_GET_VARS['mode'];
+	$mode = ( isset($_POST['mode']) ) ? $_POST['mode'] : $_GET['mode'];
 }
 else
 {
 	$mode = '';
 }
 
-if( isset($HTTP_POST_VARS['e_mode']) || isset($HTTP_GET_VARS['e_mode']) )
+if( isset($_POST['e_mode']) || isset($_GET['e_mode']) )
 {
-	$e_mode = ( isset($HTTP_POST_VARS['e_mode']) ) ? $HTTP_POST_VARS['e_mode'] : $HTTP_GET_VARS['e_mode'];
+	$e_mode = ( isset($_POST['e_mode']) ) ? $_POST['e_mode'] : $_GET['e_mode'];
 }
 else
 {
 	$e_mode = '';
 }
 
-$submit = (isset($HTTP_POST_VARS['submit'])) ? TRUE : FALSE;
+$submit = (isset($_POST['submit'])) ? TRUE : FALSE;
 
 //
 // Get Attachment Config
@@ -122,9 +122,9 @@ if ($submit && $mode == 'extensions')
 	//
 	// Change Extensions ?
 	//
-	$extension_change_list = ( isset($HTTP_POST_VARS['extension_change_list']) ) ? $HTTP_POST_VARS['extension_change_list'] : array();
-	$extension_explain_list = ( isset($HTTP_POST_VARS['extension_explain_list']) ) ? $HTTP_POST_VARS['extension_explain_list'] : array();
-	$group_select_list = ( isset($HTTP_POST_VARS['group_select']) ) ? $HTTP_POST_VARS['group_select'] : array();
+	$extension_change_list = ( isset($_POST['extension_change_list']) ) ? $_POST['extension_change_list'] : array();
+	$extension_explain_list = ( isset($_POST['extension_explain_list']) ) ? $_POST['extension_explain_list'] : array();
+	$group_select_list = ( isset($_POST['group_select']) ) ? $_POST['group_select'] : array();
 
 	//
 	// Generate correct Change List
@@ -169,7 +169,7 @@ if ($submit && $mode == 'extensions')
 	//
 	// Delete Extension ?
 	//
-	$extension_id_list = ( isset($HTTP_POST_VARS['extension_id_list']) ) ?  $HTTP_POST_VARS['extension_id_list'] : array();
+	$extension_id_list = ( isset($_POST['extension_id_list']) ) ?  $_POST['extension_id_list'] : array();
 
 	$extension_id_sql = implode(', ', $extension_id_list);
 
@@ -189,10 +189,10 @@ if ($submit && $mode == 'extensions')
 	//
 	// Add Extension ?
 	//
-	$extension = ( isset($HTTP_POST_VARS['add_extension']) ) ?  trim(strip_tags($HTTP_POST_VARS['add_extension'])) : '';
-	$extension_explain = ( isset($HTTP_POST_VARS['add_extension_explain']) ) ?  trim(strip_tags($HTTP_POST_VARS['add_extension_explain'])) : '';
-	$extension_group = ( isset($HTTP_POST_VARS['add_group_select']) ) ?  intval($HTTP_POST_VARS['add_group_select']) : '';
-	$add = ( isset($HTTP_POST_VARS['add_extension_check']) ) ? TRUE : FALSE;
+	$extension = ( isset($_POST['add_extension']) ) ?  trim(strip_tags($_POST['add_extension'])) : '';
+	$extension_explain = ( isset($_POST['add_extension_explain']) ) ?  trim(strip_tags($_POST['add_extension_explain'])) : '';
+	$extension_group = ( isset($_POST['add_group_select']) ) ?  intval($_POST['add_group_select']) : '';
+	$add = ( isset($_POST['add_extension_check']) ) ? TRUE : FALSE;
 
 	if ($extension != '' && $add)
 	{
@@ -374,14 +374,14 @@ if ($submit && $mode == 'groups')
 	//
 	// Change Extension Groups ?
 	//
-	$group_change_list = ( isset($HTTP_POST_VARS['group_change_list']) ) ? $HTTP_POST_VARS['group_change_list'] : array();
-	$extension_group_list = ( isset($HTTP_POST_VARS['extension_group_list']) ) ? $HTTP_POST_VARS['extension_group_list'] : array();
-	$group_allowed_list = ( isset($HTTP_POST_VARS['allowed_list']) ) ? $HTTP_POST_VARS['allowed_list'] : array();
-	$download_mode_list = ( isset($HTTP_POST_VARS['download_mode_list']) ) ? $HTTP_POST_VARS['download_mode_list'] : array();
-	$category_list = ( isset($HTTP_POST_VARS['category_list']) ) ? $HTTP_POST_VARS['category_list'] : array();
-	$upload_icon_list = ( isset($HTTP_POST_VARS['upload_icon_list']) ) ? $HTTP_POST_VARS['upload_icon_list'] : array();
-	$filesize_list = ( isset($HTTP_POST_VARS['max_filesize_list']) ) ? $HTTP_POST_VARS['max_filesize_list'] : array();
-	$size_select_list = ( isset($HTTP_POST_VARS['size_select_list']) ) ? $HTTP_POST_VARS['size_select_list'] : array();
+	$group_change_list = ( isset($_POST['group_change_list']) ) ? $_POST['group_change_list'] : array();
+	$extension_group_list = ( isset($_POST['extension_group_list']) ) ? $_POST['extension_group_list'] : array();
+	$group_allowed_list = ( isset($_POST['allowed_list']) ) ? $_POST['allowed_list'] : array();
+	$download_mode_list = ( isset($_POST['download_mode_list']) ) ? $_POST['download_mode_list'] : array();
+	$category_list = ( isset($_POST['category_list']) ) ? $_POST['category_list'] : array();
+	$upload_icon_list = ( isset($_POST['upload_icon_list']) ) ? $_POST['upload_icon_list'] : array();
+	$filesize_list = ( isset($_POST['max_filesize_list']) ) ? $_POST['max_filesize_list'] : array();
+	$size_select_list = ( isset($_POST['size_select_list']) ) ? $_POST['size_select_list'] : array();
 
 	$allowed_list = array();
 
@@ -415,7 +415,7 @@ if ($submit && $mode == 'groups')
 	//
 	// Delete Extension Groups
 	//
-	$group_id_list = ( isset($HTTP_POST_VARS['group_id_list']) ) ?  $HTTP_POST_VARS['group_id_list'] : array();
+	$group_id_list = ( isset($_POST['group_id_list']) ) ?  $_POST['group_id_list'] : array();
 
 	$group_id_sql = implode(', ', $group_id_list);
 
@@ -447,14 +447,14 @@ if ($submit && $mode == 'groups')
 	//
 	// Add Extensions ?
 	//
-	$extension_group = ( isset($HTTP_POST_VARS['add_extension_group']) ) ?  trim(strip_tags($HTTP_POST_VARS['add_extension_group'])) : '';
-	$download_mode = ( isset($HTTP_POST_VARS['add_download_mode']) ) ?  $HTTP_POST_VARS['add_download_mode'] : '';
-	$cat_id = ( isset($HTTP_POST_VARS['add_category']) ) ?  $HTTP_POST_VARS['add_category'] : '';
-	$upload_icon = ( isset($HTTP_POST_VARS['add_upload_icon']) ) ?  $HTTP_POST_VARS['add_upload_icon'] : '';
-	$filesize = ( isset($HTTP_POST_VARS['add_max_filesize']) ) ?  $HTTP_POST_VARS['add_max_filesize'] : '';
-	$size_select = ( isset($HTTP_POST_VARS['add_size_select']) ) ?  $HTTP_POST_VARS['add_size_select'] : '';
-	$is_allowed = ( isset($HTTP_POST_VARS['add_allowed']) ) ? '1' : '0';
-	$add = ( isset($HTTP_POST_VARS['add_extension_group_check']) ) ? TRUE : FALSE;
+	$extension_group = ( isset($_POST['add_extension_group']) ) ?  trim(strip_tags($_POST['add_extension_group'])) : '';
+	$download_mode = ( isset($_POST['add_download_mode']) ) ?  $_POST['add_download_mode'] : '';
+	$cat_id = ( isset($_POST['add_category']) ) ?  $_POST['add_category'] : '';
+	$upload_icon = ( isset($_POST['add_upload_icon']) ) ?  $_POST['add_upload_icon'] : '';
+	$filesize = ( isset($_POST['add_max_filesize']) ) ?  $_POST['add_max_filesize'] : '';
+	$size_select = ( isset($_POST['add_size_select']) ) ?  $_POST['add_size_select'] : '';
+	$is_allowed = ( isset($_POST['add_allowed']) ) ? '1' : '0';
+	$add = ( isset($_POST['add_extension_group_check']) ) ? TRUE : FALSE;
 
 	if ($extension_group != '' && $add)
 	{
@@ -645,7 +645,7 @@ if ($submit && $mode == 'forbidden')
 	//
 	// Store new forbidden extension or delete selected forbidden extensions
 	//
-	$extension = ( isset($HTTP_POST_VARS['extension_id_list']) ) ? $HTTP_POST_VARS['extension_id_list'] : array();
+	$extension = ( isset($_POST['extension_id_list']) ) ? $_POST['extension_id_list'] : array();
 
 	$extension_id_sql = implode(', ', $extension);
 
@@ -661,8 +661,8 @@ if ($submit && $mode == 'forbidden')
 		}
 	}
 		
-	$extension = ( isset($HTTP_POST_VARS['add_extension']) ) ? trim(strip_tags($HTTP_POST_VARS['add_extension'])) : '';
-	$add = ( isset($HTTP_POST_VARS['add_extension_check']) ) ? TRUE : FALSE;
+	$extension = ( isset($_POST['add_extension']) ) ? trim(strip_tags($_POST['add_extension'])) : '';
+	$add = ( isset($_POST['add_extension_check']) ) ? TRUE : FALSE;
 		
 	if ($extension != '' && $add)
 	{
@@ -796,10 +796,10 @@ if ($e_mode == 'perm')
 {
 	$group = get_var('e_group', 0);
 
-	$add_forum = (isset($HTTP_POST_VARS['add_forum'])) ? TRUE : FALSE;
-	$delete_forum = (isset($HTTP_POST_VARS['del_forum'])) ? TRUE : FALSE;
+	$add_forum = (isset($_POST['add_forum'])) ? TRUE : FALSE;
+	$delete_forum = (isset($_POST['del_forum'])) ? TRUE : FALSE;
 
-	if (isset($HTTP_POST_VARS['close_perm']))
+	if (isset($_POST['close_perm']))
 	{
 		$e_mode = '';
 	}
@@ -808,7 +808,7 @@ if ($e_mode == 'perm')
 // Add Forums
 if ($add_forum && $e_mode == 'perm' && $group)
 {
-	$add_forums_list = ( isset($HTTP_POST_VARS['entries']) ) ? $HTTP_POST_VARS['entries'] : array();
+	$add_forums_list = ( isset($_POST['entries']) ) ? $_POST['entries'] : array();
 	$add_all_forums = FALSE;
 
 	for ($i = 0; $i < count($add_forums_list); $i++)
@@ -875,7 +875,7 @@ if ($add_forum && $e_mode == 'perm' && $group)
 // Delete Forums
 if ($delete_forum && $e_mode == 'perm' && $group)
 {
-	$delete_forums_list = ( isset($HTTP_POST_VARS['entries']) ) ? $HTTP_POST_VARS['entries'] : array();
+	$delete_forums_list = ( isset($_POST['entries']) ) ? $_POST['entries'] : array();
 
 	// Get the current Forums
 	$sql = "SELECT forum_permissions

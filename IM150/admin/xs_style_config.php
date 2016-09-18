@@ -38,7 +38,7 @@ if(empty($template->xs_version) || $template->xs_version !== 8)
 define('IN_XS', true);
 include_once('xs_include.' . $phpEx);
 
-$tpl = isset($HTTP_POST_VARS['tpl']) ? $HTTP_POST_VARS['tpl'] : (isset($HTTP_GET_VARS['tpl']) ? $HTTP_GET_VARS['tpl'] : '');
+$tpl = isset($_POST['tpl']) ? $_POST['tpl'] : (isset($_GET['tpl']) ? $_GET['tpl'] : '');
 $filename = $phpbb_root_path . 'templates/' . $tpl . '/xs_config.cfg';
 
 if(empty($tpl))
@@ -77,7 +77,7 @@ for($i=0; $i<count($style_config); $i++)
 
 
 // check submitted form
-if(isset($HTTP_POST_VARS['tpl']) && !defined('DEMO_MODE'))
+if(isset($_POST['tpl']) && !defined('DEMO_MODE'))
 {
 	for($i=0; $i<count($style_config); $i++)
 	{
@@ -85,7 +85,7 @@ if(isset($HTTP_POST_VARS['tpl']) && !defined('DEMO_MODE'))
 		$var = $style_config[$i]['var'];
 		if($item['type'] === 'list')
 		{
-			$value = isset($HTTP_POST_VARS['cfg_' . $var]) && is_array($HTTP_POST_VARS['cfg_' . $var]) ? $HTTP_POST_VARS['cfg_' . $var] : array();
+			$value = isset($_POST['cfg_' . $var]) && is_array($_POST['cfg_' . $var]) ? $_POST['cfg_' . $var] : array();
 			$list = array();
 			foreach($value as $var1 => $value1)
 			{
@@ -95,7 +95,7 @@ if(isset($HTTP_POST_VARS['tpl']) && !defined('DEMO_MODE'))
 		}
 		else
 		{
-			$value = isset($HTTP_POST_VARS['cfg_' . $var]) ? stripslashes($HTTP_POST_VARS['cfg_' . $var]) : 0;
+			$value = isset($_POST['cfg_' . $var]) ? stripslashes($_POST['cfg_' . $var]) : 0;
 		}
 		$data[$var] = $value;
 	}

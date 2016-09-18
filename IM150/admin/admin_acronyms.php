@@ -28,20 +28,20 @@ $phpEx = substr(strrchr(__FILE__, '.'), 1);
 require('./pagestart.' . $phpEx);
 include($phpbb_root_path.'language/lang_' . $board_config['default_lang'] . '/lang_admin_acronyms.'.$phpEx);
 
-if( isset($HTTP_GET_VARS['mode']) || isset($HTTP_POST_VARS['mode']) )
+if( isset($_GET['mode']) || isset($_POST['mode']) )
 {
-	$mode = ($HTTP_GET_VARS['mode']) ? $HTTP_GET_VARS['mode'] : $HTTP_POST_VARS['mode'];
+	$mode = ($_GET['mode']) ? $_GET['mode'] : $_POST['mode'];
 }
 else 
 {
 	//
 	// These could be entered via a form button
 	//
-	if( isset($HTTP_POST_VARS['add']) )
+	if( isset($_POST['add']) )
 	{
 		$mode = "add";
 	}
-	else if( isset($HTTP_POST_VARS['save']) )
+	else if( isset($_POST['save']) )
 	{
 		$mode = "save";
 	}
@@ -55,7 +55,7 @@ if( $mode != "" )
 {
 	if( $mode == "edit" || $mode == "add" )
 	{
-		$acronym_id = ( isset($HTTP_GET_VARS['id']) ) ? $HTTP_GET_VARS['id'] : 0;
+		$acronym_id = ( isset($_GET['id']) ) ? $_GET['id'] : 0;
 
 		$template->set_filenames(array(
 			"body" => "admin/acronyms_edit_body.tpl")
@@ -106,9 +106,9 @@ if( $mode != "" )
 	}
 	else if( $mode == "save" )
 	{
-		$acronym_id = ( isset($HTTP_POST_VARS['id']) ) ? $HTTP_POST_VARS['id'] : 0;
-		$acronym = ( isset($HTTP_POST_VARS['acronym']) ) ? trim($HTTP_POST_VARS['acronym']) : "";
-		$description = ( isset($HTTP_POST_VARS['description']) ) ? trim($HTTP_POST_VARS['description']) : "";
+		$acronym_id = ( isset($_POST['id']) ) ? $_POST['id'] : 0;
+		$acronym = ( isset($_POST['acronym']) ) ? trim($_POST['acronym']) : "";
+		$description = ( isset($_POST['description']) ) ? trim($_POST['description']) : "";
 
 		if($acronym == "" || $description == "")
 		{
@@ -160,9 +160,9 @@ if( $mode != "" )
 	}
 	else if( $mode == "delete" )
 	{
-		if( isset($HTTP_POST_VARS['id']) ||  isset($HTTP_GET_VARS['id']) )
+		if( isset($_POST['id']) ||  isset($_GET['id']) )
 		{
-			$acronym_id = ( isset($HTTP_POST_VARS['id']) ) ? $HTTP_POST_VARS['id'] : $HTTP_GET_VARS['id'];
+			$acronym_id = ( isset($_POST['id']) ) ? $_POST['id'] : $_GET['id'];
 		}
 		else
 		{

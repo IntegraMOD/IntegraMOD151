@@ -29,7 +29,7 @@ if(!function_exists(imp_calendar_block_func))
 {
 	function imp_calendar_block_func()
 	{
-		global $phpbb_root_path, $phpEx, $template, $images, $board_config, $userdata, $HTTP_GET_VARS, $HTTP_POST_VARS, $db;
+		global $phpbb_root_path, $phpEx, $template, $images, $board_config, $userdata, $_GET, $_POST, $db;
 		include($phpbb_root_path . 'mods/netclectic/mini_cal/mini_cal2.'.$phpEx);
 	}
 }

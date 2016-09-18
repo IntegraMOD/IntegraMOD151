@@ -95,40 +95,40 @@ if (($userdata['user_level'] != MOD) && ($userdata['user_level'] != ADMIN))
 }
 
 // from topic
-$from_topic = isset($HTTP_POST_VARS['from_topic']) ? strtolower(trim(htmlspecialchars($HTTP_POST_VARS['from_topic']))) : '';
-if (empty($from_topic) && (isset($HTTP_GET_VARS[POST_TOPIC_URL]) || isset($HTTP_GET_VARS[POST_POST_URL])))
+$from_topic = isset($_POST['from_topic']) ? strtolower(trim(htmlspecialchars($_POST['from_topic']))) : '';
+if (empty($from_topic) && (isset($_GET[POST_TOPIC_URL]) || isset($_GET[POST_POST_URL])))
 {
-	$from_topic = (isset($HTTP_GET_VARS[POST_TOPIC_URL])) ? intval($HTTP_GET_VARS[POST_TOPIC_URL]) : POST_POST_URL . '=' . intval($HTTP_GET_VARS[POST_POST_URL]);
+	$from_topic = (isset($_GET[POST_TOPIC_URL])) ? intval($_GET[POST_TOPIC_URL]) : POST_POST_URL . '=' . intval($_GET[POST_POST_URL]);
 }
 $from_topic_id = get_topic_id($from_topic);
 
 // to topic
-$to_topic = isset($HTTP_POST_VARS['to_topic']) ? strtolower(trim(htmlspecialchars($HTTP_POST_VARS['to_topic']))) : '';
+$to_topic = isset($_POST['to_topic']) ? strtolower(trim(htmlspecialchars($_POST['to_topic']))) : '';
 $to_topic_id =  get_topic_id($to_topic);
 
 // topic title
 $topic_title = '';
-if (isset($HTTP_POST_VARS['topic_title'])) $topic_title = htmlspecialchars(trim(stripslashes($HTTP_POST_VARS['topic_title'])));
+if (isset($_POST['topic_title'])) $topic_title = htmlspecialchars(trim(stripslashes($_POST['topic_title'])));
 
 // start
-if (isset($HTTP_POST_VARS['start'])) $start = intval($start);
+if (isset($_POST['start'])) $start = intval($start);
 
 // buttons
-$submit = isset($HTTP_POST_VARS['submit']);
-$confirm = isset($HTTP_POST_VARS['confirm']);
-$cancel = isset($HTTP_POST_VARS['cancel']);
-$shadow = isset($HTTP_POST_VARS['shadow']);
+$submit = isset($_POST['submit']);
+$confirm = isset($_POST['confirm']);
+$cancel = isset($_POST['cancel']);
+$shadow = isset($_POST['shadow']);
 if ($cancel) $submit = false;
-$select_from = isset($HTTP_POST_VARS['select_from']);
-$select_to = isset($HTTP_POST_VARS['select_to']);
-$page_prec = isset($HTTP_POST_VARS['page_prec']);
-$page_next = isset($HTTP_POST_VARS['page_next']);
+$select_from = isset($_POST['select_from']);
+$select_to = isset($_POST['select_to']);
+$page_prec = isset($_POST['page_prec']);
+$page_next = isset($_POST['page_next']);
 
 // check if a selection has been made
 $topic_selected = 0;
-if (isset($HTTP_POST_VARS['topic_selected']))
+if (isset($_POST['topic_selected']))
 {
-	$topic_selected = intval(substr($HTTP_POST_VARS['topic_selected'],1));
+	$topic_selected = intval(substr($_POST['topic_selected'],1));
 }
 
 if ($submit && !empty($topic_selected))
@@ -150,9 +150,9 @@ if ($submit && !empty($topic_selected))
 
 // session id
 $sid = '';
-if (!empty($HTTP_POST_VARS['sid']) || !empty($HTTP_GET_VARS['sid']))
+if (!empty($_POST['sid']) || !empty($_GET['sid']))
 {
-	$sid = (!empty($HTTP_POST_VARS['sid'])) ? $HTTP_POST_VARS['sid'] : $HTTP_GET_VARS['sid'];
+	$sid = (!empty($_POST['sid'])) ? $_POST['sid'] : $_GET['sid'];
 }
 
 // titles
@@ -179,13 +179,13 @@ if (!empty($to_topic_id))
 
 // forum_id
 $forum_id = 0;
-if (isset($HTTP_POST_VARS[POST_FORUM_URL]) || isset($HTTP_GET_VARS[POST_FORUM_URL]))
+if (isset($_POST[POST_FORUM_URL]) || isset($_GET[POST_FORUM_URL]))
 {
-	$forum_id = (isset($HTTP_POST_VARS[POST_FORUM_URL])) ? intval($HTTP_POST_VARS[POST_FORUM_URL]) : intval($HTTP_GET_VARS[POST_FORUM_URL]);
+	$forum_id = (isset($_POST[POST_FORUM_URL])) ? intval($_POST[POST_FORUM_URL]) : intval($_GET[POST_FORUM_URL]);
 }
-if (isset($HTTP_POST_VARS['fid']) || isset($HTTP_GET_VARS['fid']))
+if (isset($_POST['fid']) || isset($_GET['fid']))
 {
-	$fid = (isset($HTTP_POST_VARS['fid'])) ? $HTTP_POST_VARS['fid'] : $HTTP_GET_VARS['fid'];
+	$fid = (isset($_POST['fid'])) ? $_POST['fid'] : $_GET['fid'];
 	if (substr($fid, 0, 1) == POST_FORUM_URL)
 	{
 		$forum_id = intval(substr($fid, 1));

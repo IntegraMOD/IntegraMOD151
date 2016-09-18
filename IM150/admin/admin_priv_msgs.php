@@ -275,9 +275,9 @@ $params = array('mode' => '', 'view_id' => '', 'start' => 0, 'order' => 'DESC', 
 foreach($params as $var => $default)
 {
 	$$var = $default;
-	if(isset($HTTP_POST_VARS[$var]) || isset($HTTP_GET_VARS[$var]))
+	if(isset($_POST[$var]) || isset($_GET[$var]))
 	{
-		$$var = (isset($HTTP_POST_VARS[$var])) ? $HTTP_POST_VARS[$var] : $HTTP_GET_VARS[$var];
+		$$var = (isset($_POST[$var])) ? $_POST[$var] : $_GET[$var];
 	}
 }
 
@@ -317,9 +317,9 @@ if ($filter_to != '')
 	$filter_to_text = (!empty($filter_to_user)) ? "AND pm.privmsgs_to_userid = $filter_to_user" : '';
 }
 
-if (count($HTTP_POST_VARS))
+if (count($_POST))
 {
-	foreach($HTTP_POST_VARS as $key => $val)
+	foreach($_POST as $key => $val)
 	{
 		/*******************************************************************************************
 		/** Check for archive items

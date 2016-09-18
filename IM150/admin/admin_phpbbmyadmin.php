@@ -57,36 +57,36 @@ $template->set_filenames(array(
 
 // Get HTTP_GET/POST info
 // mode:
-$mode = isset($HTTP_GET_VARS['mode']) ? htmlspecialchars($HTTP_GET_VARS['mode']) : '';
-if (isset($HTTP_POST_VARS['submit']))
+$mode = isset($_GET['mode']) ? htmlspecialchars($_GET['mode']) : '';
+if (isset($_POST['submit']))
 {
 	$mode = 'submit';
 }
-if (isset($HTTP_POST_VARS['repairall']))
+if (isset($_POST['repairall']))
 {
 	$mode = 'repairall';
 }
-if (isset($HTTP_POST_VARS['optimizeall']))
+if (isset($_POST['optimizeall']))
 {
 	$mode = 'optimizeall';
 }
-if (isset($HTTP_POST_VARS['go_with_selected']))
+if (isset($_POST['go_with_selected']))
 {
 	$mode = 'with_selected';
 }
 // get variables:
-$tablename = isset($HTTP_GET_VARS['tablename']) ? htmlspecialchars($HTTP_GET_VARS['tablename']) : '';
-$this_query = isset($HTTP_GET_VARS['this_query']) ? $HTTP_GET_VARS['this_query'] : '';
-$confirm = isset($HTTP_GET_VARS['confirm']) ? htmlspecialchars($HTTP_GET_VARS['confirm']) : '';
-$first = isset($HTTP_GET_VARS['first']) ? htmlspecialchars($HTTP_GET_VARS['first']) : '';
-$sort = isset($HTTP_GET_VARS['sort']) ? htmlspecialchars($HTTP_GET_VARS['sort']) : '';
-$order = isset($HTTP_GET_VARS['order']) ? htmlspecialchars($HTTP_GET_VARS['order']) : '';
-$with_selected = isset($HTTP_POST_VARS['with_selected']) ? htmlspecialchars($HTTP_POST_VARS['with_selected']) : '';
-$with_selected_table_list = isset($HTTP_POST_VARS['with_selected_table_list']) ? $HTTP_POST_VARS['with_selected_table_list'] : '';
-$force_normal_die = isset($HTTP_GET_VARS['force_normal_die']) ? htmlspecialchars($HTTP_GET_VARS['force_normal_die']) : '';
-if (isset($HTTP_POST_VARS['this_query']))
+$tablename = isset($_GET['tablename']) ? htmlspecialchars($_GET['tablename']) : '';
+$this_query = isset($_GET['this_query']) ? $_GET['this_query'] : '';
+$confirm = isset($_GET['confirm']) ? htmlspecialchars($_GET['confirm']) : '';
+$first = isset($_GET['first']) ? htmlspecialchars($_GET['first']) : '';
+$sort = isset($_GET['sort']) ? htmlspecialchars($_GET['sort']) : '';
+$order = isset($_GET['order']) ? htmlspecialchars($_GET['order']) : '';
+$with_selected = isset($_POST['with_selected']) ? htmlspecialchars($_POST['with_selected']) : '';
+$with_selected_table_list = isset($_POST['with_selected_table_list']) ? $_POST['with_selected_table_list'] : '';
+$force_normal_die = isset($_GET['force_normal_die']) ? htmlspecialchars($_GET['force_normal_die']) : '';
+if (isset($_POST['this_query']))
 {
-	$this_query = $HTTP_POST_VARS['this_query'];
+	$this_query = $_POST['this_query'];
 }
 // Done with HTTP_GET/POST info
 

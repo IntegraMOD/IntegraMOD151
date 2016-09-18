@@ -61,7 +61,7 @@ include($phpbb_root_path . 'language/lang_' . $board_config['default_lang'] . '/
 //
 // Generate relevant output
 //
-if( isset($HTTP_GET_VARS['pane']) && $HTTP_GET_VARS['pane'] == 'left' )
+if( isset($_GET['pane']) && $_GET['pane'] == 'left' )
 {
 	$jr_admin_userdata = jr_admin_get_user_info($userdata['user_id']);
 	$module = jr_admin_get_module_list($jr_admin_userdata['user_jr_admin']);
@@ -94,7 +94,7 @@ if( isset($HTTP_GET_VARS['pane']) && $HTTP_GET_VARS['pane'] == 'left' )
 
 	include('./page_footer_admin.'.$phpEx);
 }
-elseif( isset($HTTP_GET_VARS['pane']) && $HTTP_GET_VARS['pane'] == 'right' )
+elseif( isset($_GET['pane']) && $_GET['pane'] == 'right' )
 {
 
 	include('./page_header_admin.'.$phpEx);

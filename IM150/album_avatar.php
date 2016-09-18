@@ -39,13 +39,13 @@ init_userprefs($userdata);
 include($album_root_path . 'album_common.'.$phpEx);
 
 // Load up pic_id.
-if( isset($HTTP_POST_VARS['pic_id']) )
+if( isset($_POST['pic_id']) )
 {
-	$pic_id = intval($HTTP_POST_VARS['pic_id']);
+	$pic_id = intval($_POST['pic_id']);
 }
-elseif( isset($HTTP_GET_VARS['pic_id']) )
+elseif( isset($_GET['pic_id']) )
 {
-	$pic_id = intval($HTTP_GET_VARS['pic_id']);
+	$pic_id = intval($_GET['pic_id']);
 }
 else
 {

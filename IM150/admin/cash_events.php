@@ -42,7 +42,7 @@ if ( !$cash->currency_count() )
 	message_die(GENERAL_MESSAGE, $lang['Insufficient_currencies']);
 }
 
-$mode = isset($HTTP_POST_VARS['mode'])?$HTTP_POST_VARS['mode']:"main";
+$mode = isset($_POST['mode'])?$_POST['mode']:"main";
 
 switch ( $mode )
 {
@@ -51,9 +51,9 @@ switch ( $mode )
 // ================= Add event (no data) ================================
 //
 	case "add":
-		if ( isset($HTTP_POST_VARS['new_event_name']) )
+		if ( isset($_POST['new_event_name']) )
 		{
-			$sql = "INSERT INTO " . CASH_EVENTS_TABLE . " (event_name, event_data) VALUES ('" . str_replace("\'","''",$HTTP_POST_VARS['new_event_name']) . "', '')";
+			$sql = "INSERT INTO " . CASH_EVENTS_TABLE . " (event_name, event_data) VALUES ('" . str_replace("\'","''",$_POST['new_event_name']) . "', '')";
 			if ( !($db->sql_query($sql)) )
 			{
 				message_die(GENERAL_ERROR, "Could add event", "", __LINE__, __FILE__, $sql);
@@ -65,16 +65,16 @@ switch ( $mode )
 // ================= Update board mode ( submitted form ) ================================
 //
 	case "update":
-		if ( isset($HTTP_POST_VARS['event_name']) && isset($HTTP_POST_VARS['cash']) && is_array($HTTP_POST_VARS['cash']) )
+		if ( isset($_POST['event_name']) && isset($_POST['cash']) && is_array($_POST['cash']) )
 		{
-			$event_name = $HTTP_POST_VARS['event_name'];
+			$event_name = $_POST['event_name'];
 			$updates = array();
 			$updated_data = '';
 			while ( $c_cur = &$cash->currency_next($cm_i) )
 			{
-				if ( isset($HTTP_POST_VARS['cash'][$c_cur->id()]) )
+				if ( isset($_POST['cash'][$c_cur->id()]) )
 				{
-					$entry = cash_floatval($HTTP_POST_VARS['cash'][$c_cur->id()]);
+					$entry = cash_floatval($_POST['cash'][$c_cur->id()]);
 					if( $entry != 0 )
 					{
 						$updates[] = $c_cur->id() . CASH_EVENT_DELIM2 . $entry;
@@ -99,10 +99,10 @@ switch ( $mode )
 // ================= Edit board mode ( or delete ) ================================
 //
 	case "edit":
-		if ( isset($HTTP_POST_VARS['event_name']) )
+		if ( isset($_POST['event_name']) )
 		{
-			$event_name = $HTTP_POST_VARS['event_name'];
-			if ( isset($HTTP_POST_VARS['delete']) )
+			$event_name = $_POST['event_name'];
+			if ( isset($_POST['delete']) )
 			{
 				$sql = "DELETE FROM " . CASH_EVENTS_TABLE . " WHERE event_name = '" . str_replace("\'","''",$event_name) . "'";
 				if ( !($db->sql_query($sql)) )

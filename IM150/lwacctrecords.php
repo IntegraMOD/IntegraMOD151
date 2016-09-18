@@ -60,7 +60,7 @@ if( !$userdata['session_logged_in'] )
    exit;
 }
 
-$start = ( isset($HTTP_GET_VARS['start']) ) ? intval($HTTP_GET_VARS['start']) : 0;
+$start = ( isset($_GET['start']) ) ? intval($_GET['start']) : 0;
 
 include($phpbb_root_path . 'includes/page_header.'.$phpEx);
 
@@ -74,9 +74,9 @@ $previous_days = array(7, 14, 30, 90, 180, 364, 400);
 $previous_days_text = array($lang['7_Days'], $lang['2_Weeks'], $lang['1_Month'], $lang['3_Months'], $lang['6_Months'], $lang['1_Year'], $lang['LW_ALL_RECORDS']);
 
 $topic_days = 7;
-if ( !empty($HTTP_POST_VARS['topicdays']) || !empty($HTTP_GET_VARS['topicdays']) )
+if ( !empty($_POST['topicdays']) || !empty($_GET['topicdays']) )
 {
-	$topic_days = ( !empty($HTTP_POST_VARS['topicdays']) ) ? intval($HTTP_POST_VARS['topicdays']) : intval($HTTP_GET_VARS['topicdays']);
+	$topic_days = ( !empty($_POST['topicdays']) ) ? intval($_POST['topicdays']) : intval($_GET['topicdays']);
 
 	if($topic_days > 0 && $topic_days < 400)
 	{
@@ -90,7 +90,7 @@ if ( !empty($HTTP_POST_VARS['topicdays']) || !empty($HTTP_GET_VARS['topicdays'])
 		$limit_topics_time = '';
 	}
 
-	if ( !empty($HTTP_POST_VARS['topicdays']) )
+	if ( !empty($_POST['topicdays']) )
 	{
 		$start = 0;
 	}
@@ -109,13 +109,13 @@ for($i = 0; $i < count($previous_days); $i++)
 }
 $select_topic_days .= '</select>';
 $user_id = 0;
-if(isset($HTTP_POST_VARS['userid']))
+if(isset($_POST['userid']))
 {
-	$user_id = intval(trim(htmlspecialchars($HTTP_POST_VARS['userid']))) + 0;
+	$user_id = intval(trim(htmlspecialchars($_POST['userid']))) + 0;
 } 
-else if(isset($HTTP_GET_VARS['userid']))
+else if(isset($_GET['userid']))
 {
-	$user_id = intval(trim(htmlspecialchars($HTTP_GET_VARS['userid']))) + 0;
+	$user_id = intval(trim(htmlspecialchars($_GET['userid']))) + 0;
 }
 else
 {

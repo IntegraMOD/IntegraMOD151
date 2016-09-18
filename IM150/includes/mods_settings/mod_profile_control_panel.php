@@ -285,11 +285,11 @@ if (!function_exists(mods_settings_check_birthday))
 	function mods_settings_check_birthday($field, $value)
 	{
 		global $error, $error_msg, $lang;
-		global $HTTP_POST_VARS;
+		global $_POST;
 
-		$day = intval($HTTP_POST_VARS[$field . '_day']);
-		$month = intval($HTTP_POST_VARS[$field . '_month']);
-		$year = intval($HTTP_POST_VARS[$field . '_year']);
+		$day = intval($_POST[$field . '_day']);
+		$month = intval($_POST[$field . '_month']);
+		$year = intval($_POST[$field . '_year']);
 
 		if (empty($day) || empty($month) || empty($year) ) return 0;
 
@@ -780,9 +780,9 @@ if (!function_exists(mods_check_email_confirm))
 {
 	function mods_check_email_confirm($field, $value)
 	{
-		global $HTTP_POST_VARS, $lang, $error, $error_msg;
+		global $_POST, $lang, $error, $error_msg;
 		
-		$email = trim(htmlspecialchars($HTTP_POST_VARS['user_email']));
+		$email = trim(htmlspecialchars($_POST['user_email']));
 		$email_confirm = trim(htmlspecialchars($value));
 		if(!defined('IN_ADMIN')){
 		if ( strtolower($email_confirm) != strtolower($email)){
@@ -882,16 +882,16 @@ if (!function_exists(mods_check_confirm_code))
 {
 	function mods_check_confirm_code($field, $value)
 	{
-		global $error, $error_msg, $userdata, $lang, $db, $HTTP_POST_VARS;
+		global $error, $error_msg, $userdata, $lang, $db, $_POST;
 
-		if ( empty($HTTP_POST_VARS['confirm_id']) )
+		if ( empty($_POST['confirm_id']) )
 		{
 			$error = TRUE;
 			$error_msg = ( ( isset($error_msg) ) ? '<br />' : '' ) . $lang['ctracker_login_wrong'];
 		}
 		else
 		{
-			$confirm_id = trim(htmlspecialchars($HTTP_POST_VARS['confirm_id']));
+			$confirm_id = trim(htmlspecialchars($_POST['confirm_id']));
 			$confirm_code = trim(htmlspecialchars($value));
 
 			if (!preg_match('/^[A-Za-z0-9]+$/', $confirm_id))
@@ -1061,9 +1061,9 @@ if (!function_exists(mods_check_password_confirm))
 {
 	function mods_check_password_confirm($field, $value)
 	{
-		global $is_guest, $lang, $error, $error_msg, $HTTP_POST_VARS;
+		global $is_guest, $lang, $error, $error_msg, $_POST;
 	
-		$pass = trim(htmlspecialchars($HTTP_POST_VARS['user_password']));
+		$pass = trim(htmlspecialchars($_POST['user_password']));
 		$pass_confirm = trim(htmlspecialchars($value));
 		if ($is_guest && empty($pass_confirm)) {
 			$error = true;

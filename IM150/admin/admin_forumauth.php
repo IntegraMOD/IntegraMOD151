@@ -87,14 +87,14 @@ while ( list($auth_key, $auth_name) = @each($field_names) )
 }
 //-- fin mod : categories hierarchy ----------------------------------------------------------------
 
-if(isset($HTTP_GET_VARS[POST_FORUM_URL]) || isset($HTTP_POST_VARS[POST_FORUM_URL]))
+if(isset($_GET[POST_FORUM_URL]) || isset($_POST[POST_FORUM_URL]))
 {
 //-- mod : categories hierarchy --------------------------------------------------------------------
 //-- delete
-//	$forum_id = (isset($HTTP_POST_VARS[POST_FORUM_URL])) ? intval($HTTP_POST_VARS[POST_FORUM_URL]) : intval($HTTP_GET_VARS[POST_FORUM_URL]);
+//	$forum_id = (isset($_POST[POST_FORUM_URL])) ? intval($_POST[POST_FORUM_URL]) : intval($_GET[POST_FORUM_URL]);
 //	$forum_sql = "AND forum_id = $forum_id";
 //-- add
-	$fid = (isset($HTTP_POST_VARS[POST_FORUM_URL])) ? $HTTP_POST_VARS[POST_FORUM_URL] : $HTTP_GET_VARS[POST_FORUM_URL];
+	$fid = (isset($_POST[POST_FORUM_URL])) ? $_POST[POST_FORUM_URL] : $_GET[POST_FORUM_URL];
 	$f_type = substr($fid, 0, 1);
 	if ($f_type == POST_FORUM_URL)
 	{
@@ -114,9 +114,9 @@ else
 	$forum_sql = '';
 }
 
-if( isset($HTTP_GET_VARS['adv']) )
+if( isset($_GET['adv']) )
 {
-	$adv = intval($HTTP_GET_VARS['adv']);
+	$adv = intval($_GET['adv']);
 }
 else
 {
@@ -126,15 +126,15 @@ else
 //
 // Start program proper
 //
-if( isset($HTTP_POST_VARS['submit']) )
+if( isset($_POST['submit']) )
 {
 	$sql = '';
 
 	if(!empty($forum_id))
 	{
-		if(isset($HTTP_POST_VARS['simpleauth']))
+		if(isset($_POST['simpleauth']))
 		{
-			$simple_ary = $simple_auth_ary[intval($HTTP_POST_VARS['simpleauth'])]; 
+			$simple_ary = $simple_auth_ary[intval($_POST['simpleauth'])]; 
 
          for($i = 0; $i < count($simple_ary); $i++) 
          { 
@@ -150,11 +150,11 @@ if( isset($HTTP_POST_VARS['submit']) )
       { 
          for($i = 0; $i < count($forum_auth_fields); $i++) 
          { 
-            $value = intval($HTTP_POST_VARS[$forum_auth_fields[$i]]);
+            $value = intval($_POST[$forum_auth_fields[$i]]);
 
 				if ( $forum_auth_fields[$i] == 'auth_vote' )
 				{
-					if ( $HTTP_POST_VARS['auth_vote'] == AUTH_ALL )
+					if ( $_POST['auth_vote'] == AUTH_ALL )
 					{
 						$value = AUTH_REG;
 					}

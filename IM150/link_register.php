@@ -50,11 +50,11 @@ if( !$userdata['session_logged_in'] )
 	exit;
 }
 
-$link_title = ( !empty($HTTP_POST_VARS['link_title']) ) ? trim($HTTP_POST_VARS['link_title']) : '';
-$link_desc = ( !empty($HTTP_POST_VARS['link_desc']) ) ? trim($HTTP_POST_VARS['link_desc']) : '';
-$link_category = ( !empty($HTTP_POST_VARS['link_category']) ) ? (is_numeric($HTTP_POST_VARS['link_category']) ? $HTTP_POST_VARS['link_category'] : 0) : 0;
-$link_url = ( !empty($HTTP_POST_VARS['link_url']) ) ? trim($HTTP_POST_VARS['link_url']) : '';
-$link_logo_src = ( !empty($HTTP_POST_VARS['link_logo_src']) ) ? trim($HTTP_POST_VARS['link_logo_src']) : '';
+$link_title = ( !empty($_POST['link_title']) ) ? trim($_POST['link_title']) : '';
+$link_desc = ( !empty($_POST['link_desc']) ) ? trim($_POST['link_desc']) : '';
+$link_category = ( !empty($_POST['link_category']) ) ? (is_numeric($_POST['link_category']) ? $_POST['link_category'] : 0) : 0;
+$link_url = ( !empty($_POST['link_url']) ) ? trim($_POST['link_url']) : '';
+$link_logo_src = ( !empty($_POST['link_logo_src']) ) ? trim($_POST['link_logo_src']) : '';
 $link_logo_src = trim($link_logo_src);
 $link_url = trim($link_url);
 if (strtolower(substr($link_logo_src,0,4)) != 'http'){

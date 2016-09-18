@@ -57,10 +57,10 @@ while ( $row = $db->sql_fetchrow($result) )
    $new[$config_name] = $default_config[$config_name]; 
 
    if ( $allowed_array[$config_name] && 
-       isset($HTTP_POST_VARS['submit']) && 
-       isset($HTTP_POST_VARS[$config_name]) ) 
+       isset($_POST['submit']) && 
+       isset($_POST[$config_name]) ) 
    { 
-      $new[$config_name] = stripslashes($HTTP_POST_VARS[$config_name]); 
+      $new[$config_name] = stripslashes($_POST[$config_name]); 
       $sql = "UPDATE " . CONFIG_TABLE . " SET 
          config_value = '" . addslashes($new[$config_name]) . "' 
          WHERE config_name = '$config_name'"; 
@@ -71,7 +71,7 @@ while ( $row = $db->sql_fetchrow($result) )
    } 
 } 
     
-if ( isset($HTTP_POST_VARS['submit']) ) 
+if ( isset($_POST['submit']) ) 
 { 
    $message = $lang['Pseudocron_config_updated'] . "<br /><br />" . sprintf($lang['Click_return_pseudocron_config'], "<a href=\"" . append_sid("admin_cron.$phpEx") . "\">", "</a>") . "<br /><br />" . sprintf($lang['Click_return_admin_index'], "<a href=\"" . append_sid("index.$phpEx?pane=right") . "\">", "</a>"); 
 

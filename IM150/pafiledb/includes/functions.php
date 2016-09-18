@@ -177,9 +177,7 @@ class pafiledb_functions
 
 		else 
 		{
-			$ini_val = ( @phpversion() >= '4.0.0' ) ? 'ini_get' : 'get_cfg_var';
-
-			$upload_mode = (@$ini_val('open_basedir') || @$ini_val('safe_mode')) ? 'move' : 'copy';
+			$upload_mode = (@ini_get('open_basedir') || @ini_get('safe_mode')) ? 'move' : 'copy';
 			$upload_mode = ($local) ? 'local' : $upload_mode;
 
 			if($this->do_upload_file($upload_mode, $userfile, $phpbb_root_path . $upload_dir . $userfile_name))
@@ -705,15 +703,15 @@ class user_info
 	
 	function user_info( $user_agent = '' )
 	{
-		global $_SERVER, $HTTP_USER_AGENT, $HTTP_SERVER_VARS;
+		global $_SERVER, $HTTP_USER_AGENT, $_SERVER;
 		
 		if (!empty($_SERVER['HTTP_USER_AGENT'])) 
 		{
 			$HTTP_USER_AGENT = $_SERVER['HTTP_USER_AGENT'];
 		} 
-		else if (!empty($HTTP_SERVER_VARS['HTTP_USER_AGENT'])) 
+		else if (!empty($_SERVER['HTTP_USER_AGENT'])) 
 		{
-			$HTTP_USER_AGENT = $HTTP_SERVER_VARS['HTTP_USER_AGENT'];
+			$HTTP_USER_AGENT = $_SERVER['HTTP_USER_AGENT'];
 		}
 		else if (!isset($HTTP_USER_AGENT))
 		{

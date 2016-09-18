@@ -40,11 +40,11 @@ require($phpbb_root_path . 'includes/functions_admin.'.$phpEx);
 //
 // Get the forum ID for pruning
 //
-if( isset($HTTP_GET_VARS[POST_FORUM_URL]) || isset($HTTP_POST_VARS[POST_FORUM_URL]) )
+if( isset($_GET[POST_FORUM_URL]) || isset($_POST[POST_FORUM_URL]) )
 {
 //-- mod : categories hierarchy --------------------------------------------------------------------
 //-- delete
-//	$forum_id = ( isset($HTTP_POST_VARS[POST_FORUM_URL]) ) ? $HTTP_POST_VARS[POST_FORUM_URL] : $HTTP_GET_VARS[POST_FORUM_URL];
+//	$forum_id = ( isset($_POST[POST_FORUM_URL]) ) ? $_POST[POST_FORUM_URL] : $_GET[POST_FORUM_URL];
 //
 //	if( $forum_id == -1 )
 //	{
@@ -56,7 +56,7 @@ if( isset($HTTP_GET_VARS[POST_FORUM_URL]) || isset($HTTP_POST_VARS[POST_FORUM_UR
 //		$forum_sql = "AND forum_id = $forum_id";
 //	}
 //-- add
-	$fid = ( isset($HTTP_POST_VARS[POST_FORUM_URL]) ) ? $HTTP_POST_VARS[POST_FORUM_URL] : $HTTP_GET_VARS[POST_FORUM_URL];
+	$fid = ( isset($_POST[POST_FORUM_URL]) ) ? $_POST[POST_FORUM_URL] : $_GET[POST_FORUM_URL];
 	$type = substr($fid, 0, 1);
 	$id = intval(substr($fid, 1));
 	$cat_id = -1;
@@ -124,9 +124,9 @@ else
 //
 // Check for submit to be equal to Prune. If so then proceed with the pruning.
 //
-if( isset($HTTP_POST_VARS['doprune']) )
+if( isset($_POST['doprune']) )
 {
-	$prunedays = ( isset($HTTP_POST_VARS['prunedays']) ) ? intval($HTTP_POST_VARS['prunedays']) : 0;
+	$prunedays = ( isset($_POST['prunedays']) ) ? intval($_POST['prunedays']) : 0;
 
 	// Convert days to seconds for timestamp functions...
 	$prunedate = time() - ( $prunedays * 86400 );
@@ -171,7 +171,7 @@ else
 	// If they haven't selected a forum for pruning yet then
 	// display a select box to use for pruning.
 	//
-	if( empty($HTTP_POST_VARS[POST_FORUM_URL]) )
+	if( empty($_POST[POST_FORUM_URL]) )
 	{
 		//
 		// Output a selection table if no forum id has been specified.
@@ -210,7 +210,7 @@ else
 	{
 //-- mod : categories hierarchy --------------------------------------------------------------------
 //-- delete
-//		$forum_id = intval($HTTP_POST_VARS[POST_FORUM_URL]);
+//		$forum_id = intval($_POST[POST_FORUM_URL]);
 //-- fin mod : categories hierarchy ----------------------------------------------------------------
 		
 		//

@@ -32,7 +32,7 @@
  *			-totally rewrote search.php and templet file to use phpbbs
  *			 template system
  *			-fixed bug in mysql query line
- *			-implemented use of $HTTP_GET_VARS and $HTTP_POST_VARS
+ *			-implemented use of $_GET and $_POST
  *
  *		1.2.0
  *			-fixed session problem,and php opening tag before comments bug
@@ -68,30 +68,30 @@ include($phpbb_root_path . 'common.'.$phpEx);
 	);
 	include($album_root_path . 'album_common.'.$phpEx);
 	
-	if (( isset($HTTP_POST_VARS['search']) || isset($HTTP_GET_VARS['search']) ) && ( $HTTP_POST_VARS['search'] != '' || $HTTP_GET_VARS['search'] != '' ))
+	if (( isset($_POST['search']) || isset($_GET['search']) ) && ( $_POST['search'] != '' || $_GET['search'] != '' ))
 	{
 		$template->assign_block_vars('switch_search_results', array());
 		
-		if ( isset($HTTP_POST_VARS['mode']) )
+		if ( isset($_POST['mode']) )
 		{
-			$m = $HTTP_POST_VARS['mode'];
+			$m = $_POST['mode'];
 		}
-		elseif ( isset($HTTP_GET_VARS['mode']) )
+		elseif ( isset($_GET['mode']) )
 		{
-			$m = $HTTP_GET_VARS['mode'];
+			$m = $_GET['mode'];
 		}
 		else
 		{
 			message_die(GENERAL_ERROR, 'Bad request');
 		}
 			
-		if ( isset($HTTP_POST_VARS['search']) )
+		if ( isset($_POST['search']) )
 		{
-			$s = $HTTP_POST_VARS['search'];
+			$s = $_POST['search'];
 		}
-		elseif ( isset($HTTP_GET_VARS['search']) )
+		elseif ( isset($_GET['search']) )
 		{
-			$s = $HTTP_GET_VARS['search'];
+			$s = $_GET['search'];
 		}
 			
 		if ($m == 'user')
@@ -123,13 +123,13 @@ include($phpbb_root_path . 'common.'.$phpEx);
 		}
 		//$pics_per_page = 4;
 		
-		if (isset ($HTTP_GET_VARS['start']))
+		if (isset ($_GET['start']))
 		{
-			$start = intval($HTTP_GET_VARS['start']);
+			$start = intval($_GET['start']);
 		}
-		elseif (isset ($HTTP_POST_VARS['start']))
+		elseif (isset ($_POST['start']))
 		{
-			$start = intval($HTTP_POST_VARS['start']);
+			$start = intval($_POST['start']);
 		}
 		else
 		{

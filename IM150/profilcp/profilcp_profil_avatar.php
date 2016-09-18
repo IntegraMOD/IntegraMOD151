@@ -45,20 +45,20 @@ $template->set_filenames(array(
 
 if ($submit)
 {
-	$user_avatar_local = ( !empty($HTTP_POST_VARS['avatarlocal']) && $board_config['allow_avatar_local'] ) ? trim(htmlspecialchars($HTTP_POST_VARS['avatarlocal'])) : '';
-	$user_avatar_category = ( !empty($HTTP_POST_VARS['avatarcatname']) && $board_config['allow_avatar_local'] ) ? trim(htmlspecialchars($HTTP_POST_VARS['avatarcatname'])) : '' ;
-	$user_avatar_remoteurl = ( !empty($HTTP_POST_VARS['avatarremoteurl']) ) ? trim(htmlspecialchars($HTTP_POST_VARS['avatarremoteurl'])) : '';
-	$user_avatar_upload = ( !empty($HTTP_POST_VARS['avatarurl']) ) ? trim($HTTP_POST_VARS['avatarurl']) : ( ( $HTTP_POST_FILES['avatar']['tmp_name'] != "none") ? $HTTP_POST_FILES['avatar']['tmp_name'] : '' );
-	$user_avatar_name = ( !empty($HTTP_POST_FILES['avatar']['name']) ) ? $HTTP_POST_FILES['avatar']['name'] : '';
-	$user_avatar_size = ( !empty($HTTP_POST_FILES['avatar']['size']) ) ? $HTTP_POST_FILES['avatar']['size'] : 0;
-	$user_avatar_filetype = ( !empty($HTTP_POST_FILES['avatar']['type']) ) ? $HTTP_POST_FILES['avatar']['type'] : '';
+	$user_avatar_local = ( !empty($_POST['avatarlocal']) && $board_config['allow_avatar_local'] ) ? trim(htmlspecialchars($_POST['avatarlocal'])) : '';
+	$user_avatar_category = ( !empty($_POST['avatarcatname']) && $board_config['allow_avatar_local'] ) ? trim(htmlspecialchars($_POST['avatarcatname'])) : '' ;
+	$user_avatar_remoteurl = ( !empty($_POST['avatarremoteurl']) ) ? trim(htmlspecialchars($_POST['avatarremoteurl'])) : '';
+	$user_avatar_upload = ( !empty($_POST['avatarurl']) ) ? trim($_POST['avatarurl']) : ( ( $_FILES['avatar']['tmp_name'] != "none") ? $_FILES['avatar']['tmp_name'] : '' );
+	$user_avatar_name = ( !empty($_FILES['avatar']['name']) ) ? $_FILES['avatar']['name'] : '';
+	$user_avatar_size = ( !empty($_FILES['avatar']['size']) ) ? $_FILES['avatar']['size'] : 0;
+	$user_avatar_filetype = ( !empty($_FILES['avatar']['type']) ) ? $_FILES['avatar']['type'] : '';
 
 	$user_avatar = $view_userdata['user_avatar'];
 	$user_avatar_type = $view_userdata['user_avatar_type'];
 
 	// check
 	$avatar_sql = '';
-	if ( isset($HTTP_POST_VARS['avatardel']) )
+	if ( isset($_POST['avatardel']) )
 	{
 		$avatar_sql = pcp_user_avatar_delete($view_userdata['user_avatar_type'], $view_userdata['user_avatar']);
 	}
@@ -103,8 +103,7 @@ if (!$submit)
 	// Let's do an overall check for settings/versions which would prevent
 	// us from doing file uploads....
 	//
-	$ini_val = ( phpversion() >= '4.0.0' ) ? 'ini_get' : 'get_cfg_var';
-	$form_enctype = ( @$ini_val('file_uploads') == '0' || strtolower(@$ini_val('file_uploads') == 'off') || phpversion() == '4.0.4pl1' || !$board_config['allow_avatar_upload'] || ( phpversion() < '4.0.3' && @$ini_val('open_basedir') != '' ) ) ? '' : 'enctype="multipart/form-data"';
+	$form_enctype = ( @ini_get('file_uploads') == '0' || strtolower(@ini_get('file_uploads') == 'off') || phpversion() == '4.0.4pl1' || !$board_config['allow_avatar_upload'] || ( phpversion() < '4.0.3' && @$ini_val('open_basedir') != '' ) ) ? '' : 'enctype="multipart/form-data"';
 
 	$template->assign_vars(array(
 		'L_AVATAR_PANEL' => $lang['Avatar_panel'],

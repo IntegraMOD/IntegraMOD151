@@ -30,8 +30,8 @@ include_once($phpbb_root_path .'extension.inc');
 include_once('pagestart.'. $phpEx);
 include_once($phpbb_root_path .'includes/phpbb_security.'. $phpEx);
 	
-	$action = (isset($HTTP_POST_VARS['action'])) ? $HTTP_POST_VARS['action'] : $HTTP_GET_VARS['action'];
-	$mode 	= (isset($HTTP_POST_VARS['mode'])) ? $HTTP_POST_VARS['mode'] : $HTTP_GET_VARS['mode'];
+	$action = (isset($_POST['action'])) ? $_POST['action'] : $_GET['action'];
+	$mode 	= (isset($_POST['mode'])) ? $_POST['mode'] : $_GET['mode'];
 	
 	function AdminLinkLength($link, $max)
 		{
@@ -93,7 +93,7 @@ include_once($phpbb_root_path .'includes/phpbb_security.'. $phpEx);
 	if (!$allowed)
 		message_die(GENERAL_ERROR, $lang['PS_admin_not_authed']);
 		
-	$which_file = isset($HTTP_GET_VARS['file']) ? $HTTP_GET_VARS['file'] : '';
+	$which_file = isset($_GET['file']) ? $_GET['file'] : '';
 		
 		if ($which_file)
 			{
@@ -108,7 +108,7 @@ include_once($phpbb_root_path .'includes/phpbb_security.'. $phpEx);
 		{
 		if ($action == 'unban')
 			{
-		$who = ($_POST['u']) ? $_POST['u'] : $HTTP_POST_VARS['u'];
+		$who = ($_POST['u']) ? $_POST['u'] : $_POST['u'];
 		
 		$q = "DELETE FROM ". BANLIST_TABLE ."
 			  WHERE ban_ip = '$who'";
@@ -126,8 +126,8 @@ include_once($phpbb_root_path .'includes/phpbb_security.'. $phpEx);
 		$r 			= $db->sql_query($q);
 		$ban_data 	= $db->sql_fetchrowset($r);
 		
-		$what_ip 	= isset($HTTP_POST_VARS['ip']) ? $HTTP_POST_VARS['ip'] : '';
-		$what_type 	= isset($_POST['match_type']) ? intval($HTTP_POST_VARS['match_type']) : '';
+		$what_ip 	= isset($_POST['ip']) ? $_POST['ip'] : '';
+		$what_type 	= isset($_POST['match_type']) ? intval($_POST['match_type']) : '';
 		$split_ip 	= explode('.', $what_ip);
 		
 			if ($what_type == '1')		
@@ -222,7 +222,7 @@ include_once($phpbb_root_path .'includes/phpbb_security.'. $phpEx);
 	
 	if ($action == 'list_exploits')
 		{
-	$who 		= isset($HTTP_GET_VARS['u']) ? intval($HTTP_GET_VARS['u']) : '';
+	$who 		= isset($_GET['u']) ? intval($_GET['u']) : '';
 	$user_ips 	= array();
 	$ban_links	= array();
 	$ban_id		= array();
@@ -362,34 +362,34 @@ include_once($phpbb_root_path .'includes/phpbb_security.'. $phpEx);
 	if (!$allowed)
 		message_die(GENERAL_ERROR, $lang['PS_admin_not_authed']);
 				
-	$s_a 	= ($_POST['special_admin']) 	? $_POST['special_admin'] 	: $HTTP_POST_VARS['special_admin'];
-	$s_m 	= ($_POST['special_mod']) 		? $_POST['special_mod'] 	: $HTTP_POST_VARS['special_mod'];
-	$s_u 	= ($_POST['ps_use_special']) 	? $_POST['ps_use_special'] 	: $HTTP_POST_VARS['ps_use_special'];
-	$s_d	= ($_POST['ps_ddos_option']) 	? $_POST['ps_ddos_option'] 	: $HTTP_POST_VARS['ps_ddos_option'];
-	$s_cl	= ($_POST['ps_clike_option']) 	? $_POST['ps_clike_option']	: $HTTP_POST_VARS['ps_clike_option'];
-	$s_cb	= ($_POST['ps_cback_option']) 	? $_POST['ps_cback_option'] : $HTTP_POST_VARS['ps_cback_option'];
-	$s_e	= ($_POST['ps_chr_option']) 	? $_POST['ps_chr_option'] 	: $HTTP_POST_VARS['ps_chr_option'];
-	$s_s	= ($_POST['ps_sql_option']) 	? $_POST['ps_sql_option'] 	: $HTTP_POST_VARS['ps_sql_option'];
-	$s_p	= ($_POST['ps_perl_option']) 	? $_POST['ps_perl_option'] 	: $HTTP_POST_VARS['ps_perl_option'];
-	$s_un	= ($_POST['ps_union_option']) 	? $_POST['ps_union_option'] : $HTTP_POST_VARS['ps_union_option'];
-	$s_f	= ($_POST['ps_file_option']) 	? $_POST['ps_file_option'] 	: $HTTP_POST_VARS['ps_file_option'];
+	$s_a 	= ($_POST['special_admin']) 	? $_POST['special_admin'] 	: $_POST['special_admin'];
+	$s_m 	= ($_POST['special_mod']) 		? $_POST['special_mod'] 	: $_POST['special_mod'];
+	$s_u 	= ($_POST['ps_use_special']) 	? $_POST['ps_use_special'] 	: $_POST['ps_use_special'];
+	$s_d	= ($_POST['ps_ddos_option']) 	? $_POST['ps_ddos_option'] 	: $_POST['ps_ddos_option'];
+	$s_cl	= ($_POST['ps_clike_option']) 	? $_POST['ps_clike_option']	: $_POST['ps_clike_option'];
+	$s_cb	= ($_POST['ps_cback_option']) 	? $_POST['ps_cback_option'] : $_POST['ps_cback_option'];
+	$s_e	= ($_POST['ps_chr_option']) 	? $_POST['ps_chr_option'] 	: $_POST['ps_chr_option'];
+	$s_s	= ($_POST['ps_sql_option']) 	? $_POST['ps_sql_option'] 	: $_POST['ps_sql_option'];
+	$s_p	= ($_POST['ps_perl_option']) 	? $_POST['ps_perl_option'] 	: $_POST['ps_perl_option'];
+	$s_un	= ($_POST['ps_union_option']) 	? $_POST['ps_union_option'] : $_POST['ps_union_option'];
+	$s_f	= ($_POST['ps_file_option']) 	? $_POST['ps_file_option'] 	: $_POST['ps_file_option'];
 	
-	$add_admin 		= ($_POST['grant_access']) 	? $_POST['grant_access'] 	: $HTTP_POST_VARS['grant_access'];
-	$remove_admin 	= ($_POST['deny_access']) 	? $_POST['deny_access'] 	: $HTTP_POST_VARS['deny_access'];
-	$add_agent		= ($_POST['block_agents']) 	? $_POST['block_agents'] 	: $HTTP_POST_VARS['block_agents'];
-	$remove_agent	= ($_POST['allow_agents']) 	? $_POST['allow_agents'] 	: $HTTP_POST_VARS['allow_agents'];
-	$ddos_level		= ($_POST['ps_ddos_level']) ? $_POST['ps_ddos_level'] 	: $HTTP_POST_VARS['ps_ddos_level'];
-	$per_page		= ($_POST['per_page']) 		? $_POST['per_page'] 		: $HTTP_POST_VARS['per_page'];
+	$add_admin 		= ($_POST['grant_access']) 	? $_POST['grant_access'] 	: $_POST['grant_access'];
+	$remove_admin 	= ($_POST['deny_access']) 	? $_POST['deny_access'] 	: $_POST['deny_access'];
+	$add_agent		= ($_POST['block_agents']) 	? $_POST['block_agents'] 	: $_POST['block_agents'];
+	$remove_agent	= ($_POST['allow_agents']) 	? $_POST['allow_agents'] 	: $_POST['allow_agents'];
+	$ddos_level		= ($_POST['ps_ddos_level']) ? $_POST['ps_ddos_level'] 	: $_POST['ps_ddos_level'];
+	$per_page		= ($_POST['per_page']) 		? $_POST['per_page'] 		: $_POST['per_page'];
 	$per_page		= ($per_page <= 0) 			? 100 						: $per_page;
-	$add_referer	= ($_POST['block_referers'])? $_POST['block_referers'] 	: $HTTP_POST_VARS['block_referers'];
-	$remove_referer	= ($_POST['allow_referers'])? $_POST['allow_referers'] 	: $HTTP_POST_VARS['allow_referers'];
+	$add_referer	= ($_POST['block_referers'])? $_POST['block_referers'] 	: $_POST['block_referers'];
+	$remove_referer	= ($_POST['allow_referers'])? $_POST['allow_referers'] 	: $_POST['allow_referers'];
 	
-	$use_backup 	= ($_POST['backup_on']) 	? $_POST['backup_on'] 		: $HTTP_POST_VARS['backup_on'];
-	$backup_folder 	= ($_POST['backup_folder']) ? $_POST['backup_folder'] 	: $HTTP_POST_VARS['backup_folder'];
-	$backup_file 	= ($_POST['backup_file']) 	? $_POST['backup_file'] 	: $HTTP_POST_VARS['backup_file'];
-	$backup_time 	= ($_POST['backup_time']) 	? $_POST['backup_time'] 	: $HTTP_POST_VARS['backup_time'];
+	$use_backup 	= ($_POST['backup_on']) 	? $_POST['backup_on'] 		: $_POST['backup_on'];
+	$backup_folder 	= ($_POST['backup_folder']) ? $_POST['backup_folder'] 	: $_POST['backup_folder'];
+	$backup_file 	= ($_POST['backup_file']) 	? $_POST['backup_file'] 	: $_POST['backup_file'];
+	$backup_time 	= ($_POST['backup_time']) 	? $_POST['backup_time'] 	: $_POST['backup_time'];
 
-	$guest_matches	= isset($HTTP_POST_VARS['guest_sessions']) ? intval($HTTP_POST_VARS['guest_sessions']) : '';
+	$guest_matches	= isset($_POST['guest_sessions']) ? intval($_POST['guest_sessions']) : '';
 
 	$q = "UPDATE ". CONFIG_TABLE ."
 		  SET config_value = '$guest_matches'
@@ -505,18 +505,18 @@ include_once($phpbb_root_path .'includes/phpbb_security.'. $phpEx);
 		
 	if ( ($action == 'save_config') && ($userdata['user_level'] == ADMIN) )
 		{
-	$ps_a = (isset($HTTP_POST_VARS['ps_admin'])) 		? $HTTP_POST_VARS['ps_admin'] 			: '';
-	$ps_i = (isset($HTTP_POST_VARS['ps_admin_id'])) 	? $HTTP_POST_VARS['ps_admin_id'] 		: '';
-	$ps_l = (isset($HTTP_POST_VARS['ps_limit'])) 		? $HTTP_POST_VARS['ps_limit'] 			: '';
-	$ps_b = (isset($HTTP_POST_VARS['ps_ban'])) 			? $HTTP_POST_VARS['ps_ban'] 			: '';
-	$ps_s = (isset($HTTP_POST_VARS['ps_sess'])) 		? $HTTP_POST_VARS['ps_sess'] 			: '';
-	$ps_c = (isset($HTTP_POST_VARS['ps_allow_change'])) ? $HTTP_POST_VARS['ps_allow_change'] 	: '';
-	$ps_p = (isset($HTTP_POST_VARS['ps_admin_pm'])) 	? $HTTP_POST_VARS['ps_admin_pm'] 		: '';
-	$ps_e = (isset($HTTP_POST_VARS['ps_admin_em'])) 	? $HTTP_POST_VARS['ps_admin_em'] 		: '';
+	$ps_a = (isset($_POST['ps_admin'])) 		? $_POST['ps_admin'] 			: '';
+	$ps_i = (isset($_POST['ps_admin_id'])) 	? $_POST['ps_admin_id'] 		: '';
+	$ps_l = (isset($_POST['ps_limit'])) 		? $_POST['ps_limit'] 			: '';
+	$ps_b = (isset($_POST['ps_ban'])) 			? $_POST['ps_ban'] 			: '';
+	$ps_s = (isset($_POST['ps_sess'])) 		? $_POST['ps_sess'] 			: '';
+	$ps_c = (isset($_POST['ps_allow_change'])) ? $_POST['ps_allow_change'] 	: '';
+	$ps_p = (isset($_POST['ps_admin_pm'])) 	? $_POST['ps_admin_pm'] 		: '';
+	$ps_e = (isset($_POST['ps_admin_em'])) 	? $_POST['ps_admin_em'] 		: '';
 	
-	$use_pw_match	 	= (isset($HTTP_POST_VARS['phpBBSecurity_use_password_match'])) ? $HTTP_POST_VARS['phpBBSecurity_use_password_match'] : '';
-	$use_pw_length 		= (isset($HTTP_POST_VARS['phpBBSecurity_use_password_length'])) ? $HTTP_POST_VARS['phpBBSecurity_use_password_length'] : '';
-	$pw_length			= (isset($HTTP_POST_VARS['phpBBSecurity_password_min_length'])) ? intval($HTTP_POST_VARS['phpBBSecurity_password_min_length']) : '';
+	$use_pw_match	 	= (isset($_POST['phpBBSecurity_use_password_match'])) ? $_POST['phpBBSecurity_use_password_match'] : '';
+	$use_pw_length 		= (isset($_POST['phpBBSecurity_use_password_length'])) ? $_POST['phpBBSecurity_use_password_length'] : '';
+	$pw_length			= (isset($_POST['phpBBSecurity_password_min_length'])) ? intval($_POST['phpBBSecurity_password_min_length']) : '';
 	
 		if ( ($use_pw_length) && ($pw_length <= 0) )
 			message_die(GENERAL_ERROR, $lang['PS_pass_error']);

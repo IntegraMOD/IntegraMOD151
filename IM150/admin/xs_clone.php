@@ -53,10 +53,10 @@ if(!@function_exists('gzcompress'))
 //
 // clone style
 //
-if(!empty($HTTP_POST_VARS['clone_style']) && !defined('DEMO_MODE'))
+if(!empty($_POST['clone_style']) && !defined('DEMO_MODE'))
 {
-	$style = intval($HTTP_POST_VARS['clone_style']);
-	$new_name = stripslashes($HTTP_POST_VARS['clone_name']);
+	$style = intval($_POST['clone_style']);
+	$new_name = stripslashes($_POST['clone_name']);
 	// get theme data
 	$sql = "SELECT * FROM " . THEMES_TABLE . " WHERE themes_id='{$style}'";
 	if(!$result = $db->sql_query($sql))
@@ -117,10 +117,10 @@ if(!empty($HTTP_POST_VARS['clone_style']) && !defined('DEMO_MODE'))
 //
 // clone template
 //
-if(!empty($HTTP_POST_VARS['clone_tpl']) && !defined('DEMO_MODE'))
+if(!empty($_POST['clone_tpl']) && !defined('DEMO_MODE'))
 {
-	$old_name = xs_tpl_name($HTTP_POST_VARS['clone_tpl']);
-	$new_name = xs_tpl_name($HTTP_POST_VARS['clone_style_name']);
+	$old_name = xs_tpl_name($_POST['clone_tpl']);
+	$new_name = xs_tpl_name($_POST['clone_style_name']);
 	if(empty($new_name) || $new_name === $old_name)
 	{
 		xs_error($lang['xs_invalid_style_name'] . '<br /><br />' . $lang['xs_clone_back']);
@@ -131,7 +131,7 @@ if(!empty($HTTP_POST_VARS['clone_tpl']) && !defined('DEMO_MODE'))
 		xs_error($lang['xs_clone_style_exists'] . '<br /><br />' . $lang['xs_clone_back']);
 	}
 	// check variables
-	$total = intval($HTTP_POST_VARS['total']);
+	$total = intval($_POST['total']);
 	$vars = array('clone_tpl', 'clone_style_name', 'total');
 	$count = 0;
 	$list = array();
@@ -140,15 +140,15 @@ if(!empty($HTTP_POST_VARS['clone_tpl']) && !defined('DEMO_MODE'))
 		$vars[] = 'clone_style_id_'.$i;
 		$vars[] = 'clone_style_'.$i;
 		$vars[] = 'clone_style_name_'.$i;
-		if(!empty($HTTP_POST_VARS['clone_style_'.$i]) && !empty($HTTP_POST_VARS['clone_style_name_'.$i]))
+		if(!empty($_POST['clone_style_'.$i]) && !empty($_POST['clone_style_name_'.$i]))
 		{
 			// prepare for export
-			$list[] = intval($HTTP_POST_VARS['clone_style_id_'.$i]);
-			$HTTP_POST_VARS['export_style_'.$i] = $HTTP_POST_VARS['clone_style_'.$i];
-			$HTTP_POST_VARS['export_style_id_'.$i] = $HTTP_POST_VARS['clone_style_id_'.$i];
-			$HTTP_POST_VARS['export_style_name_'.$i] = $HTTP_POST_VARS['clone_style_name_'.$i];
+			$list[] = intval($_POST['clone_style_id_'.$i]);
+			$_POST['export_style_'.$i] = $_POST['clone_style_'.$i];
+			$_POST['export_style_id_'.$i] = $_POST['clone_style_id_'.$i];
+			$_POST['export_style_name_'.$i] = $_POST['clone_style_name_'.$i];
 			// prepare for import
-			$HTTP_POST_VARS['import_install_'.$count] = '1';
+			$_POST['import_install_'.$count] = '1';
 			$count ++;
 		}
 	}
@@ -159,7 +159,7 @@ if(!empty($HTTP_POST_VARS['clone_tpl']) && !defined('DEMO_MODE'))
 	$request = array();
 	for($i=0; $i<count($vars); $i++)
 	{
-		$request[$vars[$i]] = stripslashes($HTTP_POST_VARS[$vars[$i]]);
+		$request[$vars[$i]] = stripslashes($_POST[$vars[$i]]);
 	}
 	// get ftp configuration
 	$write_local = false;
@@ -199,9 +199,9 @@ if(!empty($HTTP_POST_VARS['clone_tpl']) && !defined('DEMO_MODE'))
 		$theme_name = $theme_rowset[$i]['style_name'];
 		for($j=0; $j<$total; $j++)
 		{
-			if(!empty($HTTP_POST_VARS['export_style_name_'.$j]) && $HTTP_POST_VARS['export_style_id_'.$j] == $id)
+			if(!empty($_POST['export_style_name_'.$j]) && $_POST['export_style_id_'.$j] == $id)
 			{
-				$theme_name = stripslashes($HTTP_POST_VARS['export_style_name_'.$j]);
+				$theme_name = stripslashes($_POST['export_style_name_'.$j]);
 			}
 		}
 		$theme_rowset[$i]['style_name'] = $theme_name;
@@ -228,7 +228,7 @@ if(!empty($HTTP_POST_VARS['clone_tpl']) && !defined('DEMO_MODE'))
 	fclose($f);
 	// prepare import variables
 	$total = $count;
-	$HTTP_POST_VARS['total'] = $count;
+	$_POST['total'] = $count;
 	$list_only = false;
 	$get_file = '';
 	define('XS_CLONING', true);
@@ -241,9 +241,9 @@ if(!empty($HTTP_POST_VARS['clone_tpl']) && !defined('DEMO_MODE'))
 //
 // clone style menu
 //
-if(!empty($HTTP_GET_VARS['clone']))
+if(!empty($_GET['clone']))
 {
-	$style = stripslashes($HTTP_GET_VARS['clone']);
+	$style = stripslashes($_GET['clone']);
 	$sql = "SELECT themes_id, style_name FROM " . THEMES_TABLE . " WHERE template_name = '" . xs_sql($style) . "' ORDER BY style_name ASC";
 	if(!$result = $db->sql_query($sql))
 	{

@@ -215,7 +215,7 @@ if(isset($theme['theme_public']))
 //
 function get_ftp_config($action, $post = array(), $allow_local = false, $show_error = '')
 {
-	global $template, $board_config, $db, $lang, $HTTP_POST_VARS, $HTTP_SERVER_VARS;
+	global $template, $board_config, $db, $lang, $_POST, $_SERVER;
 	$board_config['xs_ftp_local'] = false;
 	// check if ftp can be used
 	if(!@function_exists('ftp_connect'))
@@ -228,21 +228,21 @@ function get_ftp_config($action, $post = array(), $allow_local = false, $show_er
 		xs_error($lang['xs_ftp_error_fatal']);
 	}
 	// check if we have configuration
-	if(!empty($HTTP_POST_VARS['get_ftp_config']))
+	if(!empty($_POST['get_ftp_config']))
 	{
 		$vars = array('xs_ftp_host', 'xs_ftp_login', 'xs_ftp_path');
 		for($i=0; $i<count($vars); $i++)
 		{
 			$var = $vars[$i];
-			if($board_config[$var] !== $HTTP_POST_VARS[$var])
+			if($board_config[$var] !== $_POST[$var])
 			{
-				$board_config[$var] = stripslashes($HTTP_POST_VARS[$var]);
+				$board_config[$var] = stripslashes($_POST[$var]);
 				$sql = "UPDATE " . CONFIG_TABLE . " SET config_value = '" . xs_sql($board_config[$var]) . "' WHERE config_name = '{$var}'";
 				$db->sql_query($sql);
 			}
 		}
-		$board_config['xs_ftp_pass'] = stripslashes($HTTP_POST_VARS['xs_ftp_pass']);
-		$board_config['xs_ftp_local'] = empty($HTTP_POST_VARS['xs_ftp_local']) ? false : true;
+		$board_config['xs_ftp_pass'] = stripslashes($_POST['xs_ftp_pass']);
+		$board_config['xs_ftp_local'] = empty($_POST['xs_ftp_local']) ? false : true;
 		// recache config table
 		if(defined('XS_MODS_CATEGORY_HIERARCHY210'))
 		{
@@ -258,7 +258,7 @@ function get_ftp_config($action, $post = array(), $allow_local = false, $show_er
 	$xs_ftp_host = $board_config['xs_ftp_host'];
 	if(empty($xs_ftp_host))
 	{
-		$str = $HTTP_SERVER_VARS['HTTP_HOST'];
+		$str = $_SERVER['HTTP_HOST'];
 		$template->assign_vars(array(
 			'HOST_GUESS' => str_replace(array('{HOST}', '{CLICK}'), array($str, 'document.ftp.xs_ftp_host.value=\''.$str.'\''), $lang['xs_ftp_host_guess'])
 			));
@@ -331,8 +331,8 @@ function get_ftp_config($action, $post = array(), $allow_local = false, $show_er
 // connect ftp
 function xs_ftp_connect($action, $post = array(), $allow_local = false)
 {
-	global $ftp, $board_config, $HTTP_POST_VARS, $phpEx, $lang, $template;
-	$HTTP_POST_VARS['get_ftp_config'] = '';
+	global $ftp, $board_config, $_POST, $phpEx, $lang, $template;
+	$_POST['get_ftp_config'] = '';
 	if($allow_local && !empty($board_config['xs_ftp_local']))
 	{
 		$ftp = XS_FTP_LOCAL;
@@ -385,7 +385,7 @@ function xs_ftp_connect($action, $post = array(), $allow_local = false)
 	{
 		get_ftp_config($action, $post, $allow_local, $lang['xs_ftp_error_nonphpbbdir']);
 	}
-	$HTTP_POST_VARS['get_ftp_config'] = '1';
+	$_POST['get_ftp_config'] = '1';
 }
 
 // get .style file header
@@ -853,7 +853,7 @@ function xs_install_style($tpl, $num)
 // generate theme_info.cfg for template
 function xs_generate_themeinfo($theme_rowset, $export, $exportas, $total)
 {
-	global $HTTP_POST_VARS;
+	global $_POST;
 	$vars = array('template_name', 'style_name', 'head_stylesheet', 'body_background', 'body_bgcolor', 'body_text', 'body_link', 'body_vlink', 'body_alink', 'body_hlink', 'tr_color1', 'tr_color2', 'tr_color3', 'tr_class1', 'tr_class2', 'tr_class3', 'th_color1', 'th_color2', 'th_color3', 'th_class1', 'th_class2', 'th_class3', 'td_color1', 'td_color2', 'td_color3', 'td_class1', 'td_class2', 'td_class3', 'fontface1', 'fontface2', 'fontface3', 'fontsize1', 'fontsize2', 'fontsize3', 'fontcolor1', 'fontcolor2', 'fontcolor3', 'span_class1', 'span_class2', 'span_class3', 'img_size_poll', 'img_size_privmsg');
 	$theme_data = '<?php'."\n\n";
 	$theme_data .= "//\n// eXtreme Styles mod (compatible with phpBB 2.0.x) auto-generated theme config file for $exportas\n// Do not change anything in this file unless you know exactly what you are doing!\n//\n\n";
@@ -863,9 +863,9 @@ function xs_generate_themeinfo($theme_rowset, $export, $exportas, $total)
 		$theme_name = $theme_rowset[$i]['style_name'];
 		for($j=0; $j<$total; $j++)
 		{
-			if(!empty($HTTP_POST_VARS['export_style_name_'.$j]) && $HTTP_POST_VARS['export_style_id_'.$j] == $id)
+			if(!empty($_POST['export_style_name_'.$j]) && $_POST['export_style_id_'.$j] == $id)
 			{
-				$theme_name = stripslashes($HTTP_POST_VARS['export_style_name_'.$j]);
+				$theme_name = stripslashes($_POST['export_style_name_'.$j]);
 				$theme_rowset[$i]['style_name'] = $theme_name;
 			}
 		}

@@ -30,9 +30,9 @@ require('./pagestart.' . $phpEx);
 //
 // Check to see what mode we should operate in.
 //
-if( isset($HTTP_POST_VARS['mode']) || isset($HTTP_GET_VARS['mode']) )
+if( isset($_POST['mode']) || isset($_GET['mode']) )
 {
-	$mode = ( isset($HTTP_POST_VARS['mode']) ) ? $HTTP_POST_VARS['mode'] : $HTTP_GET_VARS['mode'];
+	$mode = ( isset($_POST['mode']) ) ? $_POST['mode'] : $_GET['mode'];
 	$mode = htmlspecialchars($mode); 
 }
 else
@@ -43,7 +43,7 @@ else
 //
 // Select main mode
 //
-if( isset($HTTP_POST_VARS['delete']) || isset($HTTP_GET_VARS['delete']) )
+if( isset($_POST['delete']) || isset($_GET['delete']) )
 {
 	//
 	// Delete all referers data 
@@ -63,8 +63,8 @@ if ( $mode == 'delete')
 	//
 	// Delete a individual referer
 	//		
-	$referer_id = ( !empty($HTTP_POST_VARS['id']) ) ? $HTTP_POST_VARS['id'] : $HTTP_GET_VARS['id'];		
-	$referer_host = ( !empty($HTTP_POST_VARS['host']) ) ? $HTTP_POST_VARS['host'] : $HTTP_GET_VARS['host'];
+	$referer_id = ( !empty($_POST['id']) ) ? $_POST['id'] : $_GET['id'];		
+	$referer_host = ( !empty($_POST['host']) ) ? $_POST['host'] : $_GET['host'];
 
 	$sql = "DELETE FROM " . REFERERS_TABLE . "
 		WHERE " . ($referer_id ? "referer_id = $referer_id" : "referer_host = '$referer_host'");
@@ -85,30 +85,30 @@ else
 	// This is the main display of the page before the admin has selected
 	// any options.
 	//
-	$start = (isset($HTTP_GET_VARS['start'])) ? intval($HTTP_GET_VARS['start']) : 0;
+	$start = (isset($_GET['start'])) ? intval($_GET['start']) : 0;
 
-	if( isset($HTTP_POST_VARS['sort']) )
+	if( isset($_POST['sort']) )
 	{
-		$sort_method = $HTTP_POST_VARS['sort'];
+		$sort_method = $_POST['sort'];
 	}
-	else if( isset($HTTP_GET_VARS['sort']) )
+	else if( isset($_GET['sort']) )
 	{
-		$sort_method = $HTTP_GET_VARS['sort'];
+		$sort_method = $_GET['sort'];
 	}
 	else
 	{
 		$sort_method = 'referer_host';
 	}
 
-	$rdns_ip_num = ( isset($HTTP_GET_VARS['rdns']) ) ? $HTTP_GET_VARS['rdns'] : "";
+	$rdns_ip_num = ( isset($_GET['rdns']) ) ? $_GET['rdns'] : "";
 
-	if( isset($HTTP_POST_VARS['order']) )
+	if( isset($_POST['order']) )
 	{
-		$sort_order = $HTTP_POST_VARS['order'];
+		$sort_order = $_POST['order'];
 	}
-	else if( isset($HTTP_GET_VARS['order']) )
+	else if( isset($_GET['order']) )
 	{
-		$sort_order = $HTTP_GET_VARS['order'];
+		$sort_order = $_GET['order'];
 	}
 	else
 	{

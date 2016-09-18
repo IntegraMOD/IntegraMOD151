@@ -46,9 +46,9 @@ include_once ($phpbb_root_path . 'includes/news_data.' . $phpEx );
 //
 // Check to see what mode we should operate in.
 //
-if( isset($HTTP_POST_VARS['mode']) || isset($HTTP_GET_VARS['mode']) )
+if( isset($_POST['mode']) || isset($_GET['mode']) )
 {
-  $mode = ( isset($HTTP_POST_VARS['mode']) ) ? $HTTP_POST_VARS['mode'] : $HTTP_GET_VARS['mode'];
+  $mode = ( isset($_POST['mode']) ) ? $_POST['mode'] : $_GET['mode'];
 }
 else
 {
@@ -82,7 +82,7 @@ if( is_array( $category_images ) )
   sort( $category_images );
 }
 
-if( isset($HTTP_POST_VARS['add']) || isset($HTTP_GET_VARS['add']) )
+if( isset($_POST['add']) || isset($_GET['add']) )
 {
   //
   // Admin has selected to add a smiley.
@@ -128,7 +128,7 @@ else if ( $mode != "" )
       // Admin has selected to delete a category.
       //
 
-      $news_id = ( !empty($HTTP_POST_VARS['id']) ) ? $HTTP_POST_VARS['id'] : $HTTP_GET_VARS['id'];
+      $news_id = ( !empty($_POST['id']) ) ? $_POST['id'] : $_GET['id'];
 
       $sql = "DELETE FROM " . NEWS_TABLE . "
         WHERE news_id = " . $news_id;
@@ -157,7 +157,7 @@ else if ( $mode != "" )
       // Admin has selected to edit a smiley.
       //
 
-      $news_id = ( !empty($HTTP_POST_VARS['id']) ) ? $HTTP_POST_VARS['id'] : $HTTP_GET_VARS['id'];
+      $news_id = ( !empty($_POST['id']) ) ? $_POST['id'] : $_GET['id'];
 
       $sql = "SELECT *
         FROM " . NEWS_TABLE . "
@@ -225,9 +225,9 @@ else if ( $mode != "" )
       // Get the submitted data, being careful to ensure that we only
       // accept the data we are looking for.
       //
-      $news_category = ( isset($HTTP_POST_VARS['category']) ) ? trim($HTTP_POST_VARS['category']) : trim($HTTP_GET_VARS['category']);
-      $news_image = ( isset($HTTP_POST_VARS['image_url']) ) ? trim($HTTP_POST_VARS['image_url']) : trim($HTTP_GET_VARS['image_url']);
-      $news_id = ( isset($HTTP_POST_VARS['news_id']) ) ? intval($HTTP_POST_VARS['news_id']) : intval($HTTP_GET_VARS['news_id']);
+      $news_category = ( isset($_POST['category']) ) ? trim($_POST['category']) : trim($_GET['category']);
+      $news_image = ( isset($_POST['image_url']) ) ? trim($_POST['image_url']) : trim($_GET['image_url']);
+      $news_id = ( isset($_POST['news_id']) ) ? intval($_POST['news_id']) : intval($_GET['news_id']);
 
       // If no code was entered complain ...
       if ($news_category == '' || $news_image == '' || $news_id == '' )
@@ -260,8 +260,8 @@ else if ( $mode != "" )
       // Get the submitted data being careful to ensure the the data
       // we recieve and process is only the data we are looking for.
       //
-      $news_category = ( isset($HTTP_POST_VARS['category']) ) ? trim($HTTP_POST_VARS['category']) : trim($HTTP_GET_VARS['category']);
-      $news_image = ( isset($HTTP_POST_VARS['image_url']) ) ? trim($HTTP_POST_VARS['image_url']) : trim($HTTP_GET_VARS['image_url']);
+      $news_category = ( isset($_POST['category']) ) ? trim($_POST['category']) : trim($_GET['category']);
+      $news_image = ( isset($_POST['image_url']) ) ? trim($_POST['image_url']) : trim($_GET['image_url']);
 
       // If no code was entered complain ...
       if ($news_category == '' || $news_image == '' )

@@ -420,7 +420,7 @@ class Template {
 
 	function subtemplates_make_filename($filename)
 	{
-		global $HTTP_GET_VARS, $HTTP_POST_VARS, $db, $board_config, $images, $theme;
+		global $_GET, $_POST, $db, $board_config, $images, $theme;
 		global $sub_template_key_image, $sub_templates;
 		global $tree;
 
@@ -445,29 +445,29 @@ class Template {
 			$topic_id = 0;
 			$post_id = 0;
 
-			if ( !defined('IN_PRIVMSG') && ( isset($HTTP_GET_VARS[POST_POST_URL]) || isset($HTTP_POST_VARS[POST_POST_URL]) ) )
+			if ( !defined('IN_PRIVMSG') && ( isset($_GET[POST_POST_URL]) || isset($_POST[POST_POST_URL]) ) )
 			{
-				$post_id = isset($HTTP_GET_VARS[POST_POST_URL]) ? intval($HTTP_GET_VARS[POST_POST_URL]) : intval($HTTP_POST_VARS[POST_POST_URL]);
+				$post_id = isset($_GET[POST_POST_URL]) ? intval($_GET[POST_POST_URL]) : intval($_POST[POST_POST_URL]);
 			}
 
-			if ( isset($HTTP_GET_VARS[POST_TOPIC_URL]) || isset($HTTP_POST_VARS[POST_TOPIC_URL]) )
+			if ( isset($_GET[POST_TOPIC_URL]) || isset($_POST[POST_TOPIC_URL]) )
 			{
-				$topic_id = intval($HTTP_GET_VARS[POST_TOPIC_URL]) ? intval($HTTP_GET_VARS[POST_TOPIC_URL]) : intval($HTTP_POST_VARS[POST_TOPIC_URL]);
+				$topic_id = intval($_GET[POST_TOPIC_URL]) ? intval($_GET[POST_TOPIC_URL]) : intval($_POST[POST_TOPIC_URL]);
 			}
 
-			if ( isset($HTTP_GET_VARS[POST_FORUM_URL]) || isset($HTTP_POST_VARS[POST_FORUM_URL]) )
+			if ( isset($_GET[POST_FORUM_URL]) || isset($_POST[POST_FORUM_URL]) )
 			{
-				$forum_id = isset($HTTP_GET_VARS[POST_FORUM_URL]) ? intval($HTTP_GET_VARS[POST_FORUM_URL]) : intval($HTTP_POST_VARS[POST_FORUM_URL]);
+				$forum_id = isset($_GET[POST_FORUM_URL]) ? intval($_GET[POST_FORUM_URL]) : intval($_POST[POST_FORUM_URL]);
 			}
 
-			if ( isset($HTTP_GET_VARS[POST_CAT_URL]) || isset($HTTP_POST_VARS[POST_CAT_URL]) )
+			if ( isset($_GET[POST_CAT_URL]) || isset($_POST[POST_CAT_URL]) )
 			{
-				$cat_id = isset($HTTP_GET_VARS[POST_CAT_URL]) ? intval($HTTP_GET_VARS[POST_CAT_URL]) : intval($HTTP_POST_VARS[POST_CAT_URL]);
+				$cat_id = isset($_GET[POST_CAT_URL]) ? intval($_GET[POST_CAT_URL]) : intval($_POST[POST_CAT_URL]);
 			}
 
-			if ( isset($HTTP_GET_VARS['selected_id']) || isset($HTTP_POST_VARS['selected_id']) )
+			if ( isset($_GET['selected_id']) || isset($_POST['selected_id']) )
 			{
-				$selected_id = isset($HTTP_GET_VARS['selected_id']) ? $HTTP_GET_VARS['selected_id'] : $HTTP_POST_VARS['selected_id'];
+				$selected_id = isset($_GET['selected_id']) ? $_GET['selected_id'] : $_POST['selected_id'];
 				$type = substr($selected_id, 0, 1);
 				$id = intval(substr($selected_id, 1));
 				if (!empty($id)) switch ($type)

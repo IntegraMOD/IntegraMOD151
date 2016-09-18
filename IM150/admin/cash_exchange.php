@@ -42,7 +42,7 @@ if ( $cash->currency_count() < 2 )
 }
 
 $exchange_update = false;
-if ( isset($HTTP_POST_VARS['currency_val']) && is_array($HTTP_POST_VARS['currency_val']) )
+if ( isset($_POST['currency_val']) && is_array($_POST['currency_val']) )
 {
 	$exchange_update = true;
 }
@@ -52,11 +52,11 @@ while ( $c_cur = &$cash->currency_next($cm_i) )
 {
 	$exval = $c_cur->exchange();
 	if ( $exchange_update &&
-		 isset($HTTP_POST_VARS['currency_val'][$c_cur->id()]) &&
-		 is_numeric($HTTP_POST_VARS['currency_val'][$c_cur->id()]) &&
-		 (intval($HTTP_POST_VARS['currency_val'][$c_cur->id()]) > 0) )
+		 isset($_POST['currency_val'][$c_cur->id()]) &&
+		 is_numeric($_POST['currency_val'][$c_cur->id()]) &&
+		 (intval($_POST['currency_val'][$c_cur->id()]) > 0) )
 	{
-		$newvalue = $c_cur->attribute_pack('cash_exchange',cash_floatval($HTTP_POST_VARS['currency_val'][$c_cur->id()]));
+		$newvalue = $c_cur->attribute_pack('cash_exchange',cash_floatval($_POST['currency_val'][$c_cur->id()]));
 		$sql = "UPDATE " . CASH_TABLE . "
 				SET cash_exchange = $newvalue
 				WHERE cash_id = " . $c_cur->id();
@@ -73,15 +73,15 @@ for ( $i1 = 0; $i1 < count($exchange); $i1++ )
 {
 	$i = $exchange[$i1]['id'];
 	$varname = 'exchange_' . $i;
-	if ( isset($HTTP_POST_VARS[$varname]) && is_array($HTTP_POST_VARS[$varname]) )
+	if ( isset($_POST[$varname]) && is_array($_POST[$varname]) )
 	{
 		for ( $i2 = 0; $i2 < count($exchange); $i2++ )
 		{
 			$j = $exchange[$i2]['id'];
-			if ( isset($HTTP_POST_VARS[$varname][$j]) && ($i != $j) )
+			if ( isset($_POST[$varname][$j]) && ($i != $j) )
 			{
 				$sql = "";
-				if ( $HTTP_POST_VARS[$varname][$j] == $lang['Disabled'] )
+				if ( $_POST[$varname][$j] == $lang['Disabled'] )
 				{
 					$sql = "INSERT INTO " . CASH_EXCHANGE_TABLE . "
 							(ex_cash_id1, ex_cash_id2, ex_cash_enabled)

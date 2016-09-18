@@ -95,7 +95,7 @@ function auth_field($field){
 }
 
 function mailmsg($data,$template,$subject){
-	global $board_config, $HTTP_POST_VARS, $server_url, $server_name, $user_ip;
+	global $board_config, $_POST, $server_url, $server_name, $user_ip;
 	
 	$unhtml_specialchars_match = array('#&gt;#', '#&lt;#', '#&quot;#', '#&amp;#');
 	$unhtml_specialchars_replace = array('>', '<', '"', '&');
@@ -121,7 +121,7 @@ function mailmsg($data,$template,$subject){
 		'SITENAME' => $board_config['sitename'],
 		'WELCOME_MSG' => $subject,
 		'USERNAME' => $username,
-		'PASSWORD' => $HTTP_POST_VARS['user_password_confirm'],
+		'PASSWORD' => $_POST['user_password_confirm'],
 		'EMAIL_SIG' => str_replace('<br />', "\n", "-- \n" . $board_config['board_email_sig']),
 		'U_ACTIVATE' => $server_url . '?mode=activate&' . POST_USERS_URL . '=' . $data['user_id'] . '&act_key=' . $data['user_actkey'])
 	);

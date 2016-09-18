@@ -44,9 +44,9 @@
   echo "<table border=1 cellpadding=2 cellspacing=0>";
   echo "<tr><td>Module:</td><td>".$Spell_Config["DB_MODULE"]."</td></tr>";
   echo "<tr><td nowrap>Current PHP version:</td><td>".phpversion()."</td></tr>";
-  echo "<tr><td>Server:</td><td>".$HTTP_SERVER_VARS["SERVER_SOFTWARE"]."</td></tr>";
+  echo "<tr><td>Server:</td><td>".$_SERVER["SERVER_SOFTWARE"]."</td></tr>";
   if (isset($phpbb_root_path)) echo "<tr><td>PHP Root Path:</td><td>".$phpbb_root_path."</td></tr>";
-  echo "<tr><td>Script Path:</td><td>".$HTTP_SERVER_VARS["PHP_SELF"]."</td></tr>";
+  echo "<tr><td>Script Path:</td><td>".$_SERVER["PHP_SELF"]."</td></tr>";
   echo "<tr><td>utf8_decode support:</td><td>";
   if (function_exists('utf8_decode')) echo "Enabled.</td></tr>";
   else echo "Disabled.</td></tr>";

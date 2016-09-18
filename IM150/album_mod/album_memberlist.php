@@ -41,22 +41,22 @@ if (empty($username))
 // Build the thumbnail page
 // ------------------------------------
 
-if (isset ($HTTP_POST_VARS['type']))
+if (isset ($_POST['type']))
 {
-	$album_view_type = $HTTP_POST_VARS['type'];
+	$album_view_type = $_POST['type'];
 }
-elseif (isset ($HTTP_GET_VARS['type']))
+elseif (isset ($_GET['type']))
 {
-	$album_view_type = $HTTP_GET_VARS['type'];
+	$album_view_type = $_GET['type'];
 }
 
-if( isset($HTTP_GET_VARS['start']) )
+if( isset($_GET['start']) )
 {
-	$start = intval($HTTP_GET_VARS['start']);
+	$start = intval($_GET['start']);
 }
-elseif( isset($HTTP_POST_VARS['start']) )
+elseif( isset($_POST['start']) )
 {
-	$start = intval($HTTP_POST_VARS['start']);
+	$start = intval($_POST['start']);
 }
 else
 {
@@ -77,7 +77,7 @@ switch (strtolower($album_view_type))
 		$album_view_type = ALBUM_LISTTYPE_RATINGS;
 
 		// default sorting if not specified directly
-		if ( !isset($HTTP_GET_VARS['sort_method']) && !isset($HTTP_POST_VARS['sort_method']) )
+		if ( !isset($_GET['sort_method']) && !isset($_POST['sort_method']) )
 		{
 			$sort_method = 'rating';
 			$sort_order = 'ASC';
@@ -105,7 +105,7 @@ switch (strtolower($album_view_type))
 		$album_view_type = ALBUM_LISTTYPE_COMMENTS;
 
 		// default sorting if not specified directly
-		if ( !isset($HTTP_GET_VARS['sort_method']) && !isset($HTTP_POST_VARS['sort_method']) )
+		if ( !isset($_GET['sort_method']) && !isset($_POST['sort_method']) )
 		{
 			$sort_method = 'comments';
 			$sort_order = 'ASC';

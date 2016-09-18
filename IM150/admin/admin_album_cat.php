@@ -53,9 +53,9 @@ function showResultMessage($in_message)
 	message_die(GENERAL_MESSAGE, $message);
 }
 
-if( !isset($HTTP_POST_VARS['mode']) )
+if( !isset($_POST['mode']) )
 {
-	if( !isset($HTTP_GET_VARS['action']) )
+	if( !isset($_GET['action']) )
 	{
 		album_read_tree();
 
@@ -94,9 +94,9 @@ if( !isset($HTTP_POST_VARS['mode']) )
 	}
 	else
 	{
-		if( $HTTP_GET_VARS['action'] == 'edit' )
+		if( $_GET['action'] == 'edit' )
 		{
-			$cat_id = intval($HTTP_GET_VARS['cat_id']);
+			$cat_id = intval($_GET['cat_id']);
 
 			$sql = "SELECT cat.*, cat2.cat_title AS cat_parent_title, cat2.cat_id AS cat_parent_id
 					FROM ". ALBUM_CAT_TABLE ." AS cat LEFT OUTER JOIN ". ALBUM_CAT_TABLE ." AS cat2
@@ -202,9 +202,9 @@ if( !isset($HTTP_POST_VARS['mode']) )
 
 			include('./page_footer_admin.'.$phpEx);
 		}
-		elseif( $HTTP_GET_VARS['action'] == 'delete' )
+		elseif( $_GET['action'] == 'delete' )
 		{
-			$cat_id = intval($HTTP_GET_VARS['cat_id']);
+			$cat_id = intval($_GET['cat_id']);
 
 			$sql = "SELECT cat_id, cat_title, cat_order
 					FROM ". ALBUM_CAT_TABLE ."
@@ -257,10 +257,10 @@ if( !isset($HTTP_POST_VARS['mode']) )
 
 			include('./page_footer_admin.'.$phpEx);
 		}
-		elseif( $HTTP_GET_VARS['action'] == 'move' )
+		elseif( $_GET['action'] == 'move' )
 		{
-			$cat_id = intval($HTTP_GET_VARS['cat_id']);
-			$move = intval($HTTP_GET_VARS['move']);
+			$cat_id = intval($_GET['cat_id']);
+			$move = intval($_GET['move']);
 
 			album_move_tree($cat_id, $move);
 
@@ -271,17 +271,17 @@ if( !isset($HTTP_POST_VARS['mode']) )
 }
 else
 {
-	if( $HTTP_POST_VARS['mode'] == 'new' )
+	if( $_POST['mode'] == 'new' )
 	{
-		if ( is_array($HTTP_POST_VARS['addcategory']))
+		if ( is_array($_POST['addcategory']))
 		{
-			list($cat_id) = each($HTTP_POST_VARS['addcategory']);
-			$cat_title = stripslashes($HTTP_POST_VARS['name'][$cat_id]);
+			list($cat_id) = each($_POST['addcategory']);
+			$cat_title = stripslashes($_POST['name'][$cat_id]);
 			$cat_parent = $cat_id;
 			$cat_id = -1;
 		}
 
-		if( !isset($HTTP_POST_VARS['cat_title']) )
+		if( !isset($_POST['cat_title']) )
 		{
 			album_read_tree();
 			$s_album_cat_list = album_get_tree_option($cat_parent, ALBUM_AUTH_VIEW, ALBUM_SELECTBOX_INCLUDE_ALL);
@@ -342,16 +342,16 @@ else
 		}
 		else
 		{
-			$cat_title = str_replace("\'", "''", htmlspecialchars(trim($HTTP_POST_VARS['cat_title'])));
-			$cat_desc = str_replace("\'", "''", trim($HTTP_POST_VARS['cat_desc']));
-			$view_level = intval($HTTP_POST_VARS['cat_view_level']);
-			$upload_level = intval($HTTP_POST_VARS['cat_upload_level']);
-			$rate_level = intval($HTTP_POST_VARS['cat_rate_level']);
-			$comment_level = intval($HTTP_POST_VARS['cat_comment_level']);
-			$edit_level = intval($HTTP_POST_VARS['cat_edit_level']);
-			$delete_level = intval($HTTP_POST_VARS['cat_delete_level']);
-			$cat_approval = intval($HTTP_POST_VARS['cat_approval']);
-			$cat_parent = ($HTTP_POST_VARS['cat_parent_id'] == ALBUM_ROOT_CATEGORY) ? 0 : intval($HTTP_POST_VARS['cat_parent_id']);
+			$cat_title = str_replace("\'", "''", htmlspecialchars(trim($_POST['cat_title'])));
+			$cat_desc = str_replace("\'", "''", trim($_POST['cat_desc']));
+			$view_level = intval($_POST['cat_view_level']);
+			$upload_level = intval($_POST['cat_upload_level']);
+			$rate_level = intval($_POST['cat_rate_level']);
+			$comment_level = intval($_POST['cat_comment_level']);
+			$edit_level = intval($_POST['cat_edit_level']);
+			$delete_level = intval($_POST['cat_delete_level']);
+			$cat_approval = intval($_POST['cat_approval']);
+			$cat_parent = ($_POST['cat_parent_id'] == ALBUM_ROOT_CATEGORY) ? 0 : intval($_POST['cat_parent_id']);
 			$cat_parent = ($cat_parent < 0) ? 0 : $cat_parent;
 
 			// Get the last ordered category
@@ -379,20 +379,20 @@ else
 			showResultMessage($lang['New_category_created']);
 		}
 	}
-	elseif( $HTTP_POST_VARS['mode'] == 'edit' )
+	elseif( $_POST['mode'] == 'edit' )
 	{
 		// Get posting variables
-		$cat_id = intval($HTTP_GET_VARS['cat_id']);
-		$cat_title = str_replace("\'", "''", htmlspecialchars(trim($HTTP_POST_VARS['cat_title'])));
-		$cat_desc = str_replace("\'", "''", trim($HTTP_POST_VARS['cat_desc']));
-		$view_level = intval($HTTP_POST_VARS['cat_view_level']);
-		$upload_level = intval($HTTP_POST_VARS['cat_upload_level']);
-		$rate_level = intval($HTTP_POST_VARS['cat_rate_level']);
-		$comment_level = intval($HTTP_POST_VARS['cat_comment_level']);
-		$edit_level = intval($HTTP_POST_VARS['cat_edit_level']);
-		$delete_level = intval($HTTP_POST_VARS['cat_delete_level']);
-		$cat_approval = intval($HTTP_POST_VARS['cat_approval']);
-		$cat_parent = ($HTTP_POST_VARS['cat_parent_id'] == ALBUM_ROOT_CATEGORY) ? 0 : intval($HTTP_POST_VARS['cat_parent_id']);
+		$cat_id = intval($_GET['cat_id']);
+		$cat_title = str_replace("\'", "''", htmlspecialchars(trim($_POST['cat_title'])));
+		$cat_desc = str_replace("\'", "''", trim($_POST['cat_desc']));
+		$view_level = intval($_POST['cat_view_level']);
+		$upload_level = intval($_POST['cat_upload_level']);
+		$rate_level = intval($_POST['cat_rate_level']);
+		$comment_level = intval($_POST['cat_comment_level']);
+		$edit_level = intval($_POST['cat_edit_level']);
+		$delete_level = intval($_POST['cat_delete_level']);
+		$cat_approval = intval($_POST['cat_approval']);
+		$cat_parent = ($_POST['cat_parent_id'] == ALBUM_ROOT_CATEGORY) ? 0 : intval($_POST['cat_parent_id']);
 		$cat_parent = ($cat_parent < 0) ? 0 : $cat_parent;
 		
 		if ( ($cat_id == $cat_parent) && (album_get_personal_root_id($album_user_id) != $cat_id) )
@@ -418,14 +418,14 @@ else
 		// Return a message...
 		showResultMessage($lang['Category_updated']);
 	}
-	elseif( $HTTP_POST_VARS['mode'] == 'delete' )
+	elseif( $_POST['mode'] == 'delete' )
 	{
 		$parent_cat_deleted = false;
 		$parent_cat_id = 0;
 		$parent_cat_title = "";
 
-		$cat_id = intval($HTTP_GET_VARS['cat_id']);
-		$target = intval($HTTP_POST_VARS['target']);
+		$cat_id = intval($_GET['cat_id']);
+		$target = intval($_POST['target']);
 
 		if( $target == ALBUM_JUMPBOX_DELETE ) // Delete All
 		{

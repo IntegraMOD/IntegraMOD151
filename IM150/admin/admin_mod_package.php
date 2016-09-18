@@ -38,16 +38,16 @@ require($phpbb_root_path . 'extension.inc');
 
 require('pagestart.' . $phpEx);
 
-if( isset($HTTP_POST_VARS['mode']) || isset($HTTP_GET_VARS['mode']) )
+if( isset($_POST['mode']) || isset($_GET['mode']) )
 {
-	$mode = ( isset($HTTP_POST_VARS['mode']) ) ? $HTTP_POST_VARS['mode'] : $HTTP_GET_VARS['mode'];
+	$mode = ( isset($_POST['mode']) ) ? $_POST['mode'] : $_GET['mode'];
 }
 else
 {
 	$mode = '';
 }
 
-$submit = (isset($HTTP_POST_VARS['submit'])) ? TRUE : FALSE;
+$submit = (isset($_POST['submit'])) ? TRUE : FALSE;
 
 if (($mode == 'mod_pak') && ($submit))
 {
@@ -78,11 +78,11 @@ include($phpbb_root_path . 'stats_mod/includes/admin_functions.'.$phpEx);
 // BEGIN Package Module
 if (($mode == 'mod_pak') && ($submit))
 {
-	$info_file = trim($HTTP_POST_VARS['info_file']);
-	$lang_file = trim($HTTP_POST_VARS['lang_file']);
-	$php_file = trim($HTTP_POST_VARS['php_file']);
+	$info_file = trim($_POST['info_file']);
+	$lang_file = trim($_POST['lang_file']);
+	$php_file = trim($_POST['php_file']);
 
-	$pak_name = (trim($HTTP_POST_VARS['pak_name']) != '') ? trim($HTTP_POST_VARS['pak_name']) . '.pak' : 'module.pak';
+	$pak_name = (trim($_POST['pak_name']) != '') ? trim($_POST['pak_name']) . '.pak' : 'module.pak';
 
 	// create temporary file
 	if (!($fp = fopen($phpbb_root_path . 'modules/cache/' . $pak_name, 'wb')))

@@ -38,7 +38,7 @@ if(empty($template->xs_version) || $template->xs_version !== 8)
 define('IN_XS', true);
 include_once('xs_include.' . $phpEx);
 
-if(isset($HTTP_GET_VARS['showwarning']))
+if(isset($_GET['showwarning']))
 {
 	$msg = str_replace('{URL}', append_sid('xs_index.'.$phpEx), $lang['xs_main_comment3']);
 	xs_message($lang['Information'], $msg);

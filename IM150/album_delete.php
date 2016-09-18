@@ -45,13 +45,13 @@ include($album_root_path . 'album_common.'.$phpEx);
 // Check the request
 // ------------------------------------
 
-if( isset($HTTP_GET_VARS['pic_id']) )
+if( isset($_GET['pic_id']) )
 {
-	$pic_id = intval($HTTP_GET_VARS['pic_id']);
+	$pic_id = intval($_GET['pic_id']);
 }
-elseif( isset($HTTP_POST_VARS['pic_id']) )
+elseif( isset($_POST['pic_id']) )
 {
-	$pic_id = intval($HTTP_POST_VARS['pic_id']);
+	$pic_id = intval($_POST['pic_id']);
 }
 else
 {
@@ -121,12 +121,12 @@ else
 +----------------------------------------------------------
 */
 
-if( !isset($HTTP_POST_VARS['confirm']) )
+if( !isset($_POST['confirm']) )
 {
 	// --------------------------------
 	// If user give up deleting...
 	// --------------------------------
-	if( isset($HTTP_POST_VARS['cancel']) )
+	if( isset($_POST['cancel']) )
 	{
 		redirect(append_sid(album_append_uid("album_cat.$phpEx?cat_id=$cat_id", true)));
 		exit;

@@ -104,9 +104,9 @@ function get_list_kb( $id, $select )
 
 // Load default header
 
-if ( isset( $HTTP_POST_VARS['mode'] ) || isset( $HTTP_GET_VARS['mode'] ) )
+if ( isset( $_POST['mode'] ) || isset( $_GET['mode'] ) )
 {
-	$mode = ( isset( $HTTP_POST_VARS['mode'] ) ) ? $HTTP_POST_VARS['mode'] : $HTTP_GET_VARS['mode'];
+	$mode = ( isset( $_POST['mode'] ) ) ? $_POST['mode'] : $_GET['mode'];
 }
 else
 {
@@ -131,7 +131,7 @@ else
 switch ( $mode )
 {
 	case ( 'create' ):
-		$type_name = trim( $HTTP_POST_VARS['new_type_name'] );
+		$type_name = trim( $_POST['new_type_name'] );
 
 		if ( !$type_name )
 		{
@@ -153,9 +153,9 @@ switch ( $mode )
 
 	case ( 'edit' ):
 
-		if ( !$HTTP_POST_VARS['submit'] )
+		if ( !$_POST['submit'] )
 		{
-			$type_id = intval( $HTTP_GET_VARS['cat'] );
+			$type_id = intval( $_GET['cat'] );
 
 			$sql = "SELECT * FROM " . KB_TYPES_TABLE . " WHERE id = " . $type_id;
 
@@ -183,10 +183,10 @@ switch ( $mode )
 					'S_HIDDEN' => '<input type="hidden" name="typeid" value="' . $type_id . '">' ) 
 				);
 		}
-		else if ( $HTTP_POST_VARS['submit'] )
+		else if ( $_POST['submit'] )
 		{
-			$type_id = intval( $HTTP_POST_VARS['typeid'] );
-			$type_name = trim( $HTTP_POST_VARS['catname'] );
+			$type_id = intval( $_POST['typeid'] );
+			$type_name = trim( $_POST['catname'] );
 
 			if ( !$type_name )
 			{
@@ -209,9 +209,9 @@ switch ( $mode )
 
 	case ( 'delete' ):
 
-		if ( !$HTTP_POST_VARS['submit'] )
+		if ( !$_POST['submit'] )
 		{
-			$type_id = intval( $HTTP_GET_VARS['cat'] );
+			$type_id = intval( $_GET['cat'] );
 
 			$sql = "SELECT *  
        		FROM " . KB_TYPES_TABLE . " WHERE id = '" . $type_id . "'";
@@ -246,10 +246,10 @@ switch ( $mode )
 					'CAT_NAME' => $type_name ) 
 				);
 		}
-		else if ( $HTTP_POST_VARS['submit'] )
+		else if ( $_POST['submit'] )
 		{
-			$new_type = $HTTP_POST_VARS['move_id'];
-			$old_type = $HTTP_POST_VARS['typeid'];
+			$new_type = $_POST['move_id'];
+			$old_type = $_POST['typeid'];
 
 			if ( $new_type )
 			{

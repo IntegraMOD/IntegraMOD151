@@ -60,17 +60,17 @@ require('./pagestart.' . $phpEx);
 require($phpbb_root_path . 'language/lang_' . $board_config['default_lang'] . '/lang_ipn_grp.' . $phpEx);
 
 $mode = '';
-if( isset($HTTP_POST_VARS['mode']) || isset($HTTP_GET_VARS['mode']) )
+if( isset($_POST['mode']) || isset($_GET['mode']) )
 {
-	$mode = (isset($HTTP_POST_VARS['mode'])) ? $HTTP_POST_VARS['mode'] : $HTTP_GET_VARS['mode'];
+	$mode = (isset($_POST['mode'])) ? $_POST['mode'] : $_GET['mode'];
 }
 if( $mode == 'edit')
 {
 	$username = '';
 	$user_id = 0;
-	if( isset($HTTP_POST_VARS['username']) || isset($HTTP_GET_VARS['username']) )
+	if( isset($_POST['username']) || isset($_GET['username']) )
 	{
-		$username = (isset($HTTP_POST_VARS['username'])) ? $HTTP_POST_VARS['username'] : $HTTP_GET_VARS['username'];	
+		$username = (isset($_POST['username'])) ? $_POST['username'] : $_GET['username'];	
 	}
 	if(strlen( trim($username) ) > 0)
 	{
@@ -85,7 +85,7 @@ if( $mode == 'edit')
 	}
 	
 
-	$start = ( isset($HTTP_GET_VARS['start']) ) ? intval($HTTP_GET_VARS['start']) : 0;
+	$start = ( isset($_GET['start']) ) ? intval($_GET['start']) : 0;
 	
 	//
 	// Generate a 'Show topics in previous x days' select box. If the topicsdays var is sent
@@ -96,9 +96,9 @@ if( $mode == 'edit')
 	$previous_days_text = array($lang['7_Days'], $lang['2_Weeks'], $lang['1_Month'], $lang['3_Months'], $lang['6_Months'], $lang['1_Year'], $lang['LW_ALL_RECORDS']);
 	
 	$topic_days = 7;
-	if ( !empty($HTTP_POST_VARS['topicdays']) || !empty($HTTP_GET_VARS['topicdays']) )
+	if ( !empty($_POST['topicdays']) || !empty($_GET['topicdays']) )
 	{
-		$topic_days = ( !empty($HTTP_POST_VARS['topicdays']) ) ? intval($HTTP_POST_VARS['topicdays']) : intval($HTTP_GET_VARS['topicdays']);
+		$topic_days = ( !empty($_POST['topicdays']) ) ? intval($_POST['topicdays']) : intval($_GET['topicdays']);
 	
 		if($topic_days > 0 && $topic_days < 400)
 		{
@@ -112,7 +112,7 @@ if( $mode == 'edit')
 			$limit_topics_time = '';
 		}
 	
-		if ( !empty($HTTP_POST_VARS['topicdays']) )
+		if ( !empty($_POST['topicdays']) )
 		{
 			$start = 0;
 		}
