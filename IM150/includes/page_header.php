@@ -32,8 +32,8 @@ if(!defined('HAS_DIED')){
 $do_gzip_compress = FALSE;
 if($board_config['gzip_compress']){
 	$phpver = phpversion();
-	$useragent = (isset($HTTP_SERVER_VARS['HTTP_USER_AGENT'])) ? $HTTP_SERVER_VARS['HTTP_USER_AGENT'] : getenv('HTTP_USER_AGENT');
-	$accept_encoding = (isset($HTTP_SERVER_VARS['HTTP_ACCEPT_ENCODING'])) ? $HTTP_SERVER_VARS['HTTP_ACCEPT_ENCODING'] : getenv('HTTP_ACCEPT_ENCODING');
+	$useragent = (isset($_SERVER['HTTP_USER_AGENT'])) ? $_SERVER['HTTP_USER_AGENT'] : getenv('HTTP_USER_AGENT');
+	$accept_encoding = (isset($_SERVER['HTTP_ACCEPT_ENCODING'])) ? $_SERVER['HTTP_ACCEPT_ENCODING'] : getenv('HTTP_ACCEPT_ENCODING');
 	if ( $phpver >= '4.0.4pl1' && ( strstr($useragent,'compatible') || strstr($useragent,'Gecko') ) ){
 		if ( extension_loaded('zlib') )	{
 			if (headers_sent() != TRUE)	{
@@ -150,7 +150,7 @@ if ( $userdata['session_logged_in'] )
 }
 else
 {
-	$smart_redirect = strrchr($HTTP_SERVER_VARS['PHP_SELF'], '/');
+	$smart_redirect = strrchr($_SERVER['PHP_SELF'], '/');
 	$smart_redirect = substr($smart_redirect, 1, strlen($smart_redirect));
 
 	if( ($smart_redirect == ('profile.'.$phpEx)) or ($smart_redirect == ('login.'.$phpEx)) )
@@ -158,15 +158,15 @@ else
 		$smart_redirect = '';
 	}
 
-	if( isset($HTTP_GET_VARS) and !empty($smart_redirect) )
+	if( isset($_GET) and !empty($smart_redirect) )
 	{		
-		$smart_get_keys = array_keys($HTTP_GET_VARS);
+		$smart_get_keys = array_keys($_GET);
 
-		for ($i = 0; $i < count($HTTP_GET_VARS); $i++)
+		for ($i = 0; $i < count($_GET); $i++)
 		{
 			if ($smart_get_keys[$i] != 'sid')
 			{
-				$smart_redirect .= '&' . $smart_get_keys[$i] . '=' . $HTTP_GET_VARS[$smart_get_keys[$i]];
+				$smart_redirect .= '&' . $smart_get_keys[$i] . '=' . $_GET[$smart_get_keys[$i]];
 			}
 		}
 	}
@@ -748,7 +748,7 @@ $l_timezone = (count($l_timezone) > 1 && $l_timezone[count($l_timezone)-1] != 0)
 /*
  * CrackerTracker IP Range Scanner
  */
-if ( $HTTP_GET_VARS['marknow'] == 'ipfeature' && $userdata['session_logged_in'] )
+if ( $_GET['marknow'] == 'ipfeature' && $userdata['session_logged_in'] )
 {
 	// Mark IP Feature Read
 	$userdata['ct_last_ip'] = $userdata['ct_last_used_ip'];
@@ -757,9 +757,9 @@ if ( $HTTP_GET_VARS['marknow'] == 'ipfeature' && $userdata['session_logged_in'] 
 	{
 		message_die(GENERAL_ERROR, $lang['ctracker_error_updating_userdata'], '', __LINE__, __FILE__, $sql);
 	}
-	if ( !empty($HTTP_SERVER_VARS['HTTP_REFERER']) )
+	if ( !empty($_SERVER['HTTP_REFERER']) )
 	{
-	  preg_match('#/([^/]*?)$#', $HTTP_SERVER_VARS['HTTP_REFERER'], $backlink);
+	  preg_match('#/([^/]*?)$#', $_SERVER['HTTP_REFERER'], $backlink);
 	  redirect($backlink[1]);
 	}
 }
@@ -786,7 +786,7 @@ if ( $ctracker_config->settings['login_ip_check'] == 1 && $userdata['ct_enable_i
  * CrackerTracker Global Message Function
  */
 
-if ( $HTTP_GET_VARS['marknow'] == 'globmsg' && $userdata['session_logged_in'] )
+if ( $_GET['marknow'] == 'globmsg' && $userdata['session_logged_in'] )
 {
 	// Mark Global Message as read
 	$userdata['ct_global_msg_read'] = 0;
@@ -795,9 +795,9 @@ if ( $HTTP_GET_VARS['marknow'] == 'globmsg' && $userdata['session_logged_in'] )
 	{
 		message_die(GENERAL_ERROR, $lang['ctracker_error_updating_userdata'], '', __LINE__, __FILE__, $sql);
 	}
-	if ( !empty($HTTP_SERVER_VARS['HTTP_REFERER']) )
+	if ( !empty($_SERVER['HTTP_REFERER']) )
 	{
-	  preg_match('#/([^/]*?)$#', $HTTP_SERVER_VARS['HTTP_REFERER'], $backlink);
+	  preg_match('#/([^/]*?)$#', $_SERVER['HTTP_REFERER'], $backlink);
 	  redirect($backlink[1]);
 	}
 }
@@ -887,7 +887,7 @@ $banner_count = count($banners);
 for ($i = 0; $i < $banner_count; $i++)
 {
 	$cookie_name = $board_config['cookie_name'] . '_b_' . $banners[$i]['banner_id'];
-	if ( !($HTTP_COOKIE_VARS[$cookie_name] && $banners[$i]['banner_filter']) )
+	if ( !($_COOKIE[$cookie_name] && $banners[$i]['banner_filter']) )
 	{
 		$banner_spot=$banners[$i]['banner_spot'];
 		if ($banner_spot<>$last_spot  AND ($banners[$i]['banner_forum']==$forum_id || empty($banners[$i]['banner_forum'])))
@@ -1151,11 +1151,11 @@ else
 }
 
 // Add no-cache control for cookies if they are set
-//$c_no_cache = (isset($HTTP_COOKIE_VARS[$board_config['cookie_name'] . '_sid']) || isset($HTTP_COOKIE_VARS[$board_config['cookie_name'] . '_data'])) ? 'no-cache="set-cookie", ' : '';
+//$c_no_cache = (isset($_COOKIE[$board_config['cookie_name'] . '_sid']) || isset($_COOKIE[$board_config['cookie_name'] . '_data'])) ? 'no-cache="set-cookie", ' : '';
 
 // Work around for "current" Apache 2 + PHP module which seems to not
 // cope with private cache control setting
-if (!empty($HTTP_SERVER_VARS['SERVER_SOFTWARE']) && strstr($HTTP_SERVER_VARS['SERVER_SOFTWARE'], 'Apache/2'))
+if (!empty($_SERVER['SERVER_SOFTWARE']) && strstr($_SERVER['SERVER_SOFTWARE'], 'Apache/2'))
 {
 	header ('Cache-Control: no-cache, pre-check=0, post-check=0');
 }
@@ -1284,25 +1284,25 @@ if (defined('SHOW_ONLINE') && $userdata['session_logged_in'])
 //-- add
 // get the nav sentence
 $nav_key = '';
-if (isset($HTTP_POST_VARS[POST_CAT_URL]) || isset($HTTP_GET_VARS[POST_CAT_URL]))
+if (isset($_POST[POST_CAT_URL]) || isset($_GET[POST_CAT_URL]))
 {
-	$nav_key = POST_CAT_URL . ((isset($HTTP_POST_VARS[POST_CAT_URL])) ? intval($HTTP_POST_VARS[POST_CAT_URL]) : intval($HTTP_GET_VARS[POST_CAT_URL]));
+	$nav_key = POST_CAT_URL . ((isset($_POST[POST_CAT_URL])) ? intval($_POST[POST_CAT_URL]) : intval($_GET[POST_CAT_URL]));
 }
-if (isset($HTTP_POST_VARS[POST_FORUM_URL]) || isset($HTTP_GET_VARS[POST_FORUM_URL]))
+if (isset($_POST[POST_FORUM_URL]) || isset($_GET[POST_FORUM_URL]))
 {
-	$nav_key = POST_FORUM_URL . ((isset($HTTP_POST_VARS[POST_FORUM_URL])) ? intval($HTTP_POST_VARS[POST_FORUM_URL]) : intval($HTTP_GET_VARS[POST_FORUM_URL]));
+	$nav_key = POST_FORUM_URL . ((isset($_POST[POST_FORUM_URL])) ? intval($_POST[POST_FORUM_URL]) : intval($_GET[POST_FORUM_URL]));
 }
-if (isset($HTTP_POST_VARS[POST_TOPIC_URL]) || isset($HTTP_GET_VARS[POST_TOPIC_URL]))
+if (isset($_POST[POST_TOPIC_URL]) || isset($_GET[POST_TOPIC_URL]))
 {
-	$nav_key = POST_TOPIC_URL . ((isset($HTTP_POST_VARS[POST_TOPIC_URL])) ? intval($HTTP_POST_VARS[POST_TOPIC_URL]) : intval($HTTP_GET_VARS[POST_TOPIC_URL]));
+	$nav_key = POST_TOPIC_URL . ((isset($_POST[POST_TOPIC_URL])) ? intval($_POST[POST_TOPIC_URL]) : intval($_GET[POST_TOPIC_URL]));
 }
-if (isset($HTTP_POST_VARS[POST_POST_URL]) || isset($HTTP_GET_VARS[POST_POST_URL]))
+if (isset($_POST[POST_POST_URL]) || isset($_GET[POST_POST_URL]))
 {
-	$nav_key = POST_POST_URL . ((isset($HTTP_POST_VARS[POST_POST_URL])) ? intval($HTTP_POST_VARS[POST_POST_URL]) : intval($HTTP_GET_VARS[POST_POST_URL]));
+	$nav_key = POST_POST_URL . ((isset($_POST[POST_POST_URL])) ? intval($_POST[POST_POST_URL]) : intval($_GET[POST_POST_URL]));
 }
-if ( empty($nav_key) && (isset($HTTP_POST_VARS['selected_id']) || isset($HTTP_GET_VARS['selected_id'])) )
+if ( empty($nav_key) && (isset($_POST['selected_id']) || isset($_GET['selected_id'])) )
 {
-   $nav_key = isset($HTTP_GET_VARS['selected_id']) ? $HTTP_GET_VARS['selected_id'] : $HTTP_POST_VARS['selected_id'];
+   $nav_key = isset($_GET['selected_id']) ? $_GET['selected_id'] : $_POST['selected_id'];
 }
 if (empty($nav_key)) $nav_key = 'Root';
 $nav_cat_desc = make_cat_nav_tree($nav_key, $nav_pgm);
@@ -1383,9 +1383,9 @@ $template->pparse('overall_header');
 
 	/* removed by PCP Extra :: force_required() below will manage this...
 	# Only allow them to login & view profile to update it
-	if ($HTTP_SERVER_VARS['PHP_SELF'] == $board_config['script_path'] .'profile.'. $phpEx)
+	if ($_SERVER['PHP_SELF'] == $board_config['script_path'] .'profile.'. $phpEx)
 		$is_valid = TRUE;
-	elseif ($HTTP_SERVER_VARS['PHP_SELF'] == $board_config['script_path'] .'login.'. $phpEx)
+	elseif ($_SERVER['PHP_SELF'] == $board_config['script_path'] .'login.'. $phpEx)
 		$is_valid = TRUE;
 	else
 		$is_valid = '';

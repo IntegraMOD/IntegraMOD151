@@ -31,8 +31,8 @@ $phpbb_root_path = './';
 require_once($phpbb_root_path . 'extension.inc');
 require_once($phpbb_root_path . 'common.'.$phpEx);
 
-$banner_id = ( isset($HTTP_POST_VARS['banner_id']) ) ? intval ($HTTP_POST_VARS['banner_id']) : 
-( isset($HTTP_GET_VARS['banner_id']) ) ? intval ($HTTP_GET_VARS['banner_id']) : '';
+$banner_id = ( isset($_POST['banner_id']) ) ? intval ($_POST['banner_id']) : 
+( isset($_GET['banner_id']) ) ? intval ($_GET['banner_id']) : '';
 
 //
 // Start session management
@@ -43,8 +43,8 @@ init_userprefs($userdata);
 // End session management
 //
 
-$banner_id = ( isset($HTTP_POST_VARS['banner_id']) ) ? intval ($HTTP_POST_VARS['banner_id']) : 
-( isset($HTTP_GET_VARS['banner_id']) ) ? intval ($HTTP_GET_VARS['banner_id']) : '';
+$banner_id = ( isset($_POST['banner_id']) ) ? intval ($_POST['banner_id']) : 
+( isset($_GET['banner_id']) ) ? intval ($_GET['banner_id']) : '';
 if ( !isset($banner_id ))
 {
 	message_die(GENERAL_ERROR, "No banner id specified", "", __LINE__, __FILE__,"banner_id='".$banner_id."'"); 
@@ -57,7 +57,7 @@ if ( !($result = $db->sql_query($sql)) )
 $banner_data = $db->sql_fetchrow($result);
 $redirect_url = $banner_data['banner_url'];
 $cookie_name = $board_config['cookie_name'] . '_b_' . $banner_id;
-if (!isset($HTTP_COOKIE_VARS[$cookie_name]))
+if (!isset($_COOKIE[$cookie_name]))
 {
 	$banner_filter_time = time() + (( $banner_data['banner_filter_time'] ) ? $banner_data['banner_filter_time'] : 600 ) ;
 	setcookie($cookie_name , 1 ,$banner_filter_time , $board_config['cookie_path'], $board_config['cookie_domain'], $board_config['cookie_secure']); 

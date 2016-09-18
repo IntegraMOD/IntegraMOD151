@@ -63,13 +63,13 @@ include($album_root_path . 'album_common.'.$phpEx);
 // ------------------------------------
 // Check $album_user_id
 // ------------------------------------
-if (isset ($HTTP_POST_VARS['user_id']))
+if (isset ($_POST['user_id']))
 {
-	$album_user_id = intval($HTTP_POST_VARS['user_id']);
+	$album_user_id = intval($_POST['user_id']);
 }
-elseif (isset ($HTTP_GET_VARS['user_id']))
+elseif (isset ($_GET['user_id']))
 {
-	$album_user_id = intval($HTTP_GET_VARS['user_id']);
+	$album_user_id = intval($_GET['user_id']);
 }
 else
 {
@@ -81,13 +81,13 @@ if ($album_user_id != ALBUM_PUBLIC_GALLERY)
 {
 	$cat_id = ALBUM_ROOT_CATEGORY;
 	
-	if (isset ($HTTP_POST_VARS['mode']))
+	if (isset ($_POST['mode']))
 	{
-		$album_view_mode = strtolower($HTTP_POST_VARS['mode']);
+		$album_view_mode = strtolower($_POST['mode']);
 	}
-	elseif (isset ($HTTP_GET_VARS['mode']))
+	elseif (isset ($_GET['mode']))
 	{
-		$album_view_mode = strtolower($HTTP_GET_VARS['mode']);
+		$album_view_mode = strtolower($_GET['mode']);
 	}
 	// make sure that it only contains some valid value
 	switch ($album_view_mode)
@@ -102,13 +102,13 @@ if ($album_user_id != ALBUM_PUBLIC_GALLERY)
 			$album_view_mode = '';
 	}
 
-	if (isset ($HTTP_POST_VARS['cat_id']))
+	if (isset ($_POST['cat_id']))
 	{
-		$cat_id = intval($HTTP_POST_VARS['cat_id']);
+		$cat_id = intval($_POST['cat_id']);
 	}
-	elseif (isset ($HTTP_GET_VARS['cat_id']))
+	elseif (isset ($_GET['cat_id']))
 	{
-		$cat_id = intval($HTTP_GET_VARS['cat_id']);
+		$cat_id = intval($_GET['cat_id']);
 	}
 
 	if ($album_user_id < 1)
@@ -126,7 +126,7 @@ if ($album_user_id != ALBUM_PUBLIC_GALLERY)
 
 	if ($cat_id != ALBUM_ROOT_CATEGORY && $cat_id != album_get_personal_root_id($album_user_id))
 	{
-		redirect(append_sid(album_append_uid("album_cat.$phpEx" . album_build_url_parameters($HTTP_GET_VARS), false)));
+		redirect(append_sid(album_append_uid("album_cat.$phpEx" . album_build_url_parameters($_GET), false)));
 	}
 }
 
@@ -161,22 +161,22 @@ for ($i = 0; $i < count($catrows); $i ++)
 // information
 // ------------------------------------
 
-if (isset ($HTTP_GET_VARS['start']))
+if (isset ($_GET['start']))
 {
-	$start = intval($HTTP_GET_VARS['start']);
+	$start = intval($_GET['start']);
 }
-elseif (isset ($HTTP_POST_VARS['start']))
+elseif (isset ($_POST['start']))
 {
-	$start = intval($HTTP_POST_VARS['start']);
+	$start = intval($_POST['start']);
 }
 else
 {
 	$start = 0;
 }
 
-if (isset ($HTTP_GET_VARS['sort_method']))
+if (isset ($_GET['sort_method']))
 {
-	switch ($HTTP_GET_VARS['sort_method'])
+	switch ($_GET['sort_method'])
 	{
 		case 'pic_time' :
 			$sort_method = 'pic_time';
@@ -203,9 +203,9 @@ if (isset ($HTTP_GET_VARS['sort_method']))
 			$sort_method = $album_config['sort_method'];
 	}
 }
-elseif (isset ($HTTP_POST_VARS['sort_method']))
+elseif (isset ($_POST['sort_method']))
 {
-	switch ($HTTP_POST_VARS['sort_method'])
+	switch ($_POST['sort_method'])
 	{
 		case 'pic_time' :
 			$sort_method = 'pic_time';
@@ -237,9 +237,9 @@ else
 	$sort_method = $album_config['sort_method'];
 }
 
-if (isset ($HTTP_GET_VARS['sort_order']))
+if (isset ($_GET['sort_order']))
 {
-	switch ($HTTP_GET_VARS['sort_order'])
+	switch ($_GET['sort_order'])
 	{
 		case 'ASC' :
 			$sort_order = 'ASC';
@@ -251,9 +251,9 @@ if (isset ($HTTP_GET_VARS['sort_order']))
 			$sort_order = $album_config['sort_order'];
 	}
 }
-elseif (isset ($HTTP_POST_VARS['sort_order']))
+elseif (isset ($_POST['sort_order']))
 {
-	switch ($HTTP_POST_VARS['sort_order'])
+	switch ($_POST['sort_order'])
 	{
 		case 'ASC' :
 			$sort_order = 'ASC';

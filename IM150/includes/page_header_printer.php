@@ -33,31 +33,9 @@ define('HEADER_INC', true);
 // gzip_compression
 //
 $do_gzip_compress = FALSE;
-if($board_config['gzip_compress'])
+if($board_config['gzip_compress'] && extension_loaded('zlib'))
 {
-    $phpver = phpversion();
-
-    if($phpver >= '4.0.4pl1')
-    {
-        if(extension_loaded('zlib'))
-        {
-            ob_start('ob_gzhandler');
-        }
-    }
-    else if($phpver > '4.0')
-    {
-        if(strstr($HTTP_SERVER_VARS['HTTP_ACCEPT_ENCODING'], 'gzip'))
-        {
-            if(extension_loaded('zlib'))
-            {
-                $do_gzip_compress = TRUE;
-                ob_start();
-                ob_implicit_flush(0);
-
-                header('Content-Encoding: gzip');
-            }
-        }
-    }
+    ob_start('ob_gzhandler');
 }
 
 $template->set_filenames(array(

@@ -28,8 +28,8 @@ if ( !defined( 'IN_PORTAL' ) )
 	die( "Hacking attempt" );
 }
 
-$category_id = ( isset( $HTTP_GET_VARS['cat'] ) ) ? intval ( $HTTP_GET_VARS['cat'] ) : intval ( $HTTP_POST_VARS['cat'] );
-$article_id = ( isset( $HTTP_GET_VARS['k'] ) ) ? intval ( $HTTP_GET_VARS['k'] ) : intval ( $HTTP_POST_VARS['k'] ); 
+$category_id = ( isset( $_GET['cat'] ) ) ? intval ( $_GET['cat'] ) : intval ( $_POST['cat'] );
+$article_id = ( isset( $_GET['k'] ) ) ? intval ( $_GET['k'] ) : intval ( $_POST['k'] ); 
 
 if ( empty( $category_id ) )
 {
@@ -50,9 +50,9 @@ $kb_post_mode = empty( $article_id ) ? 'add' : 'edit';
 
 // Parameters
 
-$submit = ( isset( $HTTP_POST_VARS['article_submit'] ) ) ? true : false;
-$cancel = ( isset( $HTTP_POST_VARS['cancel'] ) ) ? true : false;
-$preview = ( isset( $HTTP_POST_VARS['preview'] ) ) ? true : false;
+$submit = ( isset( $_POST['article_submit'] ) ) ? true : false;
+$cancel = ( isset( $_POST['cancel'] ) ) ? true : false;
+$preview = ( isset( $_POST['preview'] ) ) ? true : false;
 
 $kb_wysiwyg = false;
 if ( $kb_config['wysiwyg'] ) // Html Textblock
@@ -96,23 +96,23 @@ $page_title = $kb_post_mode == 'add' ? $lang['Add_article'] : $lang['Edit_articl
 // post article ----------------------------------------------------------------------------ADD/EDIT
 if ( $submit )
 {
-	if ( empty( $HTTP_POST_VARS['article_name'] ) || empty( $HTTP_POST_VARS['article_desc'] ) || empty( $HTTP_POST_VARS['message'] ) )
+	if ( empty( $_POST['article_name'] ) || empty( $_POST['article_desc'] ) || empty( $_POST['message'] ) )
 	{
 		$message = $lang['Empty_fields'] . '<br /><br />' . sprintf( $lang['Empty_fields_return'], '<a href="' . append_sid( this_kb_mxurl( 'mode=add' ) ) . '">', '</a>' );
 		mx_message_die( GENERAL_MESSAGE, $message );
 	}
 
-	$article_title = ( !empty( $HTTP_POST_VARS['article_name'] ) ) ? htmlspecialchars( trim ( $HTTP_POST_VARS['article_name'] ) ) : '';
-	$article_description = ( !empty( $HTTP_POST_VARS['article_desc'] ) ) ? htmlspecialchars( trim ( $HTTP_POST_VARS['article_desc'] ) ) : '';
-	$article_text = ( !empty( $HTTP_POST_VARS['message'] ) ) ? $HTTP_POST_VARS['message'] : '';
+	$article_title = ( !empty( $_POST['article_name'] ) ) ? htmlspecialchars( trim ( $_POST['article_name'] ) ) : '';
+	$article_description = ( !empty( $_POST['article_desc'] ) ) ? htmlspecialchars( trim ( $_POST['article_desc'] ) ) : '';
+	$article_text = ( !empty( $_POST['message'] ) ) ? $_POST['message'] : '';
 	
-	$bbcode_uid = ( !empty( $HTTP_POST_VARS['bbcode_uid'] ) ) ? $HTTP_POST_VARS['bbcode_uid'] : '';
+	$bbcode_uid = ( !empty( $_POST['bbcode_uid'] ) ) ? $_POST['bbcode_uid'] : '';
 
 	$date = time();
 	$author_id = $userdata['user_id'] > 0 ? intval ( $userdata['user_id'] ) : '-1';
-	$type_id = intval ( $HTTP_POST_VARS['type_id'] );
+	$type_id = intval ( $_POST['type_id'] );
 	
-	$username = $HTTP_POST_VARS['username'];
+	$username = $_POST['username'];
 	// Check username
 	if (!empty($username))
 	{
@@ -361,13 +361,13 @@ if ( $kb_post_mode == 'edit' )
 	$kb_row = $db->sql_fetchrow( $result );
 }
 	
-$kb_title = ( isset( $HTTP_POST_VARS['article_name'] ) ) ? htmlspecialchars( trim( stripslashes( $HTTP_POST_VARS['article_name'] ) ) ) : $kb_row['article_title'];
-$kb_desc = ( isset( $HTTP_POST_VARS['article_desc'] ) ) ? htmlspecialchars( trim( stripslashes( $HTTP_POST_VARS['article_desc'] ) ) ): $kb_row['article_description'];
-$kb_text = ( isset( $HTTP_POST_VARS['message'] ) ) ? htmlspecialchars( trim( stripslashes( $HTTP_POST_VARS['message'] ) ) ) : $kb_row['article_body'];
+$kb_title = ( isset( $_POST['article_name'] ) ) ? htmlspecialchars( trim( stripslashes( $_POST['article_name'] ) ) ) : $kb_row['article_title'];
+$kb_desc = ( isset( $_POST['article_desc'] ) ) ? htmlspecialchars( trim( stripslashes( $_POST['article_desc'] ) ) ): $kb_row['article_description'];
+$kb_text = ( isset( $_POST['message'] ) ) ? htmlspecialchars( trim( stripslashes( $_POST['message'] ) ) ) : $kb_row['article_body'];
 
-$type_id = ( isset( $HTTP_POST_VARS['type_id'] ) ) ? htmlspecialchars( trim( stripslashes( $HTTP_POST_VARS['type_id'] ) ) ) : $kb_row['article_type'];
-$bbcode_uid = ( isset( $HTTP_POST_VARS['bbcode_uid'] ) ) ? htmlspecialchars( trim( stripslashes( $HTTP_POST_VARS['bbcode_uid'] ) ) ) : $kb_row['bbcode_uid'];
-$username = ( isset( $HTTP_POST_VARS['username'] ) ) ? htmlspecialchars( trim( stripslashes( $HTTP_POST_VARS['username'] ) ) ) : $kb_row['username'];
+$type_id = ( isset( $_POST['type_id'] ) ) ? htmlspecialchars( trim( stripslashes( $_POST['type_id'] ) ) ) : $kb_row['article_type'];
+$bbcode_uid = ( isset( $_POST['bbcode_uid'] ) ) ? htmlspecialchars( trim( stripslashes( $_POST['bbcode_uid'] ) ) ) : $kb_row['bbcode_uid'];
+$username = ( isset( $_POST['username'] ) ) ? htmlspecialchars( trim( stripslashes( $_POST['username'] ) ) ) : $kb_row['username'];
 
 if ( $preview )
 {

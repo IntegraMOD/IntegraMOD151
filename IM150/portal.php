@@ -57,9 +57,9 @@ $options = array(
 );
 $var_cache = new Cache_Lite($options);
 
-if(isset($HTTP_GET_VARS['page']))
+if(isset($_GET['page']))
 {
-	$layout = intval($HTTP_GET_VARS['page']);
+	$layout = intval($_GET['page']);
 }else
 {
 	$layout = $portal_config['default_portal'];

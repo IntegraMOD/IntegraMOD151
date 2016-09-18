@@ -30,11 +30,11 @@ if ( !defined( 'IN_PORTAL' ) )
 
 include( $phpbb_root_path . 'includes/functions_admin.' . $phpEx );
 
-$category_id = ( isset( $HTTP_GET_VARS['cat'] ) ) ? intval ( $HTTP_GET_VARS['cat'])  : intval ( $HTTP_POST_VARS['cat'] );
-$article_id = ( isset( $HTTP_GET_VARS['a'] ) ) ? intval ( $HTTP_GET_VARS['a'])  : intval ( $HTTP_POST_VARS['a'] );
-$page_id = ( isset( $HTTP_GET_VARS['page'] ) ) ? intval ( $HTTP_GET_VARS['page'])  : intval ( $HTTP_POST_VARS['page'] );
-$ref_stats = ( isset( $HTTP_GET_VARS['ref'] ) ) ? true : 0;
-$start = ( isset( $HTTP_GET_VARS['start'] ) ) ? intval( $HTTP_GET_VARS['start'] ) : 0;
+$category_id = ( isset( $_GET['cat'] ) ) ? intval ( $_GET['cat'])  : intval ( $_POST['cat'] );
+$article_id = ( isset( $_GET['a'] ) ) ? intval ( $_GET['a'])  : intval ( $_POST['a'] );
+$page_id = ( isset( $_GET['page'] ) ) ? intval ( $_GET['page'])  : intval ( $_POST['page'] );
+$ref_stats = ( isset( $_GET['ref'] ) ) ? true : 0;
+$start = ( isset( $_GET['start'] ) ) ? intval( $_GET['start'] ) : 0;
 
 // Start auth check
 //
@@ -50,9 +50,9 @@ if ( !( ($kb_is_auth['auth_delete'] || $kb_is_auth['auth_mod']) && $userdata['se
 	mx_message_die( GENERAL_MESSAGE, $message );
 }
 
-if ( isset( $HTTP_POST_VARS['action'] ) || isset( $HTTP_GET_VARS['action'] ) )
+if ( isset( $_POST['action'] ) || isset( $_GET['action'] ) )
 {
-	$action = ( isset( $HTTP_POST_VARS['action'] ) ) ? $HTTP_POST_VARS['action'] : $HTTP_GET_VARS['action'];
+	$action = ( isset( $_POST['action'] ) ) ? $_POST['action'] : $_GET['action'];
 }
 else
 {
@@ -164,7 +164,7 @@ switch ( $action )
 
 	case 'delete':
 
-		if ( $HTTP_GET_VARS['c'] == "yes" )
+		if ( $_GET['c'] == "yes" )
 		{
 			$sql = "SELECT *  
 	 			FROM " . KB_ARTICLES_TABLE . "

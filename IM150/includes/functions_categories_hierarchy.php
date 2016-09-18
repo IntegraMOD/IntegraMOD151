@@ -605,7 +605,7 @@ function cache_tree($write=false)
 //--------------------------------------------------------------------------------------------------
 function read_tree($force=false)
 {
-	global $db, $userdata, $board_config, $HTTP_COOKIE_VARS;
+	global $db, $userdata, $board_config, $_COOKIE;
 	global $tree;
 	global $phpbb_root_path, $phpEx;
 
@@ -617,9 +617,9 @@ function read_tree($force=false)
 //-- mod : keep unread -----------------------------------------------------------------------------
 //-- delete
 //	// read the user cookie
-//	$tracking_topics	= ( isset($HTTP_COOKIE_VARS[$board_config['cookie_name'] . '_t']) ) ? unserialize($HTTP_COOKIE_VARS[$board_config['cookie_name'] . "_t"]) : array();
-//	$tracking_forums	= ( isset($HTTP_COOKIE_VARS[$board_config['cookie_name'] . '_f']) ) ? unserialize($HTTP_COOKIE_VARS[$board_config['cookie_name'] . "_f"]) : array();
-//	$tracking_all		= ( isset($HTTP_COOKIE_VARS[$board_config['cookie_name'] . '_f_all']) ) ? intval($HTTP_COOKIE_VARS[$board_config['cookie_name'] . '_f_all']) : -1;
+//	$tracking_topics	= ( isset($_COOKIE[$board_config['cookie_name'] . '_t']) ) ? unserialize($_COOKIE[$board_config['cookie_name'] . "_t"]) : array();
+//	$tracking_forums	= ( isset($_COOKIE[$board_config['cookie_name'] . '_f']) ) ? unserialize($_COOKIE[$board_config['cookie_name'] . "_f"]) : array();
+//	$tracking_all		= ( isset($_COOKIE[$board_config['cookie_name'] . '_f_all']) ) ? intval($_COOKIE[$board_config['cookie_name'] . '_f_all']) : -1;
 //-- fin mod : keep unread -------------------------------------------------------------------------
 
 	// extended auth compliancy

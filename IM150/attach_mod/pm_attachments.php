@@ -38,10 +38,10 @@ class attach_pm extends attach_parent
 	//
 	function attach_pm()
 	{
-		global $HTTP_POST_VARS;
+		global $_POST;
 
 		$this->attach_parent();
-		$this->pm_delete_attachments = ( isset($HTTP_POST_VARS['pm_delete_attach']) ) ? TRUE : FALSE;
+		$this->pm_delete_attachments = ( isset($_POST['pm_delete_attach']) ) ? TRUE : FALSE;
 		$this->page = PAGE_PRIVMSGS;
 	}
 
@@ -80,7 +80,7 @@ class attach_pm extends attach_parent
 			$this->do_insert_attachment('attach_list', 'pm', $a_privmsgs_id);
 			$this->do_insert_attachment('last_attachment', 'pm', $a_privmsgs_id);
 
-			if ((count($this->attachment_list) > 0 || $this->post_attach) && !isset($HTTP_POST_VARS['update_attachment']))
+			if ((count($this->attachment_list) > 0 || $this->post_attach) && !isset($_POST['update_attachment']))
 			{
 				$sql = "UPDATE " . PRIVMSGS_TABLE . "
 					SET privmsgs_attachment = 1
@@ -203,7 +203,7 @@ class attach_pm extends attach_parent
 	//
 	function privmsgs_attachment_mod($mode)
 	{
-		global $attach_config, $template, $lang, $userdata, $HTTP_POST_VARS, $phpbb_root_path, $phpEx, $db;
+		global $attach_config, $template, $lang, $userdata, $_POST, $phpbb_root_path, $phpEx, $db;
 		global $confirm, $delete, $delete_all, $post_id, $privmsgs_id, $privmsg_id, $submit, $refresh, $mark_list, $folder;
 
 		if ($folder != 'outbox')
@@ -218,8 +218,8 @@ class attach_pm extends attach_parent
 
 		if (!$refresh)
 		{
-			$add_attachment_box = ( !empty($HTTP_POST_VARS['add_attachment_box']) ) ? TRUE : FALSE;
-			$posted_attachments_box = ( !empty($HTTP_POST_VARS['posted_attachments_box']) ) ? TRUE : FALSE;
+			$add_attachment_box = ( !empty($_POST['add_attachment_box']) ) ? TRUE : FALSE;
+			$posted_attachments_box = ( !empty($_POST['posted_attachments_box']) ) ? TRUE : FALSE;
 
 			$refresh = $add_attachment_box || $posted_attachments_box;
 		}
@@ -233,7 +233,7 @@ class attach_pm extends attach_parent
 			return;
 		}
 
-		$mark_list = ( !empty($HTTP_POST_VARS['mark']) ) ? $HTTP_POST_VARS['mark'] : array();
+		$mark_list = ( !empty($_POST['mark']) ) ? $_POST['mark'] : array();
 
 		if ( ( (($this->pm_delete_attachments) || ($delete)) && (count($mark_list)) ) )
 		{

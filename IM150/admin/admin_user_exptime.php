@@ -63,25 +63,25 @@ require($phpbb_root_path . 'language/lang_' . $board_config['default_lang'] . '/
 
 
 $mode = '';
-if( isset($HTTP_POST_VARS['mode']) || isset($HTTP_GET_VARS['mode']) )
+if( isset($_POST['mode']) || isset($_GET['mode']) )
 {
-	$mode = (isset($HTTP_POST_VARS['mode'])) ? $HTTP_POST_VARS['mode'] : $HTTP_GET_VARS['mode'];
+	$mode = (isset($_POST['mode'])) ? $_POST['mode'] : $_GET['mode'];
 }
 
-if( isset($HTTP_POST_VARS['submit']) || isset($HTTP_GET_VARS['submit']) )
+if( isset($_POST['submit']) || isset($_GET['submit']) )
 {
-	$mode = (isset($HTTP_POST_VARS['submit'])) ? $HTTP_POST_VARS['submit'] : $HTTP_GET_VARS['submit'];	
+	$mode = (isset($_POST['submit'])) ? $_POST['submit'] : $_GET['submit'];	
 }
-else if(isset($HTTP_POST_VARS['reset']) || isset($HTTP_GET_VARS['reset']))
+else if(isset($_POST['reset']) || isset($_GET['reset']))
 {
-	$mode = (isset($HTTP_POST_VARS['reset'])) ? $HTTP_POST_VARS['reset'] : $HTTP_GET_VARS['reset'];	
+	$mode = (isset($_POST['reset'])) ? $_POST['reset'] : $_GET['reset'];	
 }
 if( $mode == 'edit')
 {
 	$username = '';
-	if( isset($HTTP_POST_VARS['username']) || isset($HTTP_GET_VARS['username']) )
+	if( isset($_POST['username']) || isset($_GET['username']) )
 	{
-		$username = (isset($HTTP_POST_VARS['username'])) ? $HTTP_POST_VARS['username'] : $HTTP_GET_VARS['username'];	
+		$username = (isset($_POST['username'])) ? $_POST['username'] : $_GET['username'];	
 	}
 	if( strlen(trim($username)) <= 0 )
 	{
@@ -189,20 +189,20 @@ if( $mode == 'edit')
 }
 else if( $mode == $lang['L_IPN_user_sub_Update'] )
 {
-	$group_id = intval($HTTP_POST_VARS['group_id']);
-	$user_id = intval($HTTP_POST_VARS['user_id']);
+	$group_id = intval($_POST['group_id']);
+	$user_id = intval($_POST['user_id']);
 	if($group_id <= 0 || $user_id <= 0 )
 	{
 		message_die(GENERAL_ERROR, "Couldn't update user group information.", "", __LINE__, __FILE__, $sql);
 		exit;
 	}
-	$ingrpornot = intval($HTTP_POST_VARS['ingrpornot']);
-	$prev_ingrpornot = intval($HTTP_POST_VARS['prev_ingrpornot']);
-	$user_expire_date_str = str_replace("\'", "''", htmlspecialchars(trim($HTTP_POST_VARS['user_expire_date'])));
-	$username = str_replace("\'", "''", htmlspecialchars(trim($HTTP_POST_VARS['username'])));
+	$ingrpornot = intval($_POST['ingrpornot']);
+	$prev_ingrpornot = intval($_POST['prev_ingrpornot']);
+	$user_expire_date_str = str_replace("\'", "''", htmlspecialchars(trim($_POST['user_expire_date'])));
+	$username = str_replace("\'", "''", htmlspecialchars(trim($_POST['username'])));
 	
-	$prev_expiredate = intval($HTTP_POST_VARS['prev_expiredate']);
-	$user_table_expiretime = intval($HTTP_POST_VARS['user_table_expiretime']);
+	$prev_expiredate = intval($_POST['prev_expiredate']);
+	$user_table_expiretime = intval($_POST['user_table_expiretime']);
 	
 	
 	$userexpiretime = $prev_expiredate;

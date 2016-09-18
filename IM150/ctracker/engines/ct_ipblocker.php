@@ -41,8 +41,8 @@ if ( $ctracker_config->settings['ipblock_enabled'] == 1 )
 	
 	// Fetch IP UserAgent and Remote Host
 	$ct_client_ip   = $client_ip;
-	$ct_user_agent  = $HTTP_SERVER_VARS['HTTP_USER_AGENT'];
-	$ct_remote_host = $HTTP_SERVER_VARS['REMOTE_HOST'];
+	$ct_user_agent  = $_SERVER['HTTP_USER_AGENT'];
+	$ct_remote_host = $_SERVER['REMOTE_HOST'];
 	
 	/*
 	 * Now we check if IP Adress, UserAgent or RemoteHost of the User

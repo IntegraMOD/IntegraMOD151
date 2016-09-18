@@ -50,35 +50,35 @@ if(!$result = $db->sql_query($sql))
 else
 {
 	// CrackerTracker v5.x
-	if ( isset($HTTP_POST_VARS['submit']) && $ctracker_config->settings['detect_misconfiguration'] == 1 )
+	if ( isset($_POST['submit']) && $ctracker_config->settings['detect_misconfiguration'] == 1 )
 	{
 		// Let's detect some things of misconfiguration
-		if ( $HTTP_POST_VARS['server_port'] == '21' )
+		if ( $_POST['server_port'] == '21' )
 		{
 			// FTP Port Misstake
 			message_die(GENERAL_MESSAGE, $lang['ctracker_gmb_pu_1']);
 		}
 
-		if ( $HTTP_POST_VARS['session_length'] < '100' )
+		if ( $_POST['session_length'] < '100' )
 		{
 			// Session Length Error
 			message_die(GENERAL_MESSAGE, $lang['ctracker_gmb_pu_2']);
 		}
 		
-		if ( !preg_match('/\\A\/$|\\A\/.*\/$/', $HTTP_POST_VARS['script_path']) )
+		if ( !preg_match('/\\A\/$|\\A\/.*\/$/', $_POST['script_path']) )
 		{
 			// Skript Path Error
 			message_die(GENERAL_MESSAGE, $lang['ctracker_gmb_pu_3']);
 		}
 		
-		if ( preg_match('/\/$/', $HTTP_POST_VARS['server_name']) )
+		if ( preg_match('/\/$/', $_POST['server_name']) )
 		{
 			// Server Name Error
 			message_die(GENERAL_MESSAGE, $lang['ctracker_gmb_pu_4']);
 		}
 	}
 
-	if ( isset($HTTP_POST_VARS['submit']) && $ctracker_config->settings['auto_recovery'] == 1 )
+	if ( isset($_POST['submit']) && $ctracker_config->settings['auto_recovery'] == 1 )
 	{
 		define('CTRACKER_ACP', true);
 		include_once($phpbb_root_path . 'ctracker/classes/class_ct_adminfunctions.' . $phpEx);
@@ -90,9 +90,9 @@ else
 	{
 		$config_name = $row['config_name'];
 		$config_value = $row['config_value'];
-		$default_config[$config_name] = isset($HTTP_POST_VARS['submit']) ? str_replace("'", "\'", $config_value) : $config_value;
+		$default_config[$config_name] = isset($_POST['submit']) ? str_replace("'", "\'", $config_value) : $config_value;
 		
-		$new[$config_name] = ( isset($HTTP_POST_VARS[$config_name]) ) ? $HTTP_POST_VARS[$config_name] : $default_config[$config_name];
+		$new[$config_name] = ( isset($_POST[$config_name]) ) ? $_POST[$config_name] : $default_config[$config_name];
 
 		if ($config_name == 'cookie_name')
 		{
@@ -116,40 +116,40 @@ else
 			}
 		}
 
-		if( isset($HTTP_POST_VARS['submit']) && ($config_name != 'default_style_over'))
+		if( isset($_POST['submit']) && ($config_name != 'default_style_over'))
 		{
 // Start add - Signatures control MOD
-$new['sig_allow_bold'] = ( htmlspecialchars($HTTP_POST_VARS['sig_allow_bold']) ) ? 1 : 0;
-$new['sig_allow_italic'] = ( htmlspecialchars($HTTP_POST_VARS['sig_allow_italic']) ) ? 1 : 0;
-$new['sig_allow_underline'] = ( htmlspecialchars($HTTP_POST_VARS['sig_allow_underline']) ) ? 1 : 0;
-$new['sig_allow_colors'] = ( htmlspecialchars($HTTP_POST_VARS['sig_allow_colors']) ) ? 1 : 0;
-$new['sig_allow_quote'] = ( htmlspecialchars($HTTP_POST_VARS['sig_allow_quote']) ) ? 1 : 0;
-$new['sig_allow_code'] = ( htmlspecialchars($HTTP_POST_VARS['sig_allow_code']) ) ? 1 : 0;
-$new['sig_allow_list'] = ( htmlspecialchars($HTTP_POST_VARS['sig_allow_list']) ) ? 1 : 0;
-$new['sig_allow_on_max_img_size_fail'] = ( htmlspecialchars($HTTP_POST_VARS['sig_allow_on_max_img_size_fail']) ) ? 1 : 0;
+$new['sig_allow_bold'] = ( htmlspecialchars($_POST['sig_allow_bold']) ) ? 1 : 0;
+$new['sig_allow_italic'] = ( htmlspecialchars($_POST['sig_allow_italic']) ) ? 1 : 0;
+$new['sig_allow_underline'] = ( htmlspecialchars($_POST['sig_allow_underline']) ) ? 1 : 0;
+$new['sig_allow_colors'] = ( htmlspecialchars($_POST['sig_allow_colors']) ) ? 1 : 0;
+$new['sig_allow_quote'] = ( htmlspecialchars($_POST['sig_allow_quote']) ) ? 1 : 0;
+$new['sig_allow_code'] = ( htmlspecialchars($_POST['sig_allow_code']) ) ? 1 : 0;
+$new['sig_allow_list'] = ( htmlspecialchars($_POST['sig_allow_list']) ) ? 1 : 0;
+$new['sig_allow_on_max_img_size_fail'] = ( htmlspecialchars($_POST['sig_allow_on_max_img_size_fail']) ) ? 1 : 0;
 
-$sig_config_error_list .= ( eregi("[^0-9]", htmlspecialchars($HTTP_POST_VARS['max_sig_chars'])) ) ? '<br />' . $lang['Max_sig_length'] : '' ;
-$sig_config_error_list .= ( eregi("[^0-9]", htmlspecialchars($HTTP_POST_VARS['sig_max_lines'])) ) ? '<br />' . $lang['sig_max_lines'] : '' ;
-$sig_config_error_list .= ( eregi("[^0-9]", htmlspecialchars($HTTP_POST_VARS['sig_wordwrap'])) ) ? '<br />' . $lang['sig_wordwrap'] : '' ;
-$sig_config_error_list .= ( eregi("[^0-9]", htmlspecialchars($HTTP_POST_VARS['sig_min_font_size'])) || htmlspecialchars($HTTP_POST_VARS['sig_min_font_size'])>29 || eregi("[^0-9]", htmlspecialchars($HTTP_POST_VARS['sig_max_font_size'])) || htmlspecialchars($HTTP_POST_VARS['sig_max_font_size'])>29 ) ? '<br />' . $lang['sig_font_size_limit'] : '' ;
-$sig_config_error_list .= ( eregi("[^0-9]", htmlspecialchars($HTTP_POST_VARS['sig_max_images'])) ) ? '<br />' . $lang['sig_max_images'] : '' ;
-$sig_config_error_list .= ( eregi("[^0-9]", htmlspecialchars($HTTP_POST_VARS['sig_max_img_height'])) || eregi("[^0-9]", htmlspecialchars($HTTP_POST_VARS['sig_max_img_width'])) ) ? '<br />' . $lang['sig_max_img_size'] : '' ;
-$sig_config_error_list .= ( eregi("[^0-9]", htmlspecialchars($HTTP_POST_VARS['sig_max_img_files_size'])) ) ? '<br />' . $lang['sig_max_img_files_size'] : '' ;
-$sig_config_error_list .= ( eregi("[^0-9]", htmlspecialchars($HTTP_POST_VARS['sig_max_img_av_files_size'])) ) ? '<br />' . $lang['sig_max_img_av_files_size'] : '' ;
+$sig_config_error_list .= ( eregi("[^0-9]", htmlspecialchars($_POST['max_sig_chars'])) ) ? '<br />' . $lang['Max_sig_length'] : '' ;
+$sig_config_error_list .= ( eregi("[^0-9]", htmlspecialchars($_POST['sig_max_lines'])) ) ? '<br />' . $lang['sig_max_lines'] : '' ;
+$sig_config_error_list .= ( eregi("[^0-9]", htmlspecialchars($_POST['sig_wordwrap'])) ) ? '<br />' . $lang['sig_wordwrap'] : '' ;
+$sig_config_error_list .= ( eregi("[^0-9]", htmlspecialchars($_POST['sig_min_font_size'])) || htmlspecialchars($_POST['sig_min_font_size'])>29 || eregi("[^0-9]", htmlspecialchars($_POST['sig_max_font_size'])) || htmlspecialchars($_POST['sig_max_font_size'])>29 ) ? '<br />' . $lang['sig_font_size_limit'] : '' ;
+$sig_config_error_list .= ( eregi("[^0-9]", htmlspecialchars($_POST['sig_max_images'])) ) ? '<br />' . $lang['sig_max_images'] : '' ;
+$sig_config_error_list .= ( eregi("[^0-9]", htmlspecialchars($_POST['sig_max_img_height'])) || eregi("[^0-9]", htmlspecialchars($_POST['sig_max_img_width'])) ) ? '<br />' . $lang['sig_max_img_size'] : '' ;
+$sig_config_error_list .= ( eregi("[^0-9]", htmlspecialchars($_POST['sig_max_img_files_size'])) ) ? '<br />' . $lang['sig_max_img_files_size'] : '' ;
+$sig_config_error_list .= ( eregi("[^0-9]", htmlspecialchars($_POST['sig_max_img_av_files_size'])) ) ? '<br />' . $lang['sig_max_img_av_files_size'] : '' ;
 
 if ( $sig_config_error_list != '' )
 {
 	message_die(GENERAL_MESSAGE, $lang['sig_config_error'] . '<br /><br />' . $lang['sig_config_error_int'] . $sig_config_error_list . "<br /><br />" . sprintf($lang['Click_return_config'], "<a href=\"" . append_sid("admin_board.$phpEx") . "\">", "</a>"));
 }
 
-if ( htmlspecialchars($HTTP_POST_VARS['sig_min_font_size']) >= htmlspecialchars($HTTP_POST_VARS['sig_max_font_size']) && htmlspecialchars($HTTP_POST_VARS['sig_max_font_size']) != 0 )
+if ( htmlspecialchars($_POST['sig_min_font_size']) >= htmlspecialchars($_POST['sig_max_font_size']) && htmlspecialchars($_POST['sig_max_font_size']) != 0 )
 {
-	message_die(GENERAL_MESSAGE, $lang['sig_config_error'] . '<br /><br />' . sprintf($lang['sig_config_error_min_max'], htmlspecialchars($HTTP_POST_VARS['sig_min_font_size']), htmlspecialchars($HTTP_POST_VARS['sig_max_font_size'])) . "<br /><br />" . sprintf($lang['Click_return_config'], "<a href=\"" . append_sid("admin_board.$phpEx") . "\">", "</a>"));
+	message_die(GENERAL_MESSAGE, $lang['sig_config_error'] . '<br /><br />' . sprintf($lang['sig_config_error_min_max'], htmlspecialchars($_POST['sig_min_font_size']), htmlspecialchars($_POST['sig_max_font_size'])) . "<br /><br />" . sprintf($lang['Click_return_config'], "<a href=\"" . append_sid("admin_board.$phpEx") . "\">", "</a>"));
 }
 
-if ( htmlspecialchars($HTTP_POST_VARS['sig_allow_font_sizes']) == 0 && htmlspecialchars($HTTP_POST_VARS['sig_max_font_size']) < 7 && htmlspecialchars($HTTP_POST_VARS['sig_max_font_size']) > 29 )
+if ( htmlspecialchars($_POST['sig_allow_font_sizes']) == 0 && htmlspecialchars($_POST['sig_max_font_size']) < 7 && htmlspecialchars($_POST['sig_max_font_size']) > 29 )
 {
-	message_die(GENERAL_MESSAGE, $lang['sig_config_error'] . '<br /><br />' . sprintf($lang['sig_config_error_imposed'], htmlspecialchars($HTTP_POST_VARS['sig_max_font_size'])) . "<br /><br />" . sprintf($lang['Click_return_config'], "<a href=\"" . append_sid("admin_board.$phpEx") . "\">", "</a>"));
+	message_die(GENERAL_MESSAGE, $lang['sig_config_error'] . '<br /><br />' . sprintf($lang['sig_config_error_imposed'], htmlspecialchars($_POST['sig_max_font_size'])) . "<br /><br />" . sprintf($lang['Click_return_config'], "<a href=\"" . append_sid("admin_board.$phpEx") . "\">", "</a>"));
 }
 // End add - Signatures control MOD
 			$sql = "UPDATE " . CONFIG_TABLE . " SET
@@ -172,7 +172,7 @@ if ( htmlspecialchars($HTTP_POST_VARS['sig_allow_font_sizes']) == 0 && htmlspeci
 		}
 	}
 
-	if( isset($HTTP_POST_VARS['submit']) )
+	if( isset($_POST['submit']) )
 	{
 		$message = $lang['Config_updated'] . "<br /><br />" . sprintf($lang['Click_return_config'], "<a href=\"" . append_sid("admin_board.$phpEx") . "\">", "</a>") . "<br /><br />" . sprintf($lang['Click_return_admin_index'], "<a href=\"" . append_sid("index.$phpEx?pane=right") . "\">", "</a>");
 
@@ -288,28 +288,12 @@ $sig_allow_images_no = ( !$new['sig_allow_images'] ) ? "checked=\"checked\"" : "
 
 $sig_allow_on_max_img_size_fail_yes = ( $new['sig_allow_on_max_img_size_fail'] ) ? "checked=\"checked\"" : "";
 
-if( phpversion() < '4.0.4' || (ini_get('allow_url_fopen')==0 && function_exists('ImageCreateFromString') == false) )
-{
-	if( phpversion() < '4.0.4' )
-	{
-		$l_explain = "php < 4.0.4";
-	} elseif( ini_get('allow_url_fopen')==0 && function_exists('ImageCreateFromString') == false )
-	{
-		$l_explain = "allow_url_fopen: off & ImageCreateFromString: off";
-	} else
-	{
-		$l_explain = "";
-	}
-	$l_sig_max_img_size_explain = sprintf($lang['sig_max_img_size_explain3'], $l_explain);
-} elseif( phpversion() >= '4.0.5' && ini_get('allow_url_fopen')==1 )
+if(ini_get('allow_url_fopen')==1 )
 {
 	$l_sig_max_img_size_explain = $lang['sig_max_img_size_explain1'];
 } else
 {
-	if( phpversion() == '4.0.4' )
-	{
-		$l_explain = "php 4.0.4";
-	} elseif( ini_get('allow_url_fopen')==0 )
+	if( ini_get('allow_url_fopen')==0 )
 	{
 		$l_explain = "allow_url_fopen: off";
 	} else

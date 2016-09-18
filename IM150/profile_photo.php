@@ -35,7 +35,7 @@ $nb_per_row = 4;
 $userdata = session_pagestart($user_ip, PAGE_SEARCH);
 init_userprefs($userdata);
 
-if (isset($HTTP_POST_VARS['photogallery'])) $category = trim(htmlspecialchars($HTTP_POST_VARS['photocategory']));
+if (isset($_POST['photogallery'])) $category = trim(htmlspecialchars($_POST['photocategory']));
 
 //
 // set the page title and include the page header

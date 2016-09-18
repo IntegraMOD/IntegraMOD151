@@ -51,23 +51,23 @@ while( $file = @readdir($dir) )
 
 // menu_id
 $menu_id = 0;
-if ( isset($HTTP_GET_VARS['menu']) || isset($HTTP_POST_VARS['menu_id']) )
+if ( isset($_GET['menu']) || isset($_POST['menu_id']) )
 {
-	$menu_id = isset($HTTP_POST_VARS['menu_id']) ? intval($HTTP_POST_VARS['menu_id']) : intval($HTTP_GET_VARS['menu']);
+	$menu_id = isset($_POST['menu_id']) ? intval($_POST['menu_id']) : intval($_GET['menu']);
 }
 
 // mod_id
 $mod_id = 0;
-if ( isset($HTTP_GET_VARS['mod']) || isset($HTTP_POST_VARS['mod_id']) )
+if ( isset($_GET['mod']) || isset($_POST['mod_id']) )
 {
-	$mod_id = isset($HTTP_POST_VARS['mod_id']) ? intval($HTTP_POST_VARS['mod_id']) : intval($HTTP_GET_VARS['mod']);
+	$mod_id = isset($_POST['mod_id']) ? intval($_POST['mod_id']) : intval($_GET['mod']);
 }
 
 // sub_id
 $sub_id = 0;
-if ( isset($HTTP_GET_VARS['msub']) || isset($HTTP_POST_VARS['sub_id']) )
+if ( isset($_GET['msub']) || isset($_POST['sub_id']) )
 {
-	$sub_id = isset($HTTP_POST_VARS['sub_id']) ? intval($HTTP_POST_VARS['sub_id']) : intval($HTTP_GET_VARS['msub']);
+	$sub_id = isset($_POST['sub_id']) ? intval($_POST['sub_id']) : intval($_GET['msub']);
 }
 
 // menu
@@ -209,7 +209,7 @@ $mod_name = $mod_keys[$menu_id][$mod_id];
 $sub_name = $sub_keys[$menu_id][$mod_id][$sub_id];
 
 // buttons
-$submit = isset($HTTP_POST_VARS['submit']);
+$submit = isset($_POST['submit']);
 
 // get the real value of board_config
 $sql = "SELECT * FROM " . CONFIG_TABLE;
@@ -231,13 +231,13 @@ if ($submit)
 	@reset($mods[$menu_name]['data'][$mod_name]['data'][$sub_name]['data']);
 	while ( list($field_name, $field) = @each($mods[$menu_name]['data'][$mod_name]['data'][$sub_name]['data']) )
 	{
-		if (isset($HTTP_POST_VARS[$field_name]))
+		if (isset($_POST[$field_name]))
 		{
 			switch ($field['type'])
 			{
 				case 'LIST_RADIO':
 				case 'LIST_DROP':
-					$$field_name = $HTTP_POST_VARS[$field_name];
+					$$field_name = $_POST[$field_name];
 					if (!in_array($$field_name, $mods[$menu_name]['data'][$mod_name]['data'][$sub_name]['data'][$field_name]['values']))
 					{
 						$error = true;
@@ -249,22 +249,22 @@ if ($submit)
 				case 'SMALLINT':
 				case 'MEDIUMINT':
 				case 'INT':
-					$$field_name = intval($HTTP_POST_VARS[$field_name]);
+					$$field_name = intval($_POST[$field_name]);
 					break;
 				case 'VARCHAR':
 				case 'TEXT':
 				case 'DATEFMT':
-					$$field_name = trim(str_replace("\'", "''", htmlspecialchars($HTTP_POST_VARS[$field_name])));
+					$$field_name = trim(str_replace("\'", "''", htmlspecialchars($_POST[$field_name])));
 					break;
 				case 'HTMLVARCHAR':
 				case 'HTMLTEXT':
-					$$field_name = trim(str_replace("\'", "''", $HTTP_POST_VARS[$field_name]));
+					$$field_name = trim(str_replace("\'", "''", $_POST[$field_name]));
 					break;
 				default:
 					$$field_name = '';
 					if ( !empty($field['chk_func']) && function_exists($field['chk_func']) )
 					{
-						$$field_name = $field['chk_func']($field_name, $HTTP_POST_VARS[$field_name]);
+						$$field_name = $field['chk_func']($field_name, $_POST[$field_name]);
 					}
 					else
 					{
@@ -295,11 +295,11 @@ if ($submit)
 				message_die(GENERAL_ERROR, 'Failed to update general configuration for ' . $field_name, '', __LINE__, __FILE__, $sql);
 			}
 		}
-		if ( isset($HTTP_POST_VARS[$field_name . '_over']) && !empty($field['user']) && isset($userdata[ $field['user'] ]) )
+		if ( isset($_POST[$field_name . '_over']) && !empty($field['user']) && isset($userdata[ $field['user'] ]) )
 		{
 			// update
 			$sql = "UPDATE " . CONFIG_TABLE . " 
-					SET config_value = '" . intval($HTTP_POST_VARS[$field_name . '_over']) . "'
+					SET config_value = '" . intval($_POST[$field_name . '_over']) . "'
 					WHERE config_name = '$field_name" . "_over'";
 			if ( !$db->sql_query($sql) )
 			{
@@ -308,7 +308,7 @@ if ($submit)
 			if($field_name == 'default_style')
 			{
 				$sql = "UPDATE " . CONFIG_TABLE . " 
-						SET config_value = '" . intval($HTTP_POST_VARS[$field_name . '_over']) . "'
+						SET config_value = '" . intval($_POST[$field_name . '_over']) . "'
 						WHERE config_name = 'override_user_style'";
 				if ( !$db->sql_query($sql) )
 				{

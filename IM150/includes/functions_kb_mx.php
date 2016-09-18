@@ -424,7 +424,7 @@
 		
 		function mx_do_install_upgrade( $sql = '', $main_install = false )
 		{
-			global $table_prefix, $mx_table_prefix, $userdata, $phpEx, $template, $lang, $db, $board_config, $HTTP_POST_VARS;
+			global $table_prefix, $mx_table_prefix, $userdata, $phpEx, $template, $lang, $db, $board_config, $_POST;
 			
 			$inst_error = false;
 			$n = 0;

@@ -68,7 +68,7 @@
      ***************************************************************************/
     function setQueryStringVal($var, $value)
     {
-        $querystring = $HTTP_SERVER_VARS["QUERY_STRING"];
+        $querystring = $_SERVER["QUERY_STRING"];
     
         if (!stristr($querystring, $var))
         { 

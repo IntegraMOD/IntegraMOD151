@@ -81,11 +81,11 @@ if( !$is_auth['auth_read'] )
 // End auth check
 //
 
-$refresh = (isset($HTTP_POST_VARS['auto_refresh']) || isset($HTTP_POST_VARS['refresh'])) ? 1 : 0;
-$submit = (isset($HTTP_POST_VARS['shout']) && isset($HTTP_POST_VARS['message'])) ? 1 : 0;
-if ( !empty($HTTP_POST_VARS['mode']) || !empty($HTTP_GET_VARS['mode']) )
+$refresh = (isset($_POST['auto_refresh']) || isset($_POST['refresh'])) ? 1 : 0;
+$submit = (isset($_POST['shout']) && isset($_POST['message'])) ? 1 : 0;
+if ( !empty($_POST['mode']) || !empty($_GET['mode']) )
 	{
-		$mode = ( !empty($HTTP_POST_VARS['mode']) ) ? intval($HTTP_POST_VARS['mode']) : intval($HTTP_GET_VARS['mode']);
+		$mode = ( !empty($_POST['mode']) ) ? intval($_POST['mode']) : intval($_GET['mode']);
 	}
 	else
 	{
@@ -101,7 +101,7 @@ if ( !$board_config['allow_html'] )
 }
 else
 {
-	$html_on = ( $submit || $refresh || preview) ? ( ( !empty($HTTP_POST_VARS['disable_html']) ) ? 0 : TRUE ) : ( ( $userdata['user_id'] == ANONYMOUS ) ? $board_config['allow_html'] : $userdata['user_allowhtml'] );
+	$html_on = ( $submit || $refresh || preview) ? ( ( !empty($_POST['disable_html']) ) ? 0 : TRUE ) : ( ( $userdata['user_id'] == ANONYMOUS ) ? $board_config['allow_html'] : $userdata['user_allowhtml'] );
 }
 if ( !$board_config['allow_bbcode'] )
 {
@@ -109,7 +109,7 @@ if ( !$board_config['allow_bbcode'] )
 }
 else
 {
-	$bbcode_on = ( $submit || $refresh || preview) ? ( ( !empty($HTTP_POST_VARS['disable_bbcode']) ) ? 0 : TRUE ) : ( ( $userdata['user_id'] == ANONYMOUS ) ? $board_config['allow_bbcode'] : $userdata['user_allowbbcode'] );
+	$bbcode_on = ( $submit || $refresh || preview) ? ( ( !empty($_POST['disable_bbcode']) ) ? 0 : TRUE ) : ( ( $userdata['user_id'] == ANONYMOUS ) ? $board_config['allow_bbcode'] : $userdata['user_allowbbcode'] );
 }
 
 if ( !$board_config['allow_smilies'] )
@@ -118,7 +118,7 @@ if ( !$board_config['allow_smilies'] )
 }
 else
 {
-	$smilies_on = ( $submit || $refresh || preview) ? ( ( !empty($HTTP_POST_VARS['disable_smilies']) ) ? 0 : TRUE ) : ( ( $userdata['user_id'] == ANONYMOUS ) ? $board_config['allow_smilies'] : $userdata['user_allowsmile'] );
+	$smilies_on = ( $submit || $refresh || preview) ? ( ( !empty($_POST['disable_smilies']) ) ? 0 : TRUE ) : ( ( $userdata['user_id'] == ANONYMOUS ) ? $board_config['allow_smilies'] : $userdata['user_allowsmile'] );
 	if ($smilies_on)
 	{
 		include($phpbb_root_path . 'includes/functions_post.'.$phpEx);
@@ -134,13 +134,13 @@ else
 
 if ($refresh)
 {
-	$message = ( !empty($HTTP_POST_VARS['message']) ) ? htmlspecialchars(trim(stripslashes($HTTP_POST_VARS['message']))) : '';
+	$message = ( !empty($_POST['message']) ) ? htmlspecialchars(trim(stripslashes($_POST['message']))) : '';
 	if (!empty($message))
 	{
 		$template->assign_vars(array('MESSAGE' => $message));
 	}
 } else
-if ($submit || isset($HTTP_POST_VARS['message']))
+if ($submit || isset($_POST['message']))
 {
 	$current_time = time();
 	//
@@ -177,7 +177,7 @@ if ($submit || isset($HTTP_POST_VARS['message']))
 			}
 		}
 	}
-	$message = (isset($HTTP_POST_VARS['message'])) ? trim($HTTP_POST_VARS['message']) : '';
+	$message = (isset($_POST['message'])) ? trim($_POST['message']) : '';
 	// insert shout !
 	if (!empty($message) && $is_auth['auth_post'] && !$error)
 	{
@@ -203,9 +203,9 @@ if ($submit || isset($HTTP_POST_VARS['message']))
 } 
 
 // see if we need offset
-if ((isset($HTTP_POST_VARS['start']) || isset($HTTP_GET_VARS['start'])) && !$submit)
+if ((isset($_POST['start']) || isset($_GET['start'])) && !$submit)
 {
-	$start=(isset($HTTP_POST_VARS['start'])) ? intval($HTTP_POST_VARS['start']) : intval($HTTP_GET_VARS['start']);
+	$start=(isset($_POST['start'])) ? intval($_POST['start']) : intval($_GET['start']);
 } else $start=0;
 
 	//
@@ -257,7 +257,7 @@ $template->assign_vars(array(
 			'ERROR_MESSAGE' => $error_msg)
 		);
 		$template->assign_var_from_handle('ERROR_BOX', 'reg_header');
-		$message = ( !empty($HTTP_POST_VARS['message']) ) ? htmlspecialchars(trim(stripslashes($HTTP_POST_VARS['message']))) : '';
+		$message = ( !empty($_POST['message']) ) ? htmlspecialchars(trim(stripslashes($_POST['message']))) : '';
 		$template->assign_vars(array('MESSAGE' => $message));
 	}
 

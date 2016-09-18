@@ -26,12 +26,12 @@ if ( !defined('IN_PHPBB') )
 }
 
 // Do we have an id? No, then just exit
-if (empty($HTTP_GET_VARS['id']))
+if (empty($_GET['id']))
 {
 	exit;
 }
 
-$confirm_id = htmlspecialchars($HTTP_GET_VARS['id']);
+$confirm_id = htmlspecialchars($_GET['id']);
 
 #if (!preg_match('/^[A-Za-z0-9]+$/', $confirm_id))
 if (!preg_match('/^[[:alnum:]]+$/', $confirm_id))

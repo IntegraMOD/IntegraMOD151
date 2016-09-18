@@ -178,7 +178,7 @@ if(!count($updates))
 }
 
 // show list of available updates
-if(!isset($HTTP_GET_VARS['doupdate']))
+if(!isset($_GET['doupdate']))
 {
 	$template->set_filenames(array('body' => XS_TPL_PATH . 'update.tpl'));
 	$template->assign_vars(array(
@@ -227,9 +227,9 @@ foreach($updates as $var1 => $item)
 {
 	$i++;
 	$var = 'item_'.$i.'_';
-	if(!empty($HTTP_POST_VARS[$var.'item']) && !empty($HTTP_POST_VARS[$var.'checked']) && $HTTP_POST_VARS[$var.'checked'])
+	if(!empty($_POST[$var.'item']) && !empty($_POST[$var.'checked']) && $_POST[$var.'checked'])
 	{
-		$item = $HTTP_POST_VARS[$var.'item'];
+		$item = $_POST[$var.'item'];
 		if(!empty($updates[$item]['update_url']))
 		{
 			$items[] = $var1;
@@ -260,7 +260,7 @@ if(!count($urls))
 	xs_error($lang['xs_update_nothing']);
 }
 
-@set_time_limit(intval($HTTP_POST_VARS['timeout']));
+@set_time_limit(intval($_POST['timeout']));
 
 // getting data
 for($i=0; $i<count($urls); $i++)

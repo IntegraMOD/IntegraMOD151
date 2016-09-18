@@ -38,9 +38,9 @@ include($phpbb_root_path . 'includes/functions_admin.'.$phpEx);
 //
 // Mode setting
 //
-if( isset($HTTP_POST_VARS['mode']) || isset($HTTP_GET_VARS['mode']) )
+if( isset($_POST['mode']) || isset($_GET['mode']) )
 {
-	$mode = ( isset($HTTP_POST_VARS['mode']) ) ? $HTTP_POST_VARS['mode'] : $HTTP_GET_VARS['mode'];
+	$mode = ( isset($_POST['mode']) ) ? $_POST['mode'] : $_GET['mode'];
 	$mode = htmlspecialchars($mode);
 }
 else
@@ -97,7 +97,7 @@ if( !empty($mode) )
 				$newmode = 'modforum';
 				$buttonvalue = $lang['Update'];
 
-				$forum_id = intval($HTTP_GET_VARS[POST_FORUM_URL]);
+				$forum_id = intval($_GET[POST_FORUM_URL]);
 
 				$row = get_info($forum_id);
 
@@ -274,12 +274,12 @@ if( !empty($mode) )
 // Begin Approve_Mod Block : 16
 // 
 			$approve_notify_user_list = '';
-			$approve_enable = (intval($HTTP_POST_VARS['approve_enable']) == 1) ? 1 : 0;
+			$approve_enable = (intval($_POST['approve_enable']) == 1) ? 1 : 0;
 
-			if ( trim($HTTP_POST_VARS['usernames_list']) != '' ) 
+			if ( trim($_POST['usernames_list']) != '' ) 
 			{ 
 				$approve_mod['moderators'] = array();
-				$approve_mod['moderators'] = explode('  |  ', trim($HTTP_POST_VARS['usernames_list']));
+				$approve_mod['moderators'] = explode('  |  ', trim($_POST['usernames_list']));
 
 				for($i = 0; !empty($approve_mod['moderators'][$i]); $i++)
 				{
@@ -316,19 +316,19 @@ if( !empty($mode) )
 			}
 			else
 			{
-				if ( $HTTP_POST_VARS['approve_notify_enable'] )
+				if ( $_POST['approve_notify_enable'] )
 				{
 					message_die(GENERAL_ERROR, $lang['approve_admin_notify_user_empty']);
 				}
 			}
 			$sql = "DELETE FROM " . APPROVE_FORUMS_TABLE . " 
-				WHERE forum_id = " . intval($HTTP_POST_VARS[POST_FORUM_URL]);
+				WHERE forum_id = " . intval($_POST[POST_FORUM_URL]);
 			if ( !$result = $db->sql_query($sql) )
 			{
 				message_die(GENERAL_ERROR, $lang['approve_posts_error_delete'], '', __LINE__, __FILE__, $sql);
 			}
 			$sql = "INSERT INTO " . APPROVE_FORUMS_TABLE . " (forum_id, enabled, approve_posts, approve_topics, approve_users, approve_poste, approve_topice, approve_notify, approve_notify_type, approve_notify_message, approve_notify_message_len, approve_moderators, approve_notify_posts, approve_notify_poste, approve_notify_topics, approve_notify_topice, approve_notify_approval, forum_hide_unapproved_topics, forum_hide_unapproved_posts) 
-				VALUES (" . intval($HTTP_POST_VARS[POST_FORUM_URL]) . ", " . intval($approve_enable) . ", " . intval($HTTP_POST_VARS['approve_posts_enable']) . ", " . intval($HTTP_POST_VARS['approve_topics_enable']) . ", " . intval($HTTP_POST_VARS['approve_users_enable']) . ", " . intval($HTTP_POST_VARS['approve_poste_enable']) . ", " . intval($HTTP_POST_VARS['approve_topice_enable']) . ", " . intval($HTTP_POST_VARS['approve_notify_enable']) . ", " . intval($HTTP_POST_VARS['approve_notify_type_enable']) . ", " . intval($HTTP_POST_VARS['approve_notify_message_enable']) . ", " . intval($HTTP_POST_VARS['approve_notify_message_len']) . ", '" . $approve_notify_user_list . "', " . intval($HTTP_POST_VARS['approve_notify_posts_enable']) . ", " . intval($HTTP_POST_VARS['approve_notify_poste_enable']) . ", " . intval($HTTP_POST_VARS['approve_notify_topics_enable']) . ", " . intval($HTTP_POST_VARS['approve_notify_topice_enable']) . ", " . intval($HTTP_POST_VARS['approve_notify_user_enable']) . ", " . intval($HTTP_POST_VARS['approve_hide_topics_enable']) . ", " . intval($HTTP_POST_VARS['approve_hide_posts_enable']) . ")";
+				VALUES (" . intval($_POST[POST_FORUM_URL]) . ", " . intval($approve_enable) . ", " . intval($_POST['approve_posts_enable']) . ", " . intval($_POST['approve_topics_enable']) . ", " . intval($_POST['approve_users_enable']) . ", " . intval($_POST['approve_poste_enable']) . ", " . intval($_POST['approve_topice_enable']) . ", " . intval($_POST['approve_notify_enable']) . ", " . intval($_POST['approve_notify_type_enable']) . ", " . intval($_POST['approve_notify_message_enable']) . ", " . intval($_POST['approve_notify_message_len']) . ", '" . $approve_notify_user_list . "', " . intval($_POST['approve_notify_posts_enable']) . ", " . intval($_POST['approve_notify_poste_enable']) . ", " . intval($_POST['approve_notify_topics_enable']) . ", " . intval($_POST['approve_notify_topice_enable']) . ", " . intval($_POST['approve_notify_user_enable']) . ", " . intval($_POST['approve_hide_topics_enable']) . ", " . intval($_POST['approve_hide_posts_enable']) . ")";
 			if ( !$result = $db->sql_query($sql) ) 
 			{ 
 				message_die(GENERAL_ERROR, $lang['approve_posts_error_insert'], '', __LINE__, __FILE__, $sql); 

@@ -64,9 +64,9 @@ if (defined('PRILLIAN_INSTALLED') && !file_exists('prill_install'))
 //--------------------------------------------------------------------------------
 
 // session id check
-if (!empty($HTTP_POST_VARS['sid']) || !empty($HTTP_GET_VARS['sid']))
+if (!empty($_POST['sid']) || !empty($_GET['sid']))
 {
-	$sid = (!empty($HTTP_POST_VARS['sid'])) ? $HTTP_POST_VARS['sid'] : $HTTP_GET_VARS['sid'];
+	$sid = (!empty($_POST['sid'])) ? $_POST['sid'] : $_GET['sid'];
 }
 else
 {
@@ -74,17 +74,17 @@ else
 }
 
 // CrackerTracker v5.x
-if ( !empty($HTTP_POST_VARS['username']) && $ctracker_config->settings['loginfeature'] == 1 )
+if ( !empty($_POST['username']) && $ctracker_config->settings['loginfeature'] == 1 )
 {
-	$ctracker_config->check_login_status($HTTP_POST_VARS['username']);	
+	$ctracker_config->check_login_status($_POST['username']);	
 }
 
-if( isset($HTTP_POST_VARS['login']) || isset($HTTP_GET_VARS['login']) || isset($HTTP_POST_VARS['logout']) || isset($HTTP_GET_VARS['logout']) )
+if( isset($_POST['login']) || isset($_GET['login']) || isset($_POST['logout']) || isset($_GET['logout']) )
 {
-	if( ( isset($HTTP_POST_VARS['login']) || isset($HTTP_GET_VARS['login']) ) && (!$userdata['session_logged_in'] || isset($HTTP_POST_VARS['admin'])) )
+	if( ( isset($_POST['login']) || isset($_GET['login']) ) && (!$userdata['session_logged_in'] || isset($_POST['admin'])) )
 	{
-      	$username = isset($HTTP_POST_VARS['username']) ? phpbb_clean_username($HTTP_POST_VARS['username']) : '';
-		$password = isset($HTTP_POST_VARS['password']) ? $HTTP_POST_VARS['password'] : '';
+      	$username = isset($_POST['username']) ? phpbb_clean_username($_POST['username']) : '';
+		$password = isset($_POST['password']) ? $_POST['password'] : '';
 
 		$sql = "SELECT user_id, username, user_password, user_active, user_level, user_rank, user_actviate_date, user_expire_date, user_regdate, user_login_tries, user_last_login_try, ct_login_count
 			FROM " . USERS_TABLE . "
@@ -129,9 +129,9 @@ if( isset($HTTP_POST_VARS['login']) || isset($HTTP_GET_VARS['login']) || isset($
 				if( md5($password) == $row['user_password'] && $row['user_active'] )
 				{
 					lw_check_membership($row);
-					$autologin = ( isset($HTTP_POST_VARS['autologin']) ) ? TRUE : 0;
+					$autologin = ( isset($_POST['autologin']) ) ? TRUE : 0;
 
-					$admin = (isset($HTTP_POST_VARS['admin'])) ? 1 : 0;
+					$admin = (isset($_POST['admin'])) ? 1 : 0;
 					$session_id = session_begin($row['user_id'], $user_ip, PAGE_INDEX, FALSE, $autologin, $admin);
 					// Reset login tries
 					$db->sql_query('UPDATE ' . USERS_TABLE . ' SET user_login_tries = 0, user_last_login_try = 0 WHERE user_id = ' . $row['user_id']);
@@ -162,7 +162,7 @@ if( isset($HTTP_POST_VARS['login']) || isset($HTTP_GET_VARS['login']) || isset($
 #==== Author: aUsTiN [austin@phpbb-amod.com] [http://phpbb-amod.com] === |
 #==== End: ==== phpBB Security ========================================= |	
 #======================================================================= |
-						$url = ( !empty($HTTP_POST_VARS['redirect']) ) ? str_replace('&amp;', '&', htmlspecialchars($HTTP_POST_VARS['redirect'])) : "portal.$phpEx";
+						$url = ( !empty($_POST['redirect']) ) ? str_replace('&amp;', '&', htmlspecialchars($_POST['redirect'])) : "portal.$phpEx";
 						redirect(append_sid($url, true));
 					}
 					else
@@ -194,7 +194,7 @@ if( isset($HTTP_POST_VARS['login']) || isset($HTTP_GET_VARS['login']) || isset($
 					}
 				}
 
-				$redirect = ( !empty($HTTP_POST_VARS['redirect']) ) ? str_replace('&amp;', '&', htmlspecialchars($HTTP_POST_VARS['redirect'])) : '';
+				$redirect = ( !empty($_POST['redirect']) ) ? str_replace('&amp;', '&', htmlspecialchars($_POST['redirect'])) : '';
 				$redirect = str_replace('?', '&', $redirect);
 
 				if (strstr(urldecode($redirect), "\n") || strstr(urldecode($redirect), "\r") || strstr(urldecode($redirect), ';url'))
@@ -213,7 +213,7 @@ if( isset($HTTP_POST_VARS['login']) || isset($HTTP_GET_VARS['login']) || isset($
 		}
 		else
 		{
-			$redirect = ( !empty($HTTP_POST_VARS['redirect']) ) ? str_replace('&amp;', '&', htmlspecialchars($HTTP_POST_VARS['redirect'])) : "";
+			$redirect = ( !empty($_POST['redirect']) ) ? str_replace('&amp;', '&', htmlspecialchars($_POST['redirect'])) : "";
 			$redirect = str_replace("?", "&", $redirect);
 
 			if (strstr(urldecode($redirect), "\n") || strstr(urldecode($redirect), "\r") || strstr(urldecode($redirect), ';url'))
@@ -230,7 +230,7 @@ if( isset($HTTP_POST_VARS['login']) || isset($HTTP_GET_VARS['login']) || isset($
 			message_die(GENERAL_MESSAGE, $message);
 		}
 	}
-	else if( ( isset($HTTP_GET_VARS['logout']) || isset($HTTP_POST_VARS['logout']) ) && $userdata['session_logged_in'] )
+	else if( ( isset($_GET['logout']) || isset($_POST['logout']) ) && $userdata['session_logged_in'] )
 	{
 		// session id check
 		if ($sid == '' || $sid != $userdata['session_id'])
@@ -252,9 +252,9 @@ if( isset($HTTP_POST_VARS['login']) || isset($HTTP_GET_VARS['login']) || isset($
 // Prillian - End Code Addition
 //--------------------------------------------------------------------------------
 
-		if (!empty($HTTP_POST_VARS['redirect']) || !empty($HTTP_GET_VARS['redirect']))
+		if (!empty($_POST['redirect']) || !empty($_GET['redirect']))
 		{
-			$url = (!empty($HTTP_POST_VARS['redirect'])) ? htmlspecialchars($HTTP_POST_VARS['redirect']) : htmlspecialchars($HTTP_GET_VARS['redirect']);
+			$url = (!empty($_POST['redirect'])) ? htmlspecialchars($_POST['redirect']) : htmlspecialchars($_GET['redirect']);
 			$url = str_replace('&amp;', '&', $url);
 			redirect(append_sid($url, true));
 		}
@@ -265,7 +265,7 @@ if( isset($HTTP_POST_VARS['login']) || isset($HTTP_GET_VARS['login']) || isset($
 	}
 	else
 	{
-		$url = ( !empty($HTTP_POST_VARS['redirect']) ) ? str_replace('&amp;', '&', htmlspecialchars($HTTP_POST_VARS['redirect'])) : "portal.$phpEx";
+		$url = ( !empty($_POST['redirect']) ) ? str_replace('&amp;', '&', htmlspecialchars($_POST['redirect'])) : "portal.$phpEx";
 		redirect(append_sid($url, true));
 	}
 }
@@ -278,7 +278,7 @@ else
 	include_once($phpbb_root_path . 'includes/functions_jr_admin.' . $phpEx);  
 	$jr_admin_userdata = jr_admin_get_user_info($userdata['user_id']);  
 
-	if( !$userdata['session_logged_in'] || (isset($HTTP_GET_VARS['admin']) && $userdata['session_logged_in'] && (!empty($jr_admin_userdata['user_jr_admin']) || $userdata['user_level'] == ADMIN)))
+	if( !$userdata['session_logged_in'] || (isset($_GET['admin']) && $userdata['session_logged_in'] && (!empty($jr_admin_userdata['user_jr_admin']) || $userdata['user_level'] == ADMIN)))
 	{
 		$page_title = $lang['Login'];
 		include($phpbb_root_path . 'includes/page_header.'.$phpEx);
@@ -300,9 +300,9 @@ else
 
 		$forward_page = '';
 
-		if( isset($HTTP_POST_VARS['redirect']) || isset($HTTP_GET_VARS['redirect']) )
+		if( isset($_POST['redirect']) || isset($_GET['redirect']) )
 		{
-			$forward_to = $HTTP_SERVER_VARS['QUERY_STRING'];
+			$forward_to = $_SERVER['QUERY_STRING'];
 
 			if( preg_match("/^redirect=([a-z0-9\.#\/\?&=\+\-_]+)/si", $forward_to, $forward_matches) )
 			{
@@ -335,13 +335,13 @@ else
 
 		$s_hidden_fields = '<input type="hidden" name="redirect" value="' . $forward_page . '" />';
 
-		$s_hidden_fields .= (isset($HTTP_GET_VARS['admin'])) ? '<input type="hidden" name="admin" value="1" />' : '';
+		$s_hidden_fields .= (isset($_GET['admin'])) ? '<input type="hidden" name="admin" value="1" />' : '';
 
 		make_jumpbox('viewforum.'.$phpEx);
 		$template->assign_vars(array(
 			'USERNAME' => $username,
 
-			'L_ENTER_PASSWORD' => (isset($HTTP_GET_VARS['admin'])) ? $lang['Admin_reauthenticate'] : $lang['Enter_password'],
+			'L_ENTER_PASSWORD' => (isset($_GET['admin'])) ? $lang['Admin_reauthenticate'] : $lang['Enter_password'],
 			'L_SEND_PASSWORD' => $lang['Forgotten_password'],
 
 			'U_SEND_PASSWORD' => append_sid("profile.$phpEx?mode=sendpassword"),

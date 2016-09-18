@@ -34,7 +34,7 @@ if( !empty($setmodules) )
 	$filename = basename(__FILE__);
 	$module['General']['Backup_DB'] = $filename . "?perform=backup";
 
-	$file_uploads = (@phpversion() >= '4.0.0') ? @ini_get('file_uploads') : @get_cfg_var('file_uploads');
+	$file_uploads = @ini_get('file_uploads');
 
 	if( (empty($file_uploads) || $file_uploads != 0) && (strtolower($file_uploads) != 'off') && (@phpversion() != '4.0.4pl1') )
 	{
@@ -650,9 +650,9 @@ function output_table_content($content)
 //
 // Begin program proper
 //
-if( isset($HTTP_GET_VARS['perform']) || isset($HTTP_POST_VARS['perform']) )
+if( isset($_GET['perform']) || isset($_POST['perform']) )
 {
-	$perform = (isset($HTTP_POST_VARS['perform'])) ? $HTTP_POST_VARS['perform'] : $HTTP_GET_VARS['perform'];
+	$perform = (isset($_POST['perform'])) ? $_POST['perform'] : $_GET['perform'];
 
 	switch($perform)
 	{
@@ -668,7 +668,7 @@ if( isset($HTTP_GET_VARS['perform']) || isset($HTTP_POST_VARS['perform']) )
 			//
 			// If has been clicked the button reset
 			//
-			if( isset( $HTTP_POST_VARS['reset'] ) )
+			if( isset( $_POST['reset'] ) )
 			{
 			$sql = "UPDATE " . OPTIMIZE_DB_TABLE . " SET cron_enable = '0', cron_every = '86400', cron_next ='0', cron_count='0', cron_lock = '1', show_begin_for = '',  show_not_optimized = '0' LIMIT 1 ";
 			
@@ -681,23 +681,23 @@ if( isset($HTTP_GET_VARS['perform']) || isset($HTTP_POST_VARS['perform']) )
 			//
 			// If has been clicked the button configure
 			//
-			if( isset( $HTTP_POST_VARS['configure'] ) || isset( $HTTP_POST_VARS['show_begin_for'] ) )
+			if( isset( $_POST['configure'] ) || isset( $_POST['show_begin_for'] ) )
 			{
 
-				$sql = "UPDATE " . OPTIMIZE_DB_TABLE . " SET show_begin_for = '" . $HTTP_POST_VARS['show_begin_for'] . "' ";
+				$sql = "UPDATE " . OPTIMIZE_DB_TABLE . " SET show_begin_for = '" . $_POST['show_begin_for'] . "' ";
 			
 				if( !($result = $db->sql_query($sql)) )
 				{
 					message_die(GENERAL_ERROR, 'Could not configure show begin for', '', __LINE__, __FILE__, $sql);
 				}
 			
-				if ( isset( $HTTP_POST_VARS['configure'] ) )
+				if ( isset( $_POST['configure'] ) )
 				{
 
 				//
 				// Update optimize database cronfiguration
 				//
-				$sql = "UPDATE " . OPTIMIZE_DB_TABLE . " SET cron_every = " . $HTTP_POST_VARS['cron_every'] . ", cron_enable = '"  . $HTTP_POST_VARS['enable_optimize_cron'] . "', cron_next = " . ( $current_time + $HTTP_POST_VARS['cron_every'] ) . ", show_begin_for = '" . $HTTP_POST_VARS['show_begin_for'] . "', show_not_optimized = '" . $HTTP_POST_VARS['show_not_optimized'] . "' ";
+				$sql = "UPDATE " . OPTIMIZE_DB_TABLE . " SET cron_every = " . $_POST['cron_every'] . ", cron_enable = '"  . $_POST['enable_optimize_cron'] . "', cron_next = " . ( $current_time + $_POST['cron_every'] ) . ", show_begin_for = '" . $_POST['show_begin_for'] . "', show_not_optimized = '" . $_POST['show_not_optimized'] . "' ";
 			
 				if( !($result = $db->sql_query($sql)) )
 				{
@@ -723,7 +723,7 @@ if( isset($HTTP_GET_VARS['perform']) || isset($HTTP_POST_VARS['perform']) )
 			//
 			// If has been clicked the button optimize
 			//
-			if(!isset($HTTP_POST_VARS['optimize']))
+			if(!isset($_POST['optimize']))
 			{
 
 			$sql = "SHOW TABLE STATUS LIKE '" . $opt_conf['show_begin_for'] . "%' ";
@@ -1103,13 +1103,13 @@ $i++;
 			$tables[] = 'banner';
 			$tables[] = 'banner_stats';
 // End add - Complete banner MOD*/
-			$additional_tables = (isset($HTTP_POST_VARS['additional_tables'])) ? $HTTP_POST_VARS['additional_tables'] : ( (isset($HTTP_GET_VARS['additional_tables'])) ? $HTTP_GET_VARS['additional_tables'] : "" );
+			$additional_tables = (isset($_POST['additional_tables'])) ? $_POST['additional_tables'] : ( (isset($_GET['additional_tables'])) ? $_GET['additional_tables'] : "" );
 
-			$backup_type = (isset($HTTP_POST_VARS['backup_type'])) ? $HTTP_POST_VARS['backup_type'] : ( (isset($HTTP_GET_VARS['backup_type'])) ? $HTTP_GET_VARS['backup_type'] : "" );
+			$backup_type = (isset($_POST['backup_type'])) ? $_POST['backup_type'] : ( (isset($_GET['backup_type'])) ? $_GET['backup_type'] : "" );
 
-			$gzipcompress = (!empty($HTTP_POST_VARS['gzipcompress'])) ? $HTTP_POST_VARS['gzipcompress'] : ( (!empty($HTTP_GET_VARS['gzipcompress'])) ? $HTTP_GET_VARS['gzipcompress'] : 0 );
+			$gzipcompress = (!empty($_POST['gzipcompress'])) ? $_POST['gzipcompress'] : ( (!empty($_GET['gzipcompress'])) ? $_GET['gzipcompress'] : 0 );
 
-			$drop = (!empty($HTTP_POST_VARS['drop'])) ? intval($HTTP_POST_VARS['drop']) : ( (!empty($HTTP_GET_VARS['drop'])) ? intval($HTTP_GET_VARS['drop']) : 0 );
+			$drop = (!empty($_POST['drop'])) ? intval($_POST['drop']) : ( (!empty($_GET['drop'])) ? intval($_GET['drop']) : 0 );
 
 			if(!empty($additional_tables))
 			{
@@ -1129,7 +1129,7 @@ $i++;
 				}
 			}
 
-			if( !isset($HTTP_POST_VARS['backupstart']) && !isset($HTTP_GET_VARS['backupstart']))
+			if( !isset($_POST['backupstart']) && !isset($_GET['backupstart']))
 			{
 				include('./page_header_admin.'.$phpEx);
 
@@ -1159,7 +1159,7 @@ $i++;
 				break;
 
 			}
-			else if( !isset($HTTP_POST_VARS['startdownload']) && !isset($HTTP_GET_VARS['startdownload']) )
+			else if( !isset($_POST['startdownload']) && !isset($_GET['startdownload']) )
 			{
 				if(is_array($additional_tables))
 				{
@@ -1267,7 +1267,7 @@ $i++;
 			break;
 
 		case 'restore':
-			if(!isset($HTTP_POST_VARS['restore_start']))
+			if(!isset($_POST['restore_start']))
 			{
 				//
 				// Define Template files...
@@ -1300,9 +1300,9 @@ $i++;
 				// Handle the file upload ....
 				// If no file was uploaded report an error...
 				//
-				$backup_file_name = (!empty($HTTP_POST_FILES['backup_file']['name'])) ? $HTTP_POST_FILES['backup_file']['name'] : "";
-				$backup_file_tmpname = ($HTTP_POST_FILES['backup_file']['tmp_name'] != "none") ? $HTTP_POST_FILES['backup_file']['tmp_name'] : "";
-				$backup_file_type = (!empty($HTTP_POST_FILES['backup_file']['type'])) ? $HTTP_POST_FILES['backup_file']['type'] : "";
+				$backup_file_name = (!empty($_FILES['backup_file']['name'])) ? $_FILES['backup_file']['name'] : "";
+				$backup_file_tmpname = ($_FILES['backup_file']['tmp_name'] != "none") ? $_FILES['backup_file']['tmp_name'] : "";
+				$backup_file_type = (!empty($_FILES['backup_file']['type'])) ? $_FILES['backup_file']['type'] : "";
 
 				if($backup_file_tmpname == "" || $backup_file_name == "")
 				{

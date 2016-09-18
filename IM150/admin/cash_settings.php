@@ -53,18 +53,18 @@ $table_updated = false;
 while ( $c_cur = &$cash->currency_next($cm_i) )
 {
 	$varname = 'cash_' . $c_cur->id();
-	if ( isset($HTTP_POST_VARS['submit']) &&
-		 isset($HTTP_POST_VARS[$varname]) &&
-		 is_array($HTTP_POST_VARS[$varname]) )
+	if ( isset($_POST['submit']) &&
+		 isset($_POST[$varname]) &&
+		 is_array($_POST[$varname]) )
 	{
 		$updates = array();
 		$settings = $c_cur->data('cash_settings');
 		$settings_update = false;
 		while ( list($key,$type) = each ( $update_set ) )
 		{
-			if ( isset($HTTP_POST_VARS[$varname][$key]) )
+			if ( isset($_POST[$varname][$key]) )
 			{
-				$data = $HTTP_POST_VARS[$varname][$key];
+				$data = $_POST[$varname][$key];
 				switch ( $type )
 				{
 					case 'bool':
@@ -125,7 +125,7 @@ if ( $table_updated )
 	$cash->refresh_table();
 }
 
-if ( isset($HTTP_POST_VARS['submit']) )
+if ( isset($_POST['submit']) )
 {
 	$message = $lang['Cash_settings_updated'] . "<br /><br />" . sprintf($lang['Click_return_cash_settings'], "<a href=\"" . append_sid("cash_settings.$phpEx") . "\">", "</a>") . "<br /><br />" . sprintf($lang['Click_return_admin_index'], "<a href=\"" . append_sid("index.$phpEx?pane=right") . "\">", "</a>");
 

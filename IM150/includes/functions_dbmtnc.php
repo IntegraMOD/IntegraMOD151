@@ -751,15 +751,15 @@ function style_select($default_style, $select_name = "style", $dirname = "templa
 
 function check_authorisation($die = TRUE)
 {
-	global $db, $lang, $dbuser, $dbpasswd, $option, $HTTP_POST_VARS;
+	global $db, $lang, $dbuser, $dbpasswd, $option, $_POST;
 
-	$auth_method = ( isset($HTTP_POST_VARS['auth_method']) ) ? htmlspecialchars($HTTP_POST_VARS['auth_method']) : '';
-	$board_user = isset($HTTP_POST_VARS['board_user']) ? trim(htmlspecialchars($HTTP_POST_VARS['board_user'])) : '';
+	$auth_method = ( isset($_POST['auth_method']) ) ? htmlspecialchars($_POST['auth_method']) : '';
+	$board_user = isset($_POST['board_user']) ? trim(htmlspecialchars($_POST['board_user'])) : '';
 	$board_user = substr(str_replace("\\'", "'", $board_user), 0, 25);
 	$board_user = str_replace("'", "\\'", $board_user);
-	$board_password = ( isset($HTTP_POST_VARS['board_password']) ) ? $HTTP_POST_VARS['board_password'] : '';
-	$db_user = ( isset($HTTP_POST_VARS['db_user']) ) ? $HTTP_POST_VARS['db_user'] : '';
-	$db_password = ( isset($HTTP_POST_VARS['db_password']) ) ? $HTTP_POST_VARS['db_password'] : '';
+	$board_password = ( isset($_POST['board_password']) ) ? $_POST['board_password'] : '';
+	$db_user = ( isset($_POST['db_user']) ) ? $_POST['db_user'] : '';
+	$db_password = ( isset($_POST['db_password']) ) ? $_POST['db_password'] : '';
 	// Change authentication mode if selected option does not allow database authentication
 	if ( $option == 'rld' || $option == 'rtd' )
 	{
@@ -842,11 +842,11 @@ function get_config_data($option)
 
 function success_message($text)
 {
-	global $lang, $lg, $HTTP_SERVER_VARS;
+	global $lang, $lg, $_SERVER;
 	
 ?>
 	<p><?php echo $text; ?></p>
-	<p style="text-align:center"><a href="<?php echo $HTTP_SERVER_VARS['PHP_SELF'] . '?lg=' . $lg; ?>"><?php echo $lang['Return_ERC']; ?></a></p>
+	<p style="text-align:center"><a href="<?php echo $_SERVER['PHP_SELF'] . '?lg=' . $lg; ?>"><?php echo $lang['Return_ERC']; ?></a></p>
 <?php
 }
 ?>

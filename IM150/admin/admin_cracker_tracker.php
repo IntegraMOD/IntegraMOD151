@@ -66,7 +66,7 @@ require('./pagestart.' . $phpEx);
 
 
 // Get module number from URL
-$module_number   = $HTTP_GET_VARS['modu'];
+$module_number   = $_GET['modu'];
 
 
 // Include CrackerTracker Class Files

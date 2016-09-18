@@ -54,25 +54,25 @@ $page_title = $lang['Personal_Cat_Admin'];
 // ------------------------------------------------------------------------
 // Get $album_user_id
 // ------------------------------------------------------------------------
-if( isset($HTTP_POST_VARS['user_id']) )
+if( isset($_POST['user_id']) )
 {
-	$album_user_id = intval($HTTP_POST_VARS['user_id']);
+	$album_user_id = intval($_POST['user_id']);
 }
-elseif( isset($HTTP_GET_VARS['user_id']) )
+elseif( isset($_GET['user_id']) )
 {
-	$album_user_id = intval($HTTP_GET_VARS['user_id']);
+	$album_user_id = intval($_GET['user_id']);
 }
 
 // ------------------------------------------------------------------------
 // Get $cat_id
 // ------------------------------------------------------------------------
-if( isset($HTTP_POST_VARS['cat_id']) )
+if( isset($_POST['cat_id']) )
 {
-	$cat_id = intval($HTTP_POST_VARS['cat_id']);
+	$cat_id = intval($_POST['cat_id']);
 }
-elseif( isset($HTTP_GET_VARS['cat_id']) )
+elseif( isset($_GET['cat_id']) )
 {
-	$cat_id = intval($HTTP_GET_VARS['cat_id']);
+	$cat_id = intval($_GET['cat_id']);
 }
 
 // ------------------------------------------------------------------------
@@ -90,7 +90,7 @@ if (empty($username))
 
 if ( album_get_personal_root_id($album_user_id) == ALBUM_ROOT_CATEGORY )
 {
-	if(!isset($HTTP_POST_VARS['submit']))
+	if(!isset($_POST['submit']))
 	{
 		album_init_personal_gallery($album_user_id);
 	}
@@ -110,7 +110,7 @@ else
 // gallery can manage the categories
 // TODO : should the moderator also be allowed ?
 // ------------------------------------------------------------------------
-if( (isset($HTTP_GET_VARS['action'])) && ($HTTP_GET_VARS['action'] == 'create') )
+if( (isset($_GET['action'])) && ($_GET['action'] == 'create') )
 {
 	$auth_data = album_permissions($album_user_id, $cat_id, ALBUM_AUTH_UPLOAD);
 	if ( !album_check_permission($auth_data, ALBUM_AUTH_UPLOAD) )
@@ -121,7 +121,7 @@ if( (isset($HTTP_GET_VARS['action'])) && ($HTTP_GET_VARS['action'] == 'create') 
 			{
 				redirect(append_sid(LOGIN_MG . "?redirect=album_cat.$phpEx"));
 			}
-			$album_user_id = (isset($HTTP_GET_VARS['user_id']) && (intval($HTTP_GET_VARS['user_id']) > 1)) ? intval($HTTP_GET_VARS['user_id']) : $userdata['user_id'];
+			$album_user_id = (isset($_GET['user_id']) && (intval($_GET['user_id']) > 1)) ? intval($_GET['user_id']) : $userdata['user_id'];
 			//$album_user_id = $userdata['user_id'];
 		}
 		else
@@ -145,7 +145,7 @@ else
 				redirect(append_sid(LOGIN_MG . "?redirect=album_cat.$phpEx"));
 			}
 
-			if( !isset($HTTP_GET_VARS['action']) )
+			if( !isset($_GET['action']) )
 			{
 				redirect(append_sid(album_append_uid("album.$phpEx")));
 			}
@@ -170,7 +170,7 @@ function showResultMessage($in_message)
 {
 	global $lang, $album_user_id, $phpEx;
 
-	if (album_get_personal_root_id($album_user_id) == ALBUM_ROOT_CATEGORY && strcmp('delete',isset($HTTP_GET_VARS['action']) == 0) )
+	if (album_get_personal_root_id($album_user_id) == ALBUM_ROOT_CATEGORY && strcmp('delete',isset($_GET['action']) == 0) )
 	{
 		$message = $in_message . "<br /><br />" . sprintf($lang['Click_return_personal_gallery_index'], "<a href=\"" . append_sid(album_append_uid("album_personal_index.$phpEx")) . "\">", "</a>");
 	}
@@ -186,9 +186,9 @@ function showResultMessage($in_message)
 // ------------------------------------------------------------------------
 // now start processing the page...
 // ------------------------------------------------------------------------
-if( !isset($HTTP_POST_VARS['mode']) )
+if( !isset($_POST['mode']) )
 {
-	if( !isset($HTTP_GET_VARS['action']) )
+	if( !isset($_GET['action']) )
 	{
 		$template->set_filenames(array(
 			'body' => 'admin/album_personal_cat_body.tpl')
@@ -253,15 +253,15 @@ if( !isset($HTTP_POST_VARS['mode']) )
 	}
 	else
 	{
-		if( $HTTP_GET_VARS['action'] == 'create' )
+		if( $_GET['action'] == 'create' )
 		{
 			album_create_personal_gallery($album_user_id, $album_config['personal_gallery_view'], ALBUM_PRIVATE);
 			album_read_tree($album_user_id);
 			showResultMessage($lang['New_category_created']);
 		}
-		elseif( $HTTP_GET_VARS['action'] == 'edit' )
+		elseif( $_GET['action'] == 'edit' )
 		{
-			$cat_id = intval($HTTP_GET_VARS['cat_id']);
+			$cat_id = intval($_GET['cat_id']);
 
 			//$is_personal_root_cat = ($cat_id == album_get_personal_root_id($album_user_id)) ? true : false;
 			if (($cat_id == album_get_personal_root_id($album_user_id)) || -1 == album_get_personal_root_id($album_user_id))
@@ -383,9 +383,9 @@ if( !isset($HTTP_POST_VARS['mode']) )
 
 			include($phpbb_root_path . 'includes/page_tail.'.$phpEx);
 		}
-		elseif( $HTTP_GET_VARS['action'] == 'delete' )
+		elseif( $_GET['action'] == 'delete' )
 		{
-			$cat_id = intval($HTTP_GET_VARS['cat_id']);
+			$cat_id = intval($_GET['cat_id']);
 
 			$sql = "SELECT cat_id, cat_title, cat_order
 					FROM ". ALBUM_CAT_TABLE ."
@@ -453,10 +453,10 @@ if( !isset($HTTP_POST_VARS['mode']) )
 
 			include($phpbb_root_path . 'includes/page_tail.'.$phpEx); //include('./page_footer_admin.'.$phpEx);
 		}
-		elseif( $HTTP_GET_VARS['action'] == 'move' )
+		elseif( $_GET['action'] == 'move' )
 		{
-			$cat_id = intval($HTTP_GET_VARS['cat_id']);
-			$move = intval($HTTP_GET_VARS['move']);
+			$cat_id = intval($_GET['cat_id']);
+			$move = intval($_GET['move']);
 
 			album_move_tree($cat_id, $move);
 
@@ -467,17 +467,17 @@ if( !isset($HTTP_POST_VARS['mode']) )
 }
 else
 {
-	if( $HTTP_POST_VARS['mode'] == 'new' )
+	if( $_POST['mode'] == 'new' )
 	{
-		if ( is_array($HTTP_POST_VARS['addcategory']))
+		if ( is_array($_POST['addcategory']))
 		{
-			list($cat_id) = each($HTTP_POST_VARS['addcategory']);
-			$cat_title = stripslashes($HTTP_POST_VARS['name'][$cat_id]);
+			list($cat_id) = each($_POST['addcategory']);
+			$cat_title = stripslashes($_POST['name'][$cat_id]);
 			$cat_parent = $cat_id;
 			$cat_id = -1;
 		}
 
-		if( !isset($HTTP_POST_VARS['cat_title']) )
+		if( !isset($_POST['cat_title']) )
 		{
 			$s_album_cat_list = album_get_tree_option($cat_parent, ALBUM_AUTH_VIEW);
 
@@ -549,16 +549,16 @@ else
 		else
 		{
 			// Get posting variables
-			$cat_title = str_replace("\'", "''", htmlspecialchars(trim($HTTP_POST_VARS['cat_title'])));
-			$cat_desc = str_replace("\'", "''", trim($HTTP_POST_VARS['cat_desc']));
-			$view_level = intval($HTTP_POST_VARS['cat_view_level']);
-			$upload_level = intval($HTTP_POST_VARS['cat_upload_level']);
-			$rate_level = intval($HTTP_POST_VARS['cat_rate_level']);
-			$comment_level = intval($HTTP_POST_VARS['cat_comment_level']);
-			$edit_level = intval($HTTP_POST_VARS['cat_edit_level']);
-			$delete_level = intval($HTTP_POST_VARS['cat_delete_level']);
-			$cat_approval = intval($HTTP_POST_VARS['cat_approval']);
-			$cat_parent = ($HTTP_POST_VARS['cat_parent_id'] == ALBUM_ROOT_CATEGORY) ? album_get_personal_root_id($album_user_id) : intval($HTTP_POST_VARS['cat_parent_id']);
+			$cat_title = str_replace("\'", "''", htmlspecialchars(trim($_POST['cat_title'])));
+			$cat_desc = str_replace("\'", "''", trim($_POST['cat_desc']));
+			$view_level = intval($_POST['cat_view_level']);
+			$upload_level = intval($_POST['cat_upload_level']);
+			$rate_level = intval($_POST['cat_rate_level']);
+			$comment_level = intval($_POST['cat_comment_level']);
+			$edit_level = intval($_POST['cat_edit_level']);
+			$delete_level = intval($_POST['cat_delete_level']);
+			$cat_approval = intval($_POST['cat_approval']);
+			$cat_parent = ($_POST['cat_parent_id'] == ALBUM_ROOT_CATEGORY) ? album_get_personal_root_id($album_user_id) : intval($_POST['cat_parent_id']);
 
 			// Get the last ordered category
 			$sql = "SELECT cat_order FROM ". ALBUM_CAT_TABLE ."
@@ -588,20 +588,20 @@ else
 			showResultMessage($lang['New_category_created']);
 		}
 	}
-	elseif( $HTTP_POST_VARS['mode'] == 'edit' )
+	elseif( $_POST['mode'] == 'edit' )
 	{
 		// Get posting variables
-		$cat_id = intval($HTTP_GET_VARS['cat_id']);
-		$cat_title = str_replace("\'", "''", htmlspecialchars(trim($HTTP_POST_VARS['cat_title'])));
-		$cat_desc = str_replace("\'", "''", trim($HTTP_POST_VARS['cat_desc']));
-		$view_level = intval($HTTP_POST_VARS['cat_view_level']);
-		$upload_level = intval($HTTP_POST_VARS['cat_upload_level']);
-		$rate_level = intval($HTTP_POST_VARS['cat_rate_level']);
-		$comment_level = intval($HTTP_POST_VARS['cat_comment_level']);
-		$edit_level = intval($HTTP_POST_VARS['cat_edit_level']);
-		$delete_level = intval($HTTP_POST_VARS['cat_delete_level']);
-		$cat_approval = intval($HTTP_POST_VARS['cat_approval']);
-		$cat_parent = ($HTTP_POST_VARS['cat_parent_id'] == ALBUM_ROOT_CATEGORY) ? 0 : intval($HTTP_POST_VARS['cat_parent_id']);
+		$cat_id = intval($_GET['cat_id']);
+		$cat_title = str_replace("\'", "''", htmlspecialchars(trim($_POST['cat_title'])));
+		$cat_desc = str_replace("\'", "''", trim($_POST['cat_desc']));
+		$view_level = intval($_POST['cat_view_level']);
+		$upload_level = intval($_POST['cat_upload_level']);
+		$rate_level = intval($_POST['cat_rate_level']);
+		$comment_level = intval($_POST['cat_comment_level']);
+		$edit_level = intval($_POST['cat_edit_level']);
+		$delete_level = intval($_POST['cat_delete_level']);
+		$cat_approval = intval($_POST['cat_approval']);
+		$cat_parent = ($_POST['cat_parent_id'] == ALBUM_ROOT_CATEGORY) ? 0 : intval($_POST['cat_parent_id']);
 
 		if ( ($cat_id == $cat_parent) && (album_get_personal_root_id($album_user_id) != $cat_id)  )
 		{
@@ -627,14 +627,14 @@ else
 		// Return a message...
 		showResultMessage($lang['Category_updated']);
 	}
-	elseif( $HTTP_POST_VARS['mode'] == 'delete' )
+	elseif( $_POST['mode'] == 'delete' )
 	{
 		$parent_cat_id = 0;
 		$parent_cat_title = "";
 		$parent_cat_deleted = false;
 
-		$source_cat_id = intval($HTTP_GET_VARS['cat_id']);
-		$target_cat_id = intval($HTTP_POST_VARS['target']);
+		$source_cat_id = intval($_GET['cat_id']);
+		$target_cat_id = intval($_POST['target']);
 
 		if( $target_cat_id == ALBUM_JUMPBOX_DELETE ) // Delete All
 		{

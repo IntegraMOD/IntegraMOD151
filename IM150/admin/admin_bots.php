@@ -41,17 +41,17 @@ define('BOTS_TABLE', $table_prefix . "bots");
 $bot_errors = "";
 
 // get relevant query data
-$submit = ((isset($HTTP_POST_VARS['submit'])) ? true : false);
-if (isset($HTTP_GET_VARS['action']) || isset($HTTP_POST_VARS['action']))
+$submit = ((isset($_POST['submit'])) ? true : false);
+if (isset($_GET['action']) || isset($_POST['action']))
 {
-	$action = (isset($HTTP_POST_VARS['action'])) ? $HTTP_POST_VARS['action'] : $HTTP_GET_VARS['action'];
+	$action = (isset($_POST['action'])) ? $_POST['action'] : $_GET['action'];
 }
 else
 {
 	$action = '';
 }
-$id = (isset($HTTP_GET_VARS['id'])) ? $HTTP_GET_VARS['id'] : 0;
-$mark = (isset($HTTP_POST_VARS['mark'])) ? $HTTP_POST_VARS['mark'] : 0;
+$id = (isset($_GET['id'])) ? $_GET['id'] : 0;
+$mark = (isset($_POST['mark'])) ? $_POST['mark'] : 0;
 if (isset($_POST['add'])) $action = 'add';
 
 // editing and marks don't go well together...
@@ -70,8 +70,8 @@ switch ($action)
 	case 'ignore_pending':
 	case 'add_pending':
 		// get required query data
-		$pending_number = $HTTP_GET_VARS['pending']; 
-		$pending_data = $HTTP_GET_VARS['data']; 
+		$pending_number = $_GET['pending']; 
+		$pending_data = $_GET['data']; 
 
 		// get data from table
 		$sql = "SELECT pending_" . $pending_data . " 
@@ -187,16 +187,16 @@ switch ($action)
 		{
 
 			// get and validate required submitted data - for some reason isset doesn't work here?!
-			if ( $HTTP_POST_VARS['bot_ip'] == '' )
+			if ( $_POST['bot_ip'] == '' )
 			{
-				if ( $HTTP_POST_VARS['bot_agent'] == '')
+				if ( $_POST['bot_agent'] == '')
 				{
 					$bot_errors = $lang['Error_No_Agent_Or_Ip'];
 				}
 			}
-			if ( $HTTP_POST_VARS['bot_name'] != '' )
+			if ( $_POST['bot_name'] != '' )
 			{
-				$bot_name = $HTTP_POST_VARS['bot_name'];
+				$bot_name = $_POST['bot_name'];
 			}
 			else
 			{
@@ -207,8 +207,8 @@ switch ($action)
 			{
 
 
-				$bot_agent = ( ( $HTTP_POST_VARS['bot_agent'] != '' ) ? $HTTP_POST_VARS['bot_agent'] : '' );
-				$bot_ip = ( ( $HTTP_POST_VARS['bot_ip'] != '' ) ? $HTTP_POST_VARS['bot_ip'] : '' );
+				$bot_agent = ( ( $_POST['bot_agent'] != '' ) ? $_POST['bot_agent'] : '' );
+				$bot_ip = ( ( $_POST['bot_ip'] != '' ) ? $_POST['bot_ip'] : '' );
 
 				// remove spaces from ip
 				$bot_ip = str_replace(' ', '', $bot_ip);

@@ -68,7 +68,7 @@ define('ALBUM_ACP_TEMPLATE', 'admin/album_config_body_extended.tpl' );
 //------------------------------------------------------------------------
 
 // Mighty Gorgon - Clear Cache - Begin
-if( isset($HTTP_POST_VARS['confirm_clear_cache']) )
+if( isset($_POST['confirm_clear_cache']) )
 {
 	$cache_dir = @opendir('../' . ALBUM_CACHE_PATH);
 
@@ -204,13 +204,13 @@ usort($album_config_tabs,sort_cmp);
 //------------------------------------------------------------------------
 // get the selected tab selection from the submitted form
 //------------------------------------------------------------------------
-if (isset ($HTTP_POST_VARS['tab']))
+if (isset ($_POST['tab']))
 {
-	$selected_tab = strtolower($HTTP_POST_VARS['tab']);
+	$selected_tab = strtolower($_POST['tab']);
 }
-elseif (isset ($HTTP_GET_VARS['tab']))
+elseif (isset ($_GET['tab']))
 {
-	$selected_tab = strtolower($HTTP_GET_VARS['tab']);
+	$selected_tab = strtolower($_GET['tab']);
 }
 
 //------------------------------------------------------------------------
@@ -218,13 +218,13 @@ elseif (isset ($HTTP_GET_VARS['tab']))
 // NOTE : a sub tab, is a tab in the left or right side of a configuration
 // for alittle hint see the template file 'admin/album_config_sub_body.tpl'
 //------------------------------------------------------------------------
-if (isset ($HTTP_POST_VARS['subtab']))
+if (isset ($_POST['subtab']))
 {
-	$selected_subtab = strtolower($HTTP_POST_VARS['subtab']);
+	$selected_subtab = strtolower($_POST['subtab']);
 }
-elseif (isset ($HTTP_GET_VARS['subtab']))
+elseif (isset ($_GET['subtab']))
 {
-	$selected_subtab = strtolower($HTTP_GET_VARS['subtab']);
+	$selected_subtab = strtolower($_GET['subtab']);
 }
 
 //------------------------------------------------------------------------
@@ -235,13 +235,13 @@ elseif (isset ($HTTP_GET_VARS['subtab']))
 //
 // We don't post the actual table name for security reasons !!!
 //------------------------------------------------------------------------
-if (isset ($HTTP_POST_VARS['config_table']))
+if (isset ($_POST['config_table']))
 {
-	$config_table = get_config_table($HTTP_POST_VARS['config_table']);
+	$config_table = get_config_table($_POST['config_table']);
 }
-elseif (isset ($HTTP_GET_VARS['config_table']))
+elseif (isset ($_GET['config_table']))
 {
-	$config_table = get_config_table($HTTP_GET_VARS['config_table']);
+	$config_table = get_config_table($_GET['config_table']);
 }
 
 //------------------------------------------------------------------------
@@ -345,7 +345,7 @@ if (empty($selected_tab_data['config_table_name']))
 //------------------------------------------------------------------------
 // save the data from the requested tab (or tab that we are 'leaving')
 //------------------------------------------------------------------------
-if( strcmp($HTTP_POST_VARS['save_config'], 'true') == 0 )
+if( strcmp($_POST['save_config'], 'true') == 0 )
 {
 	if (empty($config_table))
 	{
@@ -363,7 +363,7 @@ if( strcmp($HTTP_POST_VARS['save_config'], 'true') == 0 )
 		while( $row = $db->sql_fetchrow($result) )
 		{
 			$config_name = $row['config_name'];
-			$config_value = ( isset($HTTP_POST_VARS[$config_name]) ) ? $HTTP_POST_VARS[$config_name] : $row['config_value'];
+			$config_value = ( isset($_POST[$config_name]) ) ? $_POST[$config_name] : $row['config_value'];
 
 			$sql = "UPDATE " . $config_table . " SET
 				config_value = '" . str_replace("\'", "''", $config_value) . "'
@@ -379,12 +379,12 @@ if( strcmp($HTTP_POST_VARS['save_config'], 'true') == 0 )
 		//------------------------------------------------------------------------
 		// did the user click 'submit' then display the standard confirmation page
 		//------------------------------------------------------------------------
-		if( isset($HTTP_POST_VARS['submitted']) )
+		if( isset($_POST['submitted']) )
 		{
-			if (isset($HTTP_POST_VARS['personal_gallery_view']))
+			if (isset($_POST['personal_gallery_view']))
 			{
 				$sql = "UPDATE " . ALBUM_CAT_TABLE . "
-					SET cat_view_level = '" . $HTTP_POST_VARS['personal_gallery_view'] . "'
+					SET cat_view_level = '" . $_POST['personal_gallery_view'] . "'
 					WHERE cat_user_id != 0";
 
 				if ( !($result = $db->sql_query($sql)) )
@@ -426,7 +426,7 @@ else
 		$config_value = $row['config_value'];
 		$default_config[$config_name] = $config_value;
 
-		$new[$config_name] = ( isset($HTTP_POST_VARS[$config_name]) ) ? $HTTP_POST_VARS[$config_name] : $default_config[$config_name];
+		$new[$config_name] = ( isset($_POST[$config_name]) ) ? $_POST[$config_name] : $default_config[$config_name];
 	}
 	$db->sql_freeresult($result);
 }

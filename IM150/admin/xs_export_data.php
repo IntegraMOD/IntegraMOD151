@@ -45,9 +45,9 @@ $lang['xs_export_data_back'] = str_replace('{URL}', append_sid('xs_export_data.'
 //
 // export style
 //
-if(isset($HTTP_GET_VARS['export']))
+if(isset($_GET['export']))
 {
-	$export = str_replace(array('\\', '/'), array('',''), stripslashes($HTTP_GET_VARS['export']));
+	$export = str_replace(array('\\', '/'), array('',''), stripslashes($_GET['export']));
 	// get list of themes for style
 	$sql = "SELECT themes_id, style_name FROM " . THEMES_TABLE . " WHERE template_name = '$export' ORDER BY style_name ASC";
 	if(!$result = $db->sql_query($sql))
@@ -61,10 +61,10 @@ if(isset($HTTP_GET_VARS['export']))
 	}
 	if(count($theme_rowset) == 1)
 	{
-		$HTTP_POST_VARS['export'] = $HTTP_GET_VARS['export'];
-		$HTTP_POST_VARS['export_total'] = '1';
-		$HTTP_POST_VARS['export_id_0'] = $theme_rowset[0]['themes_id'];
-		$HTTP_POST_VARS['export_check_0'] = 'checked';
+		$_POST['export'] = $_GET['export'];
+		$_POST['export_total'] = '1';
+		$_POST['export_id_0'] = $theme_rowset[0]['themes_id'];
+		$_POST['export_check_0'] = 'checked';
 	}
 	else
 	{
@@ -91,18 +91,18 @@ if(isset($HTTP_GET_VARS['export']))
 	}
 }
 
-if(!empty($HTTP_POST_VARS['export']) && !defined('DEMO_MODE'))
+if(!empty($_POST['export']) && !defined('DEMO_MODE'))
 {
-	$export = xs_tpl_name($HTTP_POST_VARS['export']);
+	$export = xs_tpl_name($_POST['export']);
 	// get ftp configuration
 	$params = array('export' => $export);
-	$total = intval($HTTP_POST_VARS['export_total']);
+	$total = intval($_POST['export_total']);
 	$count = 0;
 	for($i=0; $i<$total; $i++)
 	{
-		if(!empty($HTTP_POST_VARS['export_check_'.$i]))
+		if(!empty($_POST['export_check_'.$i]))
 		{
-			$params['export_id_'.$count] = intval($HTTP_POST_VARS['export_id_'.$i]);
+			$params['export_id_'.$count] = intval($_POST['export_id_'.$i]);
 			$params['export_check_'.$count] = 'checked';
 			$count ++;
 		}
@@ -131,9 +131,9 @@ if(!empty($HTTP_POST_VARS['export']) && !defined('DEMO_MODE'))
 	$export_list = array();
 	for($i=0; $i<$total; $i++)
 	{
-		if(!empty($HTTP_POST_VARS['export_check_'.$i]))
+		if(!empty($_POST['export_check_'.$i]))
 		{
-			$export_list[] = intval($HTTP_POST_VARS['export_id_'.$i]);
+			$export_list[] = intval($_POST['export_id_'.$i]);
 		}
 	}
 	$sql = "SELECT * FROM " . THEMES_TABLE . " WHERE themes_id IN (" . implode(', ', $export_list) . ") ORDER BY style_name ASC";

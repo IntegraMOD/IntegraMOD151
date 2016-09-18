@@ -50,31 +50,14 @@ set_magic_quotes_runtime(0); // Disable magic_quotes_runtime
 // The following code (unsetting globals)
 // Thanks to Matt Kavanagh and Stefan Esser for providing feedback as well as patch files
 
-// PHP5 with register_long_arrays off?
-if (@phpversion() >= '5.0.0' && (!@ini_get('register_long_arrays') || @ini_get('register_long_arrays') == '0' || strtolower(@ini_get('register_long_arrays')) == 'off'))
-{
-	$HTTP_POST_VARS = $_POST;
-	$HTTP_GET_VARS = $_GET;
-	$HTTP_SERVER_VARS = $_SERVER;
-	$HTTP_COOKIE_VARS = $_COOKIE;
-	$HTTP_ENV_VARS = $_ENV;
-	$HTTP_POST_FILES = $_FILES;
-
-	// _SESSION is the only superglobal which is conditionally set
-	if (isset($_SESSION))
-	{
-		$HTTP_SESSION_VARS = $_SESSION;
-	}
-}
-
 // Protect against GLOBALS tricks
-if (isset($HTTP_POST_VARS['GLOBALS']) || isset($HTTP_POST_FILES['GLOBALS']) || isset($HTTP_GET_VARS['GLOBALS']) || isset($HTTP_COOKIE_VARS['GLOBALS']))
+if (isset($_POST['GLOBALS']) || isset($_FILES['GLOBALS']) || isset($_GET['GLOBALS']) || isset($_COOKIE['GLOBALS']))
 {
 	die("Hacking attempt");
 }
 
 // Protect against HTTP_SESSION_VARS tricks
-if (isset($HTTP_SESSION_VARS) && !is_array($HTTP_SESSION_VARS))
+if (isset($_SESSION) && !is_array($_SESSION))
 {
 	die("Hacking attempt");
 }
@@ -88,14 +71,14 @@ if (@ini_get('register_globals') == '1' || strtolower(@ini_get('register_globals
 	// Not only will array_merge give a warning if a parameter
 	// is not an array, it will actually fail. So we check if
 	// HTTP_SESSION_VARS has been initialised.
-	if (!isset($HTTP_SESSION_VARS) || !is_array($HTTP_SESSION_VARS))
+	if (!isset($_SESSION) || !is_array($_SESSION))
 	{
-		$HTTP_SESSION_VARS = array();
+		$_SESSION = array();
 	}
 
 	// Merge all into one extremely huge array; unset
 	// this later
-	$input = array_merge($HTTP_GET_VARS, $HTTP_POST_VARS, $HTTP_COOKIE_VARS, $HTTP_SERVER_VARS, $HTTP_SESSION_VARS, $HTTP_ENV_VARS, $HTTP_POST_FILES);
+	$input = array_merge($_GET, $_POST, $_COOKIE, $_SERVER, $_SESSION, $_ENV, $_FILES);
 
 	unset($input['input']);
 	unset($input['not_unset']);
@@ -119,64 +102,64 @@ if (@ini_get('register_globals') == '1' || strtolower(@ini_get('register_globals
 //
 if( !get_magic_quotes_gpc() )
 {
-	if( is_array($HTTP_GET_VARS) )
+	if( is_array($_GET) )
 	{
-		while( list($k, $v) = each($HTTP_GET_VARS) )
+		while( list($k, $v) = each($_GET) )
 		{
-			if( is_array($HTTP_GET_VARS[$k]) )
+			if( is_array($_GET[$k]) )
 			{
-				while( list($k2, $v2) = each($HTTP_GET_VARS[$k]) )
+				while( list($k2, $v2) = each($_GET[$k]) )
 				{
-					$HTTP_GET_VARS[$k][$k2] = addslashes($v2);
+					$_GET[$k][$k2] = addslashes($v2);
 				}
-				@reset($HTTP_GET_VARS[$k]);
+				@reset($_GET[$k]);
 			}
 			else
 			{
-				$HTTP_GET_VARS[$k] = addslashes($v);
+				$_GET[$k] = addslashes($v);
 			}
 		}
-		@reset($HTTP_GET_VARS);
+		@reset($_GET);
 	}
 
-	if( is_array($HTTP_POST_VARS) )
+	if( is_array($_POST) )
 	{
-		while( list($k, $v) = each($HTTP_POST_VARS) )
+		while( list($k, $v) = each($_POST) )
 		{
-			if( is_array($HTTP_POST_VARS[$k]) )
+			if( is_array($_POST[$k]) )
 			{
-				while( list($k2, $v2) = each($HTTP_POST_VARS[$k]) )
+				while( list($k2, $v2) = each($_POST[$k]) )
 				{
-					$HTTP_POST_VARS[$k][$k2] = addslashes($v2);
+					$_POST[$k][$k2] = addslashes($v2);
 				}
-				@reset($HTTP_POST_VARS[$k]);
+				@reset($_POST[$k]);
 			}
 			else
 			{
-				$HTTP_POST_VARS[$k] = addslashes($v);
+				$_POST[$k] = addslashes($v);
 			}
 		}
-		@reset($HTTP_POST_VARS);
+		@reset($_POST);
 	}
 
-	if( is_array($HTTP_COOKIE_VARS) )
+	if( is_array($_COOKIE) )
 	{
-		while( list($k, $v) = each($HTTP_COOKIE_VARS) )
+		while( list($k, $v) = each($_COOKIE) )
 		{
-			if( is_array($HTTP_COOKIE_VARS[$k]) )
+			if( is_array($_COOKIE[$k]) )
 			{
-				while( list($k2, $v2) = each($HTTP_COOKIE_VARS[$k]) )
+				while( list($k2, $v2) = each($_COOKIE[$k]) )
 				{
-					$HTTP_COOKIE_VARS[$k][$k2] = addslashes($v2);
+					$_COOKIE[$k][$k2] = addslashes($v2);
 				}
-				@reset($HTTP_COOKIE_VARS[$k]);
+				@reset($_COOKIE[$k]);
 			}
 			else
 			{
-				$HTTP_COOKIE_VARS[$k] = addslashes($v);
+				$_COOKIE[$k] = addslashes($v);
 			}
 		}
-		@reset($HTTP_COOKIE_VARS);
+		@reset($_COOKIE);
 	}
 }
 
@@ -228,7 +211,7 @@ $template->set_filenames(array(
 /*
  * Console Operations
  */
-$mode = $HTTP_GET_VARS['mode'];
+$mode = $_GET['mode'];
 
 if ( $mode == 'restore' )
 {
@@ -279,7 +262,7 @@ if ( $mode == 'restore' )
 else if ( $mode == 'psrt' )
 {
 	$sql = "UPDATE " . PREFIX . "config SET
-				config_value = '" . str_replace("\'", "''", $HTTP_POST_VARS['cookie_name']) . "'
+				config_value = '" . str_replace("\'", "''", $_POST['cookie_name']) . "'
 				WHERE config_name = 'cookie_name'";
 	if ( !$result = $db->sql_query($sql) )
 	{
@@ -287,7 +270,7 @@ else if ( $mode == 'psrt' )
 	}
 	
 	$sql = "UPDATE " . PREFIX . "config SET
-				config_value = '" . str_replace("\'", "''", $HTTP_POST_VARS['cookie_path']) . "'
+				config_value = '" . str_replace("\'", "''", $_POST['cookie_path']) . "'
 				WHERE config_name = 'cookie_path'";
 	if ( !$result = $db->sql_query($sql) )
 	{
@@ -295,7 +278,7 @@ else if ( $mode == 'psrt' )
 	}
 	
 	$sql = "UPDATE " . PREFIX . "config SET
-				config_value = '" . str_replace("\'", "''", $HTTP_POST_VARS['cookie_domain']) . "'
+				config_value = '" . str_replace("\'", "''", $_POST['cookie_domain']) . "'
 				WHERE config_name = 'cookie_domain'";
 	if ( !$result = $db->sql_query($sql) )
 	{
@@ -303,7 +286,7 @@ else if ( $mode == 'psrt' )
 	}
 	
 	$sql = "UPDATE " . PREFIX . "config SET
-				config_value = '" . str_replace("\'", "''", $HTTP_POST_VARS['cookie_secure']) . "'
+				config_value = '" . str_replace("\'", "''", $_POST['cookie_secure']) . "'
 				WHERE config_name = 'cookie_secure'";
 	if ( !$result = $db->sql_query($sql) )
 	{
@@ -311,7 +294,7 @@ else if ( $mode == 'psrt' )
 	}
 	
 	$sql = "UPDATE " . PREFIX . "config SET
-				config_value = '" . str_replace("\'", "''", $HTTP_POST_VARS['server_name']) . "'
+				config_value = '" . str_replace("\'", "''", $_POST['server_name']) . "'
 				WHERE config_name = 'server_name'";
 	if ( !$result = $db->sql_query($sql) )
 	{
@@ -319,7 +302,7 @@ else if ( $mode == 'psrt' )
 	}
 	
 	$sql = "UPDATE " . PREFIX . "config SET
-				config_value = '" . str_replace("\'", "''", $HTTP_POST_VARS['server_port']) . "'
+				config_value = '" . str_replace("\'", "''", $_POST['server_port']) . "'
 				WHERE config_name = 'server_port'";
 	if ( !$result = $db->sql_query($sql) )
 	{
@@ -327,7 +310,7 @@ else if ( $mode == 'psrt' )
 	}
 	
 	$sql = "UPDATE " . PREFIX . "config SET
-				config_value = '" . str_replace("\'", "''", $HTTP_POST_VARS['script_path']) . "'
+				config_value = '" . str_replace("\'", "''", $_POST['script_path']) . "'
 				WHERE config_name = 'script_path'";
 	if ( !$result = $db->sql_query($sql) )
 	{
@@ -335,7 +318,7 @@ else if ( $mode == 'psrt' )
 	}
 	
 	$sql = "UPDATE " . PREFIX . "config SET
-				config_value = '" . str_replace("\'", "''", $HTTP_POST_VARS['session_length']) . "'
+				config_value = '" . str_replace("\'", "''", $_POST['session_length']) . "'
 				WHERE config_name = 'session_length'";
 	if ( !$result = $db->sql_query($sql) )
 	{

@@ -31,15 +31,15 @@ if( !defined('IN_PHPBB') || !defined('CRACKER_TRACKER_VCONFIRM') )
 
 if ( $mode == 'check' || defined('POST_CONFIRM_CHECK') )
 {
-	if ( empty($HTTP_POST_VARS['confirm_id']) )
+	if ( empty($_POST['confirm_id']) )
 	{
 		$error = TRUE;
 		$error_msg = ( ( isset($error_msg) ) ? '<br />' : '' ) . $lang['ctracker_login_wrong'];
 	}
 	else
 	{
-		$confirm_id = htmlspecialchars($HTTP_POST_VARS['confirm_id']);
-		$confirm_code = htmlspecialchars($HTTP_POST_VARS['confirm_code']);
+		$confirm_id = htmlspecialchars($_POST['confirm_id']);
+		$confirm_code = htmlspecialchars($_POST['confirm_code']);
 
 		if (!preg_match('/^[A-Za-z0-9]+$/', $confirm_id))
 		{

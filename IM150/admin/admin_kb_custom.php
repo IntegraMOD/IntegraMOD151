@@ -80,26 +80,13 @@ if ( !@function_exists( 'slash_input_data' ) )
 		return $data;
 	}
 }
-// ===================================================
-// to make it work with php version under 4.1 and other stuff
-// ===================================================
-if ( @phpversion() < '4.1' )
-{
-	$_GET = &$HTTP_GET_VARS;
-	$_POST = &$HTTP_POST_VARS;
-	$_COOKIE = &$HTTP_COOKIE_VARS;
-	$_SERVER = &$HTTP_SERVER_VARS;
-	$_ENV = &$HTTP_ENV_VARS;
-	$_FILES = &$HTTP_POST_FILES;
-	$_SESSION = &$HTTP_SESSION_VARS;
-}
 
 if ( !isset( $_REQUEST ) )
 {
 	$_REQUEST = array_merge( $_GET, $_POST, $_COOKIE );
 }
 
-if ( !get_magic_quotes_gpc() )
+if ( !function_exists('get_magic_quotes_gpc') || !get_magic_quotes_gpc() )
 {
 	$_GET = slash_input_data( $_GET );
 	$_POST = slash_input_data( $_POST );

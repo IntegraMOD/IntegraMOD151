@@ -94,7 +94,7 @@ function announces_prune($force_prune=false)
 
 function announces_from_forums($cur='Root', $force_prune=false)
 {
-	global $db, $template, $board_config, $userdata, $phpEx, $lang, $images, $HTTP_COOKIE_VARS;
+	global $db, $template, $board_config, $userdata, $phpEx, $lang, $images, $_COOKIE;
 	global $tree;
 	global $topic_rank_set, $rating_config, $phpbb_root_path, $table_prefix; 
 	// fix and prune announces

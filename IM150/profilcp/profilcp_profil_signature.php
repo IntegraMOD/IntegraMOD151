@@ -57,11 +57,11 @@ if ($submit || $preview)
 {
 	if ($submit)
     {
-		$signature = (isset($HTTP_POST_VARS['message'])) ? str_replace('<br />', "\n", $HTTP_POST_VARS['message']) : '';
+		$signature = (isset($_POST['message'])) ? str_replace('<br />', "\n", $_POST['message']) : '';
 	}
 	else
     {
-		$signature = str_replace( '<br />', "\n", trim(str_replace("\'", "'", str_replace("\\\"", "\"", $HTTP_POST_VARS['message']))) );
+		$signature = str_replace( '<br />', "\n", trim(str_replace("\'", "'", str_replace("\\\"", "\"", $_POST['message']))) );
     }
 
 	$signature_bbcode_uid = $view_userdata['user_sig_bbcode_uid'];
@@ -325,7 +325,7 @@ if ($submit || $preview)
 			} elseif ( !empty($user_avatar_local) && $board_config['allow_avatar_local'] )
 			{
 				$avatar_url = $board_config['avatar_gallery_path'] . '/' . $user_avatar_local;
-			} elseif ( $user_avatar_type && !isset($HTTP_POST_VARS['avatardel']) )
+			} elseif ( $user_avatar_type && !isset($_POST['avatardel']) )
 			{
 				switch( $user_avatar_type )
 				{

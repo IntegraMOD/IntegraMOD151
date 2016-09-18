@@ -40,11 +40,11 @@ if( !empty($setmodules) )
 
 require('pagestart.' . $phpEx);
 
-$submit = (isset($HTTP_POST_VARS['submit'])) ? TRUE : FALSE;
+$submit = (isset($_POST['submit'])) ? TRUE : FALSE;
 
-if( isset($HTTP_POST_VARS['mode']) || isset($HTTP_GET_VARS['mode']) )
+if( isset($_POST['mode']) || isset($_GET['mode']) )
 {
-	$mode = ( isset($HTTP_POST_VARS['mode']) ) ? $HTTP_POST_VARS['mode'] : $HTTP_GET_VARS['mode'];
+	$mode = ( isset($_POST['mode']) ) ? $_POST['mode'] : $_GET['mode'];
 }
 else
 {
@@ -79,9 +79,9 @@ if ($submit)
 	$config_update = FALSE;
 
 	// Go through all configuration settings
-	if ( (intval($stats_config['return_limit']) != intval($HTTP_POST_VARS['return_limit'])) )
+	if ( (intval($stats_config['return_limit']) != intval($_POST['return_limit'])) )
 	{
-		$sql = "UPDATE " . STATS_CONFIG_TABLE . " SET config_value = '" . trim($HTTP_POST_VARS['return_limit']) . "' WHERE config_name = 'return_limit'";
+		$sql = "UPDATE " . STATS_CONFIG_TABLE . " SET config_value = '" . trim($_POST['return_limit']) . "' WHERE config_name = 'return_limit'";
 
 		if ( !($result = $db->sql_query($sql)) )
 		{
@@ -111,7 +111,7 @@ if ($submit)
 	}
 
 	// Reset Settings
-	if (isset($HTTP_POST_VARS['reset_view_count']))
+	if (isset($_POST['reset_view_count']))
 	{
 		$sql = "UPDATE " . STATS_CONFIG_TABLE . " SET config_value = '0' WHERE config_name = 'page_views'";
 
@@ -124,7 +124,7 @@ if ($submit)
 	}
 
 	// Reset Settings
-	if (isset($HTTP_POST_VARS['reset_install_date']))
+	if (isset($_POST['reset_install_date']))
 	{
 		$sql = "UPDATE " . STATS_CONFIG_TABLE . " SET config_value = '" . time() . "' WHERE config_name = 'install_date'";
 
@@ -151,7 +151,7 @@ if ($submit)
 	}
 
 	// Reset Cache
-	if (isset($HTTP_POST_VARS['reset_cache']))
+	if (isset($_POST['reset_cache']))
 	{
 		// Clear Module Cache
 		$sql = "UPDATE " . CACHE_TABLE . " SET module_cache_time = 0, db_cache = '', priority = 0";
@@ -183,7 +183,7 @@ if ($submit)
 	}
 
 	// Delete Module Directory
-	if (isset($HTTP_POST_VARS['purge_module_directory']))
+	if (isset($_POST['purge_module_directory']))
 	{
 		clear_directory('modules');
 

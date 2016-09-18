@@ -34,9 +34,9 @@ if (!empty($board_config))
 $no_page_header = true;
 require('pagestart.' . $phpEx);
 
-if( isset($HTTP_POST_VARS['mode']) || isset($HTTP_GET_VARS['mode']) )
+if( isset($_POST['mode']) || isset($_GET['mode']) )
 {
-	$mode = ( isset($HTTP_POST_VARS['mode']) ) ? $HTTP_POST_VARS['mode'] : $HTTP_GET_VARS['mode'];
+	$mode = ( isset($_POST['mode']) ) ? $_POST['mode'] : $_GET['mode'];
 }
 else
 {
@@ -67,8 +67,8 @@ include($phpbb_root_path . 'stats_mod/includes/admin_functions.'.$phpEx);
 
 if ($mode == 'export_module')
 {
-	$module_id = (isset($HTTP_GET_VARS['module'])) ? intval($HTTP_GET_VARS['module']) : -1;
-	$language = (isset($HTTP_GET_VARS['lang'])) ? trim($HTTP_GET_VARS['lang']) : '';
+	$module_id = (isset($_GET['module'])) ? intval($_GET['module']) : -1;
+	$language = (isset($_GET['lang'])) ? trim($_GET['lang']) : '';
 		
 	if (($language == '') || ($module_id == -1))
 	{
@@ -136,7 +136,7 @@ if ($mode == 'export_module')
 }
 else if ($mode == 'export_lang')
 {
-	$language = (isset($HTTP_GET_VARS['lang'])) ? trim($HTTP_GET_VARS['lang']) : '';
+	$language = (isset($_GET['lang'])) ? trim($_GET['lang']) : '';
 		
 	if ($language == '')
 	{

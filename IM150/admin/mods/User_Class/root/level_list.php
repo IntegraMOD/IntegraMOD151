@@ -33,11 +33,11 @@ init_userprefs($userdata);
 // End session management
 //
 
-$start = ( isset($HTTP_GET_VARS['start']) ) ? intval($HTTP_GET_VARS['start']) : 0;
+$start = ( isset($_GET['start']) ) ? intval($_GET['start']) : 0;
 
-if ( isset($HTTP_GET_VARS['level']) || isset($HTTP_POST_VARS['level']) )
+if ( isset($_GET['level']) || isset($_POST['level']) )
 {
-	$level = ( isset($HTTP_POST_VARS['level']) ) ? htmlspecialchars($HTTP_POST_VARS['level']) : htmlspecialchars($HTTP_GET_VARS['level']);
+	$level = ( isset($_POST['level']) ) ? htmlspecialchars($_POST['level']) : htmlspecialchars($_GET['level']);
 }
 else
 {

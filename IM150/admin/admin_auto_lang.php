@@ -95,11 +95,11 @@ while (list ($key, $value) = each ($board_config))
 reset ($board_config);
 
 // Edit or delete requests
-if (isset ($HTTP_POST_VARS['edit']) || isset ($HTTP_POST_VARS['delete']))
+if (isset ($_POST['edit']) || isset ($_POST['delete']))
 {
-	$auto_lang_list = (isset($HTTP_POST_VARS['auto_lang_list']) && is_array($HTTP_POST_VARS['auto_lang_list'])) ? $HTTP_POST_VARS['auto_lang_list'] : array();
-	$auto_lang_check = (isset($HTTP_POST_VARS['auto_lang_check']) && is_array($HTTP_POST_VARS['auto_lang_check'])) ? $HTTP_POST_VARS['auto_lang_check'] : array();
-	$auto_lang_language = (isset($HTTP_POST_VARS['auto_lang_language']) && is_array($HTTP_POST_VARS['auto_lang_language'])) ? $HTTP_POST_VARS['auto_lang_language'] : array();
+	$auto_lang_list = (isset($_POST['auto_lang_list']) && is_array($_POST['auto_lang_list'])) ? $_POST['auto_lang_list'] : array();
+	$auto_lang_check = (isset($_POST['auto_lang_check']) && is_array($_POST['auto_lang_check'])) ? $_POST['auto_lang_check'] : array();
+	$auto_lang_language = (isset($_POST['auto_lang_language']) && is_array($_POST['auto_lang_language'])) ? $_POST['auto_lang_language'] : array();
 
 	reset ($auto_lang_list);
 	while (list($a_list) = each($auto_lang_list))
@@ -113,7 +113,7 @@ if (isset ($HTTP_POST_VARS['edit']) || isset ($HTTP_POST_VARS['delete']))
 				message_die (GENERAL_ERROR, sprintf($lang['auto_lang_notexists_lc'], $lang_check), '', __LINE__, __FILE__, '');
 			}
 
-			if (isset ($HTTP_POST_VARS['delete']))
+			if (isset ($_POST['delete']))
 			{
 				$sql = 'DELETE FROM ' . CONFIG_TABLE . "
 							WHERE config_name='" . str_replace("\'", "''", $lang_check) . "'";
@@ -141,7 +141,7 @@ if (isset ($HTTP_POST_VARS['edit']) || isset ($HTTP_POST_VARS['delete']))
 				message_die (GENERAL_ERROR, "Couldn't update configuration table", '', __LINE__, __FILE__, $sql);
 			}
 			// Update $board_config as well, so the changes will be shown immediately
-			if (isset ($HTTP_POST_VARS['delete']))
+			if (isset ($_POST['delete']))
 			{
 				unset ($board_config[$lang_check]);
 				unset ($language_codes[$lang_check]);
@@ -154,13 +154,13 @@ if (isset ($HTTP_POST_VARS['edit']) || isset ($HTTP_POST_VARS['delete']))
 		}
 	}
 }
-else if ( isset($HTTP_POST_VARS['new']) )
+else if ( isset($_POST['new']) )
 {
 	// Add a new entry to the config table
 
-	$lang_code = (isset ($HTTP_POST_VARS['auto_lang_new_entry']) ? $HTTP_POST_VARS['auto_lang_new_entry'] : (isset ($HTTP_GET_VARS['auto_lang_new_entry']) ? $HTTP_GET_VARS['auto_lang_new_entry'] : '') );
+	$lang_code = (isset ($_POST['auto_lang_new_entry']) ? $_POST['auto_lang_new_entry'] : (isset ($_GET['auto_lang_new_entry']) ? $_GET['auto_lang_new_entry'] : '') );
 	$lang_code = strtolower(trim($lang_code));
-	$lang_lang = (isset ($HTTP_POST_VARS['language']) ? $HTTP_POST_VARS['language'] : '');
+	$lang_lang = (isset ($_POST['language']) ? $_POST['language'] : '');
 	$lang_lang = strtolower(trim($lang_lang));
 
 	if (empty ($lang_code) || empty ($lang_lang))

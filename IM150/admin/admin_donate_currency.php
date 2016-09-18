@@ -60,9 +60,9 @@ require('./pagestart.' . $phpEx);
 require($phpbb_root_path . 'language/lang_' . $board_config['default_lang'] . '/lang_donate_curreny.' . $phpEx);
 
 $mode = "";
-if( isset($HTTP_POST_VARS['mode']) || isset($HTTP_GET_VARS['mode']) )
+if( isset($_POST['mode']) || isset($_GET['mode']) )
 {
-	$mode = (isset($HTTP_POST_VARS['mode'])) ? trim($HTTP_POST_VARS['mode']) : trim($HTTP_GET_VARS['mode']);
+	$mode = (isset($_POST['mode'])) ? trim($_POST['mode']) : trim($_GET['mode']);
 }
 
 if($mode == $lang['L_SUBMIT'])
@@ -70,36 +70,36 @@ if($mode == $lang['L_SUBMIT'])
 	// Get posting variables
 	$newdata = array();
 	$count = 0;
-	$donate_currencies = str_replace("\'", "''", htmlspecialchars(trim($HTTP_POST_VARS['donate_currencies'])));
+	$donate_currencies = str_replace("\'", "''", htmlspecialchars(trim($_POST['donate_currencies'])));
 	$newdata[$count]['config_value'] = $donate_currencies;
 	$newdata[$count]['config_name'] = 'donate_currencies';
 	
-	$paypal_currency_code = str_replace("\'", "''", htmlspecialchars(trim($HTTP_POST_VARS['paypal_currency_code'])));
+	$paypal_currency_code = str_replace("\'", "''", htmlspecialchars(trim($_POST['paypal_currency_code'])));
 	$count += 1;
 	$newdata[$count]['config_value'] = $paypal_currency_code;
 	$newdata[$count]['config_name'] = 'paypal_currency_code';
 
-	$usd_to_primary = str_replace("\'", "''", htmlspecialchars(trim($HTTP_POST_VARS['usd_to_primary'])));
+	$usd_to_primary = str_replace("\'", "''", htmlspecialchars(trim($_POST['usd_to_primary'])));
 	$count += 1;
 	$newdata[$count]['config_value'] = $usd_to_primary;
 	$newdata[$count]['config_name'] = 'usd_to_primary';
 
-	$eur_to_primary = str_replace("\'", "''", htmlspecialchars(trim($HTTP_POST_VARS['eur_to_primary'])));
+	$eur_to_primary = str_replace("\'", "''", htmlspecialchars(trim($_POST['eur_to_primary'])));
 	$count += 1;
 	$newdata[$count]['config_value'] = $eur_to_primary;
 	$newdata[$count]['config_name'] = 'eur_to_primary';
 
-	$gbp_to_primary = str_replace("\'", "''", htmlspecialchars(trim($HTTP_POST_VARS['gbp_to_primary'])));
+	$gbp_to_primary = str_replace("\'", "''", htmlspecialchars(trim($_POST['gbp_to_primary'])));
 	$count += 1;
 	$newdata[$count]['config_value'] = $gbp_to_primary;
 	$newdata[$count]['config_name'] = 'gbp_to_primary';
 
-	$cad_to_primary = str_replace("\'", "''", htmlspecialchars(trim($HTTP_POST_VARS['cad_to_primary'])));
+	$cad_to_primary = str_replace("\'", "''", htmlspecialchars(trim($_POST['cad_to_primary'])));
 	$count += 1;
 	$newdata[$count]['config_value'] = $cad_to_primary;
 	$newdata[$count]['config_name'] = 'cad_to_primary';
 
-	$jpy_to_primary = str_replace("\'", "''", htmlspecialchars(trim($HTTP_POST_VARS['jpy_to_primary'])));
+	$jpy_to_primary = str_replace("\'", "''", htmlspecialchars(trim($_POST['jpy_to_primary'])));
 	$count += 1;
 	$newdata[$count]['config_value'] = $jpy_to_primary;
 	$newdata[$count]['config_name'] = 'jpy_to_primary';

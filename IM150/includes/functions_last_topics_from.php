@@ -28,7 +28,7 @@ if (!defined('IN_PHPBB'))
 
 function last_topics_from($view_userdata, $last_started_box='', $last_replied_box='', $last_ended_box='')
 {
-	global $db, $template, $board_config, $userdata, $phpEx, $lang, $images, $HTTP_COOKIE_VARS;
+	global $db, $template, $board_config, $userdata, $phpEx, $lang, $images, $_COOKIE;
 	global $tree;
 
 	include_once($phpbb_root_path . './includes/functions_topics_list.' . $phpEx);

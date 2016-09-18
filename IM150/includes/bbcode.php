@@ -219,9 +219,9 @@ function prepare_bbcode_template($bbcode_tpl)
 */
 function get_image_tag_replacement($bbcode_tpl)
 {
-	global $lang, $HTTP_POST_VARS, $HTTP_GET_VARS;
+	global $lang, $_POST, $_GET;
 	$bb_tmpl = '';
-	if (isset($HTTP_POST_VARS['p_sid']))
+	if (isset($_POST['p_sid']))
 	{
 		if (isset($bbcode_tpl['p_img']))
 		{
@@ -1200,16 +1200,7 @@ function bbencode_second_pass_php($text, $uid, $bbcode_tpl)
 		}
 
 		// Highlight the php code
-		if(strcmp('4.2.0', phpversion()) > 0)
-		{
-			ob_start();
-			highlight_string($after_replace);
-			$after_replace = ob_get_contents();
-			ob_end_clean();
-		} else
-		{
-			$after_replace = highlight_string($after_replace, TRUE);
-		}
+		$after_replace = highlight_string($after_replace, TRUE);
 
 		// Remove the php tags if added to let highlight_string() works
 		if ($added == TRUE)

@@ -47,10 +47,10 @@ $lang['xs_goto_default'] = str_replace('{URL}', append_sid('xs_styles.'.$phpEx),
 @set_time_limit(XS_MAX_TIMEOUT);
 
 // install style
-if(!empty($HTTP_GET_VARS['style']) && !defined('DEMO_MODE'))
+if(!empty($_GET['style']) && !defined('DEMO_MODE'))
 {
-	$style = stripslashes($HTTP_GET_VARS['style']);
-	$num = intval($HTTP_GET_VARS['num']);
+	$style = stripslashes($_GET['style']);
+	$num = intval($_GET['num']);
 	$res = xs_install_style($style, $num);
 	if(defined('REFRESH_NAVBAR'))
 	{
@@ -70,17 +70,17 @@ if(!empty($HTTP_GET_VARS['style']) && !defined('DEMO_MODE'))
 }
 
 // install styles
-if(!empty($HTTP_POST_VARS['total']) && !defined('DEMO_MODE'))
+if(!empty($_POST['total']) && !defined('DEMO_MODE'))
 {
 	$tpl = array();
 	$num = array();
-	$total = intval($HTTP_POST_VARS['total']);
+	$total = intval($_POST['total']);
 	for($i=0; $i<$total; $i++)
 	{
-		if(!empty($HTTP_POST_VARS['install_'.$i]))
+		if(!empty($_POST['install_'.$i]))
 		{
-			$tpl[] = stripslashes($HTTP_POST_VARS['install_'.$i.'_style']);
-			$num[] = intval($HTTP_POST_VARS['install_'.$i.'_num']);
+			$tpl[] = stripslashes($_POST['install_'.$i.'_style']);
+			$num[] = intval($_POST['install_'.$i.'_num']);
 		}
 	}
 	if(count($tpl))

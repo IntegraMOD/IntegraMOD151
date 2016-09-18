@@ -197,9 +197,9 @@ function xs_get_vars($theme)
 //
 // submit
 //
-if(!empty($HTTP_POST_VARS['edit']) && !defined('DEMO_MODE'))
+if(!empty($_POST['edit']) && !defined('DEMO_MODE'))
 {
-	$id = intval($HTTP_POST_VARS['edit']);
+	$id = intval($_POST['edit']);
 	$lang['xs_edittpl_back_edit'] = str_replace('{URL}', append_sid('xs_edit_data.'.$phpEx.'?edit='.$id), $lang['xs_edittpl_back_edit']);
 	$data_item = array();
 	$data_item_update = array();
@@ -207,7 +207,7 @@ if(!empty($HTTP_POST_VARS['edit']) && !defined('DEMO_MODE'))
 	$data_name_insert_vars = array('themes_id');
 	$data_name_insert_values = array($id);
 	$data_name_update = array();
-	foreach($HTTP_POST_VARS as $var => $value)
+	foreach($_POST as $var => $value)
 	{
 		if(substr($var, 0, 5) === 'edit_')
 		{
@@ -266,9 +266,9 @@ if(!empty($HTTP_POST_VARS['edit']) && !defined('DEMO_MODE'))
 //
 // edit style
 //
-if(!empty($HTTP_GET_VARS['edit']))
+if(!empty($_GET['edit']))
 {
-	$id = intval($HTTP_GET_VARS['edit']);
+	$id = intval($_GET['edit']);
 	$sql = "SELECT * FROM " . THEMES_TABLE . " WHERE themes_id='{$id}'";
 	if(!$result = $db->sql_query($sql))
 	{

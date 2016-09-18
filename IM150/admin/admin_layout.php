@@ -47,9 +47,9 @@ $var_cache = new Cache_Lite($options);
 $var_cache->clean('block');
 $var_cache->clean('layout');
 
-if( isset($HTTP_GET_VARS['mode']) || isset($HTTP_POST_VARS['mode']) )
+if( isset($_GET['mode']) || isset($_POST['mode']) )
 {
-	$mode = ($HTTP_GET_VARS['mode']) ? $HTTP_GET_VARS['mode'] : $HTTP_POST_VARS['mode'];
+	$mode = ($_GET['mode']) ? $_GET['mode'] : $_POST['mode'];
 	$mode = htmlspecialchars($mode);
 }
 else 
@@ -57,11 +57,11 @@ else
 	//
 	// These could be entered via a form button
 	//
-	if( isset($HTTP_POST_VARS['add']) )
+	if( isset($_POST['add']) )
 	{
 		$mode = "add";
 	}
-	else if( isset($HTTP_POST_VARS['save']) )
+	else if( isset($_POST['save']) )
 	{
 		$mode = "save";
 	}
@@ -71,7 +71,7 @@ else
 	}
 }
 
-if(isset($HTTP_POST_VARS['cancel']))
+if(isset($_POST['cancel']))
 {
 	$mode="";
 }
@@ -88,7 +88,7 @@ if( $mode != "" )
 {
 	if( $mode == "edit" || $mode == "add" )
 	{
-		$l_id = ( isset($HTTP_GET_VARS['id']) ) ? intval($HTTP_GET_VARS['id']) : 0;
+		$l_id = ( isset($_GET['id']) ) ? intval($_GET['id']) : 0;
 
 		$template->set_filenames(array(
 			"body" => "admin/layout_edit_body.tpl")
@@ -258,12 +258,12 @@ if( $mode != "" )
 	}
 	else if( $mode == "save" )
 	{
-		$l_id = ( isset($HTTP_POST_VARS['id']) ) ? intval($HTTP_POST_VARS['id']) : 0;
-		$l_name = ( isset($HTTP_POST_VARS['name']) ) ? trim($HTTP_POST_VARS['name']) : "";
-		$l_pagetitle = ( isset($HTTP_POST_VARS['pagetitle']) ) ? trim($HTTP_POST_VARS['pagetitle']) : "";
-		$l_template = ( isset($HTTP_POST_VARS['template']) ) ? trim($HTTP_POST_VARS['template']) : "";
-		$l_forum_wide = ( isset($HTTP_POST_VARS['forum_wide']) ) ? intval($HTTP_POST_VARS['forum_wide']) : 0;
-		$l_view = ( isset($HTTP_POST_VARS['view']) ) ? intval($HTTP_POST_VARS['view']) : 0;
+		$l_id = ( isset($_POST['id']) ) ? intval($_POST['id']) : 0;
+		$l_name = ( isset($_POST['name']) ) ? trim($_POST['name']) : "";
+		$l_pagetitle = ( isset($_POST['pagetitle']) ) ? trim($_POST['pagetitle']) : "";
+		$l_template = ( isset($_POST['template']) ) ? trim($_POST['template']) : "";
+		$l_forum_wide = ( isset($_POST['forum_wide']) ) ? intval($_POST['forum_wide']) : 0;
+		$l_view = ( isset($_POST['view']) ) ? intval($_POST['view']) : 0;
 
 		$sql = "SELECT MAX(group_id) max_group_id FROM " . GROUPS_TABLE . " WHERE group_single_user = 0"; 
 		if( !($result = $db->sql_query($sql)) )
@@ -275,7 +275,7 @@ if( $mode != "" )
 		$not_first = FALSE;
 		for($i = 1; $i <= $row['max_group_id']; $i++)
 		{
-			if(isset($HTTP_POST_VARS['group' . strval($i)]))
+			if(isset($_POST['group' . strval($i)]))
 			{
 				if($not_first)
 				{
@@ -389,16 +389,16 @@ if( $mode != "" )
 	}
 	else if( $mode == "delete" )
 	{
-		if( isset($HTTP_POST_VARS['id']) ||  isset($HTTP_GET_VARS['id']) )
+		if( isset($_POST['id']) ||  isset($_GET['id']) )
 		{
-			$l_id = ( isset($HTTP_POST_VARS['id']) ) ? intval($HTTP_POST_VARS['id']) : intval($HTTP_GET_VARS['id']);
+			$l_id = ( isset($_POST['id']) ) ? intval($_POST['id']) : intval($_GET['id']);
 		}
 		else
 		{
 			$l_id = 0;
 		}
 
-		if(!isset($HTTP_POST_VARS['confirm']))
+		if(!isset($_POST['confirm']))
 		{
 			$hidden_fields = '<input type="hidden" name="mode" value="'.$mode.'" /><input type="hidden" name="id" value="'.$l_id.'" />';
 			
@@ -463,9 +463,9 @@ if( $mode != "" )
 }
 else
 {
-	if( isset($HTTP_GET_VARS['d']))
+	if( isset($_GET['d']))
 	{
-		$d = intval($HTTP_GET_VARS['d']);
+		$d = intval($_GET['d']);
 
 		$sql = "UPDATE " . PORTAL_CONFIG_TABLE . " SET config_value = '" . $d . "' WHERE config_name = 'default_portal'";
 

@@ -376,54 +376,54 @@ $s_hidden_fields = '';
 // Parameters
 //
 $mode = '';
-if (isset($HTTP_POST_VARS['mode']) || isset($HTTP_GET_VARS['mode']))
+if (isset($_POST['mode']) || isset($_GET['mode']))
 {
-	$mode = isset($HTTP_POST_VARS['mode']) ? $HTTP_POST_VARS['mode'] : $HTTP_GET_VARS['mode'];
+	$mode = isset($_POST['mode']) ? $_POST['mode'] : $_GET['mode'];
 }
 if (!in_array($mode, array('up', 'dw', 'edit', 'delete'))) $mode = '';
 
 $sav_mode = '';
-if (isset($HTTP_POST_VARS['sav_mode']) || isset($HTTP_GET_VARS['sav_mode']))
+if (isset($_POST['sav_mode']) || isset($_GET['sav_mode']))
 {
-	$sav_mode = isset($HTTP_POST_VARS['sav_mode']) ? $HTTP_POST_VARS['sav_mode'] : $HTTP_GET_VARS['sav_mode'];
+	$sav_mode = isset($_POST['sav_mode']) ? $_POST['sav_mode'] : $_GET['sav_mode'];
 }
 if (!in_array($sav_mode, array('', 'main'))) $sav_mode = '';
 
 // panel
 $panel_id = 0;
-if (isset($HTTP_POST_VARS['panel_id']) || isset($HTTP_GET_VARS['panel']))
+if (isset($_POST['panel_id']) || isset($_GET['panel']))
 {
-	$panel_id = isset($HTTP_POST_VARS['panel_id']) ? intval($HTTP_POST_VARS['panel_id']) : intval($HTTP_GET_VARS['panel']);
+	$panel_id = isset($_POST['panel_id']) ? intval($_POST['panel_id']) : intval($_GET['panel']);
 }
 
 // panel while importing
-if (isset($HTTP_POST_VARS['goto']))
+if (isset($_POST['goto']))
 {
-	$indexed = $HTTP_POST_VARS['goto'];
+	$indexed = $_POST['goto'];
 	list($id, $action) = each($indexed);
 	$panel_id = intval($id);
 }
 
 // field_ids while importing
 $field_ids = array();
-if (isset($HTTP_POST_VARS['field_ids']))
+if (isset($_POST['field_ids']))
 {
-	$field_ids = $HTTP_POST_VARS['field_ids'];
+	$field_ids = $_POST['field_ids'];
 }
 
 // add a new field button pushed
 $create_field = false;
 $field_name = '';
-if (isset($HTTP_POST_VARS['create_field']))
+if (isset($_POST['create_field']))
 {
 	$create_field = true;
-	$indexed = $HTTP_POST_VARS['create_field'];
+	$indexed = $_POST['create_field'];
 	if (is_array($indexed))
 	{
 		list($id, $action) = each($indexed);
 		$panel_id = intval($id);
 		$field_names = array();
-		$field_names = $HTTP_POST_VARS['field_name'];
+		$field_names = $_POST['field_name'];
 		$field_name = isset($field_names[$panel_id]) ? trim(stripslashes($field_names[$panel_id])) : '';
 	}
 	$mode = 'edit';
@@ -431,10 +431,10 @@ if (isset($HTTP_POST_VARS['create_field']))
 
 // import fields
 $import = false;
-if (isset($HTTP_POST_VARS['import_field']))
+if (isset($_POST['import_field']))
 {
 	$import = true;
-	$indexed = $HTTP_POST_VARS['import_field'];
+	$indexed = $_POST['import_field'];
 	if (is_array($indexed))
 	{
 		list($id, $action) = each($indexed);
@@ -451,32 +451,32 @@ if (!empty($sav_mode))
 // add a new panel button pushed
 $create_panel = false;
 $panel_name = '';
-if (isset($HTTP_POST_VARS['create_panel']))
+if (isset($_POST['create_panel']))
 {
 	$create_panel = true;
-	$panel_name = trim(stripslashes($HTTP_POST_VARS['field_name']));
+	$panel_name = trim(stripslashes($_POST['field_name']));
 	$mode = 'edit';
 }
 
 // field id
 $field_id = 0;
-if (isset($HTTP_POST_VARS['field_id']) || isset($HTTP_GET_VARS['field']))
+if (isset($_POST['field_id']) || isset($_GET['field']))
 {
-	$field_id = isset($HTTP_POST_VARS['field_id']) ? intval($HTTP_POST_VARS['field_id']) : intval($HTTP_GET_VARS['field']);
+	$field_id = isset($_POST['field_id']) ? intval($_POST['field_id']) : intval($_GET['field']);
 }
 if ($create_field) $field_id = 0;
 
 // other button
-$submit = isset($HTTP_POST_VARS['submit']);
-$cancel = isset($HTTP_POST_VARS['cancel']);
-$refresh = isset($HTTP_POST_VARS['refresh']);
+$submit = isset($_POST['submit']);
+$cancel = isset($_POST['cancel']);
+$refresh = isset($_POST['refresh']);
 //
 // get who is opened
 //
 $open_ids = array();
 if ($panel_id == 0)
 {
-	if (isset($HTTP_POST_VARS['open_ids'])) $open_ids = $HTTP_POST_VARS['open_ids'];
+	if (isset($_POST['open_ids'])) $open_ids = $_POST['open_ids'];
 }
 
 //
@@ -714,20 +714,20 @@ if (($mode == 'edit') && (!empty($field_id) || $create_field))
 	}
 
 	// get data from the formular
-	if (isset($HTTP_POST_VARS['name']))			$field_name			= trim(stripslashes($HTTP_POST_VARS['name']));
-	if (isset($HTTP_POST_VARS['shortcut']))		$field_shortcut		= trim(stripslashes($HTTP_POST_VARS['shortcut']));
-	if (isset($HTTP_POST_VARS['alternate']))	$field_alternate	= trim(stripslashes($HTTP_POST_VARS['alternate']));
-	if (isset($HTTP_POST_VARS['explain']))		$field_explain		= trim(stripslashes($HTTP_POST_VARS['explain']));
-	if (isset($HTTP_POST_VARS['icon']))			$field_icon			= trim(stripslashes($HTTP_POST_VARS['icon']));
-	if (isset($HTTP_POST_VARS['use_value']))	$field_use_value	= intval($HTTP_POST_VARS['use_value']);
-	if (isset($HTTP_POST_VARS['use_icon']))		$field_use_icon		= intval($HTTP_POST_VARS['use_icon']);
-	if (isset($HTTP_POST_VARS['url']))			$field_url			= trim(stripslashes($HTTP_POST_VARS['url']));
-	if (isset($HTTP_POST_VARS['internal']))		$field_internal		= intval($HTTP_POST_VARS['internal']);
-	if (isset($HTTP_POST_VARS['window']))		$field_window		= intval($HTTP_POST_VARS['window']);
-	if (isset($HTTP_POST_VARS['auth_logged']))	$field_auth_logged	= intval($HTTP_POST_VARS['auth_logged']);
-	if (isset($HTTP_POST_VARS['auth_admin']))	$field_auth_admin	= intval($HTTP_POST_VARS['auth_admin']);
-	if (isset($HTTP_POST_VARS['auth_pm']))		$field_auth_pm		= intval($HTTP_POST_VARS['auth_pm']);
-	if (isset($HTTP_POST_VARS['tree_id']))		$field_tree_id		= trim(stripslashes($HTTP_POST_VARS['tree_id']));
+	if (isset($_POST['name']))			$field_name			= trim(stripslashes($_POST['name']));
+	if (isset($_POST['shortcut']))		$field_shortcut		= trim(stripslashes($_POST['shortcut']));
+	if (isset($_POST['alternate']))	$field_alternate	= trim(stripslashes($_POST['alternate']));
+	if (isset($_POST['explain']))		$field_explain		= trim(stripslashes($_POST['explain']));
+	if (isset($_POST['icon']))			$field_icon			= trim(stripslashes($_POST['icon']));
+	if (isset($_POST['use_value']))	$field_use_value	= intval($_POST['use_value']);
+	if (isset($_POST['use_icon']))		$field_use_icon		= intval($_POST['use_icon']);
+	if (isset($_POST['url']))			$field_url			= trim(stripslashes($_POST['url']));
+	if (isset($_POST['internal']))		$field_internal		= intval($_POST['internal']);
+	if (isset($_POST['window']))		$field_window		= intval($_POST['window']);
+	if (isset($_POST['auth_logged']))	$field_auth_logged	= intval($_POST['auth_logged']);
+	if (isset($_POST['auth_admin']))	$field_auth_admin	= intval($_POST['auth_admin']);
+	if (isset($_POST['auth_pm']))		$field_auth_pm		= intval($_POST['auth_pm']);
+	if (isset($_POST['tree_id']))		$field_tree_id		= trim(stripslashes($_POST['tree_id']));
 
 	// process the action
 	if ($import)
@@ -735,13 +735,13 @@ if (($mode == 'edit') && (!empty($field_id) || $create_field))
 		if ($cancel)
 		{
 			// get back the start value
-			if (isset($HTTP_POST_VARS['sav_panel_id']))
+			if (isset($_POST['sav_panel_id']))
 			{
-				$panel_id = intval($HTTP_POST_VARS['sav_panel_id']);
+				$panel_id = intval($_POST['sav_panel_id']);
 			}
-			if (isset($HTTP_POST_VARS['sav_field_id']))
+			if (isset($_POST['sav_field_id']))
 			{
-				$field_id = intval($HTTP_POST_VARS['sav_field_id']);
+				$field_id = intval($_POST['sav_field_id']);
 			}
 
 			// return to the display
@@ -770,16 +770,16 @@ if (($mode == 'edit') && (!empty($field_id) || $create_field))
 
 					// recall the save field ref
 					$qname = '';
-					if (isset($HTTP_POST_VARS['sav_panel_id']))
+					if (isset($_POST['sav_panel_id']))
 					{
-						$panel_id = intval($HTTP_POST_VARS['sav_panel_id']);
+						$panel_id = intval($_POST['sav_panel_id']);
 						$qname = isset($qbar_keys[$panel_id][0]) ? $qbar_keys[$panel_id][0] : '';
 					}
 					if (empty($sav_mode))
 					{
-						if (isset($HTTP_POST_VARS['sav_field_id']))
+						if (isset($_POST['sav_field_id']))
 						{
-							$field_id = intval($HTTP_POST_VARS['sav_field_id']);
+							$field_id = intval($_POST['sav_field_id']);
 						}
 					}
 
@@ -837,18 +837,18 @@ if (($mode == 'edit') && (!empty($field_id) || $create_field))
 		else
 		{
 			$sav_panel_id = $panel_id;
-			if (isset($HTTP_POST_VARS['sav_panel_id']))
+			if (isset($_POST['sav_panel_id']))
 			{
-				$sav_panel_id = intval($HTTP_POST_VARS['sav_panel_id']);
+				$sav_panel_id = intval($_POST['sav_panel_id']);
 			}
 			else
 			{
 				$panel_id = 0;
 			}
 			$sav_field_id = $field_id;
-			if (isset($HTTP_POST_VARS['sav_field_id']))
+			if (isset($_POST['sav_field_id']))
 			{
-				$sav_field_id = intval($HTTP_POST_VARS['sav_field_id']);
+				$sav_field_id = intval($_POST['sav_field_id']);
 			}
 			$s_hidden_fields .= '<input type="hidden" name="sav_panel_id" value="' . $sav_panel_id . '" />';
 			if (!empty($sav_field_id))
@@ -1175,13 +1175,13 @@ if (($mode == 'edit') && empty($field_id) && !$create_field)
 	}
 
 	// get data from the formular
-	if (isset($HTTP_POST_VARS['panel_name']))			$panel_name				= trim(stripslashes($HTTP_POST_VARS['panel_name']));
-	if (isset($HTTP_POST_VARS['panel_class']))			$panel_class			= trim(stripslashes($HTTP_POST_VARS['panel_class']));
-	if (isset($HTTP_POST_VARS['panel_display']))		$panel_display			= intval($HTTP_POST_VARS['panel_display']);
-	if (isset($HTTP_POST_VARS['panel_cells']))			$panel_cells			= intval($HTTP_POST_VARS['panel_cells']);
-	if (isset($HTTP_POST_VARS['panel_in_table']))		$panel_in_table			= intval($HTTP_POST_VARS['panel_in_table']);
-	if (isset($HTTP_POST_VARS['panel_style']))			$panel_style			= intval($HTTP_POST_VARS['panel_style']);
-	if (isset($HTTP_POST_VARS['panel_sub_template']))	$panel_sub_template		= qbar_fix_sub_template($panel_style, trim(stripslashes($HTTP_POST_VARS['panel_sub_template'])));
+	if (isset($_POST['panel_name']))			$panel_name				= trim(stripslashes($_POST['panel_name']));
+	if (isset($_POST['panel_class']))			$panel_class			= trim(stripslashes($_POST['panel_class']));
+	if (isset($_POST['panel_display']))		$panel_display			= intval($_POST['panel_display']);
+	if (isset($_POST['panel_cells']))			$panel_cells			= intval($_POST['panel_cells']);
+	if (isset($_POST['panel_in_table']))		$panel_in_table			= intval($_POST['panel_in_table']);
+	if (isset($_POST['panel_style']))			$panel_style			= intval($_POST['panel_style']);
+	if (isset($_POST['panel_sub_template']))	$panel_sub_template		= qbar_fix_sub_template($panel_style, trim(stripslashes($_POST['panel_sub_template'])));
 
 	// process the action
 	if ($cancel)

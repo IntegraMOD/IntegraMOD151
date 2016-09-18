@@ -30,13 +30,13 @@ $phpbb_root_path = './../';
 include_once( $phpbb_root_path . 'extension.inc' );
 include_once( $phpbb_root_path . 'chatspot/chatspot_config.' . $phpEx );
 
-if( isset( $HTTP_GET_VARS[ 'room' ] ) )
-	$room_id = $HTTP_GET_VARS[ 'room' ];
+if( isset( $_GET[ 'room' ] ) )
+	$room_id = $_GET[ 'room' ];
 else
 	die( "ERROR:  Cannot determine room id." );
 	
-if( isset( $HTTP_GET_VARS[ 'sid' ] ) )
-	$SID = '&amp;sid=' . $HTTP_GET_VARS[ 'sid' ];
+if( isset( $_GET[ 'sid' ] ) )
+	$SID = '&amp;sid=' . $_GET[ 'sid' ];
 else
 	$SID = '';
 ?>

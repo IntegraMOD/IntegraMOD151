@@ -121,8 +121,7 @@ $template->set_filenames(array(
 	'body' => 'admin/smilies_upload_body.tpl')
 );
 
-$ini_val = ( phpversion() >= '4.0.0' ) ? 'ini_get' : 'get_cfg_var';
-$form_enctype = ( @$ini_val('file_uploads') == '0' || strtolower(@$ini_val('file_uploads') == 'off') || phpversion() == '4.0.4pl1' || ( phpversion() < '4.0.3' && @$ini_val('open_basedir') != '' ) ) ? '' : 'enctype="multipart/form-data"';
+$form_enctype = ( @ini_get('file_uploads') == '0' || strtolower(@ini_get('file_uploads') == 'off') ) ? '' : 'enctype="multipart/form-data"';
 
 if( !empty($form_enctype) )
 {
@@ -232,8 +231,6 @@ function smilies_upload()
 		return false;
 	}
 
-	$ini_val = ( @phpversion() >= '4.0.0' ) ? 'ini_get' : 'get_cfg_var';
-
 	if ( $filesize <= $cfg['max_filesize'] && $filesize > 0 )
 	{
 		preg_match('#image\/[x\-]*([a-z]+)#', $filetype, $filetype);
@@ -285,13 +282,8 @@ function smilies_upload()
 		return false;
 	}
 
-	if ( @$ini_val('open_basedir') != '' )
+	if ( ini_get('open_basedir') != '' )
 	{
-		if ( @phpversion() < '4.0.3' )
-		{
-			error_msg('SU_open_basedir');
-			return false;
-		}
 		$move_file = 'move_uploaded_file';
 	}
 	else

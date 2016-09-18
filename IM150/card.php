@@ -70,20 +70,20 @@ init_userprefs($userdata);
 include($phpbb_root_path . 'language/lang_' . $board_config['default_lang'] . '/lang_card.' . $phpEx);
 
 // Find what we are to do
-$mode = ( isset($HTTP_POST_VARS['report_x']) ) ? 'report' : 
-		((isset($HTTP_POST_VARS['report_reset_x']) ) ? 'report_reset' : 
-			((isset($HTTP_POST_VARS['ban_x']) ) ? 'ban' : 
-				((isset($HTTP_POST_VARS['unban_x']) ) ? 'unban' : 
-					((isset($HTTP_POST_VARS['warn_x']) ) ? 'warn' : 
-						((isset($HTTP_POST_VARS['block_x']) ) ? 'block' : ''
+$mode = ( isset($_POST['report_x']) ) ? 'report' : 
+		((isset($_POST['report_reset_x']) ) ? 'report_reset' : 
+			((isset($_POST['ban_x']) ) ? 'ban' : 
+				((isset($_POST['unban_x']) ) ? 'unban' : 
+					((isset($_POST['warn_x']) ) ? 'warn' : 
+						((isset($_POST['block_x']) ) ? 'block' : ''
 						)
 					)
 
 				)
 			)
 		);
-$post_id = ( isset($HTTP_POST_VARS['post_id']) ) ? intval ($HTTP_POST_VARS['post_id']) : '';
-$user_id = ( isset($HTTP_POST_VARS[POST_USERS_URL]) ) ? intval ($HTTP_POST_VARS[POST_USERS_URL]) : '';
+$post_id = ( isset($_POST['post_id']) ) ? intval ($_POST['post_id']) : '';
+$user_id = ( isset($_POST[POST_USERS_URL]) ) ? intval ($_POST[POST_USERS_URL]) : '';
 
 // check that we have all what is needed to know
 if ( !( $post_id + $user_id ) )

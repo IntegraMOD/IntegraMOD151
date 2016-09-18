@@ -40,8 +40,8 @@ if( $userdata[ 'user_level' ] != ADMIN )
 	exit();
 }
 
-if( isset( $HTTP_GET_VARS[ 'sid' ] ) )
-	$SID = '?sid=' . $HTTP_GET_VARS[ 'sid' ];
+if( isset( $_GET[ 'sid' ] ) )
+	$SID = '?sid=' . $_GET[ 'sid' ];
 else
 	$SID = '';
 

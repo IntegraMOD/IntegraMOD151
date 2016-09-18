@@ -110,9 +110,9 @@ function get_forums( $sel_id = 0 )
 }
 
 
-if ( isset( $HTTP_POST_VARS['mode'] ) || isset( $HTTP_GET_VARS['mode'] ) )
+if ( isset( $_POST['mode'] ) || isset( $_GET['mode'] ) )
 {
-	$mode = ( isset( $HTTP_POST_VARS['mode'] ) ) ? $HTTP_POST_VARS['mode'] : $HTTP_GET_VARS['mode'];
+	$mode = ( isset( $_POST['mode'] ) ) ? $_POST['mode'] : $_GET['mode'];
 }
 else
 {
@@ -138,9 +138,9 @@ switch ( $mode )
 {
 	case ( 'create' ):
 
-		if ( !$HTTP_POST_VARS['submit'] )
+		if ( !$_POST['submit'] )
 		{
-			$new_cat_name = stripslashes( $HTTP_POST_VARS['new_cat_name'] ); 
+			$new_cat_name = stripslashes( $_POST['new_cat_name'] ); 
 			
 			// Generate page
 			
@@ -202,31 +202,31 @@ switch ( $mode )
 					'S_ADMIN' => AUTH_ADMIN
 					 ) );
 		}
-		else if ( $HTTP_POST_VARS['submit'] )
+		else if ( $_POST['submit'] )
 		{
-			$cat_name = trim( $HTTP_POST_VARS['catname'] );
+			$cat_name = trim( $_POST['catname'] );
 
 			if ( !$cat_name )
 			{
 				echo "Please put a category name in!";
 			}
 
-			$cat_desc = $HTTP_POST_VARS['catdesc'];
-			$parent = intval( $HTTP_POST_VARS['parent'] );
-			$comments_forum_id = intval( $HTTP_POST_VARS['forum_id'] );
+			$cat_desc = $_POST['catdesc'];
+			$parent = intval( $_POST['parent'] );
+			$comments_forum_id = intval( $_POST['forum_id'] );
 			
 			if ( $comments_forum_id == 0 )
 			{
 				mx_message_die(GENERAL_MESSAGE , 'Select a Forum');	
 			}
-			$view_level = intval( $HTTP_POST_VARS['auth_view'] );
-			$post_level = intval( $HTTP_POST_VARS['auth_post'] );
-			$rate_level = intval( $HTTP_POST_VARS['auth_rate'] );
-			$comment_level = intval( $HTTP_POST_VARS['auth_comment'] );
-			$edit_level = intval( $HTTP_POST_VARS['auth_edit'] );
-			$delete_level = intval( $HTTP_POST_VARS['auth_delete'] );
-			$approval_level = intval( $HTTP_POST_VARS['auth_approval'] );
-			$approval_edit_level = intval( $HTTP_POST_VARS['auth_approval_edit'] );
+			$view_level = intval( $_POST['auth_view'] );
+			$post_level = intval( $_POST['auth_post'] );
+			$rate_level = intval( $_POST['auth_rate'] );
+			$comment_level = intval( $_POST['auth_comment'] );
+			$edit_level = intval( $_POST['auth_edit'] );
+			$delete_level = intval( $_POST['auth_delete'] );
+			$approval_level = intval( $_POST['auth_approval'] );
+			$approval_edit_level = intval( $_POST['auth_approval_edit'] );
 
 			$sql = "SELECT MAX(cat_order) AS cat_order
 			FROM " . KB_CATEGORIES_TABLE . " WHERE parent = $parent";
@@ -257,9 +257,9 @@ switch ( $mode )
 
 	case ( 'edit' ):
 
-		if ( !$HTTP_POST_VARS['submit'] )
+		if ( !$_POST['submit'] )
 		{
-			$cat_id = intval( $HTTP_GET_VARS['cat'] );
+			$cat_id = intval( $_GET['cat'] );
 
 			$sql = "SELECT * FROM " . KB_CATEGORIES_TABLE . " WHERE category_id = " . $cat_id;
 
@@ -376,23 +376,23 @@ switch ( $mode )
 					'S_HIDDEN' => '<input type="hidden" name="catid" value="' . $cat_id . '">' ) 
 				);
 		}
-		else if ( $HTTP_POST_VARS['submit'] )
+		else if ( $_POST['submit'] )
 		{
-			$cat_id = intval( $HTTP_POST_VARS['catid'] );
-			$cat_name = trim( $HTTP_POST_VARS['catname'] );
-			$cat_desc = $HTTP_POST_VARS['catdesc'];
-			$number_articles = intval( $HTTP_POST_VARS['number_articles'] );
-			$parent = intval( $HTTP_POST_VARS['parent'] );
-			$comments_forum_id = intval( $HTTP_POST_VARS['forum_id'] );
+			$cat_id = intval( $_POST['catid'] );
+			$cat_name = trim( $_POST['catname'] );
+			$cat_desc = $_POST['catdesc'];
+			$number_articles = intval( $_POST['number_articles'] );
+			$parent = intval( $_POST['parent'] );
+			$comments_forum_id = intval( $_POST['forum_id'] );
 			
-			$view_level = intval( $HTTP_POST_VARS['auth_view'] );
-			$post_level = intval( $HTTP_POST_VARS['auth_post'] );
-			$rate_level = intval( $HTTP_POST_VARS['auth_rate'] );
-			$comment_level = intval( $HTTP_POST_VARS['auth_comment'] );
-			$edit_level = intval( $HTTP_POST_VARS['auth_edit'] );
-			$delete_level = intval( $HTTP_POST_VARS['auth_delete'] );
-			$approval_level = intval( $HTTP_POST_VARS['auth_approval'] );
-			$approval_edit_level = intval( $HTTP_POST_VARS['auth_approval_edit'] );
+			$view_level = intval( $_POST['auth_view'] );
+			$post_level = intval( $_POST['auth_post'] );
+			$rate_level = intval( $_POST['auth_rate'] );
+			$comment_level = intval( $_POST['auth_comment'] );
+			$edit_level = intval( $_POST['auth_edit'] );
+			$delete_level = intval( $_POST['auth_delete'] );
+			$approval_level = intval( $_POST['auth_approval'] );
+			$approval_edit_level = intval( $_POST['auth_approval_edit'] );
 
 
 			if ( !$cat_name )
@@ -415,9 +415,9 @@ switch ( $mode )
 
 	case ( 'delete' ):
 
-		if ( !$HTTP_POST_VARS['submit'] )
+		if ( !$_POST['submit'] )
 		{
-			$cat_id = $HTTP_GET_VARS['cat'];
+			$cat_id = $_GET['cat'];
 
 			$sql = "SELECT *  
        		FROM " . KB_CATEGORIES_TABLE . " WHERE category_id = '" . $cat_id . "'";
@@ -453,10 +453,10 @@ switch ( $mode )
 					'CAT_NAME' => $cat_name ) 
 				);
 		}
-		else if ( $HTTP_POST_VARS['submit'] )
+		else if ( $_POST['submit'] )
 		{
-			$new_category = $HTTP_POST_VARS['move_id'];
-			$old_category = $HTTP_POST_VARS['catid'];
+			$new_category = $_POST['move_id'];
+			$old_category = $_POST['catid'];
 
 			if ( $new_category != '0' )
 			{
@@ -530,7 +530,7 @@ switch ( $mode )
 
 		if ( $mode == "up" )
 		{
-			$cat_id = $HTTP_GET_VARS['cat'];
+			$cat_id = $_GET['cat'];
 
 			$sql = "SELECT *  
 	  	   FROM " . KB_CATEGORIES_TABLE . " 
@@ -569,7 +569,7 @@ switch ( $mode )
 
 		if ( $mode == "down" )
 		{
-			$cat_id = $HTTP_GET_VARS['cat'];
+			$cat_id = $_GET['cat'];
 
 			$sql = "SELECT *  
 	  	   FROM " . KB_CATEGORIES_TABLE . " 

@@ -13,7 +13,7 @@
 define('IN_PHPBB', true);
 define('CT_SECLEVEL', 'MEDIUM');
 $ct_ignorepvar = array('helpbox','delete','deleteall','phpBBSecurity_answer','phpBBSecurity_question','user_interests');
-if ( (isset($HTTP_GET_VARS['mode']) && ($HTTP_GET_VARS['mode'] == 'viewprofile')) || (isset($HTTP_POST_VARS['mode']) && ($HTTP_POST_VARS['mode'] == 'viewprofile')) )
+if ( (isset($_GET['mode']) && ($_GET['mode'] == 'viewprofile')) || (isset($_POST['mode']) && ($_POST['mode'] == 'viewprofile')) )
 {
 	define('IN_CASHMOD', true);
 	define('CM_VIEWPROFILE',true);
@@ -49,9 +49,9 @@ $server_url = $server_protocol . $server_name . $server_port . $script_name;
 //
 //  get viewed user id
 $view_user_id = ANONYMOUS;
-if ( isset($HTTP_POST_VARS[POST_USERS_URL]) || isset($HTTP_GET_VARS[POST_USERS_URL]) )
+if ( isset($_POST[POST_USERS_URL]) || isset($_GET[POST_USERS_URL]) )
 {
-	$view_user_id = isset($HTTP_POST_VARS[POST_USERS_URL]) ? intval($HTTP_POST_VARS[POST_USERS_URL]) : intval($HTTP_GET_VARS[POST_USERS_URL]);
+	$view_user_id = isset($_POST[POST_USERS_URL]) ? intval($_POST[POST_USERS_URL]) : intval($_GET[POST_USERS_URL]);
 }
 if ($view_user_id==ANONYMOUS) $view_user_id = $userdata['user_id'];
 
@@ -82,9 +82,9 @@ for ($i=0; $i < count($module['sub']); $i++)
 
 // session id get
 $sid = '';
-if (!empty($HTTP_POST_VARS['sid']) || !empty($HTTP_GET_VARS['sid']))
+if (!empty($_POST['sid']) || !empty($_GET['sid']))
 {
-   $sid = (!empty($HTTP_POST_VARS['sid'])) ? $HTTP_POST_VARS['sid'] : $HTTP_GET_VARS['sid'];
+   $sid = (!empty($_POST['sid'])) ? $_POST['sid'] : $_GET['sid'];
 } 
 
 //
@@ -102,21 +102,21 @@ if ( !$userdata['session_logged_in'] ){
 $mode = 'home';
 }
 // PCP Extra :: END
-if ( isset($HTTP_POST_VARS['mode']) || isset($HTTP_GET_VARS['mode']) )
+if ( isset($_POST['mode']) || isset($_GET['mode']) )
 {
-	$mode = isset($HTTP_POST_VARS['mode']) ? $HTTP_POST_VARS['mode'] : $HTTP_GET_VARS['mode'];
+	$mode = isset($_POST['mode']) ? $_POST['mode'] : $_GET['mode'];
 	$mode = htmlspecialchars($mode);
 }
-if ( isset($HTTP_POST_VARS['sub']) || isset($HTTP_GET_VARS['sub']) ){
-	$sub = isset($HTTP_POST_VARS['sub']) ? $HTTP_POST_VARS['sub'] : $HTTP_GET_VARS['sub'];
+if ( isset($_POST['sub']) || isset($_GET['sub']) ){
+	$sub = isset($_POST['sub']) ? $_POST['sub'] : $_GET['sub'];
 	$sub = htmlspecialchars($sub);
 }
-if ( isset($HTTP_POST_VARS['mod']) || isset($HTTP_GET_VARS['mod']) ){
-	$mod = isset($HTTP_POST_VARS['mod']) ? $HTTP_POST_VARS['mod'] : $HTTP_GET_VARS['mod'];
+if ( isset($_POST['mod']) || isset($_GET['mod']) ){
+	$mod = isset($_POST['mod']) ? $_POST['mod'] : $_GET['mod'];
 	$mod = htmlspecialchars($mod);
 }
-if ( isset($HTTP_POST_VARS['msub']) || isset($HTTP_GET_VARS['msub']) ){
-	$msub = isset($HTTP_POST_VARS['msub']) ? $HTTP_POST_VARS['msub'] : $HTTP_GET_VARS['msub'];
+if ( isset($_POST['msub']) || isset($_GET['msub']) ){
+	$msub = isset($_POST['msub']) ? $_POST['msub'] : $_GET['msub'];
 	$msub = htmlspecialchars($msub);
 }
 if ( $mode == 'activate' ) 
@@ -138,7 +138,7 @@ if ($mode == 'privmsg_popup')
 if ( $mode == 'confirm' && !function_exists('imagettfbbox') && !function_exists('imagettftext'))
 {
 	// Visual Confirmation
-	if ( $userdata['session_logged_in'] && (htmlspecialchars($HTTP_GET_VARS['id']) != 'Admin'))
+	if ( $userdata['session_logged_in'] && (htmlspecialchars($_GET['id']) != 'Admin'))
 	{
 		exit;
 	}
@@ -148,7 +148,7 @@ if ( $mode == 'confirm' && !function_exists('imagettfbbox') && !function_exists(
 if ( $mode == 'confirm' && function_exists('imagettfbbox') && function_exists('imagettftext'))
 {
 	// Visual Confirmation
-	if ( $userdata['session_logged_in'] && (htmlspecialchars($HTTP_GET_VARS['id']) != 'Admin'))
+	if ( $userdata['session_logged_in'] && (htmlspecialchars($_GET['id']) != 'Admin'))
 	{
 		exit;
 	}
@@ -224,24 +224,24 @@ if ( ($cur_subopt < 0) && (count($module['sub'][$curopt]) > 0) )
 
 // action
 $set = '';
-if ( isset($HTTP_POST_VARS['set']) || isset($HTTP_GET_VARS['set']) )
+if ( isset($_POST['set']) || isset($_GET['set']) )
 {
-	$set = isset($HTTP_POST_VARS['set']) ? $HTTP_POST_VARS['set'] : $HTTP_GET_VARS['set'];
+	$set = isset($_POST['set']) ? $_POST['set'] : $_GET['set'];
 }
 $no_header = in_array($set, array('add', 'remove'));
 
 // Control
-$submit = ( isset($HTTP_POST_VARS['submit']) || (($mode=='privmsg') && isset($HTTP_POST_VARS['post'])) );
-$reset = isset($HTTP_POST_VARS['reset']);
-$remove = isset($HTTP_POST_VARS['remove']);
-$adduser = isset($HTTP_POST_VARS['adduser']);
-$preview = isset($HTTP_POST_VARS['preview']);
-$cancel = isset($HTTP_POST_VARS['cancel']);
-$confirm = isset($HTTP_POST_VARS['confirm']);
+$submit = ( isset($_POST['submit']) || (($mode=='privmsg') && isset($_POST['post'])) );
+$reset = isset($_POST['reset']);
+$remove = isset($_POST['remove']);
+$adduser = isset($_POST['adduser']);
+$preview = isset($_POST['preview']);
+$cancel = isset($_POST['cancel']);
+$confirm = isset($_POST['confirm']);
 
 // privmsg
-$save = isset($HTTP_POST_VARS['save']);
-$mark_list = ( !empty($HTTP_POST_VARS['mark']) ) ? $HTTP_POST_VARS['mark'] : 0;
+$save = isset($_POST['save']);
+$mark_list = ( !empty($_POST['mark']) ) ? $_POST['mark'] : 0;
 $save = ($save && $mark_list && ($sub != 'savebox') && ($sub != 'outbox'));
 
 // reload the user row

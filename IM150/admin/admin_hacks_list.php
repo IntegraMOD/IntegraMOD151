@@ -77,15 +77,15 @@ $params = array('mode' => '', 'hack_id' => '');
 foreach($params as $var => $default)
 {
 	$$var = $default;
-	if( isset($HTTP_POST_VARS[$var]) || isset($HTTP_GET_VARS[$var]) )
+	if( isset($_POST[$var]) || isset($_GET[$var]) )
 	{
-		$$var = ( isset($HTTP_POST_VARS[$var]) ) ? $HTTP_POST_VARS[$var] : $HTTP_GET_VARS[$var];
+		$$var = ( isset($_POST[$var]) ) ? $_POST[$var] : $_GET[$var];
 	}
 }
 
-if (count($HTTP_POST_VARS))
+if (count($_POST))
 {
-	foreach($HTTP_POST_VARS as $key => $valx)
+	foreach($_POST as $key => $valx)
 	{
 		/*******************************************************************************************
 		/** Check for deletion items
@@ -132,13 +132,13 @@ if (count($HTTP_POST_VARS))
 			foreach ($dbase_fields as $val)
 			{
 				/* Check for required items */
-				if (in_array($val, $required_fields) && $HTTP_POST_VARS[$val] == '')
+				if (in_array($val, $required_fields) && $_POST[$val] == '')
 				{
 					message_die(GENERAL_ERROR, $lang['Required_Field_Missing'], '', __LINE__, __FILE__);
 				}
 				
 				/* Compile the SQL Lists */
-				$update_sql .= ($update_sql != '') ? ", $val = '" . addslashes($HTTP_POST_VARS[$val]) . "'" : "$val = '" . addslashes($HTTP_POST_VARS[$val]) . "'";
+				$update_sql .= ($update_sql != '') ? ", $val = '" . addslashes($_POST[$val]) . "'" : "$val = '" . addslashes($_POST[$val]) . "'";
 			}
 			
 			$sql = 'UPDATE ' . HACKS_LIST_TABLE . "
@@ -150,7 +150,7 @@ if (count($HTTP_POST_VARS))
 			}
 			else
 			{
-				$status_message .= sprintf($lang['Updated_Hack'], stripslashes($HTTP_POST_VARS['hack_name']));
+				$status_message .= sprintf($lang['Updated_Hack'], stripslashes($_POST['hack_name']));
 			}
 		}
 		
@@ -164,14 +164,14 @@ if (count($HTTP_POST_VARS))
 			foreach ($dbase_fields as $val)
 			{
 				/* Check for required items */
-				if (in_array($val, $required_fields) && $HTTP_POST_VARS[$val] == '')
+				if (in_array($val, $required_fields) && $_POST[$val] == '')
 				{
 					message_die(GENERAL_ERROR, $lang['Required_Field_Missing'], '', __LINE__, __FILE__);
 				}
 				
 				/* Compile the SQL Lists */
 				$insert_sql .= ($insert_sql != '') ? ", $val" : $val;
-				$insert_val_sql .= ($insert_val_sql != '') ? ", '" . addslashes($HTTP_POST_VARS[$val]) . "'" : "'" . addslashes($HTTP_POST_VARS[$val]) . "'";
+				$insert_val_sql .= ($insert_val_sql != '') ? ", '" . addslashes($_POST[$val]) . "'" : "'" . addslashes($_POST[$val]) . "'";
 			}
 
 			$sql = 'INSERT INTO ' . HACKS_LIST_TABLE . "
@@ -184,7 +184,7 @@ if (count($HTTP_POST_VARS))
 			}
 			else
 			{
-				$status_message .= sprintf($lang['Added_Hack'], stripslashes($HTTP_POST_VARS['hack_name']));
+				$status_message .= sprintf($lang['Added_Hack'], stripslashes($_POST['hack_name']));
 			}
 		}
 	}

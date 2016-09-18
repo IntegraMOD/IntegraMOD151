@@ -44,9 +44,9 @@ if ( !$cash->currency_count() )
 //
 // Mode setting
 //
-if ( isset($HTTP_POST_VARS['mode']) || isset($HTTP_GET_VARS['mode']) )
+if ( isset($_POST['mode']) || isset($_GET['mode']) )
 {
-	$mode = ( isset($HTTP_POST_VARS['mode']) ) ? $HTTP_POST_VARS['mode'] : $HTTP_GET_VARS['mode'];
+	$mode = ( isset($_POST['mode']) ) ? $_POST['mode'] : $_GET['mode'];
 }
 else
 {
@@ -56,7 +56,7 @@ else
 //
 // Begin program proper
 //
-if ( isset($HTTP_POST_VARS['submit']) )
+if ( isset($_POST['submit']) )
 {
 	$cash_forums = array();
 	$current_list = array();
@@ -72,15 +72,15 @@ if ( isset($HTTP_POST_VARS['submit']) )
 	while ( $c_cur = &$cash->currency_next($cm_i) )
 	{
 		$varname = 'cash_' . $c_cur->id();
-		if ( isset($HTTP_POST_VARS[$varname]) &&
-			 is_array($HTTP_POST_VARS[$varname]) )
+		if ( isset($_POST[$varname]) &&
+			 is_array($_POST[$varname]) )
 		{
 			$activated = array(array(),array());
 			for ( $i = 0; $i < count($cash_forums); $i++ )
 			{
-				if ( isset($HTTP_POST_VARS[$varname][$cash_forums[$i]]) )
+				if ( isset($_POST[$varname][$cash_forums[$i]]) )
 				{
-					$activated[intval($HTTP_POST_VARS[$varname][$cash_forums[$i]])][] = $cash_forums[$i];
+					$activated[intval($_POST[$varname][$cash_forums[$i]])][] = $cash_forums[$i];
 				}
 			}
 			$sql_list = "";

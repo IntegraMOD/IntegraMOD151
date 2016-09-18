@@ -66,55 +66,55 @@ include($phpbb_root_path . 'attach_mod/includes/functions_admin.' . $phpEx);
 //
 // Init Vars
 //
-if( isset($HTTP_POST_VARS['mode']) || isset($HTTP_GET_VARS['mode']) )
+if( isset($_POST['mode']) || isset($_GET['mode']) )
 {
-	$mode = ( isset($HTTP_POST_VARS['mode']) ) ? $HTTP_POST_VARS['mode'] : $HTTP_GET_VARS['mode'];
+	$mode = ( isset($_POST['mode']) ) ? $_POST['mode'] : $_GET['mode'];
 }
 else
 {
 	$mode = '';
 }
 
-if( isset($HTTP_POST_VARS['e_mode']) || isset($HTTP_GET_VARS['e_mode']) )
+if( isset($_POST['e_mode']) || isset($_GET['e_mode']) )
 {
-	$e_mode = ( isset($HTTP_POST_VARS['e_mode']) ) ? $HTTP_POST_VARS['e_mode'] : $HTTP_GET_VARS['e_mode'];
+	$e_mode = ( isset($_POST['e_mode']) ) ? $_POST['e_mode'] : $_GET['e_mode'];
 }
 else
 {
 	$e_mode = '';
 }
 
-if(isset($HTTP_GET_VARS['size']) || isset($HTTP_POST_VARS['size']))
+if(isset($_GET['size']) || isset($_POST['size']))
 {
-	$size = (isset($HTTP_POST_VARS['size'])) ? $HTTP_POST_VARS['size'] : $HTTP_GET_VARS['size'];
+	$size = (isset($_POST['size'])) ? $_POST['size'] : $_GET['size'];
 }
 else
 {
 	$size = '';
 }
 
-if(isset($HTTP_GET_VARS['quota_size']) || isset($HTTP_POST_VARS['quota_size']))
+if(isset($_GET['quota_size']) || isset($_POST['quota_size']))
 {
-	$quota_size = (isset($HTTP_POST_VARS['quota_size'])) ? $HTTP_POST_VARS['quota_size'] : $HTTP_GET_VARS['quota_size'];
+	$quota_size = (isset($_POST['quota_size'])) ? $_POST['quota_size'] : $_GET['quota_size'];
 }
 else
 {
 	$quota_size = '';
 }
 
-if(isset($HTTP_GET_VARS['pm_size']) || isset($HTTP_POST_VARS['pm_size']))
+if(isset($_GET['pm_size']) || isset($_POST['pm_size']))
 {
-	$pm_size = (isset($HTTP_POST_VARS['pm_size'])) ? $HTTP_POST_VARS['pm_size'] : $HTTP_GET_VARS['pm_size'];
+	$pm_size = (isset($_POST['pm_size'])) ? $_POST['pm_size'] : $_GET['pm_size'];
 }
 else
 {
 	$pm_size = '';
 }
 
-$submit = (isset($HTTP_POST_VARS['submit'])) ? TRUE : FALSE;
-$check_upload = (isset($HTTP_POST_VARS['settings'])) ? TRUE : FALSE;
-$check_image_cat = (isset($HTTP_POST_VARS['cat_settings'])) ? TRUE : FALSE;
-$search_imagick = (isset($HTTP_POST_VARS['search_imagick'])) ? TRUE : FALSE;
+$submit = (isset($_POST['submit'])) ? TRUE : FALSE;
+$check_upload = (isset($_POST['settings'])) ? TRUE : FALSE;
+$check_image_cat = (isset($_POST['cat_settings'])) ? TRUE : FALSE;
+$search_imagick = (isset($_POST['search_imagick'])) ? TRUE : FALSE;
 
 //
 // Re-evaluate the Attachment Configuration
@@ -132,7 +132,7 @@ while ($row = $db->sql_fetchrow($result))
 	$config_name = $row['config_name'];
 	$config_value = $row['config_value'];
 
-	$new_attach[$config_name] = ( isset($HTTP_POST_VARS[$config_name]) ) ? trim($HTTP_POST_VARS[$config_name]) : trim($attach_config[$config_name]);
+	$new_attach[$config_name] = ( isset($_POST[$config_name]) ) ? trim($_POST[$config_name]) : trim($attach_config[$config_name]);
 
 	if ((empty($size)) && (!$submit) && ($config_name == 'max_filesize'))
 	{
@@ -597,7 +597,7 @@ if ($submit && $mode == 'shadow')
 	//
 	// Delete Attachments from file system...
 	//
-	$attach_file_list = ( isset($HTTP_POST_VARS['attach_file_list']) ) ?  $HTTP_POST_VARS['attach_file_list'] : array();
+	$attach_file_list = ( isset($_POST['attach_file_list']) ) ?  $_POST['attach_file_list'] : array();
 	
 	for ($i = 0; $i < count($attach_file_list); $i++)
 	{
@@ -608,7 +608,7 @@ if ($submit && $mode == 'shadow')
 	//
 	// Delete Attachments from table...
 	//
-	$attach_id_list = ( isset($HTTP_POST_VARS['attach_id_list']) ) ?  $HTTP_POST_VARS['attach_id_list'] : array();
+	$attach_id_list = ( isset($_POST['attach_id_list']) ) ?  $_POST['attach_id_list'] : array();
 
 	$attach_id_sql = implode(', ', $attach_id_list);
 
@@ -1244,10 +1244,10 @@ if ($submit && $mode == 'quota')
 	//
 	// Change Quota Limit
 	//
-	$quota_change_list = ( isset($HTTP_POST_VARS['quota_change_list']) ) ? $HTTP_POST_VARS['quota_change_list'] : array();
-	$quota_desc_list = ( isset($HTTP_POST_VARS['quota_desc_list']) ) ? $HTTP_POST_VARS['quota_desc_list'] : array();
-	$filesize_list = ( isset($HTTP_POST_VARS['max_filesize_list']) ) ? $HTTP_POST_VARS['max_filesize_list'] : array();
-	$size_select_list = ( isset($HTTP_POST_VARS['size_select_list']) ) ? $HTTP_POST_VARS['size_select_list'] : array();
+	$quota_change_list = ( isset($_POST['quota_change_list']) ) ? $_POST['quota_change_list'] : array();
+	$quota_desc_list = ( isset($_POST['quota_desc_list']) ) ? $_POST['quota_desc_list'] : array();
+	$filesize_list = ( isset($_POST['max_filesize_list']) ) ? $_POST['max_filesize_list'] : array();
+	$size_select_list = ( isset($_POST['size_select_list']) ) ? $_POST['size_select_list'] : array();
 
 	$allowed_list = array();
 
@@ -1268,7 +1268,7 @@ if ($submit && $mode == 'quota')
 	//
 	// Delete Quota Limits
 	//
-	$quota_id_list = ( isset($HTTP_POST_VARS['quota_id_list']) ) ?  $HTTP_POST_VARS['quota_id_list'] : array();
+	$quota_id_list = ( isset($_POST['quota_id_list']) ) ?  $_POST['quota_id_list'] : array();
 
 	$quota_id_sql = implode(', ', $quota_id_list);
 
@@ -1298,10 +1298,10 @@ if ($submit && $mode == 'quota')
 	//
 	// Add Quota Limit ?
 	//
-	$quota_desc = ( isset($HTTP_POST_VARS['quota_description']) ) ?  trim(strip_tags($HTTP_POST_VARS['quota_description'])) : '';
-	$filesize = ( isset($HTTP_POST_VARS['add_max_filesize']) ) ?  $HTTP_POST_VARS['add_max_filesize'] : '';
-	$size_select = ( isset($HTTP_POST_VARS['add_size_select']) ) ?  $HTTP_POST_VARS['add_size_select'] : '';
-	$add = ( isset($HTTP_POST_VARS['add_quota_check']) ) ? TRUE : FALSE;
+	$quota_desc = ( isset($_POST['quota_description']) ) ?  trim(strip_tags($_POST['quota_description'])) : '';
+	$filesize = ( isset($_POST['add_max_filesize']) ) ?  $_POST['add_max_filesize'] : '';
+	$size_select = ( isset($_POST['add_size_select']) ) ?  $_POST['add_size_select'] : '';
+	$add = ( isset($_POST['add_quota_check']) ) ? TRUE : FALSE;
 
 	if ($quota_desc != '' && $add)
 	{
@@ -1431,9 +1431,9 @@ if ($mode == 'quota')
 
 if ($mode == 'quota' && $e_mode == 'view_quota')
 {
-	if( isset($HTTP_POST_VARS['quota_id']) || isset($HTTP_GET_VARS['quota_id']) )
+	if( isset($_POST['quota_id']) || isset($_GET['quota_id']) )
 	{
-		$quota_id = ( isset($HTTP_POST_VARS['quota_id']) ) ? intval($HTTP_POST_VARS['quota_id']) : intval($HTTP_GET_VARS['quota_id']);
+		$quota_id = ( isset($_POST['quota_id']) ) ? intval($_POST['quota_id']) : intval($_GET['quota_id']);
 	}
 	else
 	{

@@ -64,7 +64,7 @@ if(!DISABLE_PREFERENCE_SAVING && !$board_config['gzip_compress']) ob_end_flush()
 /** Get parameters.  'var_name' => 'default_value'
 /** Also get any saved cookie preferences.
 /******************************************************************************************/
-$preference_cookie = (isset($HTTP_COOKIE_VARS[MOD_COOKIE_PREF_NAME])) ? unserialize(stripslashes($HTTP_COOKIE_VARS[MOD_COOKIE_PREF_NAME])) : array();
+$preference_cookie = (isset($_COOKIE[MOD_COOKIE_PREF_NAME])) ? unserialize(stripslashes($_COOKIE[MOD_COOKIE_PREF_NAME])) : array();
 $preference_cookie['test'] = true;
 $params = array('start' => 0, 'order' => 'DESC', 'mode' => 'topic_time', 'delete_all_before_date' => 0,
 'del_month' => 1, 'del_day' => 1, 'del_year' => 1970);
@@ -73,9 +73,9 @@ $params_ignore = array('delete_all_before_date');
 foreach($params as $var => $default)
 {
 	$$var = (isset($preference_cookie[MOD_CODE."_$var"]) && !in_array($var, $params_ignore)) ? $preference_cookie[MOD_CODE."_$var"] : $default;
-	if(isset($HTTP_POST_VARS[$var]) || isset($HTTP_GET_VARS[$var]))
+	if(isset($_POST[$var]) || isset($_GET[$var]))
 	{
-		$preference_cookie[MOD_CODE."_$var"] = (isset($HTTP_POST_VARS[$var])) ? $HTTP_POST_VARS[$var] : $HTTP_GET_VARS[$var];
+		$preference_cookie[MOD_CODE."_$var"] = (isset($_POST[$var])) ? $_POST[$var] : $_GET[$var];
 		$$var = $preference_cookie[MOD_CODE."_$var"];
 	}
 }
@@ -219,9 +219,9 @@ if ($delete_all_before_date)
 }
 else
 {
-	if (count($HTTP_POST_VARS))
+	if (count($_POST))
 	{
-		foreach($HTTP_POST_VARS as $key => $val)
+		foreach($_POST as $key => $val)
 		{
 			if (substr_count($key, 'delete_id_'))
 			{
@@ -299,7 +299,7 @@ $template->assign_vars(array(
 'S_ORDER' => $order,
 'S_MODE_SELECT' => topic_shadow_make_drop_box('mode'),
 'S_ORDER_SELECT' => topic_shadow_make_drop_box('order'),
-'S_MODE_ACTION' => append_sid($HTTP_SERVER_VARS['PHP_SELF']))
+'S_MODE_ACTION' => append_sid($_SERVER['PHP_SELF']))
 );
 
 /* See if we actually have any shadow topics */
