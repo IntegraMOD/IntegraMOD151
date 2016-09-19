@@ -20,10 +20,10 @@ init_userprefs($userdata);
 // End session management
 
 // VALIDATE GET VARS
-$s = intval($HTTP_GET_VARS['s']);
-$m = intval($HTTP_GET_VARS['m']);
+$s = intval($_GET['s']);
+$m = intval($_GET['m']);
 $this_url = append_sid($PHP_SELF).'?m='.$m.'&s='.$s;
-$n = intval($HTTP_GET_VARS['n']);
+$n = intval($_GET['n']);
 
 // MUST BE LOGGED IN
 if ( !$userdata['session_logged_in'] )

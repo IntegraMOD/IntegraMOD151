@@ -91,21 +91,11 @@
 
 <!-- BEGIN url --><a href="{URL}" target="_blank" class="postlink">{DESCRIPTION}</a><!-- END url -->
 <!-- BEGIN email --><a href="mailto:{EMAIL}">{EMAIL}</a><!-- END email -->
-<!-- BEGIN GVideo -->
-<object width="425" height="350">
-   <param name="movie" value="http://video.google.com/googleplayer.swf?docId={GVIDEOID}"></param>
-	<embed style="width:400px; height:326px;" id="VideoPlayback"
-	align="middle" type="application/x-shockwave-flash"
-	src="http://video.google.com/googleplayer.swf?docId={GVIDEOID}"
-	allowScriptAccess="sameDomain" quality="best" bgcolor="#ffffff"
-	scale="noScale" salign="TL"  FlashVars="playerMode=embedded">
-	</embed>
-</object><br />
-<a href="http://video.google.com/googleplayer.swf?docId={GVIDEOID}" target="_blank">{GVIDEOLINK}</a><br />
-<!-- END GVideo -->
 <!-- BEGIN youtube -->
-<iframe width="560" height="315" src="https://www.youtube.com/embed/{YOUTUBEID}" frameborder="0" allowfullscreen></iframe>
-<br />
+<object width="425" height="350">
+   <param name="movie" value="http://www.youtube.com/v/{YOUTUBEID}"></param>
+   <embed src="http://www.youtube.com/v/{YOUTUBEID}" type="application/x-shockwave-flash" width="425" height="350"></embed>
+</object><br />
 <a href="http://youtube.com/watch?v={YOUTUBEID}" target="_blank">{YOUTUBELINK}</a><br />
 <!-- END youtube --> 
 <!-- BEGIN acronym_open --><acronym onMouseOver="createTitle(this, '{DESCRIPTION}', event.pageX, event.pageY, 1);" onMouseOut="destroyTitle();"><!-- END acronym_open -->
@@ -182,27 +172,30 @@
 <!-- BEGIN poet_open --><div tag='{POET}' style='display:none'><!-- END poet_open -->
 <!-- BEGIN poet_close --></div><script>doPoetry()</script><!-- END poet_close -->
 
-<!-- BEGIN ram --><div align="center"><embed src="{URL}" align="center" width="275" height="40" type="audio/x-pn-realaudio-plugin" console="cons" controls="ControlPanel" autostart="false"></embed></div><!-- END ram -->
+<!-- BEGIN ram --><div align="center"><embed src="{URL}" align="center" 
+width="275" height="40" type="audio/x-pn-realaudio-plugin" console="cons" 
+controls="ControlPanel" autostart="false"></embed></div><!-- END ram -->
 
 <!-- BEGIN flash --><!-- URL's used in the movie--> 
 <!-- text used in the movie--> 
 <!-- --> 
-<object classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" codebase="http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=5,0,0,0" WIDTH={WIDTH} HEIGHT={HEIGHT}> 
-	<param name=movie VALUE="{URL}"><PARAM NAME=quality VALUE=high> <PARAM NAME=scale VALUE=noborder> <PARAM NAME=wmode VALUE=transparent> <PARAM NAME=bgcolor VALUE=#000000> 
-	<embed src="{URL}" quality=high scale=noborder wmode=transparent bgcolor=#000000 WIDTH={WIDTH} HEIGHT={HEIGHT} TYPE="application/x-shockwave-flash" PLUGINSPAGE="http://www.macromedia.com/shockwave/download/index.cgi?P1_Prod_Version=ShockwaveFlash"></embed>
-</object>
-<!-- END flash --> 
+<OBJECT classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" codebase="http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=5,0,0,0" WIDTH={WIDTH} HEIGHT={HEIGHT}> 
+<PARAM NAME=movie VALUE="{URL}"><PARAM NAME=quality VALUE=high> <PARAM NAME=scale VALUE=noborder> <PARAM NAME=wmode VALUE=transparent> <PARAM NAME=bgcolor VALUE=#000000> 
+  <EMBED src="{URL}" quality=high scale=noborder wmode=transparent bgcolor=#000000 WIDTH={WIDTH} HEIGHT={HEIGHT} TYPE="application/x-shockwave-flash" PLUGINSPAGE="http://www.macromedia.com/shockwave/download/index.cgi?P1_Prod_Version=ShockwaveFlash">
+</EMBED></OBJECT><!-- END flash --> 
 
-<!-- BEGIN stream -->
-<object id="wmp" width={WIDTH} height={HEIGHT} classid="CLSID:22d6f312-b0f6-11d0-94ab-0080c74c7e95" codebase="http://activex.microsoft.com/activex/controls/mplayer/en/nsmp2inf.cab#Version=6,0,0,0" standby="Loading Microsoft Windows Media Player components..." type="application/x-oleobject"> 
-	<param name="FileName" value="{URL}"> 
-	<param name="ShowControls" value="1"> 
-	<param name="ShowDisplay" value="0"> 
-	<param name="ShowStatusBar" value="1"> 
-	<param name="AutoSize" value="1"> 
-    <embed type="application/x-mplayer2" pluginspage="http://www.microsoft.com/windows95/downloads/contents/wurecommended/s_wufeatured/mediaplayer/default.asp" src="{URL}" name=MediaPlayer2 showcontrols=1 showdisplay=0 showstatusbar=1 autosize=1 visible=1 animationatstart=0 transparentatstart=1 loop=0 height=70 width=300></embed>
-</object>
-<!-- END stream -->
+<!-- BEGIN stream --><object id="wmp" width={WIDTH} height={HEIGHT} classid="CLSID:22d6f312-b0f6-11d0-94ab-0080c74c7e95" 
+codebase="http://activex.microsoft.com/activex/controls/mplayer/en/nsmp2inf.cab#Version=6,0,0,0" 
+standby="Loading Microsoft Windows Media Player components..." type="application/x-oleobject"> 
+<param name="FileName" value="{URL}"> 
+<param name="ShowControls" value="1"> 
+<param name="ShowDisplay" value="0"> 
+<param name="ShowStatusBar" value="1"> 
+<param name="AutoSize" value="1"> 
+        <embed type="application/x-mplayer2" 
+pluginspage="http://www.microsoft.com/windows95/downloads/contents/wurecommended/s_wufeatured/mediaplayer/default.asp" 
+src="{URL}" name=MediaPlayer2 showcontrols=1 showdisplay=0 showstatusbar=1 autosize=1 visible=1 animationatstart=0 transparentatstart=1 loop=0 height=70 width=300> 
+</embed></object><!-- END stream -->
 
 <!-- BEGIN video -->
 <div align="center"><embed src="{URL}" width={WIDTH} height={HEIGHT}></embed></div>

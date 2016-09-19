@@ -102,5 +102,4 @@ class pafiledb_license extends pafiledb_public
 		$this->display($lang['Download'], 'pa_license_body.tpl');
 	}
 }
-
 ?>

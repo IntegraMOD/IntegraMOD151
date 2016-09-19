@@ -73,9 +73,9 @@ $params_ignore = array('delete_all_before_date');
 foreach($params as $var => $default)
 {
 	$$var = (isset($preference_cookie[MOD_CODE."_$var"]) && !in_array($var, $params_ignore)) ? $preference_cookie[MOD_CODE."_$var"] : $default;
-	if(isset($HTTP_POST_VARS[$var]) || isset($HTTP_GET_VARS[$var]))
+	if(isset($_POST[$var]) || isset($_GET[$var]))
 	{
-		$preference_cookie[MOD_CODE."_$var"] = (isset($HTTP_POST_VARS[$var])) ? $HTTP_POST_VARS[$var] : $HTTP_GET_VARS[$var];
+		$preference_cookie[MOD_CODE."_$var"] = (isset($_POST[$var])) ? $_POST[$var] : $_GET[$var];
 		$$var = $preference_cookie[MOD_CODE."_$var"];
 	}
 }
@@ -219,9 +219,9 @@ if ($delete_all_before_date)
 }
 else
 {
-	if (count($HTTP_POST_VARS))
+	if (count($_POST))
 	{
-		foreach($HTTP_POST_VARS as $key => $val)
+		foreach($_POST as $key => $val)
 		{
 			if (substr_count($key, 'delete_id_'))
 			{
@@ -299,7 +299,7 @@ $template->assign_vars(array(
 'S_ORDER' => $order,
 'S_MODE_SELECT' => topic_shadow_make_drop_box('mode'),
 'S_ORDER_SELECT' => topic_shadow_make_drop_box('order'),
-'S_MODE_ACTION' => append_sid($HTTP_SERVER_VARS['PHP_SELF']))
+'S_MODE_ACTION' => append_sid($_SERVER['PHP_SELF']))
 );
 
 /* See if we actually have any shadow topics */

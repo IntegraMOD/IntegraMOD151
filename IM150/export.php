@@ -30,21 +30,21 @@ init_userprefs($userdata);
 // 
 // Start initial var setup 
 // 
-if ( isset($HTTP_GET_VARS[POST_TOPIC_URL]) ) 
+if ( isset($_GET[POST_TOPIC_URL]) ) 
 { 
-   $topic_id = intval($HTTP_GET_VARS[POST_TOPIC_URL]); 
+   $topic_id = intval($_GET[POST_TOPIC_URL]); 
 } 
-else if ( isset($HTTP_GET_VARS['topic']) ) 
+else if ( isset($_GET['topic']) ) 
 { 
-   $topic_id = intval($HTTP_GET_VARS['topic']); 
-} 
-
-if ( isset($HTTP_GET_VARS[POST_POST_URL])) 
-{ 
-   $post_id = intval($HTTP_GET_VARS[POST_POST_URL]); 
+   $topic_id = intval($_GET['topic']); 
 } 
 
-$start = ( isset($HTTP_GET_VARS['start']) ) ? intval($HTTP_GET_VARS['start']) : 0; 
+if ( isset($_GET[POST_POST_URL])) 
+{ 
+   $post_id = intval($_GET[POST_POST_URL]); 
+} 
+
+$start = ( isset($_GET['start']) ) ? intval($_GET['start']) : 0; 
 
 if ( !isset($topic_id) && !isset($post_id) ) 
 { 
@@ -115,9 +115,9 @@ if ( !empty($post_id) )
 
 // Decide how to order the post display 
 // 
-if ( !empty($HTTP_POST_VARS['postorder']) || !empty($HTTP_GET_VARS['postorder']) ) 
+if ( !empty($_POST['postorder']) || !empty($_GET['postorder']) ) 
 { 
-   $post_order = (!empty($HTTP_POST_VARS['postorder'])) ? $HTTP_POST_VARS['postorder'] : $HTTP_GET_VARS['postorder']; 
+   $post_order = (!empty($_POST['postorder'])) ? $_POST['postorder'] : $_GET['postorder']; 
    $post_time_order = ($post_order == "asc") ? "ASC" : "DESC"; 
 } 
 else 

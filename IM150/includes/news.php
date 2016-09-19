@@ -78,7 +78,7 @@ class NewsModule
         'ROOT_PATH' => $this->root_path
         ));
 
-    $this->data = new NewsDataAccess( $root_path );
+    $this->data =& new NewsDataAccess( $root_path );
   }
 
   /**
@@ -92,7 +92,7 @@ class NewsModule
   */
   function prepareArticles( $articles, $show_abstract = false )
   {
-    global $CFG, $lang, $board_config, $HTTP_SERVER_VARS, $images, $phpEx;
+    global $CFG, $lang, $board_config, $_SERVER, $images, $phpEx;
 
     if( is_array( $articles ) )
     {
@@ -110,7 +110,7 @@ class NewsModule
         $article['post_text'] = $this->parseMessage( $article['post_text'], $article['bbcode_uid'] );
 
 		$this->setVariables(array( 
-			"TELL_LINK" => append_sid("http://".$HTTP_SERVER_VARS['HTTP_HOST'].$HTTP_SERVER_VARS['PHP_SELF']."?topic_id=" . $article['topic_id'], true),
+			"TELL_LINK" => append_sid("http://".$_SERVER['HTTP_HOST'].$_SERVER['PHP_SELF']."?topic_id=" . $article['topic_id'], true),
 			'L_TELL_FRIEND' => $lang['Tell_Friend'],
 			'L_PRINTER_TOPIC' => $lang['Printer_topic'],
 			'NEWS_EMAIL_IMAGE' => $images['news_email'],

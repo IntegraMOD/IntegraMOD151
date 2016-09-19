@@ -11,12 +11,12 @@ init_userprefs($userdata);
 
 include($phpbb_root_path . 'language/lang_' . $board_config['default_lang'] . '/lang_tellafriend.' . $phpEx);
 
-$topic = (isset($HTTP_POST_VARS['topic'])) ? $HTTP_POST_VARS['topic'] : $HTTP_GET_VARS['topic']; 
-$friendname =  $HTTP_POST_VARS['friendname'];
-//$message = $HTTP_POST_VARS['message'];
-$message = trim(stripslashes($HTTP_POST_VARS['message']));
-$link = $HTTP_GET_VARS['link'];
-$PHP_SELF = $HTTP_SERVER_VARS['PHP_SELF'];
+$topic = (isset($_POST['topic'])) ? $_POST['topic'] : $_GET['topic']; 
+$friendname =  $_POST['friendname'];
+//$message = $_POST['message'];
+$message = trim(stripslashes($_POST['message']));
+$link = $_GET['link'];
+$PHP_SELF = $_SERVER['PHP_SELF'];
 
 if( !$userdata['session_logged_in'] ) 
     { 
@@ -51,14 +51,14 @@ $template->assign_vars(array(
 ));
 
 /**************/
-		if ( isset($HTTP_POST_VARS['submit']) )
+		if ( isset($_POST['submit']) )
 		{
 			$error = FALSE;
 
-			if ( !empty($HTTP_POST_VARS['friendemail']) && (strpos($HTTP_POST_VARS['friendemail'],"@")>0) )
+			if ( !empty($_POST['friendemail']) && (strpos($_POST['friendemail'],"@")>0) )
 			{
-				$friendemail = trim(stripslashes($HTTP_POST_VARS['friendemail']));
-				if (!$HTTP_POST_VARS['friendname']) { $friendname=substr($friendemail,0,strpos($HTTP_POST_VARS['friendemail'],"@")); };
+				$friendemail = trim(stripslashes($_POST['friendemail']));
+				if (!$_POST['friendname']) { $friendname=substr($friendemail,0,strpos($_POST['friendemail'],"@")); };
 			}
 			else
 			{

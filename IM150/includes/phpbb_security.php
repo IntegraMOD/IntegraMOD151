@@ -43,7 +43,7 @@
 		}
 
 //*** The return valuse in the next 3 functions MUST be changed to the default values prior to installing.See Michales_notes.txt in install directory before running an install ***//
-	
+
 	function phpBBSecurity_AdminConfigName()
 	{
 		return 'phpBBSecurity_max_admins';
@@ -57,8 +57,8 @@
 	function phpBBSecurity_UseSpecial()
 	{
 		return 'phpBBSecurity_use_max';
-	}			
-
+	}				
+	
 	function phpBBSecurity_Validate($q, $a, $user, $mode, $location)
 		{
 		global $userdata, $db, $board_config;
@@ -362,8 +362,8 @@
 		{
 		if (isset($_SERVER['QUERY_STRING']))
     		return eregi_replace('%09', '%20', $_SERVER['QUERY_STRING']);
-		elseif (isset($HTTP_SERVER_VARS['QUERY_STRING']))
-    		return eregi_replace('%09', '%20', $HTTP_SERVER_VARS['QUERY_STRING']);
+		elseif (isset($_SERVER['QUERY_STRING']))
+    		return eregi_replace('%09', '%20', $_SERVER['QUERY_STRING']);
 		elseif (getenv('QUERY_STRING'))
 			return eregi_replace('%09', '%20', getenv('QUERY_STRING'));
 		else
@@ -384,8 +384,8 @@
 		{
 		if (isset($_SERVER['REQUEST_METHOD'])) 
 			return $_SERVER['REQUEST_METHOD'];
-		elseif (isset($HTTP_SERVER_VARS['REQUEST_METHOD']))
-			return $HTTP_SERVER_VARS['REQUEST_METHOD'];
+		elseif (isset($_SERVER['REQUEST_METHOD']))
+			return $_SERVER['REQUEST_METHOD'];
 		elseif (getenv('REQUEST_METHOD'))
 			return getenv('REQUEST_METHOD');
 		else
@@ -396,8 +396,8 @@
 		{
 		if (isset($_SERVER['SERVER_NAME'])) 
 			return $_SERVER['SERVER_NAME'];
-		elseif (isset($HTTP_SERVER_VARS['SERVER_NAME']))
-			return $HTTP_SERVER_VARS['SERVER_NAME'];
+		elseif (isset($_SERVER['SERVER_NAME']))
+			return $_SERVER['SERVER_NAME'];
 		elseif (getenv('SERVER_NAME'))
 			return getenv('SERVER_NAME');
 		else
@@ -408,8 +408,8 @@
 		{
 		if (intval($_SERVER['SERVER_PORT'])) 
 			return $_SERVER['SERVER_PORT'];
-		elseif (intval($HTTP_SERVER_VARS['SERVER_PORT']))
-			return $HTTP_SERVER_VARS['SERVER_PORT'];
+		elseif (intval($_SERVER['SERVER_PORT']))
+			return $_SERVER['SERVER_PORT'];
 		elseif (getenv('SERVER_PORT'))
 			return getenv('SERVER_PORT');
 		else
@@ -420,8 +420,8 @@
 		{
 		if (isset($_SERVER['HTTP_USER_AGENT'])) 
 			return $_SERVER['HTTP_USER_AGENT'];
-		elseif (isset($HTTP_SERVER_VARS['HTTP_USER_AGENT']))
-			return $HTTP_SERVER_VARS['HTTP_USER_AGENT'];
+		elseif (isset($_SERVER['HTTP_USER_AGENT']))
+			return $_SERVER['HTTP_USER_AGENT'];
 		elseif (getenv('HTTP_USER_AGENT'))
 			return getenv('HTTP_USER_AGENT');
 		else
@@ -432,8 +432,8 @@
 		{
 		if (isset($_SERVER['HTTP_REFERER'])) 
 			return $_SERVER['HTTP_REFERER'];
-		elseif (isset($HTTP_SERVER_VARS['HTTP_REFERER']))
-			return $HTTP_SERVER_VARS['HTTP_REFERER'];
+		elseif (isset($_SERVER['HTTP_REFERER']))
+			return $_SERVER['HTTP_REFERER'];
 		elseif (getenv('HTTP_REFERER'))
 			return getenv('HTTP_REFERER');
 		else
@@ -444,8 +444,8 @@
 		{
 		if (isset($_SERVER['SCRIPT_NAME'])) 
 			return $_SERVER['SCRIPT_NAME'];
-		elseif (isset($HTTP_SERVER_VARS['SCRIPT_NAME']))
-			return $HTTP_SERVER_VARS['SCRIPT_NAME'];
+		elseif (isset($_SERVER['SCRIPT_NAME']))
+			return $_SERVER['SCRIPT_NAME'];
 		elseif (getenv('SCRIPT_NAME'))
 			return getenv('SCRIPT_NAME');
 		else
@@ -460,7 +460,7 @@
 		$trick = '';
 		
 		#==== Passing Globals (Super Or Not) Or Functions
-		$disallowed = array('$_REQUEST', '$HTTP_REQUEST_VARS', '$_SERVER', '$HTTP_SERVER_VARS', '$_COOKIE', '$HTTP_COOKIE_VARS', '$_ENV', '$HTTP_ENV_VARS', '$_FILES', '$HTTP_FILES_VARS', '$_GET', '$HTTP_GET_VARS', '$_POST', '$HTTP_POST_VARS', '$_SESSION', '$HTTP_SESSION_VARS', 'phpinfo()');
+		$disallowed = array('$_REQUEST', '$HTTP_REQUEST_VARS', '$_SERVER', '$_SERVER', '$_COOKIE', '$_COOKIE', '$_ENV', '$_ENV', '$_FILES', '$HTTP_FILES_VARS', '$_GET', '$_GET', '$_POST', '$_POST', '$_SESSION', '$_SESSION', 'phpinfo()');
 		$qstring	= phpBBSecurity_QueryString();
 		for ($x = 0; $x < count($disallowed); $x++)
 			{
@@ -1192,7 +1192,7 @@
 			{
 			if ( ($last_backup != $today) && (date('H') >= $backup_time) )
 				{				
-			system("/usr/bin/mysqldump -u". $dbuser ." -p". $dbpasswd ." -h ". $dbhost ." ". $dbname ." > ". (($_SERVER['DOCUMENT_ROOT']) ? $_SERVER['DOCUMENT_ROOT'] : $HTTP_SERVER_VARS['DOCUMENT_ROOT']) . $board_config['script_path'] . $backup_folder ."/". $backup_file  ."-". date('Y-m-d') .".sql", $fp);
+			system("/usr/bin/mysqldump -u". $dbuser ." -p". $dbpasswd ." -h ". $dbhost ." ". $dbname ." > ". (($_SERVER['DOCUMENT_ROOT']) ? $_SERVER['DOCUMENT_ROOT'] : $_SERVER['DOCUMENT_ROOT']) . $board_config['script_path'] . $backup_folder ."/". $backup_file  ."-". date('Y-m-d') .".sql", $fp);
 			
 				if ($fp == 0)
 					$msg = 'Your Daily Database Backup Was Completed.';

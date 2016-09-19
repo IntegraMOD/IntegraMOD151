@@ -41,26 +41,26 @@ if (!$userdata['session_logged_in'])
 $username = $userdata[ 'username' ];
 $user_id = $userdata[ 'user_id' ];
 
-if( isset( $HTTP_GET_VARS[ 'initialize' ] ) )
+if( isset( $_GET[ 'initialize' ] ) )
 	$initialize = TRUE;
 else
 	$initialize = FALSE;
 
-if( isset( $HTTP_GET_VARS[ 'password' ] ) )
-	$password = $HTTP_GET_VARS[ 'password' ];
+if( isset( $_GET[ 'password' ] ) )
+	$password = $_GET[ 'password' ];
 else
 	$password = '';
 
-if( isset( $HTTP_GET_VARS[ 'room' ] ) )
-	$room_id = $HTTP_GET_VARS[ 'room' ];
+if( isset( $_GET[ 'room' ] ) )
+	$room_id = $_GET[ 'room' ];
 else
 	$room_id = $chatspot_config[ 'default_room_id' ];
 
 if( ( $room_name = get_room_name( $room_id ) ) == NULL )
 {
-	if( isset( $HTTP_GET_VARS[ 'create' ] ) )
+	if( isset( $_GET[ 'create' ] ) )
 	{
-		$room_name = $HTTP_GET_VARS[ 'create' ];
+		$room_name = $_GET[ 'create' ];
 		
 		if( !is_room_name_okay( $room_name ) )
 		{

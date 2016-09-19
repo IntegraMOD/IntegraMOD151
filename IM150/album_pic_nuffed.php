@@ -37,13 +37,13 @@ include($album_root_path . 'album_common.' . $phpEx);
 // ------------------------------------
 // Check the request
 // ------------------------------------
-if( isset($HTTP_GET_VARS['pic_id']) )
+if( isset($_GET['pic_id']) )
 {
-	$pic_id = intval($HTTP_GET_VARS['pic_id']);
+	$pic_id = intval($_GET['pic_id']);
 }
-elseif( isset($HTTP_POST_VARS['pic_id']) )
+elseif( isset($_POST['pic_id']) )
 {
-	$pic_id = intval($HTTP_POST_VARS['pic_id']);
+	$pic_id = intval($_POST['pic_id']);
 }
 else
 {
@@ -106,9 +106,9 @@ if( $userdata['user_level'] != ADMIN )
 // ------------------------------------
 // Check hotlink
 // ------------------------------------
-if( ($album_config['hotlink_prevent'] == 1) && (isset($HTTP_SERVER_VARS['HTTP_REFERER'])) )
+if( ($album_config['hotlink_prevent'] == 1) && (isset($_SERVER['HTTP_REFERER'])) )
 {
-	$check_referer = explode('?', $HTTP_SERVER_VARS['HTTP_REFERER']);
+	$check_referer = explode('?', $_SERVER['HTTP_REFERER']);
 	$check_referer = trim($check_referer[0]);
 
 	$good_referers = array();

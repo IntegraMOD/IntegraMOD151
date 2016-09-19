@@ -33,7 +33,7 @@ if(!function_exists(imp_news_block_func))
 
 		include_once ($phpbb_root_path . 'includes/news.' . $phpEx );
 
-		$content = new NewsModule( $phpbb_root_path );
+		$content =& new NewsModule( $phpbb_root_path );
 
 		$content->setVariables( array(
 			'L_INDEX' => $lang['Index'],

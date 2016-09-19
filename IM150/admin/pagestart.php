@@ -24,10 +24,7 @@ if (!defined('IN_PHPBB'))
 	die("Hacking attempt");
 }
 
-if (!defined('IN_ADMIN'))
-{
-  define('IN_ADMIN', true);
-}
+define('IN_ADMIN', true);
 // Include files
 include($phpbb_root_path . 'common.'.$phpEx);
 
@@ -53,27 +50,27 @@ if (!$userdata['session_logged_in'])
 	redirect(append_sid("login.$phpEx?redirect=admin/index.$phpEx", true));
 	//redirect(append_sid($phpbb_root_path .'login.'. $phpEx .'?redirect=admin/index.'. $phpEx, true)); 
 }
-elseif (strstr(basename($HTTP_SERVER_VARS['REQUEST_URI']),"xs_"))
+elseif (strstr(basename($_SERVER['REQUEST_URI']),"xs_"))
 {
 	// use a mdified secure function for extreme styles to fix bug - see functions_jr_admin.php //
-	if(!jr_admin_secure_2(basename($HTTP_SERVER_VARS['REQUEST_URI'])))
+	if(!jr_admin_secure_2(basename($_SERVER['REQUEST_URI'])))
 		{
 			message_die(GENERAL_ERROR, $lang['Error_Module_ID'], '', __LINE__, __FILE__);		
 		}
 }
-elseif (!jr_admin_secure(basename($HTTP_SERVER_VARS['REQUEST_URI'])))
+elseif (!jr_admin_secure(basename($_SERVER['REQUEST_URI'])))
 {
 	message_die(GENERAL_ERROR, $lang['Error_Module_ID'], '', __LINE__, __FILE__);	
 }
 
 
 
-if ($HTTP_GET_VARS['sid'] != $userdata['session_id'] && $HTTP_COOKIE_VARS[$board_config['cookie_name'] . '_sid'] != $userdata['session_id']) 
+if ($_GET['sid'] != $userdata['session_id'] && $HTTP_COOKIE_VARS[$board_config['cookie_name'] . '_sid'] != $userdata['session_id']) 
 {
 	redirect("index.$phpEx?sid=" . $userdata['session_id']);
 }
 
-$p_sid = (isset($HTTP_GET_VARS['p_sid'])) ? $HTTP_GET_VARS['p_sid'] : ((isset($HTTP_POST_VARS['p_sid'])) ? $HTTP_POST_VARS['p_sid'] : '');
+$p_sid = (isset($_GET['p_sid'])) ? $_GET['p_sid'] : ((isset($_POST['p_sid'])) ? $_POST['p_sid'] : '');
 
 // if ($p_sid !== $userdata['priv_session_id'])
 // {

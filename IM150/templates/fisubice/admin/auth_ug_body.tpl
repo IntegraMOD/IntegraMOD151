@@ -33,11 +33,11 @@
 		<!-- BEGIN inc -->
 		<td class="row2" width="46"><img src="{SPACER}" width="46" height="0" /></td>
 		<!-- END inc -->
-		<td colspan="{row.cat.INC_SPAN}" class="{row.cat.CLASS_CAT}" align="left" nowrap> <span class="cattitlemed">{row.cat.CAT_TITLE}</span></td>
+		<td colspan="{row.cathead.INC_SPAN}" class="{row.cathead.CLASS_CAT}" align="left" nowrap="nowrap"> <span class="cattitlemed">{row.cathead.CAT_TITLE}</span></td>
 		<!-- BEGIN aclvalues -->
-		<td class="{row.cat.CLASS_CAT}" align="left" nowrap><span class="cattitlemed">&nbsp;</span></td>
+		<td class="{row.cathead.CLASS_CAT}" align="left" nowrap="nowrap"><span class="cattitlemed">&nbsp;</span></td>
 		<!-- END aclvalues -->
-		<td class="{row.cat.CLASS_CAT}" align="left" nowrap><span class="cattitlemed">&nbsp;</span></td>
+		<td class="{row.cathead.CLASS_CAT}" align="left" nowrap="nowrap"><span class="cattitlemed">&nbsp;</span></td>
 	</tr>
 	<!-- END cat -->
 <!-- BEGIN forums -->

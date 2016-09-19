@@ -48,7 +48,7 @@ if ( !function_exists(box_buddy_list) )
 	{
 		global $db, $template, $lang, $images, $phpEx, $board_config;
 		global $s_hidden_fields, $s_pagination_fields;
-		global $HTTP_POST_VARS, $HTTP_GET_VARS;
+		global $_POST, $_GET;
 		global $userdata, $view_userdata;
 		global $admin_level, $level_prior;
 		global $sub_template_key_image, $sub_templates;

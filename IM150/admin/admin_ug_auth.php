@@ -39,18 +39,18 @@ $phpbb_root_path = "./../";
 require($phpbb_root_path . 'extension.inc');
 require('./pagestart.' . $phpEx);
 
-if ( ( isset($HTTP_POST_VARS['user_name']) ) & ( !isset($HTTP_POST_VARS['username']) ) )
+if ( ( isset($_POST['user_name']) ) & ( !isset($_POST['username']) ) )
 {
-	$HTTP_POST_VARS['username'] = $HTTP_POST_VARS['user_name'];
+	$_POST['username'] = $_POST['user_name'];
 }
 
 $params = array('mode' => 'mode', 'user_id' => POST_USERS_URL, 'group_id' => POST_GROUPS_URL, 'adv' => 'adv');
 
 while( list($var, $param) = @each($params) )
 {
-	if ( !empty($HTTP_POST_VARS[$param]) || !empty($HTTP_GET_VARS[$param]) )
+	if ( !empty($_POST[$param]) || !empty($_GET[$param]) )
 	{
-		$$var = ( !empty($HTTP_POST_VARS[$param]) ) ? $HTTP_POST_VARS[$param] : $HTTP_GET_VARS[$param];
+		$$var = ( !empty($_POST[$param]) ) ? $_POST[$param] : $_GET[$param];
 	}
 	else
 	{
@@ -69,7 +69,7 @@ $mode = htmlspecialchars($mode);
 #====					
 $owner = '2';
 
-	if (isset($HTTP_POST_VARS['submit']))
+	if (isset($_POST['submit']))
 		{	
 		if ( ($user_id == $owner) && ($userdata['user_id'] != $owner) )
 			message_die(GENERAL_ERROR, $lang['PS_admin_not_authed']);
@@ -110,6 +110,7 @@ $owner = '2';
 //	'auth_pollcreate' => $lang['Pollcreate']);
 
 //-- mod : categories hierarchy --------------------------------------------------------------------
+//-- mod : cache -----------------------------------------------------------------------------------
 //-- delete
 // all the preset and auth fields definition has been moved to includes/def_auth.php
 //-- add
@@ -163,7 +164,7 @@ function check_auth($type, $key, $u_access, $is_admin)
 // End Functions
 // -------------
 
-if ( isset($HTTP_POST_VARS['submit']) && ( ( $mode == 'user' && $user_id ) || ( $mode == 'group' && $group_id ) ) )
+if ( isset($_POST['submit']) && ( ( $mode == 'user' && $user_id ) || ( $mode == 'group' && $group_id ) ) )
 {
 	$user_level = '';
 	if ( $mode == 'user' )
@@ -193,7 +194,7 @@ if ( isset($HTTP_POST_VARS['submit']) && ( ( $mode == 'user' && $user_id ) || ( 
 	//
 	// Carry out requests
 	//
-	if ( $mode == 'user' && $HTTP_POST_VARS['userlevel'] == 'admin' && $user_level != ADMIN )
+	if ( $mode == 'user' && $_POST['userlevel'] == 'admin' && $user_level != ADMIN )
 	{
 		//
 		// Make user an admin (if already user)
@@ -228,17 +229,17 @@ if ( isset($HTTP_POST_VARS['submit']) && ( ( $mode == 'user' && $user_id ) || ( 
 				message_die(GENERAL_ERROR, "Couldn't update auth access", "", __LINE__, __FILE__, $sql);
 			}
 		}
-//-- mod : categories hierarchy --------------------------------------------------------------------
+
+//-- mod : cache -----------------------------------------------------------------------------------
 //-- add
 		cache_tree(true);
-//-- fin mod : categories hierarchy ----------------------------------------------------------------
-
+//-- fin mod : cache -------------------------------------------------------------------------------
 		$message = $lang['Auth_updated'] . '<br /><br />' . sprintf($lang['Click_return_userauth'], '<a href="' . append_sid("admin_ug_auth.$phpEx?mode=$mode") . '">', '</a>') . '<br /><br />' . sprintf($lang['Click_return_admin_index'], '<a href="' . append_sid("index.$phpEx?pane=right") . '">', '</a>');
 		message_die(GENERAL_MESSAGE, $message);
 	}
 else
 	{
-		if ( $mode == 'user' && $HTTP_POST_VARS['userlevel'] == 'user' && $user_level == ADMIN )
+		if ( $mode == 'user' && $_POST['userlevel'] == 'user' && $user_level == ADMIN )
 		{
 			//
 			// Make admin a user (if already admin) ... ignore if you're trying
@@ -271,7 +272,7 @@ else
 		else
 		{
 	
-			$change_mod_list = ( isset($HTTP_POST_VARS['moderator']) ) ? $HTTP_POST_VARS['moderator'] : array();
+			$change_mod_list = ( isset($_POST['moderator']) ) ? $_POST['moderator'] : array();
 
 			if ( empty($adv) )
 			{
@@ -301,7 +302,7 @@ else
 					}
 				}
 
-				while( list($forum_id, $value) = @each($HTTP_POST_VARS['private']) )
+				while( list($forum_id, $value) = @each($_POST['private']) )
 				{
 					while( list($auth_field, $exists) = @each($forum_auth_level_fields[$forum_id]) )
 					{
@@ -319,7 +320,7 @@ else
 				{
 					$auth_field = $forum_auth_fields[$j];
 
-					while( list($forum_id, $value) = @each($HTTP_POST_VARS['private_' . $auth_field]) )
+					while( list($forum_id, $value) = @each($_POST['private_' . $auth_field]) )
 					{
 						$change_acl_list[$forum_id][$auth_field] = $value;
 					}
@@ -590,10 +591,10 @@ $sql = "SELECT u.user_id
 				message_die(GENERAL_ERROR, "Couldn't update user level", "", __LINE__, __FILE__, $sql);
 			}
 		}
-//-- mod : categories hierarchy --------------------------------------------------------------------
+//-- mod : cache -----------------------------------------------------------------------------------
 //-- add
 		cache_tree(true);
-//-- fin mod : categories hierarchy ----------------------------------------------------------------
+//-- fin mod : cache -------------------------------------------------------------------------------
 
 		if ( $unset_mod != '' )
 		{
@@ -651,11 +652,11 @@ $sql = "SELECT u.user_id
 		message_die(GENERAL_MESSAGE, $message);
 	}
 }
-else if ( ( $mode == 'user' && ( isset($HTTP_POST_VARS['username']) || $user_id ) ) || ( $mode == 'group' && $group_id ) )
+else if ( ( $mode == 'user' && ( isset($_POST['username']) || $user_id ) ) || ( $mode == 'group' && $group_id ) )
 {
-	if ( isset($HTTP_POST_VARS['username']) )
+	if ( isset($_POST['username']) )
 	{
-		$this_userdata = get_userdata($HTTP_POST_VARS['username'], true);
+		$this_userdata = get_userdata($_POST['username'], true);
 		if ( !is_array($this_userdata) )
 		{
 			message_die(GENERAL_MESSAGE, $lang['No_such_user']);
@@ -820,15 +821,15 @@ else if ( ( $mode == 'user' && ( isset($HTTP_POST_VARS['username']) || $user_id 
 	// read the objects without the index forum (i=0)
 	for ($i=1; $i < count($keys['id']); $i++)
 	{
-		$CH_this	= $keys['idx'][$i];
+		$this_key	= $keys['idx'][$i];
 		$level	= $keys['real_level'][$i];
-		if ($tree['type'][$CH_this] == POST_CAT_URL)
+		if ($tree['type'][$this_key] == POST_CAT_URL)
 		{
 			$class_cat = "cat";
 			$template->assign_block_vars('row', array());
 			$template->assign_block_vars('row.cat', array(
 				'CLASS_CAT' => $class_cat,
-				'CAT_TITLE' => get_object_lang( $tree['type'][$CH_this] . $tree['id'][$CH_this], 'name'),
+				'CAT_TITLE' => get_object_lang( $tree['type'][$this_key] . $tree['id'][$this_key], 'name'),
 				'INC_SPAN'	=> $max_level - $level+1,
 				)
 			);
@@ -846,7 +847,7 @@ else if ( ( $mode == 'user' && ( isset($HTTP_POST_VARS['username']) || $user_id 
 			}
 		}
 
-		if ($tree['type'][$CH_this] == POST_FORUM_URL)
+		if ($tree['type'][$this_key] == POST_FORUM_URL)
 		{
 			$forum_id = $tree['data'][ $keys['idx'][$i] ]['forum_id'];
 			$user_ary = $auth_ug[$forum_id];

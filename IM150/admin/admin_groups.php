@@ -40,18 +40,18 @@ require('./pagestart.' . $phpEx);
 
 include($phpbb_root_path.'language/lang_' . $board_config['default_lang'] . '/lang_admin_groups.'.$phpEx);
 
-if ( isset($HTTP_POST_VARS[POST_GROUPS_URL]) || isset($HTTP_GET_VARS[POST_GROUPS_URL]) )
+if ( isset($_POST[POST_GROUPS_URL]) || isset($_GET[POST_GROUPS_URL]) )
 {
-	$group_id = ( isset($HTTP_POST_VARS[POST_GROUPS_URL]) ) ? intval($HTTP_POST_VARS[POST_GROUPS_URL]) : intval($HTTP_GET_VARS[POST_GROUPS_URL]);
+	$group_id = ( isset($_POST[POST_GROUPS_URL]) ) ? intval($_POST[POST_GROUPS_URL]) : intval($_GET[POST_GROUPS_URL]);
 }
 else
 {
 	$group_id = 0;
 }
 
-if ( isset($HTTP_POST_VARS['mode']) || isset($HTTP_GET_VARS['mode']) )
+if ( isset($_POST['mode']) || isset($_GET['mode']) )
 {
-	$mode = ( isset($HTTP_POST_VARS['mode']) ) ? $HTTP_POST_VARS['mode'] : $HTTP_GET_VARS['mode'];
+	$mode = ( isset($_POST['mode']) ) ? $_POST['mode'] : $_GET['mode'];
 	$mode = htmlspecialchars($mode);
 }
 else
@@ -59,12 +59,12 @@ else
 	$mode = '';
 }
 
-attachment_quota_settings('group', $HTTP_POST_VARS['group_update'], $mode);
+attachment_quota_settings('group', $_POST['group_update'], $mode);
 //-- mod : Loewen Enterprise - PAYPAL IPN REG / SUBSCRIPTION - GROUP -----------------------------------------------------------			
 //-- remove
-//if ( isset($HTTP_POST_VARS['edit']) || isset($HTTP_POST_VARS['new']) )
+//if ( isset($_POST['edit']) || isset($_POST['new']) )
 //-- add
-if ( isset($HTTP_POST_VARS['edit']) || isset($HTTP_GET_VARS['edit']) || isset($HTTP_POST_VARS['new']) )
+if ( isset($_POST['edit']) || isset($_GET['edit']) || isset($_POST['new']) )
 //-- fin mod : Loewen Enterprise - PAYPAL IPN REG / SUBSCRIPTION - GROUP -----------------------------------------------------------			
 {
 	//
@@ -76,9 +76,9 @@ if ( isset($HTTP_POST_VARS['edit']) || isset($HTTP_GET_VARS['edit']) || isset($H
 
 //-- mod : Loewen Enterprise - PAYPAL IPN REG / SUBSCRIPTION - GROUP -----------------------------------------------------------			
 //-- remove
-//	if ( isset($HTTP_POST_VARS['edit']) )
+//	if ( isset($_POST['edit']) )
 //-- add
-	if ( isset($HTTP_POST_VARS['edit']) || isset($HTTP_GET_VARS['edit']))
+	if ( isset($_POST['edit']) || isset($_GET['edit']))
 //-- fin mod : Loewen Enterprise - PAYPAL IPN REG / SUBSCRIPTION - GROUP -----------------------------------------------------------			
 
 	{
@@ -103,7 +103,7 @@ if ( isset($HTTP_POST_VARS['edit']) || isset($HTTP_GET_VARS['edit']) || isset($H
 		$template->assign_block_vars('group_edit', array());
 
 	}
-	else if ( isset($HTTP_POST_VARS['new']) )
+	else if ( isset($_POST['new']) )
 	{
 		$group_info = array (
 			'group_name' => '',
@@ -261,7 +261,7 @@ if ( isset($HTTP_POST_VARS['edit']) || isset($HTTP_GET_VARS['edit']) || isset($H
 		'L_GROUP_COUNT_DELETE' => $lang['Group_count_delete'],
 
 		'L_GROUP_TITLE' => $lang['Group_administration'],
-		'L_GROUP_EDIT_DELETE' => ( isset($HTTP_POST_VARS['new']) ) ? $lang['New_group'] : $lang['Edit_group'], 
+		'L_GROUP_EDIT_DELETE' => ( isset($_POST['new']) ) ? $lang['New_group'] : $lang['Edit_group'], 
 		'L_GROUP_NAME' => $lang['group_name'],
 		'L_GROUP_DESCRIPTION' => $lang['group_description'],
 		'L_GROUP_MODERATOR' => $lang['group_moderator'], 
@@ -313,12 +313,12 @@ if ( isset($HTTP_POST_VARS['edit']) || isset($HTTP_GET_VARS['edit']) || isset($H
 	$template->pparse('body');
 
 }
-else if ( isset($HTTP_POST_VARS['group_update']) )
+else if ( isset($_POST['group_update']) )
 {
 	//
 	// Ok, they are submitting a group, let's save the data based on if it's new or editing
 	//
-	if ( isset($HTTP_POST_VARS['group_delete']) )
+	if ( isset($_POST['group_delete']) )
 	{
 		//
 		// Reset User Moderator Level
@@ -397,30 +397,30 @@ else if ( isset($HTTP_POST_VARS['group_update']) )
 	}
 	else
 	{
-		$group_type = isset($HTTP_POST_VARS['group_type']) ? intval($HTTP_POST_VARS['group_type']) : GROUP_OPEN;
-		$group_name = isset($HTTP_POST_VARS['group_name']) ? htmlspecialchars(trim($HTTP_POST_VARS['group_name'])) : '';
-		$group_description = isset($HTTP_POST_VARS['group_description']) ? trim($HTTP_POST_VARS['group_description']) : '';
-		$group_moderator = isset($HTTP_POST_VARS['username']) ? $HTTP_POST_VARS['username'] : '';
-		$delete_old_moderator = isset($HTTP_POST_VARS['delete_old_moderator']) ? true : false;
-		$group_amount = isset($HTTP_POST_VARS['group_amount']) ? ($HTTP_POST_VARS['group_amount'] + 0.00) : 0;
-		$group_period = isset($HTTP_POST_VARS['group_period']) ? intval($HTTP_POST_VARS['group_period']) : 0;
-		$group_period_basis = isset($HTTP_POST_VARS['group_period_basis']) ? htmlspecialchars($HTTP_POST_VARS['group_period_basis']) : '0';
-		$group_first_trial_fee = isset($HTTP_POST_VARS['group_first_trial_fee']) ? ($HTTP_POST_VARS['group_first_trial_fee'] + 0.00) : 0;
-		$group_first_trial_period = isset($HTTP_POST_VARS['group_first_trial_period']) ? intval($HTTP_POST_VARS['group_first_trial_period']) : 0;
-		$group_first_trial_period_basis = isset($HTTP_POST_VARS['group_first_trial_period_basis']) ? htmlspecialchars($HTTP_POST_VARS['group_first_trial_period_basis']) : '0';
-		$group_second_trial_fee = isset($HTTP_POST_VARS['group_second_trial_fee']) ? ($HTTP_POST_VARS['group_second_trial_fee'] + 0.00) : 0;
-		$group_second_trial_period = isset($HTTP_POST_VARS['group_second_trial_period']) ? intval($HTTP_POST_VARS['group_second_trial_period']) : 0;
-		$group_second_trial_period_basis = isset($HTTP_POST_VARS['group_second_trial_period_basis']) ? htmlspecialchars($HTTP_POST_VARS['group_second_trial_period_basis']) : '0';
-		$group_sub_recurring = isset($HTTP_POST_VARS['group_sub_recurring']) ? intval($HTTP_POST_VARS['group_sub_recurring']) : 1;
-		$group_sub_recurring_stop = isset($HTTP_POST_VARS['group_sub_recurring_stop']) ? intval($HTTP_POST_VARS['group_sub_recurring_stop']) : 0;
-		$group_sub_recurring_stop_num = isset($HTTP_POST_VARS['group_sub_recurring_stop_num']) ? intval($HTTP_POST_VARS['group_sub_recurring_stop_num']) : 0;
-		$group_sub_reattempt = isset($HTTP_POST_VARS['group_sub_reattempt']) ? intval($HTTP_POST_VARS['group_sub_reattempt']) : 1;
+		$group_type = isset($_POST['group_type']) ? intval($_POST['group_type']) : GROUP_OPEN;
+		$group_name = isset($_POST['group_name']) ? htmlspecialchars(trim($_POST['group_name'])) : '';
+		$group_description = isset($_POST['group_description']) ? trim($_POST['group_description']) : '';
+		$group_moderator = isset($_POST['username']) ? $_POST['username'] : '';
+		$delete_old_moderator = isset($_POST['delete_old_moderator']) ? true : false;
+		$group_amount = isset($_POST['group_amount']) ? ($_POST['group_amount'] + 0.00) : 0;
+		$group_period = isset($_POST['group_period']) ? intval($_POST['group_period']) : 0;
+		$group_period_basis = isset($_POST['group_period_basis']) ? htmlspecialchars($_POST['group_period_basis']) : '0';
+		$group_first_trial_fee = isset($_POST['group_first_trial_fee']) ? ($_POST['group_first_trial_fee'] + 0.00) : 0;
+		$group_first_trial_period = isset($_POST['group_first_trial_period']) ? intval($_POST['group_first_trial_period']) : 0;
+		$group_first_trial_period_basis = isset($_POST['group_first_trial_period_basis']) ? htmlspecialchars($_POST['group_first_trial_period_basis']) : '0';
+		$group_second_trial_fee = isset($_POST['group_second_trial_fee']) ? ($_POST['group_second_trial_fee'] + 0.00) : 0;
+		$group_second_trial_period = isset($_POST['group_second_trial_period']) ? intval($_POST['group_second_trial_period']) : 0;
+		$group_second_trial_period_basis = isset($_POST['group_second_trial_period_basis']) ? htmlspecialchars($_POST['group_second_trial_period_basis']) : '0';
+		$group_sub_recurring = isset($_POST['group_sub_recurring']) ? intval($_POST['group_sub_recurring']) : 1;
+		$group_sub_recurring_stop = isset($_POST['group_sub_recurring_stop']) ? intval($_POST['group_sub_recurring_stop']) : 0;
+		$group_sub_recurring_stop_num = isset($_POST['group_sub_recurring_stop_num']) ? intval($_POST['group_sub_recurring_stop_num']) : 0;
+		$group_sub_reattempt = isset($_POST['group_sub_reattempt']) ? intval($_POST['group_sub_reattempt']) : 1;
 
-$group_count = isset($HTTP_POST_VARS['group_count']) ? intval($HTTP_POST_VARS['group_count']) : 0;
-$group_count_max = isset($HTTP_POST_VARS['group_count_max']) ? intval($HTTP_POST_VARS['group_count_max']) : 0;
-$group_count_enable = isset($HTTP_POST_VARS['group_count_enable']) ? true : false;
-$group_count_update = isset($HTTP_POST_VARS['group_count_update']) ? true : false;
-$group_count_delete = isset($HTTP_POST_VARS['group_count_delete']) ? true : false;
+$group_count = isset($_POST['group_count']) ? intval($_POST['group_count']) : 0;
+$group_count_max = isset($_POST['group_count_max']) ? intval($_POST['group_count_max']) : 0;
+$group_count_enable = isset($_POST['group_count_enable']) ? true : false;
+$group_count_update = isset($_POST['group_count_update']) ? true : false;
+$group_count_delete = isset($_POST['group_count_delete']) ? true : false;
 
 		if ( $group_name == '' )
 		{

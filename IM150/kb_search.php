@@ -101,18 +101,18 @@ else // ------------------------------------------------------------------------
 
 // Define initial vars
 
-if ( isset( $HTTP_POST_VARS['mode'] ) || isset( $HTTP_GET_VARS['mode'] ) )
+if ( isset( $_POST['mode'] ) || isset( $_GET['mode'] ) )
 {
-	$mode = ( isset( $HTTP_POST_VARS['mode'] ) ) ? $HTTP_POST_VARS['mode'] : $HTTP_GET_VARS['mode'];
+	$mode = ( isset( $_POST['mode'] ) ) ? $_POST['mode'] : $_GET['mode'];
 }
 else
 {
 	$mode = '';
 }
 
-if ( isset( $HTTP_POST_VARS['search_keywords'] ) || isset( $HTTP_GET_VARS['search_keywords'] ) )
+if ( isset( $_POST['search_keywords'] ) || isset( $_GET['search_keywords'] ) )
 {
-	$search_keywords = ( isset( $HTTP_POST_VARS['search_keywords'] ) ) ? $HTTP_POST_VARS['search_keywords'] : $HTTP_GET_VARS['search_keywords'];
+	$search_keywords = ( isset( $_POST['search_keywords'] ) ) ? $_POST['search_keywords'] : $_GET['search_keywords'];
 }
 else
 {
@@ -124,45 +124,45 @@ if ( !$search_keywords || $search_keywords == '' )
 	$mode = '';
 }
 
-$search_id = ( isset( $HTTP_GET_VARS['search_id'] ) ) ? $HTTP_GET_VARS['search_id'] : '';
+$search_id = ( isset( $_GET['search_id'] ) ) ? $_GET['search_id'] : '';
 
 if ( $search_id )
 {
 	$mode = 'results';
 }
 
-$show_results = ( isset( $HTTP_POST_VARS['show_results'] ) ) ? $HTTP_POST_VARS['show_results'] : 'posts';
+$show_results = ( isset( $_POST['show_results'] ) ) ? $_POST['show_results'] : 'posts';
 
-if ( isset( $HTTP_POST_VARS['search_terms'] ) )
+if ( isset( $_POST['search_terms'] ) )
 {
-	$search_terms = ( $HTTP_POST_VARS['search_terms'] == 'all' ) ? 1 : 0;
+	$search_terms = ( $_POST['search_terms'] == 'all' ) ? 1 : 0;
 }
 else
 {
 	$search_terms = 0;
 }
 
-if ( isset( $HTTP_POST_VARS['search_fields'] ) )
+if ( isset( $_POST['search_fields'] ) )
 {
-	$search_fields = ( $HTTP_POST_VARS['search_fields'] == 'all' ) ? 1 : 0;
+	$search_fields = ( $_POST['search_fields'] == 'all' ) ? 1 : 0;
 }
 else
 {
 	$search_fields = 0;
 }
 
-$sort_by = ( isset( $HTTP_POST_VARS['sort_by'] ) ) ? intval( $HTTP_POST_VARS['sort_by'] ) : 0;
+$sort_by = ( isset( $_POST['sort_by'] ) ) ? intval( $_POST['sort_by'] ) : 0;
 
-if ( isset( $HTTP_POST_VARS['sort_dir'] ) )
+if ( isset( $_POST['sort_dir'] ) )
 {
-	$sort_dir = ( $HTTP_POST_VARS['sort_dir'] == 'DESC' ) ? 'DESC' : 'ASC';
+	$sort_dir = ( $_POST['sort_dir'] == 'DESC' ) ? 'DESC' : 'ASC';
 }
 else
 {
 	$sort_dir = 'DESC';
 }
 
-$start = ( isset( $HTTP_GET_VARS['start'] ) ) ? intval( $HTTP_GET_VARS['start'] ) : 0;
+$start = ( isset( $_GET['start'] ) ) ? intval( $_GET['start'] ) : 0;
 
 switch ( $mode )
 {

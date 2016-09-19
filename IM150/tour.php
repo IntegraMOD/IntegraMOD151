@@ -53,9 +53,9 @@ $template->set_filenames(array(
 //
 // Get currect page number
 $start = 0;
-$page = ( $HTTP_POST_VARS['page'] ) ? $HTTP_POST_VARS['page'] : $HTTP_GET_VARS['page'];
+$page = ( $_POST['page'] ) ? $_POST['page'] : $_GET['page'];
 $page = ( !$page ) ? $start : intval($page);
-$cp = ( $HTTP_POST_VARS['cp'] ) ? $HTTP_POST_VARS['cp'] : $HTTP_GET_VARS['cp'];
+$cp = ( $_POST['cp'] ) ? $_POST['cp'] : $_GET['cp'];
 $cp = intval($cp);
 
 // Check userlevel and prepare page access

@@ -37,23 +37,23 @@ include_once( $phpbb_root_path . 'chatspot/chatspot_config.' . $phpEx );
 
 $userdata = array();
 
-if( isset( $HTTP_GET_VARS[ 'room' ] ) )
-	$room_id = $HTTP_GET_VARS[ 'room' ];
+if( isset( $_GET[ 'room' ] ) )
+	$room_id = $_GET[ 'room' ];
 else
 	die( $lang['Cannot_determine_room_id'] );
 
-if( isset( $HTTP_GET_VARS[ 'room_name' ] ) )
-	$room_name = $HTTP_GET_VARS[ 'room_name' ];
+if( isset( $_GET[ 'room_name' ] ) )
+	$room_name = $_GET[ 'room_name' ];
 else
 	die( $lang['Cannot_determine_room_name'] );
 
-if( isset( $HTTP_GET_VARS[ 'user_id' ] ) )
-	$userdata[ 'user_id' ] = $HTTP_GET_VARS[ 'user_id' ];
+if( isset( $_GET[ 'user_id' ] ) )
+	$userdata[ 'user_id' ] = $_GET[ 'user_id' ];
 else
 	die( $lang['Cannot_determine_user_id'] );
 
-if( isset( $HTTP_GET_VARS[ 'username' ] ) )
-	$userdata[ 'username' ] = $HTTP_GET_VARS[ 'username' ];
+if( isset( $_GET[ 'username' ] ) )
+	$userdata[ 'username' ] = $_GET[ 'username' ];
 else
 	die( $lang['Cannot_determine_username'] );
 

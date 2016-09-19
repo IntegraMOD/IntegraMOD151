@@ -40,9 +40,9 @@ init_userprefs($userdata);
 
 
 // session id check
-if (!empty($HTTP_POST_VARS['sid']) || !empty($HTTP_GET_VARS['sid']))
+if (!empty($_POST['sid']) || !empty($_GET['sid']))
 {
-	$sid = (!empty($HTTP_POST_VARS['sid'])) ? $HTTP_POST_VARS['sid'] : $HTTP_GET_VARS['sid'];
+	$sid = (!empty($_POST['sid'])) ? $_POST['sid'] : $_GET['sid'];
 }
 else
 {
@@ -50,8 +50,8 @@ else
 }
 
 // Get URL vars
-$mode		  = $HTTP_GET_VARS['mode'];
-$user_id      = $HTTP_GET_VARS['uid'];
+$mode		  = $_GET['mode'];
+$user_id      = $_GET['uid'];
 
 
 // Ensure that a user is not logged in

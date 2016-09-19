@@ -549,3 +549,96 @@ a.kb:hover span {
     background-position: bottom left;
     padding: 6px 20px 4px 30px;
 }
+
+/* Responsive qbar qmenu */
+
+.mob-tab-menu-position-fixed { position: fixed;  margin: 0; overflow: auto; box-sizing: border-box; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; }
+.mob-tab-menu-position-fixed-horiz { height: 100%; bottom: 0px; top: 0px; }
+.mob-tab-menu-position-fixed-vert { left: 0px; right: 0px; }
+.mob-tab-menu-position-fixed-left { left: 0px;}
+.mob-tab-menu-position-fixed-top { top: 0px; }
+.mob-tab-menu-position-fixed-right { right: 0px; }
+
+#mob-tab-menu-pseudo-body { width: 100%; overflow-x: hidden; position: relative; }
+
+a.mob-tab-menu-toggle {
+	display: inline-block;
+	width: 30px;
+	height: 30px;
+	background: transparent url('images/button.gif') no-repeat left top;
+	text-decoration: none;
+}
+
+.mob-tab-menu-active { background-position: left bottom !important; }
+
+nav.mobile-menu a{color:#B4C5D5;font-weight: 900;}
+
+nav.mobile-menu a:hover{color:#D8D8D8;}
+
+nav.mobile-menu {
+	width: 200px;
+	padding: 20px;
+	background-color: #111111;
+	border-right: 1px solid #000000;
+}
+
+nav.mobile-menu a {
+	display: block;
+	border-bottom: 1px solid #000000;
+	
+}
+
+div#mobile-bar {
+	position: fixed;
+	left: 0;
+	top: 0;
+	width: 100%;
+	background-color: #000000;
+	text-indent: 10px;
+	padding: 5px 0 5px 0;
+}
+
+body.resp nav.mobile-menu {
+	width: auto;
+	border: none;
+}
+
+body.resp nav.mobile-menu { text-align: center; }
+
+body.resp nav.desktop-menu {
+	padding: 0px;
+	text-align: center;
+	display: none;
+}
+
+body.resp div#mobile-bar { position: absolute; }
+
+@media only screen and (min-width: 700px) {
+	body.resp nav.desktop-menu { display: block; }
+	body.resp div#mobile-bar { display: none; }
+	body.resp p.custom-links { display: none; }
+}
+
+@media screen and (device-aspect-ratio: 40/71) {
+	body.resp nav.desktop-menu { display: none; }
+	body.resp div#mobile-bar { display: block; }
+	body.resp p.custom-links { display: block; }
+}
+
+@media screen and (device-aspect-ratio: 375/667) {
+	body.resp nav.desktop-menu { display: none; }
+	body.resp div#mobile-bar { display: block; }
+	body.resp p.custom-links { display: block; }
+}
+
+@media screen and (device-aspect-ratio: 16/9) {
+	body.resp nav.desktop-menu { display: none; }
+	body.resp div#mobile-bar { display: block; }
+	body.resp p.custom-links { display: block; }
+}
+
+@media only screen and (max-device-width: 480px) {
+	body.resp nav.desktop-menu { display: none; }
+	body.resp div#mobile-bar { display: block; }
+	body.resp p.custom-links { display: block; }
+}

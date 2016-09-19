@@ -89,17 +89,17 @@ function board_front_end( &$board, $main='Root', $level=0, $cur_stpl='c0' )
 
 // mode
 $mode = '';
-if ( isset($HTTP_POST_VARS['mode']) || isset($HTTP_GET_VARS['mode']) )
+if ( isset($_POST['mode']) || isset($_GET['mode']) )
 {
-	$mode = isset($HTTP_POST_VARS['mode']) ? $HTTP_POST_VARS['mode'] : $HTTP_GET_VARS['mode'];
+	$mode = isset($_POST['mode']) ? $_POST['mode'] : $_GET['mode'];
 }
 if ( !in_array($mode, array('style', 'stpl', 'edit', 'delete')) ) $mode = 'style';
 
 // themes_id
 $themes_id = 0;
-if ( isset($HTTP_POST_VARS['style']) || isset($HTTP_GET_VARS['style']) )
+if ( isset($_POST['style']) || isset($_GET['style']) )
 {
-	$themes_id = isset($HTTP_POST_VARS['style']) ? intval($HTTP_POST_VARS['style']) : intval($HTTP_GET_VARS['style']);
+	$themes_id = isset($_POST['style']) ? intval($_POST['style']) : intval($_GET['style']);
 }
 if ( $themes_id != 0)
 {
@@ -110,17 +110,17 @@ if ( $themes_id != 0)
 
 // sub-template id
 $subtpl_id = -1;
-if ( isset($HTTP_POST_VARS['id']) || isset($HTTP_GET_VARS['id']) )
+if ( isset($_POST['id']) || isset($_GET['id']) )
 {
-	$subtpl_id = isset($HTTP_POST_VARS['id']) ? intval($HTTP_POST_VARS['id']) : intval($HTTP_GET_VARS['id']);
+	$subtpl_id = isset($_POST['id']) ? intval($_POST['id']) : intval($_GET['id']);
 }
 
 //
 //  button
 //
-if (isset($HTTP_POST_VARS['create'])) $mode = 'edit' ;
-$submit = isset($HTTP_POST_VARS['submit']);
-$cancel = isset($HTTP_POST_VARS['cancel']);
+if (isset($_POST['create'])) $mode = 'edit' ;
+$submit = isset($_POST['submit']);
+$cancel = isset($_POST['cancel']);
 if ($mode=='delete')
 {
 	$mode = 'edit';
@@ -249,11 +249,11 @@ if ($mode == 'edit')
 		if ( !$delete)
 		{
 			// get the screen vars
-			$name				= trim(str_replace('"', '&quot;', strip_tags($HTTP_POST_VARS['name'])));
-			$dir				= trim(str_replace('"', '&quot;', strip_tags($HTTP_POST_VARS['dir'])));
-			$head_stylesheet	= trim(str_replace('"', '&quot;', strip_tags($HTTP_POST_VARS['head_stylesheet'])));
-			$imagefile			= trim(str_replace('"', '&quot;', strip_tags($HTTP_POST_VARS['imagefile'])));
-			$board_ids			= $HTTP_POST_VARS['board_ids'];
+			$name				= trim(str_replace('"', '&quot;', strip_tags($_POST['name'])));
+			$dir				= trim(str_replace('"', '&quot;', strip_tags($_POST['dir'])));
+			$head_stylesheet	= trim(str_replace('"', '&quot;', strip_tags($_POST['head_stylesheet'])));
+			$imagefile			= trim(str_replace('"', '&quot;', strip_tags($_POST['imagefile'])));
+			$board_ids			= $_POST['board_ids'];
 
 			// control
 			if ($name == '') message_die(GENERAL_ERROR, $lang['subtpl_error_name_missing'] );

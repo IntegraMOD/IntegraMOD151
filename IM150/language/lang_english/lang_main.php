@@ -701,6 +701,7 @@ $lang['PS_backup_filename']			= 'Name To Use For DB Backups';
 $lang['PS_backup_filename_exp']		= '<i>Example:</i> backup';
 $lang['PS_backup_time']				= 'Time Every Day To Complete Backup';
 $lang['PS_backup_total']			= 'Clean Avaliable Backups: %N%';
+$lang['PS_backup_remove']			= 'Delete Backup File';
 
 #==== Added in 1.0.3
 $lang['PS_modcp_verify']			= 'Please verify your password.';
@@ -717,10 +718,6 @@ $lang['PS_pass_force_error']		= 'You <b>have</b> to update your password. Please
 $lang['PS_pass_length_error']		= 'Sorry, there is a %s minimum character requirement for passwords.';
 $lang['PS_pass_match_error']		= 'Sorry, your password can not be the same as your username.';
 $lang['PS_pass_error']				= 'You cant force a minimum password length and not have a minimum length set.';
-#====
-#==== Author: aUsTiN [austin@phpbb-amod.com] [http://phpbb-amod.com] === |
-#==== End: ==== phpBB Security ========================================= |	
-#======================================================================= |
 
 
 $lang['Avatar'] = 'Avatar';
@@ -1385,7 +1382,6 @@ $lang['Please_remove_install'] = 'Please ensure that the install/ directory is d
 $lang['Please_remove_prill'] = 'Please ensure that the prill_install/ directory is deleted';
 $lang['Please_remove_both'] = 'Please ensure both the install/ and prill_install/ directories are deleted';
 $lang['Session_invalid'] = 'Invalid Session. Please resubmit the form.';
-$lang['Please_remove_chmod'] = 'Please ensure that root/chmod.php is deleted';
 
 //====================================================================== |
 //==== Start Advanced BBCode Box MOD =================================== |

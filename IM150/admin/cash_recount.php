@@ -31,14 +31,14 @@ require($phpbb_root_path . 'extension.inc');
 require('./pagestart.' . $phpEx);
 include($phpbb_root_path . 'includes/functions_selects.'.$phpEx);
 
-if ( isset($HTTP_POST_VARS['cancel']) || empty($HTTP_POST_VARS['confirm']) )
+if ( isset($_POST['cancel']) || empty($_POST['confirm']) )
 {
 	message_die(GENERAL_MESSAGE, "<br />" . sprintf($lang['Click_return_cash_reset'], "<a href=\"" . append_sid("cash_reset.$phpEx") . "\">", "</a>") . "<br /><br />");
 }
 
-if ( isset($HTTP_POST_VARS['cids']) )
+if ( isset($_POST['cids']) )
 {
-	$cids = explode(",",$HTTP_POST_VARS['cids']);
+	$cids = explode(",",$_POST['cids']);
 	$cash_check = array();
 	for ( $i = 0; $i < count($cids);$i++ )
 	{

@@ -59,25 +59,25 @@ if (isset($_REQUEST['psid']))
 	$psid = $_REQUEST['psid'];
 	
 	// Check if this a multi upload so we transfer the correct upload file
-	if ($HTTP_GET_VARS['multi_id'])
+	if ($_GET['multi_id'])
 	{
-		$multi_tag = "-" . $HTTP_GET_VARS['multi_id'];
-		$multi_id = $HTTP_GET_VARS['multi_id'];
+		$multi_tag = "-" . $_GET['multi_id'];
+		$multi_id = $_GET['multi_id'];
 	}
 
 	// Routine for php uploading, save files to disk.
 	if (!$album_config['perl_uploader'] && !$multi_id)
 	{
 		$qstr = "";
-		$key_names = array_keys($HTTP_GET_VARS);
+		$key_names = array_keys($_GET);
 		for($a=0;$a<count($key_names);$a++)
 		{
-			$qstr .= "&" . $key_names[$a] . "=" . $HTTP_GET_VARS[$key_names[$a]];
+			$qstr .= "&" . $key_names[$a] . "=" . $_GET[$key_names[$a]];
 		}
-		$key_names = array_keys($HTTP_POST_VARS);
+		$key_names = array_keys($_POST);
 		for($a=0;$a<count($key_names);$a++)
 		{
-			$qstr .= "&" . $key_names[$a] . "=" . $HTTP_POST_VARS[$key_names[$a]];
+			$qstr .= "&" . $key_names[$a] . "=" . $_POST[$key_names[$a]];
 		}
 		$key_names = array_keys($_FILES);
 		for($a=0;$a<count($key_names);$a++)
@@ -118,13 +118,13 @@ if (isset($_REQUEST['psid']))
 		$temp = explode("=",$qstr_array[$i]);
 			if (!preg_match("/^file\[/", $qstr_array[$i]))
 			{
-				$HTTP_GET_VARS[$temp[0]] = $temp[1];
-				$HTTP_POST_VARS[$temp[0]] = $temp[1];
+				$_GET[$temp[0]] = $temp[1];
+				$_POST[$temp[0]] = $temp[1];
 			}
 	}
 
 	// Needed for album hierarchy mod
-	$album_user_id = $HTTP_GET_VARS['user_id'];
+	$album_user_id = $_GET['user_id'];
 
 	// Find the total number of file inputs from the form
 	$multi_max = 0;
@@ -210,11 +210,11 @@ if (isset($_REQUEST['psid']))
 		if ($file['field'][$i] == 'pic_thumbnail' . $multi_tag)
 		{
 			$thumb_type_error = false;
-			$HTTP_POST_FILES['pic_thumbnail']['tmp_name'] = $path_to_bin . $file['tmp_name'][$i];
+			$_FILES['pic_thumbnail']['tmp_name'] = $path_to_bin . $file['tmp_name'][$i];
 			$split_name = explode("\\",$file['name'][$i]);
 			$file_name = $split_name[count($split_name)-1];
-			$HTTP_POST_FILES['pic_thumbnail']['name'] = $file_name;
-			$HTTP_POST_FILES['pic_thumbnail']['size'] = $file['size'][$i];
+			$_FILES['pic_thumbnail']['name'] = $file_name;
+			$_FILES['pic_thumbnail']['size'] = $file['size'][$i];
 			// Find image type and check if allowed
 			$image_data = @getimagesize($path_to_bin . $file['tmp_name'][$i]);
 			switch ($image_data[2])
@@ -224,21 +224,21 @@ if (isset($_REQUEST['psid']))
 					{
 						$thumb_type_error = true;
 					}
-					$HTTP_POST_FILES['pic_thumbnail']['type'] = 'image/gif';
+					$_FILES['pic_thumbnail']['type'] = 'image/gif';
 					break;
 				case '2':
 					if (!$album_config['jpg_allowed'])
 					{
 						$thumb_type_error = true;
 					}
-					$HTTP_POST_FILES['pic_thumbnail']['type'] = 'image/jpeg';
+					$_FILES['pic_thumbnail']['type'] = 'image/jpeg';
 					break;
 				case '3':
 					if (!$album_config['png_allowed'])
 					{
 						$thumb_type_error = true;
 					}
-					$HTTP_POST_FILES['pic_thumbnail']['type'] = 'image/png';
+					$_FILES['pic_thumbnail']['type'] = 'image/png';
 					break;
 				default:
 					$thumb_type_error = true;
@@ -248,11 +248,11 @@ if (isset($_REQUEST['psid']))
 		elseif ($file['field'][$i] == 'pic_file' . $multi_tag)
 		{
 			$pic_type_error = false;
-			$HTTP_POST_FILES['pic_file']['tmp_name'] = $path_to_bin . $file['tmp_name'][$i];
+			$_FILES['pic_file']['tmp_name'] = $path_to_bin . $file['tmp_name'][$i];
 			$split_name = explode("\\",$file['name'][$i]);
 			$file_name = $split_name[count($split_name)-1];
-			$HTTP_POST_FILES['pic_file']['name'] = $file_name;
-			$HTTP_POST_FILES['pic_file']['size'] = $file['size'][$i];
+			$_FILES['pic_file']['name'] = $file_name;
+			$_FILES['pic_file']['size'] = $file['size'][$i];
 			// Find image type and check if allowed
 			$image_data = @getimagesize($path_to_bin . $file['tmp_name'][$i]);
 			$pic_width = $image_data[0];
@@ -264,21 +264,21 @@ if (isset($_REQUEST['psid']))
 					{
 						$pic_type_error = true;
 					}
-					$HTTP_POST_FILES['pic_file']['type'] = 'image/gif';
+					$_FILES['pic_file']['type'] = 'image/gif';
 					break;
 				case '2':
 					if (!$album_config['jpg_allowed'])
 					{
 						$pic_type_error = true;
 					}
-					$HTTP_POST_FILES['pic_file']['type'] = 'image/jpeg';
+					$_FILES['pic_file']['type'] = 'image/jpeg';
 					break;
 				case '3':
 					if (!$album_config['png_allowed'])
 					{
 						$pic_type_error = true;
 					}
-					$HTTP_POST_FILES['pic_file']['type'] = 'image/png';
+					$_FILES['pic_file']['type'] = 'image/png';
 					break;
 				default:
 					$pic_type_error = true;
@@ -287,23 +287,23 @@ if (isset($_REQUEST['psid']))
 	}
 
 	// Build picture title
-	if ($HTTP_POST_VARS['pic_title']=='')
+	if ($_POST['pic_title']=='')
 	{
-		$HTTP_POST_VARS['pic_title'] = $HTTP_POST_FILES['pic_file']['name'];
+		$_POST['pic_title'] = $_FILES['pic_file']['name'];
 	}
 	elseif ($multi_max > 0)
 	{
-		$HTTP_POST_VARS['pic_title'] .= " - " . str_pad(($multi_id + 1), 3, "0", STR_PAD_LEFT);
+		$_POST['pic_title'] .= " - " . str_pad(($multi_id + 1), 3, "0", STR_PAD_LEFT);
 	}
 
 	// Handle no pic file error.
-	if ($HTTP_POST_FILES['pic_file']['size'] == 0)
+	if ($_FILES['pic_file']['size'] == 0)
 	{
 		message_die(GENERAL_MESSAGE, multi_loop($lang['no_file_received']));
 	}
 
 	// Handle no thumbnail file error.
-	if ($album_config['gd_version'] == 0 && $HTTP_POST_FILES['pic_thumbnail']['size'] == 0)
+	if ($album_config['gd_version'] == 0 && $_FILES['pic_thumbnail']['size'] == 0)
 	{
 		message_die(GENERAL_MESSAGE, multi_loop("no_thumbnail_file_recieved!!"));
 	}
@@ -323,24 +323,24 @@ if (isset($_REQUEST['psid']))
 	// Resize image if option selected
 	if ($resize_pic && ($pic_width > $album_config['max_width'] or $pic_height > $album_config['max_height']))
 	{
-		$HTTP_POST_FILES['pic_file']['type'] = resize_image($HTTP_POST_FILES['pic_file']['tmp_name'], $resize_width, $resize_height, $resize_quality);
-		$HTTP_POST_FILES['pic_file']['size'] = filesize($HTTP_POST_FILES['pic_file']['tmp_name']);
+		$_FILES['pic_file']['type'] = resize_image($_FILES['pic_file']['tmp_name'], $resize_width, $resize_height, $resize_quality);
+		$_FILES['pic_file']['size'] = filesize($_FILES['pic_file']['tmp_name']);
 	}
 
 	// Handle large pic file error.
-	if ($HTTP_POST_FILES['pic_file']['size'] > $album_config['max_file_size'])
+	if ($_FILES['pic_file']['size'] > $album_config['max_file_size'])
 	{
 		message_die(GENERAL_MESSAGE, multi_loop($lang['file_too_big']));
 	}
 
 	// Handle large thumbnail file error.
-	if ($album_config['gd_version'] == 0 && $HTTP_POST_FILES['pic_thumbnail']['size'] > $album_config['max_file_size'])
+	if ($album_config['gd_version'] == 0 && $_FILES['pic_thumbnail']['size'] > $album_config['max_file_size'])
 	{
 		message_die(GENERAL_MESSAGE, multi_loop($lang['thumbnail_too_big']));
 	}
 
 	// Handle large resolution pic error.
-	$image_data = getimagesize($HTTP_POST_FILES['pic_file']['tmp_name']);
+	$image_data = getimagesize($_FILES['pic_file']['tmp_name']);
 	if ($image_data[0] > $album_config['max_width'] || $image_data[1] > $album_config['max_height'])
 	{
 		message_die(GENERAL_MESSAGE, multi_loop($lang['image_res_too_high']));
@@ -349,7 +349,7 @@ if (isset($_REQUEST['psid']))
 	// Handle large resolution thumbnail error.
 	if ($album_config['gd_version'] == 0)
 	{
-		$image_data = getimagesize($HTTP_POST_FILES['pic_thumbnail']['tmp_name']);
+		$image_data = getimagesize($_FILES['pic_thumbnail']['tmp_name']);
 		if ($image_data[0] > $album_config['thumbnail_size'] || $image_data[1] > $album_config['thumbnail_size'])
 		{
 			message_die(GENERAL_MESSAGE, multi_loop($lang['thumb_res_too_high']));
@@ -370,23 +370,23 @@ if (isset($_REQUEST['psid']))
 	// If idlevoids multi mod installed convert array.
 	if (isset($album_config['max_files_to_upload']))
 	{
-		$tmp_tmp_name = $HTTP_POST_FILES['pic_file']['tmp_name'];
-		$tmp_name = $HTTP_POST_FILES['pic_file']['name'];
-		$tmp_size = $HTTP_POST_FILES['pic_file']['size'];
-		$tmp_type = $HTTP_POST_FILES['pic_file']['type'];
-		$ttmp_tmp_name = $HTTP_POST_FILES['pic_thumbnail']['tmp_name'];
-		$ttmp_name = $HTTP_POST_FILES['pic_thumbnail']['name'];
-		$ttmp_size = $HTTP_POST_FILES['pic_thumbnail']['size'];
-		$ttmp_type = $HTTP_POST_FILES['pic_thumbnail']['type'];
-		unset($HTTP_POST_FILES);
-		$HTTP_POST_FILES['pic_file']['tmp_name'][0] = $tmp_tmp_name;
-		$HTTP_POST_FILES['pic_file']['name'][0] = $tmp_name;
-		$HTTP_POST_FILES['pic_file']['size'][0] = $tmp_size;
-		$HTTP_POST_FILES['pic_file']['type'][0] = $tmp_type;
-		$HTTP_POST_FILES['pic_thumbnail']['tmp_name'][0] = $ttmp_tmp_name;
-		$HTTP_POST_FILES['pic_thumbnail']['name'][0] = $ttmp_name;
-		$HTTP_POST_FILES['pic_thumbnail']['size'][0] = $ttmp_size;
-		$HTTP_POST_FILES['pic_thumbnail']['type'][0] = $ttmp_type;
+		$tmp_tmp_name = $_FILES['pic_file']['tmp_name'];
+		$tmp_name = $_FILES['pic_file']['name'];
+		$tmp_size = $_FILES['pic_file']['size'];
+		$tmp_type = $_FILES['pic_file']['type'];
+		$ttmp_tmp_name = $_FILES['pic_thumbnail']['tmp_name'];
+		$ttmp_name = $_FILES['pic_thumbnail']['name'];
+		$ttmp_size = $_FILES['pic_thumbnail']['size'];
+		$ttmp_type = $_FILES['pic_thumbnail']['type'];
+		unset($_FILES);
+		$_FILES['pic_file']['tmp_name'][0] = $tmp_tmp_name;
+		$_FILES['pic_file']['name'][0] = $tmp_name;
+		$_FILES['pic_file']['size'][0] = $tmp_size;
+		$_FILES['pic_file']['type'][0] = $tmp_type;
+		$_FILES['pic_thumbnail']['tmp_name'][0] = $ttmp_tmp_name;
+		$_FILES['pic_thumbnail']['name'][0] = $ttmp_name;
+		$_FILES['pic_thumbnail']['size'][0] = $ttmp_size;
+		$_FILES['pic_thumbnail']['type'][0] = $ttmp_type;
 	}
 }
 // In an include with no session id we create a new session id

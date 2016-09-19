@@ -252,7 +252,7 @@ function jr_admin_get_module_list($user_module_list = false)
 
 function jr_admin_secure($file)
 {
-	global $HTTP_GET_VARS, $HTTP_POST_VARS, $db, $lang, $userdata;
+	global $_GET, $_POST, $db, $lang, $userdata;
 	
 	/* Debugging in this function causes changes to the way ADMIN users
 	are interpreted.  You are warned */
@@ -289,12 +289,12 @@ function jr_admin_secure($file)
 		//We are at the index file, which is already secure pretty much
 		return true;
 	}
-	elseif (isset($HTTP_GET_VARS['module']) && in_array($HTTP_GET_VARS['module'], explode(EXPLODE_SEPERATOR_CHAR, $jr_admin_userdata['user_jr_admin'])))
+	elseif (isset($_GET['module']) && in_array($_GET['module'], explode(EXPLODE_SEPERATOR_CHAR, $jr_admin_userdata['user_jr_admin'])))
 	{
 		//The user has access for sure by module_id security from GET vars only
 		return true;
 	}
-	elseif (!isset($HTTP_GET_VARS['module']) && count($HTTP_POST_VARS))
+	elseif (!isset($_GET['module']) && count($_POST))
 	{
 		//This user likely entered a post form, so let's use some checking logic
 		//to make sure they are doing it from where they should be!
@@ -304,10 +304,10 @@ function jr_admin_secure($file)
 		//Return the check to make sure the user has access to what they are submitting
 		return jr_admin_check_file_hashes($file);
 	}
-	elseif (!isset($HTTP_GET_VARS['module']) && isset($HTTP_GET_VARS['sid']))
+	elseif (!isset($_GET['module']) && isset($_GET['sid']))
 	{
 		//This user has clicked on a url that specified items
-		if ($HTTP_GET_VARS['sid'] != $userdata['session_id'])
+		if ($_GET['sid'] != $userdata['session_id'])
 		{
 			return false;
 		}
@@ -464,7 +464,7 @@ function jr_admin_make_admin_link()
 
 function jr_admin_secure_2($file)
 {
-	global $HTTP_GET_VARS, $HTTP_POST_VARS, $db, $lang, $userdata;
+	global $_GET, $_POST, $db, $lang, $userdata;
 	
 	if ($userdata['user_level'] == ADMIN)
 	{

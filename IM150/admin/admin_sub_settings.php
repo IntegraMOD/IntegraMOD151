@@ -60,9 +60,9 @@ require('./pagestart.' . $phpEx);
 require($phpbb_root_path . 'language/lang_' . $board_config['default_lang'] . '/lang_ipn_grp.' . $phpEx);
 
 $mode = "";
-if( isset($HTTP_POST_VARS['mode']) || isset($HTTP_GET_VARS['mode']) )
+if( isset($_POST['mode']) || isset($_GET['mode']) )
 {
-	$mode = (isset($HTTP_POST_VARS['mode'])) ? trim($HTTP_POST_VARS['mode']) : trim($HTTP_GET_VARS['mode']);
+	$mode = (isset($_POST['mode'])) ? trim($_POST['mode']) : trim($_GET['mode']);
 }
 
 if($mode == $lang['L_SUBMIT'])
@@ -70,7 +70,7 @@ if($mode == $lang['L_SUBMIT'])
 	// Get posting variables
 	$newdata = array();
 	$count = 0;
-	$extra_days_for_sub = str_replace("\'", "''", htmlspecialchars(trim($HTTP_POST_VARS['extra_days_for_sub'])));
+	$extra_days_for_sub = str_replace("\'", "''", htmlspecialchars(trim($_POST['extra_days_for_sub'])));
 	$newdata[$count]['config_value'] = $extra_days_for_sub;
 	$newdata[$count]['config_name'] = 'extra_days_for_sub';
 		

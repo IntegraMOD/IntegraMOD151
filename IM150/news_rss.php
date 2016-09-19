@@ -42,7 +42,7 @@ init_userprefs( $userdata );
 // Tell the template class which template to use.
 $template->set_filenames( array( 'news' => 'news_200_rss_body.tpl' ) );
     
-$content = new NewsModule( $phpbb_root_path );
+$content =& new NewsModule( $phpbb_root_path );
 
 $content->setVariables( array(
     'L_INDEX' => $lang['Index'],

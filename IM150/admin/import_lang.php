@@ -38,12 +38,12 @@ if ($cancel)
 
 require('pagestart.' . $phpEx);
 
-$submit = (isset($HTTP_POST_VARS['submit'])) ? TRUE : FALSE;
-$cancel = ( isset($HTTP_POST_VARS['cancel']) ) ? TRUE : FALSE;
+$submit = (isset($_POST['submit'])) ? TRUE : FALSE;
+$cancel = ( isset($_POST['cancel']) ) ? TRUE : FALSE;
 
-if( isset($HTTP_POST_VARS['mode']) || isset($HTTP_GET_VARS['mode']) )
+if( isset($_POST['mode']) || isset($_GET['mode']) )
 {
-	$mode = ( isset($HTTP_POST_VARS['mode']) ) ? $HTTP_POST_VARS['mode'] : $HTTP_GET_VARS['mode'];
+	$mode = ( isset($_POST['mode']) ) ? $_POST['mode'] : $_GET['mode'];
 }
 else
 {
@@ -100,9 +100,9 @@ if (($mode == 'import_new_lang') && ($submit))
 		'body' => 'admin/stat_import_language.tpl')
 	);
 
-	if (isset($HTTP_POST_VARS['install_language']))
+	if (isset($_POST['install_language']))
 	{
-		$filename = trim(stripslashes(htmlspecialchars($HTTP_POST_VARS['filename'])));
+		$filename = trim(stripslashes(htmlspecialchars($_POST['filename'])));
 		
 		if (!($fp = fopen($filename, 'r')) )
 		{
@@ -151,13 +151,13 @@ if (($mode == 'import_new_lang') && ($submit))
 		message_die(GENERAL_MESSAGE, $lang['Language_pak_installed']);
 	}
 
-	if ( isset($HTTP_POST_VARS['fileselect']) )
+	if ( isset($_POST['fileselect']) )
 	{
-		$filename = $phpbb_root_path . 'modules/pakfiles/' . trim($HTTP_POST_VARS['selected_pak_file']);
+		$filename = $phpbb_root_path . 'modules/pakfiles/' . trim($_POST['selected_pak_file']);
 	}
-	else if (isset($HTTP_POST_VARS['fileupload']))
+	else if (isset($_POST['fileupload']))
 	{
-		$filename = $HTTP_POST_FILES['package']['tmp_name'];
+		$filename = $_FILES['package']['tmp_name'];
 
 		// check php upload-size
 		if ( ($filename == 'none') || ($filename == '') )
@@ -271,7 +271,7 @@ if (($mode == 'import_new_lang') && (!$submit))
 		'body' => 'admin/stat_import_language.tpl')
 	);
 
-	if ( (!isset($HTTP_POST_VARS['fileupload'])) && (!isset($HTTP_POST_VARS['fileselect'])) )
+	if ( (!isset($_POST['fileupload'])) && (!isset($_POST['fileselect'])) )
 	{
 		$lang_paks = array();
 	

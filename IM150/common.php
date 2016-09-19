@@ -33,7 +33,6 @@ $starttime = $mtime;
 
 error_reporting  (E_ERROR | E_WARNING | E_PARSE); // This will NOT report uninitialized variables
 set_magic_quotes_runtime(0); // Disable magic_quotes_runtime
-date_default_timezone_set(@date_default_timezone_get());
 
 // The following code (unsetting globals)
 // Thanks to Matt Kavanagh and Stefan Esser for providing feedback as well as patch files
@@ -41,17 +40,17 @@ date_default_timezone_set(@date_default_timezone_get());
 // PHP5 with register_long_arrays off?
 if (@phpversion() >= '5.0.0' && (!@ini_get('register_long_arrays') || @ini_get('register_long_arrays') == '0' || strtolower(@ini_get('register_long_arrays')) == 'off'))
 {
-	$HTTP_POST_VARS = $_POST;
-	$HTTP_GET_VARS = $_GET;
-	$HTTP_SERVER_VARS = $_SERVER;
-	$HTTP_COOKIE_VARS = $_COOKIE;
-	$HTTP_ENV_VARS = $_ENV;
-	$HTTP_POST_FILES = $_FILES;
+	$_POST = $_POST;
+	$_GET = $_GET;
+	$_SERVER = $_SERVER;
+	$_COOKIE = $_COOKIE;
+	$_ENV = $_ENV;
+	$_FILES = $_FILES;
 
 	// _SESSION is the only superglobal which is conditionally set
 	if (isset($_SESSION))
 	{
-		$HTTP_SESSION_VARS = $_SESSION;
+		$_SESSION = $_SESSION;
 	}
 }
 
@@ -59,13 +58,13 @@ if (@phpversion() >= '5.0.0' && (!@ini_get('register_long_arrays') || @ini_get('
 include($phpbb_root_path . 'ctracker/engines/ct_security.' . $phpEx);
 
 // Protect against GLOBALS tricks
-if (isset($HTTP_POST_VARS['GLOBALS']) || isset($HTTP_POST_FILES['GLOBALS']) || isset($HTTP_GET_VARS['GLOBALS']) || isset($HTTP_COOKIE_VARS['GLOBALS']))
+if (isset($_POST['GLOBALS']) || isset($_FILES['GLOBALS']) || isset($_GET['GLOBALS']) || isset($_COOKIE['GLOBALS']))
 {
 	die("Hacking attempt");
 }
 
 // Protect against HTTP_SESSION_VARS tricks
-if (isset($HTTP_SESSION_VARS) && !is_array($HTTP_SESSION_VARS))
+if (isset($_SESSION) && !is_array($_SESSION))
 {
 	die("Hacking attempt");
 }
@@ -79,14 +78,14 @@ if (@ini_get('register_globals') == '1' || strtolower(@ini_get('register_globals
    // Not only will array_merge give a warning if a parameter
    // is not an array, it will actually fail. So we check if
    // HTTP_SESSION_VARS has been initialised.
-	if (!isset($HTTP_SESSION_VARS) || !is_array($HTTP_SESSION_VARS))
+	if (!isset($_SESSION) || !is_array($_SESSION))
 	{
-		$HTTP_SESSION_VARS = array();
+		$_SESSION = array();
 	}
 
 	// Merge all into one extremely huge array; unset
 	// this later
-	$input = array_merge($HTTP_GET_VARS, $HTTP_POST_VARS, $HTTP_COOKIE_VARS, $HTTP_SERVER_VARS, $HTTP_SESSION_VARS, $HTTP_ENV_VARS, $HTTP_POST_FILES);
+	$input = array_merge($_GET, $_POST, $_COOKIE, $_SERVER, $_SESSION, $_ENV, $_FILES);
 
 	unset($input['input']);
 	unset($input['not_unset']);
@@ -110,64 +109,64 @@ if (@ini_get('register_globals') == '1' || strtolower(@ini_get('register_globals
 //
 if( !get_magic_quotes_gpc() )
 {
-	if( is_array($HTTP_GET_VARS) )
+	if( is_array($_GET) )
 	{
-		while( list($k, $v) = each($HTTP_GET_VARS) )
+		while( list($k, $v) = each($_GET) )
 		{
-			if( is_array($HTTP_GET_VARS[$k]) )
+			if( is_array($_GET[$k]) )
 			{
-				while( list($k2, $v2) = each($HTTP_GET_VARS[$k]) )
+				while( list($k2, $v2) = each($_GET[$k]) )
 				{
-					$HTTP_GET_VARS[$k][$k2] = addslashes($v2);
+					$_GET[$k][$k2] = addslashes($v2);
 				}
-				@reset($HTTP_GET_VARS[$k]);
+				@reset($_GET[$k]);
 			}
 			else
 			{
-				$HTTP_GET_VARS[$k] = addslashes($v);
+				$_GET[$k] = addslashes($v);
 			}
 		}
-		@reset($HTTP_GET_VARS);
+		@reset($_GET);
 	}
 
-	if( is_array($HTTP_POST_VARS) )
+	if( is_array($_POST) )
 	{
-		while( list($k, $v) = each($HTTP_POST_VARS) )
+		while( list($k, $v) = each($_POST) )
 		{
-			if( is_array($HTTP_POST_VARS[$k]) )
+			if( is_array($_POST[$k]) )
 			{
-				while( list($k2, $v2) = each($HTTP_POST_VARS[$k]) )
+				while( list($k2, $v2) = each($_POST[$k]) )
 				{
-					$HTTP_POST_VARS[$k][$k2] = addslashes($v2);
+					$_POST[$k][$k2] = addslashes($v2);
 				}
-				@reset($HTTP_POST_VARS[$k]);
+				@reset($_POST[$k]);
 			}
 			else
 			{
-				$HTTP_POST_VARS[$k] = addslashes($v);
+				$_POST[$k] = addslashes($v);
 			}
 		}
-		@reset($HTTP_POST_VARS);
+		@reset($_POST);
 	}
 
-	if( is_array($HTTP_COOKIE_VARS) )
+	if( is_array($_COOKIE) )
 	{
-		while( list($k, $v) = each($HTTP_COOKIE_VARS) )
+		while( list($k, $v) = each($_COOKIE) )
 		{
-			if( is_array($HTTP_COOKIE_VARS[$k]) )
+			if( is_array($_COOKIE[$k]) )
 			{
-				while( list($k2, $v2) = each($HTTP_COOKIE_VARS[$k]) )
+				while( list($k2, $v2) = each($_COOKIE[$k]) )
 				{
-					$HTTP_COOKIE_VARS[$k][$k2] = addslashes($v2);
+					$_COOKIE[$k][$k2] = addslashes($v2);
 				}
-				@reset($HTTP_COOKIE_VARS[$k]);
+				@reset($_COOKIE[$k]);
 			}
 			else
 			{
-				$HTTP_COOKIE_VARS[$k] = addslashes($v);
+				$_COOKIE[$k] = addslashes($v);
 			}
 		}
-		@reset($HTTP_COOKIE_VARS);
+		@reset($_COOKIE);
 	}
 }
 
@@ -212,7 +211,7 @@ unset($dbpasswd);
 //
 //if( getenv('HTTP_X_FORWARDED_FOR') != '' )
 //{
-//	$client_ip = ( !empty($HTTP_SERVER_VARS['REMOTE_ADDR']) ) ? $HTTP_SERVER_VARS['REMOTE_ADDR'] : ( ( !empty($HTTP_ENV_VARS['REMOTE_ADDR']) ) ? $HTTP_ENV_VARS['REMOTE_ADDR'] : $REMOTE_ADDR );
+//	$client_ip = ( !empty($_SERVER['REMOTE_ADDR']) ) ? $_SERVER['REMOTE_ADDR'] : ( ( !empty($_ENV['REMOTE_ADDR']) ) ? $_ENV['REMOTE_ADDR'] : $REMOTE_ADDR );
 //
 //	$entries = explode(',', getenv('HTTP_X_FORWARDED_FOR'));
 //	reset($entries);
@@ -234,9 +233,9 @@ unset($dbpasswd);
 //}
 //else
 //{
-//	$client_ip = ( !empty($HTTP_SERVER_VARS['REMOTE_ADDR']) ) ? $HTTP_SERVER_VARS['REMOTE_ADDR'] : ( ( !empty($HTTP_ENV_VARS['REMOTE_ADDR']) ) ? $HTTP_ENV_VARS['REMOTE_ADDR'] : $REMOTE_ADDR );
+//	$client_ip = ( !empty($_SERVER['REMOTE_ADDR']) ) ? $_SERVER['REMOTE_ADDR'] : ( ( !empty($_ENV['REMOTE_ADDR']) ) ? $_ENV['REMOTE_ADDR'] : $REMOTE_ADDR );
 //}
-$client_ip = ( !empty($HTTP_SERVER_VARS['REMOTE_ADDR']) ) ? $HTTP_SERVER_VARS['REMOTE_ADDR'] : ( ( !empty($HTTP_ENV_VARS['REMOTE_ADDR']) ) ? $HTTP_ENV_VARS['REMOTE_ADDR'] : $REMOTE_ADDR );
+$client_ip = ( !empty($_SERVER['REMOTE_ADDR']) ) ? $_SERVER['REMOTE_ADDR'] : ( ( !empty($_ENV['REMOTE_ADDR']) ) ? $_ENV['REMOTE_ADDR'] : $REMOTE_ADDR );
 $user_ip = encode_ip($client_ip);
 
 // CrackerTracker v5.x
@@ -366,7 +365,7 @@ if(!defined("IN_LOGIN")){
 
 	if (file_exists('chmod.php'))
 	{
-		message_die(GENERAL_MESSAGE, 'Please ensure that root/chmod.php is deleted<br /><form><input type=button value="Continue" onClick="window.location.reload()"></form>');
+		message_die(GENERAL_MESSAGE, 'Please ensure root/chmod.php is deleted');
 	}
 }
 //

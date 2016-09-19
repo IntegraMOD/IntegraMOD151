@@ -42,7 +42,7 @@ if ( !$cash->currency_count() )
 	message_die(GENERAL_MESSAGE, $lang['Insufficient_currencies']);
 }
 
-$mode = isset($HTTP_POST_VARS['mode'])?$HTTP_POST_VARS['mode']:"main";
+$mode = isset($_POST['mode'])?$_POST['mode']:"main";
 
 switch ( $mode )
 {
@@ -51,22 +51,22 @@ switch ( $mode )
 // ================= Update board mode ( group add/remove/set ) ================================
 //
 	case "set":
-		if ( isset($HTTP_POST_VARS['group_type']) &&
-			 isset($HTTP_POST_VARS['group_id']) &&
-			 is_numeric($HTTP_POST_VARS['group_type']) &&
-			 is_numeric($HTTP_POST_VARS['group_id']) &&
-			 isset($HTTP_POST_VARS['update_type']) &&
-			 isset($HTTP_POST_VARS['update_amount']) &&
-			 is_array($HTTP_POST_VARS['update_type']) &&
-			 is_array($HTTP_POST_VARS['update_amount']) )
+		if ( isset($_POST['group_type']) &&
+			 isset($_POST['group_id']) &&
+			 is_numeric($_POST['group_type']) &&
+			 is_numeric($_POST['group_id']) &&
+			 isset($_POST['update_type']) &&
+			 isset($_POST['update_amount']) &&
+			 is_array($_POST['update_type']) &&
+			 is_array($_POST['update_amount']) )
 		{
 			$update_clause = array();
 			while ( $c_cur = &$cash->currency_next($cm_i) )
 			{
-				if ( isset($HTTP_POST_VARS['update_type'][$c_cur->id()]) )
+				if ( isset($_POST['update_type'][$c_cur->id()]) )
 				{
-					$type = intval($HTTP_POST_VARS['update_type'][$c_cur->id()]);
-					$amount = intval($HTTP_POST_VARS['update_amount'][$c_cur->id()]);
+					$type = intval($_POST['update_type'][$c_cur->id()]);
+					$amount = intval($_POST['update_amount'][$c_cur->id()]);
 					if ( ($amount < 0) && (($type == 1) || ($type == 2)) )
 					{
 						$amount = -$amount;
@@ -90,8 +90,8 @@ switch ( $mode )
 			}
 			if ( count($update_clause) )
 			{
-				$group_type = intval($HTTP_POST_VARS['group_type']);
-				$group_id = intval($HTTP_POST_VARS['group_id']);
+				$group_type = intval($_POST['group_type']);
+				$group_id = intval($_POST['group_id']);
 				$where_clause = array();
 				switch ( $group_type )
 				{
@@ -169,13 +169,13 @@ switch ( $mode )
 // ================= Update board mode ( submitted form ) ================================
 //
 	case "update":
-		if ( isset($HTTP_POST_VARS['group_type']) &&
-			 isset($HTTP_POST_VARS['group_id']) &&
-			 is_numeric($HTTP_POST_VARS['group_type']) &&
-			 is_numeric($HTTP_POST_VARS['group_id']) )
+		if ( isset($_POST['group_type']) &&
+			 isset($_POST['group_id']) &&
+			 is_numeric($_POST['group_type']) &&
+			 is_numeric($_POST['group_id']) )
 		{
-			$group_type = intval($HTTP_POST_VARS['group_type']);
-			$group_id = intval($HTTP_POST_VARS['group_id']);
+			$group_type = intval($_POST['group_type']);
+			$group_id = intval($_POST['group_id']);
 
 			$group = new cash_forumgroup($group_type,$group_id,$group_name,$group_description);
 
@@ -189,16 +189,16 @@ switch ( $mode )
 			{
 				$delete_this = true;
 				$varname = 'cash_' . $c_cur->id();
-				if ( isset($HTTP_POST_VARS['submit']) &&
-					 isset($HTTP_POST_VARS[$varname]) &&
-					 is_array($HTTP_POST_VARS[$varname]) )
+				if ( isset($_POST['submit']) &&
+					 isset($_POST[$varname]) &&
+					 is_array($_POST[$varname]) )
 				{
 					$updates = array();
 					while ( list($key,$type) = each ( $update_set ) )
 					{
-						if ( isset($HTTP_POST_VARS[$varname][$key]) )
+						if ( isset($_POST[$varname][$key]) )
 						{
-							$data = $HTTP_POST_VARS[$varname][$key];
+							$data = $_POST[$varname][$key];
 							switch ( $type )
 							{
 								case 'int':
@@ -265,18 +265,18 @@ switch ( $mode )
 // ================= Edit board mode ( change form ) ================================
 //
 	case "edit":
-		if ( isset($HTTP_POST_VARS['group_type']) &&
-			 isset($HTTP_POST_VARS['group_id']) &&
-			 is_numeric($HTTP_POST_VARS['group_type']) &&
-			 is_numeric($HTTP_POST_VARS['group_id']) &&
-			 isset($HTTP_POST_VARS['group_name']) &&
-			 isset($HTTP_POST_VARS['group_description']))
+		if ( isset($_POST['group_type']) &&
+			 isset($_POST['group_id']) &&
+			 is_numeric($_POST['group_type']) &&
+			 is_numeric($_POST['group_id']) &&
+			 isset($_POST['group_name']) &&
+			 isset($_POST['group_description']))
 		{
 			// so we're editing one of the cash groups at a specific currency.
-			$group_type = intval($HTTP_POST_VARS['group_type']);
-			$group_id = intval($HTTP_POST_VARS['group_id']);
-			$group_name = stripslashes($HTTP_POST_VARS['group_name']);
-			$group_description = stripslashes($HTTP_POST_VARS['group_description']);
+			$group_type = intval($_POST['group_type']);
+			$group_id = intval($_POST['group_id']);
+			$group_name = stripslashes($_POST['group_name']);
+			$group_description = stripslashes($_POST['group_description']);
 
 			$group = new cash_forumgroup($group_type,$group_id,$group_name,$group_description);
 

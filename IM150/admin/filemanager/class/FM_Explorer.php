@@ -70,8 +70,8 @@ class FM_Explorer {
 	 * @return FM_Explorer
 	 */
 	function FM_Explorer(&$Listing) {
-		$this->_Listing = $Listing;
-		$this->_FileManager = $this->_Listing->FileManager;
+		$this->_Listing =& $Listing;
+		$this->_FileManager =& $this->_Listing->FileManager;
 		$this->_width = $this->_FileManager->explorerWidth;
 		$this->_expandAll = $this->_FileManager->explorerExpandAll;
 

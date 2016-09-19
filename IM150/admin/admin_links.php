@@ -52,9 +52,9 @@ $var_cache = new Cache_Lite($options);
 $var_cache->clean('link');
 
 // Check link_id
-$link_id = trim($HTTP_GET_VARS['link_id']);
-$mode = trim($HTTP_GET_VARS['mode']); 
-$action = trim($HTTP_GET_VARS['action']); 
+$link_id = trim($_GET['link_id']);
+$mode = trim($_GET['mode']); 
+$action = trim($_GET['action']); 
 //
 // Set template
 //
@@ -140,10 +140,10 @@ switch ($mode)
 		}
 		*/
 		$linkspp = 10;
-		$start = ( isset($HTTP_GET_VARS['start']) ) ? $HTTP_GET_VARS['start'] : 0;
-		if ( isset($HTTP_POST_VARS['search_keywords']) || isset($HTTP_GET_VARS['search_keywords']) )
+		$start = ( isset($_GET['start']) ) ? $_GET['start'] : 0;
+		if ( isset($_POST['search_keywords']) || isset($_GET['search_keywords']) )
 		{
-			$search_keywords = ( isset($HTTP_POST_VARS['search_keywords']) ) ? $HTTP_POST_VARS['search_keywords'] : $HTTP_GET_VARS['search_keywords'];
+			$search_keywords = ( isset($_POST['search_keywords']) ) ? $_POST['search_keywords'] : $_GET['search_keywords'];
 			$search_keywords = trim($search_keywords);
 		}
 		else
@@ -288,12 +288,12 @@ switch ($mode)
 		}
 		break;
 	case 'update':
-		$link_title = ( !empty($HTTP_POST_VARS['link_title']) ) ? trim($HTTP_POST_VARS['link_title']) : '';
-		$link_desc = ( !empty($HTTP_POST_VARS['link_desc']) ) ? trim($HTTP_POST_VARS['link_desc']) : '';
-		$link_category = ( !empty($HTTP_POST_VARS['link_category']) ) ? (is_numeric($HTTP_POST_VARS['link_category']) ? $HTTP_POST_VARS['link_category'] : 0) : 0;
-		$link_url = ( !empty($HTTP_POST_VARS['link_url']) ) ? trim($HTTP_POST_VARS['link_url']) : '';
-		$link_logo_src = ( !empty($HTTP_POST_VARS['link_logo_src']) ) ? trim($HTTP_POST_VARS['link_logo_src']) : '';
-		$link_active = ( !empty($HTTP_POST_VARS['link_active']) ) ? 1 : 0;
+		$link_title = ( !empty($_POST['link_title']) ) ? trim($_POST['link_title']) : '';
+		$link_desc = ( !empty($_POST['link_desc']) ) ? trim($_POST['link_desc']) : '';
+		$link_category = ( !empty($_POST['link_category']) ) ? (is_numeric($_POST['link_category']) ? $_POST['link_category'] : 0) : 0;
+		$link_url = ( !empty($_POST['link_url']) ) ? trim($_POST['link_url']) : '';
+		$link_logo_src = ( !empty($_POST['link_logo_src']) ) ? trim($_POST['link_logo_src']) : '';
+		$link_active = ( !empty($_POST['link_active']) ) ? 1 : 0;
 
 		$link_joined = time();
 		$user_id = $userdata['user_id'];

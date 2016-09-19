@@ -873,15 +873,15 @@ function _set_var(&$result, $var, $type)
 
 function get_var($var_name, $default)
 {
-	global $HTTP_POST_VARS, $HTTP_GET_VARS;
+	global $_POST, $_GET;
 
-	if (!isset($HTTP_POST_VARS[$var_name]) && !isset($HTTP_GET_VARS[$var_name]))
+	if (!isset($_POST[$var_name]) && !isset($_GET[$var_name]))
 	{
 		return $default;
 	}
 	else
 	{
-		$var = (isset($HTTP_POST_VARS[$var_name])) ? $HTTP_POST_VARS[$var_name] : $HTTP_GET_VARS[$var_name];
+		$var = (isset($_POST[$var_name])) ? $_POST[$var_name] : $_GET[$var_name];
 		$type = gettype($default);
 
 		if (is_array($var))

@@ -77,9 +77,9 @@ $classes = pcp_get_classes_fields();
 
 //  get parameters
 $mode = '';
-if (isset($HTTP_POST_VARS['mode']) || isset($HTTP_GET_VARS['mode']) )
+if (isset($_POST['mode']) || isset($_GET['mode']) )
 {
-	$mode = isset($HTTP_POST_VARS['mode']) ? $HTTP_POST_VARS['mode'] : $HTTP_GET_VARS['mode'];
+	$mode = isset($_POST['mode']) ? $_POST['mode'] : $_GET['mode'];
 }
 if ( !in_array($mode, array('edit')) )
 {
@@ -88,9 +88,9 @@ if ( !in_array($mode, array('edit')) )
 
 // class
 $class = '';
-if (isset($HTTP_POST_VARS['class']) || isset($HTTP_GET_VARS['class']) )
+if (isset($_POST['class']) || isset($_GET['class']) )
 {
-	$class = isset($HTTP_POST_VARS['class']) ? $HTTP_POST_VARS['class'] : $HTTP_GET_VARS['class'];
+	$class = isset($_POST['class']) ? $_POST['class'] : $_GET['class'];
 }
 if ( empty($classes) || ( !empty($class) && !isset($classes[$class]) ) )
 {
@@ -98,11 +98,11 @@ if ( empty($classes) || ( !empty($class) && !isset($classes[$class]) ) )
 }
 
 // buttons
-$submit = isset($HTTP_POST_VARS['submit']);
-$cancel = isset($HTTP_POST_VARS['cancel']);
-$create = isset($HTTP_POST_VARS['create']);
-$delete = isset($HTTP_POST_VARS['delete']);
-$suggest = isset($HTTP_POST_VARS['suggest']);
+$submit = isset($_POST['submit']);
+$cancel = isset($_POST['cancel']);
+$create = isset($_POST['create']);
+$delete = isset($_POST['delete']);
+$suggest = isset($_POST['suggest']);
 
 if ( $create )
 {
@@ -120,11 +120,11 @@ if ( $mode == 'edit' )
 	$sql_def		= isset($classes[$class]['sql_def']) ? str_replace("\n", ' ', str_replace("\r", '', str_replace("\t", '', $classes[$class]['sql_def']))) : '';
 
 	// get info from form
-	$name			= isset($HTTP_POST_VARS['name']) ? $HTTP_POST_VARS['name'] : $name;
-	$config_field	= isset($HTTP_POST_VARS['config_field']) ? $HTTP_POST_VARS['config_field'] : $config_field;
-	$admin_field	= isset($HTTP_POST_VARS['admin_field']) ? $HTTP_POST_VARS['admin_field'] : $admin_field;
-	$user_field		= isset($HTTP_POST_VARS['user_field']) ? $HTTP_POST_VARS['user_field'] : $user_field;
-	$sql_def		= isset($HTTP_POST_VARS['sql_def']) ? $HTTP_POST_VARS['sql_def'] : $sql_def;
+	$name			= isset($_POST['name']) ? $_POST['name'] : $name;
+	$config_field	= isset($_POST['config_field']) ? $_POST['config_field'] : $config_field;
+	$admin_field	= isset($_POST['admin_field']) ? $_POST['admin_field'] : $admin_field;
+	$user_field		= isset($_POST['user_field']) ? $_POST['user_field'] : $user_field;
+	$sql_def		= isset($_POST['sql_def']) ? $_POST['sql_def'] : $sql_def;
 
 	if ( $suggest )
 	{

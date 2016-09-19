@@ -286,7 +286,7 @@ function get_kb_articles( $id = false, $approve, $block_name, $start = -1, $arti
 
 		$article_title = $article['article_title'];
 		$temp_url = append_sid( this_kb_mxurl( "mode=article&amp;k=$article_id" ) );
-		$article_link = '<a href="' . $temp_url . '" class="gen">' . $article_title . '</a>';
+		$article = '<a href="' . $temp_url . '" class="gen">' . $article_title . '</a>';
 
 		$approve = '';
 		$delete = '';
@@ -356,8 +356,8 @@ function get_kb_articles( $id = false, $approve, $block_name, $start = -1, $arti
 		// Newssuite operation mode
 		// if ( ns_auth_item($article_cat, $type_id) && ns_auth_cat($article_cat))
 		// {
-		$template->assign_block_vars($block_name, array(
-				'ARTICLE' => $article_link,
+		$template->assign_block_vars( $block_name, array( 'ARTICLE' => $article ,
+				'ARTICLE_DESCRIPTION' => $article_description,
 				'ARTICLE_TYPE' => $article_type,
 				'ARTICLE_DATE' => $article_date,
 				'ARTICLE_AUTHOR' => $author,
@@ -451,7 +451,7 @@ function get_kb_stats( $type = false, $approve, $block_name, $start = -1, $artic
 
 		$article_title = $article['article_title'];
 		$temp_url = append_sid( this_kb_mxurl( "mode=article&amp;k=$article_id" ) );
-		$article_link = '<a href="' . $temp_url . '" class="gen">' . $article_title . '</a>';
+		$article = '<a href="' . $temp_url . '" class="gen">' . $article_title . '</a>';
 
 		$approve = '';
 		$delete = '';
@@ -501,8 +501,8 @@ function get_kb_stats( $type = false, $approve, $block_name, $start = -1, $artic
 		if ( ns_auth_item( $article_cat, $type_id ) && ns_auth_cat( $article_cat )  && $kb_is_auth[$article_cat]['auth_view'])
 		{
 			$i++;
-			$template->assign_block_vars($block_name, array(
-					'ARTICLE' => $article_link,
+			$template->assign_block_vars( $block_name, array( 'ARTICLE' => $article ,
+					'ARTICLE_DESCRIPTION' => $article_description,
 					'ARTICLE_TYPE' => $article_type,
 					'ARTICLE_DATE' => $article_date,
 					'ARTICLE_AUTHOR' => $author,
@@ -1089,7 +1089,7 @@ function get_kb_cat_subs_admin( $parent, $select = 1, $indent, $ss )
 		$category2 = '<a href="' . $temp_url . '" class="gen">' . $category_name2 . '</a>';
 
 		$temp_url = $module_root_path . "admin/admin_kb_cat.$phpEx?mode=edit&amp;cat=$category_id2" . "&amp;sid=".$userdata['session_id'];
-		$edit2 = '<a class="icon_edit" href="' . $temp_url . '" title="' . $lang['Edit'] . '"><span>' . $lang['Edit'] . '</span></a>';
+		$edit2 = '<a href="' . $temp_url . '"><img src="' . $phpbb_root_path . $images['icon_edit'] . '" border="0" alt="' . $lang['Edit'] . '"></a>';
 
 		$temp_url = $module_root_path . "admin/admin_kb_cat.$phpEx?mode=delete&amp;cat=$category_id2" . "&amp;sid=".$userdata['session_id'];
 		$delete2 = '<a href="' . $temp_url . '" class="gen"><img src="' . $phpbb_root_path . $images['icon_delpost'] . '" border="0" alt="' . $lang['Delete'] . '"></a>';

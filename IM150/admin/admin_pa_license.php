@@ -30,9 +30,9 @@ require('./pagestart.' . $phpEx);
 
 include($phpbb_root_path . 'pafiledb/pafiledb_common.'.$phpEx);
 
-if( isset($HTTP_GET_VARS['license']) || isset($HTTP_POST_VARS['license']) )
+if( isset($_GET['license']) || isset($_POST['license']) )
 {
-	$license = (isset($HTTP_POST_VARS['license'])) ? $HTTP_POST_VARS['license'] : $HTTP_GET_VARS['license'];
+	$license = (isset($_POST['license'])) ? $_POST['license'] : $_GET['license'];
 
 	switch($license)
 	{
@@ -42,16 +42,16 @@ if( isset($HTTP_GET_VARS['license']) || isset($HTTP_POST_VARS['license']) )
 				'admin' => 'admin/pa_admin_license_add.tpl')
 			);
 
-			if ( isset($HTTP_GET_VARS['add']) || isset($HTTP_POST_VARS['add']) )
+			if ( isset($_GET['add']) || isset($_POST['add']) )
 			{
-				$add = ( isset($HTTP_GET_VARS['add']) ) ? $HTTP_GET_VARS['add'] : $HTTP_POST_VARS['add'];
+				$add = ( isset($_GET['add']) ) ? $_GET['add'] : $_POST['add'];
 			}
 
 			if ($add == 'do')
 			{
-				if ( isset($HTTP_GET_VARS['form']) || isset($HTTP_POST_VARS['form']) )
+				if ( isset($_GET['form']) || isset($_POST['form']) )
 				{
-					$form = ( isset($HTTP_GET_VARS['form']) ) ? $HTTP_GET_VARS['form'] : $HTTP_POST_VARS['form'];
+					$form = ( isset($_GET['form']) ) ? $_GET['form'] : $_POST['form'];
 				}
 
 				//$form['text'] = str_replace("\n", "<br>", $form['text']);
@@ -90,21 +90,21 @@ if( isset($HTTP_GET_VARS['license']) || isset($HTTP_POST_VARS['license']) )
 				'admin' => 'admin/pa_admin_license_edit.tpl')
 			);
 
-			if ( isset($HTTP_GET_VARS['edit']) || isset($HTTP_POST_VARS['edit']) )
+			if ( isset($_GET['edit']) || isset($_POST['edit']) )
 			{
-				$edit = ( isset($HTTP_GET_VARS['edit']) ) ? $HTTP_GET_VARS['edit'] : $HTTP_POST_VARS['edit'];
+				$edit = ( isset($_GET['edit']) ) ? $_GET['edit'] : $_POST['edit'];
 			}
 
 			if ($edit == 'do')
 			{
-				if ( isset($HTTP_GET_VARS['form']) || isset($HTTP_POST_VARS['form']) )
+				if ( isset($_GET['form']) || isset($_POST['form']) )
 				{
-					$form = ( isset($HTTP_GET_VARS['form']) ) ? $HTTP_GET_VARS['form'] : $HTTP_POST_VARS['form'];
+					$form = ( isset($_GET['form']) ) ? $_GET['form'] : $_POST['form'];
 				}
 
-				if ( isset($HTTP_GET_VARS['id']) || isset($HTTP_POST_VARS['id']) )
+				if ( isset($_GET['id']) || isset($_POST['id']) )
 				{
-					$id = ( isset($HTTP_GET_VARS['id']) ) ? intval($HTTP_GET_VARS['id']) : intval($HTTP_POST_VARS['id']);
+					$id = ( isset($_GET['id']) ) ? intval($_GET['id']) : intval($_POST['id']);
 				}
 
 				//$form['text'] = str_replace("\n", "<br>", $form['text']);
@@ -123,9 +123,9 @@ if( isset($HTTP_GET_VARS['license']) || isset($HTTP_POST_VARS['license']) )
 
 			if ($edit == 'form')
 			{
-				if ( isset($HTTP_GET_VARS['select']) || isset($HTTP_POST_VARS['select']) )
+				if ( isset($_GET['select']) || isset($_POST['select']) )
 				{
-					$select = ( isset($HTTP_GET_VARS['select']) ) ? $HTTP_GET_VARS['select'] : $HTTP_POST_VARS['select'];
+					$select = ( isset($_GET['select']) ) ? $_GET['select'] : $_POST['select'];
 				}
 
 				$sql = "SELECT * FROM " . PA_LICENSE_TABLE . " WHERE license_id = '" . $select . "'";
@@ -188,16 +188,16 @@ if( isset($HTTP_GET_VARS['license']) || isset($HTTP_POST_VARS['license']) )
 				'admin' => 'admin/pa_admin_license_delete.tpl')
 			);
 
-			if ( isset($HTTP_GET_VARS['delete']) || isset($HTTP_POST_VARS['delete']) )
+			if ( isset($_GET['delete']) || isset($_POST['delete']) )
 			{
-				$delete = ( isset($HTTP_GET_VARS['delete']) ) ? $HTTP_GET_VARS['delete'] : $HTTP_POST_VARS['delete'];
+				$delete = ( isset($_GET['delete']) ) ? $_GET['delete'] : $_POST['delete'];
 			}
             
 			if ($delete == 'do')
 			{
-				if ( isset($HTTP_GET_VARS['select']) || isset($HTTP_POST_VARS['select']) )
+				if ( isset($_GET['select']) || isset($_POST['select']) )
 				{
-					$select = ( isset($HTTP_GET_VARS['select']) ) ? $HTTP_GET_VARS['select'] : $HTTP_POST_VARS['select'];
+					$select = ( isset($_GET['select']) ) ? $_GET['select'] : $_POST['select'];
 				}
 
 				if (empty($select)) 

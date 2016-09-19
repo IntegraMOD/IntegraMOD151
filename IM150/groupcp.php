@@ -43,18 +43,18 @@ $server_port = ( $board_config['server_port'] <> 80 ) ? ':' . trim($board_config
 
 $server_url = $server_protocol . $server_name . $server_port . $script_name;
 
-if ( isset($HTTP_GET_VARS[POST_GROUPS_URL]) || isset($HTTP_POST_VARS[POST_GROUPS_URL]) )
+if ( isset($_GET[POST_GROUPS_URL]) || isset($_POST[POST_GROUPS_URL]) )
 {
-	$group_id = ( isset($HTTP_POST_VARS[POST_GROUPS_URL]) ) ? intval($HTTP_POST_VARS[POST_GROUPS_URL]) : intval($HTTP_GET_VARS[POST_GROUPS_URL]);
+	$group_id = ( isset($_POST[POST_GROUPS_URL]) ) ? intval($_POST[POST_GROUPS_URL]) : intval($_GET[POST_GROUPS_URL]);
 }
 else
 {
 	$group_id = '';
 }
 
-if ( isset($HTTP_POST_VARS['mode']) || isset($HTTP_GET_VARS['mode']) )
+if ( isset($_POST['mode']) || isset($_GET['mode']) )
 {
-	$mode = ( isset($HTTP_POST_VARS['mode']) ) ? $HTTP_POST_VARS['mode'] : $HTTP_GET_VARS['mode'];
+	$mode = ( isset($_POST['mode']) ) ? $_POST['mode'] : $_GET['mode'];
 	$mode = htmlspecialchars($mode);
 }
 else
@@ -62,12 +62,12 @@ else
 	$mode = '';
 }
 
-$confirm = ( isset($HTTP_POST_VARS['confirm']) ) ? TRUE : 0;
-$cancel = ( isset($HTTP_POST_VARS['cancel']) ) ? TRUE : 0;
+$confirm = ( isset($_POST['confirm']) ) ? TRUE : 0;
+$cancel = ( isset($_POST['cancel']) ) ? TRUE : 0;
 
-$sid = ( isset($HTTP_POST_VARS['sid']) ) ? $HTTP_POST_VARS['sid'] : '';
+$sid = ( isset($_POST['sid']) ) ? $_POST['sid'] : '';
 
-$start = ( isset($HTTP_GET_VARS['start']) ) ? intval($HTTP_GET_VARS['start']) : 0;
+$start = ( isset($_GET['start']) ) ? intval($_GET['start']) : 0;
 $start = ($start < 0) ? 0 : $start;
 
 //
@@ -75,7 +75,7 @@ $start = ($start < 0) ? 0 : $start;
 //
 $is_moderator = FALSE;
 
-if ( isset($HTTP_POST_VARS['groupstatus']) && $group_id )
+if ( isset($_POST['groupstatus']) && $group_id )
 {
 	if ( !$userdata['session_logged_in'] )
 	{
@@ -106,7 +106,7 @@ if ( isset($HTTP_POST_VARS['groupstatus']) && $group_id )
 	}
 
 	$sql = "UPDATE " . GROUPS_TABLE . " 
-		SET group_type = " . intval($HTTP_POST_VARS['group_type']) . "
+		SET group_type = " . intval($_POST['group_type']) . "
 		WHERE group_id = $group_id";
 	if ( !($result = $db->sql_query($sql)) )
 	{
@@ -122,7 +122,7 @@ if ( isset($HTTP_POST_VARS['groupstatus']) && $group_id )
 	message_die(GENERAL_MESSAGE, $message);
 
 }
-else if ( isset($HTTP_POST_VARS['joingroup']) && $group_id )
+else if ( isset($_POST['joingroup']) && $group_id )
 {
 	//
 	// First, joining a group
@@ -254,7 +254,7 @@ message_die(GENERAL_MESSAGE, $message);
 
 	message_die(GENERAL_MESSAGE, $message);
 }
-else if ( isset($HTTP_POST_VARS['unsub']) || isset($HTTP_POST_VARS['unsubpending']) && $group_id )
+else if ( isset($_POST['unsub']) || isset($_POST['unsubpending']) && $group_id )
 {
 	//
 	// Second, unsubscribing from a group
@@ -317,7 +317,7 @@ else if ( isset($HTTP_POST_VARS['unsub']) || isset($HTTP_POST_VARS['unsubpending
 	}
 	else
 	{
-		$unsub_msg = ( isset($HTTP_POST_VARS['unsub']) ) ? $lang['Confirm_unsub'] : $lang['Confirm_unsub_pending'];
+		$unsub_msg = ( isset($_POST['unsub']) ) ? $lang['Confirm_unsub'] : $lang['Confirm_unsub_pending'];
 
 		$s_hidden_fields = '<input type="hidden" name="' . POST_GROUPS_URL . '" value="' . $group_id . '" /><input type="hidden" name="unsub" value="1" />';
 		$s_hidden_fields .= '<input type="hidden" name="sid" value="' . $userdata['session_id'] . '" />';
@@ -350,7 +350,7 @@ else if ( $group_id )
 	// Did the group moderator get here through an email?
 	// If so, check to see if they are logged in.
 	//
-	if ( isset($HTTP_GET_VARS['validate']) )
+	if ( isset($_GET['validate']) )
 	{
 		if ( !$userdata['session_logged_in'] )
 		{
@@ -425,7 +425,7 @@ else if ( $group_id )
 		//
 		// Handle Additions, removals, approvals and denials
 		//
-		if ( !empty($HTTP_POST_VARS['add']) || !empty($HTTP_POST_VARS['remove']) || isset($HTTP_POST_VARS['approve']) || isset($HTTP_POST_VARS['deny']) || isset($HTTP_POST_VARS['grant_ungrant']) )
+		if ( !empty($_POST['add']) || !empty($_POST['remove']) || isset($_POST['approve']) || isset($_POST['deny']) || isset($_POST['grant_ungrant']) )
 		{
 			if ( !$userdata['session_logged_in'] )
 			{
@@ -448,9 +448,9 @@ else if ( $group_id )
 				message_die(GENERAL_MESSAGE, $message);
 			}
 
-			if ( isset($HTTP_POST_VARS['grant_ungrant']) )
+			if ( isset($_POST['grant_ungrant']) )
 			{
-				$members = $HTTP_POST_VARS['members'];
+				$members = $_POST['members'];
 				if (count($members) > 0)
 				{
 					$s_members = implode( ', ', $members);
@@ -477,9 +477,9 @@ else if ( $group_id )
 					message_die(GENERAL_MESSAGE, $message);
 				}
 			}
-			else if ( isset($HTTP_POST_VARS['add']) )
+			else if ( isset($_POST['add']) )
 			{
-				$username = ( isset($HTTP_POST_VARS['username']) ) ? phpbb_clean_username($HTTP_POST_VARS['username']) : '';
+				$username = ( isset($_POST['username']) ) ? phpbb_clean_username($_POST['username']) : '';
 				
 				$sql = "SELECT user_id, user_email, user_lang, user_level  
 					FROM " . USERS_TABLE . " 
@@ -590,10 +590,10 @@ else if ( $group_id )
 			}
 			else 
 			{
-				if ( ( ( isset($HTTP_POST_VARS['approve']) || isset($HTTP_POST_VARS['deny']) ) && isset($HTTP_POST_VARS['pending_members']) ) || ( isset($HTTP_POST_VARS['remove']) && isset($HTTP_POST_VARS['members']) ) )
+				if ( ( ( isset($_POST['approve']) || isset($_POST['deny']) ) && isset($_POST['pending_members']) ) || ( isset($_POST['remove']) && isset($_POST['members']) ) )
 				{
 
-					$members = ( isset($HTTP_POST_VARS['approve']) || isset($HTTP_POST_VARS['deny']) ) ? $HTTP_POST_VARS['pending_members'] : $HTTP_POST_VARS['members'];
+					$members = ( isset($_POST['approve']) || isset($_POST['deny']) ) ? $_POST['pending_members'] : $_POST['members'];
 
 					$sql_in = '';
 					for($i = 0; $i < count($members); $i++)
@@ -601,7 +601,7 @@ else if ( $group_id )
 						$sql_in .= ( ( $sql_in != '' ) ? ', ' : '' ) . intval($members[$i]);
 					}
 
-					if ( isset($HTTP_POST_VARS['approve']) )
+					if ( isset($_POST['approve']) )
 					{
 						if ( $group_info['auth_mod'] )
 						{
@@ -623,7 +623,7 @@ else if ( $group_id )
 							FROM ". USERS_TABLE . " 
 							WHERE user_id IN ($sql_in)"; 
 					}
-					else if ( isset($HTTP_POST_VARS['deny']) || isset($HTTP_POST_VARS['remove']) )
+					else if ( isset($_POST['deny']) || isset($_POST['remove']) )
 					{
 						if ( $group_info['auth_mod'] )
 						{
@@ -685,7 +685,7 @@ else if ( $group_id )
 					//
 					// MOD Group Extra e-mails
 					//
-					if ( isset($HTTP_POST_VARS['deny']) || isset($HTTP_POST_VARS['remove']) )
+					if ( isset($_POST['deny']) || isset($_POST['remove']) )
 					{
 						$sql_select = "SELECT user_email 
 							FROM ". USERS_TABLE . " 
@@ -737,7 +737,7 @@ else if ( $group_id )
 						{
 							$emailer->bcc($bcc_list[$i]);
 						}
-					        if ( isset($HTTP_POST_VARS['deny']) )
+					        if ( isset($_POST['deny']) )
 					        {
 						$emailer->use_template('group_denied');
 						$emailer->set_subject($lang['Group_deny']);
@@ -762,7 +762,7 @@ else if ( $group_id )
 					//
 					// Email users when they are approved
 					//
-					else if ( isset($HTTP_POST_VARS['approve']) )
+					else if ( isset($_POST['approve']) )
 					{
                                         if ( !($result = $db->sql_query($sql_select)) )
 						{

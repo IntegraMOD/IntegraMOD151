@@ -7,11 +7,11 @@ global $table_prefix, $db, $admin_name, $admin_pass_md5, $language, $board_email
 $sql = array();
 $sql[] = "DELETE FROM " . $table_prefix . "sessions";
 $sql[] = "UPDATE " . $table_prefix . "users 
-					SET username = '" . str_replace("'", "''", $admin_name) . "', 
-							user_password='" . str_replace("'", "''", $admin_pass_md5) . "', 
-							user_lang = '" . str_replace("'", "''", $language) . "', 
-							user_email='" . str_replace("'", "''", $board_email) . "' 
-				WHERE username = 'Admin'";
+	SET username = '" . str_replace("'", "''", $admin_name) . "', 
+		user_password='" . str_replace("'", "''", $admin_pass_md5) . "', 
+		user_lang = '" . str_replace("'", "''", $language) . "', 
+		user_email='" . str_replace("'", "''", $board_email) . "' 
+	WHERE username = 'Admin'";
 $sql[] = "UPDATE " . $table_prefix . "users SET user_regdate = " . time();
 $sql[] = "UPDATE " . $table_prefix . "topics SET topic_time = " . time();
 $sql[] = "UPDATE " . $table_prefix . "posts SET post_time = " . time();
@@ -205,8 +205,6 @@ while( $file = @readdir($dir) ){
 $portal_config = array(
 		'default_portal'			=> '1',
 		'cache_enabled'				=> '1',
-		'header_width'				=> '180',
-		'footer_width'				=> '180',
 		'portal_header'				=> '1',
 		'portal_tail'				=> '0'
 );

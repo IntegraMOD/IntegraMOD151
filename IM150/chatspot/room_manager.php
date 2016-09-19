@@ -38,20 +38,20 @@ if( $userdata[ 'user_level' ] != ADMIN )
 	exit();
 }
 
-if( isset( $HTTP_GET_VARS[ 'sid' ] ) )
-	$SID = '?sid=' . $HTTP_GET_VARS[ 'sid' ];
+if( isset( $_GET[ 'sid' ] ) )
+	$SID = '?sid=' . $_GET[ 'sid' ];
 else
 	$SID = '';
 
-if( !isset( $HTTP_GET_VARS[ 'room_id' ] ) || !isset( $HTTP_GET_VARS[ 'room_name' ] ) || !isset( $HTTP_GET_VARS[ 'password' ] ) ||
-	!isset( $HTTP_GET_VARS[ 'access' ] ) )
+if( !isset( $_GET[ 'room_id' ] ) || !isset( $_GET[ 'room_name' ] ) || !isset( $_GET[ 'password' ] ) ||
+	!isset( $_GET[ 'access' ] ) )
 	die( 'Not all parameters present.' );
 else
 {
-	$room_id = $HTTP_GET_VARS[ 'room_id' ];
-	$room_name = $HTTP_GET_VARS[ 'room_name' ];
-	$password = $HTTP_GET_VARS[ 'password' ];
-	$group_id = $HTTP_GET_VARS[ 'access' ];
+	$room_id = $_GET[ 'room_id' ];
+	$room_name = $_GET[ 'room_name' ];
+	$password = $_GET[ 'password' ];
+	$group_id = $_GET[ 'access' ];
 }
 ?>
 

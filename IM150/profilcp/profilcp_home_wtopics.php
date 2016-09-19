@@ -58,23 +58,23 @@ if ($process == 'pre')
 	{
 		// get the current page
 		$topics_watched_start = 0;
-		if ( isset($HTTP_POST_VARS['topics_watched_start']) || isset($HTTP_GET_VARS['startwt']) )
+		if ( isset($_POST['topics_watched_start']) || isset($_GET['startwt']) )
 		{
-			$topics_watched_start = isset($HTTP_GET_VARS['startwt']) ? intval($HTTP_GET_VARS['startwt']) : intval($HTTP_POST_VARS['topics_watched_start']);
+			$topics_watched_start = isset($_GET['startwt']) ? intval($_GET['startwt']) : intval($_POST['topics_watched_start']);
 		}
 
 		// get the selection days
 		$msg_days = 1;
-		if (isset($HTTP_POST_VARS['msg_days']) || isset($HTTP_GET_VARS['msgd']) )
+		if (isset($_POST['msg_days']) || isset($_GET['msgd']) )
 		{
-			$msg_days = isset($HTTP_POST_VARS['msg_days']) ? intval($HTTP_POST_VARS['msg_days']) : intval($HTTP_GET_VARS['msgd']);
+			$msg_days = isset($_POST['msg_days']) ? intval($_POST['msg_days']) : intval($_GET['msgd']);
 		}
 
 		// get the selected topics
 		$select_unwatched = array();
-		if ( isset($HTTP_POST_VARS['select_unwatch']) )
+		if ( isset($_POST['select_unwatch']) )
 		{
-			$w_unwatched = $HTTP_POST_VARS['select_unwatch'];
+			$w_unwatched = $_POST['select_unwatch'];
 			for ($i=0; $i < count($w_unwatched); $i++)
 			{
 				$type = substr($w_unwatched[$i], 0, 1);
@@ -87,7 +87,7 @@ if ($process == 'pre')
 		}
 
 		// get the unwatched button
-		$submit_unwatched = isset($HTTP_POST_VARS['submit_unwatched']);
+		$submit_unwatched = isset($_POST['submit_unwatched']);
 
 		// unwatched topics
 		if ( $submit_unwatched && !empty($select_unwatched) )

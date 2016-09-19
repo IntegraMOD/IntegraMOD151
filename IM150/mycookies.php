@@ -21,7 +21,7 @@ $cookiename = $board_config['cookie_name'];
 //
 //Delete teh cookies
 //
-if ($HTTP_GET_VARS['confirm'] == 1)
+if ($_GET['confirm'] == 1)
 {
      setcookie($board_config['cookie_name'] . '_f_all', time(), - 3600, $board_config['cookie_path'], $board_config['cookie_domain'], $board_config['cookie_secure']);
 
@@ -37,7 +37,7 @@ header("location: portal.$phpEx");
 }
 
 
-else if(!isset($HTTP_GET_VARS['confirm']) || $HTTP_GET_VARS['confirm'] != 1)
+else if(!isset($_GET['confirm']) || $_GET['confirm'] != 1)
 {
 	 $page_title = $lang['cookies_link'];
 	 include($phpbb_root_path . 'includes/page_header.'.$phpEx);
@@ -46,7 +46,7 @@ else if(!isset($HTTP_GET_VARS['confirm']) || $HTTP_GET_VARS['confirm'] != 1)
 	 'body' => 'cookies_body.tpl')
 	 );
 	 
-	 $cookies_found = (isset($HTTP_COOKIE_VARS[$cookiename . '_t']) || isset($HTTP_COOKIE_VARS[$cookiename . '_f_all']) || isset($HTTP_COOKIE_VARS[$cookiename .'_f']) || isset($HTTP_COOKIE_VARS[$cookiename .'_data']) || isset($HTTP_COOKIE_VARS[$cookiename .'_sid'])) ? TRUE : FALSE;
+	 $cookies_found = (isset($_COOKIE[$cookiename . '_t']) || isset($_COOKIE[$cookiename . '_f_all']) || isset($_COOKIE[$cookiename .'_f']) || isset($_COOKIE[$cookiename .'_data']) || isset($_COOKIE[$cookiename .'_sid'])) ? TRUE : FALSE;
 	 
 	 if($cookies_found == TRUE)
 	 {
@@ -58,11 +58,11 @@ else if(!isset($HTTP_GET_VARS['confirm']) || $HTTP_GET_VARS['confirm'] != 1)
 	 'L_COOKIES_EXPLAIN' => $lang['cookies_explain'],
 	 'L_COOKIES' => $lang['cookies_link'],
 	 'L_CURRENT_CONTENTS' => $lang['current_contents'],
-	 'TOPIC_COOKIE' => $HTTP_COOKIE_VARS[$cookiename .'t'],
-	 'MARKED_COOKIE' => $HTTP_COOKIE_VARS[$cookiename .'_f_all'],
-	 'FORUM_COOKIE' => $HTTP_COOKIE_VARS[$cookiename .'_f'],
-	 'DATA_COOKIE' => $HTTP_COOKIE_VARS[$cookiename .'_data'],
-	 'SID_COOKIE' => $HTTP_COOKIE_VARS[$cookiename .'sid'])
+	 'TOPIC_COOKIE' => $_COOKIE[$cookiename .'t'],
+	 'MARKED_COOKIE' => $_COOKIE[$cookiename .'_f_all'],
+	 'FORUM_COOKIE' => $_COOKIE[$cookiename .'_f'],
+	 'DATA_COOKIE' => $_COOKIE[$cookiename .'_data'],
+	 'SID_COOKIE' => $_COOKIE[$cookiename .'sid'])
 	 );
 	 
 	 $template->pparse('body');

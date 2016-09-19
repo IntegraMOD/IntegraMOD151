@@ -25,27 +25,27 @@ $phpbb_root_path 	= '../';
 require($phpbb_root_path . 'extension.inc');
 require('pagestart.' . $phpEx);
 
-	if( isset($HTTP_POST_VARS['mode']) || isset($HTTP_GET_VARS['mode']) )
+	if( isset($_POST['mode']) || isset($_GET['mode']) )
 		{
-	$mode = ( isset($HTTP_POST_VARS['mode']) ) ? $HTTP_POST_VARS['mode'] : $HTTP_GET_VARS['mode'];
+	$mode = ( isset($_POST['mode']) ) ? $_POST['mode'] : $_GET['mode'];
 		}
-	else if( isset($HTTP_POST_VARS['config']) )
+	else if( isset($_POST['config']) )
 		{
 	$mode = "config";
 		}
-	else if( isset($HTTP_POST_VARS['logs']) )
+	else if( isset($_POST['logs']) )
 		{
 	$mode = "logs";
 		}
-	else if( isset($HTTP_POST_VARS['admin']) )
+	else if( isset($_POST['admin']) )
 		{
 	$mode = "admin";		
 		}
-	else if( isset($HTTP_POST_VARS['multi']) )
+	else if( isset($_POST['multi']) )
 		{
 	$mode = "multi";
 		}
-	else if( isset($HTTP_POST_VARS['search']) )
+	else if( isset($_POST['search']) )
 		{
 	$mode = "search";
 		}						
@@ -55,7 +55,7 @@ require('pagestart.' . $phpEx);
 		}
 		
 	$update = $_POST['update'];
-	$start 	= ( isset($HTTP_GET_VARS['start']) ) ? intval($HTTP_GET_VARS['start']) : 0;		
+	$start 	= ( isset($_GET['start']) ) ? intval($_GET['start']) : 0;		
 	$limit 	= "50";
 		
 	if($mode == "search")

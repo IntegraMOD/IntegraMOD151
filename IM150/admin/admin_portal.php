@@ -176,13 +176,13 @@ else
 		
 		if($var[$portal_name]['type'] == '4')
 		{
-			$new[$portal_name] = ( isset($HTTP_POST_VARS[$portal_name]) ) ? '1' : '0';
+			$new[$portal_name] = ( isset($_POST[$portal_name]) ) ? '1' : '0';
 		}else
 		{
-			$new[$portal_name] = ( isset($HTTP_POST_VARS[$portal_name]) ) ? $HTTP_POST_VARS[$portal_name] : $default_portal[$portal_name];
+			$new[$portal_name] = ( isset($_POST[$portal_name]) ) ? $_POST[$portal_name] : $default_portal[$portal_name];
 		}
 
-		if( isset($HTTP_POST_VARS['submit']) )
+		if( isset($_POST['submit']) )
 		{
 			$sql = "UPDATE " . PORTAL_CONFIG_TABLE . " SET
 				config_value = '" . str_replace("\'", "''", $new[$portal_name]) . "'
@@ -203,7 +203,7 @@ else
 		}
 	}
 
-	if( isset($HTTP_POST_VARS['submit']) )
+	if( isset($_POST['submit']) )
 	{
 		$message = $lang['Config_updated'] . "<br /><br />" . sprintf($lang['Click_return_config'], "<a href=\"" . append_sid("admin_portal.$phpEx") . "\">", "</a>") . "<br /><br />" . sprintf($lang['Click_return_admin_index'], "<a href=\"" . append_sid("index.$phpEx?pane=right") . "\">", "</a>");
 

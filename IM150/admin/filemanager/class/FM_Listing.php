@@ -138,8 +138,8 @@ class FM_Listing {
 	 * @return FM_Listing
 	 */
 	function FM_Listing(&$FileManager, $dir = '') {
-		$this->FileManager = $FileManager;
-		$this->FileSystem = new FM_FileSystem($FileManager, ($FileManager->encoding == 'UTF-8'));
+		$this->FileManager =& $FileManager;
+		$this->FileSystem =& new FM_FileSystem($FileManager, ($FileManager->encoding == 'UTF-8'));
 		$this->curDir = ($dir != '') ? $dir : $this->FileManager->startDir;
 		$this->listWidth = $this->FileManager->fmWidth - $this->FileManager->explorerWidth - 2;
 		$this->_cellsPerRow = floor($this->listWidth / 100);
@@ -218,7 +218,7 @@ class FM_Listing {
 	function &getEntry($id) {
 		if(is_array($this->_entries[$this->_folderId])) {
 			foreach(array_keys($this->_entries[$this->_folderId]) as $ind) {
-				$Entry = $this->_entries[$this->_folderId][$ind];
+				$Entry =& $this->_entries[$this->_folderId][$ind];
 				if($Entry->id == $id) return $Entry;
 			}
 		}
@@ -234,7 +234,7 @@ class FM_Listing {
 	function &getEntryByName($name) {
 		if(is_array($this->_entries[$this->_folderId])) {
 			foreach(array_keys($this->_entries[$this->_folderId]) as $ind) {
-				$Entry = $this->_entries[$this->_folderId][$ind];
+				$Entry =& $this->_entries[$this->_folderId][$ind];
 				if($Entry->name == $name) return $Entry;
 			}
 		}
@@ -477,7 +477,7 @@ class FM_Listing {
 	 * @return string
 	 */
 	function _viewDirUp() {
-		$Entry = new FM_Entry($this);
+		$Entry =& new FM_Entry($this);
 		$Entry->icon = 'cdup';
 		$Entry->name = ($this->searchString == '') ? '..' : '';
 		return $Entry->view();
@@ -569,7 +569,7 @@ class FM_Listing {
 				}
 			}
 			$Entry->id = count($this->_entries[$this->_folderId]);
-			$this->_entries[$this->_folderId][] = $Entry;
+			$this->_entries[$this->_folderId][] =& $Entry;
 		}
 		else if(is_string($Entry)) {
 			/* check if directory access is allowed */
@@ -586,7 +586,7 @@ class FM_Listing {
 	 * @return mixed				entry object, directory name or false
 	 */
 	function &_createEntry($file, $dir) {
-		$Entry = new FM_Entry($this);
+		$Entry =& new FM_Entry($this);
 		if($Entry->setProperties($file, $dir)) {
 			if($this->searchString != '') {
 				if(stristr($Entry->name, $this->searchString)) {

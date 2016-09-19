@@ -184,10 +184,11 @@ function sync($type, $id = false)
 			attachment_sync_topic($id);
 			break;
 	}
-//-- mod : categories hierarchy --------------------------------------------------------------------
+//-- mod : cache -----------------------------------------------------------------------------------
 //-- add
 	global $board_config;
 	board_stats();
+	cache_tree(true);
 //-- fin mod : categories hierarchy ----------------------------------------------------------------
 	
 	return true;

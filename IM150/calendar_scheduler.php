@@ -45,9 +45,9 @@ $set_of_days = array('Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat');
 //
 // date
 $date = 0;
-if ( isset($HTTP_POST_VARS['date']) || isset($HTTP_GET_VARS['d']) )
+if ( isset($_POST['date']) || isset($_GET['d']) )
 {
-	$date = isset($HTTP_POST_VARS['date']) ? intval($HTTP_POST_VARS['date']) : intval($HTTP_GET_VARS['d']);
+	$date = isset($_POST['date']) ? intval($_POST['date']) : intval($_GET['d']);
 }
 if ($date == 0)
 {
@@ -55,8 +55,8 @@ if ($date == 0)
 }
 
 // date per jumpbox
-$start_month = intval($HTTP_POST_VARS['start_month']);
-$start_year = intval($HTTP_POST_VARS['start_year']);
+$start_month = intval($_POST['start_month']);
+$start_year = intval($_POST['start_year']);
 if ( !empty($start_month) && !empty($start_year) )
 {
 	$day = 01;
@@ -69,9 +69,9 @@ if ( !empty($start_month) && !empty($start_year) )
 
 // mode
 $mode = '';
-if ( isset($HTTP_POST_VARS['mode']) || isset($HTTP_GET_VARS['mode']) )
+if ( isset($_POST['mode']) || isset($_GET['mode']) )
 {
-	$mode = isset($HTTP_POST_VARS['mode']) ? $HTTP_POST_VARS['mode'] : $HTTP_GET_VARS['mode'];
+	$mode = isset($_POST['mode']) ? $_POST['mode'] : $_GET['mode'];
 }
 if ( !in_array($mode, array('hour')) )
 {
@@ -79,9 +79,9 @@ if ( !in_array($mode, array('hour')) )
 }
 // start
 $start = 0;
-if ( isset($HTTP_POST_VARS['start']) || isset($HTTP_GET_VARS['start']) )
+if ( isset($_POST['start']) || isset($_GET['start']) )
 {
-$start = isset($HTTP_POST_VARS['start']) ? intval($HTTP_POST_VARS['start']) : intval($HTTP_GET_VARS['start']);	
+$start = isset($_POST['start']) ? intval($_POST['start']) : intval($_GET['start']);	
 }
 
 // get the period
@@ -103,9 +103,9 @@ else
 
 // get the forum id selected
 $fid = '';
-if ( isset($HTTP_POST_VARS['selected_id']) || isset($HTTP_GET_VARS['fid']) )
+if ( isset($_POST['selected_id']) || isset($_GET['fid']) )
 {
-	$fid = isset($HTTP_POST_VARS['selected_id']) ? $HTTP_POST_VARS['selected_id'] : $HTTP_GET_VARS['fid'];
+	$fid = isset($_POST['selected_id']) ? $_POST['selected_id'] : $_GET['fid'];
 	if ($fid != 'Root')
 	{
 		$type = substr($fid, 0, 1);

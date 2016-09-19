@@ -34,13 +34,13 @@ init_userprefs($userdata);
 
 include($album_root_path . 'album_common.'.$phpEx);
 
-if ( isset($HTTP_POST_VARS['hon_rating']) )
+if ( isset($_POST['hon_rating']) )
 {
-	$rate_point = intval($HTTP_POST_VARS['hon_rating']);
+	$rate_point = intval($_POST['hon_rating']);
 }
-elseif ( isset($HTTP_GET_VARS['hon_rating']) )
+elseif ( isset($_GET['hon_rating']) )
 {
-	$rate_point = intval($HTTP_GET_VARS['hon_rating']);
+	$rate_point = intval($_GET['hon_rating']);
 }
 else
 {
@@ -241,7 +241,7 @@ else
 {
 	$rate_user_id = $userdata['user_id'];
 	$rate_user_ip = $userdata['session_ip'];
-	$pic_id = ( isset($HTTP_POST_VARS['pic_id']) || isset($HTTP_GET_VARS['pic_id']) ) ? (isset($HTTP_POST_VARS['pic_id'])) ? $HTTP_POST_VARS['pic_id'] : $HTTP_GET_VARS['pic_id'] : 0;
+	$pic_id = ( isset($_POST['pic_id']) || isset($_GET['pic_id']) ) ? (isset($_POST['pic_id'])) ? $_POST['pic_id'] : $_GET['pic_id'] : 0;
 		
 	if ($album_config['hon_rate_sep'] == 1)
 	{

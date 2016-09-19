@@ -1,0 +1,16 @@
+[19-Feb-2016 12:45:46 UTC] PHP Warning:  include(../album_mod/album_hierarchy_functions.php): failed to open stream: No such file or directory in /home/fimages/public_html/IM150/album_mod/album_common.php on line 128
+[19-Feb-2016 12:45:46 UTC] PHP Warning:  include(../album_mod/album_hierarchy_functions.php): failed to open stream: No such file or directory in /home/fimages/public_html/IM150/album_mod/album_common.php on line 128
+[19-Feb-2016 12:45:46 UTC] PHP Warning:  include(): Failed opening '../album_mod/album_hierarchy_functions.php' for inclusion (include_path='.:/usr/lib/php:/usr/local/lib/php') in /home/fimages/public_html/IM150/album_mod/album_common.php on line 128
+[19-Feb-2016 12:45:46 UTC] PHP Fatal error:  Call to undefined function album_read_tree() in /home/fimages/public_html/IM150/admin/admin_album_cat.php on line 60
+[02-Mar-2016 20:28:27 UTC] PHP Parse error:  syntax error, unexpected '{' in /home/fimages/public_html/IM150/admin/admin_security.php on line 722
+[02-Mar-2016 20:37:44 UTC] PHP Parse error:  syntax error, unexpected 'DELETE' (T_STRING) in /home/fimages/public_html/IM150/admin/admin_security.php on line 722
+[02-Mar-2016 20:41:44 UTC] PHP Parse error:  syntax error, unexpected '' '' (T_CONSTANT_ENCAPSED_STRING) in /home/fimages/public_html/IM150/admin/admin_security.php on line 722
+[02-Mar-2016 20:47:20 UTC] PHP Parse error:  syntax error, unexpected '$lang' (T_VARIABLE) in /home/fimages/public_html/IM150/admin/admin_security.php on line 722
+[02-Mar-2016 21:16:41 UTC] PHP Parse error:  syntax error, unexpected '{' in /home/fimages/public_html/IM150/admin/admin_security.php on line 723
+[02-Mar-2016 21:16:43 UTC] PHP Parse error:  syntax error, unexpected '{' in /home/fimages/public_html/IM150/admin/admin_security.php on line 723
+[02-Mar-2016 21:17:04 UTC] PHP Parse error:  syntax error, unexpected '{' in /home/fimages/public_html/IM150/admin/admin_security.php on line 723
+[02-Mar-2016 21:17:06 UTC] PHP Parse error:  syntax error, unexpected '{' in /home/fimages/public_html/IM150/admin/admin_security.php on line 723
+[02-Mar-2016 21:17:30 UTC] PHP Parse error:  syntax error, unexpected '}', expecting ']' in /home/fimages/public_html/IM150/admin/admin_security.php on line 723
+[02-Mar-2016 21:17:31 UTC] PHP Parse error:  syntax error, unexpected '}', expecting ']' in /home/fimages/public_html/IM150/admin/admin_security.php on line 723
+[02-Mar-2016 21:17:58 UTC] PHP Parse error:  syntax error, unexpected ''>'' (T_CONSTANT_ENCAPSED_STRING) in /home/fimages/public_html/IM150/admin/admin_security.php on line 723
+[02-Mar-2016 21:18:00 UTC] PHP Parse error:  syntax error, unexpected ''>'' (T_CONSTANT_ENCAPSED_STRING) in /home/fimages/public_html/IM150/admin/admin_security.php on line 723

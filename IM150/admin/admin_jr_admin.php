@@ -203,28 +203,28 @@ if ($debug)
 {
 	//Dump out the get and post vars if in debug mode
 	echo '<pre><span  class="gensmall"><font color="blue">DEBUG - POST VARS -<br>';
-	print_r($HTTP_POST_VARS);
+	print_r($_POST);
 	echo '</font><br>';
 	echo '<font color="red">DEBUG - GET VARS -<br>';
-	print_r($HTTP_GET_VARS);
+	print_r($_GET);
 	echo '</font><br></pre></span>';
 }
 
 foreach($params as $var => $default)
 {
 	$$var = $default;
-	if( isset($HTTP_POST_VARS[$var]) || isset($HTTP_GET_VARS[$var]) )
+	if( isset($_POST[$var]) || isset($_GET[$var]) )
 	{
-		$$var = ( isset($HTTP_POST_VARS[$var]) ) ? $HTTP_POST_VARS[$var] : $HTTP_GET_VARS[$var];
+		$$var = ( isset($_POST[$var]) ) ? $_POST[$var] : $_GET[$var];
 	}
 }
 
 //*******************************************************************************************
 /** Check for edit user
 /******************************************************************************************/
-if (count($HTTP_POST_VARS))
+if (count($_POST))
 {
-	foreach ($HTTP_POST_VARS as $key => $val)
+	foreach ($_POST as $key => $val)
 	{
 		if (preg_match("/^edit_user_/", $key))
 		{
@@ -236,7 +236,7 @@ $page_title = $lang['Jr_Admin'];
 $page_desc = $lang['Permissions_Page_Desc'];
 
 
-if (!empty($user_id) && !isset($HTTP_POST_VARS['update_user']))
+if (!empty($user_id) && !isset($_POST['update_user']))
 {
 	$sql = "SELECT $color_group username, user_id, user_level  FROM " . USERS_TABLE . "
 		WHERE user_id = $user_id
@@ -345,10 +345,10 @@ if (!empty($user_id) && !isset($HTTP_POST_VARS['update_user']))
 else
 {
 	//Update info like module list and color groups
-	if (isset($HTTP_POST_VARS['update_user']) && !empty($user_id))
+	if (isset($_POST['update_user']) && !empty($user_id))
 	{
 		$user_update_list = '';
-		foreach ($HTTP_POST_VARS as $key => $val)
+		foreach ($_POST as $key => $val)
 		{
 			if (preg_match($update_find_pattern, $key))
 			{
@@ -379,8 +379,8 @@ else
 			}
 		}
 		
-		$notes_view = (isset($HTTP_POST_VARS['notes_view'])) ? 1 : 0;
-		$admin_notes = $HTTP_POST_VARS['admin_notes'];
+		$notes_view = (isset($_POST['notes_view'])) ? 1 : 0;
+		$admin_notes = $_POST['admin_notes'];
 		
 		//Do the information update
 		$sql = 'UPDATE ' . JR_ADMIN_TABLE . "

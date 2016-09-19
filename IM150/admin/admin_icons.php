@@ -148,25 +148,25 @@ icons_read();
 
 // mode
 $mode = '';
-if ( isset($HTTP_POST_VARS['mode']) || isset($HTTP_GET_VARS['mode']) )
+if ( isset($_POST['mode']) || isset($_GET['mode']) )
 {
-	$mode = isset($HTTP_POST_VARS['mode']) ? $HTTP_POST_VARS['mode'] : $HTTP_GET_VARS['mode'];
+	$mode = isset($_POST['mode']) ? $_POST['mode'] : $_GET['mode'];
 }
 if (!in_array($mode, array('edit', 'up', 'dw', 'del'))) $mode = '';
 
 // icon
 $icon = -1;
-if ( isset($HTTP_POST_VARS['icon']) || isset($HTTP_GET_VARS['icon']) )
+if ( isset($_POST['icon']) || isset($_GET['icon']) )
 {
-	$icon = isset($HTTP_POST_VARS['icon']) ? intval($HTTP_POST_VARS['icon']) : intval($HTTP_GET_VARS['icon']);
+	$icon = isset($_POST['icon']) ? intval($_POST['icon']) : intval($_GET['icon']);
 }
 
 // buttons
-$create = isset($HTTP_POST_VARS['create']);
-$submit = isset($HTTP_POST_VARS['submit']);
-$confirm = isset($HTTP_POST_VARS['confirm']);
-$cancel = isset($HTTP_POST_VARS['cancel']);
-$refreh = isset($HTTP_POST_VARS['refresh']);
+$create = isset($_POST['create']);
+$submit = isset($_POST['submit']);
+$confirm = isset($_POST['confirm']);
+$cancel = isset($_POST['cancel']);
+$refreh = isset($_POST['refresh']);
 
 // creation
 if ($create)
@@ -221,9 +221,9 @@ if ($mode == 'del')
 
 		// handle the replacement icon
 		$replace_icon = -1;
-		if (isset($HTTP_POST_VARS['replace_icon']))
+		if (isset($_POST['replace_icon']))
 		{
-			$replace_icon = intval($HTTP_POST_VARS['replace_icon']);
+			$replace_icon = intval($_POST['replace_icon']);
 			if (isset($map_icon[$replace_icon]))
 			{
 				// replace post icons
@@ -424,14 +424,14 @@ if ($mode == 'edit')
 	}
 
 	// read the formular
-	if (isset($HTTP_POST_VARS['icon_title']))	$icon_title		= trim(str_replace("\'", "''", $HTTP_POST_VARS['icon_title']));
-	if (isset($HTTP_POST_VARS['icon_url']))		$icon_url		= trim(str_replace("\'", "''", $HTTP_POST_VARS['icon_url']));
-	if (isset($HTTP_POST_VARS['icon_auth']))	$icon_auth		= trim(str_replace("\'", "''", $HTTP_POST_VARS['icon_auth']));
+	if (isset($_POST['icon_title']))	$icon_title		= trim(str_replace("\'", "''", $_POST['icon_title']));
+	if (isset($_POST['icon_url']))		$icon_url		= trim(str_replace("\'", "''", $_POST['icon_url']));
+	if (isset($_POST['icon_auth']))	$icon_auth		= trim(str_replace("\'", "''", $_POST['icon_auth']));
 
 	if ($refresh || $submit)
 	{
 		$icon_ids = array();
-		$icon_ids = $HTTP_POST_VARS['ids'];
+		$icon_ids = $_POST['ids'];
 	}
 
 	// process the buttons

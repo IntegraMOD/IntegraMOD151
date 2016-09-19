@@ -316,7 +316,7 @@ class pafiledb_functions
 			$path = $url['path']; 
 			$port = (!empty($url['port'])) ? $url['port'] : 80;
 
-			$fp = fsockopen($host, $port, $errno, $errstr, 20);
+			$fp = @fsockopen($host, $port, $errno, $errstr, 20);
 		
 			if(!$fp)
 			{ 
@@ -540,7 +540,7 @@ class pafiledb_functions
 
 		if (@file_exists($this->pafiledb_realpath($filename)) ) 
 		{
-			$filesys = eregi_replace('/','\\', $filename);
+			$filesys = preg_replace('/\//', '\\', $filename);
 			$deleted = @system("del $filesys");
 
 			if (@file_exists($this->pafiledb_realpath($filename))) 
@@ -705,15 +705,15 @@ class user_info
 	
 	function user_info( $user_agent = '' )
 	{
-		global $_SERVER, $HTTP_USER_AGENT, $HTTP_SERVER_VARS;
+		global $_SERVER, $HTTP_USER_AGENT, $_SERVER;
 		
 		if (!empty($_SERVER['HTTP_USER_AGENT'])) 
 		{
 			$HTTP_USER_AGENT = $_SERVER['HTTP_USER_AGENT'];
 		} 
-		else if (!empty($HTTP_SERVER_VARS['HTTP_USER_AGENT'])) 
+		else if (!empty($_SERVER['HTTP_USER_AGENT'])) 
 		{
-			$HTTP_USER_AGENT = $HTTP_SERVER_VARS['HTTP_USER_AGENT'];
+			$HTTP_USER_AGENT = $_SERVER['HTTP_USER_AGENT'];
 		}
 		else if (!isset($HTTP_USER_AGENT))
 		{

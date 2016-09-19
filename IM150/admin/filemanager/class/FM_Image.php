@@ -93,7 +93,7 @@ class FM_Image {
 	 * @return FM_Image
 	 */
 	function FM_Image(&$Entry, $maxWidth = null, $maxHeight = null) {
-		$this->_Entry = $Entry;
+		$this->_Entry =& $Entry;
 		$this->_file = $Entry->getFile();
 		$this->_sharpen = $Entry->FileManager->thumbSharpen;
 

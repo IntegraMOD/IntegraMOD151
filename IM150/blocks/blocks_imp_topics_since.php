@@ -29,7 +29,7 @@ if(!function_exists(imp_topics_since_block_func))
 {
 	function imp_topics_since_block_func()
 	{
-		global $template, $lang, $db, $theme, $phpEx, $lang, $board_config, $userdata, $phpbb_root_path, $table_prefix, $portal_config, $var_cache, $HTTP_POST_VARS, $HTTP_GET_VARS;
+		global $template, $lang, $db, $theme, $phpEx, $lang, $board_config, $userdata, $phpbb_root_path, $table_prefix, $portal_config, $var_cache, $_POST, $_GET;
 
 	include_once($phpbb_root_path . 'includes/functions_topics_list.' . $phpEx);
 	$process = 'pre';

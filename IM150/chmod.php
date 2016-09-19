@@ -1,5 +1,4 @@
 <?php
-error_reporting  (E_ERROR | E_WARNING | E_PARSE); // This will NOT report uninitialized variables
 
 // Version 2.02_beta by Evolver
 // Version 0.13_beta
@@ -40,9 +39,9 @@ function page_header()
 <meta http-equiv="Content-Type" content="text/html; charset=<?php echo $lang['ENCODING']; ?>">
 <meta http-equiv="Content-Style-Type" content="text/css">
 <title><?php echo $lang['Welcome_install'];?></title>
-<link rel="stylesheet" href="templates/DEFAULT/stylesheet.css" type="text/css">
+<link rel="stylesheet" href="templates/Default/Default.css" type="text/css">
 <!--[if IE]>
-<link rel="stylesheet" href="templates/DEFAULT/formIE.css" type="text/css">
+<link rel="stylesheet" href="templates/Default/formIE.css" type="text/css">
 <![endif]-->
 
 </head>
@@ -623,9 +622,10 @@ global $ftp_details, $ftpcheck;
 
 function fileicon($path)
 {
+$relpath = './';
 // dir or fileicon begin
-$dirimage = "<img src='".$relpath."templates/DEFAULT/images/icon_minicat_new.gif' width='13' height='9' border='0'> ";
-$fileimage = "<img src='".$relpath."templates/DEFAULT/images/icon_minipost.gif' width='12' height='9' border='0'> ";
+$dirimage = "<img src='".$relpath."templates/Default/images/icon_minicat_new.gif' width='13' height='9' border='0'> ";
+$fileimage = "<img src='".$relpath."templates/Default/images/icon_minipost.gif' width='12' height='9' border='0'> ";
 // dir or fileicon end
 
 // dir or fileicon begin
@@ -663,7 +663,7 @@ function chmod_routine($path, $mod, $chmodmethod, $ftp_details)   // Just to mak
 // -  --   CHMOD FUNCTION routine for both methods    --  --  --  --  --  --  --  --  --  --  --  --  --  --  --  --  --  --  --  -
 // -  --  --  --  --  --  --  --  --  --  --  --  --  --  --  --  --  --  --  --  --  --  --  --  --  --  --  --  --  --  --  --  -
 // -  --  --  --  --  --  --  --  --  --  --  --  --  --  --  --  --  --  --  --  --  --  --  --  --  --  --  --  --  --  --  --  -
-
+  $relpath = './';
   $fileicon = fileicon($path);
   $errorimage = " <img src='".$relpath."images/smiles/icon_exclaim.gif' width='19' height='19' border='0' align='absmiddle'>";
  
@@ -833,7 +833,8 @@ $aftermodcheck = $filenumber;
 $nofilechmod = "---";
 $prereport = "";
 $afterreport = "";
-
+$predifference = "";
+$afterdifference = "";
 
   foreach($preinstall_list as $path => $mod)
   {
@@ -843,6 +844,7 @@ $afterreport = "";
       $fileicon[] = fileicon($path);
 
     if (file_exists($path) !== false) {
+  	  $relpath = './';
       // controleren van de werkelijke permissies
       $now = substr(sprintf("%o",fileperms($relpath.$path)),-3);
       //clearstatcache($relpath.$path);
@@ -932,12 +934,12 @@ $report2 = $afterreport;
 
 if ($list !== "permissionstatus") tableboxtitle3("Now", "File / Directory", "Pre", "After");
    for($i = 0; $i < $filenumber; $i++){
-     $contents1 = "<p title='$nowmodmeaning[i]' class='maintitle'>$modnow[$i]</p>";
+     $contents1 = "<p title='$nowmodmeaning[$i]' class='maintitle'>$modnow[$i]</p>";
      $contents2 = $fileicon[$i];
      if ( $modnow[$i] == $nofilechmod ) $contents3 = "<font color='#FF0000'>$prepath[$i] $errorimage</font>";
      else $contents3 = "<font color='#6666CC'>$prepath[$i]</font>";
-     $contents4 = "<p title='$premodmeaning[i]' class='maintitle'>$premod[$i]</p>";
-     $contents5 = "<p title='$aftermodmeaning[i]' class='maintitle'>$aftermod[$i]</p>";
+     $contents4 = "<p title='$premodmeaning[$i]' class='maintitle'>$premod[$i]</p>";
+     $contents5 = "<p title='$aftermodmeaning[$i]' class='maintitle'>$aftermod[$i]</p>";
      $row1 = "forumline";
      $row2 = "forumline";
      if ($modnow[$i] == $premod[$i]) $row1 = "errorline";
@@ -1068,7 +1070,8 @@ function size($sFile, $sDecimal, $sFormat="kb")
 
 function chmodcalculator()
 {
-?><script type="text/javascript">
+?>
+<script type="text/javascript">
 <!--
 
 
@@ -1125,8 +1128,6 @@ function do_chmod(user) {
 }
 //-->
 </script>
-
-
 
 <form name="chmod">
 <table align="center" cellpadding="0" cellspacing="0" border="0" bgcolor="#03075D"><tr><td width="100%" valign="top"><table width="100%" cellpadding="5" cellspacing="2" border="0"><tr><td width="100%" bgcolor="#52847B" align="center" colspan="5"><font color="#ffffff" size="3"><b>chmod (File Permissions) helper</b></font></td></tr>
@@ -1243,7 +1244,6 @@ if ($processcall) {
    if ($processcall == 'welcome') {
       $preinstall = autodetect_install();
 ?>
-
 <table width="100%" cellpadding="3" cellspacing="1" border="0" class="forumline">
 		<tr>
 			<th>Thank you for choosing <b>IntegraMOD</b></th>
@@ -1403,16 +1403,10 @@ if ($processcall) {
 }
 
 
-
-
 //test
-
-
 //cachechmod
 //ftp_form($ftp_details, $ftpcheck);
 //cachechmod(testdir);
-
-
 
 
 //$ERROR_MESSAGE = "dit is een test";
@@ -1421,16 +1415,7 @@ if ($processcall) {
 //bigtest();
 
 
-
-
 menuend();
-
-
-
-
-
-
-
 
 function bigtest() {
 $testingfile = 'config.php';
@@ -1482,32 +1467,32 @@ box('System', $system);
   $inside = "";
   $preinstall = autodetect_install();
 
-  $inside .= "<a href=\"" . basename($_SERVER[PHP_SELF]) . "?page=0\"><img src='templates/DEFAULT/images/pips/pip.gif' align='absbottom' border='0' hspace='5'>$process[0]</a><br>";
+  $inside .= "<a href=\"" . basename($_SERVER['PHP_SELF']) . "?page=0\"><img src='templates/Default/images/pips/pip.gif' align='absbottom' border='0' hspace='5'>$process[0]</a><br>";
 
   $inside .= "<hr>";
 if ($nolinux) {
-  $inside .= "<a href=\"" . basename($_SERVER[PHP_SELF]) . "?page=1\"><img src='templates/DEFAULT/images/pips/pip.gif' align='absbottom' border='0' hspace='5'><strike>$process[1]</strike><br>";
-  $inside .= "<a href=\"" . basename($_SERVER[PHP_SELF]) . "?page=2\"><img src='templates/DEFAULT/images/pips/pip.gif' align='absbottom' border='0' hspace='5'><strike>$process[2]</strike></a><br>";
-  $inside .= "<a href=\"" . basename($_SERVER[PHP_SELF]) . "?page=3\"><img src='templates/DEFAULT/images/pips/pip.gif' align='absbottom' border='0' hspace='5'><strike>$process[3]</strike></a><br>";
+  $inside .= "<a href=\"" . basename($_SERVER['PHP_SELF']) . "?page=1\"><img src='templates/Default/images/pips/pip.gif' align='absbottom' border='0' hspace='5'><strike>$process[1]</strike><br>";
+  $inside .= "<a href=\"" . basename($_SERVER['PHP_SELF']) . "?page=2\"><img src='templates/Default/images/pips/pip.gif' align='absbottom' border='0' hspace='5'><strike>$process[2]</strike></a><br>";
+  $inside .= "<a href=\"" . basename($_SERVER['PHP_SELF']) . "?page=3\"><img src='templates/Default/images/pips/pip.gif' align='absbottom' border='0' hspace='5'><strike>$process[3]</strike></a><br>";
   $inside .= "<div  align='center' class='admin'><strong>(no linux)</strong></div>";
 }
 else if ($preinstall) {
-  $inside .= "<a href=\"" . basename($_SERVER[PHP_SELF]) . "?page=1\"><img src='templates/DEFAULT/images/pips/pip.gif' align='absbottom' border='0' hspace='5'>$process[1]</a><br>";
-  $inside .= "<a href=\"" . basename($_SERVER[PHP_SELF]) . "?page=2\"><img src='templates/DEFAULT/images/pips/pip.gif' align='absbottom' border='0' hspace='5'><strong>$process[2]</strong></a><br>";
-  $inside .= "<a href=\"" . basename($_SERVER[PHP_SELF]) . "?page=3\"><img src='templates/DEFAULT/images/pips/pip.gif' align='absbottom' border='0' hspace='5'><strike>$process[3]</strike></a><br>";
+  $inside .= "<a href=\"" . basename($_SERVER['PHP_SELF']) . "?page=1\"><img src='templates/Default/images/pips/pip.gif' align='absbottom' border='0' hspace='5'>$process[1]</a><br>";
+  $inside .= "<a href=\"" . basename($_SERVER['PHP_SELF']) . "?page=2\"><img src='templates/Default/images/pips/pip.gif' align='absbottom' border='0' hspace='5'><strong>$process[2]</strong></a><br>";
+  $inside .= "<a href=\"" . basename($_SERVER['PHP_SELF']) . "?page=3\"><img src='templates/Default/images/pips/pip.gif' align='absbottom' border='0' hspace='5'><strike>$process[3]</strike></a><br>";
 }
 else {
-  $inside .= "<a href=\"" . basename($_SERVER[PHP_SELF]) . "?page=1\"><img src='templates/DEFAULT/images/pips/pip.gif' align='absbottom' border='0' hspace='5'>$process[1]</a><br>";
-  $inside .= "<a href=\"" . basename($_SERVER[PHP_SELF]) . "?page=2\"><img src='templates/DEFAULT/images/pips/pip.gif' align='absbottom' border='0' hspace='5'><strike>$process[2]</strike></a><br>";
-  $inside .= "<a href=\"" . basename($_SERVER[PHP_SELF]) . "?page=3\"><img src='templates/DEFAULT/images/pips/pip.gif' align='absbottom' border='0' hspace='5'><strong>$process[3]</strong></a><br>";
+  $inside .= "<a href=\"" . basename($_SERVER['PHP_SELF']) . "?page=1\"><img src='templates/Default/images/pips/pip.gif' align='absbottom' border='0' hspace='5'>$process[1]</a><br>";
+  $inside .= "<a href=\"" . basename($_SERVER['PHP_SELF']) . "?page=2\"><img src='templates/Default/images/pips/pip.gif' align='absbottom' border='0' hspace='5'><strike>$process[2]</strike></a><br>";
+  $inside .= "<a href=\"" . basename($_SERVER['PHP_SELF']) . "?page=3\"><img src='templates/Default/images/pips/pip.gif' align='absbottom' border='0' hspace='5'><strong>$process[3]</strong></a><br>";
 }
   $inside .= "<hr>";
-  $inside .= "<a href=\"" . basename($_SERVER[PHP_SELF]) . "?page=4\"><img src='templates/DEFAULT/images/pips/pip.gif' align='absbottom' border='0' hspace='5'>$process[4]</a><br>";
+  $inside .= "<a href=\"" . basename($_SERVER['PHP_SELF']) . "?page=4\"><img src='templates/Default/images/pips/pip.gif' align='absbottom' border='0' hspace='5'>$process[4]</a><br>";
   $inside .= "<hr>";
-  $inside .= "<a href=\"" . basename($_SERVER[PHP_SELF]) . "?page=5\"><img src='templates/DEFAULT/images/pips/pip.gif' align='absbottom' border='0' hspace='5'>$process[5]</a><br>";
-  $inside .= "<a href=\"" . basename($_SERVER[PHP_SELF]) . "?page=6\"><img src='templates/DEFAULT/images/pips/pip.gif' align='absbottom' border='0' hspace='5'>$process[6]</a><br>";
+  $inside .= "<a href=\"" . basename($_SERVER['PHP_SELF']) . "?page=5\"><img src='templates/Default/images/pips/pip.gif' align='absbottom' border='0' hspace='5'>$process[5]</a><br>";
+  $inside .= "<a href=\"" . basename($_SERVER['PHP_SELF']) . "?page=6\"><img src='templates/Default/images/pips/pip.gif' align='absbottom' border='0' hspace='5'>$process[6]</a><br>";
   $inside .= "<hr>";
-  $inside .= "<a href=\"" . basename($_SERVER[PHP_SELF]) . "?page=7\"><img src='templates/DEFAULT/images/pips/pip.gif' align='absbottom' border='0' hspace='5'>$process[7]</a><br>";
+  $inside .= "<a href=\"" . basename($_SERVER['PHP_SELF']) . "?page=7\"><img src='templates/Default/images/pips/pip.gif' align='absbottom' border='0' hspace='5'>$process[7]</a><br>";
 
 
 box($title, $inside);
@@ -1532,8 +1517,6 @@ function menuend() {
 </table>
 <?php
 }
-
-
 
 
 function cachechmod($directory) {
@@ -1584,7 +1567,8 @@ echo $ERROR_MESSAGE;
 }
 
 function box($title, $inside) {
-?><table align="center" width="100%" cellpadding="5" cellspacing="1" border="0" class="forumline">
+?>
+<table align="center" width="100%" cellpadding="5" cellspacing="1" border="0" class="forumline">
 <tr>
 <th>
 <?php
@@ -1606,7 +1590,8 @@ echo $inside;
 
 
 function tableboxtitle3($title, $title2, $title3, $title4) {
-?><table align="center" width="100%" cellpadding="2" cellspacing="1" border="0" class="forumline">
+?>
+<table align="center" width="100%" cellpadding="2" cellspacing="1" border="0" class="forumline">
 <tr>
 <th width="40" nowrap="nowrap">
 <?php
@@ -1688,7 +1673,8 @@ function tableboxend3() {
 
 
 function tableboxtitle2($title, $title2, $title3, $title4) {
-?><table align="center" width="100%" cellpadding="2" cellspacing="1" border="0" class="forumline">
+?>
+<table align="center" width="100%" cellpadding="2" cellspacing="1" border="0" class="forumline">
 <tr>
 <th colspan="2" width="100%" nowrap="nowrap">
 <?php
@@ -1770,7 +1756,8 @@ function tableboxend2() {
 
 
 function boxtitle($title, $explain) {
-?><table align="center" width="100%" cellpadding="5" cellspacing="1" border="0" class="forumline">
+?>
+<table align="center" width="100%" cellpadding="5" cellspacing="1" border="0" class="forumline">
 <tr>
 <th>
 <?php
@@ -1782,7 +1769,8 @@ echo $title;
 <td class="row1"><span class="postdetails">
 <?php
 echo $explain;
-?></span></td>
+?>
+</span></td>
 </tr>
 <?php
 }
@@ -1813,11 +1801,6 @@ echo $cattitle;
 </tr>
 <?php
 }
-
-
-
-
-
 
 function boxmiddlecontents($middlecontents) {
 ?>

@@ -74,13 +74,13 @@ include($phpbb_root_path . 'language/lang_' . $language . '/lang_admin_attach.' 
 
 $start = get_var('start', 0);
 
-if (isset($HTTP_POST_VARS['order']))
+if (isset($_POST['order']))
 {
-	$sort_order = ($HTTP_POST_VARS['order'] == 'ASC') ? 'ASC' : 'DESC';
+	$sort_order = ($_POST['order'] == 'ASC') ? 'ASC' : 'DESC';
 }
-else if (isset($HTTP_GET_VARS['order']))
+else if (isset($_GET['order']))
 {
-	$sort_order = ($HTTP_GET_VARS['order'] == 'ASC') ? 'ASC' : 'DESC';
+	$sort_order = ($_GET['order'] == 'ASC') ? 'ASC' : 'DESC';
 }
 else
 {
@@ -164,10 +164,10 @@ if (!empty($sort_order))
 	$select_sort_order .= '</select>';
 }
 
-$delete = (isset($HTTP_POST_VARS['delete'])) ? true : false;
-$delete_id_list = (isset($HTTP_POST_VARS['delete_id_list'])) ? $HTTP_POST_VARS['delete_id_list'] : array();
+$delete = (isset($_POST['delete'])) ? true : false;
+$delete_id_list = (isset($_POST['delete_id_list'])) ? $_POST['delete_id_list'] : array();
 
-$confirm = ($HTTP_POST_VARS['confirm']) ? true : false;
+$confirm = ($_POST['confirm']) ? true : false;
 
 if ($confirm && sizeof($delete_id_list) > 0)
 {

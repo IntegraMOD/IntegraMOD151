@@ -247,11 +247,11 @@ $template->assign_vars(array(
 );
 $template->pparse("approval_header");
 
-$mode = ($HTTP_GET_VARS['mode']) ? $HTTP_GET_VARS['mode'] : $HTTP_POST_VARS['mode']; 
-$s = ($HTTP_GET_VARS['s']) ? $HTTP_GET_VARS['s'] : $HTTP_POST_VARS['s'];
-$p = ($HTTP_GET_VARS['p']) ? $HTTP_GET_VARS['p'] : $HTTP_POST_VARS['p'];
-$id =($HTTP_GET_VARS['id']) ? $HTTP_GET_VARS['id'] : $HTTP_POST_VARS['id'];
-$submit = ( !empty($HTTP_POST_VARS['submit']) ) ? true : false;
+$mode = ($_GET['mode']) ? $_GET['mode'] : $_POST['mode']; 
+$s = ($_GET['s']) ? $_GET['s'] : $_POST['s'];
+$p = ($_GET['p']) ? $_GET['p'] : $_POST['p'];
+$id =($_GET['id']) ? $_GET['id'] : $_POST['id'];
+$submit = ( !empty($_POST['submit']) ) ? true : false;
 
 switch( $mode )
 {
@@ -381,10 +381,10 @@ if ( $modevar['default'] == true )
 }
 if ( $modevar['d'] == true )
 {
-		$s = ($HTTP_GET_VARS['s']) ? $HTTP_GET_VARS['s'] : $HTTP_POST_VARS['s'];
-		$p = ($HTTP_GET_VARS['p']) ? $HTTP_GET_VARS['p'] : $HTTP_POST_VARS['p'];
-		$id =($HTTP_GET_VARS['id']) ? $HTTP_GET_VARS['id'] : $HTTP_POST_VARS['id'];
-		$submit = ( !empty($HTTP_POST_VARS['submit']) ) ? true : false;
+		$s = ($_GET['s']) ? $_GET['s'] : $_POST['s'];
+		$p = ($_GET['p']) ? $_GET['p'] : $_POST['p'];
+		$id =($_GET['id']) ? $_GET['id'] : $_POST['id'];
+		$submit = ( !empty($_POST['submit']) ) ? true : false;
 
 		$approval_links = '';
 
@@ -1193,10 +1193,10 @@ if ( $modevar['u'] == true )
 			)
 		);
 
-		$s = ($HTTP_GET_VARS['s']) ? $HTTP_GET_VARS['s'] : $HTTP_POST_VARS['s'];
-		$p = ($HTTP_GET_VARS['p']) ? $HTTP_GET_VARS['p'] : $HTTP_POST_VARS['p'];
-		$id =($HTTP_GET_VARS['id']) ? $HTTP_GET_VARS['id'] : $HTTP_POST_VARS['id'];
-		$submit = ( !empty($HTTP_POST_VARS['submit']) ) ? true : false;
+		$s = ($_GET['s']) ? $_GET['s'] : $_POST['s'];
+		$p = ($_GET['p']) ? $_GET['p'] : $_POST['p'];
+		$id =($_GET['id']) ? $_GET['id'] : $_POST['id'];
+		$submit = ( !empty($_POST['submit']) ) ? true : false;
 
 		switch( $s )
 		{
@@ -1332,7 +1332,7 @@ if ( $modevar['u'] == true )
 				{
 					$approve_sql = "SELECT username, user_id 
 						FROM " . USERS_TABLE . " 
-						WHERE username = '" . ( get_magic_quotes_gpc() ? $HTTP_POST_VARS['username'] : addslashes($HTTP_POST_VARS['username']) ) . "'";
+						WHERE username = '" . ( get_magic_quotes_gpc() ? $_POST['username'] : addslashes($_POST['username']) ) . "'";
 					if ( !($approve_result = $db->sql_query($approve_sql)) ) 
 					{ 
 						message_die(GENERAL_ERROR, $lang['approve_posts_error_obtain'], '', __LINE__, __FILE__, $approve_sql); 
@@ -1382,7 +1382,7 @@ if ( $modevar['u'] == true )
 				{
 					$approve_sql = "SELECT username, user_id 
 						FROM " . USERS_TABLE . " 
-						WHERE username = '" . ( get_magic_quotes_gpc() ? $HTTP_POST_VARS['username'] : addslashes($HTTP_POST_VARS['username']) ) . "'";
+						WHERE username = '" . ( get_magic_quotes_gpc() ? $_POST['username'] : addslashes($_POST['username']) ) . "'";
 					if ( !($approve_result = $db->sql_query($approve_sql)) ) 
 					{ 
 						message_die(GENERAL_ERROR, $lang['approve_posts_error_obtain'], '', __LINE__, __FILE__, $approve_sql); 
@@ -1663,10 +1663,10 @@ if ( $modevar['t'] == true )
 			"topics" => "admin/approve_topics.tpl")
 		);
 
-		$s = ($HTTP_GET_VARS['s']) ? $HTTP_GET_VARS['s'] : $HTTP_POST_VARS['s'];
-		$p = ($HTTP_GET_VARS['p']) ? $HTTP_GET_VARS['p'] : $HTTP_POST_VARS['p'];
-		$id =($HTTP_GET_VARS['id']) ? $HTTP_GET_VARS['id'] : $HTTP_POST_VARS['id'];
-		$submit = ( !empty($HTTP_POST_VARS['submit']) ) ? true : false;
+		$s = ($_GET['s']) ? $_GET['s'] : $_POST['s'];
+		$p = ($_GET['p']) ? $_GET['p'] : $_POST['p'];
+		$id =($_GET['id']) ? $_GET['id'] : $_POST['id'];
+		$submit = ( !empty($_POST['submit']) ) ? true : false;
 
 		$template->assign_vars(array(
 				"L_MODERATION" => $lang['approve_admin_topic_moderation'],
@@ -2343,10 +2343,10 @@ if ( $modevar['p'] == true )
 			)
 		);
 
-		$s = ($HTTP_GET_VARS['s']) ? $HTTP_GET_VARS['s'] : $HTTP_POST_VARS['s'];
-		$p = ($HTTP_GET_VARS['p']) ? $HTTP_GET_VARS['p'] : $HTTP_POST_VARS['p'];
-		$id =($HTTP_GET_VARS['id']) ? $HTTP_GET_VARS['id'] : $HTTP_POST_VARS['id'];
-		$submit = ( !empty($HTTP_POST_VARS['submit']) ) ? true : false;
+		$s = ($_GET['s']) ? $_GET['s'] : $_POST['s'];
+		$p = ($_GET['p']) ? $_GET['p'] : $_POST['p'];
+		$id =($_GET['id']) ? $_GET['id'] : $_POST['id'];
+		$submit = ( !empty($_POST['submit']) ) ? true : false;
 		
 		if ( $s == "ap" )
 		{	

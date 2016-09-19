@@ -213,7 +213,7 @@ class FM_File {
 	 * @return FM_File
 	 */
 	function FM_File(&$FileManager, $path, $ftp = null) {
-		$this->_FileManager = $FileManager;
+		$this->_FileManager =& $FileManager;
 		$this->_file = $path;
 		$this->_ftp = $ftp;
 	}

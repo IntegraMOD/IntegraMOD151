@@ -43,21 +43,21 @@ if( !empty($setmodules) )
 
 require('pagestart.' . $phpEx);
 
-$lang_decollapse = (isset($HTTP_GET_VARS['d_lang'])) ? trim($HTTP_GET_VARS['d_lang']) : '';
-$submit = (isset($HTTP_POST_VARS['submit'])) ? TRUE : FALSE;
+$lang_decollapse = (isset($_GET['d_lang'])) ? trim($_GET['d_lang']) : '';
+$submit = (isset($_POST['submit'])) ? TRUE : FALSE;
 
-if( isset($HTTP_POST_VARS['mode']) || isset($HTTP_GET_VARS['mode']) )
+if( isset($_POST['mode']) || isset($_GET['mode']) )
 {
-	$mode = ( isset($HTTP_POST_VARS['mode']) ) ? $HTTP_POST_VARS['mode'] : $HTTP_GET_VARS['mode'];
+	$mode = ( isset($_POST['mode']) ) ? $_POST['mode'] : $_GET['mode'];
 }
 else
 {
 	$mode = '';
 }
 
-if( isset($HTTP_POST_VARS['m_mode']) || isset($HTTP_GET_VARS['m_mode']) )
+if( isset($_POST['m_mode']) || isset($_GET['m_mode']) )
 {
-	$m_mode = ( isset($HTTP_POST_VARS['m_mode']) ) ? $HTTP_POST_VARS['m_mode'] : $HTTP_GET_VARS['m_mode'];
+	$m_mode = ( isset($_POST['m_mode']) ) ? $_POST['m_mode'] : $_GET['m_mode'];
 }
 else
 {
@@ -86,18 +86,18 @@ include($phpbb_root_path . 'stats_mod/includes/lang_functions.'.$phpEx);
 include($phpbb_root_path . 'stats_mod/includes/stat_functions.'.$phpEx);
 include($phpbb_root_path . 'stats_mod/includes/admin_functions.'.$phpEx);
 
-$update_list = ( isset($HTTP_POST_VARS['update']) ) ? $HTTP_POST_VARS['update'] : array();
-$delete_list = ( isset($HTTP_POST_VARS['delete']) ) ? $HTTP_POST_VARS['delete'] : array();
-$lang_entry = ( isset($HTTP_POST_VARS['lang_entry']) ) ? $HTTP_POST_VARS['lang_entry'] : array();
-$update_all_lang = ( isset($HTTP_POST_VARS['update_all_lang']) ) ? TRUE : FALSE;
-$add_new_key = ( isset($HTTP_POST_VARS['add_new_key']) ) ? $HTTP_POST_VARS['add_new_key'] : array();
-$add_key = ( isset($HTTP_POST_VARS['add_key']) ) ? trim(htmlspecialchars($HTTP_POST_VARS['add_key'])) : '';
-$add_value = ( isset($HTTP_POST_VARS['add_value']) ) ? trim($HTTP_POST_VARS['add_value']) : '';
+$update_list = ( isset($_POST['update']) ) ? $_POST['update'] : array();
+$delete_list = ( isset($_POST['delete']) ) ? $_POST['delete'] : array();
+$lang_entry = ( isset($_POST['lang_entry']) ) ? $_POST['lang_entry'] : array();
+$update_all_lang = ( isset($_POST['update_all_lang']) ) ? TRUE : FALSE;
+$add_new_key = ( isset($_POST['add_new_key']) ) ? $_POST['add_new_key'] : array();
+$add_key = ( isset($_POST['add_key']) ) ? trim(htmlspecialchars($_POST['add_key'])) : '';
+$add_value = ( isset($_POST['add_value']) ) ? trim($_POST['add_value']) : '';
 
-$new_lang_submit = ( isset($HTTP_POST_VARS['new_lang_submit']) ) ? TRUE : FALSE;
-$new_language = ( isset($HTTP_POST_VARS['new_language']) ) ? trim($HTTP_POST_VARS['new_language']) : '';
+$new_lang_submit = ( isset($_POST['new_lang_submit']) ) ? TRUE : FALSE;
+$new_language = ( isset($_POST['new_language']) ) ? trim($_POST['new_language']) : '';
 
-$delete_complete_lang = ( isset($HTTP_POST_VARS['delete_complete_lang']) ) ? $HTTP_POST_VARS['delete_complete_lang'] : array();
+$delete_complete_lang = ( isset($_POST['delete_complete_lang']) ) ? $_POST['delete_complete_lang'] : array();
 
 if (($new_lang_submit) && ($new_language != ''))
 {
@@ -140,7 +140,7 @@ if (($new_lang_submit) && ($new_language != ''))
 	
 	$mode = 'select';
 	$m_mode = 'edit';
-	$HTTP_GET_VARS['lang'] = $new_language;
+	$_GET['lang'] = $new_language;
 }
 else if (count($delete_complete_lang) > 0)
 {
@@ -287,8 +287,8 @@ if ($mode == 'select')
 
 	if ($m_mode == 'edit')
 	{
-		$module_id = (isset($HTTP_GET_VARS['module'])) ? intval($HTTP_GET_VARS['module']) : -1;
-		$language = (isset($HTTP_GET_VARS['lang'])) ? trim($HTTP_GET_VARS['lang']) : '';
+		$module_id = (isset($_GET['module'])) ? intval($_GET['module']) : -1;
+		$language = (isset($_GET['lang'])) ? trim($_GET['lang']) : '';
 		
 		if ($language == '')
 		{

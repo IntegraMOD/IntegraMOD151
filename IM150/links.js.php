@@ -52,7 +52,7 @@ if($board_config['gzip_compress'])
 	}
 	else if($phpver > "4.0")
 	{
-		if(strstr($HTTP_SERVER_VARS['HTTP_ACCEPT_ENCODING'], 'gzip'))
+		if(strstr($_SERVER['HTTP_ACCEPT_ENCODING'], 'gzip'))
 		{
 			if(extension_loaded("zlib"))
 			{

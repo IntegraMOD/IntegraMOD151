@@ -68,9 +68,9 @@ include($phpbb_root_path . 'language/lang_' . $board_config['default_lang'] . '/
 if ($userdata['user_level']!=ADMIN)
       message_die(GENERAL_ERROR, $lang['Not_Authorised']);
 
-$del_user = ( isset($HTTP_POST_VARS['del_user']) ) ? intval($HTTP_POST_VARS['del_user']) : (( isset($HTTP_GET_VARS['del_user']) ) ? intval($HTTP_GET_VARS['del_user']):'');
-$mode = ( isset($HTTP_POST_VARS['mode']) ) ? $HTTP_POST_VARS['mode'] : ( ( isset($HTTP_GET_VARS['mode']) ) ? $HTTP_GET_VARS['mode']:'');
-$days = ( isset($HTTP_POST_VARS['days']) ) ? intval($HTTP_POST_VARS['days']) : (( isset($HTTP_GET_VARS['days']) ) ? intval($HTTP_GET_VARS['days']):'');
+$del_user = ( isset($_POST['del_user']) ) ? intval($_POST['del_user']) : (( isset($_GET['del_user']) ) ? intval($_GET['del_user']):'');
+$mode = ( isset($_POST['mode']) ) ? $_POST['mode'] : ( ( isset($_GET['mode']) ) ? $_GET['mode']:'');
+$days = ( isset($_POST['days']) ) ? intval($_POST['days']) : (( isset($_GET['days']) ) ? intval($_GET['days']):'');
 
 // ******************************************************************************************
 // Define you own modes here

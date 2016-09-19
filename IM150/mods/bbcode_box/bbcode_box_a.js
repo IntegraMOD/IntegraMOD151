@@ -43,7 +43,6 @@ spoil_help = "Spoiler: [spoil]text[/spoil]";
 anchor_help = "Anchor: [anchor]name[/anchor]";
 url_help = "Insert URL: [url]http://Site URL[/url] or [url=http://Site URL]Site Name[/url]";
 youtube_help = "Insert youtube image: [youtube]http://youtube URL[/youtube]";
-googlevid_help = "Insert google video: [GVideo]http://GVideo URL[/GVideo]";
 mail_help = "Insert email: [email]Email Here[/email]";
 gotopost_help = "Gotopost: [gotopost=post]text[/gotopost] [gotopost=name]text[/gotopost] [gotopost=post,name]text[/gotopost]";
 photo_help = "Insert photo image: [photo]http://photo URL[/photo]";
@@ -81,8 +80,6 @@ var code = 0;
 var quote = 0;
 var php = 0;
 var spoiler = 0;
-var youtube = 0;
-var GVideo = 0;
 
 // Fix a bug involving the TextRange object in IE. From
 // http://www.frostjedi.com/terra/scripts/demo/caretBug.html
@@ -1058,20 +1055,6 @@ function BBCurl() {
 			Result1 = 1;
 		}
 	}
-	PostWrite(ToAdd);
-}
-
-function BBCGVideo() {
-	var FoundErrors = '';
-	var enterURL   = prompt("Enter the movie URL", "http://");
-	if (!enterURL)    {
-		FoundErrors += " You didn't write the file URL";
-	}
-	if (FoundErrors)  {
-		alert("Error:"+FoundErrors);
-		return;
-	}
-	var ToAdd = "[GVideo]"+enterURL+"[/GVideo]";
 	PostWrite(ToAdd);
 }
 

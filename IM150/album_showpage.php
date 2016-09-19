@@ -38,7 +38,7 @@
  *
  ***************************************************************************/
 
-if( isset($HTTP_GET_VARS['mode']) && $HTTP_GET_VARS['mode'] == 'smilies' )
+if( isset($_GET['mode']) && $_GET['mode'] == 'smilies' )
 {
 	define('IN_PHPBB', true);
 	$phpbb_root_path = './';
@@ -73,23 +73,23 @@ include_once($phpbb_root_path . 'album_mod/album_bbcode.' . $phpEx);
 // Check the request
 // ------------------------------------
 
-if( isset($HTTP_GET_VARS['pic_id']) )
+if( isset($_GET['pic_id']) )
 {
-	$pic_id = intval($HTTP_GET_VARS['pic_id']);
+	$pic_id = intval($_GET['pic_id']);
 }
-elseif( isset($HTTP_POST_VARS['pic_id']) )
+elseif( isset($_POST['pic_id']) )
 {
-	$pic_id = intval($HTTP_POST_VARS['pic_id']);
+	$pic_id = intval($_POST['pic_id']);
 }
 else
 {
-	if( isset($HTTP_GET_VARS['comment_id']) )
+	if( isset($_GET['comment_id']) )
 	{
-		$comment_id = intval($HTTP_GET_VARS['comment_id']);
+		$comment_id = intval($_GET['comment_id']);
 	}
-	elseif( isset($HTTP_POST_VARS['comment_id']) )
+	elseif( isset($_POST['comment_id']) )
 	{
-		$comment_id = intval($HTTP_POST_VARS['comment_id']);
+		$comment_id = intval($_POST['comment_id']);
 	}
 	else
 	{
@@ -98,7 +98,7 @@ else
 }
 
 // Midthumb & Full Pic
-if( isset($HTTP_GET_VARS['full']) || isset($HTTP_POST_VARS['full']) )
+if( isset($_GET['full']) || isset($_POST['full']) )
 {
 	$picm = false;
 	$full_size_param = '&amp;full=true';
@@ -120,7 +120,7 @@ else
 // ------------------------------------
 // TEMPLATE ASSIGNEMENT
 // ------------------------------------
-if ((isset($HTTP_GET_VARS['slideshow']) && (intval($HTTP_GET_VARS['slideshow']) > 0)) || (isset($HTTP_POST_VARS['slideshow']) && (intval($HTTP_POST_VARS['slideshow']) > 0)))
+if ((isset($_GET['slideshow']) && (intval($_GET['slideshow']) > 0)) || (isset($_POST['slideshow']) && (intval($_POST['slideshow']) > 0)))
 {
 	$gen_simple_header = true;
 	$show_template = 'album_slideshow_body.tpl';
@@ -129,7 +129,7 @@ if ((isset($HTTP_GET_VARS['slideshow']) && (intval($HTTP_GET_VARS['slideshow']) 
 else
 {
 	//$show_template = 'album_showpage_body.tpl';
-	if ( (isset($HTTP_GET_VARS['nuffimage']) || isset($HTTP_POST_VARS['nuffimage'])) & ($album_config['enable_nuffimage'] == 1) )
+	if ( (isset($_GET['nuffimage']) || isset($_POST['nuffimage'])) & ($album_config['enable_nuffimage'] == 1) )
 	{
 		include($album_root_path . 'album_nuffimage_box.' . $phpEx);
 		$template->assign_var_from_handle('NUFFIMAGE_BOX', 'nuffimage_box');
@@ -156,10 +156,10 @@ else
 // ------------------------------------
 // PREVIOUS & NEXT
 // ------------------------------------
-if( isset($HTTP_GET_VARS['mode']) )
+if( isset($_GET['mode']) )
 {
-	//if( ($HTTP_GET_VARS['mode'] == 'next') && ($no_next_pic == false) )
-	if($HTTP_GET_VARS['mode'] == 'next')
+	//if( ($_GET['mode'] == 'next') && ($no_next_pic == false) )
+	if($_GET['mode'] == 'next')
 	{
 		//$pic_id = $next_pic_id[0];
 		$sql_where = 'AND n.pic_id > c.pic_id';
@@ -167,8 +167,8 @@ if( isset($HTTP_GET_VARS['mode']) )
 
 	}
 
-	//if( ($HTTP_GET_VARS['mode'] == 'prev') && ($no_prev_pic == false) )
-	if($HTTP_GET_VARS['mode'] == 'prev')
+	//if( ($_GET['mode'] == 'prev') && ($no_prev_pic == false) )
+	if($_GET['mode'] == 'prev')
 	{
 		//$pic_id = $prev_pic_id[0];
 		$sql_where = 'AND n.pic_id < c.pic_id';
@@ -208,9 +208,9 @@ $pic_time_tmp = $row['pic_time'];
 $pic_user_id_tmp = $row['pic_user_id'];
 $db->sql_freeresult($result);
 
-if( isset($HTTP_GET_VARS['mode']) )
+if( isset($_GET['mode']) )
 {
-	if ( ($HTTP_GET_VARS['mode'] == 'next') || ($HTTP_GET_VARS['mode'] == 'prev') )
+	if ( ($_GET['mode'] == 'next') || ($_GET['mode'] == 'prev') )
 	{
 		$pic_id = $pic_id_tmp;
 	}
@@ -512,7 +512,7 @@ if ($album_nav_cat_desc != '')
 	$album_nav_cat_desc = ALBUM_NAV_ARROW . $album_nav_cat_desc;
 }
 
-if( !isset($HTTP_POST_VARS['comment']) && !isset($HTTP_POST_VARS['rating']) )
+if( !isset($_POST['comment']) && !isset($_POST['rating']) )
 {
 	
 	/* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -527,13 +527,13 @@ if( !isset($HTTP_POST_VARS['comment']) && !isset($HTTP_POST_VARS['rating']) )
 	{
 		if( !isset($comment_id) )
 		{
-			if( isset($HTTP_GET_VARS['start']) )
+			if( isset($_GET['start']) )
 			{
-				$start = intval($HTTP_GET_VARS['start']);
+				$start = intval($_GET['start']);
 			}
-			elseif( isset($HTTP_POST_VARS['start']) )
+			elseif( isset($_POST['start']) )
 			{
-				$start = intval($HTTP_POST_VARS['start']);
+				$start = intval($_POST['start']);
 			}
 			else
 			{
@@ -565,9 +565,9 @@ if( !isset($HTTP_POST_VARS['comment']) && !isset($HTTP_POST_VARS['rating']) )
 			}
 		}
 
-		if( isset($HTTP_GET_VARS['sort_order']) )
+		if( isset($_GET['sort_order']) )
 		{
-			switch ($HTTP_GET_VARS['sort_order'])
+			switch ($_GET['sort_order'])
 			{
 				case 'ASC':
 					$sort_order = 'ASC';
@@ -576,9 +576,9 @@ if( !isset($HTTP_POST_VARS['comment']) && !isset($HTTP_POST_VARS['rating']) )
 					$sort_order = 'DESC';
 			}
 		}
-		elseif( isset($HTTP_POST_VARS['sort_order']) )
+		elseif( isset($_POST['sort_order']) )
 		{
-			switch ($HTTP_POST_VARS['sort_order'])
+			switch ($_POST['sort_order'])
 			{
 				case 'ASC':
 					$sort_order = 'ASC';
@@ -789,10 +789,10 @@ if( !isset($HTTP_POST_VARS['comment']) && !isset($HTTP_POST_VARS['rating']) )
 	}
 
 	// Mighty Gorgon - Slideshow - BEGIN
-	if ( ((isset($HTTP_GET_VARS['slideshow']) && (intval($HTTP_GET_VARS['slideshow']) > 0)) || (isset($HTTP_POST_VARS['slideshow']) && (intval($HTTP_POST_VARS['slideshow']) > 0))) )
+	if ( ((isset($_GET['slideshow']) && (intval($_GET['slideshow']) > 0)) || (isset($_POST['slideshow']) && (intval($_POST['slideshow']) > 0))) )
 	{
 		$template->assign_block_vars('switch_slideshow', array());
-		$slideshow_delay = (isset($HTTP_GET_VARS['slideshow']) ? intval($HTTP_GET_VARS['slideshow']) : intval($HTTP_POST_VARS['slideshow']));
+		$slideshow_delay = (isset($_GET['slideshow']) ? intval($_GET['slideshow']) : intval($_POST['slideshow']));
 		$slideshow_select = '';
 		$slideshow_onoff = $lang['Slideshow_Off'];
 		$slideshow_link = append_sid(album_append_uid("album_showpage." . $phpEx . "?pic_id=" . $pic_id));
@@ -966,9 +966,9 @@ else
 	// Comment System
 	if ( $album_config['comment'] == 1 && $auth_data['comment'] == 1 )
 	{
-		$comment_text = str_replace("\'", "''", htmlspecialchars(substr(trim($HTTP_POST_VARS['comment']), 0, $album_config['desc_length'])));
+		$comment_text = str_replace("\'", "''", htmlspecialchars(substr(trim($_POST['comment']), 0, $album_config['desc_length'])));
 
-		$comment_username = (!$userdata['session_logged_in']) ? str_replace("\'", "''", substr(htmlspecialchars(trim($HTTP_POST_VARS['comment_username'])), 0, 32)) : str_replace("'", "''", htmlspecialchars(trim($userdata['username'])));
+		$comment_username = (!$userdata['session_logged_in']) ? str_replace("\'", "''", substr(htmlspecialchars(trim($_POST['comment_username'])), 0, 32)) : str_replace("'", "''", htmlspecialchars(trim($userdata['username'])));
 
 		// Check Pic Locked
 		if( ($thispic['pic_lock'] == 1) && (!$auth_data['moderator']) )
@@ -1030,15 +1030,15 @@ else
 			message_die(GENERAL_ERROR, $lang['Pic_Locked']);
 		}
 
-		//$rate_point = intval($HTTP_POST_VARS['rating']);
+		//$rate_point = intval($_POST['rating']);
 		
-		if (isset($HTTP_POST_VARS['rating']))
+		if (isset($_POST['rating']))
 		{
-			$rate_point = intval($HTTP_POST_VARS['rating']);
+			$rate_point = intval($_POST['rating']);
 		}
-		elseif (isset($HTTP_GET_VARS['rating']))
+		elseif (isset($_GET['rating']))
 		{
-			$rate_point = intval($HTTP_GET_VARS['rating']);
+			$rate_point = intval($_GET['rating']);
 		}
 		else
 		{

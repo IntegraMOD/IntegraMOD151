@@ -58,16 +58,16 @@ if ($process == 'pre')
 	{
 		// get the current page
 		$topics_last_start = 0;
-		if ( isset($HTTP_POST_VARS['topics_last_start']) || isset($HTTP_GET_VARS['startlt']) )
+		if ( isset($_POST['topics_last_start']) || isset($_GET['startlt']) )
 		{
-			$topics_last_start = isset($HTTP_GET_VARS['startlt']) ? intval($HTTP_GET_VARS['startlt']) : intval($HTTP_POST_VARS['topics_last_start']);
+			$topics_last_start = isset($_GET['startlt']) ? intval($_GET['startlt']) : intval($_POST['topics_last_start']);
 		}
 
 		// get the selection days
 		$lt_msg_days = 0;
-		if (isset($HTTP_POST_VARS['lt_msg_days']) || isset($HTTP_GET_VARS['ltmsgd']) )
+		if (isset($_POST['lt_msg_days']) || isset($_GET['ltmsgd']) )
 		{
-			$lt_msg_days = isset($HTTP_POST_VARS['lt_msg_days']) ? intval($HTTP_POST_VARS['lt_msg_days']) : intval($HTTP_GET_VARS['ltmsgd']);
+			$lt_msg_days = isset($_POST['lt_msg_days']) ? intval($_POST['lt_msg_days']) : intval($_GET['ltmsgd']);
 		}
 
 		// select days option

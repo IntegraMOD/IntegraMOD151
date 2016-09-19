@@ -40,6 +40,10 @@ if($pass == 0)
 */
 // Security update 02 September 2006 ends // 
 	
+//-- mod : cache -----------------------------------------------------------------------------------
+//-- add
+include_once( $phpbb_root_path . './includes/functions_cache.' . $phpEx);
+//-- fin mod : cache -------------------------------------------------------------------------------
 	
 //-- mod : categories hierarchy --------------------------------------------------------------------
 //-- add
@@ -169,7 +173,7 @@ define('KEEP_UNREAD_DB', true);
 
 function read_cookies($userdata)
 {
-	global $board_config, $HTTP_COOKIE_VARS;
+	global $board_config, $_COOKIE;
 
 	// do we use the tracking ?
 	if ( !isset($board_config['keep_unreads']) )
@@ -198,7 +202,7 @@ function read_cookies($userdata)
 	// get the anonymous last visit date
 	if ( !$userdata['session_logged_in'] )
 	{
-		$board_config['guest_lastvisit'] = intval($HTTP_COOKIE_VARS[$base_name . '_lastvisit']);
+		$board_config['guest_lastvisit'] = intval($_COOKIE[$base_name . '_lastvisit']);
 		if ( $board_config['guest_lastvisit'] < (time()-300) )
 		{
 			$board_config['guest_lastvisit'] = time();
@@ -207,9 +211,9 @@ function read_cookies($userdata)
 	}
 
 	// read the user cookies
-	$board_config['tracking_all']		= isset($HTTP_COOKIE_VARS[$base_name . '_f_all']) ? intval($HTTP_COOKIE_VARS[$base_name . '_f_all']) : 0;
-	$board_config['tracking_forums']	= isset($HTTP_COOKIE_VARS[$base_name . '_f']) ? unserialize($HTTP_COOKIE_VARS[$base_name . '_f']) : array();
-	$board_config['tracking_topics']	= isset($HTTP_COOKIE_VARS[$base_name . '_t']) ? unserialize($HTTP_COOKIE_VARS[$base_name . '_t']) : array();
+	$board_config['tracking_all']		= isset($_COOKIE[$base_name . '_f_all']) ? intval($_COOKIE[$base_name . '_f_all']) : 0;
+	$board_config['tracking_forums']	= isset($_COOKIE[$base_name . '_f']) ? unserialize($_COOKIE[$base_name . '_f']) : array();
+	$board_config['tracking_topics']	= isset($_COOKIE[$base_name . '_t']) ? unserialize($_COOKIE[$base_name . '_t']) : array();
 
 	// get the unreads topics
 	$board_config['tracking_unreads'] = array();
@@ -217,10 +221,10 @@ function read_cookies($userdata)
 	{
 		if ( !$board_config['keep_unreads_db'] )
 		{
-			$board_config['tracking_unreads'] = isset($HTTP_COOKIE_VARS[$base_name . '_u']) ? unserialize($HTTP_COOKIE_VARS[$base_name . '_u']) : array();
+			$board_config['tracking_unreads'] = isset($_COOKIE[$base_name . '_u']) ? unserialize($_COOKIE[$base_name . '_u']) : array();
 
 			// the tracking floor (min time value) allows to reduce the size of the time data, so the size of the cookie
-			$tracking_floor = intval($HTTP_COOKIE_VARS[$base_name . '_uf']);
+			$tracking_floor = intval($_COOKIE[$base_name . '_uf']);
 			if ( $tracking_floor > 0 )
 			{
 				@reset( $board_config['tracking_unreads'] );
@@ -248,7 +252,7 @@ function read_cookies($userdata)
 
 function write_cookies($userdata)
 {
-	global $board_config, $HTTP_COOKIE_VARS, $db;
+	global $board_config, $_COOKIE, $db;
 
 	// do we use the tracking ?
 	if ( !isset($board_config['keep_unreads']) )
@@ -391,6 +395,38 @@ function write_cookies($userdata)
 
 function get_db_stat($mode)
 {
+//-- mod : cache -----------------------------------------------------------------------------------
+//-- add
+	global $board_config;
+
+	// first inits
+	if ( !isset($board_config['max_users']) || !isset($board_config['record_last_user_id']) || !isset($board_config['record_last_username']) )
+	{
+		users_stats();
+		cache_birthday();
+	}
+	if ( !isset($board_config['max_posts']) || !isset($board_config['max_topics']) )
+	{
+		board_stats();
+	}
+	switch ( $mode )
+	{
+		case 'usercount':
+			return intval($board_config['max_users']);
+			break;
+		case 'newestuser':
+			$row = array( 'user_id' => intval($board_config['record_last_user_id']), 'username' => $board_config['record_last_username']);
+			return $row;
+			break;
+		case 'postcount':
+			return intval($board_config['max_posts']);
+			break;
+		case 'topiccount':
+			return intval($board_config['max_topics']);
+			break;
+	}
+//-- fin mod : cache -------------------------------------------------------------------------------
+
 	global $db, $board_config, $phpbb_root_path, $phpEx;
 	if ( empty($board_config['max_posts']) 
 		|| empty($board_config['max_users']) 
@@ -671,7 +707,7 @@ function make_jumpbox($action, $match_forum_id = 0)
 function init_userprefs($userdata)
 {
 	// BEGIN Style Select MOD
-	global $HTTP_GET_VARS, $HTTP_POST_VARS, $HTTP_COOKIE_VARS;
+	global $_GET, $_POST, $_COOKIE;
 	// END Style Select MOD
 	global $is_called;
 	if ( $is_called == FALSE )
@@ -867,9 +903,9 @@ function init_userprefs($userdata)
 	// BEGIN Style Select MOD
 	
 	// Security update 02 September 2006 B starts// 
-	if ( (int)isset($HTTP_POST_VARS[STYLE_URL]) || (int)isset($HTTP_GET_VARS[STYLE_URL]) ) 
+	if ( (int)isset($_POST[STYLE_URL]) || (int)isset($_GET[STYLE_URL]) ) 
 	{
-		(int)$style = urldecode( (isset($HTTP_POST_VARS[STYLE_URL])) ? $HTTP_POST_VARS[STYLE_URL] : (int)$HTTP_GET_VARS[STYLE_URL] );
+		(int)$style = urldecode( (isset($_POST[STYLE_URL])) ? $_POST[STYLE_URL] : (int)$_GET[STYLE_URL] );
 		if($style == 0) { die('Hacking attempt'); exit; }
 		if ( $theme = setup_style((int)$style) )
 		{
@@ -878,9 +914,9 @@ function init_userprefs($userdata)
 		}
 	}
 
-	if ( isset($HTTP_COOKIE_VARS[$board_config['cookie_name'] . '_style']) )
+	if ( isset($_COOKIE[$board_config['cookie_name'] . '_style']) )
 	{
-		$style = $HTTP_COOKIE_VARS[$board_config['cookie_name'] . '_style'];
+		$style = $_COOKIE[$board_config['cookie_name'] . '_style'];
 		if ( $theme = setup_style((int)$style) )
 		{
 			return;
@@ -1064,17 +1100,17 @@ function setup_style($style)
 	}
 	// END Style Select MOD
 
-//-- mod : categories hierarchy --------------------------------------------------------------------
+//-- mod : cache -----------------------------------------------------------------------------------
 //-- add
 	global $phpEx, $themes_style;
 
 	if ( defined('CACHE_THEMES') )
 	{
-		include( $phpbb_root_path . './includes/def_themes.' . $phpEx );
+		@include( $phpbb_root_path . './includes/def_themes.' . $phpEx );
 		if ( empty($themes_style) )
 		{
 			cache_themes();
-			@include( $phpbb_root_path . './includes/def_themes.' . $phpEx );
+			include( $phpbb_root_path . './includes/def_themes.' . $phpEx );
 		}
 	}
 	if ( !empty($themes_style[$style]) )
@@ -1083,7 +1119,7 @@ function setup_style($style)
 	}
 	else
 	{
-//-- fin mod : categories hierarchy ----------------------------------------------------------------
+//-- fin mod : cache -------------------------------------------------------------------------------
 
 		$sql = 'SELECT *
 			FROM ' . THEMES_TABLE . '
@@ -1135,10 +1171,10 @@ function setup_style($style)
 		{
 			message_die(CRITICAL_ERROR, "Could not get theme data for themes_id [$style]");
 		}
-//-- mod : categories hierarchy --------------------------------------------------------------------
+//-- mod : cache -----------------------------------------------------------------------------------
 //-- add
 	}
-//-- fin mod : categories hierarchy ----------------------------------------------------------------
+//-- fin mod : cache -------------------------------------------------------------------------------
 
 	$template_path = 'templates/' ;
 	$template_name = $row['template_name'] ;
@@ -1509,41 +1545,55 @@ function obtain_word_list(&$orig_word, &$replacement_word)
 {
 	global $db;
 
-//-- mod : categories hierarchy --------------------------------------------------------------------
+//-- mod : cache -----------------------------------------------------------------------------------
 //-- add
-	global $global_orig_word, $global_replacement_word;
-
 	global $phpbb_root_path, $phpEx;
-	if (isset($global_orig_word))
+
+	// not processed yet
+	if ( empty($orig_word) )
 	{
-		$orig_word			= $global_orig_word;
-		$replacement_word	= $global_replacement_word;
-	}
-	else
-	{
+		// take them from the cache
 		if ( defined('CACHE_WORDS') )
 		{
 			@include($phpbb_root_path . './includes/def_words.' . $phpEx);
-			if ( !isset($word_replacement) )
+			if ( !isset($censored_words) )
 			{
+				$censored_words = array();
 				cache_words();
-				@include($phpbb_root_path . './includes/def_words.' . $phpEx);
+				include($phpbb_root_path . './includes/def_words.' . $phpEx);
 			}
-		}
-		if ( isset($word_replacement) )
-		{
+
+			// convert
 			$orig_word = array();
 			$replacement_word = array();
-			@reset($word_replacement);
-			while ( list($word, $replacement) = @each($word_replacement) )
+			@reset($censored_words);
+			while ( list($word_id, $row) = @each($censored_words) )
 			{
-				$orig_word[] = '#\b(' . str_replace('\*', '\w*?', phpbb_preg_quote(stripslashes($word), '#')) . ')\b#i';
-				$replacement_word[] = $replacement;
+				$orig_word[] = '#\b(' . str_replace('\*', '\w*?', phpbb_preg_quote($row['word'], '#')) . ')\b#i';
+				$replacement_word[] = $row['replacement'];
 			}
 		}
 		else
 		{
-//-- fin mod : categories hierarchy ----------------------------------------------------------------
+			// get them from the database
+			$sql = "SELECT * FROM  " . WORDS_TABLE;
+			if ( !$result = $db->sql_query($sql) )
+			{
+				message_die(GENERAL_ERROR, 'Could not get censored words from database', '', __LINE__, __FILE__, $sql);
+			}
+			// get the data
+			$censored_words = array();
+			while ( $row = $db->sql_fetchrow($result) )
+			{
+				$orig_word[] = '#\b(' . str_replace('\*', '\w*?', phpbb_preg_quote($row['word'], '#')) . ')\b#i';
+				$replacement_word[] = $row['replacement'];
+			}
+		}
+	}
+
+	// end the function
+	return true;
+//-- fin mod : cache -------------------------------------------------------------------------------
 
 	//
 	// Define censored word matches
@@ -1564,14 +1614,6 @@ function obtain_word_list(&$orig_word, &$replacement_word)
 		}
 		while ( $row = $db->sql_fetchrow($result) );
 	}
-//-- mod : categories hierarchy --------------------------------------------------------------------
-//-- add
-		}
-		$global_orig_word			= $orig_word;
-		$global_replacement_word	= $replacement_word;
-	}
-//-- fin mod : categories hierarchy ----------------------------------------------------------------
-
 	return true;
 }
 
@@ -1599,7 +1641,7 @@ function message_die($msg_code, $msg_text = '', $msg_title = '', $err_line = '',
 	global $db, $template, $board_config, $theme, $lang, $phpEx, $phpbb_root_path, $nav_links, $gen_simple_header, $images;
 	global $userdata, $user_ip, $session_length;
 	global $starttime;
-	global $HTTP_COOKIE_VARS;
+	global $_COOKIE;
 	//-- mod : profile cp ------------------------------------------------------------------------------
 //-- add
 	global $admin_level, $level_prior;
@@ -1977,14 +2019,14 @@ function serverload() {
 // 
 function is_robot() 
 { 
-	global $db, $HTTP_SERVER_VARS, $table_prefix;
+	global $db, $_SERVER, $table_prefix;
 
 	// define bots table - for the users who are to lazy to edit constants.php hehehe!
 	define('BOTS_TABLE', $table_prefix . "bots");
 
 	// get required user data
-	$user_ip = $HTTP_SERVER_VARS['REMOTE_ADDR'];
-	$user_agent = $HTTP_SERVER_VARS['HTTP_USER_AGENT'];
+	$user_ip = $_SERVER['REMOTE_ADDR'];
+	$user_agent = $_SERVER['HTTP_USER_AGENT'];
 
 	// get bot table data
 	$sql = "SELECT bot_agent, bot_ip, bot_id, bot_visits, last_visit, bot_pages 
@@ -2522,4 +2564,95 @@ function search_mysqldump()
    return $mysqldump;
 } 	
 
+function bbcode_box()
+{
+	global $template, $board_config, $phpbb_root_path, $phpEx;
+	include_once($phpbb_root_path . 'language/lang_' . $board_config['default_lang'] . '/lang_bbcode_box.' . $phpEx);
+
+	$template->set_filenames(array(
+		'bbcode_box' => $current_template_path . 'bbcode_box.tpl')
+	);
+
+	$template->assign_vars(array(
+		'L_ROOT' => $phpbb_root_path,
+		'L_BBCODE_RTL_HELP' => $lang['bbcode_rtl_help'],
+		'L_BBCODE_LTR_HELP' => $lang['bbcode_ltr_help'],
+		'L_BBCODE_PLAIN_HELP' => $lang['bbcode_plain_help'],
+		'L_BBCODE_FC_HELP' => $lang['bbcode_fc_help'],
+		'L_BBCODE_FS_HELP' => $lang['bbcode_fs_help'],
+		'L_BBCODE_FT_HELP' => $lang['bbcode_ft_help'],
+		'L_BBCODE_RIGHT_HELP' => $lang['bbcode_right_help'],
+		'L_BBCODE_LEFT_HELP' => $lang['bbcode_left_help'],
+		'L_BBCODE_CENTER_HELP' => $lang['bbcode_center_help'],
+		'L_BBCODE_JUSTIFY_HELP' => $lang['bbcode_justify_help'],
+		'L_BBCODE_B_HELP' => $lang['bbcode_b_help'],
+		'L_BBCODE_I_HELP' => $lang['bbcode_i_help'],
+		'L_BBCODE_U_HELP' => $lang['bbcode_u_help'],
+		'L_BBCODE_STRIKE_HELP' => $lang['bbcode_strike_help'],
+		'L_BBCODE_SUP_HELP' => $lang['bbcode_sup_help'],
+		'L_BBCODE_SUB_HELP' => $lang['bbcode_sub_help'],
+		'L_BBCODE_GRAD_HELP' => $lang['bbcode_grad_help'],
+		'L_BBCODE_FADE_HELP' => $lang['bbcode_fade_help'],
+		'L_BBCODE_LIST_HELP' => $lang['bbcode_list_help'],
+		'L_BBCODE_MARQR_HELP' => $lang['bbcode_marqr_help'],
+		'L_BBCODE_MARQL_HELP' => $lang['bbcode_marql_help'],
+		'L_BBCODE_MARQU_HELP' => $lang['bbcode_marqu_help'],
+		'L_BBCODE_MARQD_HELP' => $lang['bbcode_marqd_help'],
+		'L_BBCODE_QUOTE_HELP' => $lang['bbcode_quote_help'],
+		'L_BBCODE_CODE_HELP' => $lang['bbcode_code_help'],
+		'L_BBCODE_PHP_HELP' => $lang['bbcode_php_help'],
+		'L_BBCODE_SPOIL_HELP' => $lang['bbcode_spoil_help'],
+		'L_BBCODE_ANCHOR_HELP' => $lang['bbcode_anchor_help'],
+		'L_BBCODE_URL_HELP' => $lang['bbcode_url_help'],
+		'L_BBCODE_YOUTUBE_HELP' => $lang['bbcode_youtube_help'],
+		'L_BBCODE_MAIL_HELP' => $lang['bbcode_mail_help'],
+		'L_BBCODE_GOTOPOST_HELP' => $lang['bbcode_goto_help'],
+		'L_BBCODE_IMG_HELP' => $lang['bbcode_img_help'],
+		'L_BBCODE_STREAM_HELP' => $lang['bbcode_stream_help'],
+		'L_BBCODE_RAM_HELP' => $lang['bbcode_ram_help'],
+		'L_BBCODE_WEB_HELP' => $lang['bbcode_web_help'],
+		'L_BBCODE_VIDEO_HELP' => $lang['bbcode_video_help'],
+		'L_BBCODE_FLASH_HELP' => $lang['bbcode_flash_help'],
+		'L_BBCODE_SPELL_HELP' => $lang['bbcode_spell_help'],
+		'L_BBCODE_HR_HELP' => $lang['bbcode_hr_help'],
+		'L_BBCODE_YOU_HELP' => $lang['bbcode_you_help'],
+		'L_BBCODE_TAB_HELP' => $lang['bbcode_tab_help'],
+		'L_BBCODE_NBSP_HELP' => $lang['bbcode_nbsp_help'],
+		'L_BBCODE_SEARCH_HELP' => $lang['bbcode_search_help'],
+		'L_BBCODE_GOOGLE_HELP' => $lang['bbcode_google_help'],
+		'L_BBCODE_TABLE_HELP' => $lang['bbcode_table_help'],
+		'L_BBCODE_TIP_HELP' => $lang['bbcode_tip_help'],
+
+		'L_BBCODE_TYPE_MESSAGE' => $lang['bbcode_type_message'],
+		'L_BBCODE_CONFIRM' => $lang['bbcode_confirm'],
+		'L_BBCODE_SELECT' => $lang['bbcode_select_text'],
+		'L_BBCODE_LESS_120' => $lang['bbcode_less_120'],
+		'L_BBCODE_NOT_AVAILABLE' => $lang['bbcode_not_available'],
+		'L_BBCODE_LIST_BOX' => $lang['bbcode_list_box'],
+		'L_BBCODE_LISTBOX_OPTIONS' => $lang['bbcode_listbox_options'],
+		'L_BBCODE_LISTBOX_ITEM' => $lang['bbcode_listbox_item'],
+		'L_BBCODE_NO_LISTBOX_ITEM' => $lang['bbcode_no_listbox_item'],
+		'L_BBCODE_ANCHORNAME' => $lang['bbcode_anchorname'],
+		'L_BBCODE_NO_ANCHORNAME' => $lang['bbcode_no_anchorname'],
+		'L_BBCODE_BAD_ANCHORNAME' => $lang['bbcode_bad_anchorname'],
+		'L_BBCODE_NO_URL' => $lang['bbcode_enter_url'],
+		'L_BBCODE_ENTER_URL' => $lang['bbcode_no_url'],
+		'L_BBCODE_ENTER_PAGENAME' => $lang['bbcode_enter_pagename'],
+		'L_BBCODE_NO_PAGENAME' => $lang['bbcode_no_pagename'],
+		'L_BBCODE_ENTER_YOUTUBE' => $lang['bbcode_enter_youtube'],
+		'L_BBCODE_NO_YOUTUBE' => $lang['bbcode_no_youtube'],
+		'L_BBCODE_ENTER_EMAIL' => $lang['bbcode_enter_email'],
+		'L_BBCODE_NO_EMAIL' => $lang['bbcode_no_email'],
+		'L_BBCODE_POSTNUMBER' => $lang['bbcode_postnumber'],
+		'L_BBCODE_NO_POSTNUMBER' => $lang['bbcode_no_postnumber'],
+		'L_BBCODE_ANCHORNAME2' => $lang['bbcode_anchorname2'],
+		'L_BBCODE_ENTER_SEARCHTEXT' => $lang['bbcode_enter_searchtext'],
+		'L_BBCODE_NO_SEARCHTEXT' => $lang['bbcode_no_searchtext'],
+
+		)
+	);
+
+	$template->assign_var_from_handle('JAVASCRIPT_BBCODE_BOX', 'bbcode_box');
+
+}
 ?>

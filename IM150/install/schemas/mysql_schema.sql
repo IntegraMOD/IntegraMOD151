@@ -55,7 +55,6 @@ CREATE TABLE phpbb_admin_pm (
    admin_deny int(1) default '0'
 );
 
-
 # --------------------------------------------------------
 
 #

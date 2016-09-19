@@ -58,7 +58,7 @@ include($phpbb_root_path . 'common.'.$phpEx);
 //
 // End session management
 //
-if(phpversion() <= "4.0.6")  { $_POST = ($HTTP_POST_VARS);  }
+if(phpversion() <= "4.0.6")  { $_POST = ($_POST);  }
 
 
 /*
@@ -80,7 +80,7 @@ $from_email = $board_config['paypal_p_acct'];
 
 
 // Convert Super globals For backward compatibility
-if(phpversion() <= "4.0.6")  { $_POST = ($HTTP_POST_VARS);  }
+if(phpversion() <= "4.0.6")  { $_POST = ($_POST);  }
 
 // Check for IPN post if non then return 404 error.
 if (!$_POST['txn_type']) {header("Status: 404 Not Found");exit; } else { header("Status: 200 OK");    }

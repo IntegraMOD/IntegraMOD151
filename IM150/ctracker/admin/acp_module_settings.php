@@ -22,13 +22,13 @@ if ( !defined('IN_PHPBB') || !defined('CTRACKER_ACP') )
 /*
  * Submit?
  */
-if( isset($HTTP_POST_VARS['submit']) )
+if( isset($_POST['submit']) )
 {
 	// Update new config
 	for($i = 0; $i < count($ctracker_config->fieldnames_set); $i++)
 	{
-		isset($HTTP_POST_VARS[$ctracker_config->fieldnames_set[$i]])? $ctracker_config->change_configuration($ctracker_config->fieldnames_set[$i], str_replace("'", "\'", $HTTP_POST_VARS[$ctracker_config->fieldnames_set[$i]])) : null;	
-		isset($HTTP_POST_VARS[$ctracker_config->fieldnames_set[$i]])? $ctracker_config->settings[$ctracker_config->fieldnames_set[$i]] = str_replace("'", "\'", $HTTP_POST_VARS[$ctracker_config->fieldnames_set[$i]]) : null;
+		isset($_POST[$ctracker_config->fieldnames_set[$i]])? $ctracker_config->change_configuration($ctracker_config->fieldnames_set[$i], str_replace("'", "\'", $_POST[$ctracker_config->fieldnames_set[$i]])) : null;	
+		isset($_POST[$ctracker_config->fieldnames_set[$i]])? $ctracker_config->settings[$ctracker_config->fieldnames_set[$i]] = str_replace("'", "\'", $_POST[$ctracker_config->fieldnames_set[$i]]) : null;
 	}	
 }
 
