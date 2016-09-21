@@ -32,6 +32,8 @@ include($phpbb_root_path . 'common.'.$phpEx);
 //
 // Start session management
 //
+$userdata = session_pagestart($user_ip, PAGE_INDEX);
+init_userprefs($userdata);
 //
 // End session management
 //

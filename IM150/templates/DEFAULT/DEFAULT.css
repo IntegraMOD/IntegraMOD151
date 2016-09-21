@@ -631,11 +631,13 @@ body.resp div#mobile-bar { position: absolute; }
 	body.resp p.custom-links { display: block; }
 }
 
+/*
 @media screen and (device-aspect-ratio: 16/9) {
 	body.resp nav.desktop-menu { display: none; }
 	body.resp div#mobile-bar { display: block; }
 	body.resp p.custom-links { display: block; }
 }
+*/
 
 @media only screen and (max-device-width: 480px) {
 	body.resp nav.desktop-menu { display: none; }

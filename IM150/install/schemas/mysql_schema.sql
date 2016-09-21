@@ -1568,8 +1568,7 @@ CREATE TABLE phpbb_pa_comments (
   comment_bbcode_uid varchar(10) default NULL,
   poster_id mediumint(8) NOT NULL default '0',
   PRIMARY KEY  (comments_id),
-  KEY comments_id (comments_id),
-  FULLTEXT KEY comment_bbcode_uid (comment_bbcode_uid)
+  KEY comments_id (comments_id)
 );
 
 # --------------------------------------------------------

@@ -420,6 +420,7 @@ class StatisticsCORE
 			$error = $db->sql_error();
 			$this->error_handler($error_message, $error['message'] . '<br />SQL Statement: ' . $sql_statement);
 		}
+    return $result;
 	}
 
 	// $stat_db->sql_fetchrow()
