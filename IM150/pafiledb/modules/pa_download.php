@@ -234,7 +234,7 @@ class pafiledb_download extends pafiledb_public
 
 function send_file_to_browser($real_filename, $mimetype, $physical_filename, $upload_dir)
 {
-	global $_SERVER, $HTTP_USER_AGENT, $HTTP_SERVER_VARS, $lang, $db, $pafiledb_functions;
+	global $_SERVER, $HTTP_USER_AGENT, $_SERVER, $lang, $db, $pafiledb_functions;
 
 	if ($upload_dir == '')
 	{
@@ -269,7 +269,7 @@ function send_file_to_browser($real_filename, $mimetype, $physical_filename, $up
 	// Determine the Browser the User is using, because of some nasty incompatibilities.
 	// Most of the methods used in this function are from phpMyAdmin. :)
 	//
-	$user_agent = (!empty($_SERVER['HTTP_USER_AGENT'])) ? $_SERVER['HTTP_USER_AGENT'] : ((!empty($HTTP_SERVER_VARS['HTTP_USER_AGENT'])) ? $HTTP_SERVER_VARS['HTTP_USER_AGENT'] : '');
+	$user_agent = (!empty($_SERVER['HTTP_USER_AGENT'])) ? $_SERVER['HTTP_USER_AGENT'] : ((!empty($_SERVER['HTTP_USER_AGENT'])) ? $_SERVER['HTTP_USER_AGENT'] : '');
 
 	if (ereg('Opera(/| )([0-9].[0-9]{1,2})', $user_agent, $log_version))
 	{

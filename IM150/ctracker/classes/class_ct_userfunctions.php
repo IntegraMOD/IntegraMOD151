@@ -190,7 +190,7 @@ class ct_userfunctions
 	 */
 	function handle_postings()
 	{
-		global $lang, $db, $ctracker_config, $userdata, $HTTP_POST_VARS, $phpbb_root_path, $phpEx;
+		global $lang, $db, $ctracker_config, $userdata, $_POST, $phpbb_root_path, $phpEx;
 
 		// MOD or ADMIN? - No Action please.
 		if ( $userdata['user_level'] > 0 )
@@ -242,15 +242,15 @@ class ct_userfunctions
 			$url_count 	= 0;
 			$match1		= array();
 			$match2		= array();
-			$match1 	= preg_split('/\\[url=|www\\.|http:\/\//', $HTTP_POST_VARS['message']);
-			$match2		= preg_split('/\\[url=|www\\.|http:\/\//', $HTTP_POST_VARS['subject']);
+			$match1 	= preg_split('/\\[url=|www\\.|http:\/\//', $_POST['message']);
+			$match2		= preg_split('/\\[url=|www\\.|http:\/\//', $_POST['subject']);
 			$url_count  = count($match1) + count($match2) - 2;
 
 			$eur_count  = 0;
 			$match1		= array();
 			$match2		= array();
-			$match1     = preg_split('/US|\\$|€/m', $HTTP_POST_VARS['message']);
-			$match2     = preg_split('/US|\\$|€/m', $HTTP_POST_VARS['subject']);
+			$match1     = preg_split('/US|\\$|€/m', $_POST['message']);
+			$match2     = preg_split('/US|\\$|€/m', $_POST['subject']);
 			$eur_count  = count($match1) + count($match2) - 2;
 
 			if ( $url_count > 6 || $eur_count > 6 )
@@ -272,8 +272,8 @@ class ct_userfunctions
 					$current_value = preg_quote($ct_spammer_def[$i]);
 		 			$current_value = str_replace('\*', '.*?', $current_value);
 
-					$clean_message = str_replace("\xAD", '', $HTTP_POST_VARS['message']);
-					$clean_title   = str_replace("\xAD", '', $HTTP_POST_VARS['subject']);
+					$clean_message = str_replace("\xAD", '', $_POST['message']);
+					$clean_title   = str_replace("\xAD", '', $_POST['subject']);
 
 					if ( preg_match('/^' . $current_value . '$/is', $clean_message) || preg_match('/^' . $current_value . '$/is', $clean_title) )
 					{
@@ -356,7 +356,7 @@ class ct_userfunctions
 	 */
 	function handle_profile()
 	{
-		global $ctracker_config, $phpbb_root_path, $phpEx, $mode, $lang, $HTTP_POST_VARS, $userdata;
+		global $ctracker_config, $phpbb_root_path, $phpEx, $mode, $lang, $_POST, $userdata;
 
 		/*
 		 * Done this that Eclipse or another Code-Checker does not output
@@ -391,11 +391,11 @@ class ct_userfunctions
 		}
 
 		// Registration Scan blocked Mails
-		if ( isset($HTTP_POST_VARS['submit']) && intval($ctracker_config->settings['autoban_mails']) == 1 && $mode == 'register' )
+		if ( isset($_POST['submit']) && intval($ctracker_config->settings['autoban_mails']) == 1 && $mode == 'register' )
 		{
 			for($i = 0; $i < count($ct_userspm_def); $i++)
 			{
-				if ( $HTTP_POST_VARS['username'] == $ct_userspm_def[$i] )
+				if ( $_POST['username'] == $ct_userspm_def[$i] )
 				{
 					message_die(GENERAL_MESSAGE, $lang['ctracker_info_profile_spammer']);
 				}
@@ -406,7 +406,7 @@ class ct_userfunctions
 				$current_value = preg_quote($ct_mailscn_def[$i]);
 		 		$current_value = str_replace('\*', '.*?', $current_value);
 
-				if ( preg_match('/^' . $current_value . '$/is', $HTTP_POST_VARS['email']) )
+				if ( preg_match('/^' . $current_value . '$/is', $_POST['email']) )
 				{
 					message_die(GENERAL_MESSAGE, $lang['ctracker_info_profile_spammer']);
 				}
@@ -414,21 +414,21 @@ class ct_userfunctions
 		}
 
 		// Registration Scan blocked Words
-		if ( isset($HTTP_POST_VARS['submit']) && intval($ctracker_config->settings['spam_keyword_det']) >= 1 )
+		if ( isset($_POST['submit']) && intval($ctracker_config->settings['spam_keyword_det']) >= 1 )
 		{
 			for($i = 0; $i < count($ct_spammer_def); $i++)
 			{
 				$current_value = preg_quote($ct_spammer_def[$i]);
 		 		$current_value = str_replace('\*', '.*?', $current_value);
 
-				$clean_aim 	   	   = str_replace("\xAD", '', $HTTP_POST_VARS['aim']);
-				$clean_msn 	   	   = str_replace("\xAD", '', $HTTP_POST_VARS['msn']);
-				$clean_yim 	   	   = str_replace("\xAD", '', $HTTP_POST_VARS['yim']);
-				$clean_website 	   = str_replace("\xAD", '', $HTTP_POST_VARS['website']);
-				$clean_location    = str_replace("\xAD", '', $HTTP_POST_VARS['location']);
-				$clean_occupation  = str_replace("\xAD", '', $HTTP_POST_VARS['occupation']);
-				$clean_interests   = str_replace("\xAD", '', $HTTP_POST_VARS['interests']);
-				$clean_signature   = str_replace("\xAD", '', $HTTP_POST_VARS['signature']);
+				$clean_aim 	   	   = str_replace("\xAD", '', $_POST['aim']);
+				$clean_msn 	   	   = str_replace("\xAD", '', $_POST['msn']);
+				$clean_yim 	   	   = str_replace("\xAD", '', $_POST['yim']);
+				$clean_website 	   = str_replace("\xAD", '', $_POST['website']);
+				$clean_location    = str_replace("\xAD", '', $_POST['location']);
+				$clean_occupation  = str_replace("\xAD", '', $_POST['occupation']);
+				$clean_interests   = str_replace("\xAD", '', $_POST['interests']);
+				$clean_signature   = str_replace("\xAD", '', $_POST['signature']);
 
 				if ( preg_match('/^' . $current_value . '$/is', $clean_aim) || preg_match('/^' . $current_value . '$/is', $clean_msn) || preg_match('/^' . $current_value . '$/is', $clean_yim) ||  preg_match('/^' . $current_value . '$/is', $clean_website) ||  preg_match('/^' . $current_value . '$/is', $clean_location) ||  preg_match('/^' . $current_value . '$/is', $clean_occupation) ||  preg_match('/^' . $current_value . '$/is', $clean_interests) ||  preg_match('/^' . $current_value . '$/is', $clean_signature))
 				{
@@ -462,21 +462,21 @@ class ct_userfunctions
 	 */
 	function password_functions()
 	{
-		global $db, $HTTP_POST_VARS, $ctracker_config, $lang, $mode, $userdata;
+		global $db, $_POST, $ctracker_config, $lang, $mode, $userdata;
 
 		// Password length check
-		$pw_length = strlen($HTTP_POST_VARS['new_password']);
-		if ( $pw_length < $ctracker_config->settings['pw_complex_min'] && !empty($HTTP_POST_VARS['new_password']) )
+		$pw_length = strlen($_POST['new_password']);
+		if ( $pw_length < $ctracker_config->settings['pw_complex_min'] && !empty($_POST['new_password']) )
 		{
 			message_die(GENERAL_MESSAGE, sprintf($lang['ctracker_info_password_minlng'], $ctracker_config->settings['pw_complex_min'], $pw_length));
 		}
 
 		// Password complexity
-		if ( intval($ctracker_config->settings['pw_complex']) == 1 && !empty($HTTP_POST_VARS['new_password']) )
+		if ( intval($ctracker_config->settings['pw_complex']) == 1 && !empty($_POST['new_password']) )
 		{
 			$p_patterns 	= '';
 			$active_pw_prot = '';
-			$p_pass     	= $HTTP_POST_VARS['new_password'];
+			$p_pass     	= $_POST['new_password'];
 
 			switch ( intval($ctracker_config->settings['pw_complex_mode']) )
 			{

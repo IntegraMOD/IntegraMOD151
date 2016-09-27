@@ -32,7 +32,7 @@ include_once($phpbb_root_path . 'includes/usercp_profile.'.$phpEx);
 include_once($phpbb_root_path . 'ctracker/classes/class_ct_userfunctions.' . $phpEx);
 $profile_security = new ct_userfunctions();
 $profile_security->handle_profile();
-(isset($HTTP_POST_VARS['submit']))? $profile_security->password_functions() : null;
+(isset($_POST['submit']))? $profile_security->password_functions() : null;
 // END CrackerTracker v5.x
 
 if ( !empty($setmodules) )
@@ -166,16 +166,16 @@ if ( !isset($mods[$menu_name]['data']) )
 
 // mod_id
 $mod_id = 0;
-if ( isset($HTTP_GET_VARS['mod']) || isset($HTTP_POST_VARS['mod_id']) )
+if ( isset($_GET['mod']) || isset($_POST['mod_id']) )
 {
-	$mod_id = isset($HTTP_POST_VARS['mod_id']) ? intval($HTTP_POST_VARS['mod_id']) : intval($HTTP_GET_VARS['mod']);
+	$mod_id = isset($_POST['mod_id']) ? intval($_POST['mod_id']) : intval($_GET['mod']);
 }
 
 // sub_id
 $sub_id = 0;
-if ( isset($HTTP_GET_VARS['msub']) || isset($HTTP_POST_VARS['mod_sub_id']) )
+if ( isset($_GET['msub']) || isset($_POST['mod_sub_id']) )
 {
-	$sub_id = isset($HTTP_POST_VARS['mod_sub_id']) ? intval($HTTP_POST_VARS['mod_sub_id']) : intval($HTTP_GET_VARS['msub']);
+	$sub_id = isset($_POST['mod_sub_id']) ? intval($_POST['mod_sub_id']) : intval($_GET['msub']);
 }
 
 // build a key array
@@ -261,10 +261,10 @@ $mod_name = $mod_keys[$mod_id];
 $sub_name = $sub_keys[$mod_id][$sub_id];
 
 // buttons
-$submit = isset($HTTP_POST_VARS['submit']);
+$submit = isset($_POST['submit']);
 
 // sessions
-$sid = (isset($HTTP_POST_VARS['sid'])) ? $HTTP_POST_VARS['sid'] : 0;
+$sid = (isset($_POST['sid'])) ? $_POST['sid'] : 0;
 
 // validate
 if ($submit)
@@ -286,13 +286,13 @@ if ($submit)
 	{
 		$user_field = $field['user'];
 		$is_auth = auth_field($field);
-		if ( isset($HTTP_POST_VARS[$user_field]) && $is_auth )
+		if ( isset($_POST[$user_field]) && $is_auth )
 		{
 			switch ($field['type'])
 			{
 				case 'LIST_RADIO':
 				case 'LIST_DROP':
-					$$user_field = $HTTP_POST_VARS[$user_field];
+					$$user_field = $_POST[$user_field];
 					if (!in_array($$user_field, $mods[$menu_name]['data'][$mod_name]['data'][$sub_name]['data'][$field_name]['values']))
 					{
 						$error = true;
@@ -304,22 +304,22 @@ if ($submit)
 				case 'SMALLINT':
 				case 'MEDIUMINT':
 				case 'INT':
-					$$user_field = intval($HTTP_POST_VARS[$user_field]);
+					$$user_field = intval($_POST[$user_field]);
 					break;
 				case 'VARCHAR':
 				case 'TEXT':
 				case 'DATEFMT':
-					$$user_field = trim(str_replace("\'", "''", htmlspecialchars($HTTP_POST_VARS[$user_field])));
+					$$user_field = trim(str_replace("\'", "''", htmlspecialchars($_POST[$user_field])));
 					break;
 				case 'HTMLVARCHAR':
 				case 'HTMLTEXT':
-					$$user_field = trim(str_replace("\'", "''", $HTTP_POST_VARS[$user_field]));
+					$$user_field = trim(str_replace("\'", "''", $_POST[$user_field]));
 					break;
 				default:
 					$$user_field = '';
 					if ( !empty($field['chk_func']) && function_exists($field['chk_func']) )
 					{
-						$$user_field = $field['chk_func']($user_field, $HTTP_POST_VARS[$user_field]);
+						$$user_field = $field['chk_func']($user_field, $_POST[$user_field]);
 					}
 					else
 					{

@@ -252,9 +252,9 @@ $maps = pcp_get_usermaps();
 
 //  get parameters
 $mode = '';
-if (isset($HTTP_POST_VARS['mode']) || isset($HTTP_GET_VARS['mode']) )
+if (isset($_POST['mode']) || isset($_GET['mode']) )
 {
-	$mode = isset($HTTP_POST_VARS['mode']) ? $HTTP_POST_VARS['mode'] : $HTTP_GET_VARS['mode'];
+	$mode = isset($_POST['mode']) ? $_POST['mode'] : $_GET['mode'];
 }
 if ( !in_array($mode, array('edit')) )
 {
@@ -263,9 +263,9 @@ if ( !in_array($mode, array('edit')) )
 
 // map
 $map = '';
-if (isset($HTTP_POST_VARS['map']) || isset($HTTP_GET_VARS['map']) )
+if (isset($_POST['map']) || isset($_GET['map']) )
 {
-	$map = isset($HTTP_POST_VARS['map']) ? $HTTP_POST_VARS['map'] : $HTTP_GET_VARS['map'];
+	$map = isset($_POST['map']) ? $_POST['map'] : $_GET['map'];
 }
 if ( !isset($maps[$map]) )
 {
@@ -273,14 +273,14 @@ if ( !isset($maps[$map]) )
 }
 
 // buttons
-$submit = isset($HTTP_POST_VARS['submit']);
-$create = isset($HTTP_POST_VARS['create']);
-$delete = isset($HTTP_POST_VARS['delete']);
-$cancel = isset($HTTP_POST_VARS['cancel']);
-$edit = isset($HTTP_POST_VARS['edit']);
+$submit = isset($_POST['submit']);
+$create = isset($_POST['create']);
+$delete = isset($_POST['delete']);
+$cancel = isset($_POST['cancel']);
+$edit = isset($_POST['edit']);
 
-$add_field = isset($HTTP_POST_VARS['add_field']);
-$add_title = isset($HTTP_POST_VARS['add_title']);
+$add_field = isset($_POST['add_field']);
+$add_title = isset($_POST['add_title']);
 
 // check if action on the main list
 $direction = 0;
@@ -289,18 +289,18 @@ $map_id = -1;
 while ( list($map_name, $map_data) = @each($maps) )
 {
 	$map_id++;
-	if ( isset($HTTP_POST_VARS['edit_map_' . $map_id]) )
+	if ( isset($_POST['edit_map_' . $map_id]) )
 	{
 		$mode = 'edit';
 		$map = $map_name;
 	}
-	if ( isset($HTTP_POST_VARS['moveup_map_' . $map_id]) )
+	if ( isset($_POST['moveup_map_' . $map_id]) )
 	{
 		$mode = 'move';
 		$direction = -1;
 		$map = $map_name;
 	}
-	if ( isset($HTTP_POST_VARS['movedw_map_' . $map_id]) )
+	if ( isset($_POST['movedw_map_' . $map_id]) )
 	{
 		$mode = 'move';
 		$direction = +1;
@@ -351,7 +351,7 @@ if ( !empty($map) )
 {
 	$cur_map = $map;
 }
-$cur_map = isset($HTTP_POST_VARS['cur_map']) ? $HTTP_POST_VARS['cur_map'] : $cur_map;
+$cur_map = isset($_POST['cur_map']) ? $_POST['cur_map'] : $cur_map;
 
 // make the nav sentence
 $keys = explode('.', $cur_map);
@@ -490,15 +490,15 @@ if ( $mode == 'edit' )
 	}
 
 	// get back informations from form
-	$name = isset($HTTP_POST_VARS['name']) ? $HTTP_POST_VARS['name'] : $name;
-	$parent = isset($HTTP_POST_VARS['parent']) ? $HTTP_POST_VARS['parent'] : $parent;
-	$order = isset($HTTP_POST_VARS['order']) ? intval($HTTP_POST_VARS['order']) : $order;
-	$split = isset($HTTP_POST_VARS['split']) ? intval($HTTP_POST_VARS['split']) : $split;
-	$custom = isset($HTTP_POST_VARS['custom']) ? intval($HTTP_POST_VARS['custom']) : $custom;
+	$name = isset($_POST['name']) ? $_POST['name'] : $name;
+	$parent = isset($_POST['parent']) ? $_POST['parent'] : $parent;
+	$order = isset($_POST['order']) ? intval($_POST['order']) : $order;
+	$split = isset($_POST['split']) ? intval($_POST['split']) : $split;
+	$custom = isset($_POST['custom']) ? intval($_POST['custom']) : $custom;
 
 	// title
-	$title_single = isset($HTTP_POST_VARS['title_single']) ? $HTTP_POST_VARS['title_single'] : $title_single;
-	$nb_title_fields = isset($HTTP_POST_VARS['nb_title_fields']) ? intval($HTTP_POST_VARS['nb_title_fields']) : $nb_title_fields;
+	$title_single = isset($_POST['title_single']) ? $_POST['title_single'] : $title_single;
+	$nb_title_fields = isset($_POST['nb_title_fields']) ? intval($_POST['nb_title_fields']) : $nb_title_fields;
 
 	// action
 	$title_id = -1;
@@ -507,7 +507,7 @@ if ( $mode == 'edit' )
 	$movedw_title = false;
 	$sav_title_fields = $title_fields;
 	$is_title = false;
-	if ( isset($HTTP_POST_VARS['nb_title_fields']) )
+	if ( isset($_POST['nb_title_fields']) )
 	{
 		$title_fields = array();
 		$lf_count_title = 0;
@@ -521,17 +521,17 @@ if ( $mode == 'edit' )
 		@reset($field_def);
 		while ( list($def_key, $def_data) = @each($field_def) )
 		{
-			$title_fields[$def_key][$i] = isset($HTTP_POST_VARS['title_' . $def_key . '_' . $i]) ? $HTTP_POST_VARS['title_' . $def_key . '_' . $i] : $sav_title_fields[$def_key][$i];
+			$title_fields[$def_key][$i] = isset($_POST['title_' . $def_key . '_' . $i]) ? $_POST['title_' . $def_key . '_' . $i] : $sav_title_fields[$def_key][$i];
 		}
-		if ( isset($HTTP_POST_VARS['edit_title_' . $i]) )
+		if ( isset($_POST['edit_title_' . $i]) )
 		{
 			$edit_title = true;
 		}
-		if ( isset($HTTP_POST_VARS['moveup_title_' . $i]) )
+		if ( isset($_POST['moveup_title_' . $i]) )
 		{
 			$moveup_title = true;
 		}
-		if ( isset($HTTP_POST_VARS['movedw_title_' . $i]) )
+		if ( isset($_POST['movedw_title_' . $i]) )
 		{
 			$movedw_title = true;
 		}
@@ -582,7 +582,7 @@ if ( $mode == 'edit' )
 	}
 
 	// get the fields components
-	$nb_fields = isset($HTTP_POST_VARS['nb_fields']) ? intval($HTTP_POST_VARS['nb_fields']) : $nb_fields;
+	$nb_fields = isset($_POST['nb_fields']) ? intval($_POST['nb_fields']) : $nb_fields;
 
 	// action
 	$field_id = -1;
@@ -590,7 +590,7 @@ if ( $mode == 'edit' )
 	$moveup_field = false;
 	$movedw_field = false;
 	$sav_fields = $fields;
-	if ( isset($HTTP_POST_VARS['nb_fields']) )
+	if ( isset($_POST['nb_fields']) )
 	{
 		$fields = array();
 		$lf_count = 0;
@@ -604,17 +604,17 @@ if ( $mode == 'edit' )
 		@reset($field_def);
 		while ( list($def_key, $def_data) = @each($field_def) )
 		{
-			$fields[$def_key][$i] = isset($HTTP_POST_VARS['field_' . $def_key . '_' . $i]) ? $HTTP_POST_VARS['field_' . $def_key . '_' . $i] : $sav_fields[$def_key][$i];
+			$fields[$def_key][$i] = isset($_POST['field_' . $def_key . '_' . $i]) ? $_POST['field_' . $def_key . '_' . $i] : $sav_fields[$def_key][$i];
 		}
-		if ( isset($HTTP_POST_VARS['edit_field_' . $i]) )
+		if ( isset($_POST['edit_field_' . $i]) )
 		{
 			$edit_field = true;
 		}
-		if ( isset($HTTP_POST_VARS['moveup_field_' . $i]) )
+		if ( isset($_POST['moveup_field_' . $i]) )
 		{
 			$moveup_field = true;
 		}
-		if ( isset($HTTP_POST_VARS['movedw_field_' . $i]) )
+		if ( isset($_POST['movedw_field_' . $i]) )
 		{
 			$movedw_field = true;
 		}
@@ -667,11 +667,11 @@ if ( $mode == 'edit' )
 	if ( $edit_field || $edit_title || $add_field || $add_title )
 	{
 		// which field cat is displayed ?
-		$cur_cat = isset($HTTP_POST_VARS['cur_cat']) ? $HTTP_POST_VARS['cur_cat'] : '';
+		$cur_cat = isset($_POST['cur_cat']) ? $_POST['cur_cat'] : '';
 		@reset($field_cat);
 		while ( list($cat_name, $cat_data) = @each($field_cat) )
 		{
-			if ( isset($HTTP_POST_VARS['select_field_cat_' . $cat_name]) )
+			if ( isset($_POST['select_field_cat_' . $cat_name]) )
 			{
 				$cur_cat = $cat_name;
 			}
@@ -698,7 +698,7 @@ if ( $mode == 'edit' )
 			}
 
 			// get values from form
-			$field_det[$def_key] = isset($HTTP_POST_VARS['field_det_' . $def_key]) ? $HTTP_POST_VARS['field_det_' . $def_key] : $field_det[$def_key];
+			$field_det[$def_key] = isset($_POST['field_det_' . $def_key]) ? $_POST['field_det_' . $def_key] : $field_det[$def_key];
 		}
 		
 		/* PCP Extra :: REMOVED
@@ -713,7 +713,7 @@ if ( $mode == 'edit' )
 		}*/
 
 		// suggest an Option address
-		if ( isset($HTTP_POST_VARS['suggest']) && empty($field_det['ind']) )
+		if ( isset($_POST['suggest']) && empty($field_det['ind']) )
 		{
 			$last_ind = 0;
 			for ( $i = 0; $i < count($fields['ind']); $i++ )

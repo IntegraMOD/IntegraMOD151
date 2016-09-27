@@ -36,7 +36,7 @@ if ( !defined('IN_PHPBB') )
 	exit;
 }
 
-if ( isset($HTTP_POST_VARS['submit']) )
+if ( isset($_POST['submit']) )
 {
 	// session id check
 	if ( ($sid == '' || $sid != $userdata['session_id']) && !defined('NO_SID') )
@@ -44,8 +44,8 @@ if ( isset($HTTP_POST_VARS['submit']) )
 		message_die(GENERAL_ERROR, 'Invalid_session');
 	}
 
-	$username = ( !empty($HTTP_POST_VARS['username']) ) ? trim(strip_tags($HTTP_POST_VARS['username'])) : '';
-	$email = ( !empty($HTTP_POST_VARS['email']) ) ? trim(strip_tags(htmlspecialchars($HTTP_POST_VARS['email']))) : '';
+	$username = ( !empty($_POST['username']) ) ? trim(strip_tags($_POST['username'])) : '';
+	$email = ( !empty($_POST['email']) ) ? trim(strip_tags(htmlspecialchars($_POST['email']))) : '';
 
 	$sql = "SELECT user_id, username, user_email, user_active, user_lang, ct_last_pw_reset 
 		FROM " . USERS_TABLE . " 

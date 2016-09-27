@@ -86,12 +86,12 @@ if( !$is_auth['auth_read'] )
 }
 
 $forum_id=PAGE_SHOUTBOX_MAX;
-$refresh = (isset($HTTP_POST_VARS['auto_refresh']) || isset($HTTP_POST_VARS['refresh'])) ? 1 : 0;
-$preview = (isset($HTTP_POST_VARS['preview'])) ? 1 : 0;
-$submit = (isset($HTTP_POST_VARS['shout']) && isset($HTTP_POST_VARS['message'])) ? 1 : 0;
-if ( isset($HTTP_POST_VARS['mode']) || isset($HTTP_GET_VARS['mode']) )
+$refresh = (isset($_POST['auto_refresh']) || isset($_POST['refresh'])) ? 1 : 0;
+$preview = (isset($_POST['preview'])) ? 1 : 0;
+$submit = (isset($_POST['shout']) && isset($_POST['message'])) ? 1 : 0;
+if ( isset($_POST['mode']) || isset($_GET['mode']) )
 {
-	$mode = ( isset($HTTP_POST_VARS['mode']) ) ? $HTTP_POST_VARS['mode'] : $HTTP_GET_VARS['mode'];
+	$mode = ( isset($_POST['mode']) ) ? $_POST['mode'] : $_GET['mode'];
 }
 else
 {
@@ -107,7 +107,7 @@ if ( !$board_config['allow_html'] )
 }
 else
 {
-	$html_on = ( $submit || $refresh || $preview) ? ( ( !empty($HTTP_POST_VARS['disable_html']) ) ? 0 : TRUE ) : ( ( $userdata['user_id'] == ANONYMOUS ) ? $board_config['allow_html'] : $userdata['user_allowhtml'] );
+	$html_on = ( $submit || $refresh || $preview) ? ( ( !empty($_POST['disable_html']) ) ? 0 : TRUE ) : ( ( $userdata['user_id'] == ANONYMOUS ) ? $board_config['allow_html'] : $userdata['user_allowhtml'] );
 }
 if ( !$board_config['allow_bbcode'] )
 {
@@ -115,7 +115,7 @@ if ( !$board_config['allow_bbcode'] )
 }
 else
 {
-	$bbcode_on = ( $submit || $refresh || $preview) ? ( ( !empty($HTTP_POST_VARS['disable_bbcode']) ) ? 0 : TRUE ) : ( ( $userdata['user_id'] == ANONYMOUS ) ? $board_config['allow_bbcode'] : $userdata['user_allowbbcode'] );
+	$bbcode_on = ( $submit || $refresh || $preview) ? ( ( !empty($_POST['disable_bbcode']) ) ? 0 : TRUE ) : ( ( $userdata['user_id'] == ANONYMOUS ) ? $board_config['allow_bbcode'] : $userdata['user_allowbbcode'] );
 }
 
 if ( !$board_config['allow_smilies'] )
@@ -124,13 +124,13 @@ if ( !$board_config['allow_smilies'] )
 }
 else
 {
-	$smilies_on = ( $submit || $refresh || $preview) ? ( ( !empty($HTTP_POST_VARS['disable_smilies']) ) ? 0 : TRUE ) : ( ( $userdata['user_id'] == ANONYMOUS ) ? $board_config['allow_smilies'] : $userdata['user_allowsmile'] );
+	$smilies_on = ( $submit || $refresh || $preview) ? ( ( !empty($_POST['disable_smilies']) ) ? 0 : TRUE ) : ( ( $userdata['user_id'] == ANONYMOUS ) ? $board_config['allow_smilies'] : $userdata['user_allowsmile'] );
 }
 if( !$userdata['session_logged_in'] || ( $mode == 'editpost' && $post_info['poster_id'] == ANONYMOUS ) )
 {
 	$template->assign_block_vars('switch_username_select', array());
 }
-$username = ( !empty($HTTP_POST_VARS['username']) ) ? $HTTP_POST_VARS['username'] : '';
+$username = ( !empty($_POST['username']) ) ? $_POST['username'] : '';
 // Check username
 if ( !empty($username) )
 {
@@ -149,7 +149,7 @@ if ( !empty($username) )
 
 if ($refresh || $preview)
 {
-	$message = ( !empty($HTTP_POST_VARS['message']) ) ? htmlspecialchars(trim(stripslashes($HTTP_POST_VARS['message']))) : '';
+	$message = ( !empty($_POST['message']) ) ? htmlspecialchars(trim(stripslashes($_POST['message']))) : '';
 	if (!empty($message))
 	{
 		if ($preview)
@@ -190,7 +190,7 @@ if ($refresh || $preview)
 		$template->assign_vars(array('MESSAGE' => $message));
 	}
 } else
-if ($submit || isset($HTTP_POST_VARS['message']))
+if ($submit || isset($_POST['message']))
 {
 	$current_time = time();
 	//
@@ -212,7 +212,7 @@ if ($submit || isset($HTTP_POST_VARS['message']))
 		}
 	}
 
-	$message = (isset($HTTP_POST_VARS['message'])) ? trim($HTTP_POST_VARS['message']) : '';
+	$message = (isset($_POST['message'])) ? trim($_POST['message']) : '';
 	// insert shout !
 	if (!empty($message) && $is_auth['auth_post'] && !$error)
 	{
@@ -239,9 +239,9 @@ if ($submit || isset($HTTP_POST_VARS['message']))
 if ($mode=='delete' || $mode=='censor')
 {
 	//	make shout inavtive
-	if ( isset($HTTP_GET_VARS[POST_POST_URL]) || isset($HTTP_POST_VARS[POST_POST_URL]) )
+	if ( isset($_GET[POST_POST_URL]) || isset($_POST[POST_POST_URL]) )
 	{
-		$post_id = (isset($HTTP_POST_VARS[POST_POST_URL])) ? intval($HTTP_POST_VARS[POST_POST_URL]) : intval($HTTP_GET_VARS[POST_POST_URL]);
+		$post_id = (isset($_POST[POST_POST_URL])) ? intval($_POST[POST_POST_URL]) : intval($_GET[POST_POST_URL]);
 	}
 	else
 	{
@@ -282,9 +282,9 @@ if ($mode=='ip')
 	{
 		message_die(GENERAL_MESSAGE, 'Not allowed.', '', __LINE__, __FILE__);
 	}
-	if ( isset($HTTP_GET_VARS[POST_POST_URL]) || isset($HTTP_POST_VARS[POST_POST_URL]) )
+	if ( isset($_GET[POST_POST_URL]) || isset($_POST[POST_POST_URL]) )
 	{
-		$post_id = (isset($HTTP_POST_VARS[POST_POST_URL])) ? intval($HTTP_POST_VARS[POST_POST_URL]) : intval($HTTP_GET_VARS[POST_POST_URL]);
+		$post_id = (isset($_POST[POST_POST_URL])) ? intval($_POST[POST_POST_URL]) : intval($_GET[POST_POST_URL]);
 	}
 	else
 	{
@@ -297,7 +297,7 @@ if ($mode=='ip')
 	}
 	$shout_identifyer = $db->sql_fetchrow($result);
 	$poster_id = $shout_identifyer['shout_user_id'];
-	$rdns_ip_num = ( isset($HTTP_GET_VARS['rdns']) ) ? $HTTP_GET_VARS['rdns'] : "";
+	$rdns_ip_num = ( isset($_GET['rdns']) ) ? $_GET['rdns'] : "";
 
 	$ip_this_post = decode_ip($shout_identifyer['shout_ip']);
 	$ip_this_post = ( $rdns_ip_num == $ip_this_post ) ? gethostbyaddr($ip_this_post) : $ip_this_post;
@@ -420,9 +420,9 @@ if ($mode=='ip')
 //
 
 // see if we need offset
-if ((isset($HTTP_POST_VARS['start']) || isset($HTTP_GET_VARS['start'])) && !$submit)
+if ((isset($_POST['start']) || isset($_GET['start'])) && !$submit)
 {
-	$start=(isset($HTTP_POST_VARS['start'])) ? intval($HTTP_POST_VARS['start']) : intval($HTTP_GET_VARS['start']);
+	$start=(isset($_POST['start'])) ? intval($_POST['start']) : intval($_GET['start']);
 } else $start=0;
 
 	require_once($phpbb_root_path . 'includes/functions_post.'.$phpEx);
@@ -432,10 +432,10 @@ if ((isset($HTTP_POST_VARS['start']) || isset($HTTP_GET_VARS['start'])) && !$sub
 // Was a highlight request part of the URI? 
 // 
 $highlight_match = $highlight = ''; 
-if (isset($HTTP_GET_VARS['highlight'])) 
+if (isset($_GET['highlight'])) 
 { 
    // Split words and phrases 
-	$highlight = trim(strip_tags(htmlspecialchars($HTTP_GET_VARS['highlight'])));
+	$highlight = trim(strip_tags(htmlspecialchars($_GET['highlight'])));
    $words = explode(' ', $highlight); 
 
    for($i = 0; $i < count($words); $i++) 
@@ -471,6 +471,8 @@ $db->sql_freeresult($result);
 $orig_word = array();
 $replacement_word = array();
 obtain_word_list($orig_word, $replacement_word);
+
+bbcode_box();
 
 	// get statistics
 	$sql = "SELECT COUNT(*) as total FROM " . SHOUTBOX_TABLE; 
@@ -787,7 +789,7 @@ obtain_word_list($orig_word, $replacement_word);
 			'ERROR_MESSAGE' => $error_msg)
 		);
 		$template->assign_var_from_handle('ERROR_BOX', 'reg_header');
-		$message = ( !empty($HTTP_POST_VARS['message']) ) ? htmlspecialchars(trim(stripslashes($HTTP_POST_VARS['message']))) : '';
+		$message = ( !empty($_POST['message']) ) ? htmlspecialchars(trim(stripslashes($_POST['message']))) : '';
 		$template->assign_vars(array('MESSAGE' => $message));
 	}
 

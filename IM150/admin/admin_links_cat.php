@@ -73,9 +73,9 @@ function reorder_cat2()
 // --------------------------
 
 
-if( !isset($HTTP_POST_VARS['mode']) )
+if( !isset($_POST['mode']) )
 {
-	if( !isset($HTTP_GET_VARS['action']) )
+	if( !isset($_GET['action']) )
 	{
 		$template->set_filenames(array(
 			'body' => 'admin/admin_link_cat_body.tpl')
@@ -124,9 +124,9 @@ if( !isset($HTTP_POST_VARS['mode']) )
 	}
 	else
 	{
-		if( $HTTP_GET_VARS['action'] == 'edit' )
+		if( $_GET['action'] == 'edit' )
 		{
-			$cat_id = intval($HTTP_GET_VARS['cat_id']);
+			$cat_id = intval($_GET['cat_id']);
 
 			$sql = "SELECT *
 					FROM ". LINK_CATEGORIES_TABLE ."
@@ -166,9 +166,9 @@ if( !isset($HTTP_POST_VARS['mode']) )
 
 			include('./page_footer_admin.'.$phpEx);
 		}
-		else if( $HTTP_GET_VARS['action'] == 'delete' )
+		else if( $_GET['action'] == 'delete' )
 		{
-			$cat_id = intval($HTTP_GET_VARS['cat_id']);
+			$cat_id = intval($_GET['cat_id']);
 
 			$sql = "SELECT cat_id, cat_title, cat_order
 					FROM ". LINK_CATEGORIES_TABLE ."
@@ -222,10 +222,10 @@ if( !isset($HTTP_POST_VARS['mode']) )
 
 			include('./page_footer_admin.'.$phpEx);
 		}
-		else if( $HTTP_GET_VARS['action'] == 'move' )
+		else if( $_GET['action'] == 'move' )
 		{
-			$cat_id = intval($HTTP_GET_VARS['cat_id']);
-			$move = intval($HTTP_GET_VARS['move']);
+			$cat_id = intval($_GET['cat_id']);
+			$move = intval($_GET['move']);
 
 			$sql = "UPDATE ". LINK_CATEGORIES_TABLE ."
 					SET cat_order = cat_order + $move
@@ -246,9 +246,9 @@ if( !isset($HTTP_POST_VARS['mode']) )
 }
 else
 {
-	if( $HTTP_POST_VARS['mode'] == 'new' )
+	if( $_POST['mode'] == 'new' )
 	{
-		if( !isset($HTTP_POST_VARS['cat_title']) )
+		if( !isset($_POST['cat_title']) )
 		{
 			$template->set_filenames(array(
 				'body' => 'admin/admin_link_cat_new_body.tpl')
@@ -276,7 +276,7 @@ else
 		else
 		{
 			// Get posting variables
-			$cat_title = str_replace("\'", "''", htmlspecialchars(trim($HTTP_POST_VARS['cat_title'])));
+			$cat_title = str_replace("\'", "''", htmlspecialchars(trim($_POST['cat_title'])));
 
 
 			// Get the last ordered category
@@ -305,11 +305,11 @@ else
 			message_die(GENERAL_MESSAGE, $message);
 		}
 	}
-	else if( $HTTP_POST_VARS['mode'] == 'edit' )
+	else if( $_POST['mode'] == 'edit' )
 	{
 		// Get posting variables
-		$cat_id = intval($HTTP_GET_VARS['cat_id']);
-		$cat_title = str_replace("\'", "''", htmlspecialchars(trim($HTTP_POST_VARS['cat_title'])));
+		$cat_id = intval($_GET['cat_id']);
+		$cat_title = str_replace("\'", "''", htmlspecialchars(trim($_POST['cat_title'])));
 
 
 		// Now we update this row
@@ -326,10 +326,10 @@ else
 
 		message_die(GENERAL_MESSAGE, $message);
 	}
-	else if( $HTTP_POST_VARS['mode'] == 'delete' )
+	else if( $_POST['mode'] == 'delete' )
 	{
-		$cat_id = intval($HTTP_GET_VARS['cat_id']);
-		$target = intval($HTTP_POST_VARS['target']);
+		$cat_id = intval($_GET['cat_id']);
+		$target = intval($_POST['target']);
 
 		if( $target == 0 ) // Delete All
 		{

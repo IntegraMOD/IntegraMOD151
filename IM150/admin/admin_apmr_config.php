@@ -22,9 +22,9 @@ require($phpbb_root_path . 'extension.inc');
 
 require('./pagestart.' . $phpEx);
 
-if( isset( $HTTP_POST_VARS['mode'] ) || isset( $HTTP_GET_VARS['mode'] ) )
+if( isset( $_POST['mode'] ) || isset( $_GET['mode'] ) )
 {
-	$mode = ( isset( $HTTP_POST_VARS['mode']) ) ? $HTTP_POST_VARS['mode'] : $HTTP_GET_VARS['mode'];
+	$mode = ( isset( $_POST['mode']) ) ? $_POST['mode'] : $_GET['mode'];
 }
 else
 {

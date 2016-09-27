@@ -50,20 +50,20 @@ require($phpbb_root_path . 'extension.inc');
 require('./pagestart.' . $phpEx);
 include($phpbb_root_path . 'language/lang_' . $board_config['default_lang'] . '/lang_banner.' . $phpEx);
 
-if( isset($HTTP_GET_VARS['mode']) || isset($HTTP_POST_VARS['mode']) )
+if( isset($_GET['mode']) || isset($_POST['mode']) )
 {
-	$mode = (isset($HTTP_GET_VARS['mode'])) ? $HTTP_GET_VARS['mode'] : $HTTP_POST_VARS['mode'];
+	$mode = (isset($_GET['mode'])) ? $_GET['mode'] : $_POST['mode'];
 }
 else 
 {
 	//
 	// These could be entered via a form button
 	//
-	if( isset($HTTP_POST_VARS['add']) )
+	if( isset($_POST['add']) )
 	{
 		$mode = "add";
 	}
-	else if( isset($HTTP_POST_VARS['save']) )
+	else if( isset($_POST['save']) )
 	{
 		$mode = "save";
 	}
@@ -81,9 +81,9 @@ if( $mode!= "")
 		//
 		// They want to add a new banner, show the form.
 		//
-		if( isset($HTTP_POST_VARS['id']) || isset($HTTP_GET_VARS['id']) )
+		if( isset($_POST['id']) || isset($_GET['id']) )
 		{
-			$banner_id = ( isset($HTTP_POST_VARS['id']) ) ? intval($HTTP_POST_VARS['id']) : intval($HTTP_GET_VARS['id']);
+			$banner_id = ( isset($_POST['id']) ) ? intval($_POST['id']) : intval($_GET['id']);
 		}
 		else
 		{
@@ -508,41 +508,41 @@ if( $mode!= "")
 		//
 		// Ok, they sent us our info, let's update it.
 		//
-		$banner_id = ( isset($HTTP_POST_VARS['id']) ) ? intval($HTTP_POST_VARS['id']) : 0;
+		$banner_id = ( isset($_POST['id']) ) ? intval($_POST['id']) : 0;
 
-		$banner_active = ( $HTTP_POST_VARS['banner_active'] == 1 ) ? TRUE : 0;
-		$banner_filter = ( $HTTP_POST_VARS['banner_filter'] == 1 ) ? TRUE : 0;
-		$banner_filter_time = ( isset($HTTP_POST_VARS['banner_filter_time']) ) ? intval($HTTP_POST_VARS['banner_filter_time']) : 0;
+		$banner_active = ( $_POST['banner_active'] == 1 ) ? TRUE : 0;
+		$banner_filter = ( $_POST['banner_filter'] == 1 ) ? TRUE : 0;
+		$banner_filter_time = ( isset($_POST['banner_filter_time']) ) ? intval($_POST['banner_filter_time']) : 0;
 
-		$banner_type = ( isset($HTTP_POST_VARS['banner_type']) ) ? intval($HTTP_POST_VARS['banner_type']) : 0;
-		$banner_name = ( isset($HTTP_POST_VARS['banner_name']) ) ? trim($HTTP_POST_VARS['banner_name']) : "";
-		$banner_description = ( isset($HTTP_POST_VARS['banner_description']) ) ? trim($HTTP_POST_VARS['banner_description']) : "";
-		$banner_width = ( isset($HTTP_POST_VARS['banner_width']) ) ? intval($HTTP_POST_VARS['banner_width']) : 0;
-		$banner_height = ( isset($HTTP_POST_VARS['banner_height']) ) ? intval($HTTP_POST_VARS['banner_height']) : 0;
-		$banner_click = ( isset($HTTP_POST_VARS['banner_click']) ) ? intval($HTTP_POST_VARS['banner_click']) : 0;
-		$banner_view = ( isset($HTTP_POST_VARS['banner_view']) ) ? intval($HTTP_POST_VARS['banner_view']) : 0;
-		$banner_url = ( isset($HTTP_POST_VARS['banner_url']) ) ? trim($HTTP_POST_VARS['banner_url']) : "";
-		$banner_owner = ( isset($HTTP_POST_VARS['username']) ) ? trim($HTTP_POST_VARS['username']) : "";
-		$banner_spot = ( isset($HTTP_POST_VARS['banner_spot']) ) ? intval($HTTP_POST_VARS['banner_spot']) : 0;
-		$banner_forum = ( isset($HTTP_POST_VARS[POST_FORUM_URL]) ) ? intval($HTTP_POST_VARS[POST_FORUM_URL]) : 0;
+		$banner_type = ( isset($_POST['banner_type']) ) ? intval($_POST['banner_type']) : 0;
+		$banner_name = ( isset($_POST['banner_name']) ) ? trim($_POST['banner_name']) : "";
+		$banner_description = ( isset($_POST['banner_description']) ) ? trim($_POST['banner_description']) : "";
+		$banner_width = ( isset($_POST['banner_width']) ) ? intval($_POST['banner_width']) : 0;
+		$banner_height = ( isset($_POST['banner_height']) ) ? intval($_POST['banner_height']) : 0;
+		$banner_click = ( isset($_POST['banner_click']) ) ? intval($_POST['banner_click']) : 0;
+		$banner_view = ( isset($_POST['banner_view']) ) ? intval($_POST['banner_view']) : 0;
+		$banner_url = ( isset($_POST['banner_url']) ) ? trim($_POST['banner_url']) : "";
+		$banner_owner = ( isset($_POST['username']) ) ? trim($_POST['username']) : "";
+		$banner_spot = ( isset($_POST['banner_spot']) ) ? intval($_POST['banner_spot']) : 0;
+		$banner_forum = ( isset($_POST[POST_FORUM_URL]) ) ? intval($_POST[POST_FORUM_URL]) : 0;
 
-		$banner_weigth = ( isset($HTTP_POST_VARS['banner_weigth']) ) ? intval($HTTP_POST_VARS['banner_weigth']) : 0;
-		$banner_level = ( isset($HTTP_POST_VARS['banner_level']) ) ? intval($HTTP_POST_VARS['banner_level']) : -1;
-		$banner_level_type = ( isset($HTTP_POST_VARS['banner_level_type']) ) ? intval($HTTP_POST_VARS['banner_level_type']) : 0;
+		$banner_weigth = ( isset($_POST['banner_weigth']) ) ? intval($_POST['banner_weigth']) : 0;
+		$banner_level = ( isset($_POST['banner_level']) ) ? intval($_POST['banner_level']) : -1;
+		$banner_level_type = ( isset($_POST['banner_level_type']) ) ? intval($_POST['banner_level_type']) : 0;
 
-		$time_type = ( isset($HTTP_POST_VARS['time_type']) ) ? intval($HTTP_POST_VARS['time_type']) : 0;
-		$date_begin_week = ( isset($HTTP_GET_VARS['date_begin_week']) ) ? $HTTP_GET_VARS['date_begin_week'] : (( isset($HTTP_POST_VARS['date_begin_day']) ) ? $HTTP_POST_VARS['date_begin_week'] : '0');
-		$date_end_week = ( isset($HTTP_GET_VARS['date_end_week']) ) ? $HTTP_GET_VARS['date_end_week'] : (( isset($HTTP_POST_VARS['date_end_day']) ) ? $HTTP_POST_VARS['date_end_week'] : '0');
-		$date_begin_day = ( isset($HTTP_GET_VARS['date_begin_day']) ) ? $HTTP_GET_VARS['date_begin_day'] : (( isset($HTTP_POST_VARS['date_begin_day']) ) ? $HTTP_POST_VARS['date_begin_day'] : '0');
-		$date_end_day = ( isset($HTTP_GET_VARS['date_end_day']) ) ? $HTTP_GET_VARS['date_end_day'] : (( isset($HTTP_POST_VARS['date_end_day']) ) ? $HTTP_POST_VARS['date_end_day'] : '0');
-		$date_begin_year = ( isset($HTTP_GET_VARS['date_begin_year']) ) ? $HTTP_GET_VARS['date_begin_year'] : (( isset($HTTP_POST_VARS['date_begin_year']) ) ? $HTTP_POST_VARS['date_begin_year'] : '0');
-		$date_begin_month = ( isset($HTTP_GET_VARS['date_begin_month']) ) ? $HTTP_GET_VARS['date_begin_month'] : (( isset($HTTP_POST_VARS['date_begin_month']) ) ? $HTTP_POST_VARS['date_begin_month'] : '0');
-		$date_end_year = ( isset($HTTP_GET_VARS['date_end_year']) ) ? $HTTP_GET_VARS['date_end_year'] : (( isset($HTTP_POST_VARS['date_end_year']) ) ? $HTTP_POST_VARS['date_end_year'] : '0');
-		$date_end_month = ( isset($HTTP_GET_VARS['date_end_month']) ) ? $HTTP_GET_VARS['date_end_month'] : (( isset($HTTP_POST_VARS['date_end_month']) ) ? $HTTP_POST_VARS['date_end_month'] : '0');
-		$time_begin_hour = ( isset($HTTP_GET_VARS['time_begin_hour']) ) ? $HTTP_GET_VARS['time_begin_hour'] : (( isset($HTTP_POST_VARS['time_begin_hour']) ) ? $HTTP_POST_VARS['time_begin_hour'] : '0');
-		$time_begin_min = ( isset($HTTP_GET_VARS['time_begin_min']) ) ? $HTTP_GET_VARS['time_begin_min'] : (( isset($HTTP_POST_VARS['time_begin_min']) ) ? $HTTP_POST_VARS['time_begin_min'] : '0');
-		$time_end_hour = ( isset($HTTP_GET_VARS['time_end_hour']) ) ? $HTTP_GET_VARS['time_end_hour'] : (( isset($HTTP_POST_VARS['time_end_hour']) ) ? $HTTP_POST_VARS['time_end_hour'] : '0');
-		$time_end_min = ( isset($HTTP_GET_VARS['time_end_min']) ) ? $HTTP_GET_VARS['time_end_min'] : (( isset($HTTP_POST_VARS['time_end_min']) ) ? $HTTP_POST_VARS['time_end_min'] : '0');
+		$time_type = ( isset($_POST['time_type']) ) ? intval($_POST['time_type']) : 0;
+		$date_begin_week = ( isset($_GET['date_begin_week']) ) ? $_GET['date_begin_week'] : (( isset($_POST['date_begin_day']) ) ? $_POST['date_begin_week'] : '0');
+		$date_end_week = ( isset($_GET['date_end_week']) ) ? $_GET['date_end_week'] : (( isset($_POST['date_end_day']) ) ? $_POST['date_end_week'] : '0');
+		$date_begin_day = ( isset($_GET['date_begin_day']) ) ? $_GET['date_begin_day'] : (( isset($_POST['date_begin_day']) ) ? $_POST['date_begin_day'] : '0');
+		$date_end_day = ( isset($_GET['date_end_day']) ) ? $_GET['date_end_day'] : (( isset($_POST['date_end_day']) ) ? $_POST['date_end_day'] : '0');
+		$date_begin_year = ( isset($_GET['date_begin_year']) ) ? $_GET['date_begin_year'] : (( isset($_POST['date_begin_year']) ) ? $_POST['date_begin_year'] : '0');
+		$date_begin_month = ( isset($_GET['date_begin_month']) ) ? $_GET['date_begin_month'] : (( isset($_POST['date_begin_month']) ) ? $_POST['date_begin_month'] : '0');
+		$date_end_year = ( isset($_GET['date_end_year']) ) ? $_GET['date_end_year'] : (( isset($_POST['date_end_year']) ) ? $_POST['date_end_year'] : '0');
+		$date_end_month = ( isset($_GET['date_end_month']) ) ? $_GET['date_end_month'] : (( isset($_POST['date_end_month']) ) ? $_POST['date_end_month'] : '0');
+		$time_begin_hour = ( isset($_GET['time_begin_hour']) ) ? $_GET['time_begin_hour'] : (( isset($_POST['time_begin_hour']) ) ? $_POST['time_begin_hour'] : '0');
+		$time_begin_min = ( isset($_GET['time_begin_min']) ) ? $_GET['time_begin_min'] : (( isset($_POST['time_begin_min']) ) ? $_POST['time_begin_min'] : '0');
+		$time_end_hour = ( isset($_GET['time_end_hour']) ) ? $_GET['time_end_hour'] : (( isset($_POST['time_end_hour']) ) ? $_POST['time_end_hour'] : '0');
+		$time_end_min = ( isset($_GET['time_end_min']) ) ? $_GET['time_end_min'] : (( isset($_POST['time_end_min']) ) ? $_POST['time_end_min'] : '0');
 
 		switch ($time_type)
 		{
@@ -572,7 +572,7 @@ if( $mode!= "")
 				message_die(GENERAL_MESSAGE, $lang['Missing_date']);
 			}break;
 		}
-		$banner_comment = ( isset($HTTP_POST_VARS['banner_comment']) ) ? trim($HTTP_POST_VARS['banner_comment']) : "";
+		$banner_comment = ( isset($_POST['banner_comment']) ) ? trim($_POST['banner_comment']) : "";
 		// verify the inputs
 		if( $banner_name == "" )
 		{
@@ -623,9 +623,9 @@ if( $mode!= "")
 		// Ok, they lets delete the selected banner
 		//
 		
-		if( isset($HTTP_POST_VARS['id']) || isset($HTTP_GET_VARS['id']) )
+		if( isset($_POST['id']) || isset($_GET['id']) )
 		{
-			$banner_id = ( isset($HTTP_POST_VARS['id']) ) ? intval($HTTP_POST_VARS['id']) : intval($HTTP_GET_VARS['id']);
+			$banner_id = ( isset($_POST['id']) ) ? intval($_POST['id']) : intval($_GET['id']);
 		}
 		else
 		{

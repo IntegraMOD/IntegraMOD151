@@ -28,7 +28,7 @@ if ( !defined( 'IN_PORTAL' ) )
 	die( "Hacking attempt" );
 }
 
-$start = ( isset( $HTTP_GET_VARS['start'] ) ) ? intval( $HTTP_GET_VARS['start'] ) : 0;
+$start = ( isset( $_GET['start'] ) ) ? intval( $_GET['start'] ) : 0;
 
 // Start auth check
 //

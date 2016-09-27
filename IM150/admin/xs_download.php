@@ -42,14 +42,14 @@ $template->assign_block_vars('nav_left',array('ITEM' => '&raquo; <a href="' . ap
 $template->assign_block_vars('nav_left',array('ITEM' => '&raquo; <a href="' . append_sid('xs_download.'.$phpEx) . '">' . $lang['xs_download_styles'] . '</a>'));
 
 // submit url
-if(isset($HTTP_GET_VARS['url']) && !defined('DEMO_MODE'))
+if(isset($_GET['url']) && !defined('DEMO_MODE'))
 {
-	$id = intval($HTTP_GET_VARS['url']);
+	$id = intval($_GET['url']);
 	$var = 'xs_downloads_' . $id;
 	$import_data = array(
-		'host'		=> $HTTP_SERVER_VARS['HTTP_HOST'],
-		'port'		=> $HTTP_SERVER_VARS['SERVER_PORT'],
-		'url'		=> str_replace('xs_download.', 'xs_frameset.', $HTTP_SERVER_VARS['PHP_SELF']),
+		'host'		=> $_SERVER['HTTP_HOST'],
+		'port'		=> $_SERVER['SERVER_PORT'],
+		'url'		=> str_replace('xs_download.', 'xs_frameset.', $_SERVER['PHP_SELF']),
 		'session'	=> $userdata['session_id'],
 		'xs'		=> $template->xs_versiontxt,
 		'style'		=> STYLE_HEADER_VERSION,
@@ -60,9 +60,9 @@ if(isset($HTTP_GET_VARS['url']) && !defined('DEMO_MODE'))
 }
 
 
-if(isset($HTTP_GET_VARS['edit']))
+if(isset($_GET['edit']))
 {
-	$id = intval($HTTP_GET_VARS['edit']);
+	$id = intval($_GET['edit']);
 	$template->assign_block_vars('edit', array(
 		'ID'		=> $id,
 		'TITLE'		=> $board_config['xs_downloads_title_'.$id],
@@ -70,11 +70,11 @@ if(isset($HTTP_GET_VARS['edit']))
 		));
 }
 
-if(isset($HTTP_POST_VARS['edit']) && !defined('DEMO_MODE'))
+if(isset($_POST['edit']) && !defined('DEMO_MODE'))
 {
-	$id = intval($HTTP_POST_VARS['edit']);
+	$id = intval($_POST['edit']);
 	$update = array();
-	if(!empty($HTTP_POST_VARS['edit_delete']))
+	if(!empty($_POST['edit_delete']))
 	{
 		// delete link
 		$total = $board_config['xs_downloads_count'];
@@ -89,8 +89,8 @@ if(isset($HTTP_POST_VARS['edit']) && !defined('DEMO_MODE'))
 	}
 	else
 	{
-		$update['xs_downloads_'.$id] = stripslashes($HTTP_POST_VARS['edit_url']);
-		$update['xs_downloads_title_'.$id] = stripslashes($HTTP_POST_VARS['edit_title']);
+		$update['xs_downloads_'.$id] = stripslashes($_POST['edit_url']);
+		$update['xs_downloads_title_'.$id] = stripslashes($_POST['edit_title']);
 	}
 	foreach($update as $var => $value)
 	{
@@ -115,12 +115,12 @@ if(isset($HTTP_POST_VARS['edit']) && !defined('DEMO_MODE'))
 	}
 }
 
-if(!empty($HTTP_POST_VARS['add_url']) && !defined('DEMO_MODE'))
+if(!empty($_POST['add_url']) && !defined('DEMO_MODE'))
 {
 	$id = $board_config['xs_downloads_count'];
 	$update = array();
-	$update['xs_downloads_'.$id] = stripslashes($HTTP_POST_VARS['add_url']);
-	$update['xs_downloads_title_'.$id] = stripslashes($HTTP_POST_VARS['add_title']);
+	$update['xs_downloads_'.$id] = stripslashes($_POST['add_url']);
+	$update['xs_downloads_title_'.$id] = stripslashes($_POST['add_title']);
 	$update['xs_downloads_count'] = $board_config['xs_downloads_count'] + 1;
 	foreach($update as $var => $value)
 	{

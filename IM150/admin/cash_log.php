@@ -69,12 +69,12 @@ $ar_count = array(	"a" => 10,
 					"c" => 50,
 					"d" => 100);
 
-if ( isset($HTTP_GET_VARS['delete']) &&
-	 ( ($HTTP_GET_VARS['delete'] == "all") ||
-	   ($HTTP_GET_VARS['delete'] == "admin") ||
-	   ($HTTP_GET_VARS['delete'] == "user") ) )
+if ( isset($_GET['delete']) &&
+	 ( ($_GET['delete'] == "all") ||
+	   ($_GET['delete'] == "admin") ||
+	   ($_GET['delete'] == "user") ) )
 {
-	$deleteclause = $ar_action[$HTTP_GET_VARS['delete']];
+	$deleteclause = $ar_action[$_GET['delete']];
 	if ( $deleteclause != "" )
 	{
 		$deleteclause = " WHERE " . $deleteclause;
@@ -91,18 +91,18 @@ if ( isset($HTTP_GET_VARS['delete']) &&
 //
 
 // The addslashes isn't really necessary, but it truncates the variable to a string if it's an array
-$saction = isset($HTTP_GET_VARS['saction'])?$HTTP_GET_VARS['saction']:"";
-$stime = isset($HTTP_GET_VARS['stime'])?$HTTP_GET_VARS['stime']:"";
-$scount = isset($HTTP_GET_VARS['scount'])?$HTTP_GET_VARS['scount']:"";
-$start = isset($HTTP_GET_VARS['start'])?intval($HTTP_GET_VARS['start']):0;
+$saction = isset($_GET['saction'])?$_GET['saction']:"";
+$stime = isset($_GET['stime'])?$_GET['stime']:"";
+$scount = isset($_GET['scount'])?$_GET['scount']:"";
+$start = isset($_GET['start'])?intval($_GET['start']):0;
 
 $saction = ( isset($ar_action[$saction]) ) ? $saction : "all";
 $stime = ( isset($ar_time[$stime]) ) ? $stime : "all";
 $scount = ( isset($ar_count[$scount]) ) ? $scount : "b";
 
-if ( is_numeric($HTTP_GET_VARS['sindex']) )
+if ( is_numeric($_GET['sindex']) )
 {
-	$sindex = intval($HTTP_GET_VARS['sindex']);
+	$sindex = intval($_GET['sindex']);
 	$sindex = max($sindex,0);
 }
 else

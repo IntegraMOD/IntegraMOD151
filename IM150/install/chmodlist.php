@@ -42,6 +42,126 @@ $file_list = array(
   "includes/def_tree.php" => 666 ,
   "includes/def_words.php" => 666 ,
 
+  "language/lang_english/lang_contact_faq.php" => 666 ,
+  "language/lang_english/lang_extend.php" => 666 ,
+  "language/lang_english/lang_extend_announces.php" => 666 ,
+  "language/lang_english/lang_extend_categories_hierarchy.php" => 666 ,
+  "language/lang_english/lang_extend_group_moderatorz.php" => 666 ,
+  "language/lang_english/lang_extend_lang_extend.php" => 666 ,
+  "language/lang_english/lang_extend_last_topics_from.php" => 666 ,
+  "language/lang_english/lang_extend_merge.php" => 666 ,
+  "language/lang_english/lang_extend_meta_tags.php" => 666 ,
+  "language/lang_english/lang_extend_mods_settings.php" => 666 ,
+  "language/lang_english/lang_extend_pcp_addons.php" => 666 ,
+  "language/lang_english/lang_extend_pcp_management.php" => 666 ,
+  "language/lang_english/lang_extend_pcp_wiz.php" => 666 ,
+  "language/lang_english/lang_extend_post_icons.php" => 666 ,
+  "language/lang_english/lang_extend_profile_control_panel.php" => 666 ,
+  "language/lang_english/lang_extend_qbar.php" => 666 ,
+  "language/lang_english/lang_extend_ranks.php" => 666 ,
+  "language/lang_english/lang_extend_split_topic_type.php" => 666 ,
+  "language/lang_english/lang_extend_sub_template.php" => 666 ,
+  "language/lang_english/lang_extend_topic_calendar.php" => 666 ,
+  "language/lang_english/lang_faq.php" => 666 ,
+  "language/lang_english/lang_faq_attach.php" => 666 ,
+  "language/lang_english/lang_prillian_faq.php" => 666 ,
+
+  "language/lang_deutsch/lang_contact_faq.php" => 666 ,
+  "language/lang_deutsch/lang_extend.php" => 666 ,
+  "language/lang_deutsch/lang_extend_announces.php" => 666 ,
+  "language/lang_deutsch/lang_extend_categories_hierarchy.php" => 666 ,
+  "language/lang_deutsch/lang_extend_group_moderatorz.php" => 666 ,
+  "language/lang_deutsch/lang_extend_lang_extend.php" => 666 ,
+  "language/lang_deutsch/lang_extend_last_topics_from.php" => 666 ,
+  "language/lang_deutsch/lang_extend_merge.php" => 666 ,
+  "language/lang_deutsch/lang_extend_meta_tags.php" => 666 ,
+  "language/lang_deutsch/lang_extend_mods_settings.php" => 666 ,
+  "language/lang_deutsch/lang_extend_pcp_addons.php" => 666 ,
+  "language/lang_deutsch/lang_extend_pcp_management.php" => 666 ,
+  "language/lang_deutsch/lang_extend_pcp_wiz.php" => 666 ,
+  "language/lang_deutsch/lang_extend_post_icons.php" => 666 ,
+  "language/lang_deutsch/lang_extend_profile_control_panel.php" => 666 ,
+  "language/lang_deutsch/lang_extend_qbar.php" => 666 ,
+  "language/lang_deutsch/lang_extend_ranks.php" => 666 ,
+  "language/lang_deutsch/lang_extend_split_topic_type.php" => 666 ,
+  "language/lang_deutsch/lang_extend_sub_template.php" => 666 ,
+  "language/lang_deutsch/lang_extend_topic_calendar.php" => 666 ,
+  "language/lang_deutsch/lang_faq.php" => 666 ,
+  "language/lang_deutsch/lang_faq_attach.php" => 666 ,
+  "language/lang_deutsch/lang_prillian_faq.php" => 666 ,
+
+  "language/lang_francais/lang_contact_faq.php" => 666 ,
+  "language/lang_francais/lang_extend.php" => 666 ,
+  "language/lang_francais/lang_extend_announces.php" => 666 ,
+  "language/lang_francais/lang_extend_categories_hierarchy.php" => 666 ,
+  "language/lang_francais/lang_extend_group_moderatorz.php" => 666 ,
+  "language/lang_francais/lang_extend_lang_extend.php" => 666 ,
+  "language/lang_francais/lang_extend_last_topics_from.php" => 666 ,
+  "language/lang_francais/lang_extend_merge.php" => 666 ,
+  "language/lang_francais/lang_extend_meta_tags.php" => 666 ,
+  "language/lang_francais/lang_extend_mods_settings.php" => 666 ,
+  "language/lang_francais/lang_extend_pcp_addons.php" => 666 ,
+  "language/lang_francais/lang_extend_pcp_management.php" => 666 ,
+  "language/lang_francais/lang_extend_pcp_wiz.php" => 666 ,
+  "language/lang_francais/lang_extend_post_icons.php" => 666 ,
+  "language/lang_francais/lang_extend_profile_control_panel.php" => 666 ,
+  "language/lang_francais/lang_extend_qbar.php" => 666 ,
+  "language/lang_francais/lang_extend_ranks.php" => 666 ,
+  "language/lang_francais/lang_extend_split_topic_type.php" => 666 ,
+  "language/lang_francais/lang_extend_sub_template.php" => 666 ,
+  "language/lang_francais/lang_extend_topic_calendar.php" => 666 ,
+  "language/lang_francais/lang_faq.php" => 666 ,
+  "language/lang_francais/lang_faq_attach.php" => 666 ,
+  "language/lang_francais/lang_prillian_faq.php" => 666 ,
+
+  "language/lang_hebrew/lang_contact_faq.php" => 666 ,
+  "language/lang_hebrew/lang_extend.php" => 666 ,
+  "language/lang_hebrew/lang_extend_announces.php" => 666 ,
+  "language/lang_hebrew/lang_extend_categories_hierarchy.php" => 666 ,
+  "language/lang_hebrew/lang_extend_group_moderatorz.php" => 666 ,
+  "language/lang_hebrew/lang_extend_lang_extend.php" => 666 ,
+  "language/lang_hebrew/lang_extend_last_topics_from.php" => 666 ,
+  "language/lang_hebrew/lang_extend_merge.php" => 666 ,
+  "language/lang_hebrew/lang_extend_meta_tags.php" => 666 ,
+  "language/lang_hebrew/lang_extend_mods_settings.php" => 666 ,
+  "language/lang_hebrew/lang_extend_pcp_addons.php" => 666 ,
+  "language/lang_hebrew/lang_extend_pcp_management.php" => 666 ,
+  "language/lang_hebrew/lang_extend_pcp_wiz.php" => 666 ,
+  "language/lang_hebrew/lang_extend_post_icons.php" => 666 ,
+  "language/lang_hebrew/lang_extend_profile_control_panel.php" => 666 ,
+  "language/lang_hebrew/lang_extend_qbar.php" => 666 ,
+  "language/lang_hebrew/lang_extend_ranks.php" => 666 ,
+  "language/lang_hebrew/lang_extend_split_topic_type.php" => 666 ,
+  "language/lang_hebrew/lang_extend_sub_template.php" => 666 ,
+  "language/lang_hebrew/lang_extend_topic_calendar.php" => 666 ,
+  "language/lang_hebrew/lang_faq.php" => 666 ,
+  "language/lang_hebrew/lang_faq_attach.php" => 666 ,
+  "language/lang_hebrew/lang_prillian_faq.php" => 666 ,
+
+  "language/lang_nederlands/lang_contact_faq.php" => 666 ,
+  "language/lang_nederlands/lang_extend.php" => 666 ,
+  "language/lang_nederlands/lang_extend_announces.php" => 666 ,
+  "language/lang_nederlands/lang_extend_categories_hierarchy.php" => 666 ,
+  "language/lang_nederlands/lang_extend_group_moderatorz.php" => 666 ,
+  "language/lang_nederlands/lang_extend_lang_extend.php" => 666 ,
+  "language/lang_nederlands/lang_extend_last_topics_from.php" => 666 ,
+  "language/lang_nederlands/lang_extend_merge.php" => 666 ,
+  "language/lang_nederlands/lang_extend_meta_tags.php" => 666 ,
+  "language/lang_nederlands/lang_extend_mods_settings.php" => 666 ,
+  "language/lang_nederlands/lang_extend_pcp_addons.php" => 666 ,
+  "language/lang_nederlands/lang_extend_pcp_management.php" => 666 ,
+  "language/lang_nederlands/lang_extend_pcp_wiz.php" => 666 ,
+  "language/lang_nederlands/lang_extend_post_icons.php" => 666 ,
+  "language/lang_nederlands/lang_extend_profile_control_panel.php" => 666 ,
+  "language/lang_nederlands/lang_extend_qbar.php" => 666 ,
+  "language/lang_nederlands/lang_extend_ranks.php" => 666 ,
+  "language/lang_nederlands/lang_extend_split_topic_type.php" => 666 ,
+  "language/lang_nederlands/lang_extend_sub_template.php" => 666 ,
+  "language/lang_nederlands/lang_extend_topic_calendar.php" => 666 ,
+  "language/lang_nederlands/lang_faq.php" => 666 ,
+  "language/lang_nederlands/lang_faq_attach.php" => 666 ,
+  "language/lang_nederlands/lang_prillian_faq.php" => 666 ,
+
   "modules" => 777 ,
   "modules/cache" => 777 ,
   "modules/cache/explain" => 777 ,
@@ -66,48 +186,9 @@ $file_list = array(
   "profilcp/def/def_userfuncs_vlist.php" => 666 ,
   "profilcp/def/def_userfuncs_warning.php" => 666 ,
   "profilcp/def/def_usermaps.php" => 666 ,
+  "templates/Default/sub_templates.cfg" => 666 ,
   "var_cache" => 777
 );
-
-//---------------------------------------------------------------------------------------------------------------------------------
-// Chmod Settings array for languages
-$installed_languages = array();
-$language_list = array();
-$dir = @opendir($relpath.'language');
-while( $file = @readdir($dir) )
-{
-	if(substr($file,0,5) == 'lang_' && is_dir($relpath.'language/'.$file)){
-		$installed_languages[] = substr($file,5);
-	}
-}
-@closedir($dir);
-for($i = 0; $i < count($installed_languages); $i++){
-        $language_list1 = array(
-        "language/lang_".$installed_languages[$i]."/lang_contact_faq.php" => 666
-        );
-	$lang_extend = array();
-	$dir = @opendir($relpath.'language/lang_'.$installed_languages[$i]);
-	while( $file = @readdir($dir) )
-	{
-		if(substr($file,0,11) == 'lang_extend' ){
-			$lang_extend[] = $file;
-		}
-	}
-	@closedir($dir);
-	for($e = 0; $e < count($lang_extend); $e++){
-                        $language_list2 = array(
-                        "language/lang_".$installed_languages[$i]."/".$lang_extend[$e] => 666
-                        );
-	}
-
-        $language_list3 = array(
-        "language/lang_".$installed_languages[$i]."/lang_faq.php" => 666 ,
-        "language/lang_".$installed_languages[$i]."/lang_faq_attach.php" => 666 ,
-        "language/lang_".$installed_languages[$i]."/lang_prillian_faq.php" => 666
-        );
-
-}
-$language_list = $language_list1 + $language_list2 + $language_list3;
 
 //---------------------------------------------------------------------------------------------------------------------------------
 // Chmod Settings array for pafile templates
@@ -126,21 +207,7 @@ while( $file = @readdir($dir) )
 @closedir($dir);
 
 //---------------------------------------------------------------------------------------------------------------------------------
-// Chmod Settings array for templates
-$templates_list = array();
-$dir = @opendir($relpath.'templates');
-while( $file = @readdir($dir) )
-{
-	if(is_dir('templates/'.$file) && substr($file,0,1) != '.'){
-                $templates_list = array(
-                "templates/".$file."/sub_templates.cfg" => 666
-                );
-	}
-}
-@closedir($dir);
-
-//---------------------------------------------------------------------------------------------------------------------------------
-// Chmod Settings array for Pré-install package ONLY
+// Chmod Settings array for Pre-install package ONLY
 $preinstall_only_list = array(
   "includes/phpbb_security.php" => '666' ,
   "config.php" => '666'
@@ -155,8 +222,8 @@ $installed_only_list = array(
 
 
 
-$preinstall_list = $file_list + $language_list + $templates_list + $pafiledb_list + $preinstall_only_list;
-$afterinstall_list = $file_list + $language_list + $templates_list + $pafiledb_list + $installed_only_list;
+$preinstall_list = $file_list + $pafiledb_list + $preinstall_only_list;
+$afterinstall_list = $file_list + $pafiledb_list + $installed_only_list;
 
 
 }

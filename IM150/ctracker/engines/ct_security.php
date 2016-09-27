@@ -151,7 +151,7 @@ $ct_rules = array('http_', '_server', 'delete%20', 'delete ', 'delete-', 'delete
 				  'root_path', '_globals', 'globals_', 'globals[', 'iso-8859-1',
 				  '?hl=', '%3fhl=', '.exe', '.sh', '%00', rawurldecode('%00'), '_env', '/*', '\\*');
 
-// Some fields in $HTTP_POST_VARS don't get checked to prevent wrong detection
+// Some fields in $_POST don't get checked to prevent wrong detection
 $unchecked_post_fields   = array('username', 'password', 'subject', 'message',
 								'poll_title', 'poll_option', 'poll_delete',
 								'email', 'confirm_code', 'aim', 'msn', 'yim',
@@ -164,7 +164,7 @@ $unchecked_post_fields   = array('username', 'password', 'subject', 'message',
 								'filter', 'xs', 'edit', 'content', 'fileupload', 'filecomment',
 								'comment', 'rate', 'pic', 'search_author', 'add_poll_option_text');
 
-// Some fields in $HTTP_GET_VARS don't get checked to prevent wrong detection
+// Some fields in $_GET don't get checked to prevent wrong detection
 $unchecked_get_fields = array('submit', 'search_author');
 
 /*
@@ -210,7 +210,7 @@ else if ( CT_SECLEVEL == 'MEDIUM' ||  CT_SECLEVEL == 'LOW' )
 $ct_attack_detection = false;
 
 // Write query String in the var $cracktrack and make it lowercase
-$cracktrack = strtolower($HTTP_SERVER_VARS['QUERY_STRING']);
+$cracktrack = strtolower($_SERVER['QUERY_STRING']);
 
 // Filter out the unchecked fields
 $unchecked_get_fields 	= implode('|', $unchecked_get_fields);
@@ -240,10 +240,10 @@ else
   }
   elseif ( CT_SECLEVEL != 'LOW' || !defined('CT_SECLEVEL') )
   {
-    // We create a copy of the $HTTP_POST_VARS for checking
-    $checkpost = ( is_array($HTTP_POST_VARS) ) ? $HTTP_POST_VARS : array();
+    // We create a copy of the $_POST for checking
+    $checkpost = ( is_array($_POST) ) ? $_POST : array();
 
-    // Now we have a look to $HTTP_POST_VARS
+    // Now we have a look to $_POST
     foreach ( $checkpost as $post_var_fieldname => $post_var_field_value )
     {
 	    if ( !in_array($post_var_fieldname, $unchecked_post_fields) )
@@ -347,7 +347,7 @@ function ct_debugger($checkstring, $checkmode)
   {
     return;
   }
-  global $ct_rules, $HTTP_SERVER_VARS, $phpbb_root_path, $unchecked_post_fields;
+  global $ct_rules, $_SERVER, $phpbb_root_path, $unchecked_post_fields;
 
   $dbgunchecked_post_fields = implode('|', $unchecked_post_fields);
 
@@ -394,7 +394,7 @@ function ct_debugger($checkstring, $checkmode)
   {
     // let's open the debug file and write in some stuff ;)
     $debugstream = @fopen($phpbb_root_path . 'ctracker/logfiles/logfile_debug_mode.txt', 'ab');
-    $scriptname = str_replace($HTTP_SERVER_VARS['DOCUMENT_ROOT'], '', $HTTP_SERVER_VARS['SCRIPT_FILENAME']);
+    $scriptname = str_replace($_SERVER['DOCUMENT_ROOT'], '', $_SERVER['SCRIPT_FILENAME']);
     $scriptname = (( substr($scriptname, 0, 1) == '/' ) ? '' : '/') . $scriptname;
     $scriptname = str_replace('//', '/', $scriptname);
 

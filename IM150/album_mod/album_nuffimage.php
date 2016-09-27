@@ -1764,16 +1764,16 @@ Function nuff_http_vars needed to store all HTTP vars into one array
 */
 function nuff_http_vars()
 {
-	global $HTTP_GET_VARS, $HTTP_POST_VARS;
+	global $_GET, $_POST;
 
 	$nuff_http = array();
 	$nuff_http['full_string'] = '';
 
 	// Var Init
 	/* Resize */
-	if( (isset($HTTP_GET_VARS['nuff_resize'])) || (isset($HTTP_POST_VARS['nuff_resize'])))
+	if( (isset($_GET['nuff_resize'])) || (isset($_POST['nuff_resize'])))
 	{
-		$nuff_http['nuff_resize'] = isset($HTTP_GET_VARS['nuff_resize']) ? intval($HTTP_GET_VARS['nuff_resize']) : intval($HTTP_POST_VARS['nuff_resize']);
+		$nuff_http['nuff_resize'] = isset($_GET['nuff_resize']) ? intval($_GET['nuff_resize']) : intval($_POST['nuff_resize']);
 	}
 	else
 	{
@@ -1782,9 +1782,9 @@ function nuff_http_vars()
 	$nuff_http['full_string'] .= '&nuff_resize=' . $nuff_http['nuff_resize'];
 
 	/* Resize Width */
-	if( (isset($HTTP_GET_VARS['nuff_resize_w'])) || (isset($HTTP_POST_VARS['nuff_resize_w'])))
+	if( (isset($_GET['nuff_resize_w'])) || (isset($_POST['nuff_resize_w'])))
 	{
-		$nuff_http['nuff_resize_w'] = isset($HTTP_GET_VARS['nuff_resize_w']) ? intval($HTTP_GET_VARS['nuff_resize_w']) : intval($HTTP_POST_VARS['nuff_resize_w']);
+		$nuff_http['nuff_resize_w'] = isset($_GET['nuff_resize_w']) ? intval($_GET['nuff_resize_w']) : intval($_POST['nuff_resize_w']);
 	}
 	else
 	{
@@ -1793,9 +1793,9 @@ function nuff_http_vars()
 	$nuff_http['full_string'] .= '&nuff_resize_w=' . $nuff_http['nuff_resize_w'];
 
 	/* Resize Height*/
-	if( (isset($HTTP_GET_VARS['nuff_resize_h'])) || (isset($HTTP_POST_VARS['nuff_resize_h'])))
+	if( (isset($_GET['nuff_resize_h'])) || (isset($_POST['nuff_resize_h'])))
 	{
-		$nuff_http['nuff_resize_h'] = isset($HTTP_GET_VARS['nuff_resize_h']) ? intval($HTTP_GET_VARS['nuff_resize_h']) : intval($HTTP_POST_VARS['nuff_resize_h']);
+		$nuff_http['nuff_resize_h'] = isset($_GET['nuff_resize_h']) ? intval($_GET['nuff_resize_h']) : intval($_POST['nuff_resize_h']);
 	}
 	else
 	{
@@ -1804,9 +1804,9 @@ function nuff_http_vars()
 	$nuff_http['full_string'] .= '&nuff_resize_h=' . $nuff_http['nuff_resize_h'];
 
 	/* Recompression */
-	if( (isset($HTTP_GET_VARS['nuff_recompress'])) || (isset($HTTP_POST_VARS['nuff_recompress'])))
+	if( (isset($_GET['nuff_recompress'])) || (isset($_POST['nuff_recompress'])))
 	{
-		$nuff_http['nuff_recompress'] = isset($HTTP_GET_VARS['nuff_recompress']) ? intval($HTTP_GET_VARS['nuff_recompress']) : intval($HTTP_POST_VARS['nuff_recompress']);
+		$nuff_http['nuff_recompress'] = isset($_GET['nuff_recompress']) ? intval($_GET['nuff_recompress']) : intval($_POST['nuff_recompress']);
 	}
 	else
 	{
@@ -1815,9 +1815,9 @@ function nuff_http_vars()
 	$nuff_http['full_string'] .= '&nuff_recompress=' . $nuff_http['nuff_recompress'];
 
 	/* Recompression Ratio */
-	if( (isset($HTTP_GET_VARS['nuff_recompress_r'])) || (isset($HTTP_POST_VARS['nuff_recompress_r'])))
+	if( (isset($_GET['nuff_recompress_r'])) || (isset($_POST['nuff_recompress_r'])))
 	{
-		$nuff_http['nuff_recompress_r'] = isset($HTTP_GET_VARS['nuff_recompress_r']) ? intval($HTTP_GET_VARS['nuff_recompress_r']) : intval($HTTP_POST_VARS['nuff_recompress_r']);
+		$nuff_http['nuff_recompress_r'] = isset($_GET['nuff_recompress_r']) ? intval($_GET['nuff_recompress_r']) : intval($_POST['nuff_recompress_r']);
 	}
 	else
 	{
@@ -1826,9 +1826,9 @@ function nuff_http_vars()
 	$nuff_http['full_string'] .= '&nuff_recompress_r=' . $nuff_http['nuff_recompress_r'];
 
 	/* Rotation */
-	if( (isset($HTTP_GET_VARS['nuff_rotation'])) || (isset($HTTP_POST_VARS['nuff_rotation'])))
+	if( (isset($_GET['nuff_rotation'])) || (isset($_POST['nuff_rotation'])))
 	{
-		$nuff_http['nuff_rotation'] = isset($HTTP_GET_VARS['nuff_rotation']) ? intval($HTTP_GET_VARS['nuff_rotation']) : intval($HTTP_POST_VARS['nuff_rotation']);
+		$nuff_http['nuff_rotation'] = isset($_GET['nuff_rotation']) ? intval($_GET['nuff_rotation']) : intval($_POST['nuff_rotation']);
 	}
 	else
 	{
@@ -1837,9 +1837,9 @@ function nuff_http_vars()
 	$nuff_http['full_string'] .= '&nuff_rotation=' . $nuff_http['nuff_rotation'];
 
 	/* Rotation Degree */
-	if( (isset($HTTP_GET_VARS['nuff_rotation_d'])) || (isset($HTTP_POST_VARS['nuff_rotation_d'])))
+	if( (isset($_GET['nuff_rotation_d'])) || (isset($_POST['nuff_rotation_d'])))
 	{
-		$nuff_http['nuff_rotation_d'] = isset($HTTP_GET_VARS['nuff_rotation_d']) ? intval($HTTP_GET_VARS['nuff_rotation_d']) : intval($HTTP_POST_VARS['nuff_rotation_d']);
+		$nuff_http['nuff_rotation_d'] = isset($_GET['nuff_rotation_d']) ? intval($_GET['nuff_rotation_d']) : intval($_POST['nuff_rotation_d']);
 	}
 	else
 	{
@@ -1848,9 +1848,9 @@ function nuff_http_vars()
 	$nuff_http['full_string'] .= '&nuff_rotation_d=' . $nuff_http['nuff_rotation_d'];
 
 	/* Sepia */
-	if( (isset($HTTP_GET_VARS['nuff_sepia'])) || (isset($HTTP_POST_VARS['nuff_sepia'])))
+	if( (isset($_GET['nuff_sepia'])) || (isset($_POST['nuff_sepia'])))
 	{
-		$nuff_http['nuff_sepia'] = isset($HTTP_GET_VARS['nuff_sepia']) ? intval($HTTP_GET_VARS['nuff_sepia']) : intval($HTTP_POST_VARS['nuff_sepia']);
+		$nuff_http['nuff_sepia'] = isset($_GET['nuff_sepia']) ? intval($_GET['nuff_sepia']) : intval($_POST['nuff_sepia']);
 	}
 	else
 	{
@@ -1859,9 +1859,9 @@ function nuff_http_vars()
 	$nuff_http['full_string'] .= '&nuff_sepia=' . $nuff_http['nuff_sepia'];
 
 	/* Black And White */
-	if( (isset($HTTP_GET_VARS['nuff_bw'])) || (isset($HTTP_POST_VARS['nuff_bw'])))
+	if( (isset($_GET['nuff_bw'])) || (isset($_POST['nuff_bw'])))
 	{
-		$nuff_http['nuff_bw'] = isset($HTTP_GET_VARS['nuff_bw']) ? intval($HTTP_GET_VARS['nuff_bw']) : intval($HTTP_POST_VARS['nuff_bw']);
+		$nuff_http['nuff_bw'] = isset($_GET['nuff_bw']) ? intval($_GET['nuff_bw']) : intval($_POST['nuff_bw']);
 	}
 	else
 	{
@@ -1870,9 +1870,9 @@ function nuff_http_vars()
 	$nuff_http['full_string'] .= '&nuff_bw=' . $nuff_http['nuff_bw'];
 
 	/* Mirror */
-	if( (isset($HTTP_GET_VARS['nuff_mirror'])) || (isset($HTTP_POST_VARS['nuff_mirror'])))
+	if( (isset($_GET['nuff_mirror'])) || (isset($_POST['nuff_mirror'])))
 	{
-		$nuff_http['nuff_mirror'] = isset($HTTP_GET_VARS['nuff_mirror']) ? intval($HTTP_GET_VARS['nuff_mirror']) : intval($HTTP_POST_VARS['nuff_mirror']);
+		$nuff_http['nuff_mirror'] = isset($_GET['nuff_mirror']) ? intval($_GET['nuff_mirror']) : intval($_POST['nuff_mirror']);
 	}
 	else
 	{
@@ -1881,9 +1881,9 @@ function nuff_http_vars()
 	$nuff_http['full_string'] .= '&nuff_mirror=' . $nuff_http['nuff_mirror'];
 
 	/* Flip */
-	if( (isset($HTTP_GET_VARS['nuff_flip'])) || (isset($HTTP_POST_VARS['nuff_flip'])))
+	if( (isset($_GET['nuff_flip'])) || (isset($_POST['nuff_flip'])))
 	{
-		$nuff_http['nuff_flip'] = isset($HTTP_GET_VARS['nuff_flip']) ? intval($HTTP_GET_VARS['nuff_flip']) : intval($HTTP_POST_VARS['nuff_flip']);
+		$nuff_http['nuff_flip'] = isset($_GET['nuff_flip']) ? intval($_GET['nuff_flip']) : intval($_POST['nuff_flip']);
 	}
 	else
 	{
@@ -1892,9 +1892,9 @@ function nuff_http_vars()
 	$nuff_http['full_string'] .= '&nuff_flip=' . $nuff_http['nuff_flip'];
 
 	/* Blur */
-	if( (isset($HTTP_GET_VARS['nuff_blur'])) || (isset($HTTP_POST_VARS['nuff_blur'])))
+	if( (isset($_GET['nuff_blur'])) || (isset($_POST['nuff_blur'])))
 	{
-		$nuff_http['nuff_blur'] = isset($HTTP_GET_VARS['nuff_blur']) ? intval($HTTP_GET_VARS['nuff_blur']) : intval($HTTP_POST_VARS['nuff_blur']);
+		$nuff_http['nuff_blur'] = isset($_GET['nuff_blur']) ? intval($_GET['nuff_blur']) : intval($_POST['nuff_blur']);
 	}
 	else
 	{
@@ -1903,9 +1903,9 @@ function nuff_http_vars()
 	$nuff_http['full_string'] .= '&nuff_blur=' . $nuff_http['nuff_blur'];
 
 	/* Pixelate */
-	if( (isset($HTTP_GET_VARS['nuff_pixelate'])) || (isset($HTTP_POST_VARS['nuff_pixelate'])))
+	if( (isset($_GET['nuff_pixelate'])) || (isset($_POST['nuff_pixelate'])))
 	{
-		$nuff_http['nuff_pixelate'] = isset($HTTP_GET_VARS['nuff_pixelate']) ? intval($HTTP_GET_VARS['nuff_pixelate']) : intval($HTTP_POST_VARS['nuff_pixelate']);
+		$nuff_http['nuff_pixelate'] = isset($_GET['nuff_pixelate']) ? intval($_GET['nuff_pixelate']) : intval($_POST['nuff_pixelate']);
 	}
 	else
 	{
@@ -1914,9 +1914,9 @@ function nuff_http_vars()
 	$nuff_http['full_string'] .= '&nuff_pixelate=' . $nuff_http['nuff_pixelate'];
 
 	/* Scatter */
-	if( (isset($HTTP_GET_VARS['nuff_scatter'])) || (isset($HTTP_POST_VARS['nuff_scatter'])))
+	if( (isset($_GET['nuff_scatter'])) || (isset($_POST['nuff_scatter'])))
 	{
-		$nuff_http['nuff_scatter'] = isset($HTTP_GET_VARS['nuff_scatter']) ? intval($HTTP_GET_VARS['nuff_scatter']) : intval($HTTP_POST_VARS['nuff_scatter']);
+		$nuff_http['nuff_scatter'] = isset($_GET['nuff_scatter']) ? intval($_GET['nuff_scatter']) : intval($_POST['nuff_scatter']);
 	}
 	else
 	{
@@ -1925,9 +1925,9 @@ function nuff_http_vars()
 	$nuff_http['full_string'] .= '&nuff_scatter=' . $nuff_http['nuff_scatter'];
 
 	/* Infrared */
-	if( (isset($HTTP_GET_VARS['nuff_infrared'])) || (isset($HTTP_POST_VARS['nuff_infrared'])))
+	if( (isset($_GET['nuff_infrared'])) || (isset($_POST['nuff_infrared'])))
 	{
-		$nuff_http['nuff_infrared'] = isset($HTTP_GET_VARS['nuff_infrared']) ? intval($HTTP_GET_VARS['nuff_infrared']) : intval($HTTP_POST_VARS['nuff_infrared']);
+		$nuff_http['nuff_infrared'] = isset($_GET['nuff_infrared']) ? intval($_GET['nuff_infrared']) : intval($_POST['nuff_infrared']);
 	}
 	else
 	{
@@ -1936,9 +1936,9 @@ function nuff_http_vars()
 	$nuff_http['full_string'] .= '&nuff_infrared=' . $nuff_http['nuff_infrared'];
 
 	/* Tint */
-	if( (isset($HTTP_GET_VARS['nuff_tint'])) || (isset($HTTP_POST_VARS['nuff_tint'])))
+	if( (isset($_GET['nuff_tint'])) || (isset($_POST['nuff_tint'])))
 	{
-		$nuff_http['nuff_tint'] = isset($HTTP_GET_VARS['nuff_tint']) ? intval($HTTP_GET_VARS['nuff_tint']) : intval($HTTP_POST_VARS['nuff_tint']);
+		$nuff_http['nuff_tint'] = isset($_GET['nuff_tint']) ? intval($_GET['nuff_tint']) : intval($_POST['nuff_tint']);
 	}
 	else
 	{
@@ -1947,9 +1947,9 @@ function nuff_http_vars()
 	$nuff_http['full_string'] .= '&nuff_tint=' . $nuff_http['nuff_tint'];
 
 	/* Interlace */
-	if( (isset($HTTP_GET_VARS['nuff_interlace'])) || (isset($HTTP_POST_VARS['nuff_interlace'])))
+	if( (isset($_GET['nuff_interlace'])) || (isset($_POST['nuff_interlace'])))
 	{
-		$nuff_http['nuff_interlace'] = isset($HTTP_GET_VARS['nuff_interlace']) ? intval($HTTP_GET_VARS['nuff_interlace']) : intval($HTTP_POST_VARS['nuff_interlace']);
+		$nuff_http['nuff_interlace'] = isset($_GET['nuff_interlace']) ? intval($_GET['nuff_interlace']) : intval($_POST['nuff_interlace']);
 	}
 	else
 	{
@@ -1958,9 +1958,9 @@ function nuff_http_vars()
 	$nuff_http['full_string'] .= '&nuff_interlace=' . $nuff_http['nuff_interlace'];
 
 	/* Screen */
-	if( (isset($HTTP_GET_VARS['nuff_screen'])) || (isset($HTTP_POST_VARS['nuff_screen'])))
+	if( (isset($_GET['nuff_screen'])) || (isset($_POST['nuff_screen'])))
 	{
-		$nuff_http['nuff_screen'] = isset($HTTP_GET_VARS['nuff_screen']) ? intval($HTTP_GET_VARS['nuff_screen']) : intval($HTTP_POST_VARS['nuff_screen']);
+		$nuff_http['nuff_screen'] = isset($_GET['nuff_screen']) ? intval($_GET['nuff_screen']) : intval($_POST['nuff_screen']);
 	}
 	else
 	{
@@ -1969,9 +1969,9 @@ function nuff_http_vars()
 	$nuff_http['full_string'] .= '&nuff_screen=' . $nuff_http['nuff_screen'];
 
 	/* Stereogram */
-	if( (isset($HTTP_GET_VARS['nuff_stereogram'])) || (isset($HTTP_POST_VARS['nuff_stereogram'])))
+	if( (isset($_GET['nuff_stereogram'])) || (isset($_POST['nuff_stereogram'])))
 	{
-		$nuff_http['nuff_stereogram'] = isset($HTTP_GET_VARS['nuff_stereogram']) ? intval($HTTP_GET_VARS['nuff_stereogram']) : intval($HTTP_POST_VARS['nuff_stereogram']);
+		$nuff_http['nuff_stereogram'] = isset($_GET['nuff_stereogram']) ? intval($_GET['nuff_stereogram']) : intval($_POST['nuff_stereogram']);
 	}
 	else
 	{

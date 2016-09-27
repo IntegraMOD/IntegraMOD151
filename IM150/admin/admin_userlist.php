@@ -35,9 +35,9 @@ include($phpbb_root_path.'language/lang_' . $board_config['default_lang'] . '/la
 //
 // Set mode
 //
-if( isset( $HTTP_POST_VARS['mode'] ) || isset( $HTTP_GET_VARS['mode'] ) )
+if( isset( $_POST['mode'] ) || isset( $_GET['mode'] ) )
 {
-	$mode = ( isset($HTTP_POST_VARS['mode']) ) ? $HTTP_POST_VARS['mode'] : $HTTP_GET_VARS['mode'];
+	$mode = ( isset($_POST['mode']) ) ? $_POST['mode'] : $_GET['mode'];
 }
 else
 {
@@ -47,7 +47,7 @@ else
 //
 // confirm
 //
-if( isset( $HTTP_POST_VARS['confirm'] ) || isset( $HTTP_GET_VARS['confirm'] ) )
+if( isset( $_POST['confirm'] ) || isset( $_GET['confirm'] ) )
 {
 	$confirm = true;
 }
@@ -59,7 +59,7 @@ else
 //
 // cancel
 //
-if( isset( $HTTP_POST_VARS['cancel'] ) || isset( $HTTP_GET_VARS['cancel'] ) )
+if( isset( $_POST['cancel'] ) || isset( $_GET['cancel'] ) )
 {
 	$cancel = true;
 	$mode = '';
@@ -72,14 +72,14 @@ else
 //
 // get starting position
 //
-$start = ( isset($HTTP_GET_VARS['start']) ) ? intval($HTTP_GET_VARS['start']) : 0;
+$start = ( isset($_GET['start']) ) ? intval($_GET['start']) : 0;
 
 //
 // get show amount
 //
-if ( isset($HTTP_GET_VARS['show']) || isset($HTTP_POST_VARS['show']) )
+if ( isset($_GET['show']) || isset($_POST['show']) )
 {
-	$show = ( isset($HTTP_POST_VARS['show']) ) ? intval($HTTP_POST_VARS['show']) : intval($HTTP_GET_VARS['show']);
+	$show = ( isset($_POST['show']) ) ? intval($_POST['show']) : intval($_GET['show']);
 }
 else
 {
@@ -89,9 +89,9 @@ else
 //
 // sort method
 //
-if ( isset($HTTP_GET_VARS['sort']) || isset($HTTP_POST_VARS['sort']) )
+if ( isset($_GET['sort']) || isset($_POST['sort']) )
 {
-	$sort = ( isset($HTTP_POST_VARS['sort']) ) ? htmlspecialchars($HTTP_POST_VARS['sort']) : htmlspecialchars($HTTP_GET_VARS['sort']);
+	$sort = ( isset($_POST['sort']) ) ? htmlspecialchars($_POST['sort']) : htmlspecialchars($_GET['sort']);
 	$sort = str_replace("\'", "''", $sort);
 }
 else
@@ -102,13 +102,13 @@ else
 //
 // sort order
 //
-if( isset($HTTP_POST_VARS['order']) )
+if( isset($_POST['order']) )
 {
-	$sort_order = ( $HTTP_POST_VARS['order'] == 'ASC' ) ? 'ASC' : 'DESC';
+	$sort_order = ( $_POST['order'] == 'ASC' ) ? 'ASC' : 'DESC';
 }
-else if( isset($HTTP_GET_VARS['order']) )
+else if( isset($_GET['order']) )
 {
-	$sort_order = ( $HTTP_GET_VARS['order'] == 'ASC' ) ? 'ASC' : 'DESC';
+	$sort_order = ( $_GET['order'] == 'ASC' ) ? 'ASC' : 'DESC';
 }
 else
 {
@@ -118,9 +118,9 @@ else
 //
 // alphanumeric stuff
 //
-if ( isset($HTTP_GET_VARS['alphanum']) || isset($HTTP_POST_VARS['alphanum']) ) 
+if ( isset($_GET['alphanum']) || isset($_POST['alphanum']) ) 
 { 
-	$alphanum = ( isset($HTTP_POST_VARS['alphanum']) ) ? htmlspecialchars($HTTP_POST_VARS['alphanum']) : htmlspecialchars($HTTP_GET_VARS['alphanum']);
+	$alphanum = ( isset($_POST['alphanum']) ) ? htmlspecialchars($_POST['alphanum']) : htmlspecialchars($_GET['alphanum']);
 	$alphanum = str_replace("\'", "''", $alphanum);
 	switch( $dbms )
 	{
@@ -145,9 +145,9 @@ $user_ids = array();
 // users id
 // because it is an array we will intval() it when we use it
 //
-if ( isset($HTTP_POST_VARS[POST_USERS_URL]) || isset($HTTP_GET_VARS[POST_USERS_URL]) )
+if ( isset($_POST[POST_USERS_URL]) || isset($_GET[POST_USERS_URL]) )
 {
-	$user_ids = ( isset($HTTP_POST_VARS[POST_USERS_URL]) ) ? $HTTP_POST_VARS[POST_USERS_URL] : $HTTP_GET_VARS[POST_USERS_URL];
+	$user_ids = ( isset($_POST[POST_USERS_URL]) ) ? $_POST[POST_USERS_URL] : $_GET[POST_USERS_URL];
 }
 else
 {
@@ -552,7 +552,7 @@ switch( $mode )
 		else
 		{
 			// add the users to the selected group
-			$group_id = intval($HTTP_POST_VARS[POST_GROUPS_URL]);
+			$group_id = intval($_POST[POST_GROUPS_URL]);
 
 			include($phpbb_root_path . 'includes/emailer.'.$phpEx);
 			$emailer = new emailer($board_config['smtp_delivery']);
@@ -899,7 +899,7 @@ switch( $mode )
 			// setup user row template varibles
 			//
 			$template->assign_block_vars('user_row', array(
-				'ROW_NUMBER' => $i + ( $HTTP_GET_VARS['start'] + 1 ),
+				'ROW_NUMBER' => $i + ( $_GET['start'] + 1 ),
 				'ROW_CLASS' => ( !($i % 2) ) ? $theme['td_class1'] : $theme['td_class2'],
 
 				'USER_ID' => $row['user_id'],

@@ -6,7 +6,7 @@
  *	copyright			: Ptirhiik
  *	email				: ptirhiik@clanmckeen.com
  *
- *	version				: 1.0.1 - 10/11/2003
+  *	version				: 1.0.1 - 10/11/2003
  *
  *
  ***************************************************************************/
@@ -68,6 +68,7 @@ if ( $lang_extend_admin )
 	$lang['icon_explain']							= 'This icon will be displayed in front of the forum title. You can set here a direct URI or a $image[] key entry (see <i>your_template</i>/<i>your_template</i>.cfg).';
 }
 
+$lang['Category_locked'] 			= 'This category is locked: you cannot post, reply to, or edit topics.';
 $lang['Forum_link']					= 'Link redirection';
 $lang['Forum_link_visited']			= 'This link has been visited %d times';
 $lang['Redirect']					= 'Redirect';

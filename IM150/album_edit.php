@@ -45,13 +45,13 @@ include($album_root_path . 'album_common.'.$phpEx);
 // Check the request
 // ------------------------------------
 
-if( isset($HTTP_GET_VARS['pic_id']) )
+if( isset($_GET['pic_id']) )
 {
-	$pic_id = intval($HTTP_GET_VARS['pic_id']);
+	$pic_id = intval($_GET['pic_id']);
 }
-elseif( isset($HTTP_POST_VARS['pic_id']) )
+elseif( isset($_POST['pic_id']) )
 {
-	$pic_id = intval($HTTP_POST_VARS['pic_id']);
+	$pic_id = intval($_POST['pic_id']);
 }
 else
 {
@@ -120,7 +120,7 @@ else
 +----------------------------------------------------------
 */
 
-if( !isset($HTTP_POST_VARS['pic_title']) )
+if( !isset($_POST['pic_title']) )
 {
 	//
 	// Start output of page
@@ -172,9 +172,9 @@ else
 	// Check posted info
 	// --------------------------------
 
-	$pic_title = str_replace("\'", "''", htmlspecialchars(trim($HTTP_POST_VARS['pic_title'])));
+	$pic_title = str_replace("\'", "''", htmlspecialchars(trim($_POST['pic_title'])));
 
-	$pic_desc = str_replace("\'", "''", htmlspecialchars(substr(trim($HTTP_POST_VARS['pic_desc']), 0, $album_config['desc_length'])));
+	$pic_desc = str_replace("\'", "''", htmlspecialchars(substr(trim($_POST['pic_desc']), 0, $album_config['desc_length'])));
 
 	if( empty($pic_title) )
 	{

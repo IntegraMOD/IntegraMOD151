@@ -69,17 +69,17 @@ while ( $row = $db->sql_fetchrow($result) )
 	$new[$config_name] = $default_config[$config_name];
 
 	if ( $allowed_array[$config_name] &&
-		 isset($HTTP_POST_VARS['submit']) &&
-		 isset($HTTP_POST_VARS['set']) &&
-		 ($HTTP_POST_VARS['set'] == "general") &&
-		 isset($HTTP_POST_VARS[$config_name]) )
+		 isset($_POST['submit']) &&
+		 isset($_POST['set']) &&
+		 ($_POST['set'] == "general") &&
+		 isset($_POST[$config_name]) )
 	{
-		if ( ($config_name == "cash_adminbig") && ($new[$config_name] != stripslashes($HTTP_POST_VARS[$config_name])) )
+		if ( ($config_name == "cash_adminbig") && ($new[$config_name] != stripslashes($_POST[$config_name])) )
 		{
 			$reset_navbar = "\n<script language=\"JavaScript\" type=\"text/javascript\">\n<!--\nparent.nav.location.reload();\n//-->\n</script>";
 		}
 		$sql = "UPDATE " . CONFIG_TABLE . " SET
-			config_value = '" . str_replace("\'", "''", $HTTP_POST_VARS[$config_name]) . "'
+			config_value = '" . str_replace("\'", "''", $_POST[$config_name]) . "'
 			WHERE config_name = '$config_name'";
 		if ( !$db->sql_query($sql) )
 		{
@@ -88,7 +88,7 @@ while ( $row = $db->sql_fetchrow($result) )
 	}
 }
 	
-if ( isset($HTTP_POST_VARS['submit']) )
+if ( isset($_POST['submit']) )
 {
 	$message = $lang['Cash_config_updated'] . $reset_navbar . "<br /><br />" . sprintf($lang['Click_return_cash_config'], "<a href=\"" . append_sid("cash_config.$phpEx") . "\">", "</a>") . "<br /><br />" . sprintf($lang['Click_return_admin_index'], "<a href=\"" . append_sid("index.$phpEx?pane=right") . "\">", "</a>");
 

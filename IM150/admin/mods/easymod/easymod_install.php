@@ -79,13 +79,13 @@ require($phpbb_root_path . $script_path . 'easymod_display_functions.'.$phpEx);
 //
 $EM_lang = _em_get_install_languages();
 
-if( !empty($HTTP_GET_VARS['language']) || !empty($HTTP_POST_VARS['language']) )
+if( !empty($_GET['language']) || !empty($_POST['language']) )
 {
-	$language = (!empty($HTTP_POST_VARS['language'])) ? stripslashes($HTTP_POST_VARS['language']) : stripslashes($HTTP_GET_VARS['language']);
+	$language = (!empty($_POST['language'])) ? stripslashes($_POST['language']) : stripslashes($_GET['language']);
 }
-elseif( !empty($HTTP_COOKIE_VARS['em_lang']) )
+elseif( !empty($_COOKIE['em_lang']) )
 {
-	$language = stripslashes($HTTP_COOKIE_VARS['em_lang']);
+	$language = stripslashes($_COOKIE['em_lang']);
 }
 else
 {
@@ -214,8 +214,8 @@ function _em_get_install_languages()
 /// start program proper
 ///
 
-$install_step = (isset($HTTP_POST_VARS['install_step'])) ? intval( $HTTP_POST_VARS['install_step']) : 1;
-$rescan = (isset($HTTP_POST_VARS['rescan'])) ? TRUE : FALSE;
+$install_step = (isset($_POST['install_step'])) ? intval( $_POST['install_step']) : 1;
+$rescan = (isset($_POST['rescan'])) ? TRUE : FALSE;
 if ( $rescan)
 {
 	//$install_step = 1;
@@ -223,9 +223,9 @@ if ( $rescan)
 }
 
 // Mode setting
-if(isset($HTTP_GET_VARS['mode']) || isset($HTTP_POST_VARS['mode']))
+if(isset($_GET['mode']) || isset($_POST['mode']))
 {
-	$mode = (isset($HTTP_POST_VARS['mode'])) ? stripslashes($HTTP_POST_VARS['mode']) : stripslashes($HTTP_GET_VARS['mode']);
+	$mode = (isset($_POST['mode'])) ? stripslashes($_POST['mode']) : stripslashes($_GET['mode']);
 }
 else
 {
@@ -233,43 +233,43 @@ else
 }
 
 // check the case where display file on screen is sending a GET VAR
-if (($install_step == 1) && (isset($HTTP_GET_VARS['install_step'])))
+if (($install_step == 1) && (isset($_GET['install_step'])))
 {
 	// make sure the vars seem to match
-	if (($HTTP_GET_VARS['install_step'] == 6) && (($mode == 'backup') || ($mode == 'file')))
+	if (($_GET['install_step'] == 6) && (($mode == 'backup') || ($mode == 'file')))
 	{
 		// check the password to make sure this is not someone getting around security
-		$pw = (isset($HTTP_GET_VARS['pw'])) ? stripslashes($HTTP_GET_VARS['pw']) : '';
+		$pw = (isset($_GET['pw'])) ? stripslashes($_GET['pw']) : '';
 		$install_step = ($pw === get_em_pw()) ? 6 : 1;
 	}
 }
 
 
 // file access permissions
-$read_access = (isset($HTTP_POST_VARS['read_access'])) ? intval($HTTP_POST_VARS['read_access']) : false;
-$write_access = (isset($HTTP_POST_VARS['write_access'])) ? intval($HTTP_POST_VARS['write_access']) : false;
-$root_write = (isset($HTTP_POST_VARS['root_write'])) ? intval($HTTP_POST_VARS['root_write']) : false;
-$tmp_write = (isset($HTTP_POST_VARS['tmp_write'])) ? intval($HTTP_POST_VARS['tmp_write']) : false;
-$chmod_access = (isset($HTTP_POST_VARS['chmod_access'])) ? intval($HTTP_POST_VARS['chmod_access']) : false;
-$unlink_access = (isset($HTTP_POST_VARS['unlink_access'])) ? intval($HTTP_POST_VARS['unlink_access']) : false;
-$mkdir_access = (isset($HTTP_POST_VARS['mkdir_access'])) ? intval($HTTP_POST_VARS['mkdir_access']) : false;
-$copy_access = (isset($HTTP_POST_VARS['copy_access'])) ? intval($HTTP_POST_VARS['copy_access']) : false;
+$read_access = (isset($_POST['read_access'])) ? intval($_POST['read_access']) : false;
+$write_access = (isset($_POST['write_access'])) ? intval($_POST['write_access']) : false;
+$root_write = (isset($_POST['root_write'])) ? intval($_POST['root_write']) : false;
+$tmp_write = (isset($_POST['tmp_write'])) ? intval($_POST['tmp_write']) : false;
+$chmod_access = (isset($_POST['chmod_access'])) ? intval($_POST['chmod_access']) : false;
+$unlink_access = (isset($_POST['unlink_access'])) ? intval($_POST['unlink_access']) : false;
+$mkdir_access = (isset($_POST['mkdir_access'])) ? intval($_POST['mkdir_access']) : false;
+$copy_access = (isset($_POST['copy_access'])) ? intval($_POST['copy_access']) : false;
 
 // file access settings
-$em_pass = (isset($HTTP_POST_VARS['em_pass'])) ? stripslashes($HTTP_POST_VARS['em_pass']) : '';
-$read = (isset($HTTP_POST_VARS['sel_read'])) ? stripslashes($HTTP_POST_VARS['sel_read']) : '';
-$write = (isset($HTTP_POST_VARS['sel_write'])) ? stripslashes($HTTP_POST_VARS['sel_write']) : '';
-$move = (isset($HTTP_POST_VARS['sel_move'])) ? stripslashes($HTTP_POST_VARS['sel_move']) : '';
+$em_pass = (isset($_POST['em_pass'])) ? stripslashes($_POST['em_pass']) : '';
+$read = (isset($_POST['sel_read'])) ? stripslashes($_POST['sel_read']) : '';
+$write = (isset($_POST['sel_write'])) ? stripslashes($_POST['sel_write']) : '';
+$move = (isset($_POST['sel_move'])) ? stripslashes($_POST['sel_move']) : '';
 
 // ftp settings
-$ftp_user = (isset($HTTP_POST_VARS['ftp_user'])) ? stripslashes($HTTP_POST_VARS['ftp_user']) : '';
-$ftp_pass = (isset($HTTP_POST_VARS['ftp_pass'])) ? stripslashes($HTTP_POST_VARS['ftp_pass']) : '';
-$ftp_host = (isset($HTTP_POST_VARS['ftp_host'])) ? stripslashes($HTTP_POST_VARS['ftp_host']) : 'localhost';
-$ftp_port = (isset($HTTP_POST_VARS['ftp_port'])) ? intval($HTTP_POST_VARS['ftp_port']) : 21;
-$ftp_debug = (isset($HTTP_POST_VARS['ftp_debug'])) ? intval($HTTP_POST_VARS['ftp_debug']) : false;
-$ftp_type = (isset($HTTP_POST_VARS['ftp_type'])) ? stripslashes($HTTP_POST_VARS['ftp_type']) : 'fsock';
-$ftp_cache = (isset($HTTP_POST_VARS['ftp_cache'])) ? intval($HTTP_POST_VARS['ftp_cache']) : 0;
-$ftp_dir = (isset($HTTP_POST_VARS['ftp_dir'])) ? stripslashes($HTTP_POST_VARS['ftp_dir']) : '/';
+$ftp_user = (isset($_POST['ftp_user'])) ? stripslashes($_POST['ftp_user']) : '';
+$ftp_pass = (isset($_POST['ftp_pass'])) ? stripslashes($_POST['ftp_pass']) : '';
+$ftp_host = (isset($_POST['ftp_host'])) ? stripslashes($_POST['ftp_host']) : 'localhost';
+$ftp_port = (isset($_POST['ftp_port'])) ? intval($_POST['ftp_port']) : 21;
+$ftp_debug = (isset($_POST['ftp_debug'])) ? intval($_POST['ftp_debug']) : false;
+$ftp_type = (isset($_POST['ftp_type'])) ? stripslashes($_POST['ftp_type']) : 'fsock';
+$ftp_cache = (isset($_POST['ftp_cache'])) ? intval($_POST['ftp_cache']) : 0;
+$ftp_dir = (isset($_POST['ftp_dir'])) ? stripslashes($_POST['ftp_dir']) : '/';
 $ftp_dir = ($ftp_dir == '') ? '/' : $ftp_dir;
 
 $file_list = array();
@@ -336,17 +336,17 @@ if ($mode == 'help')
 //
 else if ($mode == 'debug')
 {
-	$install_step = (isset($HTTP_GET_VARS['install_step'])) ? intval($HTTP_GET_VARS['install_step']) : $install_step;
-	$read = (isset($HTTP_GET_VARS['read'])) ? stripslashes($HTTP_GET_VARS['read']) : $read;
-	$write = (isset($HTTP_GET_VARS['write'])) ? stripslashes($HTTP_GET_VARS['write']) : $write;
-	$move = (isset($HTTP_GET_VARS['move'])) ? stripslashes($HTTP_GET_VARS['move']) : $move;
-	$ftp_dir = (isset($HTTP_GET_VARS['ftp_dir'])) ? stripslashes($HTTP_GET_VARS['ftp_dir']) : $ftp_dir;
-	$ftp_user = (isset($HTTP_GET_VARS['ftp_user'])) ? stripslashes($HTTP_GET_VARS['ftp_user']) : $ftp_user;
-	$ftp_pass = (isset($HTTP_GET_VARS['ftp_pass'])) ? stripslashes($HTTP_GET_VARS['ftp_pass']) : $ftp_pass;
-	$ftp_host = (isset($HTTP_GET_VARS['ftp_host'])) ? stripslashes($HTTP_GET_VARS['ftp_host']) : $ftp_host;
-	$ftp_port = (isset($HTTP_GET_VARS['ftp_port'])) ? intval($HTTP_GET_VARS['ftp_port']) : $ftp_port;
-	$ftp_debug = (isset($HTTP_GET_VARS['ftp_debug'])) ? intval($HTTP_GET_VARS['ftp_debug']) : $ftp_debug;
-	$ftp_type = (isset($HTTP_GET_VARS['ftp_type'])) ? stripslashes($HTTP_GET_VARS['ftp_type']) : $ftp_type;
+	$install_step = (isset($_GET['install_step'])) ? intval($_GET['install_step']) : $install_step;
+	$read = (isset($_GET['read'])) ? stripslashes($_GET['read']) : $read;
+	$write = (isset($_GET['write'])) ? stripslashes($_GET['write']) : $write;
+	$move = (isset($_GET['move'])) ? stripslashes($_GET['move']) : $move;
+	$ftp_dir = (isset($_GET['ftp_dir'])) ? stripslashes($_GET['ftp_dir']) : $ftp_dir;
+	$ftp_user = (isset($_GET['ftp_user'])) ? stripslashes($_GET['ftp_user']) : $ftp_user;
+	$ftp_pass = (isset($_GET['ftp_pass'])) ? stripslashes($_GET['ftp_pass']) : $ftp_pass;
+	$ftp_host = (isset($_GET['ftp_host'])) ? stripslashes($_GET['ftp_host']) : $ftp_host;
+	$ftp_port = (isset($_GET['ftp_port'])) ? intval($_GET['ftp_port']) : $ftp_port;
+	$ftp_debug = (isset($_GET['ftp_debug'])) ? intval($_GET['ftp_debug']) : $ftp_debug;
+	$ftp_type = (isset($_GET['ftp_type'])) ? stripslashes($_GET['ftp_type']) : $ftp_type;
 
 ////////////////////// what about ? and &
 	// fix the password and put any # symbols back they may belong
@@ -365,8 +365,8 @@ else if ($mode == 'debug')
 //
 else if ($mode == 'download')
 {
-	$install_step = (isset($HTTP_POST_VARS['filename'])) ? stripslashes($HTTP_POST_VARS['filename']) : '';
-	$body = (isset($HTTP_POST_VARS['body'])) ? stripslashes($HTTP_POST_VARS['body']) : '';
+	$install_step = (isset($_POST['filename'])) ? stripslashes($_POST['filename']) : '';
+	$body = (isset($_POST['body'])) ? stripslashes($_POST['body']) : '';
 
 	header('Content-Type: text/x-delimtext; name="' . $filename . '"');
 	header('Content-disposition: attachment; filename=' . $filename . '"');
@@ -382,13 +382,13 @@ else if ($mode == 'download')
 ///
 else if ($install_step == 1)
 {
-	$install_style = ( ( isset($HTTP_GET_VARS['setup']) && $HTTP_GET_VARS['setup'] == 'advanced' ) || ( isset($HTTP_POST_VARS['setup']) && $HTTP_POST_VARS['setup'] == 'advanced' ) ) ? 'advanced' : 'simple';
-	$substep = (isset($HTTP_POST_VARS['substep'])) ? stripslashes($HTTP_POST_VARS['substep']) : '';
+	$install_style = ( ( isset($_GET['setup']) && $_GET['setup'] == 'advanced' ) || ( isset($_POST['setup']) && $_POST['setup'] == 'advanced' ) ) ? 'advanced' : 'simple';
+	$substep = (isset($_POST['substep'])) ? stripslashes($_POST['substep']) : '';
 	if ($substep != 'a' && $substep != 'b' && $substep != 'c')
 	{
 		$substep = '';
 	}
-	$option = (isset($HTTP_POST_VARS['option'])) ? stripslashes($HTTP_POST_VARS['option']) : '';
+	$option = (isset($_POST['option'])) ? stripslashes($_POST['option']) : '';
 	if ($option != 'ftp' && $option != 'windoze' && $option != 'idunno' && $option != 'write_copy' && $option != 'post_process' && $option != 'manual' && $option != 'download' && $option != 'advanced')
 	{
 		$option = '';
@@ -501,7 +501,7 @@ else if ( $install_step == 2)
 	page_header( $lang['EM_step2']);
 
 	// confirm passwords match
-	$em_pass_confirm = (isset($HTTP_POST_VARS['em_pass_confirm'])) ? stripslashes( $HTTP_POST_VARS['em_pass_confirm']) : '';
+	$em_pass_confirm = (isset($_POST['em_pass_confirm'])) ? stripslashes( $_POST['em_pass_confirm']) : '';
 	if ( $em_pass !== $em_pass_confirm)
 	{
 		echo $lang['EM_err_pw_match'] . "<br />\n";
@@ -878,14 +878,14 @@ else if ( $install_step == 3)
 else if ( $install_step == 4)
 {
 	// if adding an option to a select field, get the field number
-	$num_command_steps = ( isset($HTTP_POST_VARS['num_command_steps'])) ? intval($HTTP_POST_VARS['num_command_steps']) : 0;
+	$num_command_steps = ( isset($_POST['num_command_steps'])) ? intval($_POST['num_command_steps']) : 0;
 	$command = array();
 	for ( $i=0; $i<$num_command_steps; $i++)
 	{
 		$var_name = 'command_step' . $i;
-		if ( isset($HTTP_POST_VARS[$var_name]))
+		if ( isset($_POST[$var_name]))
 		{
-			$command[] = stripslashes($HTTP_POST_VARS[$var_name]);
+			$command[] = stripslashes($_POST[$var_name]);
 		}
 	}
 
@@ -1376,7 +1376,7 @@ else if ( $install_step == 6)
 	// if we have a proper mode through GET VAR, then we are displaying to screen
 	if (($mode == 'backup') || ($mode == 'file'))
 	{
-		$file = ( isset($HTTP_GET_VARS['file'])) ? stripslashes($HTTP_GET_VARS['file']) : '';
+		$file = ( isset($_GET['file'])) ? stripslashes($_GET['file']) : '';
 		$on_screen = true;
 	}
 
@@ -1384,17 +1384,17 @@ else if ( $install_step == 6)
 	else
 	{
 		// they clicked a form button; we need to figure out which one so we know what file they are looking for
-		$num_files = ( isset($HTTP_POST_VARS['mod_count'])) ? intval($HTTP_POST_VARS['mod_count']) : 0;
+		$num_files = ( isset($_POST['mod_count'])) ? intval($_POST['mod_count']) : 0;
 
 		// loop through all the submit buttons to see which one was pressed
 		for ( $i=0; $i<=$num_files; $i++)
 		{
 			// if this is the button that was pressed then we are all set!  get the file name
 			$var_name = 'submitfile' . $i;
-			if ( isset($HTTP_POST_VARS[$var_name]))
+			if ( isset($_POST[$var_name]))
 			{
-				$file = ( isset($HTTP_POST_VARS['file'.$i])) ? stripslashes($HTTP_POST_VARS['file'.$i]) : '';
-				$mode = ( isset($HTTP_POST_VARS['mode'.$i])) ? stripslashes($HTTP_POST_VARS['mode'.$i]) : '';
+				$file = ( isset($_POST['file'.$i])) ? stripslashes($_POST['file'.$i]) : '';
+				$mode = ( isset($_POST['mode'.$i])) ? stripslashes($_POST['mode'.$i]) : '';
 				break;
 			}
 		}

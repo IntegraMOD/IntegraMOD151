@@ -36,15 +36,15 @@ $phpbb_root_path = '../';
 require($phpbb_root_path . 'extension.inc');
 require('pagestart.' . $phpEx);
 
-	if( isset($HTTP_POST_VARS['mode']) || isset($HTTP_GET_VARS['mode']) )
+	if( isset($_POST['mode']) || isset($_GET['mode']) )
 		{
-	$mode = ( isset($HTTP_POST_VARS['mode']) ) ? $HTTP_POST_VARS['mode'] : $HTTP_GET_VARS['mode'];
+	$mode = ( isset($_POST['mode']) ) ? $_POST['mode'] : $_GET['mode'];
 		}
-	else if( isset($HTTP_POST_VARS['config']) )
+	else if( isset($_POST['config']) )
 		{
 	$mode = "config";
 		}
-	else if( isset($HTTP_POST_VARS['logs']) )
+	else if( isset($_POST['logs']) )
 		{
 	$mode = "users";
 		}			
@@ -60,7 +60,7 @@ include($phpbb_root_path . 'language/lang_' . $board_config['default_lang'] . '/
 		
 	if ( $mode == "delete_user" )
 		{
-	( !$_GET['user'] ) ? $who = $HTTP_GET_VARS['user'] : $who = $_GET['user'];
+	( !$_GET['user'] ) ? $who = $_GET['user'] : $who = $_GET['user'];
 	
 	$q = "DELETE FROM ". $table_prefix ."force_read_users
 		  WHERE user = '". $who ."'";
@@ -72,7 +72,7 @@ include($phpbb_root_path . 'language/lang_' . $board_config['default_lang'] . '/
 	if($mode == "users")
 		{
 		
-	$start 	= ( isset($HTTP_GET_VARS['start']) ) ? intval($HTTP_GET_VARS['start']) : 0;
+	$start 	= ( isset($_GET['start']) ) ? intval($_GET['start']) : 0;
 	$show	= $board_config['topics_per_page'];		
 		
 	echo "<table width='100%' border='0' class='forumline' cellspacing='2' align='center' valign='middle'>";
@@ -173,7 +173,7 @@ include($phpbb_root_path . 'language/lang_' . $board_config['default_lang'] . '/
 		{
 		if ( $update == "new_effected" )
 			{
-		( !$_POST['effected'] ) ? $new = $HTTP_POST_VARS['effected'] : $new = $_POST['effected'];
+		( !$_POST['effected'] ) ? $new = $_POST['effected'] : $new = $_POST['effected'];
 		( !$new ) ? $new = "0" : $new = $new;
 		
 		$q = "UPDATE ". $table_prefix ."force_read
@@ -187,7 +187,7 @@ include($phpbb_root_path . 'language/lang_' . $board_config['default_lang'] . '/
 			
 		if ( $update == "activate" )
 			{
-		( !$_POST['deactivate'] ) ? $new = $HTTP_POST_VARS['deactivate'] : $new = $_POST['deactivate'];
+		( !$_POST['deactivate'] ) ? $new = $_POST['deactivate'] : $new = $_POST['deactivate'];
 		( !$new ) ? $new = "0" : $new = $new;
 				
 		$q = "UPDATE ". $table_prefix ."force_read

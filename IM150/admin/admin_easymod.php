@@ -41,7 +41,7 @@ if (defined('IN_PHPBB') && !empty($setmodules))
 
 
 // if we are downloading the file (or backup), then we don't want to send a page header from pagestart.php
-$mode = (isset($HTTP_POST_VARS['mode'])) ? stripslashes($HTTP_POST_VARS['mode']) : ((isset($HTTP_GET_VARS['mode'])) ? stripslashes($HTTP_GET_VARS['mode']) : '');
+$mode = (isset($_POST['mode'])) ? stripslashes($_POST['mode']) : ((isset($_GET['mode'])) ? stripslashes($_GET['mode']) : '');
 if (($mode == 'download_file') || ($mode == 'download_backup') ||
 	($mode == 'display_file') || ($mode == 'display_backup'))
 {
@@ -645,10 +645,10 @@ $get_password = false;
 
 // if mode is passed in a GET, be very suspicious!  we don't like it when the user sends us GET vars so make sure they
 //   are supposed to be
-if (isset($HTTP_GET_VARS['mode']))
+if (isset($_GET['mode']))
 {
 	// be very selective about what we allow from GET;  the allowed types will also require password auth
-	$mode = (isset($HTTP_GET_VARS['mode'])) ? stripslashes($HTTP_GET_VARS['mode']) : '';
+	$mode = (isset($_GET['mode'])) ? stripslashes($_GET['mode']) : '';
 
 	if ($mode == 'help')
 	{
@@ -692,9 +692,9 @@ if (isset($HTTP_GET_VARS['mode']))
 	// if we are displaying the file to screen, then get the pw to confirm against
 	else if (($mode == 'display_file') || ($mode == 'display_backup'))
 	{
-		$password = (isset($HTTP_GET_VARS['password'])) ? stripslashes($HTTP_GET_VARS['password']) : '';
-		$install_file = ( !empty($HTTP_GET_VARS['install_file']) ) ? stripslashes(trim($HTTP_GET_VARS['install_file'])) : '';
-		$install_path = ( !empty($HTTP_GET_VARS['install_path']) ) ? stripslashes(trim($HTTP_GET_VARS['install_path'])) : '';
+		$password = (isset($_GET['password'])) ? stripslashes($_GET['password']) : '';
+		$install_file = ( !empty($_GET['install_file']) ) ? stripslashes(trim($_GET['install_file'])) : '';
+		$install_path = ( !empty($_GET['install_path']) ) ? stripslashes(trim($_GET['install_path'])) : '';
 
 		// important! we are writing the file output to screen so the PRE tag will format it nicely for us
 		echo '<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">' . "\n"
@@ -722,14 +722,14 @@ if (isset($HTTP_GET_VARS['mode']))
 // get post variables; we trust post variables ;-)
 else
 {
-	$mode = ( !empty($HTTP_POST_VARS['mode']) ) ? stripslashes(trim($HTTP_POST_VARS['mode'])) : '';
+	$mode = ( !empty($_POST['mode']) ) ? stripslashes(trim($_POST['mode'])) : '';
 
-	$password = ( !empty($HTTP_POST_VARS['password']) ) ? stripslashes($HTTP_POST_VARS['password']) : '';
-	$install_file = ( !empty($HTTP_POST_VARS['install_file']) ) ? stripslashes(trim($HTTP_POST_VARS['install_file'])) : '';
-	$install_path = ( !empty($HTTP_POST_VARS['install_path']) ) ? stripslashes(trim($HTTP_POST_VARS['install_path'])) : '';
+	$password = ( !empty($_POST['password']) ) ? stripslashes($_POST['password']) : '';
+	$install_file = ( !empty($_POST['install_file']) ) ? stripslashes(trim($_POST['install_file'])) : '';
+	$install_path = ( !empty($_POST['install_path']) ) ? stripslashes(trim($_POST['install_path'])) : '';
 
 	// 0.0.11 preview mode
-	$preview = (isset($HTTP_POST_VARS['preview'])) ? true : false;
+	$preview = (isset($_POST['preview'])) ? true : false;
 }
 
 
@@ -776,7 +776,7 @@ if ((($mode == 'install') || ($mode == 'settings') || ($mode == 'history') ||
 if (($mode == 'download_file') || ($mode == 'download_backup'))
 {
 	// they clicked a form button; we need to figure out which one so we know what file they are looking for
-	$num_files = ( isset($HTTP_POST_VARS['mod_count'])) ? intval($HTTP_POST_VARS['mod_count']) : 0;
+	$num_files = ( isset($_POST['mod_count'])) ? intval($_POST['mod_count']) : 0;
 
 	// loop through all the submit buttons to see which one was pressed
 ///////////////////////////////////
@@ -789,9 +789,9 @@ if (($mode == 'download_file') || ($mode == 'download_backup'))
 		$var_name = 'submitfile' . $i;
 
 		// if this is the button that was pressed then we are all set!  get the file name
-		if (isset($HTTP_POST_VARS[$var_name]))
+		if (isset($_POST[$var_name]))
 		{
-			$file = (isset($HTTP_POST_VARS['file'.$i])) ? stripslashes($HTTP_POST_VARS['file'.$i]) : '';
+			$file = (isset($_POST['file'.$i])) ? stripslashes($_POST['file'.$i]) : '';
 			break;
 		}
 	}
@@ -843,7 +843,7 @@ if (($mode == 'download_file') || ($mode == 'download_backup'))
 else if (($mode == 'display_file') || ($mode == 'display_backup'))
 {
 	// get the file name
-	$file = (isset($HTTP_GET_VARS['file'])) ? stripslashes($HTTP_GET_VARS['file']) : '';
+	$file = (isset($_GET['file'])) ? stripslashes($_GET['file']) : '';
 	$split = explode('/', $file);
 
 	// if a file, then make sure we have the filename correct
@@ -1018,24 +1018,24 @@ else if ($mode == 'settings')
 else if ($mode == 'update')
 {
 	// password settings
-	$em_pass = (isset($HTTP_POST_VARS['em_pass'])) ? stripslashes($HTTP_POST_VARS['em_pass']) : '';
-	$em_pass_confirm = (isset($HTTP_POST_VARS['em_pass_confirm'])) ? stripslashes($HTTP_POST_VARS['em_pass_confirm']) : '';
-	$em_version = (isset($HTTP_POST_VARS['em_version'])) ? stripslashes($HTTP_POST_VARS['em_version']) : '';
+	$em_pass = (isset($_POST['em_pass'])) ? stripslashes($_POST['em_pass']) : '';
+	$em_pass_confirm = (isset($_POST['em_pass_confirm'])) ? stripslashes($_POST['em_pass_confirm']) : '';
+	$em_version = (isset($_POST['em_version'])) ? stripslashes($_POST['em_version']) : '';
 
 	// file access settings
-	$read = (isset($HTTP_POST_VARS['sel_read'])) ? stripslashes($HTTP_POST_VARS['sel_read']) : '';
-	$write = (isset($HTTP_POST_VARS['sel_write'])) ? stripslashes($HTTP_POST_VARS['sel_write']) : '';
-	$move = (isset($HTTP_POST_VARS['sel_move'])) ? stripslashes($HTTP_POST_VARS['sel_move']) : '';
+	$read = (isset($_POST['sel_read'])) ? stripslashes($_POST['sel_read']) : '';
+	$write = (isset($_POST['sel_write'])) ? stripslashes($_POST['sel_write']) : '';
+	$move = (isset($_POST['sel_move'])) ? stripslashes($_POST['sel_move']) : '';
 
 	// ftp settings
-	$ftp_user = (isset($HTTP_POST_VARS['ftp_user'])) ? stripslashes($HTTP_POST_VARS['ftp_user']) : '';
-	$ftp_pass = (isset($HTTP_POST_VARS['ftp_pass'])) ? stripslashes($HTTP_POST_VARS['ftp_pass']) : '';
-	$ftp_host = (isset($HTTP_POST_VARS['ftp_host'])) ? stripslashes($HTTP_POST_VARS['ftp_host']) : '';
-	$ftp_port = (isset($HTTP_POST_VARS['ftp_port'])) ? intval($HTTP_POST_VARS['ftp_port']) : 0;
-	$ftp_debug = (isset($HTTP_POST_VARS['ftp_debug'])) ? intval($HTTP_POST_VARS['ftp_debug']) : false;
-	$ftp_type = (isset($HTTP_POST_VARS['ftp_type'])) ? stripslashes($HTTP_POST_VARS['ftp_type']) : 'fsock';
-	$ftp_cache = (isset($HTTP_POST_VARS['ftp_cache'])) ? intval($HTTP_POST_VARS['ftp_cache']) : 0;
-	$ftp_dir = (isset($HTTP_POST_VARS['ftp_dir'])) ? stripslashes($HTTP_POST_VARS['ftp_dir']) : '/';
+	$ftp_user = (isset($_POST['ftp_user'])) ? stripslashes($_POST['ftp_user']) : '';
+	$ftp_pass = (isset($_POST['ftp_pass'])) ? stripslashes($_POST['ftp_pass']) : '';
+	$ftp_host = (isset($_POST['ftp_host'])) ? stripslashes($_POST['ftp_host']) : '';
+	$ftp_port = (isset($_POST['ftp_port'])) ? intval($_POST['ftp_port']) : 0;
+	$ftp_debug = (isset($_POST['ftp_debug'])) ? intval($_POST['ftp_debug']) : false;
+	$ftp_type = (isset($_POST['ftp_type'])) ? stripslashes($_POST['ftp_type']) : 'fsock';
+	$ftp_cache = (isset($_POST['ftp_cache'])) ? intval($_POST['ftp_cache']) : 0;
+	$ftp_dir = (isset($_POST['ftp_dir'])) ? stripslashes($_POST['ftp_dir']) : '/';
 	$ftp_dir == ( $ftp_dir == '') ? '/' : $ftp_dir;
 
 	// confirm passwords match and update pw if needed
@@ -1103,7 +1103,7 @@ else if ($mode == 'update')
 //
 else if ($mode == 'history')
 {
-	$filter_option = isset($HTTP_POST_VARS['filter_option']) ? stripslashes(trim($HTTP_POST_VARS['filter_option'])) : '';
+	$filter_option = isset($_POST['filter_option']) ? stripslashes(trim($_POST['filter_option'])) : '';
 
 	// load the history page template
 	$template->set_filenames(array(
@@ -1236,12 +1236,12 @@ else if ($mode == 'history')
 //
 // history details
 //
-else if ( $mode == 'history_details' || (isset($HTTP_POST_VARS['cancel']) && in_array($mode, array('post_process', 'del_files', 'del_record', 'restore_backups', 'install_lang', 'install_themes', 'uninstall'))) )
+else if ( $mode == 'history_details' || (isset($_POST['cancel']) && in_array($mode, array('post_process', 'del_files', 'del_record', 'restore_backups', 'install_lang', 'install_themes', 'uninstall'))) )
 {
 	// get the mod id
-	if ( isset($HTTP_POST_VARS['mod_id']) )
+	if ( isset($_POST['mod_id']) )
 	{
-		$mod_id = intval($HTTP_POST_VARS['mod_id']);
+		$mod_id = intval($_POST['mod_id']);
 	}
 	else
 	{
@@ -1278,7 +1278,7 @@ else if ( $mode == 'history_details' || (isset($HTTP_POST_VARS['cancel']) && in_
 		'L_GO' => $lang['Go'],
 			
 		'S_ACTION' => append_sid('admin_easymod.' . $phpEx),
-		'S_HIDDEN_FIELDS' => '<input type="hidden" name="mod_id" value="' . $mod_id . '" /><input type="hidden" name="password" value="' . htmlspecialchars($password) . '" /><input type="hidden" name="filter_option" value="' . htmlspecialchars(stripslashes($HTTP_POST_VARS['filter_option'])) . '" />')
+		'S_HIDDEN_FIELDS' => '<input type="hidden" name="mod_id" value="' . $mod_id . '" /><input type="hidden" name="password" value="' . htmlspecialchars($password) . '" /><input type="hidden" name="filter_option" value="' . htmlspecialchars(stripslashes($_POST['filter_option'])) . '" />')
 	);
 
 	$sql = "SELECT * FROM " . EASYMOD_TABLE . "
@@ -1377,9 +1377,9 @@ else if ( $mode == 'del_record' )
 	// display confirm and delete sql entry
 
 	// get the mod id
-	if ( isset($HTTP_POST_VARS['mod_id']) )
+	if ( isset($_POST['mod_id']) )
 	{
-		$mod_id = intval($HTTP_POST_VARS['mod_id']);
+		$mod_id = intval($_POST['mod_id']);
 	}
 	else
 	{
@@ -1387,7 +1387,7 @@ else if ( $mode == 'del_record' )
 	}
 
 	// Should we display the confirm box?
-	if( !isset($HTTP_POST_VARS['confirm']) )
+	if( !isset($_POST['confirm']) )
 	{
 		$s_hidden_fields = '<input type="hidden" name="mod_id" value="' . $mod_id . '" />'.
 							'<input type="hidden" name="password" value="' . htmlspecialchars($password) . '" />'.
@@ -1441,14 +1441,14 @@ else if ( $mode == 'del_record' )
 //
 // Restore Backups
 //
-else if ( $mode == 'restore_backups' && !isset($HTTP_POST_VARS['confirm']) )
+else if ( $mode == 'restore_backups' && !isset($_POST['confirm']) )
 {
 	// display confirm and move the backups into place
 
 	// get the mod id
-	if ( isset($HTTP_POST_VARS['mod_id']) )
+	if ( isset($_POST['mod_id']) )
 	{
-		$mod_id = intval($HTTP_POST_VARS['mod_id']);
+		$mod_id = intval($_POST['mod_id']);
 	}
 	else
 	{
@@ -1846,7 +1846,7 @@ else if (($mode == 'display_backup') || ($mode == 'download_backup'))
 else if (($mode == 'process' ) || ($mode == 'display_file') || ($mode == 'download_file'))
 {
 	// 0.0.11 preview mode
-	$preview = (isset($HTTP_POST_VARS['preview'])) ? 1 : ($mode == 'display_file') ? 1 : 0;
+	$preview = (isset($_POST['preview'])) ? 1 : ($mode == 'display_file') ? 1 : 0;
 
 	$current_command = '';
 	$commands = array();
@@ -3231,22 +3231,22 @@ copy ind*.php to sav*.?u?					// the heck??
 else if (($mode == 'SQL_view') && (!$preview))
 {
 	// get the vars we are passing along
-	$themes = (isset($HTTP_POST_VARS['themes'])) ? stripslashes($HTTP_POST_VARS['themes']) : '';
-	$languages = (isset($HTTP_POST_VARS['languages'])) ? stripslashes($HTTP_POST_VARS['languages']) : '';
-	$files = (isset($HTTP_POST_VARS['files'])) ? intval($HTTP_POST_VARS['files']) : 0;
-	$num_proc = (isset($HTTP_POST_VARS['num_proc'])) ? intval($HTTP_POST_VARS['num_proc']) : 0;
-	$num_unproc = (isset($HTTP_POST_VARS['num_unproc'])) ? intval($HTTP_POST_VARS['num_unproc']) : 0;
-	$diy = (isset($HTTP_POST_VARS['diy_array'])) ? $HTTP_POST_VARS['diy_array'] : array();
+	$themes = (isset($_POST['themes'])) ? stripslashes($_POST['themes']) : '';
+	$languages = (isset($_POST['languages'])) ? stripslashes($_POST['languages']) : '';
+	$files = (isset($_POST['files'])) ? intval($_POST['files']) : 0;
+	$num_proc = (isset($_POST['num_proc'])) ? intval($_POST['num_proc']) : 0;
+	$num_unproc = (isset($_POST['num_unproc'])) ? intval($_POST['num_unproc']) : 0;
+	$diy = (isset($_POST['diy_array'])) ? $_POST['diy_array'] : array();
 
 	// get the post process operations and prepare to send them to the next step
-	$num_command_steps = (isset($HTTP_POST_VARS['num_command_steps'])) ? intval($HTTP_POST_VARS['num_command_steps']) :0;
+	$num_command_steps = (isset($_POST['num_command_steps'])) ? intval($_POST['num_command_steps']) :0;
 	$hidden = '';
 	for( $i = 0; $i < $num_command_steps; $i++ )
 	{
 		$var_name = 'command_step' . $i;
-		if (isset($HTTP_POST_VARS[$var_name]))
+		if (isset($_POST[$var_name]))
 		{
-			$hidden .= '<input type="hidden" name="command_step'.$i.'" value="' . $HTTP_POST_VARS[$var_name] . "\" />\n";
+			$hidden .= '<input type="hidden" name="command_step'.$i.'" value="' . $_POST[$var_name] . "\" />\n";
 		}
 	}
 	$hidden .= '<input type="hidden" name="num_command_steps" value="' . $i . "\" />\n";
@@ -3259,15 +3259,15 @@ else if (($mode == 'SQL_view') && (!$preview))
 
 	// get the SQL commands we are going to translate
 	$sql = array();
-	$num_sql_steps = (isset($HTTP_POST_VARS['num_sql_steps'])) ? intval($HTTP_POST_VARS['num_sql_steps']) : 0;
+	$num_sql_steps = (isset($_POST['num_sql_steps'])) ? intval($_POST['num_sql_steps']) : 0;
 	for( $i = 0; $i < $num_sql_steps; $i++ )
 	{
 		$var_name = 'SQL' . $i;
-		if (isset($HTTP_POST_VARS[$var_name]))
+		if (isset($_POST[$var_name]))
 		{
-			if (isset($HTTP_POST_VARS[$var_name]))
+			if (isset($_POST[$var_name]))
 			{
-				$sql[] = trim(stripslashes($HTTP_POST_VARS[$var_name]));
+				$sql[] = trim(stripslashes($_POST[$var_name]));
 			}
 		}
 	}
@@ -3470,22 +3470,22 @@ else if (($mode == 'SQL_view') && (!$preview))
 else if ( $mode == 'SQL_execute' )
 {
 	// get the vars we are passing along
-	$themes = (isset($HTTP_POST_VARS['themes'])) ? stripslashes($HTTP_POST_VARS['themes']) : '';
-	$languages = (isset($HTTP_POST_VARS['languages'])) ? stripslashes($HTTP_POST_VARS['languages']) : '';
-	$files = (isset($HTTP_POST_VARS['files'])) ? intval($HTTP_POST_VARS['files']) : 0;
-	$num_proc = (isset($HTTP_POST_VARS['num_proc'])) ? intval($HTTP_POST_VARS['num_proc']) : 0;
-	$num_unproc = (isset($HTTP_POST_VARS['num_unproc'])) ? intval($HTTP_POST_VARS['num_unproc']) : 0;
-	$diy = (isset($HTTP_POST_VARS['diy_array'])) ? $HTTP_POST_VARS['diy_array'] : array();
+	$themes = (isset($_POST['themes'])) ? stripslashes($_POST['themes']) : '';
+	$languages = (isset($_POST['languages'])) ? stripslashes($_POST['languages']) : '';
+	$files = (isset($_POST['files'])) ? intval($_POST['files']) : 0;
+	$num_proc = (isset($_POST['num_proc'])) ? intval($_POST['num_proc']) : 0;
+	$num_unproc = (isset($_POST['num_unproc'])) ? intval($_POST['num_unproc']) : 0;
+	$diy = (isset($_POST['diy_array'])) ? $_POST['diy_array'] : array();
 
 	// get the post process operations and prepare to send them to the next step
-	$num_command_steps = (isset($HTTP_POST_VARS['num_command_steps'])) ? intval($HTTP_POST_VARS['num_command_steps']) :0;
+	$num_command_steps = (isset($_POST['num_command_steps'])) ? intval($_POST['num_command_steps']) :0;
 	$hidden = '';
 	for( $i = 0; $i < $num_command_steps; $i++ )
 	{
 		$var_name = 'command_step' . $i;
-		if (isset($HTTP_POST_VARS[$var_name]))
+		if (isset($_POST[$var_name]))
 		{
-			$hidden .= '<input type="hidden" name="command_step'.$i.'" value="' . $HTTP_POST_VARS[$var_name] . "\" />\n";
+			$hidden .= '<input type="hidden" name="command_step'.$i.'" value="' . $_POST[$var_name] . "\" />\n";
 		}
 	}
 	$hidden .= '<input type="hidden" name="num_command_steps" value="' . $i . "\" />\n";
@@ -3497,15 +3497,15 @@ else if ( $mode == 'SQL_execute' )
 	}
 
 	// get the SQL commands we are going to execute
-	$num_sql_steps = (isset($HTTP_POST_VARS['num_sql_steps'])) ? intval($HTTP_POST_VARS['num_sql_steps']) : 0;
+	$num_sql_steps = (isset($_POST['num_sql_steps'])) ? intval($_POST['num_sql_steps']) : 0;
 	$sql = array();
 	$failure = false;
 	for( $i = 0; $i < $num_sql_steps; $i++ )
 	{
 		$sql_name = 'SQL' . $i;
 		$sql_check = 'check_' . $sql_name;
-		$sql_line = ( !empty($HTTP_POST_VARS[$sql_name]) ) ? stripslashes(trim($HTTP_POST_VARS[$sql_name])) : '';
-		$sql_allow = ( isset($HTTP_POST_VARS[$sql_check])) ? ( ($HTTP_POST_VARS[$sql_check]) ? TRUE : 0 ) : 0;
+		$sql_line = ( !empty($_POST[$sql_name]) ) ? stripslashes(trim($_POST[$sql_name])) : '';
+		$sql_allow = ( isset($_POST[$sql_check])) ? ( ($_POST[$sql_check]) ? TRUE : 0 ) : 0;
 
 		if ($failure)
 		{
@@ -3599,12 +3599,12 @@ else if ( $mode == 'SQL_execute' )
 else if (($mode == 'post_process') || ($preview))
 {
 	// get the info we are passing along
-	$themes = (isset($HTTP_POST_VARS['themes'])) ? stripslashes($HTTP_POST_VARS['themes']) : '';
-	$languages = (isset($HTTP_POST_VARS['languages'])) ? stripslashes($HTTP_POST_VARS['languages']) : '';
-	$files = (isset($HTTP_POST_VARS['files'])) ? intval($HTTP_POST_VARS['files']) : 0;
-	$num_proc = (isset($HTTP_POST_VARS['num_proc'])) ? intval($HTTP_POST_VARS['num_proc']) : 0;
-	$num_unproc = (isset($HTTP_POST_VARS['num_unproc'])) ? intval($HTTP_POST_VARS['num_unproc']) : 0;
-	$diy = (isset($HTTP_POST_VARS['diy_array'])) ? $HTTP_POST_VARS['diy_array'] : array();
+	$themes = (isset($_POST['themes'])) ? stripslashes($_POST['themes']) : '';
+	$languages = (isset($_POST['languages'])) ? stripslashes($_POST['languages']) : '';
+	$files = (isset($_POST['files'])) ? intval($_POST['files']) : 0;
+	$num_proc = (isset($_POST['num_proc'])) ? intval($_POST['num_proc']) : 0;
+	$num_unproc = (isset($_POST['num_unproc'])) ? intval($_POST['num_unproc']) : 0;
+	$diy = (isset($_POST['diy_array'])) ? $_POST['diy_array'] : array();
 
 	$hidden = '';
 
@@ -3638,14 +3638,14 @@ else if (($mode == 'post_process') || ($preview))
 	}
 
 	// get the post process operations
-	$num_command_steps = (isset($HTTP_POST_VARS['num_command_steps'])) ? intval($HTTP_POST_VARS['num_command_steps']) : 0;
+	$num_command_steps = (isset($_POST['num_command_steps'])) ? intval($_POST['num_command_steps']) : 0;
 	$command = array();
 	for( $i = 0; $i < $num_command_steps; $i++ )
 	{
 		$var_name = 'command_step' . $i;
-		if (isset($HTTP_POST_VARS[$var_name]))
+		if (isset($_POST[$var_name]))
 		{
-			$command[] = htmlspecialchars($HTTP_POST_VARS[$var_name]);
+			$command[] = htmlspecialchars($_POST[$var_name]);
 		}
 	}
 
@@ -3863,7 +3863,7 @@ else if (($mode == 'post_process') || ($preview))
 	else
 	{
 		// We might come here from the 'Restore Backups' option, in this case we'll find the mod_id in the POST array.
-		if ( isset($HTTP_POST_VARS['mod_id']) && ($mod_id = intval($HTTP_POST_VARS['mod_id'])) > 0 )
+		if ( isset($_POST['mod_id']) && ($mod_id = intval($_POST['mod_id'])) > 0 )
 		{
 			// If we have restored backups, what we really need now is delete the MOD record.
 			$sql = 'DELETE FROM ' . EASYMOD_TABLE . " WHERE mod_id = $mod_id";
@@ -3912,7 +3912,7 @@ else if (($mode == 'post_process') || ($preview))
 //
 else if ( $mode == 'diy_process' )
 {
-	$diy = (isset($HTTP_POST_VARS['diy_array'])) ? $HTTP_POST_VARS['diy_array'] : array();
+	$diy = (isset($_POST['diy_array'])) ? $_POST['diy_array'] : array();
 
 	// explode each new line so they can have their own bullet
 	$diy_process = array();

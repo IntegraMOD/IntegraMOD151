@@ -30,15 +30,15 @@ $template->set_filenames(array(
 /*
  * If site was submitted we update the configuration
  */
-if ( isset($HTTP_POST_VARS['submit']) )
+if ( isset($_POST['submit']) )
 {
 	$adminfunctions = new ct_adminfunctions();
 
-	$ctracker_config->change_configuration('global_message_type', str_replace("'", "\'", $HTTP_POST_VARS['global_message_type']));	
-	$ctracker_config->settings['global_message_type'] = str_replace("'", "\'", $HTTP_POST_VARS['global_message_type']);
+	$ctracker_config->change_configuration('global_message_type', str_replace("'", "\'", $_POST['global_message_type']));	
+	$ctracker_config->settings['global_message_type'] = str_replace("'", "\'", $_POST['global_message_type']);
 	
-	$ctracker_config->change_configuration('global_message', str_replace("'", "\'", $HTTP_POST_VARS['global_message']));	
-	$ctracker_config->settings['global_message'] = str_replace("'", "\'", $HTTP_POST_VARS['global_message']);
+	$ctracker_config->change_configuration('global_message', str_replace("'", "\'", $_POST['global_message']));	
+	$ctracker_config->settings['global_message'] = str_replace("'", "\'", $_POST['global_message']);
 	
 	$adminfunctions->set_global_message();
 	unset($adminfunctions);
@@ -46,7 +46,7 @@ if ( isset($HTTP_POST_VARS['submit']) )
 	$message = sprintf($lang['ctracker_glob_msg_saved'], append_sid('admin_cracker_tracker.' . $phpEx . '?modu=4'));
 	message_die(GENERAL_MESSAGE, $message);
 }
-else if ( isset($HTTP_POST_VARS['pull_back']) )
+else if ( isset($_POST['pull_back']) )
 {
 	$adminfunctions = new ct_adminfunctions();
 	$adminfunctions->unset_global_message();

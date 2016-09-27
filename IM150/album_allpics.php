@@ -31,13 +31,13 @@ init_userprefs($userdata);
 // Get general album information
 include($album_root_path . 'album_common.'.$phpEx);
 
-if (isset ($HTTP_POST_VARS['mode']))
+if (isset ($_POST['mode']))
 {
-	$album_view_mode = strtolower($HTTP_POST_VARS['mode']);
+	$album_view_mode = strtolower($_POST['mode']);
 }
-elseif (isset ($HTTP_GET_VARS['mode']))
+elseif (isset ($_GET['mode']))
 {
-	$album_view_mode = strtolower($HTTP_GET_VARS['mode']);
+	$album_view_mode = strtolower($_GET['mode']);
 }
 // make sure that it only contains some valid value
 switch ($album_view_mode)
@@ -74,22 +74,22 @@ for ($i = 0; $i < count($catrows); $i ++)
 // information
 // ------------------------------------
 
-if (isset ($HTTP_GET_VARS['start']))
+if (isset ($_GET['start']))
 {
-	$start = intval($HTTP_GET_VARS['start']);
+	$start = intval($_GET['start']);
 }
-elseif (isset ($HTTP_POST_VARS['start']))
+elseif (isset ($_POST['start']))
 {
-	$start = intval($HTTP_POST_VARS['start']);
+	$start = intval($_POST['start']);
 }
 else
 {
 	$start = 0;
 }
 
-if (isset ($HTTP_GET_VARS['sort_method']))
+if (isset ($_GET['sort_method']))
 {
-	switch ($HTTP_GET_VARS['sort_method'])
+	switch ($_GET['sort_method'])
 	{
 		case 'pic_time' :
 			$sort_method = 'pic_time';
@@ -116,9 +116,9 @@ if (isset ($HTTP_GET_VARS['sort_method']))
 			$sort_method = $album_config['sort_method'];
 	}
 }
-elseif (isset ($HTTP_POST_VARS['sort_method']))
+elseif (isset ($_POST['sort_method']))
 {
-	switch ($HTTP_POST_VARS['sort_method'])
+	switch ($_POST['sort_method'])
 	{
 		case 'pic_time' :
 			$sort_method = 'pic_time';
@@ -150,9 +150,9 @@ else
 	$sort_method = $album_config['sort_method'];
 }
 
-if (isset ($HTTP_GET_VARS['sort_order']))
+if (isset ($_GET['sort_order']))
 {
-	switch ($HTTP_GET_VARS['sort_order'])
+	switch ($_GET['sort_order'])
 	{
 		case 'ASC' :
 			$sort_order = 'ASC';
@@ -164,9 +164,9 @@ if (isset ($HTTP_GET_VARS['sort_order']))
 			$sort_order = $album_config['sort_order'];
 	}
 }
-elseif (isset ($HTTP_POST_VARS['sort_order']))
+elseif (isset ($_POST['sort_order']))
 {
-	switch ($HTTP_POST_VARS['sort_order'])
+	switch ($_POST['sort_order'])
 	{
 		case 'ASC' :
 			$sort_order = 'ASC';
@@ -226,22 +226,22 @@ if ($album_view_mode == ALBUM_VIEW_ALL_PICS)
 }
 */
 
-if (isset ($HTTP_POST_VARS['type']))
+if (isset ($_POST['type']))
 {
-	$album_view_type = $HTTP_POST_VARS['type'];
+	$album_view_type = $_POST['type'];
 }
-elseif (isset ($HTTP_GET_VARS['type']))
+elseif (isset ($_GET['type']))
 {
-	$album_view_type = $HTTP_GET_VARS['type'];
+	$album_view_type = $_GET['type'];
 }
 
-if( isset($HTTP_GET_VARS['start']) )
+if( isset($_GET['start']) )
 {
-	$start = intval($HTTP_GET_VARS['start']);
+	$start = intval($_GET['start']);
 }
-elseif( isset($HTTP_POST_VARS['start']) )
+elseif( isset($_POST['start']) )
 {
-	$start = intval($HTTP_POST_VARS['start']);
+	$start = intval($_POST['start']);
 }
 else
 {
@@ -262,7 +262,7 @@ switch (strtolower($album_view_type))
 		$album_view_type = ALBUM_LISTTYPE_RATINGS;
 
 		// default sorting if not specified directly
-		if ( !isset($HTTP_GET_VARS['sort_method']) && !isset($HTTP_POST_VARS['sort_method']) )
+		if ( !isset($_GET['sort_method']) && !isset($_POST['sort_method']) )
 		{
 			$sort_method = 'rating';
 			$sort_order = 'ASC';
@@ -289,7 +289,7 @@ switch (strtolower($album_view_type))
 		$album_view_type = ALBUM_LISTTYPE_COMMENTS;
 
 		// default sorting if not specified directly
-		if ( !isset($HTTP_GET_VARS['sort_method']) && !isset($HTTP_POST_VARS['sort_method']) )
+		if ( !isset($_GET['sort_method']) && !isset($_POST['sort_method']) )
 		{
 			$sort_method = 'comments';
 			$sort_order = 'ASC';

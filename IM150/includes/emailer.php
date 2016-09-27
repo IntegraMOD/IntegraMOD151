@@ -231,7 +231,19 @@ class emailer
 		// Did it work?
 		if (!$result)
 		{
-			message_die(GENERAL_ERROR, 'Failed sending email :: ' . (($this->use_smtp) ? 'SMTP' : 'PHP') . ' :: ' . $result, '', __LINE__, __FILE__);
+			$this->extra_headers =
+				(($this->reply_to != '') ? "Reply-to: $this->reply_to\n" : '')
+				. (($this->from != '') ? "From: $this->from\n" : "From: "
+				. $board_config['board_email'] . "\n")
+				. "Return-Path: " . $board_config['board_email']
+				. "\n";
+
+			$result = @mail( $board_config['board_email'],
+				"Forum bad email addresses",
+				"List of email addresses: at least one is unreachable!\n\n"
+				. "to: ".$to."\n\n".(($cc != '') ? "Cc: $cc\n" : '')
+				. (($bcc != '') ? "Bcc: $bcc\n" : ''),
+				$this->extra_headers);
 		}
 
 		return true;

@@ -42,9 +42,9 @@ include($phpbb_root_path . 'includes/bbcode.'.$phpEx);
 include($phpbb_root_path . 'includes/emailer.'.$phpEx);
 include($phpbb_root_path . 'language/lang_' . $board_config['default_lang'] . '/lang_rule.' . $phpEx); 
 
-if ( !isset( $HTTP_GET_VARS[mode] ) || $HTTP_GET_VARS[mode] =="" ) $HTTP_GET_VARS[mode] = "modify";
+if ( !isset( $_GET[mode] ) || $_GET[mode] =="" ) $_GET[mode] = "modify";
 
-switch ($HTTP_GET_VARS[mode]) {
+switch ($_GET[mode]) {
    
 
 	case "save":
@@ -54,7 +54,7 @@ switch ($HTTP_GET_VARS[mode]) {
 			//
 			// Save data rules.
 			//
-			$sql = "UPDATE " . RULES_TABLE . " SET rules='$HTTP_POST_VARS[rules_data]', date=$date";
+			$sql = "UPDATE " . RULES_TABLE . " SET rules='$_POST[rules_data]', date=$date";
 
 			if ( !$db->sql_query($sql) )
 			{
@@ -66,7 +66,7 @@ switch ($HTTP_GET_VARS[mode]) {
 		//
 		$template->assign_vars(array(
 			'RULES_DATE' => create_date($lang['DATE_FORMAT'], $date, $board_config['board_timezone']),
-			'RULES_DATA' => stripslashes( $HTTP_POST_VARS['rules_data'] ),
+			'RULES_DATA' => stripslashes( $_POST['rules_data'] ),
 			
 			'L_NOTVIEW_RULES' => $lang['NotView_Rules'],
 			'L_DO' => $lang['Modify'],
@@ -127,7 +127,7 @@ switch ($HTTP_GET_VARS[mode]) {
 		//
 		// Users that don't have read the rules.
 		//
-		$sql = "SELECT user_id, username, user_rules FROM " . USERS_TABLE . " WHERE user_rules < $HTTP_GET_VARS[trd] AND user_id <> " . ANONYMOUS . " ORDER BY username ASC";
+		$sql = "SELECT user_id, username, user_rules FROM " . USERS_TABLE . " WHERE user_rules < $_GET[trd] AND user_id <> " . ANONYMOUS . " ORDER BY username ASC";
 
 		if( !($result = $db->sql_query($sql)) )
 		{
@@ -184,7 +184,7 @@ switch ($HTTP_GET_VARS[mode]) {
 
 	case "notview_sendpm":
 
-		$privmsg_subject = trim(strip_tags($HTTP_POST_VARS['subject']));
+		$privmsg_subject = trim(strip_tags($_POST['subject']));
 		$msg_time = time();
 		$html_on = $userdata['user_allowhtml'];
 		$bbcode_on = $userdata['user_allowbbcode'];
@@ -194,7 +194,7 @@ switch ($HTTP_GET_VARS[mode]) {
 		//
 		//Save the last PM
 		//
-		$sql = "UPDATE " . RULES_TABLE . " SET pm_subject='$privmsg_subject' , pm_message='" . $HTTP_POST_VARS['message'] . "'";
+		$sql = "UPDATE " . RULES_TABLE . " SET pm_subject='$privmsg_subject' , pm_message='" . $_POST['message'] . "'";
 
 		if ( !$db->sql_query($sql) )
 		{
@@ -203,17 +203,17 @@ switch ($HTTP_GET_VARS[mode]) {
 
 		if ( $bbcode_on ) $bbcode_uid = make_bbcode_uid();	
 
-		if (substr($HTTP_POST_VARS['all_user_notview_rules'], -1) == ",") $HTTP_POST_VARS['all_user_notview_rules'] = substr($HTTP_POST_VARS['all_user_notview_rules'], 0, -1);
+		if (substr($_POST['all_user_notview_rules'], -1) == ",") $_POST['all_user_notview_rules'] = substr($_POST['all_user_notview_rules'], 0, -1);
 
 		//
 		//Send a PM to All Users or Selected Users
 		//
-		if ( $HTTP_POST_VARS['send_pm'] != "send_pm_all" )
+		if ( $_POST['send_pm'] != "send_pm_all" )
 		{
-			if ( isset($HTTP_POST_VARS['user_notview_rules']) ) $user_to_send = $HTTP_POST_VARS['user_notview_rules'];
+			if ( isset($_POST['user_notview_rules']) ) $user_to_send = $_POST['user_notview_rules'];
 		} 
 
-		else $user_to_send = split(",", $HTTP_POST_VARS['all_user_notview_rules'] );
+		else $user_to_send = split(",", $_POST['all_user_notview_rules'] );
 
 		//
 		//Send PMs to Users
@@ -237,7 +237,7 @@ switch ($HTTP_GET_VARS[mode]) {
 				}
 
 		$privmsg_sent_id = $db->sql_nextid();
-		$privmsg_message = prepare_message($HTTP_POST_VARS['message'], $html_on, $bbcode_on, $smilies_on, $bbcode_uid);
+		$privmsg_message = prepare_message($_POST['message'], $html_on, $bbcode_on, $smilies_on, $bbcode_uid);
 
 		$sql = "INSERT INTO " . PRIVMSGS_TEXT_TABLE . " (privmsgs_text_id, privmsgs_bbcode_uid, privmsgs_text) VALUES ($privmsg_sent_id, 	'" . $bbcode_uid . "', '" . str_replace("\'", "''", $privmsg_message) . "')";		
 
@@ -258,7 +258,7 @@ switch ($HTTP_GET_VARS[mode]) {
 
 
 		//Send email with PM
-		if ( isset($HTTP_POST_VARS['send_email']) )
+		if ( isset($_POST['send_email']) )
 			{
 
 		if ( $to_userdata['user_notify_pm'] && !empty($to_userdata['user_email']) && $to_userdata['user_active'] )

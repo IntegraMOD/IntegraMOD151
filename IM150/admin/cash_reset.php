@@ -42,20 +42,20 @@ if ( !$cash->currency_count() )
 	message_die(GENERAL_MESSAGE, $lang['Insufficient_currencies']);
 }
 
-$mode = isset($HTTP_POST_VARS['mode'])?$HTTP_POST_VARS['mode']:"main";
+$mode = isset($_POST['mode'])?$_POST['mode']:"main";
 
 switch ( $mode )
 {
 	case "reset":
-		if ( isset($HTTP_POST_VARS['confirm']) && isset($HTTP_POST_VARS['cash_amount']) && is_array($HTTP_POST_VARS['cash_amount']) && isset($HTTP_POST_VARS['cids']) )
+		if ( isset($_POST['confirm']) && isset($_POST['cash_amount']) && is_array($_POST['cash_amount']) && isset($_POST['cids']) )
 		{
-			$cids = explode(",",$HTTP_POST_VARS['cids']);
+			$cids = explode(",",$_POST['cids']);
 			$cash_check = array();
 			for ( $i = 0; $i < count($cids);$i++ )
 			{
-				if ( isset($HTTP_POST_VARS['cash_amount'][$cids[$i]]) )
+				if ( isset($_POST['cash_amount'][$cids[$i]]) )
 				{
-					$cash_check[$cids[$i]] = cash_floatval($HTTP_POST_VARS['cash_amount'][$cids[$i]]);
+					$cash_check[$cids[$i]] = cash_floatval($_POST['cash_amount'][$cids[$i]]);
 				}
 			}
 			$update_clause = array();
@@ -79,22 +79,22 @@ switch ( $mode )
 		}
 		break;
 	case "submitted":
-		if ( isset($HTTP_POST_VARS['submit']) && isset($HTTP_POST_VARS['cash_check']) && is_array($HTTP_POST_VARS['cash_check']) )
+		if ( isset($_POST['submit']) && isset($_POST['cash_check']) && is_array($_POST['cash_check']) )
 		{
-			switch($HTTP_POST_VARS['submit'])
+			switch($_POST['submit'])
 			{
 				case $lang['Set_checked']:
-					if ( isset($HTTP_POST_VARS['cash_amount']) && is_array($HTTP_POST_VARS['cash_amount']) )
+					if ( isset($_POST['cash_amount']) && is_array($_POST['cash_amount']) )
 					{
 						$s_hidden_fields = '';
 						$c_ids = array();
 
 						while ( $c_cur = &$cash->currency_next($cm_i) )
 						{
-							if ( isset($HTTP_POST_VARS['cash_check'][$c_cur->id()]) && isset($HTTP_POST_VARS['cash_amount'][$c_cur->id()]) )
+							if ( isset($_POST['cash_check'][$c_cur->id()]) && isset($_POST['cash_amount'][$c_cur->id()]) )
 							{
 								$c_ids[] = $c_cur->id();
-								$s_hidden_fields .= '<input type="hidden" name="cash_amount[' . $c_cur->id() . ']" value="' . cash_floatval($HTTP_POST_VARS['cash_amount'][$c_cur->id()]) . '" />';
+								$s_hidden_fields .= '<input type="hidden" name="cash_amount[' . $c_cur->id() . ']" value="' . cash_floatval($_POST['cash_amount'][$c_cur->id()]) . '" />';
 							}
 						}
 						if ( count($c_ids) )
@@ -122,7 +122,7 @@ switch ( $mode )
 					$c_ids = array();
 					while ( $c_cur = &$cash->currency_next($cm_i) )
 					{
-						if ( isset($HTTP_POST_VARS['cash_check'][$c_cur->id()]) )
+						if ( isset($_POST['cash_check'][$c_cur->id()]) )
 						{
 							$c_ids[] = $c_cur->id();
 						}

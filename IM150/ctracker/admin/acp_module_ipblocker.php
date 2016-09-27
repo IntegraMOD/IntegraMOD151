@@ -29,16 +29,16 @@ $template->set_filenames(array(
 /*
  * Delete entry?
  */
-if ( $HTTP_GET_VARS['mode'] == 'remove' )
+if ( $_GET['mode'] == 'remove' )
 {
-	$ctracker_config->delete_from_blocklist($HTTP_GET_VARS['id']);
+	$ctracker_config->delete_from_blocklist($_GET['id']);
 	$template->assign_block_vars('deleted', array(
 			'L_SUCCESSFULLY_DELETED' => $lang['ctracker_ipb_deleted'])
 	);
 }
-else if ( $HTTP_GET_VARS['mode'] == 'add' )
+else if ( $_GET['mode'] == 'add' )
 {
-	$ctracker_config->save_to_blocklist($HTTP_POST_VARS['entry']);
+	$ctracker_config->save_to_blocklist($_POST['entry']);
 	$template->assign_block_vars('added', array(
 			'L_SUCCESSFULLY_ADDED' => $lang['ctracker_ipb_added'])
 	);	

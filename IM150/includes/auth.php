@@ -212,6 +212,23 @@ function auth($type, $forum_id, $userdata, $f_access = '')
 	$u_access = array();
 	if ( $userdata['session_logged_in'] )
 	{
+//-- mod : categories hierarchy --------------------------------------------------------------------
+//-- add
+		if ( isset( $userdata['user_forums_auth'] ) )
+		{
+			if ( $forum_id != AUTH_LIST_ALL)
+			{
+				$u_access[] = $userdata['user_forums_auth'][$forum_id];
+			}
+			else
+			{
+				$u_access = $userdata['user_forums_auth'];
+			}
+		}
+		else
+		{
+//-- fin mod : categories hierarchy ----------------------------------------------------------------
+
 		$forum_match_sql = ( $forum_id != AUTH_LIST_ALL ) ? "AND a.forum_id = $forum_id" : '';
 
 		$sql = "SELECT a.forum_id, $a_sql, a.auth_mod 
@@ -240,6 +257,11 @@ function auth($type, $forum_id, $userdata, $f_access = '')
 			}
 			while( $row = $db->sql_fetchrow($result) );
 		}
+//-- mod : categories hierarchy --------------------------------------------------------------------
+//-- add
+		}
+//-- fin mod : categories hierarchy ----------------------------------------------------------------
+
 		$db->sql_freeresult($result);
 	}
 

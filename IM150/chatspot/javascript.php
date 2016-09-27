@@ -29,23 +29,23 @@ $phpbb_root_path = './../';
 include_once( $phpbb_root_path . 'extension.inc' );
 include_once( $phpbb_root_path . 'chatspot/chatspot_config.' . $phpEx );
 
-if( isset( $HTTP_GET_VARS[ 'room' ] ) )
-	$room_id = $HTTP_GET_VARS[ 'room' ];
+if( isset( $_GET[ 'room' ] ) )
+	$room_id = $_GET[ 'room' ];
 else
 	exit();
 
-if( isset( $HTTP_GET_VARS[ 'room_name' ] ) )
-	$room_name = $HTTP_GET_VARS[ 'room_name' ];
+if( isset( $_GET[ 'room_name' ] ) )
+	$room_name = $_GET[ 'room_name' ];
 else
 	exit();
 
-if( isset( $HTTP_GET_VARS[ 'user_id' ] ) )
-	$user_id = $HTTP_GET_VARS[ 'user_id' ];
+if( isset( $_GET[ 'user_id' ] ) )
+	$user_id = $_GET[ 'user_id' ];
 else
 	exit();
 	
-if( isset( $HTTP_GET_VARS[ 'username' ] ) )
-	$username = $HTTP_GET_VARS[ 'username' ];
+if( isset( $_GET[ 'username' ] ) )
+	$username = $_GET[ 'username' ];
 else
 	exit();
 ?>

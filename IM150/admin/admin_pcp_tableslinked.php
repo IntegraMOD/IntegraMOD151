@@ -78,9 +78,9 @@ $tables = pcp_get_tables_linked();
 
 //  get parameters
 $mode = '';
-if (isset($HTTP_POST_VARS['mode']) || isset($HTTP_GET_VARS['mode']) )
+if (isset($_POST['mode']) || isset($_GET['mode']) )
 {
-	$mode = isset($HTTP_POST_VARS['mode']) ? $HTTP_POST_VARS['mode'] : $HTTP_GET_VARS['mode'];
+	$mode = isset($_POST['mode']) ? $_POST['mode'] : $_GET['mode'];
 }
 if ( !in_array($mode, array('edit')) )
 {
@@ -89,9 +89,9 @@ if ( !in_array($mode, array('edit')) )
 
 // table
 $table = '';
-if (isset($HTTP_POST_VARS['table']) || isset($HTTP_GET_VARS['table']) )
+if (isset($_POST['table']) || isset($_GET['table']) )
 {
-	$table = isset($HTTP_POST_VARS['table']) ? $HTTP_POST_VARS['table'] : $HTTP_GET_VARS['table'];
+	$table = isset($_POST['table']) ? $_POST['table'] : $_GET['table'];
 }
 if ( !empty($table) && !isset($tables[$table]) )
 {
@@ -100,10 +100,10 @@ if ( !empty($table) && !isset($tables[$table]) )
 }
 
 // buttons
-$submit = isset($HTTP_POST_VARS['submit']);
-$create = isset($HTTP_POST_VARS['create']);
-$delete = isset($HTTP_POST_VARS['delete']);
-$cancel = isset($HTTP_POST_VARS['cancel']);
+$submit = isset($_POST['submit']);
+$create = isset($_POST['create']);
+$delete = isset($_POST['delete']);
+$cancel = isset($_POST['cancel']);
 if ($create)
 {
 	$table = '';
@@ -121,11 +121,11 @@ if ($mode == 'edit')
 	$sql_order	= isset($tables[$table]['sql_order']) ? str_replace("\n", ' ', str_replace("\r", '', str_replace("\t", '', $tables[$table]['sql_order']))) : '';
 
 	// coming from the form
-	$name		= isset($HTTP_POST_VARS['name']) ? $HTTP_POST_VARS['name'] : $name;
-	$sql_id		= isset($HTTP_POST_VARS['sql_id']) ? $HTTP_POST_VARS['sql_id'] : $sql_id;
-	$sql_join	= isset($HTTP_POST_VARS['sql_join']) ? $HTTP_POST_VARS['sql_join'] : $sql_join;
-	$sql_where	= isset($HTTP_POST_VARS['sql_where']) ? $HTTP_POST_VARS['sql_where'] : $sql_where;
-	$sql_order	= isset($HTTP_POST_VARS['sql_order']) ? $HTTP_POST_VARS['sql_order'] : $sql_order;
+	$name		= isset($_POST['name']) ? $_POST['name'] : $name;
+	$sql_id		= isset($_POST['sql_id']) ? $_POST['sql_id'] : $sql_id;
+	$sql_join	= isset($_POST['sql_join']) ? $_POST['sql_join'] : $sql_join;
+	$sql_where	= isset($_POST['sql_where']) ? $_POST['sql_where'] : $sql_where;
+	$sql_order	= isset($_POST['sql_order']) ? $_POST['sql_order'] : $sql_order;
 
 	if ( $cancel )
 	{

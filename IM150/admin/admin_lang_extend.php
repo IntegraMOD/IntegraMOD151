@@ -405,9 +405,9 @@ $entries = lang_extend_get_entries();
 
 //  get parameters
 $mode = '';
-if (isset($HTTP_POST_VARS['mode']) || isset($HTTP_GET_VARS['mode']) )
+if (isset($_POST['mode']) || isset($_GET['mode']) )
 {
-	$mode = isset($HTTP_POST_VARS['mode']) ? $HTTP_POST_VARS['mode'] : $HTTP_GET_VARS['mode'];
+	$mode = isset($_POST['mode']) ? $_POST['mode'] : $_GET['mode'];
 }
 if ( !in_array($mode, array('pack', 'key')) )
 {
@@ -416,9 +416,9 @@ if ( !in_array($mode, array('pack', 'key')) )
 
 // level
 $level = 'normal';
-if ( isset($HTTP_POST_VARS['level']) || isset($HTTP_GET_VARS['level']) )
+if ( isset($_POST['level']) || isset($_GET['level']) )
 {
-	$level = isset($HTTP_POST_VARS['level']) ? urldecode($HTTP_POST_VARS['level']) : urldecode($HTTP_GET_VARS['level']);
+	$level = isset($_POST['level']) ? urldecode($_POST['level']) : urldecode($_GET['level']);
 }
 if ( !in_array($level, array('normal', 'admin')) )
 {
@@ -427,9 +427,9 @@ if ( !in_array($level, array('normal', 'admin')) )
 
 // pack file
 $pack_file = '';
-if ( isset($HTTP_POST_VARS['pack_file']) || isset($HTTP_GET_VARS['pack']) )
+if ( isset($_POST['pack_file']) || isset($_GET['pack']) )
 {
-	$pack_file = isset($HTTP_POST_VARS['pack_file']) ? urldecode($HTTP_POST_VARS['pack_file']) : urldecode($HTTP_GET_VARS['pack']);
+	$pack_file = isset($_POST['pack_file']) ? urldecode($_POST['pack_file']) : urldecode($_GET['pack']);
 }
 if ( !isset($packs[$pack_file]) )
 {
@@ -439,14 +439,14 @@ if ( !isset($packs[$pack_file]) )
 
 // keys
 $key_main = '';
-if ( isset($HTTP_POST_VARS['key_main']) || isset($HTTP_GET_VARS['key']) )
+if ( isset($_POST['key_main']) || isset($_GET['key']) )
 {
-	$key_main = isset($HTTP_POST_VARS['key_main']) ? urldecode($HTTP_POST_VARS['key_main']) : urldecode($HTTP_GET_VARS['key']);
+	$key_main = isset($_POST['key_main']) ? urldecode($_POST['key_main']) : urldecode($_GET['key']);
 }
 $key_sub = '';
-if ( isset($HTTP_POST_VARS['key_sub']) || isset($HTTP_GET_VARS['sub']) )
+if ( isset($_POST['key_sub']) || isset($_GET['sub']) )
 {
-	$key_sub = isset($HTTP_POST_VARS['key_sub']) ? urldecode($HTTP_POST_VARS['key_sub']) : urldecode($HTTP_GET_VARS['sub']);
+	$key_sub = isset($_POST['key_sub']) ? urldecode($_POST['key_sub']) : urldecode($_GET['sub']);
 }
 if ( empty($key_main) )
 {
@@ -459,10 +459,10 @@ if ( !isset($entries['admin'][$key_main][$key_sub]) )
 }
 
 // buttons
-$submit = isset($HTTP_POST_VARS['submit']);
-$delete = isset($HTTP_POST_VARS['delete']);
-$cancel = isset($HTTP_POST_VARS['cancel']);
-$add = isset($HTTP_POST_VARS['add']);
+$submit = isset($_POST['submit']);
+$delete = isset($_POST['delete']);
+$cancel = isset($_POST['cancel']);
+$add = isset($_POST['add']);
 if ($add || $delete)
 {
 	$mode = 'key';
@@ -518,11 +518,11 @@ if ($mode == 'key')
 	else if ( $submit )
 	{
 		// get formular
-		$new_main = $HTTP_POST_VARS['new_main'];
-		$new_sub = $HTTP_POST_VARS['new_sub'];
-		$new_level = $HTTP_POST_VARS['new_level'];
-		$new_values = $HTTP_POST_VARS['new_values'];
-		$new_pack = $HTTP_POST_VARS['new_pack'];
+		$new_main = $_POST['new_main'];
+		$new_sub = $_POST['new_sub'];
+		$new_level = $_POST['new_level'];
+		$new_values = $_POST['new_values'];
+		$new_pack = $_POST['new_pack'];
 
 		// force
 		if ( !in_array($new_level, array('normal', 'admin')) )
@@ -812,11 +812,11 @@ if ( $mode == 'search' )
 	else
 	{
 		// formular
-		$search_words = str_replace("\'", "'", str_replace("''", "'", trim($HTTP_POST_VARS['search_words'])));
-		$search_logic = intval($HTTP_POST_VARS['search_logic']);
-		$search_in = intval($HTTP_POST_VARS['search_in']);
-		$search_country = $HTTP_POST_VARS['search_language'];
-		$search_admin = intval($HTTP_POST_VARS['search_admin']);
+		$search_words = str_replace("\'", "'", str_replace("''", "'", trim($_POST['search_words'])));
+		$search_logic = intval($_POST['search_logic']);
+		$search_in = intval($_POST['search_in']);
+		$search_country = $_POST['search_language'];
+		$search_admin = intval($_POST['search_admin']);
 
 		// results
 		$results = array();
@@ -1000,11 +1000,11 @@ if ( $mode == 'search' )
 if ( $mode == '' )
 {
 	// search
-	$search_words = isset($HTTP_POST_VARS['search_words']) ? str_replace("\'", "'", urldecode($HTTP_POST_VARS['search_words'])) : '';
-	$search_logic = isset($HTTP_POST_VARS['search_logic']) ? intval($HTTP_POST_VARS['search_logic']) : 0;
-	$search_in = isset($HTTP_POST_VARS['search_in']) ? intval($HTTP_POST_VARS['search_in']) : 2;
-	$search_country = isset($HTTP_POST_VARS['search_language']) ? str_replace("\'", "'", urldecode($HTTP_POST_VARS['search_language'])) : 'lang_' . $board_config['default_language'];
-	$search_admin = isset($HTTP_POST_VARS['search_admin']) ? intval($HTTP_POST_VARS['search_admin']) : 2;
+	$search_words = isset($_POST['search_words']) ? str_replace("\'", "'", urldecode($_POST['search_words'])) : '';
+	$search_logic = isset($_POST['search_logic']) ? intval($_POST['search_logic']) : 0;
+	$search_in = isset($_POST['search_in']) ? intval($_POST['search_in']) : 2;
+	$search_country = isset($_POST['search_language']) ? str_replace("\'", "'", urldecode($_POST['search_language'])) : 'lang_' . $board_config['default_language'];
+	$search_admin = isset($_POST['search_admin']) ? intval($_POST['search_admin']) : 2;
 
 	// template
 	$template->set_filenames(array(

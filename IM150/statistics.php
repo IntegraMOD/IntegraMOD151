@@ -57,9 +57,9 @@ while ($row = $db->sql_fetchrow($result))
 
 init_core();
 
-if (isset($HTTP_GET_VARS['preview']))
+if (isset($_GET['preview']))
 {
-	$preview_module = intval($HTTP_GET_VARS['preview']);
+	$preview_module = intval($_GET['preview']);
 }
 else
 {

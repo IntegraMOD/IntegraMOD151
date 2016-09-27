@@ -71,7 +71,7 @@ include_once($phpbb_root_path . './includes/bbcode.' . $phpEx);
 //--------------------------------------------------
 function topic_list($box, $tpl='', $topic_rowset, $list_title='', $split_type=false, $display_nav_tree=true, $footer='', $inbox=true, $select_field='', $select_type=0, $select_formname='', $select_values=array(), $topic_rank_set=array())
 {
-	global $db, $template, $board_config, $userdata, $phpEx, $lang, $images, $HTTP_COOKIE_VARS;
+	global $db, $template, $board_config, $userdata, $phpEx, $lang, $images, $_COOKIE;
 	global $tree;
 	static $box_id;
 
@@ -143,9 +143,9 @@ function topic_list($box, $tpl='', $topic_rowset, $list_title='', $split_type=fa
 //-- mod : keep unread -----------------------------------------------------------------------------
 //-- delete
 //	// read the user cookie
-//	$tracking_topics	= ( isset($HTTP_COOKIE_VARS[$board_config['cookie_name'] . '_t']) ) ? unserialize($HTTP_COOKIE_VARS[$board_config['cookie_name'] . "_t"]) : array();
-//	$tracking_forums	= ( isset($HTTP_COOKIE_VARS[$board_config['cookie_name'] . '_f']) ) ? unserialize($HTTP_COOKIE_VARS[$board_config['cookie_name'] . "_f"]) : array();
-//	$tracking_all		= ( isset($HTTP_COOKIE_VARS[$board_config['cookie_name'] . '_f_all']) ) ? intval($HTTP_COOKIE_VARS[$board_config['cookie_name'] . '_f_all']) : NULL;
+//	$tracking_topics	= ( isset($_COOKIE[$board_config['cookie_name'] . '_t']) ) ? unserialize($_COOKIE[$board_config['cookie_name'] . "_t"]) : array();
+//	$tracking_forums	= ( isset($_COOKIE[$board_config['cookie_name'] . '_f']) ) ? unserialize($_COOKIE[$board_config['cookie_name'] . "_f"]) : array();
+//	$tracking_all		= ( isset($_COOKIE[$board_config['cookie_name'] . '_f_all']) ) ? intval($_COOKIE[$board_config['cookie_name'] . '_f_all']) : NULL;
 //-- add
 	// get last visit for guest
 	if ( !$userdata['session_logged_in'] )

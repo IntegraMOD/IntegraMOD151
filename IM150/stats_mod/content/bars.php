@@ -75,11 +75,11 @@ class Content_bars
 		// So we have to examine the cookie to get the value to use for this image //
 		
 		// Fix (statistics graph image) code added Michaelo 09/July/06 //
-		global $HTTP_GET_VARS, $HTTP_POST_VARS, $HTTP_COOKIE_VARS;								
+		global $_GET, $_POST, $_COOKIE;								
 		global $theme, $template;
-		if ( isset($HTTP_COOKIE_VARS[$board_config['cookie_name'] . '_style']) )
+		if ( isset($_COOKIE[$board_config['cookie_name'] . '_style']) )
 		{
-			$style = $HTTP_COOKIE_VARS[$board_config['cookie_name'] . '_style'];
+			$style = $_COOKIE[$board_config['cookie_name'] . '_style'];
 		}		
 		else
 			$style = $userdata['user_style'];				

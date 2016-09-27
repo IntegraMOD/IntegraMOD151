@@ -28,8 +28,8 @@ if ( !defined( 'IN_PORTAL' ) )
 	die( "Hacking attempt" );
 }
 
-$article_id = !isset( $article_id ) ? intval( $HTTP_GET_VARS['k'] ) : $article_id;
-$start = ( isset( $HTTP_GET_VARS['start'] ) ) ? intval( $HTTP_GET_VARS['start'] ) : 0;
+$article_id = !isset( $article_id ) ? intval( $_GET['k'] ) : $article_id;
+$start = ( isset( $_GET['start'] ) ) ? intval( $_GET['start'] ) : 0;
 
 $sql = "SELECT *
 		FROM " . KB_ARTICLES_TABLE . "
@@ -155,12 +155,12 @@ if ( !( $result2 = $db->sql_query( $sql ) ) )
 
 $original_highlight = '';
 $highlight_match = $highlight = '';
-if (isset($HTTP_GET_VARS['highlight']))
+if (isset($_GET['highlight']))
 {
 	// Split words and phrases
 	
-	$original_highlight = '&highlight='.trim(htmlspecialchars($HTTP_GET_VARS['highlight']));
-	$words = explode(' ', trim(htmlspecialchars($HTTP_GET_VARS['highlight'])));
+	$original_highlight = '&highlight='.trim(htmlspecialchars($_GET['highlight']));
+	$words = explode(' ', trim(htmlspecialchars($_GET['highlight'])));
 
 	for($i = 0; $i < sizeof($words); $i++)
 	{
@@ -171,7 +171,7 @@ if (isset($HTTP_GET_VARS['highlight']))
 	}
 	unset($words);
 
-	$highlight = urlencode($HTTP_GET_VARS['highlight']);
+	$highlight = urlencode($_GET['highlight']);
 	$highlight_match = phpbb_rtrim($highlight_match, "\\");
 }
 
@@ -274,7 +274,7 @@ if ( !$print_version && !$reader_mode )
 if ( ( $userdata['user_id'] == $author_id && $kb_is_auth['auth_edit'] ) || $kb_is_auth['auth_mod'] )
 {
 	$temp_url = append_sid( this_kb_mxurl( "mode=edit&amp;k=" . $article_id ) );
-	$edit_img = '<a class="icon_edit" href="' . $temp_url . '" title="' . $lang['Edit'] . '"><span>' . $lang['Edit'] . '</span></a>';
+	$edit_img = '<a href="' . $temp_url . '"><img src="' . $phpbb_root_path . $images['icon_edit'] . '" alt="' . $lang['Edit_delete_post'] . '" title="' . $lang['Edit_delete_post'] . '" border="0" /></a>';
 	$edit = '<a href="' . $temp_url . '">' . $lang['Edit_delete_post'] . '</a>';
 }
 else

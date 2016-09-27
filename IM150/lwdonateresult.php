@@ -62,12 +62,12 @@ include($phpbb_root_path . 'common.'.$phpEx);
 // read the post from PayPal system and add 'cmd'
 $req = 'cmd=_notify-validate';
 
-foreach ($HTTP_POST_VARS as $key => $value) {
+foreach ($_POST as $key => $value) {
 $value = urlencode(stripslashes($value));
 $req .= "&$key=$value";
 }
 
-//while (list($key, $value) = each($HTTP_POST_VARS)) {
+//while (list($key, $value) = each($_POST)) {
 //$value = urlencode(stripslashes($value));
 //$req .= "&$key=$value";
 //}
@@ -79,14 +79,14 @@ $header .= "Content-Length: " . strlen($req) . "\r\n\r\n";
 $fp = fsockopen ('www.paypal.com', 80, $errno, $errstr, 30);
 
 // assign posted variables to local variables
-$item_name = htmlspecialchars($HTTP_POST_VARS['item_name']);
-$item_number = htmlspecialchars($HTTP_POST_VARS['item_number']);
-$payment_status = htmlspecialchars($HTTP_POST_VARS['payment_status']);
-$payment_amount = htmlspecialchars($HTTP_POST_VARS['mc_gross']);
-$payment_currency = htmlspecialchars($HTTP_POST_VARS['mc_currency']);
-$txn_id = htmlspecialchars($HTTP_POST_VARS['txn_id']);
-$receiver_email = htmlspecialchars($HTTP_POST_VARS['receiver_email']);
-$payer_email = htmlspecialchars($HTTP_POST_VARS['payer_email']);
+$item_name = htmlspecialchars($_POST['item_name']);
+$item_number = htmlspecialchars($_POST['item_number']);
+$payment_status = htmlspecialchars($_POST['payment_status']);
+$payment_amount = htmlspecialchars($_POST['mc_gross']);
+$payment_currency = htmlspecialchars($_POST['mc_currency']);
+$txn_id = htmlspecialchars($_POST['txn_id']);
+$receiver_email = htmlspecialchars($_POST['receiver_email']);
+$payer_email = htmlspecialchars($_POST['payer_email']);
 
 if (!$fp) {
 // HTTP ERROR

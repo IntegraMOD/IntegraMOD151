@@ -41,9 +41,9 @@ init_userprefs($userdata);
 
 include($phpbb_root_path . 'language/lang_' . $board_config['default_lang'] . '/lang_errors.' . $phpEx);
 
-if(isset($HTTP_GET_VARS['error']))
+if(isset($_GET['error']))
 {
-	$error = $HTTP_GET_VARS['error'];
+	$error = $_GET['error'];
 }
 else
 {

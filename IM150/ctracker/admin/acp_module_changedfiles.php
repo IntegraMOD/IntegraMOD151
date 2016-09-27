@@ -28,7 +28,7 @@ $ct_admin = new ct_adminfunctions();
 /*
  * Wich action do we have?
  */
-$action = $HTTP_GET_VARS['action'];
+$action = $_GET['action'];
 
 if ( $action == 'akt' )
 {

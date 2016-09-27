@@ -34,44 +34,44 @@ ini_set('display_errors','Off');
 //
 if( !get_magic_quotes_gpc() )
 {
-	if( is_array($HTTP_GET_VARS) )
+	if( is_array($_GET) )
 	{
-		while( list($k, $v) = each($HTTP_GET_VARS) )
+		while( list($k, $v) = each($_GET) )
 		{
-			if( is_array($HTTP_GET_VARS[$k]) )
+			if( is_array($_GET[$k]) )
 			{
-				while( list($k2, $v2) = each($HTTP_GET_VARS[$k]) )
+				while( list($k2, $v2) = each($_GET[$k]) )
 				{
-					$HTTP_GET_VARS[$k][$k2] = addslashes($v2);
+					$_GET[$k][$k2] = addslashes($v2);
 				}
-				@reset($HTTP_GET_VARS[$k]);
+				@reset($_GET[$k]);
 			}
 			else
 			{
-				$HTTP_GET_VARS[$k] = addslashes($v);
+				$_GET[$k] = addslashes($v);
 			}
 		}
-		@reset($HTTP_GET_VARS);
+		@reset($_GET);
 	}
 
-	if( is_array($HTTP_POST_VARS) )
+	if( is_array($_POST) )
 	{
-		while( list($k, $v) = each($HTTP_POST_VARS) )
+		while( list($k, $v) = each($_POST) )
 		{
-			if( is_array($HTTP_POST_VARS[$k]) )
+			if( is_array($_POST[$k]) )
 			{
-				while( list($k2, $v2) = each($HTTP_POST_VARS[$k]) )
+				while( list($k2, $v2) = each($_POST[$k]) )
 				{
-					$HTTP_POST_VARS[$k][$k2] = addslashes($v2);
+					$_POST[$k][$k2] = addslashes($v2);
 				}
-				@reset($HTTP_POST_VARS[$k]);
+				@reset($_POST[$k]);
 			}
 			else
 			{
-				$HTTP_POST_VARS[$k] = addslashes($v);
+				$_POST[$k] = addslashes($v);
 			}
 		}
-		@reset($HTTP_POST_VARS);
+		@reset($_POST);
 	}
 
 	if( is_array($HTTP_COOKIE_VARS) )
@@ -95,19 +95,19 @@ if( !get_magic_quotes_gpc() )
 	}
 }
 
-$mode = ( isset($HTTP_POST_VARS['mode']) ) ? htmlspecialchars($HTTP_POST_VARS['mode']) : (( isset($HTTP_GET_VARS['mode']) ) ? htmlspecialchars($HTTP_GET_VARS['mode']) : 'start');
-$option = ( isset($HTTP_POST_VARS['option']) ) ? htmlspecialchars($HTTP_POST_VARS['option']) : '';
+$mode = ( isset($_POST['mode']) ) ? htmlspecialchars($_POST['mode']) : (( isset($_GET['mode']) ) ? htmlspecialchars($_GET['mode']) : 'start');
+$option = ( isset($_POST['option']) ) ? htmlspecialchars($_POST['option']) : '';
 
 // Before doing anything else send config.php if requested
 if ( $mode == 'download' )
 {
 	// Get and convert Variables
-	$new_dbms = ( isset($HTTP_GET_VARS['ndbms']) ) ? $HTTP_GET_VARS['ndbms'] : '';
-	$new_dbhost = ( isset($HTTP_GET_VARS['ndbh']) ) ? $HTTP_GET_VARS['ndbh'] : '';
-	$new_dbname = ( isset($HTTP_GET_VARS['ndbn']) ) ? $HTTP_GET_VARS['ndbn'] : '';
-	$new_dbuser = ( isset($HTTP_GET_VARS['ndbu']) ) ? $HTTP_GET_VARS['ndbu'] : '';
-	$new_dbpasswd = ( isset($HTTP_GET_VARS['ndbp']) ) ? $HTTP_GET_VARS['ndbp'] : '';
-	$new_table_prefix = ( isset($HTTP_GET_VARS['ntp']) ) ? $HTTP_GET_VARS['ntp'] : '';
+	$new_dbms = ( isset($_GET['ndbms']) ) ? $_GET['ndbms'] : '';
+	$new_dbhost = ( isset($_GET['ndbh']) ) ? $_GET['ndbh'] : '';
+	$new_dbname = ( isset($_GET['ndbn']) ) ? $_GET['ndbn'] : '';
+	$new_dbuser = ( isset($_GET['ndbu']) ) ? $_GET['ndbu'] : '';
+	$new_dbpasswd = ( isset($_GET['ndbp']) ) ? $_GET['ndbp'] : '';
+	$new_table_prefix = ( isset($_GET['ntp']) ) ? $_GET['ntp'] : '';
 
 	$var_array = array('new_dbms', 'new_dbhost', 'new_dbname', 'new_dbuser', 'new_dbpasswd', 'new_table_prefix');
 	reset($var_array);
@@ -144,9 +144,9 @@ if ( $mode == 'download' )
 }
 
 // Load a language if one was selected
-if ( isset($HTTP_POST_VARS['lg']) || isset($HTTP_GET_VARS['lg']) )
+if ( isset($_POST['lg']) || isset($_GET['lg']) )
 {
-	$lg = ( isset($HTTP_POST_VARS['lg']) ) ? htmlspecialchars($HTTP_POST_VARS['lg']) : htmlspecialchars($HTTP_GET_VARS['lg']);
+	$lg = ( isset($_POST['lg']) ) ? htmlspecialchars($_POST['lg']) : htmlspecialchars($_GET['lg']);
 	if ( file_exists(@phpbb_realpath($phpbb_root_path . 'language/lang_' . $lg . '/lang_dbmtnc.'.$phpEx)) )
 	{
 		include($phpbb_root_path . 'language/lang_' . $lg . '/lang_dbmtnc.' . $phpEx);
@@ -247,7 +247,7 @@ switch($mode)
 {
 	case 'select_lang':
 ?>
-<form action="<?php echo $HTTP_SERVER_VARS['PHP_SELF']; ?>" method="post">
+<form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
 <table border="0" cellspacing="0" cellpadding="10">
 	<tr>
 		<td><table width="100%" border="0" cellspacing="0" cellpadding="0">
@@ -264,7 +264,7 @@ switch($mode)
 		break;
 	case 'start':
 ?>
-<form action="<?php echo $HTTP_SERVER_VARS['PHP_SELF']; ?>" method="post">
+<form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
 <table border="0" cellspacing="0" cellpadding="10">
 	<tr>
 		<td><table width="100%" border="0" cellspacing="0" cellpadding="0">
@@ -312,7 +312,7 @@ switch($mode)
 		if ( $option != 'rcp' )
 		{
 ?>
-<form action="<?php echo $HTTP_SERVER_VARS['PHP_SELF']; ?>" method="post">
+<form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
 <table border="0" cellspacing="0" cellpadding="10">
 <?php
 			if ( $option != 'rld' && $option != 'rtd' )
@@ -402,7 +402,7 @@ switch($mode)
 		else
 		{
 ?>
-<form action="<?php echo $HTTP_SERVER_VARS['PHP_SELF']; ?>" method="post">
+<form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
 <table border="0" cellspacing="0" cellpadding="10">
 <?php
 		}
@@ -425,9 +425,9 @@ switch($mode)
 			case 'rpd': // Reset path data
 				// Get path information
 				$secure_cur = get_config_data('cookie_secure');
-				if (!empty($HTTP_SERVER_VARS['SERVER_PROTOCOL']) || !empty($HTTP_ENV_VARS['SERVER_PROTOCOL']))
+				if (!empty($_SERVER['SERVER_PROTOCOL']) || !empty($_ENV['SERVER_PROTOCOL']))
 				{
-					$protocol = (!empty($HTTP_SERVER_VARS['SERVER_PROTOCOL'])) ? $HTTP_SERVER_VARS['SERVER_PROTOCOL'] : $HTTP_ENV_VARS['SERVER_PROTOCOL'];
+					$protocol = (!empty($_SERVER['SERVER_PROTOCOL'])) ? $_SERVER['SERVER_PROTOCOL'] : $_ENV['SERVER_PROTOCOL'];
 					$secure_rec = ( strtolower(substr($protocol, 0 , 5)) == 'https' ) ? '1' : '0';
 				}
 				else
@@ -435,29 +435,29 @@ switch($mode)
 					$secure_rec = '0';
 				}
 				$domain_cur = get_config_data('server_name');
-				if (!empty($HTTP_SERVER_VARS['SERVER_NAME']) || !empty($HTTP_ENV_VARS['SERVER_NAME']))
+				if (!empty($_SERVER['SERVER_NAME']) || !empty($_ENV['SERVER_NAME']))
 				{
-					$domain_rec = (!empty($HTTP_SERVER_VARS['SERVER_NAME'])) ? $HTTP_SERVER_VARS['SERVER_NAME'] : $HTTP_ENV_VARS['SERVER_NAME'];
+					$domain_rec = (!empty($_SERVER['SERVER_NAME'])) ? $_SERVER['SERVER_NAME'] : $_ENV['SERVER_NAME'];
 				}
-				else if (!empty($HTTP_SERVER_VARS['HTTP_HOST']) || !empty($HTTP_ENV_VARS['HTTP_HOST']))
+				else if (!empty($_SERVER['HTTP_HOST']) || !empty($_ENV['HTTP_HOST']))
 				{
-					$domain_rec = (!empty($HTTP_SERVER_VARS['HTTP_HOST'])) ? $HTTP_SERVER_VARS['HTTP_HOST'] : $HTTP_ENV_VARS['HTTP_HOST'];
+					$domain_rec = (!empty($_SERVER['HTTP_HOST'])) ? $_SERVER['HTTP_HOST'] : $_ENV['HTTP_HOST'];
 				}
 				else
 				{
 					$domain_rec = '';
 				}
 				$port_cur = get_config_data('server_port');
-				if (!empty($HTTP_SERVER_VARS['SERVER_PORT']) || !empty($HTTP_ENV_VARS['SERVER_PORT']))
+				if (!empty($_SERVER['SERVER_PORT']) || !empty($_ENV['SERVER_PORT']))
 				{
-					$port_rec = (!empty($HTTP_SERVER_VARS['SERVER_PORT'])) ? $HTTP_SERVER_VARS['SERVER_PORT'] : $HTTP_ENV_VARS['SERVER_PORT'];
+					$port_rec = (!empty($_SERVER['SERVER_PORT'])) ? $_SERVER['SERVER_PORT'] : $_ENV['SERVER_PORT'];
 				}
 				else
 				{
 					$port_rec = '80';
 				}
 				$path_cur = get_config_data('script_path');
-				$path_rec = str_replace('admin', '', dirname($HTTP_SERVER_VARS['PHP_SELF']));
+				$path_rec = str_replace('admin', '', dirname($_SERVER['PHP_SELF']));
 ?>
 	<tr>
 		<td>
@@ -719,7 +719,7 @@ switch($mode)
 			<input type="hidden" name="mode" value="execute" />
 			<input type="hidden" name="lg" value="<?php echo $lg ?>" />
 			<input type="submit" value="<?php echo $lang['Submit_text']; ?>" />
-			- <a href="<?php echo $HTTP_SERVER_VARS['PHP_SELF'] . '?lg=' . $lg; ?>"><?php echo $lang['Cancel']; ?></a>
+			- <a href="<?php echo $_SERVER['PHP_SELF'] . '?lg=' . $lg; ?>"><?php echo $lang['Cancel']; ?></a>
 		</td>
 	</tr>
 </table>
@@ -809,14 +809,14 @@ switch($mode)
 			case 'rpd': // Reset path data
 				check_authorisation();
 				// Get variables
-				$secure_select = ( isset($HTTP_POST_VARS['secure_select']) ) ? intval($HTTP_POST_VARS['secure_select']) : 1;
-				$domain_select = ( isset($HTTP_POST_VARS['domain_select']) ) ? intval($HTTP_POST_VARS['domain_select']) : 1;
-				$port_select = ( isset($HTTP_POST_VARS['port_select']) ) ? intval($HTTP_POST_VARS['port_select']) : 1;
-				$path_select = ( isset($HTTP_POST_VARS['path_select']) ) ? intval($HTTP_POST_VARS['path_select']) : 1;
-				$secure = ( isset($HTTP_POST_VARS['secure']) ) ? intval($HTTP_POST_VARS['secure']) : 0;
-				$domain = ( isset($HTTP_POST_VARS['domain']) ) ? str_replace("\\'", "''", $HTTP_POST_VARS['domain']) : '';
-				$port = ( isset($HTTP_POST_VARS['port']) ) ? str_replace("\\'", "''", $HTTP_POST_VARS['port']) : '';
-				$path = ( isset($HTTP_POST_VARS['path']) ) ? str_replace("\\'", "''", $HTTP_POST_VARS['path']) : '';
+				$secure_select = ( isset($_POST['secure_select']) ) ? intval($_POST['secure_select']) : 1;
+				$domain_select = ( isset($_POST['domain_select']) ) ? intval($_POST['domain_select']) : 1;
+				$port_select = ( isset($_POST['port_select']) ) ? intval($_POST['port_select']) : 1;
+				$path_select = ( isset($_POST['path_select']) ) ? intval($_POST['path_select']) : 1;
+				$secure = ( isset($_POST['secure']) ) ? intval($_POST['secure']) : 0;
+				$domain = ( isset($_POST['domain']) ) ? str_replace("\\'", "''", $_POST['domain']) : '';
+				$port = ( isset($_POST['port']) ) ? str_replace("\\'", "''", $_POST['port']) : '';
+				$path = ( isset($_POST['path']) ) ? str_replace("\\'", "''", $_POST['path']) : '';
 				
 				if ($secure_select == 1)
 				{
@@ -867,9 +867,9 @@ switch($mode)
 			case 'rcd': // Reset cookie data
 				check_authorisation();
 				// Get variables
-				$cookie_domain = ( isset($HTTP_POST_VARS['cookie_domain']) ) ? str_replace("\\'", "''", $HTTP_POST_VARS['cookie_domain']) : '';
-				$cookie_name = ( isset($HTTP_POST_VARS['cookie_name']) ) ? str_replace("\\'", "''", $HTTP_POST_VARS['cookie_name']) : '';
-				$cookie_path = ( isset($HTTP_POST_VARS['cookie_path']) ) ? str_replace("\\'", "''", $HTTP_POST_VARS['cookie_path']) : '';
+				$cookie_domain = ( isset($_POST['cookie_domain']) ) ? str_replace("\\'", "''", $_POST['cookie_domain']) : '';
+				$cookie_name = ( isset($_POST['cookie_name']) ) ? str_replace("\\'", "''", $_POST['cookie_name']) : '';
+				$cookie_path = ( isset($_POST['cookie_path']) ) ? str_replace("\\'", "''", $_POST['cookie_path']) : '';
 
 				$sql = "UPDATE " . CONFIG_TABLE . "
 					SET config_value = '$cookie_domain'
@@ -899,8 +899,8 @@ switch($mode)
 				break;
 			case 'rld': // Reset language data
 				check_authorisation();
-				$new_lang = ( isset($HTTP_POST_VARS['new_lang']) ) ? str_replace("\\'", "''", $HTTP_POST_VARS['new_lang']) : '';
-				$board_user = isset($HTTP_POST_VARS['board_user']) ? trim(htmlspecialchars($HTTP_POST_VARS['board_user'])) : '';
+				$new_lang = ( isset($_POST['new_lang']) ) ? str_replace("\\'", "''", $_POST['new_lang']) : '';
+				$board_user = isset($_POST['board_user']) ? trim(htmlspecialchars($_POST['board_user'])) : '';
 				$board_user = substr(str_replace("\\'", "'", $board_user), 0, 25);
 				$board_user = str_replace("'", "\\'", $board_user);
 
@@ -931,9 +931,9 @@ switch($mode)
 				break;
 			case 'rtd': // Reset template data
 				check_authorisation();
-				$method = ( isset($HTTP_POST_VARS['method']) ) ? htmlspecialchars($HTTP_POST_VARS['method']) : '';
-				$new_style = ( isset($HTTP_POST_VARS['new_style']) ) ? intval($HTTP_POST_VARS['new_style']) : 0;
-				$board_user = isset($HTTP_POST_VARS['board_user']) ? trim(htmlspecialchars($HTTP_POST_VARS['board_user'])) : '';
+				$method = ( isset($_POST['method']) ) ? htmlspecialchars($_POST['method']) : '';
+				$new_style = ( isset($_POST['new_style']) ) ? intval($_POST['new_style']) : 0;
+				$board_user = isset($_POST['board_user']) ? trim(htmlspecialchars($_POST['board_user'])) : '';
 				$board_user = substr(str_replace("\\'", "'", $board_user), 0, 25);
 				$board_user = str_replace("'", "\\'", $board_user);
 
@@ -1027,8 +1027,8 @@ switch($mode)
 			case 'raa': // Remove all administrators
 				check_authorisation();
 				// Get userdata to check for current user
-				$auth_method = ( isset($HTTP_POST_VARS['auth_method']) ) ? htmlspecialchars($HTTP_POST_VARS['auth_method']) : '';
-				$board_user = isset($HTTP_POST_VARS['board_user']) ? trim(htmlspecialchars($HTTP_POST_VARS['board_user'])) : '';
+				$auth_method = ( isset($_POST['auth_method']) ) ? htmlspecialchars($_POST['auth_method']) : '';
+				$board_user = isset($_POST['board_user']) ? trim(htmlspecialchars($_POST['board_user'])) : '';
 				$board_user = substr(str_replace("\\'", "'", $board_user), 0, 25);
 
 				$sql = "SELECT user_id, username
@@ -1092,7 +1092,7 @@ switch($mode)
 				break;
 			case 'mua': // Grant user admin privileges
 				check_authorisation();
-				$username = ( isset($HTTP_POST_VARS['username']) ) ? str_replace("\\'", "''", $HTTP_POST_VARS['username']) : '';
+				$username = ( isset($_POST['username']) ) ? str_replace("\\'", "''", $_POST['username']) : '';
 
 				$sql = "UPDATE " . USERS_TABLE . "
 					SET user_active = 1, user_level = " . ADMIN . "
@@ -1118,7 +1118,7 @@ switch($mode)
 				reset($var_array);
 				while (list(, $var) = each ($var_array))
 				{
-					$$var = ( isset($HTTP_POST_VARS[$var]) ) ? stripslashes($HTTP_POST_VARS[$var]) : '';
+					$$var = ( isset($_POST[$var]) ) ? stripslashes($_POST[$var]) : '';
 				}
 
 ?>
@@ -1156,7 +1156,7 @@ switch($mode)
 				$ndbu = urlencode($new_dbuser);
 				$ndbp = urlencode($new_dbpasswd);
 				$ntp = urlencode($new_table_prefix);
-				success_message(sprintf($lang['rcp_success'], "<a href=\"" . $HTTP_SERVER_VARS['PHP_SELF'] . "?mode=download&ndbms=$ndbms&ndbh=$ndbh&ndbn=$ndbn&ndbu=$ndbu&ndbp=$ndbp&ntp=$ntp\">", '</a>'));
+				success_message(sprintf($lang['rcp_success'], "<a href=\"" . $_SERVER['PHP_SELF'] . "?mode=download&ndbms=$ndbms&ndbh=$ndbh&ndbn=$ndbn&ndbu=$ndbu&ndbp=$ndbp&ntp=$ntp\">", '</a>'));
 				break;
 			default:
 ?>

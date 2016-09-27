@@ -38,9 +38,9 @@ $write_local_dir	= directory where to write. only if $write_local = true.
 $list_only			= true if only list files
 $get_file			= filename to get. empty if do not return any files
 
-$HTTP_POST_VARS['total']				= total number of themes
-$HTTP_POST_VARS['import_install_0']		= non-empty if install theme
-$HTTP_POST_VARS['import_default']		= number of default style or -1 or empty
+$_POST['total']				= total number of themes
+$_POST['import_install_0']		= non-empty if install theme
+$_POST['import_default']		= number of default style or -1 or empty
 
 */
 
@@ -201,7 +201,7 @@ while($pos < strlen($str))
 				// show contents of file
 				$f = $data['filename'];
 				$ext = strtolower(substr($f, strlen($f) - 4));
-				if(empty($HTTP_GET_VARS['get_content']) && xs_in_array($ext, $text_types))
+				if(empty($_GET['get_content']) && xs_in_array($ext, $text_types))
 				{
 					// show as text
 					$str = '<div align="left">' . $lang['xs_import_list_contents'] . $f . ' [<a href="' . append_sid('xs_import.' . $phpEx . '?list=1&import=' . urlencode($filename) . '&get_file=' . urlencode($f) . '&get_content=1') . '">' . $lang['xs_import_download_lc'] . '</a>]<br /><br />';
@@ -213,7 +213,7 @@ while($pos < strlen($str))
 				{
 					$do_download = false;
 					$content_type = '';
-					if(empty($HTTP_GET_VARS['get_content']))
+					if(empty($_GET['get_content']))
 					{
 						if($ext === '.gif')
 						{
@@ -348,13 +348,13 @@ if(!$write_local)
 //
 // Check if we need to install style
 //
-$total = intval($HTTP_POST_VARS['total']);
-$default = isset($HTTP_POST_VARS['import_default']) && strlen($HTTP_POST_VARS['import_default']) ? intval($HTTP_POST_VARS['import_default']) : -1;
+$total = intval($_POST['total']);
+$default = isset($_POST['import_default']) && strlen($_POST['import_default']) ? intval($_POST['import_default']) : -1;
 $install = array();
 $default_name = '';
 for($i=0; $i<$total; $i++)
 {
-	$tmp = empty($HTTP_POST_VARS['import_install_'.$i]) ? 0 : 1;
+	$tmp = empty($_POST['import_install_'.$i]) ? 0 : 1;
 	if($tmp)
 	{
 		$set_default = $default == $i ? 1 : 0;

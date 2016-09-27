@@ -35,9 +35,9 @@ require('./pagestart.' . $phpEx);
 
 define('THEMES_SELECT_INFO_TABLE', $table_prefix.'themes_select_info');
 
-if( isset($HTTP_GET_VARS['mode']) || isset($HTTP_POST_VARS['mode']) )
+if( isset($_GET['mode']) || isset($_POST['mode']) )
 {
-	$mode = ( isset($HTTP_GET_VARS['mode']) ) ? $HTTP_GET_VARS['mode'] : $HTTP_POST_VARS['mode'];
+	$mode = ( isset($_GET['mode']) ) ? $_GET['mode'] : $_POST['mode'];
 }
 else 
 {
@@ -47,22 +47,22 @@ else
 switch( $mode )
 {
 	case "edit":
-		$submit = ( isset($HTTP_POST_VARS['submit']) ) ? TRUE : 0;
+		$submit = ( isset($_POST['submit']) ) ? TRUE : 0;
 		
 		if( $submit )
 		{
 			//	
 			// DAMN! Thats alot of data to validate...
 			//
-			$updated['style_author'] = $HTTP_POST_VARS['style_author'];
-			$updated['style_version'] = $HTTP_POST_VARS['style_version'];
-			$updated['style_website'] = $HTTP_POST_VARS['style_website'];
-			$updated['style_views'] = $HTTP_POST_VARS['style_views'];
-			$updated['style_dlurl'] = $HTTP_POST_VARS['style_dlurl'];
-			$updated['style_dls'] = $HTTP_POST_VARS['style_dls'];
-			$updated['style_loaclurl'] = $HTTP_POST_VARS['style_loaclurl'];
-			$updated['style_ludls'] = $HTTP_POST_VARS['style_ludls'];
-			$style_id = intval($HTTP_POST_VARS['style_id']);
+			$updated['style_author'] = $_POST['style_author'];
+			$updated['style_version'] = $_POST['style_version'];
+			$updated['style_website'] = $_POST['style_website'];
+			$updated['style_views'] = $_POST['style_views'];
+			$updated['style_dlurl'] = $_POST['style_dlurl'];
+			$updated['style_dls'] = $_POST['style_dls'];
+			$updated['style_loaclurl'] = $_POST['style_loaclurl'];
+			$updated['style_ludls'] = $_POST['style_ludls'];
+			$style_id = intval($_POST['style_id']);
 			
 			//
 			// Update
@@ -93,7 +93,7 @@ switch( $mode )
 		}
 		else
 		{
-			$style_id = $HTTP_GET_VARS['style_id'];
+			$style_id = $_GET['style_id'];
 				
 			$sql = "SELECT t.style_name, tdi.* 
 				FROM ( " . THEMES_TABLE . "  t

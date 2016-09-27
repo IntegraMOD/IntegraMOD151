@@ -31,7 +31,7 @@ require("pagestart.$phpEx");
 include($phpbb_root_path . 'language/lang_' . $board_config['default_lang'] . '/lang_admin_wpm.' . $phpEx);
 
 
-if( $HTTP_POST_VARS['mode'] == 'update' )
+if( $_POST['mode'] == 'update' )
 {
 
 	$vars = array('active_wpm');
@@ -39,7 +39,7 @@ if( $HTTP_POST_VARS['mode'] == 'update' )
 
 	for( $i = 0; $i < count($vars); $i++ )
 	{
-		$value = str_replace("\'", "''", $HTTP_POST_VARS[$vars[$i]]);
+		$value = str_replace("\'", "''", $_POST[$vars[$i]]);
 		$value = trim($value);
 		$value = addslashes($value);
 		$sql[] = "UPDATE " . WPM . "
@@ -54,8 +54,8 @@ if( $HTTP_POST_VARS['mode'] == 'update' )
 			message_die(GENERAL_ERROR, $lang['update_error'], "", __LINE__, __FILE__, $sql[$i]);
 		}
 	}
-		$temp_data = get_userdata($HTTP_POST_VARS['wpm_username']);
-	$HTTP_POST_VARS['wpm_userid'] = $temp_data['user_id'];
+		$temp_data = get_userdata($_POST['wpm_username']);
+	$_POST['wpm_userid'] = $temp_data['user_id'];
 	if( !$temp_data )
 		{
 			message_die(GENERAL_ERROR, $lang['not_existing_user'], "", __LINE__, __FILE__, $sql[$i]);
@@ -63,7 +63,7 @@ if( $HTTP_POST_VARS['mode'] == 'update' )
 	$vars = array('wpm_username', 'wpm_userid');
 	for( $i = 0; $i < count($vars); $i++ )
 	{
-		$value = str_replace("\'", "''", $HTTP_POST_VARS[$vars[$i]]);
+		$value = str_replace("\'", "''", $_POST[$vars[$i]]);
 		$value = trim($value);
 		$value = addslashes($value);
 		$sql[] = "UPDATE " . WPM . "
@@ -81,7 +81,7 @@ if( $HTTP_POST_VARS['mode'] == 'update' )
 	$vars = array('wpm_subject', 'wpm_message');
 	for( $i = 0; $i < count($vars); $i++ )
 	{
-		$value = str_replace("\'", "'", $HTTP_POST_VARS[$vars[$i]]);
+		$value = str_replace("\'", "'", $_POST[$vars[$i]]);
 		if(empty($value))
 		{
 			message_die(GENERAL_MESSAGE, sprintf($lang['empty_data'], '<a href="' . append_sid(basename(__FILE__)) . '">', '</a>'), $lang['wpm']);

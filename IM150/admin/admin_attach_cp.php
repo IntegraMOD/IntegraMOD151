@@ -61,13 +61,13 @@ include($phpbb_root_path . 'attach_mod/includes/functions_admin.' . $phpEx);
 //
 $start = get_var('start', 0);
 
-if(isset($HTTP_POST_VARS['order']))
+if(isset($_POST['order']))
 {
-	$sort_order = ($HTTP_POST_VARS['order'] == 'ASC') ? 'ASC' : 'DESC';
+	$sort_order = ($_POST['order'] == 'ASC') ? 'ASC' : 'DESC';
 }
-else if(isset($HTTP_GET_VARS['order']))
+else if(isset($_GET['order']))
 {
-	$sort_order = ($HTTP_GET_VARS['order'] == 'ASC') ? 'ASC' : 'DESC';
+	$sort_order = ($_GET['order'] == 'ASC') ? 'ASC' : 'DESC';
 }
 else
 {
@@ -77,16 +77,16 @@ else
 $mode = get_var('mode', '');
 $view = get_var('view', '');
 
-if(isset($HTTP_GET_VARS['uid']) || isset($HTTP_POST_VARS['u_id']))
+if(isset($_GET['uid']) || isset($_POST['u_id']))
 {
-	$uid = (isset($HTTP_POST_VARS['u_id'])) ? $HTTP_POST_VARS['u_id'] : $HTTP_GET_VARS['uid'];
+	$uid = (isset($_POST['u_id'])) ? $_POST['u_id'] : $_GET['uid'];
 }
 else
 {
 	$uid = '';
 }
 
-$view = ( $HTTP_POST_VARS['search'] ) ? 'attachments' : $view;
+$view = ( $_POST['search'] ) ? 'attachments' : $view;
 
 //
 // process modes based on view
@@ -229,11 +229,11 @@ if (!empty($sort_order))
 	$select_sort_order .= '</select>';
 }
 
-$submit_change = ( isset($HTTP_POST_VARS['submit_change']) ) ? TRUE : FALSE;
-$delete = ( isset($HTTP_POST_VARS['delete']) ) ? TRUE : FALSE;
-$delete_id_list = ( isset($HTTP_POST_VARS['delete_id_list']) ) ? array_map('intval', $HTTP_POST_VARS['delete_id_list']) : array();
+$submit_change = ( isset($_POST['submit_change']) ) ? TRUE : FALSE;
+$delete = ( isset($_POST['delete']) ) ? TRUE : FALSE;
+$delete_id_list = ( isset($_POST['delete_id_list']) ) ? array_map('intval', $_POST['delete_id_list']) : array();
 
-$confirm = ( $HTTP_POST_VARS['confirm'] ) ? TRUE : FALSE;
+$confirm = ( $_POST['confirm'] ) ? TRUE : FALSE;
 
 if ($confirm && sizeof($delete_id_list) > 0)
 {
@@ -294,9 +294,9 @@ $template->assign_vars(array(
 
 if ($submit_change && $view == 'attachments')
 {
-	$attach_change_list = ( isset($HTTP_POST_VARS['attach_id_list']) ) ? array_map('intval', $HTTP_POST_VARS['attach_id_list']) : array();
-	$attach_comment_list = ( isset($HTTP_POST_VARS['attach_comment_list']) ) ? $HTTP_POST_VARS['attach_comment_list'] : array();
-	$attach_download_count_list = ( isset($HTTP_POST_VARS['attach_count_list']) ) ? array_map('intval', $HTTP_POST_VARS['attach_count_list']) : array();
+	$attach_change_list = ( isset($_POST['attach_id_list']) ) ? array_map('intval', $_POST['attach_id_list']) : array();
+	$attach_comment_list = ( isset($_POST['attach_comment_list']) ) ? $_POST['attach_comment_list'] : array();
+	$attach_download_count_list = ( isset($_POST['attach_count_list']) ) ? array_map('intval', $_POST['attach_count_list']) : array();
 
 	//
 	// Generate correct Change List
@@ -622,7 +622,7 @@ if ($view == 'username')
 			$row_class = ( !($i % 2) ) ? $theme['td_class1'] : $theme['td_class2'];
 
 			$template->assign_block_vars('memberrow', array(
-				'ROW_NUMBER' => $i + ( $HTTP_GET_VARS['start'] + 1 ),
+				'ROW_NUMBER' => $i + ( $_GET['start'] + 1 ),
 				'ROW_COLOR' => '#' . $row_color,
 				'ROW_CLASS' => $row_class,
 				'USERNAME' => $username,
@@ -651,7 +651,7 @@ if ($view == 'username')
 if ($view == 'attachments')
 {
 	$user_based = ( !empty($uid) ) ? TRUE : FALSE;
-	$search_based = ( $HTTP_POST_VARS['search'] ) ? TRUE : FALSE;
+	$search_based = ( $_POST['search'] ) ? TRUE : FALSE;
 	
 	$hidden_fields = '';
 	
@@ -839,7 +839,7 @@ if ($view == 'attachments')
 			$hidden_field = '<input type="hidden" name="attach_id_list[]" value="' . intval($attachments[$i]['attach_id']) . '">';
 
 			$template->assign_block_vars('attachrow', array(
-				'ROW_NUMBER' => $i + ( $HTTP_GET_VARS['start'] + 1 ),
+				'ROW_NUMBER' => $i + ( $_GET['start'] + 1 ),
 				'ROW_COLOR' => '#' . $row_color,
 				'ROW_CLASS' => $row_class,
 

@@ -27,11 +27,11 @@ $template->set_filenames(array(
 );
 
 
-if ( isset($HTTP_POST_VARS['submit']) )
+if ( isset($_POST['submit']) )
 {
 	$user_id 	= 0;
 	$user_level = 0;
-	$this_userdata = get_userdata($HTTP_POST_VARS['username'], true);
+	$this_userdata = get_userdata($_POST['username'], true);
 	
 	if( !$this_userdata )
 	{
@@ -64,9 +64,9 @@ if ( isset($HTTP_POST_VARS['submit']) )
 		);
 	}
 }
-else if ( $HTTP_GET_VARS['mode'] == 'unmis' )
+else if ( $_GET['mode'] == 'unmis' )
 {
-	$userid = intval($HTTP_GET_VARS['userid']);
+	$userid = intval($_GET['userid']);
 	$sql = 'UPDATE ' . USERS_TABLE . ' SET ct_miserable_user = 0 WHERE user_id = ' . $userid;
 				
 	// Execute SQL Command in database

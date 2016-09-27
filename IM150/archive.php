@@ -14,8 +14,8 @@ foreach($var_list as $name => $value)
 
 unset($var_list, $name, $value, $safelist);
 
-$HTTP_COOKIE_VARS 	= $_COOKIE;
-$HTTP_GET_VARS 		= $_GET;
+$_COOKIE 	= $_COOKIE;
+$_GET 		= $_GET;
 
 define('IN_PHPBB', true);
 $phpbb_root_path = './';

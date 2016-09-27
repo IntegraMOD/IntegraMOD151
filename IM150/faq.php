@@ -48,9 +48,9 @@ if (defined('PRILLIAN_INSTALLED')) include_once(PRILL_PATH . 'prill_common.' . $
 //
 // Load the appropriate faq file
 //
-if( isset($HTTP_GET_VARS['mode']) )
+if( isset($_GET['mode']) )
 {
-	switch( $HTTP_GET_VARS['mode'] )
+	switch( $_GET['mode'] )
 	{
 		case 'bbcode':
 			$lang_file = 'lang_bbcode';
@@ -123,13 +123,13 @@ $page_title = $l_title;
 include($phpbb_root_path . 'includes/page_header.'.$phpEx);
 
 $template->set_filenames(array(
-	'body' => (isset($HTTP_GET_VARS['dhtml']) && $HTTP_GET_VARS['dhtml'] == 'no' ? 'faq_body.tpl' : 'faq_dhtml.tpl'))
+	'body' => (isset($_GET['dhtml']) && $_GET['dhtml'] == 'no' ? 'faq_body.tpl' : 'faq_dhtml.tpl'))
 );
 make_jumpbox('viewforum.'.$phpEx);
 
 $template->assign_vars(array(
 	'U_CFAQ_JSLIB' => $phpbb_root_path . 'templates/collapsible_faq.js',
-	'L_CFAQ_NOSCRIPT' => sprintf($lang['dhtml_faq_noscript'], ('<a href="'.append_sid("faq.$phpEx?dhtml=no".(isset($HTTP_GET_VARS['mode']) ? '&amp;mode='.$HTTP_GET_VARS['mode'] : '')).'">'), '</a>'),
+	'L_CFAQ_NOSCRIPT' => sprintf($lang['dhtml_faq_noscript'], ('<a href="'.append_sid("faq.$phpEx?dhtml=no".(isset($_GET['mode']) ? '&amp;mode='.$_GET['mode'] : '')).'">'), '</a>'),
 	'L_FAQ_TITLE' => $l_title, 
 	'L_BACK_TO_TOP' => $lang['Back_to_top'])
 );

@@ -73,9 +73,9 @@ if( !$is_auth['auth_read'] )
 //
 
 // see if we need offset
-if (isset($HTTP_POST_VARS['start']) || isset($HTTP_GET_VARS['start']))
+if (isset($_POST['start']) || isset($_GET['start']))
 {
-	$start=(isset($HTTP_POST_VARS['start'])) ? intval($HTTP_POST_VARS['start']) : intval($HTTP_GET_VARS['start']);
+	$start=(isset($_POST['start'])) ? intval($_POST['start']) : intval($_GET['start']);
 } else $start=0;
 
 $template->set_filenames(array( 

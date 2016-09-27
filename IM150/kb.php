@@ -27,7 +27,7 @@ if ( file_exists( './viewtopic.php' ) ) // -------------------------------------
 	define( 'MXBB_MODULE', false ); 
 	define( 'IN_PHPBB', true );
 	define('CT_SECLEVEL', 'MEDIUM');
-	$ct_ignorepvar = array('helpbox','message','article_desc','article_name','message',' ($pic_filetype !');
+	$ct_ignorepvar = array('helpbox');
 	define( 'IN_PORTAL', true );
 	
 	// When run as a phpBB mod these paths are identical ;)
@@ -74,12 +74,12 @@ else // ------------------------------------------------------------------------
 
 		define( 'MXBB_27x', file_exists( $mx_root_path . 'mx_login.php' ) );
 		
-		if ( !isset( $HTTP_GET_VARS['print'] ) )
+		if ( !isset( $_GET['print'] ) )
 		{
 			include_once( $module_root_path . 'includes/kb_constants.' . $phpEx );
 			include_once( $module_root_path . 'includes/kb_pages.' . $phpEx );
 
-			$start = ( isset( $HTTP_GET_VARS['start'] ) ) ? intval( $HTTP_GET_VARS['start'] ) : 0;
+			$start = ( isset( $_GET['start'] ) ) ? intval( $_GET['start'] ) : 0;
 			
 			$url = '';
 			if ( empty( $article_id ) )
@@ -163,9 +163,9 @@ $show_new = true;
 
 // page number
 
-if ( isset( $HTTP_POST_VARS['page_num'] ) || isset( $HTTP_GET_VARS['page_num'] ) )
+if ( isset( $_POST['page_num'] ) || isset( $_GET['page_num'] ) )
 {
-	$page_num = ( isset( $HTTP_POST_VARS['page_num'] ) ) ? intval( $HTTP_POST_VARS['page_num'] ) : intval( $HTTP_GET_VARS['page_num'] );
+	$page_num = ( isset( $_POST['page_num'] ) ) ? intval( $_POST['page_num'] ) : intval( $_GET['page_num'] );
 	$page_num = $page_num - 1;
 }
 else
@@ -173,9 +173,9 @@ else
 	$page_num = 0;
 }
 // Print version
-if ( isset( $HTTP_POST_VARS['print'] ) || isset( $HTTP_GET_VARS['print'] ) )
+if ( isset( $_POST['print'] ) || isset( $_GET['print'] ) )
 {
-	$print_version = ( isset( $HTTP_POST_VARS['print'] ) ) ? $HTTP_POST_VARS['print'] : $HTTP_GET_VARS['print'];
+	$print_version = ( isset( $_POST['print'] ) ) ? $_POST['print'] : $_GET['print'];
 	$print_version = htmlspecialchars( $print_version );
 }
 else
@@ -225,14 +225,14 @@ if ( MXBB_MODULE )
 {
 	// Newssuite operation mode?
 	//-------------------------------------------------------------------------
-	$total_blockk = count( $HTTP_SESSION_VARS['mx_pages']['page_' . $page_id]['blocks'] );
+	$total_blockk = count( $_SESSION['mx_pages']['page_' . $page_id]['blocks'] );
 	
 	$kb_config['news_operate_mode'] = '';
 	for( $blockk = 0; $blockk < $total_blockk; $blockk++ )
 	{
-		if ( $HTTP_SESSION_VARS['block_' . $block_rows[$blockk]['block_id']]['news_source_switch']['parameter_value'] == 'kb' && $HTTP_SESSION_VARS['block_' . $block_rows[$blockk]['block_id']]['news_mode_operate']['parameter_value'] == 'Source' )
+		if ( $_SESSION['block_' . $block_rows[$blockk]['block_id']]['news_source_switch']['parameter_value'] == 'kb' && $_SESSION['block_' . $block_rows[$blockk]['block_id']]['news_mode_operate']['parameter_value'] == 'Source' )
 		{
-			$newssuite_select_par = $HTTP_SESSION_VARS['block_' . $block_rows[$blockk]['block_id']]['news_type_select']['parameter_value']; 
+			$newssuite_select_par = $_SESSION['block_' . $block_rows[$blockk]['block_id']]['news_type_select']['parameter_value']; 
 			// Extract 'what posts to view info', the cool Array ;)
 			$news_type_select_data = array();
 			$news_type_select_temp = $newssuite_select_par;
@@ -252,15 +252,15 @@ $is_admin = ( ( $userdata['user_level'] == ADMIN  ) && $userdata['session_logged
 
 // mode
 
-if ( isset( $HTTP_POST_VARS['mode'] ) || isset( $HTTP_GET_VARS['mode'] ) )
+if ( isset( $_POST['mode'] ) || isset( $_GET['mode'] ) )
 {
-	$mode = ( isset( $HTTP_POST_VARS['mode'] ) ) ? $HTTP_POST_VARS['mode'] : $HTTP_GET_VARS['mode'];
-	$mode = ( htmlspecialchars( $mode ) != 'cat' || intval ($HTTP_GET_VARS['cat'] ) != 0 ) ? htmlspecialchars( $mode ) : '';
+	$mode = ( isset( $_POST['mode'] ) ) ? $_POST['mode'] : $_GET['mode'];
+	$mode = ( htmlspecialchars( $mode ) != 'cat' || intval ($_GET['cat'] ) != 0 ) ? htmlspecialchars( $mode ) : '';
 }
 
-if ( isset( $HTTP_POST_VARS['stats'] ) || isset( $HTTP_GET_VARS['stats'] ) )
+if ( isset( $_POST['stats'] ) || isset( $_GET['stats'] ) )
 {
-	$stats = ( isset( $HTTP_POST_VARS['stats'] ) ) ? $HTTP_POST_VARS['stats'] : $HTTP_GET_VARS['stats'];
+	$stats = ( isset( $_POST['stats'] ) ) ? $_POST['stats'] : $_GET['stats'];
 	$stats = htmlspecialchars( $stats );
 }
 

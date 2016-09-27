@@ -41,7 +41,7 @@ $album_root_path = $phpbb_root_path . 'album_mod/';
 require($album_root_path. 'album_common.'.$phpEx);
 $album_user_id = ALBUM_PUBLIC_GALLERY;
 
-if( !isset($HTTP_POST_VARS['submit']) )
+if( !isset($_POST['submit']) )
 {
 	album_read_tree();
 	$s_album_cat_list = album_get_tree_option(ALBUM_ROOT_CATEGORY, ALBUM_AUTH_VIEW, ALBUM_SELECTBOX_INCLUDE_ALL | ALBUM_SELECTBOX_INCLUDE_ROOT);
@@ -65,9 +65,9 @@ if( !isset($HTTP_POST_VARS['submit']) )
 }
 else
 {
-	if( !isset($HTTP_GET_VARS['cat_id']) )
+	if( !isset($_GET['cat_id']) )
 	{
-		$cat_id = intval($HTTP_POST_VARS['cat_id']);
+		$cat_id = intval($_POST['cat_id']);
 
 		$template->set_filenames(array(
 			'body' => 'admin/album_auth_body.tpl')
@@ -157,16 +157,16 @@ else
 	}
 	else
 	{
-		$cat_id = intval($HTTP_GET_VARS['cat_id']);
+		$cat_id = intval($_GET['cat_id']);
 
-		$view_groups = @implode(',', $HTTP_POST_VARS['view']);
-		$upload_groups = @implode(',', $HTTP_POST_VARS['upload']);
-		$rate_groups = @implode(',', $HTTP_POST_VARS['rate']);
-		$comment_groups = @implode(',', $HTTP_POST_VARS['comment']);
-		$edit_groups = @implode(',', $HTTP_POST_VARS['edit']);
-		$delete_groups = @implode(',', $HTTP_POST_VARS['delete']);
+		$view_groups = @implode(',', $_POST['view']);
+		$upload_groups = @implode(',', $_POST['upload']);
+		$rate_groups = @implode(',', $_POST['rate']);
+		$comment_groups = @implode(',', $_POST['comment']);
+		$edit_groups = @implode(',', $_POST['edit']);
+		$delete_groups = @implode(',', $_POST['delete']);
 
-		$moderator_groups = @implode(',', $HTTP_POST_VARS['moderator']);
+		$moderator_groups = @implode(',', $_POST['moderator']);
 
 		$sql = "UPDATE ". ALBUM_CAT_TABLE ."
 				SET cat_view_groups = '$view_groups', cat_upload_groups = '$upload_groups', cat_rate_groups = '$rate_groups', cat_comment_groups = '$comment_groups', cat_edit_groups = '$edit_groups', cat_delete_groups = '$delete_groups',	cat_moderator_groups = '$moderator_groups'

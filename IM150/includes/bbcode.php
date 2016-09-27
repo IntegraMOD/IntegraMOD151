@@ -138,9 +138,8 @@ function prepare_bbcode_template($bbcode_tpl)
 // Mighty Gorgon - Full Album Pack - END
 
 	$bbcode_tpl['email'] = str_replace('{EMAIL}', '\\1', $bbcode_tpl['email']);
-    $bbcode_tpl['GVideo'] = str_replace('{GVIDEOLINK}', $lang['GVideo_link'], $bbcode_tpl['GVideo']);
-    $bbcode_tpl['youtube'] = str_replace('{YOUTUBEID}', '\\3', $bbcode_tpl['youtube']);
-    $bbcode_tpl['youtube'] = str_replace('{YOUTUBELINK}', $lang['youtube_link'], $bbcode_tpl['youtube']); 
+	$bbcode_tpl['youtube'] = str_replace('{YOUTUBEID}', '\\1', $bbcode_tpl['youtube']);
+	$bbcode_tpl['youtube'] = str_replace('{YOUTUBELINK}', $lang['youtube_link'], $bbcode_tpl['youtube']); 
 
 	$bbcode_tpl['acronym_open'] = str_replace('{DESCRIPTION}', '\\1', $bbcode_tpl['acronym_open']);
 
@@ -219,9 +218,9 @@ function prepare_bbcode_template($bbcode_tpl)
 */
 function get_image_tag_replacement($bbcode_tpl)
 {
-	global $lang, $HTTP_POST_VARS, $HTTP_GET_VARS;
+	global $lang, $_POST, $_GET;
 	$bb_tmpl = '';
-	if (isset($HTTP_POST_VARS['p_sid']))
+	if (isset($_POST['p_sid']))
 	{
 		if (isset($bbcode_tpl['p_img']))
 		{
@@ -467,10 +466,6 @@ function bbencode_second_pass($text, $uid)
 	// [email]user@domain.tld[/email] code..
 	$patterns[] = "#\[email\]([a-z0-9&\-_.]+?@[\w\-]+\.([\w\-\.]+\.)?[\w]+)\[/email\]#si";
 	$replacements[] = $bbcode_tpl['email'];
-
-	// [GVideo]GVideo URL[/GVideo] code..
-    $patterns[] = "#\[GVideo\]http://video.google.[A-Za-z0-9.]{2,5}/videoplay\?docid=([0-9A-Za-z-_]*)[^[]*\[/GVideo\]#is";
-    $replacements[] = $bbcode_tpl['GVideo'];
 
     // [youtube]YouTube URL[/youtube] code..
     $patterns[] = "#\[youtube\](?:http|https)?://(?:www\.)?(youtube.com|youtu.be|gaming.youtube.com|m.youtube.com)/(watch\?v=|v/|)([0-9A-Za-z-_]{11})[^[]*\[/youtube\]#is";
@@ -1394,6 +1389,22 @@ function bbcode_array_pop(&$stack)
 function smilies_pass($message)
 {
 	static $orig, $repl;
+//-- mod : cache -----------------------------------------------------------------------------------
+//-- add
+	global $phpEx, $phpbb_root_path, $smilies, $board_config;
+
+	if ( defined('CACHE_SMILIES') )
+	{
+		@include( $phpbb_root_path . './includes/def_smilies.' . $phpEx );
+		if ( empty($smilies) )
+		{
+			cache_smilies();
+			include( $phpbb_root_path . './includes/def_smilies.' . $phpEx );
+		}
+	}
+	else
+	{
+//-- fin mod : cache -------------------------------------------------------------------------------
 
 	if (!isset($orig))
 	{
@@ -1414,6 +1425,11 @@ function smilies_pass($message)
 				message_die(GENERAL_ERROR, "Couldn't obtain smilies data", "", __LINE__, __FILE__, $sql);
 			}
 			$smilies = $db->sql_fetchrowset($result);
+//-- mod : cache -----------------------------------------------------------------------------------
+//-- add
+		}
+	}
+//-- fin mod : cache -------------------------------------------------------------------------------
 
 			if (count($smilies))
 			{
@@ -1432,7 +1448,10 @@ function smilies_pass($message)
 				$var_cache->save($repl, 'repl2', 'smilies');
 			}
 		}
-	}
+//-- mod : cache -----------------------------------------------------------------------------------
+//-- delete
+//	}
+//-- fin mod : cache -------------------------------------------------------------------------------
 
 	if (count($orig))
 	{

@@ -56,21 +56,21 @@ init_userprefs($userdata);
 // End session management
 //
 
-	if(isset($HTTP_POST_VARS['txn_id']) || isset($HTTP_GET_VARS['tx']))
+	if(isset($_POST['txn_id']) || isset($_GET['tx']))
 	{
-		$txn_id = isset($HTTP_POST_VARS['txn_id']) ? htmlspecialchars($HTTP_POST_VARS['txn_id']) : htmlspecialchars($HTTP_GET_VARS['tx']);
+		$txn_id = isset($_POST['txn_id']) ? htmlspecialchars($_POST['txn_id']) : htmlspecialchars($_GET['tx']);
 	}
-	if(isset($HTTP_POST_VARS['mc_currency']) || isset($HTTP_GET_VARS['cc']))
+	if(isset($_POST['mc_currency']) || isset($_GET['cc']))
 	{
-		$payment_currency = isset($HTTP_POST_VARS['mc_currency']) ? htmlspecialchars($HTTP_POST_VARS['mc_currency']) : htmlspecialchars($HTTP_GET_VARS['cc']);
+		$payment_currency = isset($_POST['mc_currency']) ? htmlspecialchars($_POST['mc_currency']) : htmlspecialchars($_GET['cc']);
 	}
-	if(isset($HTTP_POST_VARS['mc_gross']) || isset($HTTP_GET_VARS['amt']))
+	if(isset($_POST['mc_gross']) || isset($_GET['amt']))
 	{
-		$payment_amount = isset($HTTP_POST_VARS['mc_gross']) ? htmlspecialchars($HTTP_POST_VARS['mc_gross']) : htmlspecialchars($HTTP_GET_VARS['amt']);
+		$payment_amount = isset($_POST['mc_gross']) ? htmlspecialchars($_POST['mc_gross']) : htmlspecialchars($_GET['amt']);
 	}
-	if(isset($HTTP_POST_VARS['payment_status']) || isset($HTTP_GET_VARS['st']))
+	if(isset($_POST['payment_status']) || isset($_GET['st']))
 	{
-		$payment_status = isset($HTTP_POST_VARS['payment_status']) ? htmlspecialchars($HTTP_POST_VARS['payment_status']) : htmlspecialchars($HTTP_GET_VARS['st']);
+		$payment_status = isset($_POST['payment_status']) ? htmlspecialchars($_POST['payment_status']) : htmlspecialchars($_GET['st']);
 	}
 
 

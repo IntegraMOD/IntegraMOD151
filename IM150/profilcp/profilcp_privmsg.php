@@ -47,9 +47,9 @@ if ( defined('IN_CASHMOD') )
 }
 
 $privmsg_mode = '';
-if ( isset($HTTP_GET_VARS['privmsg_mode']) || isset($HTTP_POST_VARS['privmsg_mode']) )
+if ( isset($_GET['privmsg_mode']) || isset($_POST['privmsg_mode']) )
 {
-	$privmsg_mode = (isset($HTTP_POST_VARS['privmsg_mode'])) ? $HTTP_POST_VARS['privmsg_mode'] : $HTTP_GET_VARS['privmsg_mode'];
+	$privmsg_mode = (isset($_POST['privmsg_mode'])) ? $_POST['privmsg_mode'] : $_GET['privmsg_mode'];
 }
 $mode = $privmsg_mode;
 
@@ -64,30 +64,30 @@ $html_entities_replace = array('&amp;', '&lt;', '&gt;', '&quot;');
 //
 // Parameters
 //
-$submit			= isset($HTTP_POST_VARS['post']);
-$submit_search	= isset($HTTP_POST_VARS['usersubmit']);
-$submit_msgdays	= isset($HTTP_POST_VARS['submit_msgdays']);
-$cancel			= isset($HTTP_POST_VARS['cancel']);
-$preview		= isset($HTTP_POST_VARS['preview']);
-$confirm		= isset($HTTP_POST_VARS['confirm']);
-$delete			= isset($HTTP_POST_VARS['delete']);
-$delete_all		= isset($HTTP_POST_VARS['deleteall']);
-$save			= isset($HTTP_POST_VARS['save']);
+$submit			= isset($_POST['post']);
+$submit_search	= isset($_POST['usersubmit']);
+$submit_msgdays	= isset($_POST['submit_msgdays']);
+$cancel			= isset($_POST['cancel']);
+$preview		= isset($_POST['preview']);
+$confirm		= isset($_POST['confirm']);
+$delete			= isset($_POST['delete']);
+$delete_all		= isset($_POST['deleteall']);
+$save			= isset($_POST['save']);
 $refresh		= $preview || $submit_search;
-$mark_list		= ( !empty($HTTP_POST_VARS['mark']) ) ? $HTTP_POST_VARS['mark'] : 0;
+$mark_list		= ( !empty($_POST['mark']) ) ? $_POST['mark'] : 0;
 $folder			= $sub;
-$sid = (isset($HTTP_POST_VARS['sid'])) ? $HTTP_POST_VARS['sid'] : 0;
+$sid = (isset($_POST['sid'])) ? $_POST['sid'] : 0;
 
 //
 // Var definitions
 //
-$start = ( !empty($HTTP_GET_VARS['start']) ) ? intval($HTTP_GET_VARS['start']) : 0;
+$start = ( !empty($_GET['start']) ) ? intval($_GET['start']) : 0;
 $start = ($start < 0) ? 0 : $start;
 
 $privmsg_id = '';
-if ( isset($HTTP_POST_VARS[POST_POST_URL]) || isset($HTTP_GET_VARS[POST_POST_URL]) )
+if ( isset($_POST[POST_POST_URL]) || isset($_GET[POST_POST_URL]) )
 {
-	$privmsg_id = ( isset($HTTP_POST_VARS[POST_POST_URL]) ) ? intval($HTTP_POST_VARS[POST_POST_URL]) : intval($HTTP_GET_VARS[POST_POST_URL]);
+	$privmsg_id = ( isset($_POST[POST_POST_URL]) ) ? intval($_POST[POST_POST_URL]) : intval($_GET[POST_POST_URL]);
 }
 
 $error = FALSE;
@@ -98,9 +98,9 @@ execute_privmsgs_attachment_handling($mode);
 //
 if ( $mode == 'read' )
 {
-	if ( !empty($HTTP_GET_VARS[POST_POST_URL]) )
+	if ( !empty($_GET[POST_POST_URL]) )
 	{
-		$privmsgs_id = intval($HTTP_GET_VARS[POST_POST_URL]);
+		$privmsgs_id = intval($_GET[POST_POST_URL]);
 	}
 	else
 	{
@@ -625,7 +625,7 @@ else if ( ( $delete && $mark_list ) || $delete_all )
 		$s_hidden_fields .= '<input type="hidden" name="mode" value="privmsg" />';
 		$s_hidden_fields .= '<input type="hidden" name="privmsg_mode" value="' . $mode . '" />';
 		$s_hidden_fields .= '<input type="hidden" name="sub" value="' . $folder . '" />';
-		$s_hidden_fields .= ( isset($HTTP_POST_VARS['delete']) ) ? '<input type="hidden" name="delete" value="true" />' : '<input type="hidden" name="deleteall" value="true" />';
+		$s_hidden_fields .= ( isset($_POST['delete']) ) ? '<input type="hidden" name="delete" value="true" />' : '<input type="hidden" name="deleteall" value="true" />';
 
 		for($i = 0; $i < count($mark_list); $i++)
 		{
@@ -1043,7 +1043,7 @@ else if ( $submit || $refresh || $mode != '' )
 {
 	if ( !$userdata['session_logged_in'] )
 	{
-		$buddy_id = ( isset($HTTP_GET_VARS['b']) ) ? '&b=' . intval($HTTP_GET_VARS['b']) : '';
+		$buddy_id = ( isset($_GET['b']) ) ? '&b=' . intval($_GET['b']) : '';
 		redirect(append_sid("login.$phpEx?redirect=profile.$phpEx&mode=privmsg&sub=$folder&privmsg_mode=$mode" . $buddy_id, true));
 	}
 	
@@ -1056,7 +1056,7 @@ else if ( $submit || $refresh || $mode != '' )
 	}
 	else
 	{
-		$html_on = ( $submit || $refresh ) ? ( ( !empty($HTTP_POST_VARS['disable_html']) ) ? 0 : TRUE ) : $userdata['user_allowhtml'];
+		$html_on = ( $submit || $refresh ) ? ( ( !empty($_POST['disable_html']) ) ? 0 : TRUE ) : $userdata['user_allowhtml'];
 	}
 
 	if ( !$board_config['allow_bbcode'] )
@@ -1065,7 +1065,7 @@ else if ( $submit || $refresh || $mode != '' )
 	}
 	else
 	{
-		$bbcode_on = ( $submit || $refresh ) ? ( ( !empty($HTTP_POST_VARS['disable_bbcode']) ) ? 0 : TRUE ) : $userdata['user_allowbbcode'];
+		$bbcode_on = ( $submit || $refresh ) ? ( ( !empty($_POST['disable_bbcode']) ) ? 0 : TRUE ) : $userdata['user_allowbbcode'];
 	}
 
 	if ( !$board_config['allow_smilies'] )
@@ -1074,10 +1074,10 @@ else if ( $submit || $refresh || $mode != '' )
 	}
 	else
 	{
-		$smilies_on = ( $submit || $refresh ) ? ( ( !empty($HTTP_POST_VARS['disable_smilies']) ) ? 0 : TRUE ) : $userdata['user_allowsmile'];
+		$smilies_on = ( $submit || $refresh ) ? ( ( !empty($_POST['disable_smilies']) ) ? 0 : TRUE ) : $userdata['user_allowsmile'];
 	}
 
-	$attach_sig = ( $submit || $refresh ) ? ( ( !empty($HTTP_POST_VARS['attach_sig']) ) ? TRUE : 0 ) : $userdata['user_attachsig'];
+	$attach_sig = ( $submit || $refresh ) ? ( ( !empty($_POST['attach_sig']) ) ? TRUE : 0 ) : $userdata['user_attachsig'];
 	$user_sig = ( $userdata['user_sig'] != '' && $board_config['allow_sig'] ) ? $userdata['user_sig'] : "";
 	
 	if ( $submit && $mode != 'edit' )
@@ -1134,9 +1134,9 @@ else if ( $submit || $refresh || $mode != '' )
 			message_die(GENERAL_ERROR, 'Invalid_session');
 		}
 
-		if ( !empty($HTTP_POST_VARS['username']) )
+		if ( !empty($_POST['username']) )
 		{
-			$to_username = $HTTP_POST_VARS['username'];
+			$to_username = $_POST['username'];
 			$sql = "SELECT * FROM " . USERS_TABLE . " 
 					WHERE username = '" . str_replace("\'", "''", $to_username) . "' 
 						AND user_id <> " . ANONYMOUS;
@@ -1199,14 +1199,14 @@ else if ( $submit || $refresh || $mode != '' )
 			}
 		}
 
-		$privmsg_subject = trim(htmlspecialchars($HTTP_POST_VARS['subject']));
+		$privmsg_subject = trim(htmlspecialchars($_POST['subject']));
 		if ( empty($privmsg_subject) )
 		{
 			$error = TRUE;
 			$error_msg .= ( ( !empty($error_msg) ) ? '<br />' : '' ) . $lang['Empty_subject'];
 		}
 
-		if ( !empty($HTTP_POST_VARS['message']) )
+		if ( !empty($_POST['message']) )
 		{
 			if ( !$error )
 			{
@@ -1215,7 +1215,7 @@ else if ( $submit || $refresh || $mode != '' )
 					$bbcode_uid = make_bbcode_uid();
 				}
 
-				$privmsg_message = prepare_message($HTTP_POST_VARS['message'], $html_on, $bbcode_on, $smilies_on, $bbcode_uid);
+				$privmsg_message = prepare_message($_POST['message'], $html_on, $bbcode_on, $smilies_on, $bbcode_uid);
 
 			}
 		}
@@ -1394,9 +1394,9 @@ else if ( $submit || $refresh || $mode != '' )
 		// passed to the script, process it a little, do some checks
 		// where neccessary, etc.
 		//
-		$to_username = ( isset($HTTP_POST_VARS['username']) ) ? trim(strip_tags(stripslashes($HTTP_POST_VARS['username']))) : '';
-		$privmsg_subject = ( isset($HTTP_POST_VARS['subject']) ) ? trim(htmlspecialchars(stripslashes($HTTP_POST_VARS['subject']))) : '';
-		$privmsg_message = ( isset($HTTP_POST_VARS['message']) ) ? trim($HTTP_POST_VARS['message']) : '';
+		$to_username = ( isset($_POST['username']) ) ? trim(strip_tags(stripslashes($_POST['username']))) : '';
+		$privmsg_subject = ( isset($_POST['subject']) ) ? trim(htmlspecialchars(stripslashes($_POST['subject']))) : '';
+		$privmsg_message = ( isset($_POST['message']) ) ? trim($_POST['message']) : '';
 		// $privmsg_message = preg_replace('#<textarea>#si', '&lt;textarea&gt;', $privmsg_message);
 
 		if ( !$preview )
@@ -1452,9 +1452,9 @@ else if ( $submit || $refresh || $mode != '' )
 			message_die(GENERAL_ERROR, $lang['No_post_id']);
 		}
 
-		if ( !empty($HTTP_GET_VARS['b']) )
+		if ( !empty($_GET['b']) )
 		{
-			$user_id = intval($HTTP_GET_VARS['b']);
+			$user_id = intval($_GET['b']);
 
 			$sql = "SELECT username
 				FROM " . USERS_TABLE . "
@@ -1770,9 +1770,9 @@ else if ( $submit || $refresh || $mode != '' )
 		$s_hidden_fields .= '<input type="hidden" name="' . POST_POST_URL . '" value="' . $privmsg_id . '" />';
 	}
 
-if(isset($HTTP_GET_VARS['p']))
+if(isset($_GET['p']))
 {
-	$post_to_review = intval($HTTP_GET_VARS['p']);
+	$post_to_review = intval($_GET['p']);
 	
 	$sq1 = "SELECT privmsgs_text , privmsgs_bbcode_uid
 		   FROM  " . PRIVMSGS_TEXT_TABLE . "
@@ -2016,15 +2016,15 @@ else
 	//
 	// Show messages over previous x days/months
 	//
-	if ( $submit_msgdays && ( !empty($HTTP_POST_VARS['msgdays']) || !empty($HTTP_GET_VARS['msgdays']) ) )
+	if ( $submit_msgdays && ( !empty($_POST['msgdays']) || !empty($_GET['msgdays']) ) )
 	{
-		$msg_days = ( !empty($HTTP_POST_VARS['msgdays']) ) ? intval($HTTP_POST_VARS['msgdays']) : intval($HTTP_GET_VARS['msgdays']);
+		$msg_days = ( !empty($_POST['msgdays']) ) ? intval($_POST['msgdays']) : intval($_GET['msgdays']);
 		$min_msg_time = time() - ($msg_days * 86400);
 
 		$limit_msg_time_total = " AND privmsgs_date > $min_msg_time";
 		$limit_msg_time = " AND pm.privmsgs_date > $min_msg_time ";
 
-		if ( !empty($HTTP_POST_VARS['msgdays']) )
+		if ( !empty($_POST['msgdays']) )
 		{
 			$start = 0;
 		}

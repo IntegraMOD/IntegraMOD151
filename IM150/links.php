@@ -39,9 +39,9 @@ require($phpbb_root_path . 'language/lang_' . $board_config['default_lang'] . '/
 //
 // Count and forwrad
 //
-if($HTTP_GET_VARS['action'] == "go" && $HTTP_GET_VARS['link_id'])
+if($_GET['action'] == "go" && $_GET['link_id'])
 {
-	$link_id = $HTTP_GET_VARS['link_id'];
+	$link_id = $_GET['link_id'];
 	// Secure check
 	if(is_numeric($link_id))
 	{
@@ -80,23 +80,23 @@ include('includes/page_header.'.$phpEx);
 //
 // Define initial vars
 //
-$start = ( isset($HTTP_GET_VARS['start']) ) ? $HTTP_GET_VARS['start'] : 0;
+$start = ( isset($_GET['start']) ) ? $_GET['start'] : 0;
 
-if ( isset($HTTP_POST_VARS['t']) || isset($HTTP_GET_VARS['t']) ) 
+if ( isset($_POST['t']) || isset($_GET['t']) ) 
 {
-	$t = ( isset($HTTP_POST_VARS['t']) ) ? $HTTP_POST_VARS['t'] : $HTTP_GET_VARS['t'];
+	$t = ( isset($_POST['t']) ) ? $_POST['t'] : $_GET['t'];
 } else {
 	$t = 'index';
 }
-if ( isset($HTTP_POST_VARS['cat']) || isset($HTTP_GET_VARS['cat']) )
+if ( isset($_POST['cat']) || isset($_GET['cat']) )
 {
-	$cat = ( isset($HTTP_POST_VARS['cat']) ) ? $HTTP_POST_VARS['cat'] : $HTTP_GET_VARS['cat'];
+	$cat = ( isset($_POST['cat']) ) ? $_POST['cat'] : $_GET['cat'];
 } else {
 	$cat = 1;
 }
-if ( isset($HTTP_POST_VARS['search_keywords']) || isset($HTTP_GET_VARS['search_keywords']) )
+if ( isset($_POST['search_keywords']) || isset($_GET['search_keywords']) )
 {
-	$search_keywords = ( isset($HTTP_POST_VARS['search_keywords']) ) ? $HTTP_POST_VARS['search_keywords'] : $HTTP_GET_VARS['search_keywords'];
+	$search_keywords = ( isset($_POST['search_keywords']) ) ? $_POST['search_keywords'] : $_GET['search_keywords'];
 } else {
 	$search_keywords = '';
 }
@@ -331,22 +331,22 @@ if ($t=='pop' || $t=='new')
 
 if ($t=='sub_pages') 
 {
-	if ( isset($HTTP_GET_VARS['mode']) || isset($HTTP_POST_VARS['mode']) )
+	if ( isset($_GET['mode']) || isset($_POST['mode']) )
 	{
-		$mode = ( isset($HTTP_POST_VARS['mode']) ) ? $HTTP_POST_VARS['mode'] : $HTTP_GET_VARS['mode'];
+		$mode = ( isset($_POST['mode']) ) ? $_POST['mode'] : $_GET['mode'];
 	}
 	else
 	{
 		$mode = 'link_joined';
 	}
 
-	if(isset($HTTP_POST_VARS['order']))
+	if(isset($_POST['order']))
 	{
-		$sort_order = ($HTTP_POST_VARS['order'] == 'ASC') ? 'ASC' : 'DESC';
+		$sort_order = ($_POST['order'] == 'ASC') ? 'ASC' : 'DESC';
 	}
-	else if(isset($HTTP_GET_VARS['order']))
+	else if(isset($_GET['order']))
 	{
-		$sort_order = ($HTTP_GET_VARS['order'] == 'ASC') ? 'ASC' : 'DESC';
+		$sort_order = ($_GET['order'] == 'ASC') ? 'ASC' : 'DESC';
 	}
 	else
 	{

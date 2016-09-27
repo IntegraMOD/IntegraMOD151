@@ -1,5 +1,4 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
-<!-- mod : Loewen Enterprise - PAYPAL IPN REG / SUBSCRIPTION - GROUP -->
+<!DOCTYPE html>
 <html dir="{S_CONTENT_DIRECTION}">
 
 <head>
@@ -11,164 +10,39 @@
 <!--[if gte IE 5]><![if lt IE 7]><script type="text/javascript" src="templates/pngfix.js"></script><![endif]><![endif]--> 
 <link rel="shortcut icon" href="./favicon.ico">
 <link rel="stylesheet" href="{TEMPLATE}{T_HEAD_STYLESHEET}" type="text/css">
+
 <script type="text/javascript" src="templates/toggle_display.js"></script>
-<script type="text/javascript" src="templates/scripts.js"></script>
 <!-- BEGIN switch_enable_pm_popup -->
-<script type="text/javascript">
-<!--
-if ( {PRIVATE_MESSAGE_NEW_FLAG} )
-{
-window.open('{U_PRIVATEMSGS_POPUP}', '_phpbbprivmsg', 'HEIGHT=225,resizable=yes,WIDTH=400');;
-}
-//-->
-</script>
+<script type="text/javascript" src="templates/pmpopup.js"></script>
 <!-- END switch_enable_pm_popup -->
 <!-- Start add - No copy MOD -->
-<script language="javascript">
-<!-- 
-var previous_key ;
-
-function clickIE4(){
-if (event.button==2){
-alert('{L_NO_CLICK}');
-return false;
-}
-}
-
-function clickNS4(e){
-if (document.layers||document.getElementById&&!document.all){
-if (e.which==2||e.which==3){
-alert('{L_NO_CLICK}');
-return false;
-}
-}
-}
-
-if (document.layers){
-document.captureEvents(Event.MOUSEDOWN);
-document.onmousedown=clickNS4;
-}
-else if (document.all&&!document.getElementById){
-document.onmousedown=clickIE4;
-}
-function handleKeyDown()
-{
-	if (previous_key==17 )
-	{
-		switch (window.event.keyCode)
-		{
-			case 45 :
-			case 46: 
-			case 67:
-			case 88:
-				alert('{L_NO_COPY}');
-				event.keyCode=0;
-				previous_key=window.event.keyCode;
-				event.returnValue=false;
-				break;
-		}
-	} else if (previous_key==16)
-	{
-		switch (window.event.keyCode)
-		{
-			case 45 :
-			case 46: 
-				alert('{L_NO_COPY}'+window.event.keyCode);
-				event.keyCode=0;
-				previous_key=window.event.keyCode;
-				event.returnValue=false;
-				break;
-		}
-	}
-	previous_key=window.event.keyCode;
-}
-function handleKeyUp()
-{
-	previous_key=0;
-}
-
-if ( {USER_EXTRA} )
-{
-document.oncontextmenu=new Function("alert('{L_NO_CLICK}');return false")
-document.onkeyup = handleKeyUp;
-document.onkeydown = handleKeyDown;
-}
-//-->
-</script>
+<script type="text/javascript" src="templates/no.copy.js"></script>
 <!-- End add - No copy MOD -->
 <!-- BEGIN birthday_popup -->
-<script type="text/javascript">
-<!--
-window.open('{birthday_popup.U_BIRTHDAY_POPUP}', '_phpbbbirthday', 'HEIGHT=225,resizable=yes,WIDTH=400');
-//-->
-</script>
+<script type="text/javascript" src="templates/birthday.js"></script>
 <!-- END birthday_popup -->
-<script type="text/javascript"> 
-<!-- 
-function tour() { 
-window.open("tour.php", "_tour", "width=800,height=600,scrollbars,resizable=yes");
-} 
-//--> 
-</script>
+<script type="text/javascript" src="templates/tour.js"></script>
 <script type="text/javascript" src="templates/mouseover.js"></script>
 <!-- Prillian - Begin Code Additions -->
 <!-- BEGIN switch_user_logged_in -->
-<script type="text/javascript">
-<!--
-function prill_launch(url, w, h)
-{
-window.name = 'phpbbmain';
-prillian = window.open(url, 'prillian', 'height=' + h + ', width=' + w + ', innerWidth=' + w + ', innerHeight=' + h + ', resizable, scrollbars');
-}
-if ( {IM_AUTO_POPUP} ) 
-{ 
-prill_launch('{U_IM_LAUNCH}', '{IM_WIDTH}', '{IM_HEIGHT}');
-} 
-//-->
-</script>
+<script type="text/javascript" src="templates/prillian.js"></script>
 <!-- END switch_user_logged_in -->
 <!-- BEGIN buddy_alert -->
-<script type="text/javascript">
-if ( {buddy_alert.BUDDY_ALERT} )
-{
-window.open('{buddy_alert.U_BUDDY_ALERT}', '_buddyalert', 'HEIGHT=225,resizable=yes,WIDTH=400');
-}
-</script>
+<script type="text/javascript" src="templates/prillian.alert.js"></script>
 <!-- END buddy_alert -->
 <!-- Prillian - End Code Additions -->
-<script type="text/javascript" src="templates/fi_newsfader_user.js"></script>
-<style type="text/css">
-<!--
-   .finews {
-     height: 20px;
-     text-align: center;
-   }
--->
-</style>
-<script type="text/javascript" src="templates/jquery-1.6.4.min.js"></script>
-<script type="text/javascript">
-jQuery.noConflict();
-jQuery(document).ready(function(){
- 	// hides the fastreply as soon as the DOM is ready
- 	// (a little sooner than page load)
-  	jQuery('.fastreply').hide();
- 	// toggles the fastreply on clicking the link
-  	jQuery('a.fast-reply').click(function() {
- 		jQuery('.fastreply').toggle(500);
- 		return false;
-  		});
-	});
+<script type="text/javascript" src="templates/jquery-1.12.0.min.js"></script>
+<script type="text/javascript" src="templates/jquery.easing.min.js"></script>
+<script type="text/javascript" src="templates/jquery.toggle.js"></script>
+<script type="text/javascript" src="templates/jQuery.mobTabMenu.min.js"></script>
+<script type="text/javascript" src="templates/immenu.js"></script>
 
-	jQuery.noConflict();
-	jQuery(document).ready(function(){
-		jQuery("a.button").click(function(){
-		jQuery(this).toggleClass("active").next().slideToggle();
-		});
-
-	});
-</script>
 </head>
-<body>
+<body class="resp">
+	<div id="mobile-bar">
+		<a href="#" class="mob-tab-menu-toggle toggle"></a>
+	</div>
+	<nav class="mobile-menu" style="display: none;">{QMENUS}</nav>
 <!-- BEGIN switch_board_disabled -->
 <table width="100%" cellspacing="0" cellpadding="10" border="0" align="center"> 
   <tr> 
@@ -219,10 +93,10 @@ jQuery(document).ready(function(){
 <table class="bodyline" width="100%" cellspacing="0" cellpadding="0" border="0">
   <tr>
     <td>
-
 	<table class="forumline head" border="0" cellpadding="0" cellspacing="0">
 	  <tr>
 	    <td>
+<nav class="desktop-menu">
 	      <table border="0" cellpadding="0" cellspacing="0">
 		    <tr>
 			  <td class="top"><a href="#bot" title="{L_TOPIC_DOWN_IMAGE}"><span>&nbsp;</span></a></td>
@@ -239,6 +113,7 @@ jQuery(document).ready(function(){
 			  <td align="center" width="100%">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
 		    </tr>
 		  </table>
+</nav>
 <!-- BEGIN switch_user_logged_out -->
 		  <div class="finews" id="finewsdisplay"><script type="text/javascript" src="templates/fi_newsfader.js"></script></div>
 <!-- END switch_user_logged_out -->

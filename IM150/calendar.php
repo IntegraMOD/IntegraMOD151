@@ -49,9 +49,9 @@ include ($phpbb_root_path . 'includes/page_header.' . $phpEx);
 // get paramters
 //
 $start_date = 0;
-if (isset($HTTP_GET_VARS['start']))
+if (isset($_GET['start']))
 {
-	$p_date		= intval($HTTP_GET_VARS['start']);
+	$p_date		= intval($_GET['start']);
 	$year		= intval(substr($p_date, 0, 4));
 	$month		= intval(substr($p_date, 4, 2));
 	$day		= intval(substr($p_date, 6, 2));
@@ -65,10 +65,10 @@ if (isset($HTTP_GET_VARS['start']))
 	}
 }
 
-if (isset($HTTP_POST_VARS['start_month']))
+if (isset($_POST['start_month']))
 {
-	$month	= intval($HTTP_POST_VARS['start_month']);
-	$year	= intval($HTTP_POST_VARS['start_year']);
+	$month	= intval($_POST['start_month']);
+	$year	= intval($_POST['start_year']);
 	if (($month > 0) && ($year > 0))
 	{
 		$start_date = mktime( 0,0,0, $month, 01, $year);
@@ -82,9 +82,9 @@ if (empty($start_date) || ($start_date <= 0))
 
 // get the forum id selected
 $fid = '';
-if ( isset($HTTP_POST_VARS['selected_id']) || isset($HTTP_GET_VARS['fid']) )
+if ( isset($_POST['selected_id']) || isset($_GET['fid']) )
 {
-	$fid = isset($HTTP_POST_VARS['selected_id']) ? $HTTP_POST_VARS['selected_id'] : $HTTP_GET_VARS['fid'];
+	$fid = isset($_POST['selected_id']) ? $_POST['selected_id'] : $_GET['fid'];
 	if ($fid != 'Root')
 	{
 		$type = substr($fid, 0, 1);

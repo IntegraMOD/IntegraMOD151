@@ -32,20 +32,20 @@ include($phpbb_root_path . 'language/lang_' . $use_lang . '/lang_rating.' . $php
 include (RATING_PATH.'functions_rating.'.$phpEx);
 include (RATING_PATH.'functions_rating_2.'.$phpEx);
 
-$p = ( isset($HTTP_POST_VARS['p']) ) ? intval($HTTP_POST_VARS['p']) : intval($HTTP_GET_VARS['p']);
+$p = ( isset($_POST['p']) ) ? intval($_POST['p']) : intval($_GET['p']);
 if ( empty($p) ) die('No post id specified'); // NOTE: THIS SHOULD NEVER HAPPEN
-$i = intval($HTTP_GET_VARS['i']);
-$b = intval($HTTP_GET_VARS['b']);
-$n = intval($HTTP_GET_VARS['n']);
-$o = intval($HTTP_GET_VARS['o']);
+$i = intval($_GET['i']);
+$b = intval($_GET['b']);
+$n = intval($_GET['n']);
+$o = intval($_GET['o']);
 $this_url = append_sid($PHP_SELF.'?p='.$p);
 
 $config_set = get_rating_config();
 
-if ( isset($HTTP_POST_VARS['rating_form_submitted']) )
+if ( isset($_POST['rating_form_submitted']) )
 {
-	$anonymous_old = $HTTP_POST_VARS['anonymous_old'];
-	$anonymous_new = $HTTP_POST_VARS['anonymous_new'];
+	$anonymous_old = $_POST['anonymous_old'];
+	$anonymous_new = $_POST['anonymous_new'];
 	// UPDATE 'ANONYMOUS' SETTING IF IT HAS BEEN CHANGED
 	if ( (empty($anonymous_old) && !empty($anonymous_new)) || (!empty($anonymous_old) && empty($anonymous_new)) )
 	{
@@ -61,7 +61,7 @@ if ( isset($HTTP_POST_VARS['rating_form_submitted']) )
 		}
 	}
 
-	$new_rating = intval($HTTP_POST_VARS['rating']);
+	$new_rating = intval($_POST['rating']);
 	// CHECK IF NEW / CHANGED RATING
 	$sql = 'SELECT option_id FROM '.RATING_TABLE.' WHERE user_id = '.$userdata['user_id'].' AND post_id = '.$p;
 	if( !($result = $db->sql_query($sql)) )

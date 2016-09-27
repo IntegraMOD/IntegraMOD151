@@ -28,11 +28,11 @@ init_userprefs($userdata);
 // End session management
 
 // VALIDATE GET VARS
-$type = ( empty($HTTP_GET_VARS['type']) ) ? 'l' : $HTTP_GET_VARS['type'];
-$forum_id = intval($HTTP_GET_VARS['forum_id']);
-$postedby = intval($HTTP_GET_VARS['postedby']);
-$ratedby = intval($HTTP_GET_VARS['ratedby']);
-$ratingsby = ( !empty($HTTP_GET_VARS['ratingsby']) ) ? intval($HTTP_GET_VARS['ratingsby']) : 1;
+$type = ( empty($_GET['type']) ) ? 'l' : $_GET['type'];
+$forum_id = intval($_GET['forum_id']);
+$postedby = intval($_GET['postedby']);
+$ratedby = intval($_GET['ratedby']);
+$ratingsby = ( !empty($_GET['ratingsby']) ) ? intval($_GET['ratingsby']) : 1;
 $sql_limit = 20; // Number of posts/topics you want displayed 
 
 define('RATING_PATH', $phpbb_root_path.'mods/rating/');

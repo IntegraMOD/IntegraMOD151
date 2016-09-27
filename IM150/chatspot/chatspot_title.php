@@ -30,20 +30,20 @@ $phpbb_root_path = './../';
 include_once( $phpbb_root_path . 'extension.inc' );
 include_once( $phpbb_root_path . 'chatspot/chatspot_config.' . $phpEx );
 
-if( isset( $HTTP_GET_VARS[ 'room_name' ] ) )
-	$room_name = $HTTP_GET_VARS[ 'room_name' ];
+if( isset( $_GET[ 'room_name' ] ) )
+	$room_name = $_GET[ 'room_name' ];
 else
 	exit();
 	
 // this can't be hacked simply by manually entering &admin=1 to the URL because the room management page checks to
 // see if the user is really an admin or not; the admin variable is only used to show the link to that page.
-if( isset( $HTTP_GET_VARS[ 'admin' ] ) )
+if( isset( $_GET[ 'admin' ] ) )
 	$is_admin = TRUE;
 else
 	$is_admin = FALSE;
 	
-if( isset( $HTTP_GET_VARS[ 'sid' ] ) )
-	$SID = '?sid=' . $HTTP_GET_VARS[ 'sid' ];
+if( isset( $_GET[ 'sid' ] ) )
+	$SID = '?sid=' . $_GET[ 'sid' ];
 else
 	$SID = '';
 ?>

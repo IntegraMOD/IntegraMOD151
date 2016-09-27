@@ -138,9 +138,9 @@ include($phpbb_root_path."includes/functions_selects.$phpEx");
 include($phpbb_root_path . 'language/lang_' . $board_config['default_lang'] . '/lang_admin_faq_editor.' . $phpEx);
 
 // initially include the current FAQ or BBCode guide, depending on the file= in the query_string
-$file = isset($HTTP_GET_VARS['file']) ? htmlspecialchars($HTTP_GET_VARS['file']) : 'faq';
+$file = isset($_GET['file']) ? htmlspecialchars($_GET['file']) : 'faq';
 
-if( !isset($HTTP_GET_VARS['language']) && !isset($HTTP_POST_VARS['language']) )
+if( !isset($_GET['language']) && !isset($_POST['language']) )
 {
 	$template->set_filenames(array(
 		"body" => "admin/faq_select_lang_body.tpl")
@@ -161,7 +161,7 @@ if( !isset($HTTP_GET_VARS['language']) && !isset($HTTP_POST_VARS['language']) )
 }
 
 // get the language we want to edit
-$language = isset($HTTP_GET_VARS['language']) ? $HTTP_GET_VARS['language'] : $HTTP_POST_VARS['language'];
+$language = isset($_GET['language']) ? $_GET['language'] : $_POST['language'];
 
 // the FAQ which will generate our $faq array
 include($phpbb_root_path . 'language/lang_' . $language . '/lang_' . $file . '.' . $phpEx);
@@ -170,18 +170,18 @@ include($phpbb_root_path . 'language/lang_' . $language . '/lang_' . $file . '.'
 list($blocks, $quests) = faq_to_array($faq);
 
 // if we have a mode set this means we have to do something
-if(isset($HTTP_GET_VARS['mode']) || isset($HTTP_POST_VARS['mode']))
+if(isset($_GET['mode']) || isset($_POST['mode']))
 {
 	// fetch the mode and two commonly past variables
-	$mode = isset($HTTP_GET_VARS['mode']) ? $HTTP_GET_VARS['mode'] : $HTTP_POST_VARS['mode'];
-	$block_no = intval(isset($HTTP_GET_VARS['block']) ? $HTTP_GET_VARS['block'] : (isset($HTTP_POST_VARS['block']) ? $HTTP_POST_VARS['block'] : 0 ));
-	$quest_no = intval(isset($HTTP_GET_VARS['quest']) ? $HTTP_GET_VARS['quest'] : (isset($HTTP_POST_VARS['quest']) ? $HTTP_POST_VARS['quest'] : 0 ));
+	$mode = isset($_GET['mode']) ? $_GET['mode'] : $_POST['mode'];
+	$block_no = intval(isset($_GET['block']) ? $_GET['block'] : (isset($_POST['block']) ? $_POST['block'] : 0 ));
+	$quest_no = intval(isset($_GET['quest']) ? $_GET['quest'] : (isset($_POST['quest']) ? $_POST['quest'] : 0 ));
 
 	switch($mode)
 	{
 		// create a new block as a result of typing the block name and pressing submit
 		case 'block_new':
-			$blocks[] = isset($HTTP_GET_VARS['block_title']) ? $HTTP_GET_VARS['block_title'] : $HTTP_POST_VARS['block_title'];
+			$blocks[] = isset($_GET['block_title']) ? $_GET['block_title'] : $_POST['block_title'];
 			$quests[] = array();
 			break;
 
@@ -212,7 +212,7 @@ if(isset($HTTP_GET_VARS['mode']) || isset($HTTP_POST_VARS['mode']))
 
 		// result of pressing YES on the block delete confirmation 
 		case 'block_del_confirm':
-			if(isset($HTTP_GET_VARS['confirm']) || isset($HTTP_POST_VARS['confirm']))
+			if(isset($_GET['confirm']) || isset($_POST['confirm']))
 			{
 				for($i = $block_no; $i < count($blocks); $i++)
 				{
@@ -253,7 +253,7 @@ if(isset($HTTP_GET_VARS['mode']) || isset($HTTP_POST_VARS['mode']))
 
 		// actually do the edit after pressing submit on the block edit screen
 		case 'block_do_edit':
-			$blocks[$block_no] = isset($HTTP_GET_VARS['block_title']) ? $HTTP_GET_VARS['block_title'] : $HTTP_POST_VARS['block_title'];
+			$blocks[$block_no] = isset($_GET['block_title']) ? $_GET['block_title'] : $_POST['block_title'];
 			break;
 
 		// re-arrange the blocks after someone presses an UP link
@@ -301,7 +301,7 @@ if(isset($HTTP_GET_VARS['mode']) || isset($HTTP_POST_VARS['mode']))
 			);
 
 			$s_block_list = '';
-			$s_selected_block = intval(isset($HTTP_GET_VARS['block']) ? $HTTP_GET_VARS['block'] : $HTTP_POST_VARS['block']);
+			$s_selected_block = intval(isset($_GET['block']) ? $_GET['block'] : $_POST['block']);
 
 			for($i = 0; $i < count($blocks); $i++)
 			{
@@ -317,7 +317,7 @@ if(isset($HTTP_GET_VARS['mode']) || isset($HTTP_POST_VARS['mode']))
 				'L_ANSWER' => $lang['faq_answer'],
 				'L_SUBMIT' => $lang['Submit'],
 
-				'QUESTION' => htmlspecialchars(stripslashes(isset($HTTP_GET_VARS['quest_title']) ? $HTTP_GET_VARS['quest_title'] : $HTTP_POST_VARS['quest_title'])),
+				'QUESTION' => htmlspecialchars(stripslashes(isset($_GET['quest_title']) ? $_GET['quest_title'] : $_POST['quest_title'])),
 				'ANSWER' => '',
 
 				'S_BLOCK_LIST' => $s_block_list,
@@ -332,8 +332,8 @@ if(isset($HTTP_GET_VARS['mode']) || isset($HTTP_POST_VARS['mode']))
 
 		// actually create the question when the user submits the new question form
 		case 'quest_create':
-			$question = isset($HTTP_GET_VARS['quest_title']) ? $HTTP_GET_VARS['quest_title'] : $HTTP_POST_VARS['quest_title'];
-			$answer = str_replace("\n", "<br />", isset($HTTP_GET_VARS['answer']) ? $HTTP_GET_VARS['answer'] : $HTTP_POST_VARS['answer']);
+			$question = isset($_GET['quest_title']) ? $_GET['quest_title'] : $_POST['quest_title'];
+			$answer = str_replace("\n", "<br />", isset($_GET['answer']) ? $_GET['answer'] : $_POST['answer']);
 
 			$new_id = count($quests[$block_no]);
 
@@ -349,7 +349,7 @@ if(isset($HTTP_GET_VARS['mode']) || isset($HTTP_POST_VARS['mode']))
 			);
 
 			$s_block_list = '';
-			$s_selected_block = intval(isset($HTTP_GET_VARS['block']) ? $HTTP_GET_VARS['block'] : $HTTP_POST_VARS['block']);
+			$s_selected_block = intval(isset($_GET['block']) ? $_GET['block'] : $_POST['block']);
 
 			for($i = 0; $i < count($blocks); $i++)
 			{
@@ -379,10 +379,10 @@ if(isset($HTTP_GET_VARS['mode']) || isset($HTTP_POST_VARS['mode']))
 			exit;
 
 		case 'quest_do_edit':
-			$old_block_no = intval(isset($HTTP_GET_VARS['old_block']) ? $HTTP_GET_VARS['old_block'] : $HTTP_POST_VARS['old_block']);
+			$old_block_no = intval(isset($_GET['old_block']) ? $_GET['old_block'] : $_POST['old_block']);
 
-			$question = stripslashes(isset($HTTP_GET_VARS['quest_title']) ? $HTTP_GET_VARS['quest_title'] : $HTTP_POST_VARS['quest_title']);
-			$answer = str_replace("\n", "<br />", stripslashes(isset($HTTP_GET_VARS['answer']) ? $HTTP_GET_VARS['answer'] : $HTTP_POST_VARS['answer']));
+			$question = stripslashes(isset($_GET['quest_title']) ? $_GET['quest_title'] : $_POST['quest_title']);
+			$answer = str_replace("\n", "<br />", stripslashes(isset($_GET['answer']) ? $_GET['answer'] : $_POST['answer']));
 
 			if($block_no == $old_block_no)
 			{
@@ -438,7 +438,7 @@ if(isset($HTTP_GET_VARS['mode']) || isset($HTTP_POST_VARS['mode']))
 
 		// delete is confirmed or rejected
 		case 'quest_del_confirm':
-			if(isset($HTTP_GET_VARS['confirm']) || isset($HTTP_POST_VARS['confirm']))
+			if(isset($_GET['confirm']) || isset($_POST['confirm']))
 			{
 				for($i = $quest_no; $i < count($quests[$block_no]); $i++)
 				{

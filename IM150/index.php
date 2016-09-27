@@ -46,7 +46,7 @@ if ( !$userdata['session_logged_in'] )
 }
 //-- fin mod : keep unread -------------------------------------------------------------------------
 
-$viewcat = ( !empty($HTTP_GET_VARS[POST_CAT_URL]) ) ? $HTTP_GET_VARS[POST_CAT_URL] : -1;
+$viewcat = ( !empty($_GET[POST_CAT_URL]) ) ? $_GET[POST_CAT_URL] : -1;
 //-- mod : categories hierarchy --------------------------------------------------------------------
 //-- add
 $viewcat = intval($viewcat);
@@ -55,9 +55,9 @@ $viewcatkey = ($viewcat < 0) ? 'Root' : POST_CAT_URL . $viewcat;
 //-- fin mod : categories hierarchy ----------------------------------------------------------------
 
 
-if( isset($HTTP_GET_VARS['mark']) || isset($HTTP_POST_VARS['mark']) )
+if( isset($_GET['mark']) || isset($_POST['mark']) )
 {
-	$mark_read = ( isset($HTTP_POST_VARS['mark']) ) ? $HTTP_POST_VARS['mark'] : $HTTP_GET_VARS['mark'];
+	$mark_read = ( isset($_POST['mark']) ) ? $_POST['mark'] : $_GET['mark'];
 }
 else
 {
@@ -114,8 +114,8 @@ if( $mark_read == 'forums' )
 //				if ( !($result = $db->sql_query($sql)) ) message_die(GENERAL_ERROR, 'Could not obtain forums information', '', __LINE__, __FILE__, $sql);
 //				if ( $row = $db->sql_fetchrow($result) )
 //				{
-//					$tracking_forums = ( isset($HTTP_COOKIE_VARS[$board_config['cookie_name'] . '_f']) ) ? unserialize($HTTP_COOKIE_VARS[$board_config['cookie_name'] . '_f']) : array();
-//					$tracking_topics = ( isset($HTTP_COOKIE_VARS[$board_config['cookie_name'] . '_t']) ) ? unserialize($HTTP_COOKIE_VARS[$board_config['cookie_name'] . '_t']) : array();
+//					$tracking_forums = ( isset($_COOKIE[$board_config['cookie_name'] . '_f']) ) ? unserialize($_COOKIE[$board_config['cookie_name'] . '_f']) : array();
+//					$tracking_topics = ( isset($_COOKIE[$board_config['cookie_name'] . '_t']) ) ? unserialize($_COOKIE[$board_config['cookie_name'] . '_t']) : array();
 //
 //					if ( ( count($tracking_forums) + count($tracking_topics) ) >= 150 && empty($tracking_forums[$forum_id]) )
 //					{
@@ -164,29 +164,16 @@ if( $mark_read == 'forums' )
 
 //-- mod : categories hierarchy --------------------------------------------------------------------
 //-- delete
-// $tracking_topics = ( isset($HTTP_COOKIE_VARS[$board_config['cookie_name'] . '_t']) ) ? unserialize($HTTP_COOKIE_VARS[$board_config['cookie_name'] . "_t"]) : array();
-// $tracking_forums = ( isset($HTTP_COOKIE_VARS[$board_config['cookie_name'] . '_f']) ) ? unserialize($HTTP_COOKIE_VARS[$board_config['cookie_name'] . "_f"]) : array();
+// $tracking_topics = ( isset($_COOKIE[$board_config['cookie_name'] . '_t']) ) ? unserialize($_COOKIE[$board_config['cookie_name'] . "_t"]) : array();
+// $tracking_forums = ( isset($_COOKIE[$board_config['cookie_name'] . '_f']) ) ? unserialize($_COOKIE[$board_config['cookie_name'] . "_f"]) : array();
 //-- fin mod : categories hierarchy ----------------------------------------------------------------
 
 //
 // If you don't use these stats on your index you may want to consider
 // removing them
 //
-//-- mod : categories hierarchy --------------------------------------------------------------------
-//-- delete
-// $total_posts = get_db_stat('postcount');
-// $total_users = get_db_stat('usercount');
-//-- add
-if ( ($board_config['display_viewonline'] == 2) || ( ($viewcat < 0) && ($board_config['display_viewonline'] == 1) ) )
-{
-	if ( empty($board_config['max_posts']) || empty($board_config['max_users']) )
-	{
-		board_stats();
-	}
-	$total_posts = $board_config['max_posts'];
-	$total_users = $board_config['max_users'];
-//-- fin mod : categories hierarchy ----------------------------------------------------------------
-
+$total_posts = get_db_stat('postcount');
+$total_users = get_db_stat('usercount');
 $newest_userdata = get_db_stat('newestuser');
 $newest_user = $newest_userdata['username'];
 $newest_uid = $newest_userdata['user_id'];
@@ -216,11 +203,6 @@ else
 {
 	$l_total_user_s = $lang['Registered_users_total'];
 }
-//-- mod : categories hierarchy --------------------------------------------------------------------
-//-- add
-}
-//-- fin mod : categories hierarchy ----------------------------------------------------------------
-
 
 //
 // Start page proper
@@ -609,9 +591,9 @@ if (($board_config['display_viewonline'] == 2) || (($viewcat < 0) && ($board_con
 											}
 										}
 
-										if ( isset($HTTP_COOKIE_VARS[$board_config['cookie_name'] . '_f_all']) )
+										if ( isset($_COOKIE[$board_config['cookie_name'] . '_f_all']) )
 										{
-											if ( $HTTP_COOKIE_VARS[$board_config['cookie_name'] . '_f_all'] > $forum_last_post_time )
+											if ( $_COOKIE[$board_config['cookie_name'] . '_f_all'] > $forum_last_post_time )
 											{
 												$unread_topics = false;
 											}

@@ -32,7 +32,7 @@ init_userprefs($userdata);
 //
 // End session management
 //
-$key = isset($HTTP_GET_VARS['l']) ?  intval($HTTP_GET_VARS['l']) : 0;
+$key = isset($_GET['l']) ?  intval($_GET['l']) : 0;
 $letter = $userdata['session_robot'][$key];
 if (file_exists( phpbb_realpath( $images['alphabet_' . $letter] ) ))
 {

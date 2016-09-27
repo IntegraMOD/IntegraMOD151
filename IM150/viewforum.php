@@ -47,13 +47,13 @@ include($phpbb_root_path . 'language/lang_' . $board_config['default_lang'] . '/
 //
 // Start initial var setup
 //
-if ( isset($HTTP_GET_VARS[POST_FORUM_URL]) || isset($HTTP_POST_VARS[POST_FORUM_URL]) )
+if ( isset($_GET[POST_FORUM_URL]) || isset($_POST[POST_FORUM_URL]) )
 {
-	$forum_id = ( isset($HTTP_GET_VARS[POST_FORUM_URL]) ) ? intval($HTTP_GET_VARS[POST_FORUM_URL]) : intval($HTTP_POST_VARS[POST_FORUM_URL]);
+	$forum_id = ( isset($_GET[POST_FORUM_URL]) ) ? intval($_GET[POST_FORUM_URL]) : intval($_POST[POST_FORUM_URL]);
 }
-else if ( isset($HTTP_GET_VARS['forum']))
+else if ( isset($_GET['forum']))
 {
-	$forum_id = intval($HTTP_GET_VARS['forum']);
+	$forum_id = intval($_GET['forum']);
 }
 else
 {
@@ -62,9 +62,9 @@ else
 //-- mod : categories hierarchy --------------------------------------------------------------------
 //-- add
 define('IN_VIEWFORUM', true);
-if (isset($HTTP_GET_VARS['selected_id']) || isset($HTTP_POST_VARS['selected_id']))
+if ( isset($_GET['selected_id']) || isset($_POST['selected_id']) )
 {
-	$selected_id = isset($HTTP_POST_VARS['selected_id']) ? $HTTP_POST_VARS['selected_id'] : $HTTP_GET_VARS['selected_id'];
+	$selected_id = isset($_POST['selected_id']) ? $_POST['selected_id'] : $_GET['selected_id'];
 	$type	= substr($selected_id, 0, 1);
 	$id		= intval(substr($selected_id, 1));
 	if ($type == POST_FORUM_URL)
@@ -80,12 +80,12 @@ if (isset($HTTP_GET_VARS['selected_id']) || isset($HTTP_POST_VARS['selected_id']
 }
 //-- fin mod : categories hierarchy ----------------------------------------------------------------
 
-$start = ( isset($HTTP_GET_VARS['start']) ) ? intval($HTTP_GET_VARS['start']) : 0;
+$start = ( isset($_GET['start']) ) ? intval($_GET['start']) : 0;
 $start = ($start < 0) ? 0 : $start;
 
-if ( isset($HTTP_GET_VARS['mark']) || isset($HTTP_POST_VARS['mark']) )
+if ( isset($_GET['mark']) || isset($_POST['mark']) )
 {
-	$mark_read = (isset($HTTP_POST_VARS['mark'])) ? $HTTP_POST_VARS['mark'] : $HTTP_GET_VARS['mark'];
+	$mark_read = (isset($_POST['mark'])) ? $_POST['mark'] : $_GET['mark'];
 }
 else
 {
@@ -136,7 +136,7 @@ else
 	$install_time 	= time();
 	$bypass			= '';
 		
-	( !$_GET['mode'] ) ? $viewed_mode = $HTTP_GET_VARS['mode'] : $viewed_mode = $_GET['mode'];
+	( !$_GET['mode'] ) ? $viewed_mode = $_GET['mode'] : $viewed_mode = $_GET['mode'];
 	
 	$q = "SELECT active, effected, install_date
 		  FROM ". $table_prefix ."force_read"; 
@@ -240,11 +240,11 @@ if ( empty($forum_row) )
 
 // handle forum link type
 $selected_id = POST_FORUM_URL . $forum_id;
-$ch_this = isset($tree['keys'][$selected_id]) ? $tree['keys'][$selected_id] : -1;
-if ( ($ch_this > -1) && !empty($tree['data'][$ch_this]['forum_link']))
+$this_key = isset($tree['keys'][$selected_id]) ? $tree['keys'][$selected_id] : -1;
+if ( ($this_key > -1) && !empty($tree['data'][$this_key]['forum_link']))
 {
 	// add 1 to hit if count ativated
-	if ($tree['data'][$ch_this]['forum_link_hit_count'])
+	if ($tree['data'][$this_key]['forum_link_hit_count'])
 	{
 		$sql = "UPDATE " . FORUMS_TABLE . " 
 					SET forum_link_hit = forum_link_hit + 1 
@@ -254,8 +254,8 @@ if ( ($ch_this > -1) && !empty($tree['data'][$ch_this]['forum_link']))
 	}
 
 	// prepare url
-	$url = $tree['data'][$ch_this]['forum_link'];
-	if ($tree['data'][$ch_this]['forum_link_internal'])
+	$url = $tree['data'][$this_key]['forum_link'];
+	if ($tree['data'][$this_key]['forum_link_internal'])
 	{
 		$part = explode( '?', $url);
 		$url .= ((count($part) > 1) ? '&' : '?') . 'sid=' . $userdata['session_id'];
@@ -329,8 +329,8 @@ if ( $mark_read == 'topics' )
 //
 //		if ( $row = $db->sql_fetchrow($result) )
 //		{
-//			$tracking_forums = ( isset($HTTP_COOKIE_VARS[$board_config['cookie_name'] . '_f']) ) ? unserialize($HTTP_COOKIE_VARS[$board_config['cookie_name'] . '_f']) : array();
-//			$tracking_topics = ( isset($HTTP_COOKIE_VARS[$board_config['cookie_name'] . '_t']) ) ? unserialize($HTTP_COOKIE_VARS[$board_config['cookie_name'] . '_t']) : array();
+//			$tracking_forums = ( isset($_COOKIE[$board_config['cookie_name'] . '_f']) ) ? unserialize($_COOKIE[$board_config['cookie_name'] . '_f']) : array();
+//			$tracking_topics = ( isset($_COOKIE[$board_config['cookie_name'] . '_t']) ) ? unserialize($_COOKIE[$board_config['cookie_name'] . '_t']) : array();
 //
 //			if ( ( count($tracking_forums) + count($tracking_topics) ) >= 150 && empty($tracking_forums[$forum_id]) )
 //			{
@@ -410,8 +410,8 @@ if ( $mark_read == 'topics' )
 
 //-- mod : keep unread -----------------------------------------------------------------------------
 //-- delete
-// $tracking_topics = ( isset($HTTP_COOKIE_VARS[$board_config['cookie_name'] . '_t']) ) ? unserialize($HTTP_COOKIE_VARS[$board_config['cookie_name'] . '_t']) : '';
-// $tracking_forums = ( isset($HTTP_COOKIE_VARS[$board_config['cookie_name'] . '_f']) ) ? unserialize($HTTP_COOKIE_VARS[$board_config['cookie_name'] . '_f']) : '';
+// $tracking_topics = ( isset($_COOKIE[$board_config['cookie_name'] . '_t']) ) ? unserialize($_COOKIE[$board_config['cookie_name'] . '_t']) : '';
+// $tracking_forums = ( isset($_COOKIE[$board_config['cookie_name'] . '_f']) ) ? unserialize($_COOKIE[$board_config['cookie_name'] . '_f']) : '';
 //-- fin mod : keep unread -------------------------------------------------------------------------
 
 //
@@ -517,9 +517,9 @@ unset($moderators);
 $previous_days = array(0, 1, 7, 14, 30, 90, 180, 364);
 $previous_days_text = array($lang['All_Topics'], $lang['1_Day'], $lang['7_Days'], $lang['2_Weeks'], $lang['1_Month'], $lang['3_Months'], $lang['6_Months'], $lang['1_Year']);
 
-if ( !empty($HTTP_POST_VARS['topicdays']) || !empty($HTTP_GET_VARS['topicdays']) )
+if ( !empty($_POST['topicdays']) || !empty($_GET['topicdays']) )
 {
-	$topic_days = ( !empty($HTTP_POST_VARS['topicdays']) ) ? intval($HTTP_POST_VARS['topicdays']) : intval($HTTP_GET_VARS['topicdays']);
+	$topic_days = ( !empty($_POST['topicdays']) ) ? intval($_POST['topicdays']) : intval($_GET['topicdays']);
 	$min_topic_time = time() - ($topic_days * 86400);
 
 	$sql = "SELECT COUNT(t.topic_id) AS forum_topics 
@@ -537,7 +537,7 @@ if ( !empty($HTTP_POST_VARS['topicdays']) || !empty($HTTP_GET_VARS['topicdays'])
 	$topics_count = ( $row['forum_topics'] ) ? $row['forum_topics'] : 1;
 	$limit_topics_time .= " AND p.post_time >= $min_topic_time";
 
-	if ( !empty($HTTP_POST_VARS['topicdays']) )
+	if ( !empty($_POST['topicdays']) )
 	{
 		$start = 0;
 	}
@@ -905,7 +905,7 @@ if( $total_topics )
 //			{
 //				if( $topic_rowset[$i]['post_time'] > $userdata['user_lastvisit'] ) 
 //				{
-//					if( !empty($tracking_topics) || !empty($tracking_forums) || isset($HTTP_COOKIE_VARS[$board_config['cookie_name'] . '_f_all']) )
+//					if( !empty($tracking_topics) || !empty($tracking_forums) || isset($_COOKIE[$board_config['cookie_name'] . '_f_all']) )
 //					{
 //						$unread_topics = true;
 //
@@ -925,9 +925,9 @@ if( $total_topics )
 //							}
 //						}
 //
-//						if( isset($HTTP_COOKIE_VARS[$board_config['cookie_name'] . '_f_all']) )
+//						if( isset($_COOKIE[$board_config['cookie_name'] . '_f_all']) )
 //						{
-//							if( $HTTP_COOKIE_VARS[$board_config['cookie_name'] . '_f_all'] >= $topic_rowset[$i]['post_time'] )
+//							if( $_COOKIE[$board_config['cookie_name'] . '_f_all'] >= $topic_rowset[$i]['post_time'] )
 //							{
 //								$unread_topics = false;
 //							}
