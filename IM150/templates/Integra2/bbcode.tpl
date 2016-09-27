@@ -92,10 +92,8 @@
 <!-- BEGIN url --><a href="{URL}" target="_blank" class="postlink">{DESCRIPTION}</a><!-- END url -->
 <!-- BEGIN email --><a href="mailto:{EMAIL}">{EMAIL}</a><!-- END email -->
 <!-- BEGIN youtube -->
-<object width="425" height="350">
-   <param name="movie" value="http://www.youtube.com/v/{YOUTUBEID}"></param>
-   <embed src="http://www.youtube.com/v/{YOUTUBEID}" type="application/x-shockwave-flash" width="425" height="350"></embed>
-</object><br />
+<iframe width="560" height="315" src="https://www.youtube.com/embed/{YOUTUBEID}" frameborder="0" allowfullscreen></iframe>
+<br />
 <a href="http://youtube.com/watch?v={YOUTUBEID}" target="_blank">{YOUTUBELINK}</a><br />
 <!-- END youtube --> 
 <!-- BEGIN acronym_open --><acronym onMouseOver="createTitle(this, '{DESCRIPTION}', event.pageX, event.pageY, 1);" onMouseOut="destroyTitle();"><!-- END acronym_open -->
