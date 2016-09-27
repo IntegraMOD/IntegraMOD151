@@ -138,7 +138,7 @@ function prepare_bbcode_template($bbcode_tpl)
 // Mighty Gorgon - Full Album Pack - END
 
 	$bbcode_tpl['email'] = str_replace('{EMAIL}', '\\1', $bbcode_tpl['email']);
-	$bbcode_tpl['youtube'] = str_replace('{YOUTUBEID}', '\\1', $bbcode_tpl['youtube']);
+	$bbcode_tpl['youtube'] = str_replace('{YOUTUBEID}', '\\3', $bbcode_tpl['youtube']);
 	$bbcode_tpl['youtube'] = str_replace('{YOUTUBELINK}', $lang['youtube_link'], $bbcode_tpl['youtube']); 
 
 	$bbcode_tpl['acronym_open'] = str_replace('{DESCRIPTION}', '\\1', $bbcode_tpl['acronym_open']);
