@@ -13,28 +13,132 @@
 
 <script type="text/javascript" src="templates/toggle_display.js"></script>
 <!-- BEGIN switch_enable_pm_popup -->
-<script type="text/javascript" src="templates/pmpopup.js"></script>
+<script type="text/javascript">
+<!--
+if ( {PRIVATE_MESSAGE_NEW_FLAG} )
+{
+window.open('{U_PRIVATEMSGS_POPUP}', '_phpbbprivmsg', 'HEIGHT=225,resizable=yes,WIDTH=400');;
+}
+//-->
+</script>
 <!-- END switch_enable_pm_popup -->
 <!-- Start add - No copy MOD -->
-<script type="text/javascript" src="templates/no.copy.js"></script>
+<script language="javascript">
+<!-- 
+var previous_key ;
+
+function clickIE4(){
+if (event.button==2){
+alert('{L_NO_CLICK}');
+return false;
+}
+}
+
+function clickNS4(e){
+if (document.layers||document.getElementById&&!document.all){
+if (e.which==2||e.which==3){
+alert('{L_NO_CLICK}');
+return false;
+}
+}
+}
+
+if (document.layers){
+document.captureEvents(Event.MOUSEDOWN);
+document.onmousedown=clickNS4;
+}
+else if (document.all&&!document.getElementById){
+document.onmousedown=clickIE4;
+}
+function handleKeyDown()
+{
+	if (previous_key==17 )
+	{
+		switch (window.event.keyCode)
+		{
+			case 45 :
+			case 46: 
+			case 67:
+			case 88:
+				alert('{L_NO_COPY}');
+				event.keyCode=0;
+				previous_key=window.event.keyCode;
+				event.returnValue=false;
+				break;
+		}
+	} else if (previous_key==16)
+	{
+		switch (window.event.keyCode)
+		{
+			case 45 :
+			case 46: 
+				alert('{L_NO_COPY}'+window.event.keyCode);
+				event.keyCode=0;
+				previous_key=window.event.keyCode;
+				event.returnValue=false;
+				break;
+		}
+	}
+	previous_key=window.event.keyCode;
+}
+function handleKeyUp()
+{
+	previous_key=0;
+}
+
+if ( {USER_EXTRA} )
+{
+document.oncontextmenu=new Function("alert('{L_NO_CLICK}');return false")
+document.onkeyup = handleKeyUp;
+document.onkeydown = handleKeyDown;
+}
+//-->
+</script>
 <!-- End add - No copy MOD -->
 <!-- BEGIN birthday_popup -->
-<script type="text/javascript" src="templates/birthday.js"></script>
+<script type="text/javascript">
+<!--
+window.open('{birthday_popup.U_BIRTHDAY_POPUP}', '_phpbbbirthday', 'HEIGHT=225,resizable=yes,WIDTH=400');
+//-->
+</script>
 <!-- END birthday_popup -->
-<script type="text/javascript" src="templates/tour.js"></script>
+<script type="text/javascript"> 
+<!-- 
+function tour() { 
+window.open("tour.php", "_tour", "width=800,height=600,scrollbars,resizable=yes");
+} 
+//--> 
+</script>
 <script type="text/javascript" src="templates/mouseover.js"></script>
 <!-- Prillian - Begin Code Additions -->
 <!-- BEGIN switch_user_logged_in -->
-<script type="text/javascript" src="templates/prillian.js"></script>
+<script type="text/javascript">
+<!--
+function prill_launch(url, w, h)
+{
+window.name = 'phpbbmain';
+prillian = window.open(url, 'prillian', 'height=' + h + ', width=' + w + ', innerWidth=' + w + ', innerHeight=' + h + ', resizable, scrollbars');
+}
+if ( {IM_AUTO_POPUP} ) 
+{ 
+prill_launch('{U_IM_LAUNCH}', '{IM_WIDTH}', '{IM_HEIGHT}');
+} 
+//-->
+</script>
 <!-- END switch_user_logged_in -->
 <!-- BEGIN buddy_alert -->
-<script type="text/javascript" src="templates/prillian.alert.js"></script>
+<script type="text/javascript">
+if ( {buddy_alert.BUDDY_ALERT} )
+{
+window.open('{buddy_alert.U_BUDDY_ALERT}', '_buddyalert', 'HEIGHT=225,resizable=yes,WIDTH=400');
+}
+</script>
 <!-- END buddy_alert -->
 <!-- Prillian - End Code Additions -->
 <script type="text/javascript" src="templates/jquery-1.12.0.min.js"></script>
 <script type="text/javascript" src="templates/jquery.easing.min.js"></script>
 <script type="text/javascript" src="templates/jquery.toggle.js"></script>
-<script type="text/javascript" src="templates/jQuery.mobTabMenu.min.js"></script>
+<script type="text/javascript" src="templates/jQuery.mobTabMenu.js"></script>
 <script type="text/javascript" src="templates/immenu.js"></script>
 
 </head>
