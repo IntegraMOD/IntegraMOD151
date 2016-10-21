@@ -24,7 +24,7 @@
 
 define('IN_PHPBB', true);
 define('CT_SECLEVEL', 'MEDIUM');
-$ct_ignorepvar = array('submit','link_desc');
+$ct_ignorepvar = array('submit','link_url','link_logo_src','link_desc');
 
 // Admin Panel
 if( !empty($setmodules) )
