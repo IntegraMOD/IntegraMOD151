@@ -665,7 +665,7 @@ function update_post_stats(&$mode, &$post_data, &$forum_id, &$topic_id, &$post_i
                      WHERE topic_id = ".$topic_id." 
               ORDER BY post_time ASC 
                      LIMIT 1 "; 
-    if (!$db->sql_query($sql)) { 
+    if (!($result = $db->sql_query($sql))) { 
         message_die(GENERAL_ERROR, 'Error in fetching first post data', '', __LINE__, __FILE__, $sql); 
     } 
     if ($row = $db->sql_fetchrow($result)) { 
@@ -678,7 +678,7 @@ function update_post_stats(&$mode, &$post_data, &$forum_id, &$topic_id, &$post_i
                                  max( post_id )  AS lastpost 
                         FROM ".POSTS_TABLE." 
                      WHERE topic_id = ".$topic_id; 
-    if (!$db->sql_query($sql)) { 
+    if (!($result = $db->sql_query($sql))) { 
         message_die(GENERAL_ERROR, 'Error in fetching topic posts data', '', __LINE__, __FILE__, $sql); 
     } 
     if ($row = $db->sql_fetchrow($result)) { 
@@ -715,15 +715,12 @@ function update_post_stats(&$mode, &$post_data, &$forum_id, &$topic_id, &$post_i
                      WHERE forum_id = ".$forum_id." 
                           AND post_time <= ".time()." 
                          AND ap.post_id is null"; 
-    if (!$db->sql_query($sql)) { 
+    if (!($result = $db->sql_query($sql))) { 
         message_die(GENERAL_ERROR, 'Error in fetching posts data', '', __LINE__, __FILE__, $sql); 
     } 
-    if ($row = $db->sql_fetchrow($result)) { 
-        $posts = $row['posts']; 
-        $lastpost = $row['last_post']; 
-    }  else {
-      $posts = 0;
-    }
+    $row = $db->sql_fetchrow($result);
+    $posts = $row['posts']; 
+    $lastpost = $row['last_post']; 
     // get forum topics 
     $sql = "SELECT count( t.topic_id ) AS topics 
                         FROM ".TOPICS_TABLE." t 
@@ -733,7 +730,7 @@ function update_post_stats(&$mode, &$post_data, &$forum_id, &$topic_id, &$post_i
                      WHERE forum_id = ".$forum_id." 
                           AND topic_time < ".time()." 
                          AND ap.post_id is null"; 
-    if (!$db->sql_query($sql)) { 
+    if (!($result = $db->sql_query($sql))) { 
         message_die(GENERAL_ERROR, 'Error in fetching topics data', '', __LINE__, __FILE__, $sql); 
     } 
     if ($row = $db->sql_fetchrow($result)) { 

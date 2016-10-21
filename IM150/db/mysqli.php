@@ -134,8 +134,8 @@ if(!defined("SQL_LAYER"))
 			$this->query_result = (isset($this->query_result)) ? $this->query_result : false;
 			if ($this->query_result)
 			{
-				unset($this->row[(int)$this->query_result]);
-				unset($this->rowset[(int)$this->query_result]);
+				unset($this->row[(bool)$this->query_result]);
+				unset($this->rowset[(bool)$this->query_result]);
 
 				if( $transaction == END_TRANSACTION && $this->in_transaction )
 				{
@@ -223,8 +223,8 @@ if(!defined("SQL_LAYER"))
 
 			if( $query_id )
 			{
-				$this->row[(int)$query_id] = @mysqli_fetch_array($query_id, MYSQLI_ASSOC);
-				return $this->row[(int)$query_id];
+				$this->row[(bool)$query_id] = mysqli_fetch_array($query_id, MYSQLI_ASSOC);
+				return $this->row[(bool)$query_id];
 			}
 			else
 			{
@@ -241,12 +241,12 @@ if(!defined("SQL_LAYER"))
 
 			if( $query_id )
 			{
-				unset($this->rowset[(int)$query_id]);
-				unset($this->row[(int)$query_id]);
+				unset($this->rowset[(bool)$query_id]);
+				unset($this->row[(bool)$query_id]);
 
-				while($this->rowset[(int)$query_id] = @mysqli_fetch_array($query_id, MYSQLI_ASSOC))
+				while($this->rowset[(bool)$query_id] = @mysqli_fetch_array($query_id, MYSQLI_ASSOC))
 				{
-					$result[] = $this->rowset[(int)$query_id];
+					$result[] = $this->rowset[(bool)$query_id];
 				}
 
 				if (isset($result))
@@ -294,22 +294,22 @@ if(!defined("SQL_LAYER"))
 				}
 				else
 				{
-					if( empty($this->row[(int)$query_id]) && empty($this->rowset[(int)$query_id]) )
+					if( empty($this->row[(bool)$query_id]) && empty($this->rowset[(bool)$query_id]) )
 					{
 						if( $this->sql_fetchrow() )
 						{
-							$result = $this->row[(int)$query_id][$field];
+							$result = $this->row[(bool)$query_id][$field];
 						}
 					}
 					else
 					{
-						if( $this->rowset[(int)$query_id] )
+						if( $this->rowset[(bool)$query_id] )
 						{
-							$result = $this->rowset[(int)$query_id][0][$field];
+							$result = $this->rowset[(bool)$query_id][0][$field];
 						}
-						else if( $this->row[(int)$query_id] )
+						else if( $this->row[(bool)$query_id] )
 						{
-							$result = $this->row[(int)$query_id][$field];
+							$result = $this->row[(bool)$query_id][$field];
 						}
 					}
 				}
@@ -345,8 +345,8 @@ if(!defined("SQL_LAYER"))
 
 			if ( $query_id === true)
 			{
-				unset($this->row[(int)$query_id]);
-				unset($this->rowset[(int)$query_id]);
+				unset($this->row[(bool)$query_id]);
+				unset($this->rowset[(bool)$query_id]);
 
 				@mysqli_free_result($query_id);
 
