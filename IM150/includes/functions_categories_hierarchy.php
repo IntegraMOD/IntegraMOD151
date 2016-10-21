@@ -199,7 +199,7 @@ function read_tree($force=false)
 	// read the last or unread posts
 	$user_lastvisit = $userdata['session_logged_in'] ? $userdata['user_lastvisit'] : 99999999999;
 
-	$sql = "SELECT p.forum_id, p.topic_id, p.post_time, p.post_username, u.username, u.user_id, t.topic_last_post_id, t.topic_title
+	$sql = "SELECT p.forum_id, p.topic_id, p.post_time, p.post_username, u.username, u.user_id, u.user_level, t.topic_last_post_id, t.topic_title
 				FROM " . POSTS_TABLE . " p, " . TOPICS_TABLE . " t, " . USERS_TABLE . " u
 				WHERE ( p.post_time > $user_lastvisit $sql_last_posts )
 						AND p.post_id = t.topic_last_post_id
@@ -875,7 +875,13 @@ function build_index($cur='Root', $cat_break=false, &$forum_moderators, $real_le
 				$last_post_time = create_date($board_config['default_dateformat'], $data['tree.post_time'], $board_config['board_timezone']);
 				$last_post  = (($board_config['last_topic_title']) ? $topic_title : '');
 				$last_post .= $last_post_time . '<br />';
-				$last_post .= ( $data['tree.post_user_id'] == ANONYMOUS ) ? $data['tree.post_username'] . ' ' : '<a href="' . append_sid("profile.$phpEx?mode=viewprofile&amp;" . POST_USERS_URL . '='  . $data['tree.post_user_id']) . '">' . $data['tree.post_username'] . '</a> ';
+        // Rebuild a fake userdata array for the last poster. Pass the user_id for the founder color.
+        $last_poster_userdata = array(
+          'user_id' => $data['tree.post_user_id'],
+          'user_level' => $data['user_level'],
+        );
+        $colored_username = '<span class="'.get_user_level_class('', 'gen', $last_poster_userdata) . '">' . $data['tree.post_username'] . '</span>';
+				$last_post .= ( $data['tree.post_user_id'] == ANONYMOUS ) ? $data['tree.post_username'] . ' ' : '<a href="' . append_sid("profile.$phpEx?mode=viewprofile&amp;" . POST_USERS_URL . '='  . $data['tree.post_user_id']) . '">' . $colored_username . '</a> ';
 				$last_post .= '<a href="' . append_sid("viewtopic.$phpEx?"  . POST_POST_URL . '=' . $data['tree.topic_last_post_id']) . '#' . $data['tree.topic_last_post_id'] . '"><img src="' . $images['icon_latest_reply'] . '" border="0" alt="' . $lang['View_latest_post'] . '" title="' . $lang['View_latest_post'] . '" /></a>';
 			}
 
