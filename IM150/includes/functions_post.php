@@ -721,7 +721,9 @@ function update_post_stats(&$mode, &$post_data, &$forum_id, &$topic_id, &$post_i
     if ($row = $db->sql_fetchrow($result)) { 
         $posts = $row['posts']; 
         $lastpost = $row['last_post']; 
-    } 
+    }  else {
+      $posts = 0;
+    }
     // get forum topics 
     $sql = "SELECT count( t.topic_id ) AS topics 
                         FROM ".TOPICS_TABLE." t 
