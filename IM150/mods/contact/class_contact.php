@@ -106,12 +106,12 @@ class contact_list
              case 'ignored_by':
                 // This type gets the users ignoring someone
                 $this->ignored_by = array();
-                $field_check_sql = ' AND c.user_ignore = 1';
+                $field_check_sql .= ' AND c.user_ignore = 1';
                 break;
              case 'disallow_by':
                 // This type gets the users disallowing someone
                 $this->disallow_by = array();
-                $field_check_sql = ' AND c.disallow = 1';
+                $field_check_sql .= ' AND c.disallow = 1';
                 break;
           }
 
