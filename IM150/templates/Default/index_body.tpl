@@ -84,7 +84,7 @@
 		      <tr><td>
 			<!-- BEGIN switch_user_logged_in -->
 			<!-- Start add - Fully integrated shoutbox MOD -->
-				<table width="100%" cellpadding="0" cellspacing="1"  border="0" align="center" class="forumline"> 
+				<table width="100%" cellpadding="2" cellspacing="0"  border="0" align="center" class="forumline"> 
 				  <tr> 
 					<th align="center" nowrap="nowrap" class="cat"><span class="cattitle"><a href="{U_SHOUTBOX_MAX}">{L_SHOUTBOX}</a></span></th> 
 				  </tr> 
