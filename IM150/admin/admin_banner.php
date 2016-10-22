@@ -3,7 +3,7 @@
  *                              admin_banner.php
  *                            -------------------
  *		ver 1.2.3
- *          Author: Niels Chr. Rød, Denmark
+ *          Author: Niels Chr. RÃ¸d, Denmark
  *
  ***************************************************************************/
 
@@ -17,7 +17,8 @@
  ***************************************************************************/
 
 define('IN_PHPBB', 1);
-
+define('CT_SECLEVEL', 'LOW');
+$ct_ignorepvar = array('banner_description');
 if( !empty($setmodules) )
 {
 	$file = basename(__FILE__);
