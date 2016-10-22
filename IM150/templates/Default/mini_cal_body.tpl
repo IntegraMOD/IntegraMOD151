@@ -1,7 +1,7 @@
 <!-- BEGIN switch_mini_cal_add_events -->
 <form name="mini_cal" id ="mini_cal" action="{U_MINI_CAL_ADD_EVENT}" method="post">
 <!-- END switch_mini_cal_add_events -->
-<table width="30%" cellpadding="3" cellspacing="1" border="0" class="forumline">
+<table width="30%" cellpadding="2" cellspacing="0" border="0" class="forumline">
   <tr><th align="center" nowrap="nowrap" class="cat"><span class="cattitle">
             <!-- BEGIN switch_mini_cal_events -->
                 <a href="{U_MINI_CAL_CALENDAR}" class="boxtitle">
