@@ -81,18 +81,18 @@ if(!function_exists(imp_links_block_func))
 
 		if($portal_config['md_links_own1'])
 		{
-			$template->assign_block_vars('links_own1','1');
+			$template->assign_block_vars('links_own1',array());
 		}
 		if($portal_config['md_links_own2'])
 		{
-			$template->assign_block_vars('links_own2','1');
+			$template->assign_block_vars('links_own2',array());
 		}
 		if($portal_config['md_links_code'])
 		{
-			$template->assign_block_vars('links_code','1');
+			$template->assign_block_vars('links_code',array());
 		}
 
-		$template->assign_block_vars($style_row,"");
+		$template->assign_block_vars($style_row,array());
 
 		$template->assign_vars(array(
 			'SITE_LOGO_WIDTH' => $site_logo_width,

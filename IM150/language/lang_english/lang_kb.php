@@ -385,11 +385,11 @@ $lang['Wysiwyg_path'] = 'Path to wysiwyg software';
 $lang['Wysiwyg_path_explain'] = 'This is the path from your forum root to the wysiwyg software folder, eg \'modules/\' if you have uploaded for example tinemce in modules/tinymce.';
 
 $lang['Formatting_fixup'] = 'Fixup formatting';
-$lang['Formatting_fixup_explain'] = 'I enabled, the article text is reformatted: wordwrapping, url truncates, img resizing, some bbcode reformatting etc';
+$lang['Formatting_fixup_explain'] = 'If enabled, the article text is reformatted: wordwrapping, url truncates, img resizing, some bbcode reformatting etc';
 
 $lang['Addtional_field'] = 'More information (optional)';
 
-$lang['No_cat_comments_forum_id'] = 'Comments are enabled but you have not specified the target phpBB forum category in the KB adminCP - Cateogries';
+$lang['No_cat_comments_forum_id'] = 'Comments are enabled but you have not specified the target phpBB forum category in the KB adminCP - Categories';
 
 // Quick Nav
 $lang['Quick_nav'] = 'Quick KB Navigation';

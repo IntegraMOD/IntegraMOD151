@@ -291,4 +291,9 @@ define('DIGEST_SUPPORT', "http://www.phpbb.com/phpBB/viewtopic.php?t=187868");
 define('DIGEST_HTML', 1);
 define('DIGEST_TEXT', 0);
 
+//-- mod : categories hierarchy --------------------------------------------------------------------
+//-- add
+define('CATEGORIES_HIERARCHY_INSTALLED', true);
+//-- fin mod : categories hierarchy ----------------------------------------------------------------
+
 ?>

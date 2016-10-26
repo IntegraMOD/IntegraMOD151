@@ -50,13 +50,13 @@ include($album_root_path . 'album_common.'.$phpEx);
 // Check the request
 // ------------------------------------
 
-if( isset($HTTP_GET_VARS['pic_id']) )
+if( isset($_GET['pic_id']) )
 {
-	$pic_id = intval($HTTP_GET_VARS['pic_id']);
+	$pic_id = intval($_GET['pic_id']);
 }
-elseif( isset($HTTP_POST_VARS['pic_id']) )
+elseif( isset($_POST['pic_id']) )
 {
-	$pic_id = intval($HTTP_POST_VARS['pic_id']);
+	$pic_id = intval($_POST['pic_id']);
 }
 else
 {
@@ -121,9 +121,9 @@ if ($userdata['user_level'] != ADMIN)
 // Check hotlink
 // ------------------------------------
 
-if( ($album_config['hotlink_prevent'] == 1) and (isset($HTTP_SERVER_VARS['HTTP_REFERER'])) )
+if( ($album_config['hotlink_prevent'] == 1) and (isset($_SERVER['HTTP_REFERER'])) )
 {
-	$check_referer = explode('?', $HTTP_SERVER_VARS['HTTP_REFERER']);
+	$check_referer = explode('?', $_SERVER['HTTP_REFERER']);
 	$check_referer = trim($check_referer[0]);
 
 	$good_referers = array();
@@ -216,12 +216,13 @@ else
 		{
 			case '.gif':
 			case '.jpg':
+      case '.jpeg':
 				header('Content-type: image/jpeg');
-				header("Content-Disposition: filename=mid_" . ereg_replace("[^A-Za-z0-9]", "_", $thispic['pic_title']) . $pic_filetype);
+				header("Content-Disposition: filename=mid_" . preg_replace("[^A-Za-z0-9]", "_", $thispic['pic_title']) . $pic_filetype);
 				break;
 			case '.png':
 				header('Content-type: image/png');
-				header("Content-Disposition: filename=mid_" . ereg_replace("[^A-Za-z0-9]", "_", $thispic['pic_title']) . $pic_filetype);
+				header("Content-Disposition: filename=mid_" . preg_replace("[^A-Za-z0-9]", "_", $thispic['pic_title']) . $pic_filetype);
 				break;
 		}
 
@@ -352,7 +353,7 @@ else
 		{
 			case '.gif':
 			case '.jpg':
-				@imagejpeg($thumbnail, '', $album_config['thumbnail_quality']);
+				@imagejpeg($thumbnail, NULL, $album_config['thumbnail_quality']);
 				break;
 			case '.png':
 				@imagepng($thumbnail);

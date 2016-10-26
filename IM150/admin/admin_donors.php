@@ -31,18 +31,18 @@ require('./pagestart.' . $phpEx);
 require($phpbb_root_path . 'language/lang_' . $board_config['default_lang'] . '/lang_admin_donors.' . $phpEx);
 
 $mode = "add";
-if( isset($HTTP_POST_VARS['mode']) || isset($HTTP_GET_VARS['mode']) )
+if( isset($_POST['mode']) || isset($_GET['mode']) )
 {
-	$mode = (isset($HTTP_POST_VARS['mode'])) ? $HTTP_POST_VARS['mode'] : $HTTP_GET_VARS['mode'];
+	$mode = (isset($_POST['mode'])) ? $_POST['mode'] : $_GET['mode'];
 }
 
-if( isset($HTTP_POST_VARS['submit']) || isset($HTTP_GET_VARS['submit']) )
+if( isset($_POST['submit']) || isset($_GET['submit']) )
 {
-	$mode = (isset($HTTP_POST_VARS['submit'])) ? $HTTP_POST_VARS['submit'] : $HTTP_GET_VARS['submit'];	
+	$mode = (isset($_POST['submit'])) ? $_POST['submit'] : $_GET['submit'];	
 }
-else if(isset($HTTP_POST_VARS['reset']) || isset($HTTP_GET_VARS['reset']))
+else if(isset($_POST['reset']) || isset($_GET['reset']))
 {
-	$mode = (isset($HTTP_POST_VARS['reset'])) ? $HTTP_POST_VARS['reset'] : $HTTP_GET_VARS['reset'];	
+	$mode = (isset($_POST['reset'])) ? $_POST['reset'] : $_GET['reset'];	
 }
 
 	if( $mode == 'add' || $mode == $lang['L_RESET'])
@@ -79,11 +79,11 @@ else if(isset($HTTP_POST_VARS['reset']) || isset($HTTP_GET_VARS['reset']))
 	else if($mode == $lang['L_SUBMIT'])
 	{
 		// Get posting variables
-		$user_account = str_replace("\'", "''", htmlspecialchars(trim($HTTP_POST_VARS['user_account'])));
-		$lw_money = str_replace("\'", "''", htmlspecialchars(trim($HTTP_POST_VARS['lw_money'])));
-		$lw_date = str_replace("\'", "''", htmlspecialchars(trim($HTTP_POST_VARS['lw_date'])));
-		$txn_id = str_replace("\'", "''", htmlspecialchars(trim($HTTP_POST_VARS['txn_id'])));
-		$donor_pay_acct = str_replace("\'", "''", htmlspecialchars(trim($HTTP_POST_VARS['donor_pay_acct'])));
+		$user_account = str_replace("\'", "''", htmlspecialchars(trim($_POST['user_account'])));
+		$lw_money = str_replace("\'", "''", htmlspecialchars(trim($_POST['lw_money'])));
+		$lw_date = str_replace("\'", "''", htmlspecialchars(trim($_POST['lw_date'])));
+		$txn_id = str_replace("\'", "''", htmlspecialchars(trim($_POST['txn_id'])));
+		$donor_pay_acct = str_replace("\'", "''", htmlspecialchars(trim($_POST['donor_pay_acct'])));
 
 
 

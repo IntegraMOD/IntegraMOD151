@@ -1,4 +1,5 @@
 <!-- BEGIN _qmenu -->
+<div align="center">
 <table cellspacing="0" cellpadding="0" border="0">
 <!-- BEGIN line -->
 <tr>
@@ -22,4 +23,5 @@
 </tr>
 <!-- END line -->
 </table>
+</div>
 <!-- END _qmenu --> 

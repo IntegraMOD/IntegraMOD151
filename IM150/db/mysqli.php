@@ -1,12 +1,12 @@
 <?php
 /***************************************************************************
- *                                 mysql4.php
+ *                                 mysqli.php
  *                            -------------------
- *   begin                : Saturday, Feb 13, 2001
- *   copyright            : (C) 2001 The phpBB Group
- *   email                : support@phpbb.com
+ *   begin                : 1 janvier 2013
+ *   copyright            : achaab & BoBmArLeY
+ *   sebsite              : http://premod-shdow.servhome.org
  *
- *   $Id: mysqli.php,v 1.8 2005/10/31 03:18:41 jelly_doughnut Exp $
+ *   $Id: mysqli.php,v 1.0 2013/01/01 21:13:47 achaab Exp $
  *
  ***************************************************************************/
 
@@ -17,572 +17,356 @@
  *   the Free Software Foundation; either version 2 of the License, or
  *   (at your option) any later version.
  *
+ *   Please, if you do any change to improve the code, send me an email
+ *   at achaab@hotmail.fr so i can do the changes myself and diffuse them
+ *
  ***************************************************************************/
-
+ 
 if(!defined("SQL_LAYER"))
 {
+	define("SQL_LAYER","mysqli");
 
-define("SQL_LAYER","mysqli");
-
-class sql_db
-{
-
-	var $db_connect_id;
-	var $query_result;
-	var $row = array();
-	var $rowset = array();
-	var $num_queries = 0;
-	var $in_transaction = 0;
-	var $sql_time = 0;
-
-	//
-	// Constructor
-	//
-	function sql_db($sqlserver, $sqluser, $sqlpassword, $database, $persistency = true)
+	class sql_db
 	{
-		$mtime = microtime();
-		$mtime = explode(" ",$mtime);
-		$mtime = $mtime[1] + $mtime[0];
-		$starttime = $mtime;
 
-		$this->persistency = $persistency;
-		$this->user = $sqluser;
-		$this->password = $sqlpassword;
-		$this->server = $sqlserver;
-		$this->dbname = $database;
+		var $db_connect_id;
+		var $query_result;
+		var $row = array();
+		var $rowset = array();
+		var $num_queries = 0;
+		var $in_transaction = 0;
 
-		$this->db_connect_id = ($this->persistency) ? mysqli_pconnect($this->server, $this->user, $this->password) : mysqli_connect($this->server, $this->user, $this->password);
-
-		if( $this->db_connect_id )
+		//
+		// Constructor
+		//
+		function sql_db($sqlserver, $sqluser, $sqlpassword, $database, $port = false, $persistency = false)
 		{
-			if( $database != "" )
-			{
-				$this->dbname = $database;
-				$dbselect = mysqli_select_db($this->db_connect_id, $this->dbname);
+			$this->persistency = (version_compare(PHP_VERSION, '5.3.0', '>=')) ? $persistency : false;
+			$this->user = $sqluser;
+			
+			$this->password = $sqlpassword;
+			$this->server = ($this->persistency) ? 'p:' . (($sqlserver) ? $sqlserver : 'localhost') : $sqlserver;
+			
+			$this->dbname = $database;
+			$port = (!$port) ? NULL : $port;
 
-				if( !$dbselect )
+			$this->db_connect_id = @mysqli_connect($this->server, $this->user, $this->password, $this->dbname, $port);
+			
+			if( $this->db_connect_id && $database != '')
+			{
+				@mysqli_query($this->db_connect_id, "SET NAMES 'ISO-8859-1'");
+				
+				$this->dbname = $database;
+				$dbselect = @mysqli_select_db($this->db_connect_id, $this->dbname);
+
+				if( $dbselect === false )
 				{
-					mysqli_close($this->db_connect_id);
+					@mysqli_close($this->db_connect_id);
 					$this->db_connect_id = $dbselect;
 				}
-			}
 
-			$mtime = microtime();
-			$mtime = explode(" ",$mtime);
-			$mtime = $mtime[1] + $mtime[0];
-			$endtime = $mtime;
 
-			$this->sql_time += $endtime - $starttime;
-
-			return $this->db_connect_id;
-		}
-		else
-		{
-			$mtime = microtime();
-			$mtime = explode(" ",$mtime);
-			$mtime = $mtime[1] + $mtime[0];
-			$endtime = $mtime;
-
-			$this->sql_time += $endtime - $starttime;
-
-			return false;
-		}
-	}
-
-	//
-	// Other base methods
-	//
-	function sql_close()
-	{
-		$mtime = microtime();
-		$mtime = explode(" ",$mtime);
-		$mtime = $mtime[1] + $mtime[0];
-		$starttime = $mtime;
-
-		if( $this->db_connect_id )
-		{
-			//
-			// Commit any remaining transactions
-			//
-			if( $this->in_transaction )
-			{
-				mysqli_query($this->db_connect_id, "COMMIT");
-			}
-
-			$mtime = microtime();
-			$mtime = explode(" ",$mtime);
-			$mtime = $mtime[1] + $mtime[0];
-			$endtime = $mtime;
-
-			$this->sql_time += $endtime - $starttime;
-
-			return mysqli_close($this->db_connect_id);
-		}
-		else
-		{
-			$mtime = microtime();
-			$mtime = explode(" ",$mtime);
-			$mtime = $mtime[1] + $mtime[0];
-			$endtime = $mtime;
-
-			$this->sql_time += $endtime - $starttime;
-
-			return false;
-		}
-	}
-
-	//
-	// Base query method
-	//
-	function sql_query($query = "", $transaction = FALSE)
-	{
-		$mtime = microtime();
-		$mtime = explode(" ",$mtime);
-		$mtime = $mtime[1] + $mtime[0];
-		$starttime = $mtime;
-
-		//
-		// Remove any pre-existing queries
-		//
-		unset($this->query_result);
-
-		if( $query != "" )
-		{
-			$this->num_queries++;
-			if( $transaction == BEGIN_TRANSACTION && !$this->in_transaction )
-			{
-				$result = mysqli_query($this->db_connect_id, "BEGIN");
-				if(!$result)
-				{
-
-			$mtime = microtime();
-			$mtime = explode(" ",$mtime);
-			$mtime = $mtime[1] + $mtime[0];
-			$endtime = $mtime;
-		
-			$this->sql_time += $endtime - $starttime;
-			
-					return false;
-				}
-				$this->in_transaction = TRUE;
-			}
-
-			$this->query_result = mysqli_query($this->db_connect_id, $query);
-		}
-		else
-		{
-			if( $transaction == END_TRANSACTION && $this->in_transaction )
-			{
-				$result = mysqli_query($this->db_connect_id, "COMMIT");
-			}
-		}
-
-		if( $this->query_result )
-		{
-			unset($this->row[ (string) $this->query_result]);
-			unset($this->rowset[ (string) $this->query_result]);
-
-			if( $transaction == END_TRANSACTION && $this->in_transaction )
-			{
-				$this->in_transaction = FALSE;
-
-				if ( !mysqli_query($this->db_connect_id, "COMMIT") )
-				{
-					mysqli_query($this->db_connect_id, "ROLLBACK");
-
-			$mtime = microtime();
-			$mtime = explode(" ",$mtime);
-			$mtime = $mtime[1] + $mtime[0];
-			$endtime = $mtime;
-		
-			$this->sql_time += $endtime - $starttime;
-			
-					return false;
-				}
-			}
-
-			$mtime = microtime();
-			$mtime = explode(" ",$mtime);
-			$mtime = $mtime[1] + $mtime[0];
-			$endtime = $mtime;
-
-			$this->sql_time += $endtime - $starttime;
-
-			return $this->query_result;
-		}
-		else
-		{
-			if( $this->in_transaction )
-			{
-				mysqli_query($this->db_connect_id, "ROLLBACK");
-				$this->in_transaction = FALSE;
-			}
-
-			$mtime = microtime();
-			$mtime = explode(" ",$mtime);
-			$mtime = $mtime[1] + $mtime[0];
-			$endtime = $mtime;
-
-			$this->sql_time += $endtime - $starttime;
-
-			return false;
-		}
-	}
-
-	//
-	// Other query methods
-	//
-	function sql_numrows($query_id = 0)
-	{
-		$mtime = microtime();
-		$mtime = explode(" ",$mtime);
-		$mtime = $mtime[1] + $mtime[0];
-		$starttime = $mtime;
-
-		if( !$query_id )
-		{
-			$query_id = $this->query_result;
-		}
-
-		$mtime = microtime();
-		$mtime = explode(" ",$mtime);
-		$mtime = $mtime[1] + $mtime[0];
-		$endtime = $mtime;
-
-		$this->sql_time += $endtime - $starttime;
-
-		return ( $query_id ) ? mysqli_num_rows($query_id) : false;
-	}
-
-	function sql_affectedrows()
-	{
-		$mtime = microtime();
-		$mtime = explode(" ",$mtime);
-		$mtime = $mtime[1] + $mtime[0];
-		$starttime = $mtime;
-
-		$mtime = microtime();
-		$mtime = explode(" ",$mtime);
-		$mtime = $mtime[1] + $mtime[0];
-		$endtime = $mtime;
-		
-		$this->sql_time += $endtime - $starttime;
-
-		return ( $this->db_connect_id ) ? mysqli_affected_rows($this->db_connect_id) : false;
-	}
-
-	function sql_numfields($query_id = 0)
-	{
-		$mtime = microtime();
-		$mtime = explode(" ",$mtime);
-		$mtime = $mtime[1] + $mtime[0];
-		$starttime = $mtime;
-
-		if( !$query_id )
-		{
-			$query_id = $this->query_result;
-		}
-
-		$mtime = microtime();
-		$mtime = explode(" ",$mtime);
-		$mtime = $mtime[1] + $mtime[0];
-		$endtime = $mtime;
-
-		$this->sql_time += $endtime - $starttime;
-
-		return ( $query_id ) ? mysqli_num_fields($query_id) : false;
-	}
-
-	function sql_fieldname($offset, $query_id = 0)
-	{
-		$mtime = microtime();
-		$mtime = explode(" ",$mtime);
-		$mtime = $mtime[1] + $mtime[0];
-		$starttime = $mtime;
-
-		if( !$query_id )
-		{
-			$query_id = $this->query_result;
-		}
-
-		$mtime = microtime();
-		$mtime = explode(" ",$mtime);
-		$mtime = $mtime[1] + $mtime[0];
-		$endtime = $mtime;
-
-		$this->sql_time += $endtime - $starttime;
-
-		return ( $query_id ) ? mysqli_field_name($query_id, $offset) : false;
-	}
-
-	function sql_fieldtype($offset, $query_id = 0)
-	{
-		$mtime = microtime();
-		$mtime = explode(" ",$mtime);
-		$mtime = $mtime[1] + $mtime[0];
-		$starttime = $mtime;
-
-		if( !$query_id )
-		{
-			$query_id = $this->query_result;
-		}
-
-		$mtime = microtime();
-		$mtime = explode(" ",$mtime);
-		$mtime = $mtime[1] + $mtime[0];
-		$endtime = $mtime;
-
-		$this->sql_time += $endtime - $starttime;
-
-		return ( $query_id ) ? mysqli_fetch_field_direct($query_id, $offset) : false;
-	}
-
-	function sql_fetchrow($query_id = 0)
-	{
-		$mtime = microtime();
-		$mtime = explode(" ",$mtime);
-		$mtime = $mtime[1] + $mtime[0];
-		$starttime = $mtime;
-
-		if( !$query_id )
-		{
-			$query_id = $this->query_result;
-		}
-
-		if( $query_id )
-		{
-			$this->row[ (string) $query_id] = mysqli_fetch_array($query_id, MYSQLI_ASSOC);
-
-			$mtime = microtime();
-			$mtime = explode(" ",$mtime);
-			$mtime = $mtime[1] + $mtime[0];
-			$endtime = $mtime;
-
-			$this->sql_time += $endtime - $starttime;
-
-			return $this->row[ (string) $query_id];
-		}
-		else
-		{
-			$mtime = microtime();
-			$mtime = explode(" ",$mtime);
-			$mtime = $mtime[1] + $mtime[0];
-			$endtime = $mtime;
-
-			$this->sql_time += $endtime - $starttime;
-
-			return false;
-		}
-	}
-
-	function sql_fetchrowset($query_id = 0)
-	{
-		$mtime = microtime();
-		$mtime = explode(" ",$mtime);
-		$mtime = $mtime[1] + $mtime[0];
-		$starttime = $mtime;
-
-		if( !$query_id )
-		{
-			$query_id = $this->query_result;
-		}
-
-		if( $query_id )
-		{
-			unset($this->rowset[ (string) $query_id]);
-			unset($this->row[ (string) $query_id]);
-
-			while($this->rowset[ (string) $query_id] = mysqli_fetch_array($query_id, MYSQLI_ASSOC))
-			{
-				$result[] = $this->rowset[ (string) $query_id];
-			}
-
-			$mtime = microtime();
-			$mtime = explode(" ",$mtime);
-			$mtime = $mtime[1] + $mtime[0];
-			$endtime = $mtime;
-
-			$this->sql_time += $endtime - $starttime;
-
-			return $result;
-		}
-		else
-		{
-			$mtime = microtime();
-			$mtime = explode(" ",$mtime);
-			$mtime = $mtime[1] + $mtime[0];
-			$endtime = $mtime;
-
-			$this->sql_time += $endtime - $starttime;
-
-			return false;
-		}
-	}
-
-	function sql_fetchfield($field, $rownum = -1, $query_id = 0)
-	{
-		$mtime = microtime();
-		$mtime = explode(" ",$mtime);
-		$mtime = $mtime[1] + $mtime[0];
-		$starttime = $mtime;
-
-		if( !$query_id )
-		{
-			$query_id = $this->query_result;
-		}
-
-		if( $query_id )
-		{
-			if( $rownum > -1 )
-			{
-				//$result = mysqli_result($query_id, $rownum, $field);
-				$result = @mysql_result($query_id, $rownum, $field);
+				return $this->db_connect_id;
 			}
 			else
 			{
-				if( empty($this->row[$query_id]) && empty($this->rowset[$query_id]) )
+				return false;
+			}
+		}
+
+		//
+		// Other base methods
+		//
+		
+		function sql_close()
+		{
+			if( $this->db_connect_id )
+			{
+				//
+				// Commit any remaining transactions
+				//
+				if( $this->in_transaction )
 				{
-					if( $this->sql_fetchrow() )
-					{
-						$result = $this->row[$query_id][$field];
-					}
+					@mysqli_commit($this->db_connect_id);
 				}
-				else
+
+				return @mysqli_close($this->db_connect_id);
+			}
+			else
+			{
+				return false;
+			}
+		}
+
+		//
+		// Base query method
+		//
+		function sql_query($query = "", $transaction = FALSE)
+		{
+			//
+			// Remove any pre-existing queries
+			//
+			unset($this->query_result);
+
+			if( $query != "" )
+			{
+				$this->num_queries++;
+				if( $transaction == BEGIN_TRANSACTION && !$this->in_transaction )
 				{
-					if( $this->rowset[$query_id] )
+					$result = @mysqli_query($this->db_connect_id, "BEGIN");
+					if(!$result)
 					{
-						$result = $this->rowset[$query_id][0][$field];
+						return false;
 					}
-					else if( $this->row[$query_id] )
-					{
-						$result = $this->row[$query_id][$field];
-					}
+					$this->in_transaction = TRUE;
+				}
+
+				$this->query_result = @mysqli_query($this->db_connect_id, $query);
+			}
+			else
+			{
+				if( $transaction == END_TRANSACTION && $this->in_transaction )
+				{
+					$result = @mysqli_commit($this->db_connect_id);
 				}
 			}
 
-			$mtime = microtime();
-			$mtime = explode(" ",$mtime);
-			$mtime = $mtime[1] + $mtime[0];
-			$endtime = $mtime;
+			$this->query_result = (isset($this->query_result)) ? $this->query_result : false;
+			if ($this->query_result)
+			{
+				unset($this->row[(bool)$this->query_result]);
+				unset($this->rowset[(bool)$this->query_result]);
 
-			$this->sql_time += $endtime - $starttime;
+				if( $transaction == END_TRANSACTION && $this->in_transaction )
+				{
+					$this->in_transaction = FALSE;
+
+					if ( !@mysqli_commit($this->db_connect_id) )
+					{
+						@mysqli_rollback($this->db_connect_id);
+						return false;
+					}
+				}
+				
+				return $this->query_result;
+			}
+			else
+			{
+				if( $this->in_transaction )
+				{
+					@mysqli_rollback($this->db_connect_id);
+					$this->in_transaction = FALSE;
+				}
+				return false;
+			}
+		}
+
+		//
+		// Other query methods
+		//
+		function sql_numrows($query_id = 0)
+		{			
+			if ($query_id === false)
+			{
+				$query_id = $this->query_result;
+			}
+			
+
+			return ( $query_id ) ? @mysqli_num_rows($query_id) : false;
+		}
+
+		function sql_affectedrows()
+		{
+			return ( $this->db_connect_id ) ? @mysqli_affected_rows($this->db_connect_id) : false;
+		}
+
+		function sql_numfields($query_id = 0)
+		{
+			if ($query_id === false)
+			{
+				$query_id = $this->query_result;
+			}
+
+			return ( $query_id ) ? @mysqli_field_count($query_id) : false;
+		}
+
+		function sql_fieldname($offset, $query_id = 0)
+		{
+			if ($query_id === false)
+			{
+				$query_id = $this->query_result;
+			}
+			
+			$field_info = @mysqli_fetch_field_direct($query_id, $offset);
+			
+			return ( $query_id ) ? $field_info->name : false;
+		}
+
+		function sql_fieldtype($offset, $query_id = 0)
+		{
+			if ($query_id === false)
+			{
+				$query_id = $this->query_result;
+			}
+
+			$field_info = @mysqli_fetch_field_direct($query_id, $offset);
+			
+			return ( $query_id ) ? $field_info->type : false;
+		}
+		
+		function sql_fetchrow($query_id = 0)
+		{			
+			if ($query_id === false)
+			{
+				$query_id = $this->query_result;
+			}
+
+			if( $query_id )
+			{
+				$this->row[(bool)$query_id] = mysqli_fetch_array($query_id, MYSQLI_ASSOC);
+				return $this->row[(bool)$query_id];
+			}
+			else
+			{
+				return false;
+			}
+		}
+
+		function sql_fetchrowset($query_id = 0)
+		{			
+			if ($query_id === false)
+			{
+				$query_id = $this->query_result;
+			}
+
+			if( $query_id )
+			{
+				unset($this->rowset[(bool)$query_id]);
+				unset($this->row[(bool)$query_id]);
+
+				while($this->rowset[(bool)$query_id] = @mysqli_fetch_array($query_id, MYSQLI_ASSOC))
+				{
+					$result[] = $this->rowset[(bool)$query_id];
+				}
+
+				if (isset($result))
+				{
+					return $result;
+				}
+				else
+				{
+					return false;
+				} 
+			}
+			else
+			{
+				return false;
+			}
+		}
+		
+		function mysqlx_result($query_id, $rownum, $field) 
+		{
+			$i = 0;
+			$retval = '';
+			while ($row = $query_id->fetch_array(MYSQLI_BOTH)) 
+			{
+				if ($i == $rownum)
+				{
+					$retval = $row[$field];
+				}
+				$i++;
+			}
+			return $retval;
+		} 
+
+		function sql_fetchfield($field, $rownum = -1, $query_id = 0)
+		{
+			if ($query_id === false)
+			{
+				$query_id = $this->query_result;
+			}
+
+			if( $query_id )
+			{
+				if( $rownum > -1 )
+				{
+					$result = @mysqlx_result($query_id, $rownum, $field);
+				}
+				else
+				{
+					if( empty($this->row[(bool)$query_id]) && empty($this->rowset[(bool)$query_id]) )
+					{
+						if( $this->sql_fetchrow() )
+						{
+							$result = $this->row[(bool)$query_id][$field];
+						}
+					}
+					else
+					{
+						if( $this->rowset[(bool)$query_id] )
+						{
+							$result = $this->rowset[(bool)$query_id][0][$field];
+						}
+						else if( $this->row[(bool)$query_id] )
+						{
+							$result = $this->row[(bool)$query_id][$field];
+						}
+					}
+				}
+
+				return $result;
+			}
+			else
+			{
+				return false;
+			}
+		}
+
+		function sql_rowseek($rownum, $query_id = 0)
+		{
+			if ($query_id === false)
+			{
+				$query_id = $this->query_result;
+			}
+			return ( $query_id ) ? @mysqli_data_seek($query_id, $rownum) : false;
+		}
+
+		function sql_nextid()
+		{
+			return ( $this->db_connect_id ) ? @mysqli_insert_id($this->db_connect_id) : false;
+		}
+
+		function sql_freeresult($query_id = 0)
+		{			
+			if ($query_id === false)
+			{
+				$query_id = $this->query_result;
+			}
+
+			if ( $query_id === true)
+			{
+				unset($this->row[(bool)$query_id]);
+				unset($this->rowset[(bool)$query_id]);
+
+				@mysqli_free_result($query_id);
+
+				return true;
+			}
+			else
+			{
+				return false;
+			}
+		}
+
+		function sql_error()
+		{
+			$result['message'] = @mysqli_error($this->db_connect_id);
+			$result['code'] = @mysqli_errno($this->db_connect_id);
 
 			return $result;
 		}
-		else
-		{
-			$mtime = microtime();
-			$mtime = explode(" ",$mtime);
-			$mtime = $mtime[1] + $mtime[0];
-			$endtime = $mtime;
 
-			$this->sql_time += $endtime - $starttime;
-
-			return false;
-		}
-	}
-
-	function sql_rowseek($rownum, $query_id = 0)
-	{
-		$mtime = microtime();
-		$mtime = explode(" ",$mtime);
-		$mtime = $mtime[1] + $mtime[0];
-		$starttime = $mtime;
-
-		if( !$query_id )
-		{
-			$query_id = $this->query_result;
-		}
-
-		$mtime = microtime();
-		$mtime = explode(" ",$mtime);
-		$mtime = $mtime[1] + $mtime[0];
-		$endtime = $mtime;
-
-		$this->sql_time += $endtime - $starttime;
-
-		return ( $query_id ) ? mysqli_data_seek($query_id, $rownum) : false;
-	}
-
-	function sql_nextid()
-	{
-		$mtime = microtime();
-		$mtime = explode(" ",$mtime);
-		$mtime = $mtime[1] + $mtime[0];
-		$starttime = $mtime;
-
-		$mtime = microtime();
-		$mtime = explode(" ",$mtime);
-		$mtime = $mtime[1] + $mtime[0];
-		$endtime = $mtime;
-		
-		$this->sql_time += $endtime - $starttime;
-
-		return ( $this->db_connect_id ) ? mysqli_insert_id($this->db_connect_id) : false;
-	}
-
-	function sql_freeresult($query_id = 0)
-	{
-		$mtime = microtime();
-		$mtime = explode(" ",$mtime);
-		$mtime = $mtime[1] + $mtime[0];
-		$starttime = $mtime;
-
-		if( !$query_id )
-		{
-			$query_id = $this->query_result;
-		}
-
-		if ( $query_id )
-		{
-			unset($this->row[ (string) $query_id]);
-			unset($this->rowset[ (string) $query_id]);
-
-			mysqli_free_result($query_id);
-			
-			$mtime = microtime();
-			$mtime = explode(" ",$mtime);
-			$mtime = $mtime[1] + $mtime[0];
-			$endtime = $mtime;
-
-			$this->sql_time += $endtime - $starttime;
-
-			return true;
-		}
-		else
-		{
-			$mtime = microtime();
-			$mtime = explode(" ",$mtime);
-			$mtime = $mtime[1] + $mtime[0];
-			$endtime = $mtime;
-
-			$this->sql_time += $endtime - $starttime;
-
-			return false;
-		}
-	}
-
-	function sql_error()
-	{
-		$mtime = microtime();
-		$mtime = explode(" ",$mtime);
-		$mtime = $mtime[1] + $mtime[0];
-		$starttime = $mtime;
-
-		$result['message'] = @mysqli_error((int)$this->db_connect_id);
-		$result['code'] = @mysqli_errno((int)$this->db_connect_id);
-
-		$mtime = microtime();
-		$mtime = explode(" ",$mtime);
-		$mtime = $mtime[1] + $mtime[0];
-		$endtime = $mtime;
-
-		$this->sql_time += $endtime - $starttime;
-
-		return $result;
-	}
-
-} // class sql_db
+	} // class sql_db
 
 } // if ... define
 

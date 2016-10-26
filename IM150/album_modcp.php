@@ -46,9 +46,9 @@ include($album_root_path . 'album_common.'.$phpEx);
 // If $pic_id not found we will assign it to FALSE
 // We will check $pic_id[] in POST method later (in $mode carry out)
 // ------------------------------------
-if( isset($HTTP_GET_VARS['pic_id']) )
+if( isset($_GET['pic_id']) )
 {
-	$pic_id = intval($HTTP_GET_VARS['pic_id']);
+	$pic_id = intval($_GET['pic_id']);
 }
 else
 {
@@ -82,13 +82,13 @@ else
 	//
 	// No $pic_id found, try to find $cat_id
 	//
-	if( isset($HTTP_POST_VARS['cat_id']) )
+	if( isset($_POST['cat_id']) )
 	{
-		$cat_id = intval($HTTP_POST_VARS['cat_id']);
+		$cat_id = intval($_POST['cat_id']);
 	}
-	elseif( isset($HTTP_GET_VARS['cat_id']) )
+	elseif( isset($_GET['cat_id']) )
 	{
-		$cat_id = intval($HTTP_GET_VARS['cat_id']);
+		$cat_id = intval($_GET['cat_id']);
 	}
 	else
 	{
@@ -127,30 +127,30 @@ else
 // ------------------------------------
 // set $mode (select action)
 // ------------------------------------
-if( isset($HTTP_POST_VARS['mode']) )
+if( isset($_POST['mode']) )
 {
 	// Oh data from Mod CP
-	if( isset($HTTP_POST_VARS['move']) )
+	if( isset($_POST['move']) )
 	{
 		$mode = 'move';
 	}
-	elseif( isset($HTTP_POST_VARS['lock']) )
+	elseif( isset($_POST['lock']) )
 	{
 		$mode = 'lock';
 	}
-	elseif( isset($HTTP_POST_VARS['unlock']) )
+	elseif( isset($_POST['unlock']) )
 	{
 		$mode = 'unlock';
 	}
-	elseif( isset($HTTP_POST_VARS['delete']) )
+	elseif( isset($_POST['delete']) )
 	{
 		$mode = 'delete';
 	}
-	elseif( isset($HTTP_POST_VARS['approval']) )
+	elseif( isset($_POST['approval']) )
 	{
 		$mode = 'approval';
 	}
-	elseif( isset($HTTP_POST_VARS['unapproval']) )
+	elseif( isset($_POST['unapproval']) )
 	{
 		$mode = 'unapproval';
 	}
@@ -159,9 +159,9 @@ if( isset($HTTP_POST_VARS['mode']) )
 		$mode = '';
 	}
 }
-elseif( isset($HTTP_GET_VARS['mode']) )
+elseif( isset($_GET['mode']) )
 {
-	$mode = trim($HTTP_GET_VARS['mode']);
+	$mode = trim($_GET['mode']);
 }
 else
 {
@@ -207,22 +207,22 @@ if ($mode == '')
 	// --------------------------------
 
 	// Set Variables
-	if( isset($HTTP_GET_VARS['start']) )
+	if( isset($_GET['start']) )
 	{
-		$start = intval($HTTP_GET_VARS['start']);
+		$start = intval($_GET['start']);
 	}
-	elseif( isset($HTTP_POST_VARS['start']) )
+	elseif( isset($_POST['start']) )
 	{
-		$start = intval($HTTP_POST_VARS['start']);
+		$start = intval($_POST['start']);
 	}
 	else
 	{
 		$start = 0;
 	}
 
-	if( isset($HTTP_GET_VARS['sort_method']) )
+	if( isset($_GET['sort_method']) )
 	{
-		switch ($HTTP_GET_VARS['sort_method'])
+		switch ($_GET['sort_method'])
 		{
 			case 'pic_title':
 				$sort_method = 'pic_title';
@@ -246,9 +246,9 @@ if ($mode == '')
 				$sort_method = 'pic_time';
 		}
 	}
-	elseif( isset($HTTP_POST_VARS['sort_method']) )
+	elseif( isset($_POST['sort_method']) )
 	{
-		switch ($HTTP_POST_VARS['sort_method'])
+		switch ($_POST['sort_method'])
 		{
 			case 'pic_title':
 				$sort_method = 'pic_title';
@@ -277,9 +277,9 @@ if ($mode == '')
 		$sort_method = 'pic_time';
 	}
 
-	if( isset($HTTP_GET_VARS['sort_order']) )
+	if( isset($_GET['sort_order']) )
 	{
-		switch ($HTTP_GET_VARS['sort_order'])
+		switch ($_GET['sort_order'])
 		{
 			case 'ASC':
 				$sort_order = 'ASC';
@@ -288,9 +288,9 @@ if ($mode == '')
 				$sort_order = 'DESC';
 		}
 	}
-	elseif( isset($HTTP_POST_VARS['sort_order']) )
+	elseif( isset($_POST['sort_order']) )
 	{
-		switch ($HTTP_POST_VARS['sort_order'])
+		switch ($_POST['sort_order'])
 		{
 			case 'ASC':
 				$sort_order = 'ASC';
@@ -499,7 +499,7 @@ else
 		// MOVE
 		//-----------------------------
 
-		if( !isset($HTTP_POST_VARS['target']) )
+		if( !isset($_POST['target']) )
 		{
 			// if "target" has not been set, we will open the category select form
 			//
@@ -512,9 +512,9 @@ else
 			else
 			{
 				// Check $pic_id[] on POST Method now
-				if( isset($HTTP_POST_VARS['pic_id']) )
+				if( isset($_POST['pic_id']) )
 				{
-					$pic_id_array = $HTTP_POST_VARS['pic_id'];
+					$pic_id_array = $_POST['pic_id'];
 					if( !is_array($pic_id_array) )
 					{
 						message_die(GENERAL_ERROR, 'Invalid request');
@@ -572,9 +572,9 @@ else
 			// Do the MOVE action
 			//
 			// Now we only get $pic_id[] via POST (after the select target screen)
-			if( isset($HTTP_POST_VARS['pic_id']) )
+			if( isset($_POST['pic_id']) )
 			{
-				$pic_id = $HTTP_POST_VARS['pic_id'];
+				$pic_id = $_POST['pic_id'];
 				if( is_array($pic_id) )
 				{
 					$pic_id_sql = implode(',', $pic_id);
@@ -591,7 +591,7 @@ else
 			// if we are trying to move picture(s) to root category or a
 			// personal gallary (shouldn't be possible), but better save then sorry
 			// ...then return an error
-			if (intval($HTTP_POST_VARS['target']) <= 0)
+			if (intval($_POST['target']) <= 0)
 			{
 				message_die(GENERAL_ERROR, 'Can\'t move pictures directly to Root category');
 			}
@@ -612,7 +612,7 @@ else
 
 			// Update the DB
 			$sql = "UPDATE ". ALBUM_TABLE ."
-					SET pic_cat_id = ". intval($HTTP_POST_VARS['target']) ."
+					SET pic_cat_id = ". intval($_POST['target']) ."
 					WHERE pic_id IN ($pic_id_sql)";
 			if( !$result = $db->sql_query($sql) )
 			{
@@ -638,9 +638,9 @@ else
 		else
 		{
 			// Check $pic_id[] on POST Method now
-			if( isset($HTTP_POST_VARS['pic_id']) )
+			if( isset($_POST['pic_id']) )
 			{
-				$pic_id = $HTTP_POST_VARS['pic_id'];
+				$pic_id = $_POST['pic_id'];
 				if( is_array($pic_id) )
 				{
 					$pic_id_sql = implode(',', $pic_id);
@@ -708,9 +708,9 @@ else
 		else
 		{
 			// Check $pic_id[] on POST Method now
-			if( isset($HTTP_POST_VARS['pic_id']) )
+			if( isset($_POST['pic_id']) )
 			{
-				$pic_id = $HTTP_POST_VARS['pic_id'];
+				$pic_id = $_POST['pic_id'];
 				if( is_array($pic_id) )
 				{
 					$pic_id_sql = implode(',', $pic_id);
@@ -778,9 +778,9 @@ else
 		else
 		{
 			// Check $pic_id[] on POST Method now
-			if( isset($HTTP_POST_VARS['pic_id']) )
+			if( isset($_POST['pic_id']) )
 			{
-				$pic_id = $HTTP_POST_VARS['pic_id'];
+				$pic_id = $_POST['pic_id'];
 				if( is_array($pic_id) )
 				{
 					$pic_id_sql = implode(',', $pic_id);
@@ -837,9 +837,9 @@ else
 		else
 		{
 			// Check $pic_id[] on POST Method now
-			if( isset($HTTP_POST_VARS['pic_id']) )
+			if( isset($_POST['pic_id']) )
 			{
-				$pic_id = $HTTP_POST_VARS['pic_id'];
+				$pic_id = $_POST['pic_id'];
 				if( is_array($pic_id) )
 				{
 					$pic_id_sql = implode(',', $pic_id);
@@ -893,7 +893,7 @@ else
 			message_die(GENERAL_ERROR, $lang['Not_Authorised']);
 		}
 
-		if( !isset($HTTP_POST_VARS['confirm']) )
+		if( !isset($_POST['confirm']) )
 		{
 			// we must check POST method now
 			$pic_id_array = array();
@@ -904,9 +904,9 @@ else
 			else
 			{
 				// Check $pic_id[] on POST Method now
-				if( isset($HTTP_POST_VARS['pic_id']) )
+				if( isset($_POST['pic_id']) )
 				{
-					$pic_id_array = $HTTP_POST_VARS['pic_id'];
+					$pic_id_array = $_POST['pic_id'];
 					if( !is_array($pic_id_array) )
 					{
 						message_die(GENERAL_ERROR, 'Invalid request');
@@ -957,9 +957,9 @@ else
 			//
 			// Do the delete here...
 			//
-			if( isset($HTTP_POST_VARS['pic_id']) )
+			if( isset($_POST['pic_id']) )
 			{
-				$pic_id = $HTTP_POST_VARS['pic_id'];
+				$pic_id = $_POST['pic_id'];
 				if( is_array($pic_id) )
 				{
 					$pic_id_sql = implode(',', $pic_id);

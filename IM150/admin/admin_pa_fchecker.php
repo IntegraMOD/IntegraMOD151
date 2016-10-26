@@ -34,9 +34,9 @@ $this_dir = $phpbb_root_path . 'pafiledb/uploads/';
 
 $html_path = get_formated_url() . '/pafiledb/uploads/';
 
-if( isset($HTTP_GET_VARS['safety']) || isset($HTTP_POST_VARS['safety']) )
+if( isset($_GET['safety']) || isset($_POST['safety']) )
 {
-    $safety = (isset($HTTP_POST_VARS['safety'])) ? intval($HTTP_POST_VARS['safety']) : intval($HTTP_GET_VARS['safety']);
+    $safety = (isset($_POST['safety'])) ? intval($_POST['safety']) : intval($_GET['safety']);
 }
 
 $template->set_filenames(array(

@@ -112,7 +112,7 @@ $affected = 0;
 // Deleting?
 $type = $lang['Topic_post'];
 
-if ( isset($HTTP_POST_VARS['action']) && isset($HTTP_POST_VARS['c' . $n ]) )
+if ( isset($_POST['action']) && isset($_POST['c' . $n ]) )
 {
 	$sql_select = "SELECT DISTINCT t.topic_id
 	FROM " . TOPICS_TABLE . " t LEFT JOIN ". POSTS_TABLE . " p ON t.topic_id = p.topic_id
@@ -135,7 +135,7 @@ items_count($sql,$choice,$type);
 // Deleting?
 $type = $lang['Posts_topics'];
 
-if ( isset($HTTP_POST_VARS['action']) && isset($HTTP_POST_VARS['c' . $n ]) )
+if ( isset($_POST['action']) && isset($_POST['c' . $n ]) )
 {
 	$sql_select = "SELECT DISTINCT p.post_id
 	FROM " . POSTS_TABLE . " p LEFT JOIN " . TOPICS_TABLE . " t ON p.topic_id = t.topic_id
@@ -158,7 +158,7 @@ items_count($sql,$choice,$type);
 // Deleting?
 $type = $lang['Watchs_topics'];
 
-if ( isset($HTTP_POST_VARS['action']) && isset($HTTP_POST_VARS['c' . $n ]) )
+if ( isset($_POST['action']) && isset($_POST['c' . $n ]) )
 {
 	$sql_select = "SELECT DISTINCT w.topic_id
 	FROM " . TOPICS_WATCH_TABLE . " w LEFT JOIN " . TOPICS_TABLE . " t ON w.topic_id = t.topic_id
@@ -181,7 +181,7 @@ items_count($sql,$choice,$type);
 // Deleting?
 $type = $lang['Watchs_user'];
 
-if ( isset($HTTP_POST_VARS['action']) && isset($HTTP_POST_VARS['c' . $n ]) )
+if ( isset($_POST['action']) && isset($_POST['c' . $n ]) )
 {
 	$sql_select = "SELECT DISTINCT w.topic_id
 	FROM " . TOPICS_WATCH_TABLE . " w LEFT JOIN " . USERS_TABLE . " u ON w.user_id = u.user_id
@@ -204,7 +204,7 @@ items_count($sql,$choice,$type);
 // Deleting?
 $type = $lang['Votes_topics'];
 
-if ( isset($HTTP_POST_VARS['action']) && isset($HTTP_POST_VARS['c' . $n ]) )
+if ( isset($_POST['action']) && isset($_POST['c' . $n ]) )
 {
 	$sql_select = "SELECT DISTINCT v.vote_id
 	FROM " . VOTE_DESC_TABLE . " v LEFT JOIN " . TOPICS_TABLE . " t ON v.topic_id = t.topic_id
@@ -227,7 +227,7 @@ items_count($sql,$choice,$type);
 // Deleting?
 $type = $lang['Results_poll'];
 
-if ( isset($HTTP_POST_VARS['action']) && isset($HTTP_POST_VARS['c' . $n ]) )
+if ( isset($_POST['action']) && isset($_POST['c' . $n ]) )
 {
 	$sql_select = "SELECT DISTINCT r.vote_id
 	FROM " . VOTE_RESULTS_TABLE . " r LEFT JOIN " . VOTE_DESC_TABLE . " v ON r.vote_id = v.vote_id
@@ -250,7 +250,7 @@ items_count($sql,$choice,$type);
 // Deleting?
 $type = $lang['Voters_poll'];
 
-if ( isset($HTTP_POST_VARS['action']) && isset($HTTP_POST_VARS['c' . $n ]) )
+if ( isset($_POST['action']) && isset($_POST['c' . $n ]) )
 {
 	$sql_select = "SELECT DISTINCT v.vote_id
 	FROM " .VOTE_USERS_TABLE . " v LEFT JOIN " . VOTE_DESC_TABLE . " d ON v.vote_id = d.vote_id

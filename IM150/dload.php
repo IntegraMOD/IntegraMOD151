@@ -20,18 +20,19 @@
  *
  ***************************************************************************/
 
+
 define('IN_PHPBB', true);
-define('CT_SECLEVEL', 'MEDIUM');
-$ct_ignorepvar = array('search_keywords','long_desc','author','short_desc');
-define('IN_DOWNLOAD', true);
 $phpbb_root_path = './';
+define('IN_DOWNLOAD', true);
+define('CT_SECLEVEL', 'MEDIUM');
+$ct_ignorepvar = array('search_keywords','long_desc','author','short_desc','helpbox');
 include($phpbb_root_path . 'extension.inc');
 include($phpbb_root_path . 'common.'.$phpEx);
 
 //
 // Start session management
 //
-$userdata = session_pagestart($user_ip, PAGE_DOWNLOAD);
+$userdata = session_pagestart($user_ip, PAGE_INDEX);
 init_userprefs($userdata);
 //
 // End session management

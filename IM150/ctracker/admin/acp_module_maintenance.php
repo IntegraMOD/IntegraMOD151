@@ -28,7 +28,7 @@ $template->set_filenames(array(
 
 
 // First we look wich mode the user has selected
-$mode = $HTTP_GET_VARS['mode'];
+$mode = $_GET['mode'];
 
 // Reset used vars
 $uplink_values = array();

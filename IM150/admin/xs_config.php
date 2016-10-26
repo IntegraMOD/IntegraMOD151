@@ -48,7 +48,7 @@ $lang['xs_config_back'] = str_replace('{URL}', append_sid('xs_config.'.$phpEx), 
 //
 // Updating configuration
 //
-if(isset($HTTP_POST_VARS['submit']) && !defined('DEMO_MODE'))
+if(isset($_POST['submit']) && !defined('DEMO_MODE'))
 {
 	$vars = array('xs_use_cache', 'xs_auto_compile', 'xs_auto_recompile', 'xs_php', 'xs_def_template', 'xs_check_switches', 'xs_warn_includes', 'xs_add_comments', 'xs_ftp_host', 'xs_ftp_login', 'xs_ftp_path', 'xs_shownav');
 	// checking navigation config
@@ -56,7 +56,7 @@ if(isset($HTTP_POST_VARS['submit']) && !defined('DEMO_MODE'))
 	for($i=0; $i<XS_SHOWNAV_MAX; $i++)
 	{
 		$num = pow(2, $i);
-		if($i != XS_SHOWNAV_DOWNLOAD && !empty($HTTP_POST_VARS['shownav_' . $i])) // downloads feature is disabled
+		if($i != XS_SHOWNAV_DOWNLOAD && !empty($_POST['shownav_' . $i])) // downloads feature is disabled
 		{
 			$shownav += $num;
 		}
@@ -67,12 +67,12 @@ if(isset($HTTP_POST_VARS['submit']) && !defined('DEMO_MODE'))
 				'ACTION'	=> append_sid('index.' . $phpEx . '?pane=left')
 			));
 	}
-	$HTTP_POST_VARS['xs_shownav'] = $shownav;
+	$_POST['xs_shownav'] = $shownav;
 	// checking submitted data
 	$update_time = false;
 	foreach($vars as $var)
 	{
-		$new[$var] = stripslashes(trim($HTTP_POST_VARS[$var]));
+		$new[$var] = stripslashes(trim($_POST[$var]));
 		if(($var == 'xs_auto_recompile') && !$new['xs_auto_compile'])
 		{
 			$new[$var] = 0;
@@ -114,9 +114,9 @@ if(isset($HTTP_POST_VARS['submit']) && !defined('DEMO_MODE'))
 
 // check ftp configuration
 $xs_ftp_host = $board_config['xs_ftp_host'];
-if(empty($xs_ftp_host) && !empty($HTTP_SERVER_VARS['HTTP_HOST']))
+if(empty($xs_ftp_host) && !empty($_SERVER['HTTP_HOST']))
 {
-	$str = $HTTP_SERVER_VARS['HTTP_HOST'];
+	$str = $_SERVER['HTTP_HOST'];
 	$template->assign_vars(array(
 		'HOST_GUESS' => str_replace(array('{HOST}', '{CLICK}'), array($str, 'document.config.xs_ftp_host.value=\''.$str.'\''), $lang['xs_ftp_host_guess'])
 		));

@@ -80,9 +80,9 @@ $vlists = pcp_get_values_lists();
 
 //  get parameters
 $mode = '';
-if (isset($HTTP_POST_VARS['mode']) || isset($HTTP_GET_VARS['mode']) )
+if (isset($_POST['mode']) || isset($_GET['mode']) )
 {
-	$mode = isset($HTTP_POST_VARS['mode']) ? $HTTP_POST_VARS['mode'] : $HTTP_GET_VARS['mode'];
+	$mode = isset($_POST['mode']) ? $_POST['mode'] : $_GET['mode'];
 }
 if ( !in_array($mode, array('edit')) )
 {
@@ -91,9 +91,9 @@ if ( !in_array($mode, array('edit')) )
 
 // table
 $vlist = '';
-if (isset($HTTP_POST_VARS['vlist']) || isset($HTTP_GET_VARS['vlist']) )
+if (isset($_POST['vlist']) || isset($_GET['vlist']) )
 {
-	$vlist = isset($HTTP_POST_VARS['vlist']) ? $HTTP_POST_VARS['vlist'] : $HTTP_GET_VARS['vlist'];
+	$vlist = isset($_POST['vlist']) ? $_POST['vlist'] : $_GET['vlist'];
 }
 if ( !empty($vlist) && !isset($vlists[$vlist]) )
 {
@@ -102,10 +102,10 @@ if ( !empty($vlist) && !isset($vlists[$vlist]) )
 }
 
 // buttons
-$submit = isset($HTTP_POST_VARS['submit']);
-$create = isset($HTTP_POST_VARS['create']);
-$delete = isset($HTTP_POST_VARS['delete']);
-$cancel = isset($HTTP_POST_VARS['cancel']);
+$submit = isset($_POST['submit']);
+$create = isset($_POST['create']);
+$delete = isset($_POST['delete']);
+$cancel = isset($_POST['cancel']);
 if ($create)
 {
 	$vlist = '';
@@ -136,20 +136,20 @@ if ($mode == 'edit')
 	}
 
 	// coming from the form
-	$name		= isset($HTTP_POST_VARS['name']) ? $HTTP_POST_VARS['name'] : $name;
-	$func		= isset($HTTP_POST_VARS['func']) ? $HTTP_POST_VARS['func'] : $func;
-	$main		= isset($HTTP_POST_VARS['main']) ? $HTTP_POST_VARS['main'] : $main;
-	$keyfield	= isset($HTTP_POST_VARS['keyfield']) ? $HTTP_POST_VARS['keyfield'] : $keyfield;
-	$txtfield	= isset($HTTP_POST_VARS['txtfield']) ? $HTTP_POST_VARS['txtfield'] : $txtfield;
-	$imgfield	= isset($HTTP_POST_VARS['imgfield']) ? $HTTP_POST_VARS['imgfield'] : $imgfield;
+	$name		= isset($_POST['name']) ? $_POST['name'] : $name;
+	$func		= isset($_POST['func']) ? $_POST['func'] : $func;
+	$main		= isset($_POST['main']) ? $_POST['main'] : $main;
+	$keyfield	= isset($_POST['keyfield']) ? $_POST['keyfield'] : $keyfield;
+	$txtfield	= isset($_POST['txtfield']) ? $_POST['txtfield'] : $txtfield;
+	$imgfield	= isset($_POST['imgfield']) ? $_POST['imgfield'] : $imgfield;
 	$move_id = -1;
 	$move_dir = 0;
 
-	if ( isset($HTTP_POST_VARS['not_init']) )
+	if ( isset($_POST['not_init']) )
 	{
 		// get back all item_rows
 		$item_rows = array();
-		$item_rows = isset($HTTP_POST_VARS['item_rows']) ? $HTTP_POST_VARS['item_rows'] : array();
+		$item_rows = isset($_POST['item_rows']) ? $_POST['item_rows'] : array();
 
 		$w_item_keys = array();
 		$w_item_txts = array();
@@ -159,17 +159,17 @@ if ($mode == 'edit')
 		for ($i=0; $i < count($item_rows); $i++)
 		{
 			$offset++;
-			$w_item_keys[] = $HTTP_POST_VARS['item_key_' . $item_rows[$i] ];
-			$w_item_txts[] = $HTTP_POST_VARS['item_txt_' . $item_rows[$i] ];
-			$w_item_imgs[] = $HTTP_POST_VARS['item_img_' . $item_rows[$i] ];
-			$w_item_chks[] = $HTTP_POST_VARS['item_chk_' . $item_rows[$i] ];
+			$w_item_keys[] = $_POST['item_key_' . $item_rows[$i] ];
+			$w_item_txts[] = $_POST['item_txt_' . $item_rows[$i] ];
+			$w_item_imgs[] = $_POST['item_img_' . $item_rows[$i] ];
+			$w_item_chks[] = $_POST['item_chk_' . $item_rows[$i] ];
 
-			if ( isset($HTTP_POST_VARS['moveup_' . $item_rows[$i] ]) )
+			if ( isset($_POST['moveup_' . $item_rows[$i] ]) )
 			{
 				$w_move_id = $offset;
 				$w_move_dir = -1;
 			}
-			if ( isset($HTTP_POST_VARS['movedw_' . $item_rows[$i] ]) )
+			if ( isset($_POST['movedw_' . $item_rows[$i] ]) )
 			{
 				$w_move_id = $offset;
 				$w_move_dir = +1;
@@ -186,7 +186,7 @@ if ($mode == 'edit')
 		$move_dir = 0;
 		for ($i = 0; $i < count($w_item_keys); $i++)
 		{
-			if ( ( !isset($HTTP_POST_VARS['delete_selection']) || !$w_item_chks[$i] ) && ( ($w_item_keys[$i] != '') || ($w_item_txts[$i] != '') || ($w_item_imgs[$i] != '') ) )
+			if ( ( !isset($_POST['delete_selection']) || !$w_item_chks[$i] ) && ( ($w_item_keys[$i] != '') || ($w_item_txts[$i] != '') || ($w_item_imgs[$i] != '') ) )
 			{
 				$offset++;
 				$item_keys[] = $w_item_keys[$i];
@@ -229,7 +229,7 @@ if ($mode == 'edit')
 		}
 
 		// add values asked
-		if ( isset($HTTP_POST_VARS['add_selection']) )
+		if ( isset($_POST['add_selection']) )
 		{
 			$item_keys[] = '';
 			$item_txts[] = '';

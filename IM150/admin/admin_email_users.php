@@ -37,11 +37,11 @@ $template->set_filenames(array(
 	'body' => 'admin/config_email_users_body.tpl')
 );
 
-$add = isset($HTTP_POST_VARS['add']); 
-$send_action = isset($HTTP_POST_VARS['send_action']);
-$send_pm_action = isset($HTTP_POST_VARS['send_pm_action']);
-$send = isset($HTTP_POST_VARS['send']); 
-$remove = isset($HTTP_POST_VARS['remove']);
+$add = isset($_POST['add']); 
+$send_action = isset($_POST['send_action']);
+$send_pm_action = isset($_POST['send_pm_action']);
+$send = isset($_POST['send']); 
+$remove = isset($_POST['remove']);
 
 if ( $add )
 {
@@ -58,7 +58,7 @@ if ( $add )
 	
 	while( list(,$email_to) = @each($email_tos) )
 	{
-		if ( isset($HTTP_POST_VARS[$email_to['user_id']]))
+		if ( isset($_POST[$email_to['user_id']]))
 		{
 			$id = $email_to['user_id'];
 			$mail = $email_to['user_email'];
@@ -114,7 +114,7 @@ else if ( $remove )
 	
 	while( list(,$target) = @each($targets) )
 	{
-		if ( isset($HTTP_POST_VARS[$target['user_id']]))
+		if ( isset($_POST[$target['user_id']]))
 		{
 			$id = $target['user_id'];
 
@@ -136,8 +136,8 @@ else if ( $remove )
 
 else if ( $send_pm_action )
 {
-	$subject = stripslashes(trim($HTTP_POST_VARS['subject']));
-	$message = stripslashes(trim($HTTP_POST_VARS['message']));
+	$subject = stripslashes(trim($_POST['subject']));
+	$message = stripslashes(trim($_POST['message']));
 
 	$sql = "SELECT e.* , u.username FROM " . USER_EMAILS_TABLE . " e , " . USERS_TABLE . " u
 		WHERE u.user_id = e.user_id ";
@@ -298,8 +298,8 @@ else if ( $send_action )
 {
 	@set_time_limit(1200);
 
-	$subject = stripslashes(trim($HTTP_POST_VARS['subject']));
-	$message = stripslashes(trim($HTTP_POST_VARS['message']));
+	$subject = stripslashes(trim($_POST['subject']));
+	$message = stripslashes(trim($_POST['message']));
 	
 	$error = FALSE;
 	$error_msg = '';
@@ -429,24 +429,24 @@ else
 	}
 	$ever .= ' -1 , 1 , 0)';
 
-	$start = ( isset($HTTP_GET_VARS['start']) ) ? intval($HTTP_GET_VARS['start']) : 0;
+	$start = ( isset($_GET['start']) ) ? intval($_GET['start']) : 0;
 
-	if ( isset($HTTP_GET_VARS['sort_mode']) || isset($HTTP_POST_VARS['sort_mode']) )
+	if ( isset($_GET['sort_mode']) || isset($_POST['sort_mode']) )
 	{
-		$sort_mode = ( isset($HTTP_POST_VARS['sort_mode']) ) ? htmlspecialchars($HTTP_POST_VARS['sort_mode']) : htmlspecialchars($HTTP_GET_VARS['sort_mode']);
+		$sort_mode = ( isset($_POST['sort_mode']) ) ? htmlspecialchars($_POST['sort_mode']) : htmlspecialchars($_GET['sort_mode']);
 	}
 	else
 	{
 		$sort_mode = 'username';
 	}
 
-	if(isset($HTTP_POST_VARS['order']))
+	if(isset($_POST['order']))
 	{
-		$sort_order = ($HTTP_POST_VARS['order'] == 'ASC') ? 'ASC' : 'DESC';
+		$sort_order = ($_POST['order'] == 'ASC') ? 'ASC' : 'DESC';
 	}
-	else if(isset($HTTP_GET_VARS['order']))
+	else if(isset($_GET['order']))
 	{
-		$sort_order = ($HTTP_GET_VARS['order'] == 'ASC') ? 'ASC' : 'DESC';
+		$sort_order = ($_GET['order'] == 'ASC') ? 'ASC' : 'DESC';
 	}
 	else
 	{

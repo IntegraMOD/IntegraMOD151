@@ -34,7 +34,7 @@ $nb_per_row = 4;
 $userdata = session_pagestart($user_ip, PAGE_SEARCH);
 init_userprefs($userdata);
 
-if (isset($HTTP_POST_VARS['avatargallery'])) $category = trim(htmlspecialchars($HTTP_POST_VARS['avatarcategory']));
+if (isset($_POST['avatargallery'])) $category = trim(htmlspecialchars($_POST['avatarcategory']));
 
 //
 // set the page title and include the page header

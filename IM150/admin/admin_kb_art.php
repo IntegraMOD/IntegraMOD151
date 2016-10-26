@@ -93,9 +93,9 @@ else
 	}
 }
 
-if ( isset( $HTTP_POST_VARS['mode'] ) || isset( $HTTP_GET_VARS['mode'] ) )
+if ( isset( $_POST['mode'] ) || isset( $_GET['mode'] ) )
 {
-	$mode = ( isset( $HTTP_POST_VARS['mode'] ) ) ? $HTTP_POST_VARS['mode'] : $HTTP_GET_VARS['mode'];
+	$mode = ( isset( $_POST['mode'] ) ) ? $_POST['mode'] : $_GET['mode'];
 }
 else
 {
@@ -117,8 +117,8 @@ else
 	}
 }
 
-$start = ( isset( $HTTP_GET_VARS['start'] ) ) ? intval( $HTTP_GET_VARS['start'] ) : 0;
-$article_id = intval( $HTTP_GET_VARS['a'] );
+$start = ( isset( $_GET['start'] ) ) ? intval( $_GET['start'] ) : 0;
+$article_id = intval( $_GET['a'] );
 
 switch ( $mode )
 {
@@ -211,7 +211,7 @@ switch ( $mode )
 
 	case 'delete':
 
-		if ( $HTTP_GET_VARS['c'] == "yes" )
+		if ( $_GET['c'] == "yes" )
 		{
 			$sql = "SELECT *  
 	 			FROM " . KB_ARTICLES_TABLE . "

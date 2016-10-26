@@ -25,10 +25,10 @@
 		- the user's phpBBChatSpot session is updated whenever a message is POSTed to this file
 	************************************************************************************************************************ */
 
-if( isset( $HTTP_POST_VARS[ 'sent' ] ) ) // check for this at the very beginning so we can halt page load if it's not present
+if( isset( $_POST[ 'sent' ] ) ) // check for this at the very beginning so we can halt page load if it's not present
 {
-	$message = trim( $HTTP_POST_VARS[ 'sent' ] );
-	$colour = trim( $HTTP_POST_VARS[ 'color' ] );
+	$message = trim( $_POST[ 'sent' ] );
+	$colour = trim( $_POST[ 'color' ] );
 	
 	if( empty( $message ) )
 		exit();
@@ -49,14 +49,14 @@ include_once( $phpbb_root_path . 'chatspot/user_invite.' . $phpEx );
 if( !$userdata[ 'session_logged_in' ] )
 	exit();
 
-if( isset( $HTTP_GET_VARS[ 'room' ] ) )
-	$room_id = $HTTP_GET_VARS[ 'room' ];
+if( isset( $_GET[ 'room' ] ) )
+	$room_id = $_GET[ 'room' ];
 else
 	die($lang['Cannot_determine_room_id'] );
 
 // must set these again because phpBB 2.0.10 unsets global variables in common.php
-	$message = trim( $HTTP_POST_VARS[ 'sent' ] );
-	$colour = trim( $HTTP_POST_VARS[ 'color' ] );
+	$message = trim( $_POST[ 'sent' ] );
+	$colour = trim( $_POST[ 'color' ] );
 ?>
 
 <html>

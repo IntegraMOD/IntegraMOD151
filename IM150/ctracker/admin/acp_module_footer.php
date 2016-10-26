@@ -35,10 +35,10 @@ $template->set_filenames(array(
 /*
  * Do we have a submission?
  */
-if ( isset($HTTP_POST_VARS['submit']) )
+if ( isset($_POST['submit']) )
 {
-	$ctracker_config->change_configuration('footer_layout', intval($HTTP_POST_VARS['footer_layout']));	
-	$ctracker_config->settings['footer_layout'] = intval($HTTP_POST_VARS['footer_layout']);
+	$ctracker_config->change_configuration('footer_layout', intval($_POST['footer_layout']));	
+	$ctracker_config->settings['footer_layout'] = intval($_POST['footer_layout']);
 	$template->assign_block_vars('infobox', array());
 }
 

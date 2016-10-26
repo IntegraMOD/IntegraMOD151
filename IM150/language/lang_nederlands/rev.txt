@@ -1,0 +1,17 @@
+IntegraMOD 1.4.1 Revision 1.0.5
+
+Oude bestanden verwijdert en lang_album_admin.php, lang_album_main.php, lang_main.php aan gepast.
+
+language_lang_nederlands zondag 01-04-2007
+
+by JohnnyTheOne
+-------------------------
+lang_nederlands 1.0.4
+
+by skywalker
+--------------------------
+IntegraMOD 1.4.1 Revision 1.0.3
+
+begin woensdag 24-01-2007
+
+by JohnnyTheOne

@@ -32,6 +32,8 @@ if( !empty($setmodules) )
 $no_page_header = TRUE;
 $phpbb_root_path = './../';
 require($phpbb_root_path . 'extension.inc');
+define('CT_SECLEVEL', 'LOW');
+$ct_ignorepvar = array('helpbox');
 require('./pagestart.' . $phpEx);
 include($phpbb_root_path . 'includes/bbcode.'.$phpEx);
 include($phpbb_root_path . 'includes/functions_post.'.$phpEx);
@@ -52,9 +54,9 @@ $params = array(
 
 while( list($var, $param) = @each($params) )
 {
-	if ( !empty($HTTP_POST_VARS[$param]) || !empty($HTTP_GET_VARS[$param]) )
+	if ( !empty($_POST[$param]) || !empty($_GET[$param]) )
 	{
-		$$var = ( !empty($HTTP_POST_VARS[$param]) ) ? $HTTP_POST_VARS[$param] : $HTTP_GET_VARS[$param];
+		$$var = ( !empty($_POST[$param]) ) ? $_POST[$param] : $_GET[$param];
 	}
 	else
 	{
@@ -119,9 +121,9 @@ switch ( $mode  )
 		break;
 
 	case 'submit':
-		$subject = stripslashes(trim($HTTP_POST_VARS['subject']));
-		$message = stripslashes(trim($HTTP_POST_VARS['message']));
-		$page_access = $HTTP_POST_VARS['page_access'];
+		$subject = stripslashes(trim($_POST['subject']));
+		$message = stripslashes(trim($_POST['message']));
+		$page_access = intval($_POST['page_access']);
 
 		$error = FALSE;
 		$error_msg = '';
@@ -158,7 +160,7 @@ switch ( $mode  )
 
 		if ( $id != '' )
 		{
-			$bbcode_uid = trim($HTTP_POST_VARS['bbcode_uid']);
+			$bbcode_uid = trim($_POST['bbcode_uid']);
 			$message = make_clickable($message);
 			$message = prepare_message(trim($message), 1, 1, 1, $bbcode_uid);
 

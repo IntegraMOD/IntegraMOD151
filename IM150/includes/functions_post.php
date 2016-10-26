@@ -639,14 +639,13 @@ if ($delayed && $mode == 'editpost' && $post_data['first_post'] && $old_forcetim
 	// MOD: Delayed Topics {end}
 	//-----------------------------------------------------------------------------
 
-//-- mod : categories hierarchy --------------------------------------------------------------------
+	$cash_message = $GLOBALS['cm_posting']->update_post($mode, $post_data, $forum_id, $topic_id, $post_id, $topic_type, $bbcode_uid, $post_username, $post_message);
+	$meta = '<meta http-equiv="refresh" content="3;url=' . append_sid("viewtopic.$phpEx?" . POST_POST_URL . "=" . $post_id) . '#' . $post_id . '">';
+//-- mod : cache -----------------------------------------------------------------------------------
 //-- add
 	board_stats();
 	cache_tree(true);
-//-- fin mod : categories hierarchy ----------------------------------------------------------------
-
-	$cash_message = $GLOBALS['cm_posting']->update_post($mode, $post_data, $forum_id, $topic_id, $post_id, $topic_type, $bbcode_uid, $post_username, $post_message);
-	$meta = '<meta http-equiv="refresh" content="3;url=' . append_sid("viewtopic.$phpEx?" . POST_POST_URL . "=" . $post_id) . '#' . $post_id . '">';
+//-- fin mod : cache -------------------------------------------------------------------------------
 	$message = $lang['Stored'] . '<br />' . $cash_message . '<br /><br />' . sprintf($lang['Click_view_message'], '<a href="' . append_sid("viewtopic.$phpEx?" . POST_POST_URL . "=" . $post_id) . '#' . $post_id . '">', '</a>') . '<br /><br />' . sprintf($lang['Click_return_forum'], '<a href="' . append_sid("viewforum.$phpEx?" . POST_FORUM_URL . "=$forum_id") . '">', '</a>');
 
 	return false;
@@ -666,7 +665,7 @@ function update_post_stats(&$mode, &$post_data, &$forum_id, &$topic_id, &$post_i
                      WHERE topic_id = ".$topic_id." 
               ORDER BY post_time ASC 
                      LIMIT 1 "; 
-    if (!$db->sql_query($sql)) { 
+    if (!($result = $db->sql_query($sql))) { 
         message_die(GENERAL_ERROR, 'Error in fetching first post data', '', __LINE__, __FILE__, $sql); 
     } 
     if ($row = $db->sql_fetchrow($result)) { 
@@ -679,7 +678,7 @@ function update_post_stats(&$mode, &$post_data, &$forum_id, &$topic_id, &$post_i
                                  max( post_id )  AS lastpost 
                         FROM ".POSTS_TABLE." 
                      WHERE topic_id = ".$topic_id; 
-    if (!$db->sql_query($sql)) { 
+    if (!($result = $db->sql_query($sql))) { 
         message_die(GENERAL_ERROR, 'Error in fetching topic posts data', '', __LINE__, __FILE__, $sql); 
     } 
     if ($row = $db->sql_fetchrow($result)) { 
@@ -716,13 +715,12 @@ function update_post_stats(&$mode, &$post_data, &$forum_id, &$topic_id, &$post_i
                      WHERE forum_id = ".$forum_id." 
                           AND post_time <= ".time()." 
                          AND ap.post_id is null"; 
-    if (!$db->sql_query($sql)) { 
+    if (!($result = $db->sql_query($sql))) { 
         message_die(GENERAL_ERROR, 'Error in fetching posts data', '', __LINE__, __FILE__, $sql); 
     } 
-    if ($row = $db->sql_fetchrow($result)) { 
-        $posts = $row['posts']; 
-        $lastpost = $row['last_post']; 
-    } 
+    $row = $db->sql_fetchrow($result);
+    $posts = $row['posts']; 
+    $lastpost = $row['last_post']; 
     // get forum topics 
     $sql = "SELECT count( t.topic_id ) AS topics 
                         FROM ".TOPICS_TABLE." t 
@@ -732,7 +730,7 @@ function update_post_stats(&$mode, &$post_data, &$forum_id, &$topic_id, &$post_i
                      WHERE forum_id = ".$forum_id." 
                           AND topic_time < ".time()." 
                          AND ap.post_id is null"; 
-    if (!$db->sql_query($sql)) { 
+    if (!($result = $db->sql_query($sql))) { 
         message_die(GENERAL_ERROR, 'Error in fetching topics data', '', __LINE__, __FILE__, $sql); 
     } 
     if ($row = $db->sql_fetchrow($result)) { 
@@ -767,12 +765,12 @@ function update_post_stats(&$mode, &$post_data, &$forum_id, &$topic_id, &$post_i
             message_die(GENERAL_ERROR, 'Error in posting', '', __LINE__, __FILE__, $sql); 
         } 
     } 
-//-- mod : categories hierarchy -------------------------------------------------------------------- 
-//-- add 
-    // keep even in edit mode 
-    board_stats(); 
-    cache_tree(true); 
-//-- fin mod : categories hierarchy ---------------------------------------------------------------- 
+//-- mod : cache -----------------------------------------------------------------------------------
+//-- add
+	board_stats();
+	cache_tree(true);
+//-- fin mod : cache -------------------------------------------------------------------------------
+
     // only continue the old code if not edit mode 
     if ($mode != 'editpost'){ 
         $sql = "SELECT ug.user_id, g.group_id as g_id, u.user_posts, g.group_count, g.group_count_max FROM (" . GROUPS_TABLE . " g, ".USERS_TABLE." u) 
@@ -909,12 +907,11 @@ function delete_post($mode, &$post_data, &$message, &$meta, &$forum_id, &$topic_
 	}
 
 	$message .=  '<br /><br />' . sprintf($lang['Click_return_forum'], '<a href="' . append_sid("viewforum.$phpEx?" . POST_FORUM_URL . "=$forum_id") . '">', '</a>');
-//-- mod : categories hierarchy --------------------------------------------------------------------
+//-- mod : cache -----------------------------------------------------------------------------------
 //-- add
 	board_stats();
 	cache_tree(true);
-//-- fin mod : categories hierarchy ----------------------------------------------------------------
-
+//-- fin mod : cache -------------------------------------------------------------------------------
 	return;
 }
 
@@ -1138,15 +1135,47 @@ function generate_smilies($mode, $page_id)
 			'smiliesbody' => 'posting_smilies.tpl')
 		);
 	}
-
+//-- mod : cache -----------------------------------------------------------------------------------
+//-- add
+	if ( defined('CACHE_SMILIES') )
+	{
+		@include( $phpbb_root_path . './includes/def_smilies.' . $phpEx );
+		if ( empty($smilies) )
+		{
+			cache_smilies();
+			include( $phpbb_root_path . './includes/def_smilies.' . $phpEx );
+		}
+	}
+	if ( empty($smilies) && !defined('CACHE_SMILIES') )
+	{
+		$smilies = array();
+//-- fin mod : cache -------------------------------------------------------------------------------
 	$sql = "SELECT emoticon, code, smile_url   
 		FROM " . SMILIES_TABLE . " 
 		ORDER BY smilies_id";
 	if ($result = $db->sql_query($sql))
 	{
+//-- mod : cache -----------------------------------------------------------------------------------
+//-- add
+			while ( $row = $db->sql_fetchrow($result) )
+			{
+				$smilies[] = $row;
+			}
+		}
+	}
+	if ( !empty($smilies) )
+	{
+//-- fin mod : cache -------------------------------------------------------------------------------
+
 		$num_smilies = 0;
 		$rowset = array();
-		while ($row = $db->sql_fetchrow($result))
+//-- mod : cache -----------------------------------------------------------------------------------
+//-- delete
+//		while ($row = $db->sql_fetchrow($result))
+//-- add
+		@reset($smilies);
+		while ( list($row_id, $row) = @each($smilies) )
+//-- fin mod : cache -------------------------------------------------------------------------------
 		{
 			if (empty($rowset[$row['smile_url']]))
 			{

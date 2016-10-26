@@ -40,17 +40,17 @@ if( !empty($setmodules) )
 
 require('pagestart.' . $phpEx);
 
-if( isset($HTTP_POST_VARS['mode']) || isset($HTTP_GET_VARS['mode']) )
+if( isset($_POST['mode']) || isset($_GET['mode']) )
 {
-	$mode = ( isset($HTTP_POST_VARS['mode']) ) ? $HTTP_POST_VARS['mode'] : $HTTP_GET_VARS['mode'];
+	$mode = ( isset($_POST['mode']) ) ? $_POST['mode'] : $_GET['mode'];
 }
 else
 {
 	$mode = '';
 }
 
-$submit = (isset($HTTP_POST_VARS['submit'])) ? TRUE : FALSE;
-$cancel = ( isset($HTTP_POST_VARS['cancel']) ) ? TRUE : FALSE;
+$submit = (isset($_POST['submit'])) ? TRUE : FALSE;
+$cancel = ( isset($_POST['cancel']) ) ? TRUE : FALSE;
 
 if ($cancel)
 {
@@ -82,9 +82,9 @@ $message = '';
 
 if ($mode == 'mod_edit')
 {
-	if( isset($HTTP_POST_VARS['module']) || isset($HTTP_GET_VARS['module']) )
+	if( isset($_POST['module']) || isset($_GET['module']) )
 	{
-		$module_id = ( isset($HTTP_POST_VARS['module']) ) ? intval($HTTP_POST_VARS['module']) : intval($HTTP_GET_VARS['module']);
+		$module_id = ( isset($_POST['module']) ) ? intval($_POST['module']) : intval($_GET['module']);
 	}
 	else
 	{
@@ -113,11 +113,11 @@ if ($mode == 'mod_edit')
 
 if ($submit && $mode == 'mod_edit')
 {
-	if (isset($HTTP_POST_VARS['update_time']))
+	if (isset($_POST['update_time']))
 	{
-		if (intval($mod_info['update_time']) != intval($HTTP_POST_VARS['update_time']))
+		if (intval($mod_info['update_time']) != intval($_POST['update_time']))
 		{
-			$sql = "UPDATE " . MODULES_TABLE . " SET update_time = " . intval($HTTP_POST_VARS['update_time']) . " WHERE module_id = " . $module_id;
+			$sql = "UPDATE " . MODULES_TABLE . " SET update_time = " . intval($_POST['update_time']) . " WHERE module_id = " . $module_id;
 
 			if ( !($result = $db->sql_query($sql)) )
 			{
@@ -129,7 +129,7 @@ if ($submit && $mode == 'mod_edit')
 		}
 	}
 
-	if (isset($HTTP_POST_VARS['clear_module_cache']))
+	if (isset($_POST['clear_module_cache']))
 	{
 		$sql = "UPDATE " . CACHE_TABLE . " SET module_cache_time = 0, db_cache = '', priority = 0 WHERE module_id = " . $module_id;
 
@@ -147,7 +147,7 @@ if ($submit && $mode == 'mod_edit')
 
 	for ($i = 0; $i < count($perm_array); $i++)
 	{
-		if (isset($HTTP_POST_VARS[$perm_array[$i]]))
+		if (isset($_POST[$perm_array[$i]]))
 		{
 			$update_sql .= ($update_sql == '') ? $perm_array[$i] . ' = 1' : ', ' . $perm_array[$i] . ' = 1';
 		}
@@ -186,11 +186,11 @@ if ($submit && $mode == 'mod_edit')
 
 	for ($i = 0; $i < $num_rows; $i++)
 	{
-		if (isset($HTTP_POST_VARS[trim($rows[$i]['config_name'])]))
+		if (isset($_POST[trim($rows[$i]['config_name'])]))
 		{
-			if (trim($HTTP_POST_VARS[trim($rows[$i]['config_name'])]) != trim($rows[$i]['config_value']))
+			if (trim($_POST[trim($rows[$i]['config_name'])]) != trim($rows[$i]['config_value']))
 			{
-				$sql = "UPDATE " . MODULE_ADMIN_TABLE . " SET config_value = '" . trim($HTTP_POST_VARS[trim($rows[$i]['config_name'])]) . "' 
+				$sql = "UPDATE " . MODULE_ADMIN_TABLE . " SET config_value = '" . trim($_POST[trim($rows[$i]['config_name'])]) . "' 
 				WHERE config_name = '" . trim($rows[$i]['config_name']) . "' AND module_id = " . $module_id;
 	
 				if ( !($result = $db->sql_query($sql)) )
@@ -208,18 +208,18 @@ if ($submit && $mode == 'mod_edit')
 	}
 }
 
-if (isset($HTTP_POST_VARS['add_group']) && $mode == 'mod_edit')
+if (isset($_POST['add_group']) && $mode == 'mod_edit')
 {
-	$group_id = intval($HTTP_POST_VARS['group']);
+	$group_id = intval($_POST['group']);
 
 	if ( (!$group_id) || (empty($group_id)) )
 	{
 		message_die(GENERAL_MESSAGE, 'Wrong Group ID submitted, hacking attempt ?');
 	}
 
-	if( isset($HTTP_POST_VARS['module']) || isset($HTTP_GET_VARS['module']) )
+	if( isset($_POST['module']) || isset($_GET['module']) )
 	{
-		$module_id = ( isset($HTTP_POST_VARS['module']) ) ? intval($HTTP_POST_VARS['module']) : intval($HTTP_GET_VARS['module']);
+		$module_id = ( isset($_POST['module']) ) ? intval($_POST['module']) : intval($_GET['module']);
 	}
 	else
 	{
@@ -234,18 +234,18 @@ if (isset($HTTP_POST_VARS['add_group']) && $mode == 'mod_edit')
 	}
 }
 
-if (isset($HTTP_POST_VARS['delete_group']) && $mode == 'mod_edit')
+if (isset($_POST['delete_group']) && $mode == 'mod_edit')
 {
-	$group_id = intval($HTTP_POST_VARS['added_group']);
+	$group_id = intval($_POST['added_group']);
 
 	if ( (!$group_id) || (empty($group_id)) )
 	{
 		message_die(GENERAL_MESSAGE, 'Wrong Group ID submitted, hacking attempt ?');
 	}
 
-	if( isset($HTTP_POST_VARS['module']) || isset($HTTP_GET_VARS['module']) )
+	if( isset($_POST['module']) || isset($_GET['module']) )
 	{
-		$module_id = ( isset($HTTP_POST_VARS['module']) ) ? intval($HTTP_POST_VARS['module']) : intval($HTTP_GET_VARS['module']);
+		$module_id = ( isset($_POST['module']) ) ? intval($_POST['module']) : intval($_GET['module']);
 	}
 	else
 	{
@@ -262,9 +262,9 @@ if (isset($HTTP_POST_VARS['delete_group']) && $mode == 'mod_edit')
 
 if ($mode == 'mod_edit')
 {
-	if( isset($HTTP_POST_VARS['module']) || isset($HTTP_GET_VARS['module']) )
+	if( isset($_POST['module']) || isset($_GET['module']) )
 	{
-		$module_id = ( isset($HTTP_POST_VARS['module']) ) ? intval($HTTP_POST_VARS['module']) : intval($HTTP_GET_VARS['module']);
+		$module_id = ( isset($_POST['module']) ) ? intval($_POST['module']) : intval($_GET['module']);
 	}
 	else
 	{
@@ -566,7 +566,7 @@ if ($mode == 'mod_edit')
 		);
 	}
 
-	if ( (!isset($HTTP_POST_VARS['fileupload'])) && (!isset($HTTP_POST_VARS['fileselect'])) )
+	if ( (!isset($_POST['fileupload'])) && (!isset($_POST['fileselect'])) )
 	{
 		$module_paks = array();
 	

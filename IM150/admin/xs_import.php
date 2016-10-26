@@ -42,12 +42,12 @@ $template->assign_block_vars('nav_left',array('ITEM' => '&raquo; <a href="' . ap
 
 $lang['xs_import_back'] = str_replace('{URL}', append_sid('xs_import.'.$phpEx), $lang['xs_import_back']);
 
-$return_url = isset($HTTP_POST_VARS['return']) ? stripslashes($HTTP_POST_VARS['return']) : (isset($HTTP_GET_VARS['return']) ? stripslashes($HTTP_GET_VARS['return']) : '');
+$return_url = isset($_POST['return']) ? stripslashes($_POST['return']) : (isset($_GET['return']) ? stripslashes($_GET['return']) : '');
 $return = $return_url ? '&return=' . urlencode($return_url) : '';
 if($return)
 {
 	$lang['xs_import_back'] = str_replace('{URL}', $return_url, $lang['xs_import_back_download']);
-	$HTTP_POST_VARS['return'] = $HTTP_GET_VARS['return'] = addslashes($return_url);
+	$_POST['return'] = $_GET['return'] = addslashes($return_url);
 }
 
 //
@@ -77,29 +77,29 @@ include_once('xs_include_import.'.$phpEx);
 //
 // check if need to download style
 //
-if(!empty($HTTP_GET_VARS['get_remote']))
+if(!empty($_GET['get_remote']))
 {
-	$HTTP_POST_VARS['action'] = 'web';
-	$HTTP_POST_VARS['source'] = $HTTP_GET_VARS['get_remote'];
+	$_POST['action'] = 'web';
+	$_POST['source'] = $_GET['get_remote'];
 }
 
 //
 // delete style
 //
-if(isset($HTTP_GET_VARS['del']) && !defined('DEMO_MODE'))
+if(isset($_GET['del']) && !defined('DEMO_MODE'))
 {
-	$str = xs_tpl_name($HTTP_GET_VARS['del']);
+	$str = xs_tpl_name($_GET['del']);
 	@unlink(XS_TEMP_DIR.$str);
 }
 
 //
 // import style
 //
-if(isset($HTTP_GET_VARS['import']) || isset($HTTP_POST_VARS['import']))
+if(isset($_GET['import']) || isset($_POST['import']))
 {
-	$list_only = isset($HTTP_GET_VARS['list']) ? true : false;
-	$get_file = isset($HTTP_GET_VARS['get_file']) ? stripslashes($HTTP_GET_VARS['get_file']) : '';
-	$filename = isset($HTTP_POST_VARS['import']) ? $HTTP_POST_VARS['import'] : $HTTP_GET_VARS['import'];
+	$list_only = isset($_GET['list']) ? true : false;
+	$get_file = isset($_GET['get_file']) ? stripslashes($_GET['get_file']) : '';
+	$filename = isset($_POST['import']) ? $_POST['import'] : $_GET['import'];
 	$filename = xs_tpl_name($filename);
 	$write_local = false;
 	if(!$list_only)
@@ -109,12 +109,12 @@ if(isset($HTTP_GET_VARS['import']) || isset($HTTP_POST_VARS['import']))
 			xs_error($lang['xs_permission_denied'] . '<br /><br />' . $lang['xs_import_back']);
 		}
 		$params = array('import' => $filename);
-		$total = intval($HTTP_POST_VARS['total']);
+		$total = intval($_POST['total']);
 		$params['total'] = $total;
-		$params['import_default'] = isset($HTTP_POST_VARS['import_default']) && strlen($HTTP_POST_VARS['import_default']) ? intval($HTTP_POST_VARS['import_default']) : -1;
+		$params['import_default'] = isset($_POST['import_default']) && strlen($_POST['import_default']) ? intval($_POST['import_default']) : -1;
 		for($i=0; $i<$total; $i++)
 		{
-			$install = empty($HTTP_POST_VARS['import_install_'.$i]) ? 0 : 1;
+			$install = empty($_POST['import_install_'.$i]) ? 0 : 1;
 			$default = $install ? ($params['import_default'] == $i ? 1 : 0) : 0;
 			$params['import_install_'.$i] = $install;
 		}
@@ -139,14 +139,14 @@ if(isset($HTTP_GET_VARS['import']) || isset($HTTP_POST_VARS['import']))
 //
 // Download from web
 //
-if(isset($HTTP_GET_VARS['get_web']))
+if(isset($_GET['get_web']))
 {
-	$HTTP_POST_VARS['action'] = 'web';
-	$HTTP_POST_VARS['source'] = $HTTP_GET_VARS['get_web'];
+	$_POST['action'] = 'web';
+	$_POST['source'] = $_GET['get_web'];
 }
-if(isset($HTTP_POST_VARS['action']) && $HTTP_POST_VARS['action'] === 'web' && !defined('DEMO_MODE'))
+if(isset($_POST['action']) && $_POST['action'] === 'web' && !defined('DEMO_MODE'))
 {
-	$src = stripslashes($HTTP_POST_VARS['source']);
+	$src = stripslashes($_POST['source']);
 	$dst = generate_style_name('web');
 	$str = @implode('', @file($src));
 	if(empty($str))
@@ -175,9 +175,9 @@ if(isset($HTTP_POST_VARS['action']) && $HTTP_POST_VARS['action'] === 'web' && !d
 //
 // Copy from file
 //
-if(isset($HTTP_POST_VARS['action']) && $HTTP_POST_VARS['action'] === 'copy' && !defined('DEMO_MODE'))
+if(isset($_POST['action']) && $_POST['action'] === 'copy' && !defined('DEMO_MODE'))
 {
-	$src = stripslashes($HTTP_POST_VARS['source']);
+	$src = stripslashes($_POST['source']);
 	$dst = generate_style_name('copy');
 	$str = @implode('', @file($src));
 	if(empty($str))
@@ -211,13 +211,13 @@ if(isset($HTTP_POST_VARS['action']) && $HTTP_POST_VARS['action'] === 'copy' && !
 //
 // Upload
 //
-if(isset($HTTP_POST_VARS['action']) && $HTTP_POST_VARS['action'] === 'upload' && !defined('DEMO_MODE'))
+if(isset($_POST['action']) && $_POST['action'] === 'upload' && !defined('DEMO_MODE'))
 {
-	if(empty($HTTP_POST_FILES['source']['tmp_name']) || !@file_exists($HTTP_POST_FILES['source']['tmp_name']))
+	if(empty($_FILES['source']['tmp_name']) || !@file_exists($_FILES['source']['tmp_name']))
 	{
 		xs_error($lang['xs_import_nodownload3'] . '<br /><br />' . $lang['xs_import_back']);
 	}
-	$src = $HTTP_POST_FILES['source']['tmp_name'];
+	$src = $_FILES['source']['tmp_name'];
 	$dst = generate_style_name('upload');
 	$str = @implode('', @file($src));
 	if(empty($str))
@@ -251,9 +251,9 @@ if(isset($HTTP_POST_VARS['action']) && $HTTP_POST_VARS['action'] === 'upload' &&
 //
 // Show import page
 //
-if(!empty($HTTP_GET_VARS['importstyle']))
+if(!empty($_GET['importstyle']))
 {
-	$file = xs_tpl_name($HTTP_GET_VARS['importstyle']);
+	$file = xs_tpl_name($_GET['importstyle']);
 	$header = xs_get_style_header(XS_TEMP_DIR.$file);
 	if($header === false)
 	{

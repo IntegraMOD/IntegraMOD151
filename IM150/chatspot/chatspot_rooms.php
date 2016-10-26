@@ -40,8 +40,8 @@ if( $userdata[ 'user_level' ] != ADMIN )
 	exit();
 }
 
-if( isset( $HTTP_GET_VARS[ 'sid' ] ) )
-	$SID = '?sid=' . $HTTP_GET_VARS[ 'sid' ];
+if( isset( $_GET[ 'sid' ] ) )
+	$SID = '?sid=' . $_GET[ 'sid' ];
 else
 	$SID = '';
 
@@ -168,7 +168,7 @@ function update_room( room_id, room_name, room_password, access_index )
 				<tr>
 					<td>
 						<table class="formarea" width="100%" height="100%">
-							<tr><th>phpBBChatSpot - <? echo $lang['Room_management']; ?></th></tr>
+							<tr><th>phpBBChatSpot - <?php echo $lang['Room_management']; ?></th></tr>
 						</table>
 					</td>
 				</tr>

@@ -6,7 +6,7 @@
  *   copyright            : (C) 2003 Mohd Web Site!
  *   email                : mohdalbasri@hotmail.com
  *
- *   $Id: 
+ *   $Id:
  *
  *
  ***************************************************************************/
@@ -54,7 +54,7 @@ if ( @phpversion()  < '4.1' )
 	$_GET = &$HTTP_GET_VARS;
 	$_POST = &$HTTP_POST_VARS;
 	$_COOKIE = &$HTTP_COOKIE_VARS;
-	$_SERVER = &$HTTP_SERVER_VARS;
+	$_SERVER = &$_SERVER;
 	$_ENV = &$HTTP_ENV_VARS;
 	$_FILES = &$HTTP_POST_FILES;
 	$_SESSION = &$HTTP_SESSION_VARS;
@@ -74,25 +74,23 @@ if (!get_magic_quotes_gpc())
 }
 
 
-
- 
 //===================================================
 // Get Language
 //===================================================
- 
-$language = $board_config['default_lang']; 
 
-if( !file_exists($phpbb_root_path . 'language/lang_' . $language . '/lang_pafiledb.'.$phpEx) ) 
-{ 
-   $language = 'english'; 
-} 
+$language = $board_config['default_lang'];
 
-if( !file_exists($phpbb_root_path . 'language/lang_' . $language . '/lang_admin_pafiledb.'.$phpEx) ) 
-{ 
-   $language = 'english'; 
-} 
+if( !file_exists($phpbb_root_path . 'language/lang_' . $language . '/lang_pafiledb.'.$phpEx) )
+{
+   $language = 'english';
+}
 
-include($phpbb_root_path . 'language/lang_' . $language . '/lang_pafiledb.' . $phpEx); 
+if( !file_exists($phpbb_root_path . 'language/lang_' . $language . '/lang_admin_pafiledb.'.$phpEx) )
+{
+   $language = 'english';
+}
+
+include($phpbb_root_path . 'language/lang_' . $language . '/lang_pafiledb.' . $phpEx);
 include($phpbb_root_path . 'language/lang_' . $language . '/lang_admin_pafiledb.' . $phpEx);
 
 //===================================================
@@ -118,14 +116,10 @@ else
 	$cache->put('config', $pafiledb_config);
 }
 
-
 $pafiledb_user = new user_info();
 $pafiledb_template = new pafiledb_template();
 $pafiledb_template->set_template($theme['template_name']);
 
 $pafiledb = new pafiledb_public();
-
-
-
 
 ?>

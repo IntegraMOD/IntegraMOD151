@@ -110,7 +110,7 @@ while ( !empty($sql[$n]) )
 	$vars='days_'.$n;
 	
 	$default [$n] = ($default [$n])?$default [$n]:10;
-	$days [$n] = ( isset($HTTP_GET_VARS[$vars]) ) ? $HTTP_GET_VARS[$vars] : (( isset($HTTP_POST_VARS[$vars]) ) ? intval($HTTP_POST_VARS[$vars]) : $default[$n]);
+	$days [$n] = ( isset($_GET[$vars]) ) ? $_GET[$vars] : (( isset($_POST[$vars]) ) ? intval($_POST[$vars]) : $default[$n]);
 //		<option value="'.$days[$n].'" SELECTED>&nbsp;'.$days[$n].' '.$lang['Days'].'&nbsp;</option>'.$options;
 //	'.str_replace("value=\"".$days[$n]."\"> SELECTED " , "value=\"".$days[$n]."\">" ,$options);
 

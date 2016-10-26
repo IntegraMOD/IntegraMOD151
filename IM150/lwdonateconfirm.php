@@ -91,15 +91,15 @@ if($pos === false)
 $notifyurl = $server_url . 'lwdonateresult.' . $phpEx;
 $returnurl = $server_url . 'lwdonateshowresult.' . $phpEx;
 
-$anonymous = intval($HTTP_POST_VARS['lw_anonymous']) + 0;
+$anonymous = intval($_POST['lw_anonymous']) + 0;
 if($anonymous != 1)
 {
 	$anonymous = 0;
 }
 
 
-$amountopay = htmlspecialchars($HTTP_POST_VARS['amount']) + 0.00 ;
-$currency = htmlspecialchars($HTTP_POST_VARS['currency_code']);
+$amountopay = htmlspecialchars($_POST['amount']) + 0.00 ;
+$currency = htmlspecialchars($_POST['currency_code']);
 
 if(strlen($board_config['donate_currencies']) < 4) //if not set, so just use the primary currency code
 {

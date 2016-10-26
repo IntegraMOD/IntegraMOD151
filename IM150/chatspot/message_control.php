@@ -34,17 +34,17 @@ include_once( $phpbb_root_path . 'extension.inc' );
 include_once( $phpbb_root_path . 'chatspot/chatspot_config.' . $phpEx );
 include_once( $phpbb_root_path . 'includes/bbcode.' . $phpEx );
 
-if( !isset( $HTTP_GET_VARS[ 'user_id' ] ) )
+if( !isset( $_GET[ 'user_id' ] ) )
 {
 	display_error($lang['Cannot_determine_user_id'] );
 
 	exit();
 }
 else
-	$user_id = $HTTP_GET_VARS[ 'user_id' ];
+	$user_id = $_GET[ 'user_id' ];
 
-if( isset( $HTTP_GET_VARS[ 'room' ] ) )
-	$room_id = $HTTP_GET_VARS[ 'room' ];
+if( isset( $_GET[ 'room' ] ) )
+	$room_id = $_GET[ 'room' ];
 else
 {
 	display_error( $lang['Cannot_determine_room_id'] );
@@ -79,25 +79,25 @@ if( !$userdata[ 'session_logged_in' ] )
 	exit();
 }
 
-if( !isset( $HTTP_COOKIE_VARS[ 'room_' . $room_id . '_msg_id' ] ) || !isset( $HTTP_COOKIE_VARS[ 'last_active' ] ) ||
+if( !isset( $_COOKIE[ 'room_' . $room_id . '_msg_id' ] ) || !isset( $_COOKIE[ 'last_active' ] ) ||
 	strstr( $HTTP_USER_AGENT, 'Netscape' ) )
 {
 	$cookies_enabled = 0; // 0 and 1 used so that compatible with JavaScript
 	
-	if( isset( $HTTP_GET_VARS[ 'sid' ] ) )
-		$SID = '&sid=' . $HTTP_GET_VARS[ 'sid' ]; // javascript doesn't seem to like '&amp;' in the URL string.
+	if( isset( $_GET[ 'sid' ] ) )
+		$SID = '&sid=' . $_GET[ 'sid' ]; // javascript doesn't seem to like '&amp;' in the URL string.
 	else
 		$SID = '';
 
-	$message_id = ( isset( $HTTP_GET_VARS[ 'msg' ] ) ? $HTTP_GET_VARS[ 'msg' ] : 0 );
-	$last_active_time = ( isset( $HTTP_GET_VARS[ 'active' ] ) ? $HTTP_GET_VARS[ 'active' ] : time() );
+	$message_id = ( isset( $_GET[ 'msg' ] ) ? $_GET[ 'msg' ] : 0 );
+	$last_active_time = ( isset( $_GET[ 'active' ] ) ? $_GET[ 'active' ] : time() );
 }	
 else
 {
 	$cookies_enabled = 1;
 	
-	$message_id = $HTTP_COOKIE_VARS[ 'room_' . $room_id . '_msg_id' ];
-	$last_active_time = $HTTP_COOKIE_VARS[ 'last_active' ];
+	$message_id = $_COOKIE[ 'room_' . $room_id . '_msg_id' ];
+	$last_active_time = $_COOKIE[ 'last_active' ];
 }
 
 if( ( $last_active_time + $chatspot_config[ 'inactive_time' ] ) < time() )

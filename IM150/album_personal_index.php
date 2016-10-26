@@ -41,24 +41,24 @@ init_userprefs($userdata);
 include($album_root_path . 'album_common.'.$phpEx);
 
 
-$start = ( isset($HTTP_GET_VARS['start']) ) ? intval($HTTP_GET_VARS['start']) : 0;
+$start = ( isset($_GET['start']) ) ? intval($_GET['start']) : 0;
 
-if ( isset($HTTP_GET_VARS['mode']) || isset($HTTP_POST_VARS['mode']) )
+if ( isset($_GET['mode']) || isset($_POST['mode']) )
 {
-	$mode = ( isset($HTTP_POST_VARS['mode']) ) ? $HTTP_POST_VARS['mode'] : $HTTP_GET_VARS['mode'];
+	$mode = ( isset($_POST['mode']) ) ? $_POST['mode'] : $_GET['mode'];
 }
 else
 {
 	$mode = 'joined';
 }
 
-if(isset($HTTP_POST_VARS['order']))
+if(isset($_POST['order']))
 {
-	$sort_order = ($HTTP_POST_VARS['order'] == 'ASC') ? 'ASC' : 'DESC';
+	$sort_order = ($_POST['order'] == 'ASC') ? 'ASC' : 'DESC';
 }
-elseif(isset($HTTP_GET_VARS['order']))
+elseif(isset($_GET['order']))
 {
-	$sort_order = ($HTTP_GET_VARS['order'] == 'ASC') ? 'ASC' : 'DESC';
+	$sort_order = ($_GET['order'] == 'ASC') ? 'ASC' : 'DESC';
 }
 else
 {

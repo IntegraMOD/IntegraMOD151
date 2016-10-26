@@ -50,15 +50,15 @@ function page_header($text, $form_action = false)
 <meta http-equiv="Content-Type" content="text/html; charset=<?php echo $lang['ENCODING']; ?>">
 <meta http-equiv="Content-Style-Type" content="text/css">
 <title><?php echo $lang['Welcome_install'];?></title>
-<link rel="stylesheet" href="../templates/DEFAULT/stylesheet.css" type="text/css">
+<link rel="stylesheet" href="../templates/Default/Default.css" type="text/css">
 <style type="text/css">
-th			{ background-image: url('../templates/DEFAULT/images/cellpic3.gif') }
-td.cat		{ background-image: url('../templates/DEFAULT/images/cellpic1.gif') }
-td.rowpic	{ background-image: url('../templates/DEFAULT/images/cellpic2.jpg'); background-repeat: repeat-y }
-td.catHead,td.catSides,td.catLeft,td.catRight,td.catBottom { background-image: url('../templates/DEFAULT/images/cellpic1.gif') }
+th			{ background-image: url('../templates/Default/images/cellpic3.gif') }
+td.cat		{ background-image: url('../templates/Default/images/cellpic1.gif') }
+td.rowpic	{ background-image: url('../templates/Default/images/cellpic2.jpg'); background-repeat: repeat-y }
+td.catHead,td.catSides,td.catLeft,td.catRight,td.catBottom { background-image: url('../templates/Default/images/cellpic1.gif') }
 </style>
 <!--[if IE]>
-<link rel="stylesheet" href="../templates/DEFAULT/formIE.css" type="text/css">
+<link rel="stylesheet" href="../templates/Default/formIE.css" type="text/css">
 <![endif]-->
 
 </head>
@@ -155,7 +155,7 @@ function page_error($error_title, $error)
 // match on a second pass instead of a straight "fuzzy" match.
 function guess_lang()
 {
-	global $phpbb_root_path, $HTTP_SERVER_VARS;
+	global $phpbb_root_path, $_SERVER;
 
 	// The order here _is_ important, at least for major_minor
 	// matches. Don't go moving these around without checking with
@@ -211,9 +211,9 @@ function guess_lang()
 		'chinese_simplified'		=> 'zh',
 	);
 
-	if (isset($HTTP_SERVER_VARS['HTTP_ACCEPT_LANGUAGE']))
+	if (isset($_SERVER['HTTP_ACCEPT_LANGUAGE']))
 	{
-		$accept_lang_ary = explode(',', $HTTP_SERVER_VARS['HTTP_ACCEPT_LANGUAGE']);
+		$accept_lang_ary = explode(',', $_SERVER['HTTP_ACCEPT_LANGUAGE']);
 		for ($i = 0; $i < sizeof($accept_lang_ary); $i++)
 		{
 			@reset($match_lang);
@@ -244,44 +244,44 @@ set_magic_quotes_runtime(0); // Disable magic_quotes_runtime
 // Slash data if it isn't slashed
 if (!get_magic_quotes_gpc())
 {
-	if (is_array($HTTP_GET_VARS))
+	if (is_array($_GET))
 	{
-		while (list($k, $v) = each($HTTP_GET_VARS))
+		while (list($k, $v) = each($_GET))
 		{
-			if (is_array($HTTP_GET_VARS[$k]))
+			if (is_array($_GET[$k]))
 			{
-				while (list($k2, $v2) = each($HTTP_GET_VARS[$k]))
+				while (list($k2, $v2) = each($_GET[$k]))
 				{
-					$HTTP_GET_VARS[$k][$k2] = addslashes($v2);
+					$_GET[$k][$k2] = addslashes($v2);
 				}
-				@reset($HTTP_GET_VARS[$k]);
+				@reset($_GET[$k]);
 			}
 			else
 			{
-				$HTTP_GET_VARS[$k] = addslashes($v);
+				$_GET[$k] = addslashes($v);
 			}
 		}
-		@reset($HTTP_GET_VARS);
+		@reset($_GET);
 	}
 
-	if (is_array($HTTP_POST_VARS))
+	if (is_array($_POST))
 	{
-		while (list($k, $v) = each($HTTP_POST_VARS))
+		while (list($k, $v) = each($_POST))
 		{
-			if (is_array($HTTP_POST_VARS[$k]))
+			if (is_array($_POST[$k]))
 			{
-				while (list($k2, $v2) = each($HTTP_POST_VARS[$k]))
+				while (list($k2, $v2) = each($_POST[$k]))
 				{
-					$HTTP_POST_VARS[$k][$k2] = addslashes($v2);
+					$_POST[$k][$k2] = addslashes($v2);
 				}
-				@reset($HTTP_POST_VARS[$k]);
+				@reset($_POST[$k]);
 			}
 			else
 			{
-				$HTTP_POST_VARS[$k] = addslashes($v);
+				$_POST[$k] = addslashes($v);
 			}
 		}
-		@reset($HTTP_POST_VARS);
+		@reset($_POST);
 	}
 
 	if (is_array($HTTP_COOKIE_VARS))
@@ -324,6 +324,7 @@ include($phpbb_root_path.'includes/sessions.'.$phpEx);
 
 // Define schema info
 $available_dbms = array(
+  /*
 	'mysql'=> array(
 		'LABEL'			=> 'MySQL 3.x',
 		'SCHEMA'		=> 'mysql',
@@ -331,8 +332,16 @@ $available_dbms = array(
 		'DELIM_BASIC'	=> ';',
 		'COMMENTS'		=> 'remove_remarks'
 	),
+   */
 	'mysql4' => array(
 		'LABEL'			=> 'MySQL 4.x/5.x',
+		'SCHEMA'		=> 'mysql',
+		'DELIM'			=> ';',
+		'DELIM_BASIC'	=> ';',
+		'COMMENTS'		=> 'remove_remarks'
+	),
+	'mysqli' => array(
+		'LABEL'			=> 'MySQLi',
 		'SCHEMA'		=> 'mysql',
 		'DELIM'			=> ';',
 		'DELIM_BASIC'	=> ';',
@@ -341,66 +350,66 @@ $available_dbms = array(
 );
 
 // Obtain various vars
-$confirm = (isset($HTTP_POST_VARS['confirm'])) ? true : false;
-$cancel = (isset($HTTP_POST_VARS['cancel'])) ? true : false;
+$confirm = (isset($_POST['confirm'])) ? true : false;
+$cancel = (isset($_POST['cancel'])) ? true : false;
 
-if (isset($HTTP_POST_VARS['install_step']) || isset($HTTP_GET_VARS['install_step']))
+if (isset($_POST['install_step']) || isset($_GET['install_step']))
 {
-	$install_step = (isset($HTTP_POST_VARS['install_step'])) ? $HTTP_POST_VARS['install_step'] : $HTTP_GET_VARS['install_step'];
+	$install_step = (isset($_POST['install_step'])) ? $_POST['install_step'] : $_GET['install_step'];
 }
 else
 {
 	$install_step = '';
 }
 
-$upgrade = (!empty($HTTP_POST_VARS['upgrade'])) ? $HTTP_POST_VARS['upgrade']: '';
-$upgrade_now = (!empty($HTTP_POST_VARS['upgrade_now'])) ? $HTTP_POST_VARS['upgrade_now']:'';
+$upgrade = (!empty($_POST['upgrade'])) ? $_POST['upgrade']: '';
+$upgrade_now = (!empty($_POST['upgrade_now'])) ? $_POST['upgrade_now']:'';
 
-$dbms = isset($HTTP_POST_VARS['dbms']) ? $HTTP_POST_VARS['dbms'] : '';
+$dbms = isset($_POST['dbms']) ? $_POST['dbms'] : '';
 
-$dbhost = (!empty($HTTP_POST_VARS['dbhost'])) ? $HTTP_POST_VARS['dbhost'] : 'localhost';
-$dbuser = (!empty($HTTP_POST_VARS['dbuser'])) ? $HTTP_POST_VARS['dbuser'] : '';
-$dbpasswd = (!empty($HTTP_POST_VARS['dbpasswd'])) ? $HTTP_POST_VARS['dbpasswd'] : '';
-$dbname = (!empty($HTTP_POST_VARS['dbname'])) ? $HTTP_POST_VARS['dbname'] : '';
+$dbhost = (!empty($_POST['dbhost'])) ? $_POST['dbhost'] : 'localhost';
+$dbuser = (!empty($_POST['dbuser'])) ? $_POST['dbuser'] : '';
+$dbpasswd = (!empty($_POST['dbpasswd'])) ? $_POST['dbpasswd'] : '';
+$dbname = (!empty($_POST['dbname'])) ? $_POST['dbname'] : '';
 
-$table_prefix = (!empty($HTTP_POST_VARS['prefix'])) ? $HTTP_POST_VARS['prefix'] : '';
+$table_prefix = (!empty($_POST['prefix'])) ? $_POST['prefix'] : '';
 
-$admin_name = (!empty($HTTP_POST_VARS['admin_name'])) ? $HTTP_POST_VARS['admin_name'] : '';
-$admin_pass1 = (!empty($HTTP_POST_VARS['admin_pass1'])) ? $HTTP_POST_VARS['admin_pass1'] : '';
-$admin_pass2 = (!empty($HTTP_POST_VARS['admin_pass2'])) ? $HTTP_POST_VARS['admin_pass2'] : '';
+$admin_name = (!empty($_POST['admin_name'])) ? $_POST['admin_name'] : '';
+$admin_pass1 = (!empty($_POST['admin_pass1'])) ? $_POST['admin_pass1'] : '';
+$admin_pass2 = (!empty($_POST['admin_pass2'])) ? $_POST['admin_pass2'] : '';
 
-$ftp_path = (!empty($HTTP_POST_VARS['ftp_path'])) ? $HTTP_POST_VARS['ftp_path'] : '';
-$ftp_user = (!empty($HTTP_POST_VARS['ftp_user'])) ? $HTTP_POST_VARS['ftp_user'] : '';
-$ftp_pass = (!empty($HTTP_POST_VARS['ftp_pass'])) ? $HTTP_POST_VARS['ftp_pass'] : '';
+$ftp_path = (!empty($_POST['ftp_path'])) ? $_POST['ftp_path'] : '';
+$ftp_user = (!empty($_POST['ftp_user'])) ? $_POST['ftp_user'] : '';
+$ftp_pass = (!empty($_POST['ftp_pass'])) ? $_POST['ftp_pass'] : '';
 
-$no_prill_install = (!empty($HTTP_POST_VARS['no_prill_install'])) ? $HTTP_POST_VARS['no_prill_install'] : 0;
+$no_prill_install = (!empty($_POST['no_prill_install'])) ? $_POST['no_prill_install'] : 0;
 
-if (isset($HTTP_POST_VARS['lang']) && preg_match('#^[a-z_]+$#', $HTTP_POST_VARS['lang']))
+if (isset($_POST['lang']) && preg_match('#^[a-z_]+$#', $_POST['lang']))
 {
-	$language = strip_tags($HTTP_POST_VARS['lang']);
+	$language = strip_tags($_POST['lang']);
 }
 else
 {
 	$language = guess_lang();
 }
 
-$board_email = (!empty($HTTP_POST_VARS['board_email'])) ? $HTTP_POST_VARS['board_email'] : '';
-$script_path = (!empty($HTTP_POST_VARS['script_path'])) ? $HTTP_POST_VARS['script_path'] : str_replace('install', '', dirname($HTTP_SERVER_VARS['PHP_SELF']));
+$board_email = (!empty($_POST['board_email'])) ? $_POST['board_email'] : '';
+$script_path = (!empty($_POST['script_path'])) ? $_POST['script_path'] : str_replace('install', '', dirname($_SERVER['PHP_SELF']));
 $admin_pass_md5 = 'dummy'; // changed later on...
-if (!empty($HTTP_POST_VARS['server_name']))
+if (!empty($_POST['server_name']))
 {
-	$server_name = $HTTP_POST_VARS['server_name'];
+	$server_name = $_POST['server_name'];
 }
 else
 {
 	// Guess at some basic info used for install..
-	if (!empty($HTTP_SERVER_VARS['SERVER_NAME']) || !empty($HTTP_ENV_VARS['SERVER_NAME']))
+	if (!empty($_SERVER['SERVER_NAME']) || !empty($_ENV['SERVER_NAME']))
 	{
-		$server_name = (!empty($HTTP_SERVER_VARS['SERVER_NAME'])) ? $HTTP_SERVER_VARS['SERVER_NAME'] : $HTTP_ENV_VARS['SERVER_NAME'];
+		$server_name = (!empty($_SERVER['SERVER_NAME'])) ? $_SERVER['SERVER_NAME'] : $_ENV['SERVER_NAME'];
 	}
-	else if (!empty($HTTP_SERVER_VARS['HTTP_HOST']) || !empty($HTTP_ENV_VARS['HTTP_HOST']))
+	else if (!empty($_SERVER['HTTP_HOST']) || !empty($_ENV['HTTP_HOST']))
 	{
-		$server_name = (!empty($HTTP_SERVER_VARS['HTTP_HOST'])) ? $HTTP_SERVER_VARS['HTTP_HOST'] : $HTTP_ENV_VARS['HTTP_HOST'];
+		$server_name = (!empty($_SERVER['HTTP_HOST'])) ? $_SERVER['HTTP_HOST'] : $_ENV['HTTP_HOST'];
 	}
 	else
 	{
@@ -408,15 +417,15 @@ else
 	}
 }
 
-if (!empty($HTTP_POST_VARS['server_port']))
+if (!empty($_POST['server_port']))
 {
-	$server_port = $HTTP_POST_VARS['server_port'];
+	$server_port = $_POST['server_port'];
 }
 else
 {
-	if (!empty($HTTP_SERVER_VARS['SERVER_PORT']) || !empty($HTTP_ENV_VARS['SERVER_PORT']))
+	if (!empty($_SERVER['SERVER_PORT']) || !empty($_ENV['SERVER_PORT']))
 	{
-		$server_port = (!empty($HTTP_SERVER_VARS['SERVER_PORT'])) ? $HTTP_SERVER_VARS['SERVER_PORT'] : $HTTP_ENV_VARS['SERVER_PORT'];
+		$server_port = (!empty($_SERVER['SERVER_PORT'])) ? $_SERVER['SERVER_PORT'] : $_ENV['SERVER_PORT'];
 	}
 	else
 	{
@@ -451,7 +460,7 @@ if ($upgrade == 1)
 }
 
 // What do we need to do?
-if (!empty($HTTP_POST_VARS['send_file']) && $HTTP_POST_VARS['send_file'] == 1 && empty($HTTP_POST_VARS['upgrade_now']))
+if (!empty($_POST['send_file']) && $_POST['send_file'] == 1 && empty($_POST['upgrade_now']))
 {
 	header('Content-Type: text/x-delimtext; name="config.' . $phpEx . '"');
 	header('Content-disposition: attachment; filename="config.' . $phpEx . '"');
@@ -459,13 +468,13 @@ if (!empty($HTTP_POST_VARS['send_file']) && $HTTP_POST_VARS['send_file'] == 1 &&
 	// We need to stripslashes no matter what the setting of magic_quotes_gpc is
 	// because we add slashes at the top if its off, and they are added automaticlly
 	// if it is on.
-	echo stripslashes($HTTP_POST_VARS['config_data']);
+	echo stripslashes($_POST['config_data']);
 
 	exit;
 }
-else if (!empty($HTTP_POST_VARS['send_file']) && $HTTP_POST_VARS['send_file'] == 2)
+else if (!empty($_POST['send_file']) && $_POST['send_file'] == 2)
 {
-	$s_hidden_fields = '<input type="hidden" name="config_data" value="' . htmlspecialchars(stripslashes($HTTP_POST_VARS['config_data'])) . '" />';
+	$s_hidden_fields = '<input type="hidden" name="config_data" value="' . htmlspecialchars(stripslashes($_POST['config_data'])) . '" />';
 	$s_hidden_fields .= '<input type="hidden" name="ftp_file" value="1" />';
 
 	if ($upgrade == 1)
@@ -498,7 +507,7 @@ else if (!empty($HTTP_POST_VARS['send_file']) && $HTTP_POST_VARS['send_file'] ==
 	exit;
 
 }
-else if (!empty($HTTP_POST_VARS['ftp_file']))
+else if (!empty($_POST['ftp_file']))
 {
 	// Try to connect ...
 	$conn_id = @ftp_connect('localhost');
@@ -509,7 +518,7 @@ else if (!empty($HTTP_POST_VARS['ftp_file']))
 		page_header($lang['NoFTP_config']);
 
 		// Error couldn't get connected... Go back to option to send file...
-		$s_hidden_fields = '<input type="hidden" name="config_data" value="' . htmlspecialchars(stripslashes($HTTP_POST_VARS['config_data'])) . '" />';
+		$s_hidden_fields = '<input type="hidden" name="config_data" value="' . htmlspecialchars(stripslashes($_POST['config_data'])) . '" />';
 		$s_hidden_fields .= '<input type="hidden" name="send_file" value="1" />';
 
 		// If we're upgrading ...
@@ -550,7 +559,7 @@ else if (!empty($HTTP_POST_VARS['ftp_file']))
 
 		$fp = @fopen($tmpfname, 'w');
 
-		@fwrite($fp, stripslashes($HTTP_POST_VARS['config_data']));
+		@fwrite($fp, stripslashes($_POST['config_data']));
 
 		@fclose($fp);
 
@@ -591,8 +600,8 @@ else if ((empty($install_step) || $admin_pass1 != $admin_pass2 || empty($admin_p
 
 	if (!empty($install_step))
 	{
-		if ((($HTTP_POST_VARS['admin_pass1'] != $HTTP_POST_VARS['admin_pass2'])) ||
-			(empty($HTTP_POST_VARS['admin_pass1']) || empty($dbhost)) && $HTTP_POST_VARS['cur_lang'] == $language)
+		if ((($_POST['admin_pass1'] != $_POST['admin_pass2'])) ||
+			(empty($_POST['admin_pass1']) || empty($dbhost)) && $_POST['cur_lang'] == $language)
 		{
 			$error = $lang['Password_mismatch'];
 		}
@@ -809,11 +818,14 @@ else
 	{
 		switch($dbms)
 		{
-			case 'mysql':
 			case 'mysql4':
 				$check_exts = 'mysql';
 				$check_other = 'mysql';
 				break;
+			case 'mysqli':
+        $check_exts = 'mysqli';
+        $check_other = 'mysqli';
+        break;
 		}
 
 		if (!extension_loaded($check_exts) && !extension_loaded($check_other))
@@ -827,8 +839,9 @@ else
 		include($phpbb_root_path.'includes/db.'.$phpEx);
 	}
 
-	$dbms_schema = 'schemas/' . $available_dbms[$dbms]['SCHEMA'] . '_schema.sql';
-	$dbms_basic = 'schemas/' . $available_dbms[$dbms]['SCHEMA'] . '_basic.sql';
+  $schema = $available_dbms[$dbms]['SCHEMA'];
+	$dbms_schema = 'schemas/' . $schema . '_schema.sql';
+	$dbms_basic = 'schemas/' . $schema . '_basic.sql';
 
 	$remove_remarks = $available_dbms[$dbms]['COMMENTS'];;
 	$delimiter = $available_dbms[$dbms]['DELIM'];

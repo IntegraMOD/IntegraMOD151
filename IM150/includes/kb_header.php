@@ -31,9 +31,9 @@ if ( !defined( 'IN_PORTAL' ) )
 // Parse and show the overall header.
 
 $template->set_filenames( array( 'kb_header' => 'kb_header.tpl' ) );
-if ( isset ( $HTTP_GET_VARS['cat'] ) )
+if ( isset ( $_GET['cat'] ) )
 {
-	$category_id = intval ($HTTP_GET_VARS['cat'] );
+	$category_id = intval ($_GET['cat'] );
 	// Start auth check
 	//
 		$kb_is_auth = array();

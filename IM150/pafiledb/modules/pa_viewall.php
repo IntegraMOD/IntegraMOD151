@@ -94,5 +94,4 @@ class pafiledb_viewall extends pafiledb_public
 		$this->display($lang['Download'], 'pa_viewall_body.tpl');
 	}
 }
-
 ?>

@@ -76,6 +76,35 @@ if( $single_add )
 		$ignore = 0;
 		$disallow = 0;
 
+
+
+/* ADDED BY HELTER 3-9-2016 */
+          // Get user_id from a username
+          if( $username && !$contact_id )
+          {
+             $sql = 'SELECT user_id FROM ' . USERS_TABLE . "
+                   WHERE username='$username'";
+
+             if ( !$result = $db->sql_query($sql) )
+             {
+                $message = 'Could not get user_id from username';
+                message_die(GENERAL_ERROR, $message . $contact_list->append_msg, '', __LINE__, __FILE__, $sql);
+             }
+
+             if( !$row = $db->sql_fetchrow($result) )
+             {
+                $message = 'Could not get user_id from username row';
+                message_die(GENERAL_ERROR, $message . $contact_list->append_msg, '', __LINE__, __FILE__, $sql);
+             }
+
+             $contact_id = $row['user_id'];
+          }
+/* END ADD */
+
+
+
+
+
 		$in_list = $contact_list->check_user($userdata['user_id'], $contact_id);
 
 		if( $action == 'add' && $in_list )

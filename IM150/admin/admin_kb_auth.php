@@ -71,7 +71,7 @@ else
 	include_once( $mx_root_path . 'admin/page_header_admin.' . $phpEx );
 }
 
-if ( !isset( $HTTP_POST_VARS['submit'] ) )
+if ( !isset( $_POST['submit'] ) )
 {
 	$s_kb_cat_list = get_kb_cat_list( '', 0, 1, 0, 0, true ); 
 	$template->set_filenames( array( 'body' => 'admin/kb_cat_select_body.tpl' ) 
@@ -91,9 +91,9 @@ if ( !isset( $HTTP_POST_VARS['submit'] ) )
 }
 else
 {
-	if ( !isset( $HTTP_GET_VARS['cat_id'] ) )
+	if ( !isset( $_GET['cat_id'] ) )
 	{
-		$cat_id = intval( $HTTP_POST_VARS['cat_id'] );
+		$cat_id = intval( $_POST['cat_id'] );
 
 		$template->set_filenames( array( 'body' => 'admin/kb_cat_auth_body.tpl' ) 
 			);
@@ -185,18 +185,18 @@ else
 	}
 	else
 	{
-		$cat_id = intval( $HTTP_GET_VARS['cat_id'] );
+		$cat_id = intval( $_GET['cat_id'] );
 
-		$view_groups = @implode( ',', $HTTP_POST_VARS['view'] );
-		$post_groups = @implode( ',', $HTTP_POST_VARS['post'] );
-		$rate_groups = @implode( ',', $HTTP_POST_VARS['rate'] );
-		$comment_groups = @implode( ',', $HTTP_POST_VARS['comment'] );
-		$edit_groups = @implode( ',', $HTTP_POST_VARS['edit'] );
-		$delete_groups = @implode( ',', $HTTP_POST_VARS['delete'] );
-		// $approval_groups = @implode( ',', $HTTP_POST_VARS['approval'] );
-		// $approval_edit_groups = @implode( ',', $HTTP_POST_VARS['approval_edit'] );
+		$view_groups = @implode( ',', $_POST['view'] );
+		$post_groups = @implode( ',', $_POST['post'] );
+		$rate_groups = @implode( ',', $_POST['rate'] );
+		$comment_groups = @implode( ',', $_POST['comment'] );
+		$edit_groups = @implode( ',', $_POST['edit'] );
+		$delete_groups = @implode( ',', $_POST['delete'] );
+		// $approval_groups = @implode( ',', $_POST['approval'] );
+		// $approval_edit_groups = @implode( ',', $_POST['approval_edit'] );
 
-		$moderator_groups = @implode( ',', $HTTP_POST_VARS['moderator'] );
+		$moderator_groups = @implode( ',', $_POST['moderator'] );
 
 		$sql = "UPDATE " . KB_CATEGORIES_TABLE . "
 				SET auth_view_groups = '$view_groups', auth_post_groups = '$post_groups', auth_rate_groups = '$rate_groups', auth_comment_groups = '$comment_groups', auth_edit_groups = '$edit_groups', auth_delete_groups = '$delete_groups', auth_approval_groups = '$approval_groups', auth_approval_edit_groups = '$approval_edit_groups',	auth_moderator_groups = '$moderator_groups'

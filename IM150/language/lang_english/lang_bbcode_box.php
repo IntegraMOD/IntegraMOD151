@@ -104,12 +104,4 @@ $lang['bbcode_enter_searchtext'] = 'Enter text to search for.';
 $lang['bbcode_no_searchtext']    = 'You didn\'t enter a search string.';
 $lang['bbcode_h_help']           = 'Hide: [hide]message[/hide]';
 
-$lang['bbcode_img_confirm']      = 'Do you want to display an album image?\n\nThis will display an image from the image Gallery.\n\nClicking Cancel will link to an external image.';
-$lang['bbcode_img_id']      	 = 'Specify the ID number of the image.';
-$lang['bbcode_img_no_id']      	 = 'You have no image ID number specified.';
-$lang['bbcode_img_numbers']      = 'Only numbers are allowed.';
-$lang['bbcode_img_url']      	 = 'Enter the URL of the image.';
-$lang['bbcode_img_no_url']       = 'You have no URL specified.';
-$lang['bbcode_img_position']     = 'Enter image position.\n\nLEFT= Position to the left of text\nRIGHT= Position to the right of text.\nCENTER= Center inline.\nLeave blank for no positioning.';
-$lang['bbcode_img_position_2']   = 'You may use \'left\', \'right\', \'center\', or \'blank\'.';
 ?>

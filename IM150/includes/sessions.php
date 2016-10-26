@@ -26,23 +26,23 @@
 function session_begin($user_id, $user_ip, $page_id, $auto_create = 0, $enable_autologin = 0, $admin = 0)
 {
 	global $db, $board_config;
-	global $HTTP_COOKIE_VARS, $HTTP_GET_VARS, $SID;
+	global $_COOKIE, $_GET, $SID;
 
 	$cookiename = $board_config['cookie_name'];
 	$cookiepath = $board_config['cookie_path'];
 	$cookiedomain = $board_config['cookie_domain'];
 	$cookiesecure = $board_config['cookie_secure'];
 
-	if ( isset($HTTP_COOKIE_VARS[$cookiename . '_sid']) || isset($HTTP_COOKIE_VARS[$cookiename . '_data']) )
+	if ( isset($_COOKIE[$cookiename . '_sid']) || isset($_COOKIE[$cookiename . '_data']) )
 	{
-		$session_id = isset($HTTP_COOKIE_VARS[$cookiename . '_sid']) ? $HTTP_COOKIE_VARS[$cookiename . '_sid'] : '';
-		$sessiondata = isset($HTTP_COOKIE_VARS[$cookiename . '_data']) ? unserialize(stripslashes($HTTP_COOKIE_VARS[$cookiename . '_data'])) : array();
+		$session_id = isset($_COOKIE[$cookiename . '_sid']) ? $_COOKIE[$cookiename . '_sid'] : '';
+		$sessiondata = isset($_COOKIE[$cookiename . '_data']) ? unserialize(stripslashes($_COOKIE[$cookiename . '_data'])) : array();
 		$sessionmethod = SESSION_METHOD_COOKIE;
 	}
 	else
 	{
 		$sessiondata = array();
-		$session_id = ( isset($HTTP_GET_VARS['sid']) ) ? $HTTP_GET_VARS['sid'] : '';
+		$session_id = ( isset($_GET['sid']) ) ? $_GET['sid'] : '';
 		$sessionmethod = SESSION_METHOD_GET;
 	}
 
@@ -53,8 +53,8 @@ function session_begin($user_id, $user_ip, $page_id, $auto_create = 0, $enable_a
 	
 	$page_id = (int) $page_id;
 
-	global $HTTP_SERVER_VARS; 
-	if ( empty($session_id)  && strstr($HTTP_SERVER_VARS['HTTP_USER_AGENT'] ,'Googlebot') ) 
+	global $_SERVER; 
+	if ( empty($session_id)  && strstr($_SERVER['HTTP_USER_AGENT'] ,'Googlebot') ) 
 	{ 
 		$sessiondata = ''; 
 		$session_id = md5(d8ef2eab); 
@@ -192,8 +192,8 @@ function session_begin($user_id, $user_ip, $page_id, $auto_create = 0, $enable_a
 		$session_id = md5(dss_rand());
         $priv_session_id = md5(dss_rand());
 		
-		global $HTTP_SERVER_VARS; 
-		$session_id = ( !strstr($HTTP_SERVER_VARS['HTTP_USER_AGENT'] ,'Googlebot') ) ? md5(uniqid(mt_rand(), true)) : md5(d8ef2eab);
+		global $_SERVER; 
+		$session_id = ( !strstr($_SERVER['HTTP_USER_AGENT'] ,'Googlebot') ) ? md5(uniqid(mt_rand(), true)) : md5(d8ef2eab);
 
 		$sql = "INSERT INTO " . SESSIONS_TABLE . "
 			(session_id, session_user_id, session_start, session_time, session_ip, session_page, session_logged_in, session_admin, priv_session_id)
@@ -322,7 +322,7 @@ $sql = "TRUNCATE TABLE " . SESSIONS_TABLE . "";
 function session_pagestart($user_ip, $thispage_id)
 {
 	global $db, $lang, $board_config;
-	global $HTTP_COOKIE_VARS, $HTTP_GET_VARS, $SID, $P_SID;
+	global $_COOKIE, $_GET, $SID, $P_SID;
 
 	$cookiename = $board_config['cookie_name'];
 	$cookiepath = $board_config['cookie_path'];
@@ -332,16 +332,16 @@ function session_pagestart($user_ip, $thispage_id)
 	$current_time = time();
 	unset($userdata);
 
-	if ( isset($HTTP_COOKIE_VARS[$cookiename . '_sid']) || isset($HTTP_COOKIE_VARS[$cookiename . '_data']) )
+	if ( isset($_COOKIE[$cookiename . '_sid']) || isset($_COOKIE[$cookiename . '_data']) )
 	{
-		$sessiondata = isset( $HTTP_COOKIE_VARS[$cookiename . '_data'] ) ? unserialize(stripslashes($HTTP_COOKIE_VARS[$cookiename . '_data'])) : array();
-		$session_id = isset( $HTTP_COOKIE_VARS[$cookiename . '_sid'] ) ? $HTTP_COOKIE_VARS[$cookiename . '_sid'] : '';
+		$sessiondata = isset( $_COOKIE[$cookiename . '_data'] ) ? unserialize(stripslashes($_COOKIE[$cookiename . '_data'])) : array();
+		$session_id = isset( $_COOKIE[$cookiename . '_sid'] ) ? $_COOKIE[$cookiename . '_sid'] : '';
 		$sessionmethod = SESSION_METHOD_COOKIE;
 	}
 	else
 	{
 		$sessiondata = array();
-		$session_id = ( isset($HTTP_GET_VARS['sid']) ) ? $HTTP_GET_VARS['sid'] : '';
+		$session_id = ( isset($_GET['sid']) ) ? $_GET['sid'] : '';
 		$sessionmethod = SESSION_METHOD_GET;
 	}
 
@@ -350,8 +350,8 @@ function session_pagestart($user_ip, $thispage_id)
  		$session_id = '';
  	}
 
-	global $HTTP_SERVER_VARS; 
-	if ( empty($session_id)  && strstr($HTTP_SERVER_VARS['HTTP_USER_AGENT'] ,'Googlebot') ) 
+	global $_SERVER; 
+	if ( empty($session_id)  && strstr($_SERVER['HTTP_USER_AGENT'] ,'Googlebot') ) 
 	{ 
 		$sessiondata = ''; 
 		$session_id = md5(d8ef2eab); 
@@ -393,7 +393,7 @@ function session_pagestart($user_ip, $thispage_id)
 			$ip_check_s = substr($userdata['session_ip'], 0, 6);
 			$ip_check_u = substr($user_ip, 0, 6);
 
-			if (( $ip_check_s == $ip_check_u ) || ($session_id == md5(d8ef2eab)&&(strstr($HTTP_SERVER_VARS['HTTP_USER_AGENT'] ,'Googlebot'))))
+			if (( $ip_check_s == $ip_check_u ) || ($session_id == md5(d8ef2eab)&&(strstr($_SERVER['HTTP_USER_AGENT'] ,'Googlebot'))))
 			{
 				$SID = $userdata['user_id'] > 0 ? (($sessionmethod == SESSION_METHOD_GET || defined('IN_ADMIN')) ? 'sid=' . $session_id : '') : '';
  				$P_SID = (defined('IN_ADMIN')) ? 'p_sid=' . $userdata['priv_session_id'] : '';
@@ -497,7 +497,7 @@ function session_pagestart($user_ip, $thispage_id)
 function session_end($session_id, $user_id)
 {
 	global $db, $lang, $board_config, $userdata;
-	global $HTTP_COOKIE_VARS, $HTTP_GET_VARS, $SID;
+	global $_COOKIE, $_GET, $SID;
 
 	$cookiename = $board_config['cookie_name'];
 	$cookiepath = $board_config['cookie_path'];
@@ -661,7 +661,7 @@ function session_reset_keys($user_id, $user_ip)
 //
 function append_sid($url, $non_html_amp = false)
 {
-	global $SID, $P_SID, $HTTP_SERVER_VARS;
+	global $SID, $P_SID, $_SERVER;
 
 	if ( !empty($SID) && !preg_match('#sid=#', $url) && !defined('IS_ROBOT')  )
 	{

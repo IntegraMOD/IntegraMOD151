@@ -30,9 +30,9 @@ if ( !defined( 'IN_PORTAL' ) )
 }
 
 
-$start = ( isset( $HTTP_GET_VARS['start'] ) ) ? intval( $HTTP_GET_VARS['start'] ) : 0;
+$start = ( isset( $_GET['start'] ) ) ? intval( $_GET['start'] ) : 0;
 
-$category_id = ( isset( $HTTP_GET_VARS['cat'] ) ) ? intval ( $HTTP_GET_VARS['cat'])  : intval ( $HTTP_POST_VARS['cat'] );
+$category_id = ( isset( $_GET['cat'] ) ) ? intval ( $_GET['cat'])  : intval ( $_POST['cat'] );
 
 $category = get_kb_cat( $category_id );
 $category_name = $category['category_name'];

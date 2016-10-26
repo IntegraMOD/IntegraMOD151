@@ -49,9 +49,9 @@ if ( $process == 'pre' )
 	$privmsgs_page_size = (isset($board_config['user_privmsgs_per_page'])) ? intval($board_config['user_privmsgs_per_page']) : 0;
 	$privmsgs_total = 0;
 	$privmsgs_start = 0;
-	if ( isset($HTTP_POST_VAR['privmsgs_start']) || isset($HTTP_GET_VARS['privmsgs_start']) )
+	if ( isset($HTTP_POST_VAR['privmsgs_start']) || isset($_GET['privmsgs_start']) )
 	{
-		$privmsgs_start = isset($HTTP_POST_VAR['privmsgs_start']) ? intval($HTTP_POST_VAR['privmsgs_start']) : intval($HTTP_GET_VARS['privmsgs_start']);
+		$privmsgs_start = isset($HTTP_POST_VAR['privmsgs_start']) ? intval($HTTP_POST_VAR['privmsgs_start']) : intval($_GET['privmsgs_start']);
 	}
 
 	if ($privmsgs_page_size > 0)

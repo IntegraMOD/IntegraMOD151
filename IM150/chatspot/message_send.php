@@ -30,13 +30,13 @@ $phpbb_root_path = './../';
 include_once( $phpbb_root_path . 'extension.inc' );
 include_once( $phpbb_root_path . 'chatspot/chatspot_config.' . $phpEx );
 
-if( isset( $HTTP_GET_VARS[ 'room' ] ) )
-	$room_id = $HTTP_GET_VARS[ 'room' ];
+if( isset( $_GET[ 'room' ] ) )
+	$room_id = $_GET[ 'room' ];
 else
 	die( "ERROR:  Cannot determine room id." );
 	
-if( isset( $HTTP_GET_VARS[ 'sid' ] ) )
-	$SID = '&amp;sid=' . $HTTP_GET_VARS[ 'sid' ];
+if( isset( $_GET[ 'sid' ] ) )
+	$SID = '&amp;sid=' . $_GET[ 'sid' ];
 else
 	$SID = '';
 ?>
@@ -151,7 +151,7 @@ function submit_msg()
 	if( !window.parent.scripts.did_page_load() )
 	{
 		clear_form();
-		alert( "<? echo $lang['Loading_error']; ?>" );
+		alert( "<?php echo $lang['Loading_error']; ?>" );
 		return false;
 	}
 	
@@ -190,7 +190,7 @@ function submit_msg()
 	<tr>
 		<td><table class="formarea" width="100%">
 	<tr height="23" valign="middle">
-	<td align="left"><a href="javascript:void(0);" onClick="window.open('../posting.php?mode=smilies', '_chatspotsmilies', 'HEIGHT=300,resizable=yes,scrollbars=yes,WIDTH=275');"><? echo $lang['Smilies']; ?></a></td>
+	<td align="left"><a href="javascript:void(0);" onClick="window.open('../posting.php?mode=smilies', '_chatspotsmilies', 'HEIGHT=300,resizable=yes,scrollbars=yes,WIDTH=275');"><?php echo $lang['Smilies']; ?></a></td>
 	<td align="right">
 		<table cellspacing="0" cellpadding="0" border="0">
 			<tr height="18" valign="middle">

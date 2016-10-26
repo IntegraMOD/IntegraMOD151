@@ -37,7 +37,7 @@ require('./pagestart.' . $phpEx);
 require_once($phpbb_root_path . 'language/lang_' . $board_config['default_lang'] . '/lang_album_main.' . $phpEx);
 require_once($phpbb_root_path . 'language/lang_' . $board_config['default_lang'] . '/lang_album_admin.' . $phpEx);
 
-if( !isset($HTTP_POST_VARS['submit']) )
+if( !isset($_POST['submit']) )
 {
 	$template->set_filenames(array(
 		'body' => 'admin/album_personal_body.tpl')
@@ -147,15 +147,15 @@ if( !isset($HTTP_POST_VARS['submit']) )
 else
 {
 	// Now we update the datatabase
-	$private_groups = @implode(',', $HTTP_POST_VARS['private']);
+	$private_groups = @implode(',', $_POST['private']);
 
-	$view_groups = @implode(',', $HTTP_POST_VARS['view']);
-	$upload_groups = @implode(',', $HTTP_POST_VARS['upload']);
-	$rate_groups = @implode(',', $HTTP_POST_VARS['rate']);
-	$comment_groups = @implode(',', $HTTP_POST_VARS['comment']);
-	$edit_groups = @implode(',', $HTTP_POST_VARS['edit']);
-	$delete_groups = @implode(',', $HTTP_POST_VARS['delete']);
-	$moderator_groups = @implode(',', $HTTP_POST_VARS['moderator']);
+	$view_groups = @implode(',', $_POST['view']);
+	$upload_groups = @implode(',', $_POST['upload']);
+	$rate_groups = @implode(',', $_POST['rate']);
+	$comment_groups = @implode(',', $_POST['comment']);
+	$edit_groups = @implode(',', $_POST['edit']);
+	$delete_groups = @implode(',', $_POST['delete']);
+	$moderator_groups = @implode(',', $_POST['moderator']);
 	
 	// album config for non created personal galleries	
 	$sql = "UPDATE ". ALBUM_CONFIG_TABLE ."

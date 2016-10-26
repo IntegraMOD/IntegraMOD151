@@ -45,19 +45,19 @@ $template->set_filenames(array(
 
 if ($submit)
 {
-	$user_photo_local = ( !empty($HTTP_POST_VARS['photolocal']) && $board_config['allow_photo_local'] ) ? trim(htmlspecialchars($HTTP_POST_VARS['photolocal'])) : '';
-	$user_photo_remoteurl = ( !empty($HTTP_POST_VARS['photoremoteurl']) ) ? trim(htmlspecialchars($HTTP_POST_VARS['photoremoteurl'])) : '';
-	$user_photo_upload = ( !empty($HTTP_POST_VARS['photourl']) ) ? trim($HTTP_POST_VARS['photourl']) : ( ( $HTTP_POST_FILES['photo']['tmp_name'] != "none") ? $HTTP_POST_FILES['photo']['tmp_name'] : '' );
-	$user_photo_name = ( !empty($HTTP_POST_FILES['photo']['name']) ) ? $HTTP_POST_FILES['photo']['name'] : '';
-	$user_photo_size = ( !empty($HTTP_POST_FILES['photo']['size']) ) ? $HTTP_POST_FILES['photo']['size'] : 0;
-	$user_photo_filetype = ( !empty($HTTP_POST_FILES['photo']['type']) ) ? $HTTP_POST_FILES['photo']['type'] : '';
+	$user_photo_local = ( !empty($_POST['photolocal']) && $board_config['allow_photo_local'] ) ? trim(htmlspecialchars($_POST['photolocal'])) : '';
+	$user_photo_remoteurl = ( !empty($_POST['photoremoteurl']) ) ? trim(htmlspecialchars($_POST['photoremoteurl'])) : '';
+	$user_photo_upload = ( !empty($_POST['photourl']) ) ? trim($_POST['photourl']) : ( ( $_FILES['photo']['tmp_name'] != "none") ? $_FILES['photo']['tmp_name'] : '' );
+	$user_photo_name = ( !empty($_FILES['photo']['name']) ) ? $_FILES['photo']['name'] : '';
+	$user_photo_size = ( !empty($_FILES['photo']['size']) ) ? $_FILES['photo']['size'] : 0;
+	$user_photo_filetype = ( !empty($_FILES['photo']['type']) ) ? $_FILES['photo']['type'] : '';
 
 	$user_photo = $view_userdata['user_photo'];
 	$user_photo_type = $view_userdata['user_photo_type'];
 
 	// check
 	$photo_sql = '';
-	if ( isset($HTTP_POST_VARS['photodel']) )
+	if ( isset($_POST['photodel']) )
 	{
 		$photo_sql = pcp_user_photo_delete($view_userdata['user_photo_type'], $view_userdata['user_photo']);
 	}

@@ -24,9 +24,9 @@ init_userprefs($userdata);
 
 
 // session id check
-if (!empty($HTTP_POST_VARS['sid']) || !empty($HTTP_GET_VARS['sid']))
+if (!empty($_POST['sid']) || !empty($_GET['sid']))
 {
-	$sid = (!empty($HTTP_POST_VARS['sid'])) ? $HTTP_POST_VARS['sid'] : $HTTP_GET_VARS['sid'];
+	$sid = (!empty($_POST['sid'])) ? $_POST['sid'] : $_GET['sid'];
 }
 else
 {
@@ -84,9 +84,9 @@ if ( $ctracker_config->settings['login_ip_check'] == 1 )
 	$sel1 = '';
 	$sel2 = '';
 	
-	if ( $HTTP_POST_VARS['submit'] )
+	if ( $_POST['submit'] )
 	{
-		$newsetting = intval($HTTP_POST_VARS['ct_enable_ip_warn']);
+		$newsetting = intval($_POST['ct_enable_ip_warn']);
 		$sql = 'UPDATE ' . USERS_TABLE . ' SET ct_enable_ip_warn=' . $newsetting . ' WHERE user_id=' . $userdata['user_id'];
 		$userdata['ct_enable_ip_warn'] = $newsetting;
 		if ( !($result = $db->sql_query($sql)) )

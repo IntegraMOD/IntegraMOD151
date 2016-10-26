@@ -51,142 +51,162 @@ class contact_list
 		$this->disallow_mode = false;
 	}
 
-	/* Gets lists of contacts from the database; stores them in class variables */
-	function get_list($type = 'buddy', $limit = 0, $start = 0, $order = 'ASC', $limit_max = 0)
-	{
-		if( defined('NO_CONTACTS') )
-		{
-			return;
-		}
+       /* Gets lists of contacts from the database; stores them in class variables */
+       function get_list($type = 'buddy', $limit = 0, $start = 0, $order = 'ASC', $limit_max = 0)
+       {
+          global $db, $lang, $userdata;
 
-		global $db, $lang, $userdata;
+          if(defined('NO_CONTACTS'))
+          {
+             return;
+          }
 
-		$field_list = 'user_id,contact_id';
-		$fields_sql = '';
-		$field_check_sql =  'c.contact_id AND c.user_id = ' . $userdata['user_id'];
 
-		switch( $type )
-		{
-			case 'all_new':
-				// This type dumps the current lists and gets fresh copies
-				$this->buddy = array();
-				$this->ignore = array();
-				$this->disallow = array();
-			case 'all':
-				// This type only gets lists that have not already been retrieved
-				$field_list = '*';
-				break;
-			case 'buddy':
-				// Buddy list only
-				$this->buddy = array();
-				$field_list .= ',alert,alert_status,display_name';
-				$field_check_sql .= ' AND c.disallow = 0 AND c.user_ignore = 0';
-				break;
-			case 'ignore':
-				// Ignore list only
-				$this->ignore = array();
-				$field_check_sql .= ' AND c.user_ignore = 1';
-				break;
-			case 'disallow':
-				// Disallow list only
-				$this->disallow = array();
-				$field_check_sql .= ' AND c.disallow = 1';
-				break;
-			case 'buddy_of':
-				// This type gets the users listing someone as a buddy
-				$this->buddy_of = array();
-				$field_check_sql = 'c.user_id AND c.contact_id = ' . $userdata['user_id'] . ' AND c.disallow = 0 AND c.user_ignore = 0';
-				break;
-			case 'ignored_by':
-				// This type gets the users ignoring someone
-				$this->ignored_by = array();
-				$field_check_sql = 'c.user_id AND c.contact_id = ' . $userdata['user_id'] . ' AND c.user_ignore = 1';
-				break;
-			case 'disallow_by':
-				// This type gets the users disallowing someone
-				$this->disallow_by = array();
-				$field_check_sql = 'c.user_id AND c.contact_id = ' . $userdata['user_id'] . ' AND c.disallow = 1';
-				break;
-		}
+          if(empty($userdata)) return;
+          // this should not happen but it does as $userdata (which should be global data)
+          // is not available here... so something fundamental is wrong...
 
-		$fields_sql = ( $field_list == '*' ) ? 'c.*': 'c.' . str_replace(',', ', c.', $field_list);
 
-		$sql = 'SELECT ' . $fields_sql . ', u.username FROM ' . CONTACT_TABLE . ' c, ' . USERS_TABLE . ' u WHERE u.user_id = ' . $field_check_sql;
-		$sql .= ' ORDER BY u.username ' . $order;
-		if( $limit )
-		{
-			global $board_config;
-			$sql .= ' LIMIT ';
-			$sql .= ( !empty($start) ) ? $start . ',' : '0,';
-			$sql .= ( $limit_max ) ? $limit_max : $board_config['topics_per_page'];
-		}
-		if( !$result = $db->sql_query($sql) )
-		{
-			$this->contact_die('Could not get contacts list:' . $type, __LINE__, __FILE__, $sql);
-		}
-		if( !$db->sql_numrows($result) )
-		{
-			return; // There are no contacts, quit now.
-		}
-		else
-		{
-			// There are contacts, so let's put them in arrays based on type.
-			$rows = $db->sql_fetchrowset($result);
-			$db->sql_freeresult();
+          $field_list = 'user_id, contact_id';
+          $fields_sql = '';
+          $field_check_sql =  'c.contact_id AND c.user_id = ' . $userdata['user_id'];
 
-			// First, deal with queries that are getting other user's lists that
-			// include this user.
-			$id_name = 'contact_id';
-			if( $type == 'buddy_of' || $type == 'ignored_by' || $type == 'disallow_by' )
-			{
-				$id_name = 'user_id';
-			}
+          switch( $type )
+          {
+             case 'all_new':
+                // This type dumps the current lists and gets fresh copies
+                $this->buddy = array();
+                $this->ignore = array();
+                $this->disallow = array();
+             case 'all':
+                // This type only gets lists that have not already been retrieved
+                $field_list = '*';
+                break;
+             case 'buddy':
+                // Buddy list only
+                $this->buddy = array();
+                $field_list .= ',alert,alert_status,display_name';
+                $field_check_sql .= ' AND c.disallow = 0 AND c.user_ignore = 0';
+                break;
+             case 'ignore':
+                // Ignore list only
+                $this->ignore = array();
+                $field_check_sql .= ' AND c.user_ignore = 1';
+                break;
+             case 'disallow':
+                // Disallow list only
+                $this->disallow = array();
+                $field_check_sql .= ' AND c.disallow = 1';
+                break;
+             case 'buddy_of':
+                // This type gets the users listing someone as a buddy
+                $this->buddy_of = array();
+                $field_check_sql = ' AND c.disallow = 0 AND c.user_ignore = 0';
+                break;
+             case 'ignored_by':
+                // This type gets the users ignoring someone
+                $this->ignored_by = array();
+                $field_check_sql .= ' AND c.user_ignore = 1';
+                break;
+             case 'disallow_by':
+                // This type gets the users disallowing someone
+                $this->disallow_by = array();
+                $field_check_sql .= ' AND c.disallow = 1';
+                break;
+          }
 
-			foreach($rows as $val)
-			{
-				if( $type == 'allnew' )
-				{
-					if( $val['user_ignore'] && !array_key_exists($val[$id_name], $this->ignore) )
-					{
-						$this->ignore[$val[$id_name]] = $val;
-					}
-					elseif( $val['disallow'] && !array_key_exists($val[$id_name], $this->disallow) )
-					{
-						$this->disallow[$val[$id_name]] = $val;
-					}
-					elseif( !array_key_exists($val[$id_name], $this->buddy) )
-					{
-						$this->buddy[$val[$id_name]] = $val;
-					}
-				}
-				elseif( $type == 'all' )
-				{
-					if( $val['user_ignore'] )
-					{
-						$this->ignore[$val[$id_name]] = $val;
-					}
-					elseif( $val['disallow'] )
-					{
-						$this->disallow[$val[$id_name]] = $val;
-					}
-					else
-					{
-						$this->buddy[$val[$id_name]] = $val;
-					}
-				}
-				else
-				{
-					$this->{$type}[$val[$id_name]] = $val;
-				}
-			}
-			unset($rows); // Dump the old array to free memory.
-		}
-	} // END - get_list()
+          $fields_sql = ($field_list == '*') ? 'c.*': 'c.' . str_replace(',', ', c.', $field_list);
+
+          $sql = 'SELECT ' . $fields_sql . ', u.username FROM ' . CONTACT_TABLE . ' c, ' . USERS_TABLE . ' u WHERE ' . $field_check_sql;
+
+          $sql .= ' ORDER BY u.username ' . $order;
+
+          if ($limit)
+          {
+             global $board_config;
+             $sql .= ' LIMIT ';
+             $sql .= ( !empty($start) ) ? $start . ',' : '0,';
+             $sql .= ( $limit_max ) ? $limit_max : $board_config['topics_per_page'];
+          }
+
+          //var_dump($sql);
+
+          if (!$result = $db->sql_query($sql))
+          {
+             $this->contact_die('Could not get contacts list:' . $type, __LINE__, __FILE__, $sql);
+          }
+          if (!$db->sql_numrows($result))
+          {
+             return; // There are no contacts, quit now.
+          }
+          else
+          {
+             // There are contacts, so let's put them in arrays based on type.
+             $rows = $db->sql_fetchrowset($result);
+             $db->sql_freeresult();
+
+             // First, deal with queries that are getting other user's lists that
+             // include this user.
+             $id_name = 'contact_id';
+             if( $type == 'buddy_of' || $type == 'ignored_by' || $type == 'disallow_by' )
+             {
+                $id_name = 'user_id';
+             }
+
+             foreach($rows as $val)
+             {
+                if( $type == 'allnew' )
+                {
+                   if( $val['user_ignore'] && !array_key_exists($val[$id_name], $this->ignore) )
+                   {
+                      $this->ignore[$val[$id_name]] = $val;
+                   }
+                   elseif( $val['disallow'] && !array_key_exists($val[$id_name], $this->disallow) )
+                   {
+                      $this->disallow[$val[$id_name]] = $val;
+                   }
+                   elseif( !array_key_exists($val[$id_name], $this->buddy) )
+                   {
+                      $this->buddy[$val[$id_name]] = $val;
+                   }
+                }
+                elseif( $type == 'all' )
+                {
+                   if( $val['user_ignore'] )
+                   {
+                      $this->ignore[$val[$id_name]] = $val;
+                   }
+                   elseif( $val['disallow'] )
+                   {
+                      $this->disallow[$val[$id_name]] = $val;
+                   }
+                   else
+                   {
+                      $this->buddy[$val[$id_name]] = $val;
+                   }
+                }
+                else
+                {
+                   $this->{$type}[$val[$id_name]] = $val;
+                }
+             }
+             unset($rows); // Dump the old array to free memory.
+          }
+       } // END - get_list()
 
 	/* Gets the count of users on someone's list */
 	function get_count($userid, $type = 'buddy')
 	{
 		global $db, $lang, $userdata;
+
+
+/* ADDED BY HELTER 3-9-2016 */
+if ( empty($userdata['user_id']) )
+{
+return;
+}
+/* END ADD */
+
 
 		$userid = ( empty($userid) ) ? $userdata['user_id'] : intval($userid);
 		$field_check_sql =  'user_id = ' . $userid;

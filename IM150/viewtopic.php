@@ -71,33 +71,33 @@ include_once($phpbb_root_path . 'includes/functions_calendar.'.$phpEx);
 //
 $topic_id = $post_id = 0;
 $vote_id = array();
-if ( isset($HTTP_GET_VARS[POST_TOPIC_URL]) )
+if ( isset($_GET[POST_TOPIC_URL]) )
 {
-	$topic_id = intval($HTTP_GET_VARS[POST_TOPIC_URL]);
+	$topic_id = intval($_GET[POST_TOPIC_URL]);
 }
-else if ( isset($HTTP_GET_VARS['topic']) )
+else if ( isset($_GET['topic']) )
 {
-	$topic_id = intval($HTTP_GET_VARS['topic']);
-}
-
-if ( isset($HTTP_GET_VARS[POST_POST_URL]))
-{
-	$post_id = intval($HTTP_GET_VARS[POST_POST_URL]);
+	$topic_id = intval($_GET['topic']);
 }
 
+if ( isset($_GET[POST_POST_URL]))
+{
+	$post_id = intval($_GET[POST_POST_URL]);
+}
 
-$start = ( isset($HTTP_GET_VARS['start']) ) ? intval($HTTP_GET_VARS['start']) : 0;
+
+$start = ( isset($_GET['start']) ) ? intval($_GET['start']) : 0;
 $start = ($start < 0) ? 0 : $start;
 
-$download = ( isset($HTTP_GET_VARS['download']) ) ? $HTTP_GET_VARS['download'] : '';
+$download = ( isset($_GET['download']) ) ? $_GET['download'] : '';
 
-if(isset($HTTP_GET_VARS['printertopic']))
+if(isset($_GET['printertopic']))
 {
-	$start = ( isset($HTTP_GET_VARS['start_rel']) ) && ( isset($HTTP_GET_VARS['printertopic']) ) ? intval($HTTP_GET_VARS['start_rel']) - 1 : $start;
+	$start = ( isset($_GET['start_rel']) ) && ( isset($_GET['printertopic']) ) ? intval($_GET['start_rel']) - 1 : $start;
 	// $finish when positive indicates last message; when negative it indicates range; can't be 0
-	if(isset($HTTP_GET_VARS['finish_rel']))
+	if(isset($_GET['finish_rel']))
 	{
-		$finish = intval($HTTP_GET_VARS['finish_rel']);
+		$finish = intval($_GET['finish_rel']);
 	}
 	if(($finish >= 0) && (($finish - $start) <=0))
 	{
@@ -220,7 +220,7 @@ $topic_id = $row['topic_id'];
 	$install_time 	= time();
 	$bypass			= '';
 		
-	( !$_GET['mode'] ) ? $viewed_mode = $HTTP_GET_VARS['mode'] : $viewed_mode = $_GET['mode'];
+	( !$_GET['mode'] ) ? $viewed_mode = $_GET['mode'] : $viewed_mode = $_GET['mode'];
 	
 	$q = "SELECT active, effected, install_date
 		  FROM ". $table_prefix ."force_read"; 
@@ -301,27 +301,27 @@ $topic_id = $row['topic_id'];
 //
 // Set or remove bookmark
 //
-if ( isset($HTTP_GET_VARS['setbm']) || isset($HTTP_GET_VARS['removebm']) )
+if ( isset($_GET['setbm']) || isset($_GET['removebm']) )
 {
-	$redirect = "viewtopic.$phpEx?" . POST_TOPIC_URL . "=$topic_id&start=$start&postdays=$post_days&postorder=$post_order&highlight=" . $HTTP_GET_VARS['highlight'];
+	$redirect = "viewtopic.$phpEx?" . POST_TOPIC_URL . "=$topic_id&start=$start&postdays=$post_days&postorder=$post_order&highlight=" . $_GET['highlight'];
 	if ( $userdata['session_logged_in'] )
 	{
-		if (isset($HTTP_GET_VARS['setbm']) && $HTTP_GET_VARS['setbm'])
+		if (isset($_GET['setbm']) && $_GET['setbm'])
 		{
 			set_bookmark($topic_id);
 		}
-		else if (isset($HTTP_GET_VARS['removebm']) && $HTTP_GET_VARS['removebm'])
+		else if (isset($_GET['removebm']) && $_GET['removebm'])
 		{
 			remove_bookmark($topic_id);
 		}
 	}
 	else
 	{
-		if (isset($HTTP_GET_VARS['setbm']) && $HTTP_GET_VARS['setbm'])
+		if (isset($_GET['setbm']) && $_GET['setbm'])
 		{
 			$redirect .= '&setbm=true';
 		}
-		else if (isset($HTTP_GET_VARS['removebm']) && $HTTP_GET_VARS['removebm'])
+		else if (isset($_GET['removebm']) && $_GET['removebm'])
 		{
 			$redirect .= '&removebm=true';
 		}
@@ -370,15 +370,15 @@ if ( empty($topic_last_read) )
 // Find topic id if user requested a newer
 // or older topic
 //
-if ( isset($HTTP_GET_VARS['view']) && empty($HTTP_GET_VARS[POST_POST_URL]) )
+if ( isset($_GET['view']) && empty($_GET[POST_POST_URL]) )
 {
-	if ( $HTTP_GET_VARS['view'] == 'newest' )
+	if ( $_GET['view'] == 'newest' )
 	{
 //-- mod : keep unread -----------------------------------------------------------------------------
 //-- delete
-//		if ( isset($HTTP_COOKIE_VARS[$board_config['cookie_name'] . '_sid']) || isset($HTTP_GET_VARS['sid']) )
+//		if ( isset($_COOKIE[$board_config['cookie_name'] . '_sid']) || isset($_GET['sid']) )
 //		{
-//			$session_id = isset($HTTP_COOKIE_VARS[$board_config['cookie_name'] . '_sid']) ? $HTTP_COOKIE_VARS[$board_config['cookie_name'] . '_sid'] : $HTTP_GET_VARS['sid'];
+//			$session_id = isset($_COOKIE[$board_config['cookie_name'] . '_sid']) ? $_COOKIE[$board_config['cookie_name'] . '_sid'] : $_GET['sid'];
 //
 //			if ( $session_id )
 //			{
@@ -402,7 +402,7 @@ if ( isset($HTTP_GET_VARS['view']) && empty($HTTP_GET_VARS[POST_POST_URL]) )
 //
 //				$post_id = $row['post_id'];
 //
-//				if (isset($HTTP_GET_VARS['sid']))
+//				if (isset($_GET['sid']))
 //				{
 //					redirect("viewtopic.$phpEx?sid=$session_id&" . POST_POST_URL . "=$post_id#$post_id");
 //				}
@@ -434,10 +434,10 @@ if ( isset($HTTP_GET_VARS['view']) && empty($HTTP_GET_VARS[POST_POST_URL]) )
 		redirect(append_sid("./viewtopic.$phpEx?" . POST_POST_URL . "=$post_id#$post_id", true));
 //-- fin mod : keep unread -------------------------------------------------------------------------
 	}
-	else if ( $HTTP_GET_VARS['view'] == 'next' || $HTTP_GET_VARS['view'] == 'previous' )
+	else if ( $_GET['view'] == 'next' || $_GET['view'] == 'previous' )
 	{
-		$sql_condition = ( $HTTP_GET_VARS['view'] == 'next' ) ? '>' : '<';
-		$sql_ordering = ( $HTTP_GET_VARS['view'] == 'next' ) ? 'ASC' : 'DESC';
+		$sql_condition = ( $_GET['view'] == 'next' ) ? '>' : '<';
+		$sql_ordering = ( $_GET['view'] == 'next' ) ? 'ASC' : 'DESC';
 
 		$sql = "SELECT t.topic_id
 			FROM " . TOPICS_TABLE . " t, " . TOPICS_TABLE . " t2
@@ -463,7 +463,7 @@ if ( isset($HTTP_GET_VARS['view']) && empty($HTTP_GET_VARS[POST_POST_URL]) )
 		}
 		else
 		{
-			$message = ( $HTTP_GET_VARS['view'] == 'next' ) ? 'No_newer_topics' : 'No_older_topics';
+			$message = ( $_GET['view'] == 'next' ) ? 'No_newer_topics' : 'No_older_topics';
 			message_die(GENERAL_MESSAGE, $message);
 		}
 	}
@@ -556,6 +556,8 @@ if ( !$is_auth['auth_read'] )
 // $forum_name = $forum_topic_data['forum_name'];
 //-- add
 $forum_name = get_object_lang(POST_FORUM_URL . $forum_topic_data['forum_id'], 'name');
+$topic_forum_id = $forum_topic_data['forum_id'];
+$topic_topic_title = $forum_topic_data['topic_title'];
 //-- fin mod : categories hierarchy ----------------------------------------------------------------
 
 $topic_title = $forum_topic_data['topic_title'];
@@ -592,9 +594,9 @@ if( $userdata['session_logged_in'] )
 
 	if ( $row = $db->sql_fetchrow($result) )
 	{
-		if ( isset($HTTP_GET_VARS['unwatch']) )
+		if ( isset($_GET['unwatch']) )
 		{
-			if ( $HTTP_GET_VARS['unwatch'] == 'topic' )
+			if ( $_GET['unwatch'] == 'topic' )
 			{
 				$is_watching_topic = 0;
 
@@ -635,9 +637,9 @@ if( $userdata['session_logged_in'] )
 	}
 	else
 	{
-		if ( isset($HTTP_GET_VARS['watch']) )
+		if ( isset($_GET['watch']) )
 		{
-			if ( $HTTP_GET_VARS['watch'] == 'topic' )
+			if ( $_GET['watch'] == 'topic' )
 			{
 				$is_watching_topic = TRUE;
 
@@ -665,9 +667,9 @@ if( $userdata['session_logged_in'] )
 }
 else
 {
-	if ( isset($HTTP_GET_VARS['unwatch']) )
+	if ( isset($_GET['unwatch']) )
 	{
-		if ( $HTTP_GET_VARS['unwatch'] == 'topic' )
+		if ( $_GET['unwatch'] == 'topic' )
 		{
 			redirect(append_sid("login.$phpEx?redirect=viewtopic.$phpEx&" . POST_TOPIC_URL . "=$topic_id&unwatch=topic", true));
 		}
@@ -687,9 +689,9 @@ else
 $previous_days = array(0, 1, 7, 14, 30, 90, 180, 364);
 $previous_days_text = array($lang['All_Posts'], $lang['1_Day'], $lang['7_Days'], $lang['2_Weeks'], $lang['1_Month'], $lang['3_Months'], $lang['6_Months'], $lang['1_Year']);
 
-if( !empty($HTTP_POST_VARS['postdays']) || !empty($HTTP_GET_VARS['postdays']) )
+if( !empty($_POST['postdays']) || !empty($_GET['postdays']) )
 {
-	$post_days = ( !empty($HTTP_POST_VARS['postdays']) ) ? intval($HTTP_POST_VARS['postdays']) : intval($HTTP_GET_VARS['postdays']);
+	$post_days = ( !empty($_POST['postdays']) ) ? intval($_POST['postdays']) : intval($_GET['postdays']);
 	$min_post_time = time() - (intval($post_days) * 86400);
 
 	$sql = "SELECT COUNT(p.post_id) AS num_posts
@@ -706,7 +708,7 @@ if( !empty($HTTP_POST_VARS['postdays']) || !empty($HTTP_GET_VARS['postdays']) )
 
 	$limit_posts_time = "AND p.post_time >= $min_post_time ";
 
-	if ( !empty($HTTP_POST_VARS['postdays']))
+	if ( !empty($_POST['postdays']))
 	{
 		$start = 0;
 	}
@@ -730,9 +732,9 @@ $select_post_days .= '</select>';
 //
 // Decide how to order the post display
 //
-if ( !empty($HTTP_POST_VARS['postorder']) || !empty($HTTP_GET_VARS['postorder']) )
+if ( !empty($_POST['postorder']) || !empty($_GET['postorder']) )
 {
-   $post_order = (!empty($HTTP_POST_VARS['postorder'])) ? htmlspecialchars($HTTP_POST_VARS['postorder']) : htmlspecialchars($HTTP_GET_VARS['postorder']);
+   $post_order = (!empty($_POST['postorder'])) ? htmlspecialchars($_POST['postorder']) : htmlspecialchars($_GET['postorder']);
    $post_time_order = ($post_order == "asc") ? "ASC" : "DESC";
 }
 else
@@ -864,10 +866,10 @@ if ( count($orig_word) )
 // Was a highlight request part of the URI?
 //
 $highlight_match = $highlight = '';
-if (isset($HTTP_GET_VARS['highlight']))
+if (isset($_GET['highlight']))
 {
 	// Split words and phrases   
-	$words = explode(' ', trim(htmlspecialchars($HTTP_GET_VARS['highlight'])));
+	$words = explode(' ', trim(htmlspecialchars($_GET['highlight'])));
 
 	for($i = 0; $i < sizeof($words); $i++)
 	{
@@ -878,7 +880,7 @@ if (isset($HTTP_GET_VARS['highlight']))
 	}
 	unset($words);
 
-	$highlight = urlencode($HTTP_GET_VARS['highlight']);
+	$highlight = urlencode($_GET['highlight']);
 	$highlight_match = phpbb_rtrim($highlight_match, "\\");
 }
 
@@ -966,8 +968,8 @@ $post_alt = ( $forum_topic_data['forum_status'] == FORUM_LOCKED ) ? $lang['Forum
 //-- delete
 // if ( $userdata['session_logged_in'] )
 // {
-//	$tracking_topics = ( isset($HTTP_COOKIE_VARS[$board_config['cookie_name'] . '_t']) ) ? unserialize($HTTP_COOKIE_VARS[$board_config['cookie_name'] . '_t']) : array();
-//	$tracking_forums = ( isset($HTTP_COOKIE_VARS[$board_config['cookie_name'] . '_f']) ) ? unserialize($HTTP_COOKIE_VARS[$board_config['cookie_name'] . '_f']) : array();
+//	$tracking_topics = ( isset($_COOKIE[$board_config['cookie_name'] . '_t']) ) ? unserialize($_COOKIE[$board_config['cookie_name'] . '_t']) : array();
+//	$tracking_forums = ( isset($_COOKIE[$board_config['cookie_name'] . '_f']) ) ? unserialize($_COOKIE[$board_config['cookie_name'] . '_f']) : array();
 //
 //	if ( !empty($tracking_topics[$topic_id]) && !empty($tracking_forums[$forum_id]) )
 //	{
@@ -1013,7 +1015,7 @@ write_cookies($userdata);
 //
 // Load templates
 //
-if(isset($HTTP_GET_VARS['printertopic']))
+if(isset($_GET['printertopic']))
 {
 	$template->set_filenames(array(
 		'body' => 'printertopic_body.tpl')
@@ -1032,7 +1034,7 @@ make_jumpbox('viewforum.'.$phpEx, $forum_id);
 //Begin Lo-Fi Mod
 $page_title = $topic_title;
 //End Lo-Fi Mod
-if(isset($HTTP_GET_VARS['printertopic']))
+if(isset($_GET['printertopic']))
 {
 	include($phpbb_root_path . 'includes/page_header_printer.'.$phpEx);
 } else
@@ -1126,7 +1128,7 @@ if ( $userdata['session_logged_in'] )
 	$template->assign_vars(array(
 		'L_BOOKMARK_ACTION' => (is_bookmark_set($topic_id)) ? ($lang['Remove_Bookmark']) : ($lang['Set_Bookmark']),
 		'BM_IMG' => (is_bookmark_set($topic_id)) ? $images['bm_remove'] : $images['bm_add'],
-		'U_BOOKMARK_ACTION' => append_sid("viewtopic.$phpEx?" . POST_TOPIC_URL . "=$topic_id&amp;start=$start&amp;postdays=$post_days&amp;postorder=$post_order&amp;highlight=" . $HTTP_GET_VARS['highlight'] . $bm_action))
+		'U_BOOKMARK_ACTION' => append_sid("viewtopic.$phpEx?" . POST_TOPIC_URL . "=$topic_id&amp;start=$start&amp;postdays=$post_days&amp;postorder=$post_order&amp;highlight=" . $_GET['highlight'] . $bm_action))
 	);
 }
 
@@ -1134,7 +1136,7 @@ if ( $userdata['session_logged_in'] )
 // If we've got a hightlight set pass it on to pagination,
 // I get annoyed when I lose my highlight after the first page.
 //
-if(isset($HTTP_GET_VARS['printertopic']))
+if(isset($_GET['printertopic']))
 {
 $pagination_printertopic = "printertopic=1&amp;";
 }
@@ -1156,10 +1158,10 @@ if( ($userdata['user_level'] == ADMIN) || ($is_auth['auth_mod']) )
 	$template->assign_block_vars('switch_info', array());
 }
 
-if ( isset($HTTP_POST_VARS['submit_topic_info']) && trim($HTTP_POST_VARS['topic_info']) != '' && (($userdata['user_level'] == ADMIN) || ($is_auth['auth_mod'])) )
+if ( isset($_POST['submit_topic_info']) && trim($_POST['topic_info']) != '' && (($userdata['user_level'] == ADMIN) || ($is_auth['auth_mod'])) )
 {
 	$sql = "UPDATE ". TOPICS_TABLE ." 
-		SET topic_info = '" . str_replace("\'", "''", $HTTP_POST_VARS['topic_info']) . "'
+		SET topic_info = '" . str_replace("\'", "''", $_POST['topic_info']) . "'
 		WHERE topic_id = $topic_id";
 	if ( !$db->sql_query($sql) )
             {
@@ -1191,7 +1193,7 @@ if($is_auth['auth_reply']){
 $template->assign_vars(array(
 	'L_DOWNLOAD_POST' => $lang['Download_post'],
 	'START_REL' => ($start + 1),
-	'FINISH_REL' => (isset($HTTP_GET_VARS['finish_rel'])? intval($HTTP_GET_VARS['finish_rel']) : ($board_config['posts_per_page'] - $start)),
+	'FINISH_REL' => (isset($_GET['finish_rel'])? intval($_GET['finish_rel']) : ($board_config['posts_per_page'] - $start)),
 	'L_TOPIC_INFO' => $lang['Topic_info'],
 	'S_INFO_ACTION' => append_sid("viewtopic.$phpEx?" . POST_TOPIC_URL . "=$topic_id"),
 	'TOPIC_INFO' => $topic_info,
@@ -1489,140 +1491,140 @@ if ( $approve_mod['enabled'] )
 			}
 		}//function approve_mod_pm
 		
-		if ( isset($HTTP_GET_VARS['app_p']) ) 
+		if ( isset($_GET['app_p']) ) 
 		{ 
 			//notify user
-			approve_mod_pm('app_p', intval($HTTP_GET_VARS['app_p']));
+			approve_mod_pm('app_p', intval($_GET['app_p']));
 			$approve_sql = "DELETE FROM " . APPROVE_POSTS_TABLE . " 
-				WHERE post_id = " . intval($HTTP_GET_VARS['app_p']); 
+				WHERE post_id = " . intval($_GET['app_p']); 
 			if ( !($approve_result = $db->sql_query($approve_sql)) ) 
 			{ 
 				message_die(GENERAL_ERROR, $lang['approve_posts_error_delete'], '', __LINE__, __FILE__, $approve_sql); 
 			}
 		}
-		if ( isset($HTTP_GET_VARS['app_c']) ) 
+		if ( isset($_GET['app_c']) ) 
 		{ 
 			//loop through & notify users
-			approve_mod_pm('app_c', intval($HTTP_GET_VARS['app_c']));
+			approve_mod_pm('app_c', intval($_GET['app_c']));
 			$approve_sql = "DELETE FROM " . APPROVE_POSTS_TABLE . " 
-				WHERE topic_id = " . intval($HTTP_GET_VARS['app_c']); 
+				WHERE topic_id = " . intval($_GET['app_c']); 
 			if ( !($approve_result = $db->sql_query($approve_sql)) ) 
 			{ 
 				message_die(GENERAL_ERROR, $lang['approve_posts_error_delete'], '', __LINE__, __FILE__, $approve_sql); 
 			}
 		}
-		if ( isset($HTTP_GET_VARS['app_f']) ) 
+		if ( isset($_GET['app_f']) ) 
 		{ 
 			$approve_sql = "DELETE FROM " . APPROVE_TOPICS_TABLE . " 
-				WHERE topic_id = " . intval($HTTP_GET_VARS['app_f']); 
+				WHERE topic_id = " . intval($_GET['app_f']); 
 			if ( !($approve_result = $db->sql_query($approve_sql)) ) 
 			{ 
 				message_die(GENERAL_ERROR, $lang['approve_posts_error_delete'], '', __LINE__, __FILE__, $approve_sql); 
 			}
 			$approve_sql = "INSERT INTO " . APPROVE_TOPICS_TABLE . " (topic_id, approve_moderate) 
-				VALUES (" . intval($HTTP_GET_VARS['app_f']) . ", -1)"; 
+				VALUES (" . intval($_GET['app_f']) . ", -1)"; 
 			if ( !($approve_result = $db->sql_query($approve_sql)) ) 
 			{ 
 				message_die(GENERAL_ERROR, $lang['approve_posts_error_insert'], '', __LINE__, __FILE__, $approve_sql); 
 			}
 		}
-		if ( isset($HTTP_GET_VARS['app_r']) ) 
+		if ( isset($_GET['app_r']) ) 
 		{
 			$approve_sql = "DELETE FROM " . APPROVE_TOPICS_TABLE . " 
-				WHERE topic_id = " . intval($HTTP_GET_VARS['app_r']) . " 
+				WHERE topic_id = " . intval($_GET['app_r']) . " 
 					AND approve_moderate = -1"; 
 			if ( !($approve_result = $db->sql_query($approve_sql)) ) 
 			{ 
 				message_die(GENERAL_ERROR, $lang['approve_posts_error_delete'], '', __LINE__, __FILE__, $approve_sql); 
 			}
 		}
-		if ( isset($HTTP_GET_VARS['app_ua']) ) 
+		if ( isset($_GET['app_ua']) ) 
 		{ 
 			//pm notify user they're being auto-approved now
-			approve_mod_pm('app_ua', intval($HTTP_GET_VARS['app_ua']));
+			approve_mod_pm('app_ua', intval($_GET['app_ua']));
 			$approve_sql = "DELETE FROM " . APPROVE_USERS_TABLE . " 
-				WHERE user_id = " . intval($HTTP_GET_VARS['app_ua']); 
+				WHERE user_id = " . intval($_GET['app_ua']); 
 			if ( !($approve_result = $db->sql_query($approve_sql)) ) 
 			{ 
 				message_die(GENERAL_ERROR, $lang['approve_posts_error_delete'], '', __LINE__, __FILE__, $approve_sql); 
 			}
 			$approve_sql = "INSERT INTO " . APPROVE_USERS_TABLE . " (user_id, approve_moderate) 
-				VALUES (" . intval($HTTP_GET_VARS['app_ua']) . ", -1)"; 
+				VALUES (" . intval($_GET['app_ua']) . ", -1)"; 
 			if ( !($approve_result = $db->sql_query($approve_sql)) ) 
 			{ 
 				message_die(GENERAL_ERROR, $lang['approve_posts_error_insert'], '', __LINE__, __FILE__, $approve_sql); 
 			}
 			$approve_sql = "DELETE FROM " . APPROVE_POSTS_TABLE . " 
-				WHERE poster_id = " . intval($HTTP_GET_VARS['app_ua']); 
+				WHERE poster_id = " . intval($_GET['app_ua']); 
 			if ( !($approve_result = $db->sql_query($approve_sql)) ) 
 			{ 
 				message_die(GENERAL_ERROR, $lang['approve_posts_error_delete'], '', __LINE__, __FILE__, $approve_sql); 
 			}
 		}
-		if ( isset($HTTP_GET_VARS['app_ur']) ) 
+		if ( isset($_GET['app_ur']) ) 
 		{ 
 			//pm notify user they're no longer being auto-approved
-			approve_mod_pm('app_ur', intval($HTTP_GET_VARS['app_ur']));
+			approve_mod_pm('app_ur', intval($_GET['app_ur']));
 			$approve_sql = "DELETE FROM " . APPROVE_USERS_TABLE . " 
-				WHERE user_id = " . intval($HTTP_GET_VARS['app_ur']) . " 
+				WHERE user_id = " . intval($_GET['app_ur']) . " 
 					AND approve_moderate = -1"; 
 			if ( !($approve_result = $db->sql_query($approve_sql)) ) 
 			{ 
 				message_die(GENERAL_ERROR, $lang['approve_posts_error_delete'], '', __LINE__, __FILE__, $approve_sql); 
 			}
 		} 
-		if ( isset($HTTP_GET_VARS['app_ma']) ) 
+		if ( isset($_GET['app_ma']) ) 
 		{ 
 			//pm notify user they're being moderated now
-			approve_mod_pm('app_ma', intval($HTTP_GET_VARS['app_ma']));
+			approve_mod_pm('app_ma', intval($_GET['app_ma']));
 			$approve_sql = "DELETE FROM " . APPROVE_USERS_TABLE . " 
-				WHERE user_id = " . intval($HTTP_GET_VARS['app_ma']); 
+				WHERE user_id = " . intval($_GET['app_ma']); 
 			if ( !($approve_result = $db->sql_query($approve_sql)) ) 
 			{ 
 				message_die(GENERAL_ERROR, $lang['approve_posts_error_delete'], '', __LINE__, __FILE__, $approve_sql); 
 			}
 			$approve_sql = "INSERT INTO " . APPROVE_USERS_TABLE . " (user_id, approve_moderate) 
-				VALUES (" . intval($HTTP_GET_VARS['app_ma']) . ", 1)"; 
+				VALUES (" . intval($_GET['app_ma']) . ", 1)"; 
 			if ( !($approve_result = $db->sql_query($approve_sql)) ) 
 			{ 
 				message_die(GENERAL_ERROR, $lang['approve_posts_error_insert'], '', __LINE__, __FILE__, $approve_sql); 
 			}
 		}
-		if ( isset($HTTP_GET_VARS['app_mr']) ) 
+		if ( isset($_GET['app_mr']) ) 
 		{ 
 			//pm notify user they're not longer being moderated
-			approve_mod_pm('app_mr', intval($HTTP_GET_VARS['app_mr']));
+			approve_mod_pm('app_mr', intval($_GET['app_mr']));
 			$approve_sql = "DELETE FROM " . APPROVE_USERS_TABLE . " 
-				WHERE user_id = " . intval($HTTP_GET_VARS['app_mr']) . " 
+				WHERE user_id = " . intval($_GET['app_mr']) . " 
 					AND approve_moderate = 1"; 
 			if ( !($approve_result = $db->sql_query($approve_sql)) ) 
 			{ 
 				message_die(GENERAL_ERROR, $lang['approve_posts_error_delete'], '', __LINE__, __FILE__, $approve_sql); 
 			}
 		} 
-		if ( isset($HTTP_GET_VARS['app_ta']) ) 
+		if ( isset($_GET['app_ta']) ) 
 		{ 
 			//notify user
-			approve_mod_pm('app_p', intval($HTTP_GET_VARS['app_ta']));
+			approve_mod_pm('app_p', intval($_GET['app_ta']));
 			$approve_sql = "DELETE FROM " . APPROVE_TOPICS_TABLE . " 
-				WHERE topic_id = " . intval($HTTP_GET_VARS['app_ta']); 
+				WHERE topic_id = " . intval($_GET['app_ta']); 
 			if ( !($approve_result = $db->sql_query($approve_sql)) ) 
 			{ 
 				message_die(GENERAL_ERROR, $lang['approve_posts_error_delete'], '', __LINE__, __FILE__, $approve_sql); 
 			}
 			$approve_sql = "INSERT INTO " . APPROVE_TOPICS_TABLE . " (topic_id, approve_moderate) 
-				VALUES (" . intval($HTTP_GET_VARS['app_ta']) . ", 1)"; 
+				VALUES (" . intval($_GET['app_ta']) . ", 1)"; 
 			if ( !($approve_result = $db->sql_query($approve_sql)) ) 
 			{ 
 				message_die(GENERAL_ERROR, $lang['approve_posts_error_insert'], '', __LINE__, __FILE__, $approve_sql); 
 			}
 		}
-		if ( isset($HTTP_GET_VARS['app_tr']) ) 
+		if ( isset($_GET['app_tr']) ) 
 		{ 
 			//notify user
-			approve_mod_pm('app_p', intval($HTTP_GET_VARS['app_tr']));
+			approve_mod_pm('app_p', intval($_GET['app_tr']));
 			$approve_sql = "DELETE FROM " . APPROVE_TOPICS_TABLE . " 
-				WHERE topic_id = " . intval($HTTP_GET_VARS['app_tr']) . " 
+				WHERE topic_id = " . intval($_GET['app_tr']) . " 
 					AND approve_moderate = 1"; 
 			if ( !($approve_result = $db->sql_query($approve_sql)) ) 
 			{ 
@@ -1715,9 +1717,9 @@ if ( !empty($forum_topic_data['topic_vote']) && !$approve_mod['topics_awaiting']
 		$user_voted = ( $row = $db->sql_fetchrow($result) ) ? TRUE : 0;
 		$db->sql_freeresult($result);
 
-		if ( isset($HTTP_GET_VARS['vote']) || isset($HTTP_POST_VARS['vote']) )
+		if ( isset($_GET['vote']) || isset($_POST['vote']) )
 		{
-			$view_result = ( ( ( isset($HTTP_GET_VARS['vote']) ) ? $HTTP_GET_VARS['vote'] : $HTTP_POST_VARS['vote'] ) == 'viewresult' ) ? TRUE : 0;
+			$view_result = ( ( ( isset($_GET['vote']) ) ? $_GET['vote'] : $_POST['vote'] ) == 'viewresult' ) ? TRUE : 0;
 		}
 		else
 		{
@@ -2273,7 +2275,7 @@ if ( $userdata['user_allowsignature'] != 2 && $board_config['sig_allow_font_size
 		$user_sig = '_________________<br />' . str_replace("\n", "\n<br />\n", $user_sig);
 	} else $user_sig = '';
 	
-	if(!isset($HTTP_GET_VARS['printertopic']))
+	if(!isset($_GET['printertopic']))
 	{
 		$message = acronym_pass( $message );
 	}
@@ -2639,11 +2641,11 @@ $template->assign_vars(array(
 //
 
 $template->assign_vars(array( 
-"TELL_LINK" => append_sid("http://".$HTTP_SERVER_VARS['HTTP_HOST'].$HTTP_SERVER_VARS['PHP_SELF']."?t=$topic_id", true)));
+"TELL_LINK" => append_sid("http://".$_SERVER['HTTP_HOST'].$_SERVER['PHP_SELF']."?t=$topic_id", true)));
 
 $template->pparse('body');
 
-if(isset($HTTP_GET_VARS['printertopic']))
+if(isset($_GET['printertopic']))
 {
 	$gen_simple_header = 1;
 }

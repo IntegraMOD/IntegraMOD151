@@ -38,7 +38,7 @@ include (RATING_PATH.'functions_rating.' . $phpEx);
 include (RATING_PATH.'functions_rating_2.' . $phpEx);
 
 
-if (isset($HTTP_POST_VARS['rating_form_submitted']))
+if (isset($_POST['rating_form_submitted']))
 {
 	// CHECK IF ADMIN
 	if( $userdata['user_level'] != ADMIN )
@@ -46,7 +46,7 @@ if (isset($HTTP_POST_VARS['rating_form_submitted']))
 		message_die(CRITICAL_ERROR, 'Hacking attempt!');
 	}
 	// FORM SUBMITTED
-	if ($HTTP_POST_VARS['submit'])
+	if ($_POST['submit'])
 	{
 		// UPDATE GENERAL CONFIGURATION
 
@@ -60,7 +60,7 @@ if (isset($HTTP_POST_VARS['rating_form_submitted']))
 		{
 			while( $row = $db->sql_fetchrow($result) )
 			{
-				$val = trim(strip_tags($HTTP_POST_VARS['config'][$row['config_id']]));
+				$val = trim(strip_tags($_POST['config'][$row['config_id']]));
 				$text_fields = array();
 				switch ($row['input_type'])
 				{
@@ -132,16 +132,16 @@ if (isset($HTTP_POST_VARS['rating_form_submitted']))
 			}
 		}	
 	}
-	elseif ($HTTP_POST_VARS['r_submit'])
+	elseif ($_POST['r_submit'])
 	{
 		// ADD / UPDATE RATING OPTION
-		list($key,$action) = each($HTTP_POST_VARS['r_submit']);
+		list($key,$action) = each($_POST['r_submit']);
 
 		// VALIDATE FIELDS
-		$points = intval($HTTP_POST_VARS['r_option_1'][$key]);
-		$label = trim(strip_tags($HTTP_POST_VARS['r_option_2'][$key]));
-		$threshold = intval($HTTP_POST_VARS['r_option_3'][$key]);
-		$who = $HTTP_POST_VARS['r_option_4'][$key];
+		$points = intval($_POST['r_option_1'][$key]);
+		$label = trim(strip_tags($_POST['r_option_2'][$key]));
+		$threshold = intval($_POST['r_option_3'][$key]);
+		$who = $_POST['r_option_4'][$key];
 		if ( !is_numeric($points) || $points < -127 || $points > 128 )
 		{
 			$r_error[1] = $lang['Invalid_point_value'];
@@ -237,12 +237,12 @@ if (isset($HTTP_POST_VARS['rating_form_submitted']))
 			}
 		}
 	}
-	elseif ($HTTP_POST_VARS['r_delete'])
+	elseif ($_POST['r_delete'])
 	{
 		// DELETE RATING OPTION
-		list($key,$action) = each($HTTP_POST_VARS['r_delete']);
+		list($key,$action) = each($_POST['r_delete']);
 
-		$used = $HTTP_POST_VARS['r_option_5'][$key];
+		$used = $_POST['r_option_5'][$key];
 		if ( $used > 0 )
 		{
 			// OPTION HAS ALREADY BEEN USED, NEED TO CHECK AND UPDATE ALL AFFECTED RATINGS
@@ -322,17 +322,17 @@ if (isset($HTTP_POST_VARS['rating_form_submitted']))
 		}
 	}
 	// ADDING / UPDATING TOTAL ENTRY
-	elseif ($HTTP_POST_VARS['t_submit'])
+	elseif ($_POST['t_submit'])
 	{
 		// ADD / UPDATE RATING TOTAL
-		list($key,$action) = each($HTTP_POST_VARS['t_submit']);
+		list($key,$action) = each($_POST['t_submit']);
 		// VALIDATE FIELDS
-		$type = intval($HTTP_POST_VARS['r_total_1'][$key]);
-		$average = intval($HTTP_POST_VARS['r_total_2'][$key]);
-		$sum = intval($HTTP_POST_VARS['r_total_3'][$key]);
-		$label = trim(strip_tags($HTTP_POST_VARS['r_total_4'][$key]));
-		$icon = trim(strip_tags($HTTP_POST_VARS['r_total_5'][$key]));
-		$urank = intval($HTTP_POST_VARS['r_total_6'][$key]);
+		$type = intval($_POST['r_total_1'][$key]);
+		$average = intval($_POST['r_total_2'][$key]);
+		$sum = intval($_POST['r_total_3'][$key]);
+		$label = trim(strip_tags($_POST['r_total_4'][$key]));
+		$icon = trim(strip_tags($_POST['r_total_5'][$key]));
+		$urank = intval($_POST['r_total_6'][$key]);
 		if (!is_numeric($average) || $average < -127 || $average > 128)
 		{
 			$t_error[2] = $lang['Invalid_average_threshold'];
@@ -423,9 +423,9 @@ if (isset($HTTP_POST_VARS['rating_form_submitted']))
 			}
 		}
 	}
-	elseif ($HTTP_POST_VARS['t_delete'])
+	elseif ($_POST['t_delete'])
 	{
-		list($key,$action) = each($HTTP_POST_VARS['t_delete']);
+		list($key,$action) = each($_POST['t_delete']);
 
 		// NOTE: IF OPTION IN USE, NEED TO CHECK AND UPDATE ALL AFFECTED RATINGS
 		if ( $type == 5 )
@@ -485,7 +485,7 @@ if (isset($HTTP_POST_VARS['rating_form_submitted']))
 			message_die(CRITICAL_ERROR, 'Could not delete rating total', '', __LINE__, __FILE__, $sql);
 		}
 	}
-	elseif ( isset($HTTP_POST_VARS['recalculate']) )
+	elseif ( isset($_POST['recalculate']) )
 	{
 		$rating_config = get_rating_config('8,9,10');
 		update_post_rating($rating_config[8]);

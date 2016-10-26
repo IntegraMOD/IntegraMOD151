@@ -38,9 +38,9 @@ include($phpbb_root_path . 'language/lang_' . $board_config['default_lang'] . '/
 //
 // Start initial var setup
 //
-if ( isset($HTTP_GET_VARS['p']))
+if ( isset($_GET['p']))
 {
-	$post_id = intval($HTTP_GET_VARS['p']);
+	$post_id = intval($_GET['p']);
 }
 
 if ( !isset($post_id) )
@@ -52,12 +52,12 @@ if ( !isset($post_id) )
 // Find topic id if user requested a newer
 // or older topic
 //
-if ( isset($HTTP_GET_VARS['view']) )
+if ( isset($_GET['view']) )
 {
-	if ( $HTTP_GET_VARS['view'] == 'next' || $HTTP_GET_VARS['view'] == 'previous' )
+	if ( $_GET['view'] == 'next' || $_GET['view'] == 'previous' )
 	{
-		$sql_condition = ( $HTTP_GET_VARS['view'] == 'next' ) ? '>' : '<';
-		$sql_ordering = ( $HTTP_GET_VARS['view'] == 'next' ) ? 'ASC' : 'DESC';
+		$sql_condition = ( $_GET['view'] == 'next' ) ? '>' : '<';
+		$sql_ordering = ( $_GET['view'] == 'next' ) ? 'ASC' : 'DESC';
 
 		$sql = "SELECT topic_id, post_time FROM " . POSTS_TABLE . " WHERE post_id = " . $post_id . " LIMIT 1";
 
@@ -88,7 +88,7 @@ if ( isset($HTTP_GET_VARS['view']) )
 		}
 		else
 		{
-			$message = ( $HTTP_GET_VARS['view'] == 'next' ) ? 'No_newer_posts' : 'No_older_posts';
+			$message = ( $_GET['view'] == 'next' ) ? 'No_newer_posts' : 'No_older_posts';
 			message_die(GENERAL_MESSAGE, $message);
 		}
 	}

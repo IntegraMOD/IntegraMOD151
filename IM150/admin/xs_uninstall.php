@@ -46,9 +46,9 @@ $lang['xs_goto_default'] = str_replace('{URL}', append_sid('xs_styles.'.$phpEx),
 //
 // uninstall style
 //
-if(isset($HTTP_GET_VARS['remove']) && !defined('DEMO_MODE'))
+if(isset($_GET['remove']) && !defined('DEMO_MODE'))
 {
-	$remove_id = intval($HTTP_GET_VARS['remove']);
+	$remove_id = intval($_GET['remove']);
 	if($board_config['default_style'] == $remove_id)
 	{
 		xs_error(str_replace('{URL}', append_sid('xs_styles.'.$phpEx), $lang['xs_uninstall_default']) . '<br /><br />' . $lang['xs_uninstall_back']);
@@ -69,12 +69,12 @@ if(isset($HTTP_GET_VARS['remove']) && !defined('DEMO_MODE'))
 	$db->sql_query($sql);
 	$template->assign_block_vars('removed', array());
 	// remove files
-	if(!empty($HTTP_GET_VARS['dir']))
+	if(!empty($_GET['dir']))
 	{
-		$HTTP_POST_VARS['remove'] = addslashes($row['template_name']);
+		$_POST['remove'] = addslashes($row['template_name']);
 	}
 	// remove config
-	if(empty($HTTP_GET_VARS['nocfg']) && isset($board_config['xs_style_'.$row['template_name']]))
+	if(empty($_GET['nocfg']) && isset($board_config['xs_style_'.$row['template_name']]))
 	{
 		$sql = "DELETE FROM " . CONFIG_TABLE . " WHERE config_name='" . addslashes("xs_style_{$row['template_name']}") . "'";
 		$db->sql_query($sql);
@@ -131,9 +131,9 @@ function remove_all($dir)
 //
 // remove files
 //
-if(isset($HTTP_POST_VARS['remove']) && !defined('DEMO_MODE'))
+if(isset($_POST['remove']) && !defined('DEMO_MODE'))
 {
-	$remove = stripslashes($HTTP_POST_VARS['remove']);
+	$remove = stripslashes($_POST['remove']);
 	$params = array('remove' => $remove);
 	if(!get_ftp_config(append_sid('xs_uninstall.'.$phpEx), $params, true))
 	{

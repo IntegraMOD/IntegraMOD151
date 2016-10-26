@@ -26,35 +26,35 @@ if ( !defined( 'IN_PORTAL' ) )
 
 // Start initial var setup
 
-if ( isset( $HTTP_GET_VARS['cat'] ) )
+if ( isset( $_GET['cat'] ) )
 {
-	$category_id = intval( $HTTP_GET_VARS['cat'] );
+	$category_id = intval( $_GET['cat'] );
 }
 else
 {
 	// message_die(GENERAL_MESSAGE, 'no category');
 }
 
-if ( isset( $HTTP_GET_VARS['k'] ) || isset( $HTTP_POST_VARS['k'] ) )
+if ( isset( $_GET['k'] ) || isset( $_POST['k'] ) )
 {
-	$article_id = ( isset( $HTTP_GET_VARS['k'] ) ) ? intval( $HTTP_GET_VARS['k'] ): intval( $HTTP_POST_VARS['k'] );
+	$article_id = ( isset( $_GET['k'] ) ) ? intval( $_GET['k'] ): intval( $_POST['k'] );
 }
 else
 {
 	message_die( GENERAL_MESSAGE, 'no article' );
 }
 
-if ( isset( $HTTP_GET_VARS['rate'] ) || isset( $HTTP_POST_VARS['rate'] ) )
+if ( isset( $_GET['rate'] ) || isset( $_POST['rate'] ) )
 {
-	$rate = ( isset( $HTTP_GET_VARS['rate'] ) ) ? $HTTP_GET_VARS['rate'] : $HTTP_POST_VARS['rate'];
+	$rate = ( isset( $_GET['rate'] ) ) ? $_GET['rate'] : $_POST['rate'];
 }
 
-if ( isset( $HTTP_GET_VARS['rating'] ) || isset( $HTTP_POST_VARS['rating'] ) )
+if ( isset( $_GET['rating'] ) || isset( $_POST['rating'] ) )
 {
-	$rating = ( isset( $HTTP_GET_VARS['rating'] ) ) ? intval( $HTTP_GET_VARS['rating'] ) : intval( $HTTP_POST_VARS['rating'] );
+	$rating = ( isset( $_GET['rating'] ) ) ? intval( $_GET['rating'] ) : intval( $_POST['rating'] );
 }
 
-$start = ( isset( $HTTP_GET_VARS['start'] ) ) ? intval( $HTTP_GET_VARS['start'] ) : 0;
+$start = ( isset( $_GET['start'] ) ) ? intval( $_GET['start'] ) : 0;
 
 // End initial var setup
 

@@ -23,7 +23,7 @@
 //
 // Install Process
 //
-$lang['Welcome_install'] = 'Welcome to IntegraMOD141 Installation';
+$lang['Welcome_install'] = 'Welcome to IntegraMOD151 Installation';
 $lang['Initial_config'] = 'Basic Configuration';
 $lang['DB_config'] = 'Database Configuration';
 $lang['Admin_config'] = 'Admin Configuration';

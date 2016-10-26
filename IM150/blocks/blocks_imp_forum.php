@@ -29,7 +29,7 @@ if(!function_exists(imp_forum_block_func))
 {
 	function imp_forum_block_func()
 	{
-		global $phpbb_root_path, $template, $phpEx, $lang, $portal_config,$HTTP_GET_VARS;
+		global $phpbb_root_path, $template, $phpEx, $lang, $portal_config,$_GET;
 
 		include_once($phpbb_root_path . 'fetchposts.'.$phpEx);
 
@@ -45,7 +45,7 @@ if(!function_exists(imp_forum_block_func))
 		//
 		// Fetch Posts from Announcements Forum
 		//
-		if(!isset($HTTP_GET_VARS['article']))
+		if(!isset($_GET['article']))
 		{
 			$template->assign_block_vars('welcome_text', array());
 
@@ -85,7 +85,7 @@ if(!function_exists(imp_forum_block_func))
 		{
 			$fetchposts = phpbb_fetch_posts($portal_config['md_news_forum_id'],  $portal_config['md_num_news'], 0);
 
-			$i = intval($HTTP_GET_VARS['article']);
+			$i = intval($_GET['article']);
 
 			$template->assign_block_vars('fetchpost_row', array(
 				'TITLE' => $fetchposts[$i]['topic_title'],

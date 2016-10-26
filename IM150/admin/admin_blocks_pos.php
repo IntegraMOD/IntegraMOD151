@@ -47,9 +47,9 @@ $var_cache = new Cache_Lite($options);
 $var_cache->clean('block');
 $var_cache->clean('layout_pos');
 
-if( isset($HTTP_GET_VARS['mode']) || isset($HTTP_POST_VARS['mode']) )
+if( isset($_GET['mode']) || isset($_POST['mode']) )
 {
-	$mode = ($HTTP_GET_VARS['mode']) ? $HTTP_GET_VARS['mode'] : $HTTP_POST_VARS['mode'];
+	$mode = ($_GET['mode']) ? $_GET['mode'] : $_POST['mode'];
 	$mode = htmlspecialchars($mode);
 }
 else 
@@ -57,11 +57,11 @@ else
 	//
 	// These could be entered via a form button
 	//
-	if( isset($HTTP_POST_VARS['add']) )
+	if( isset($_POST['add']) )
 	{
 		$mode = "add";
 	}
-	else if( isset($HTTP_POST_VARS['save']) )
+	else if( isset($_POST['save']) )
 	{
 		$mode = "save";
 	}
@@ -71,7 +71,7 @@ else
 	}
 }
 
-if(isset($HTTP_POST_VARS['cancel']))
+if(isset($_POST['cancel']))
 {
 	$mode="";
 }
@@ -80,7 +80,7 @@ if( $mode != "" )
 {
 	if( $mode == "edit" || $mode == "add" )
 	{
-		$bp_id = ( isset($HTTP_GET_VARS['id']) ) ? intval($HTTP_GET_VARS['id']) : 0;
+		$bp_id = ( isset($_GET['id']) ) ? intval($_GET['id']) : 0;
 
 		$template->set_filenames(array(
 			"body" => "admin/blocks_position_edit_body.tpl")
@@ -156,10 +156,10 @@ if( $mode != "" )
 	}
 	else if( $mode == "save" )
 	{
-		$bp_id = ( isset($HTTP_POST_VARS['id']) ) ? intval($HTTP_POST_VARS['id']) : 0;
-		$bp_pkey = ( isset($HTTP_POST_VARS['pkey']) ) ? trim($HTTP_POST_VARS['pkey']) : "";
-		$bp_bposition = ( isset($HTTP_POST_VARS['bposition']) ) ? trim($HTTP_POST_VARS['bposition']) : "";
-		$bp_layout = ( isset($HTTP_POST_VARS['layout']) ) ? trim($HTTP_POST_VARS['layout']) : "";
+		$bp_id = ( isset($_POST['id']) ) ? intval($_POST['id']) : 0;
+		$bp_pkey = ( isset($_POST['pkey']) ) ? trim($_POST['pkey']) : "";
+		$bp_bposition = ( isset($_POST['bposition']) ) ? trim($_POST['bposition']) : "";
+		$bp_layout = ( isset($_POST['layout']) ) ? trim($_POST['layout']) : "";
 
 		if($bp_pkey == "" || $bp_bposition == "" || $bp_layout=="")
 		{
@@ -194,16 +194,16 @@ if( $mode != "" )
 	}
 	else if( $mode == "delete" )
 	{
-		if( isset($HTTP_POST_VARS['id']) ||  isset($HTTP_GET_VARS['id']) )
+		if( isset($_POST['id']) ||  isset($_GET['id']) )
 		{
-			$bp_id = ( isset($HTTP_POST_VARS['id']) ) ? intval($HTTP_POST_VARS['id']) : intval($HTTP_GET_VARS['id']);
+			$bp_id = ( isset($_POST['id']) ) ? intval($_POST['id']) : intval($_GET['id']);
 		}
 		else
 		{
 			$bp_id = 0;
 		}
 
-		if(!isset($HTTP_POST_VARS['confirm']))
+		if(!isset($_POST['confirm']))
 		{
 			$hidden_fields = '<input type="hidden" name="mode" value="'.$mode.'" /><input type="hidden" name="id" value="'.$bp_id.'" />';
 			

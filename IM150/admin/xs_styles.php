@@ -43,9 +43,9 @@ $template->assign_block_vars('nav_left',array('ITEM' => '&raquo; <a href="' . ap
 //
 // set new default style
 //
-if(!empty($HTTP_GET_VARS['setdefault']) && !defined('DEMO_MODE'))
+if(!empty($_GET['setdefault']) && !defined('DEMO_MODE'))
 {
-	$board_config['default_style'] = intval($HTTP_GET_VARS['setdefault']);
+	$board_config['default_style'] = intval($_GET['setdefault']);
 	$sql = "UPDATE " . CONFIG_TABLE . " SET config_value='" . $board_config['default_style'] . "' WHERE config_name='default_style'";
 	if(defined('XS_MODS_ADMIN_TEMPLATES'))
 	{
@@ -65,9 +65,9 @@ if(!empty($HTTP_GET_VARS['setdefault']) && !defined('DEMO_MODE'))
 //
 // change "override" variable
 //
-if(isset($HTTP_GET_VARS['setoverride']) && !defined('DEMO_MODE'))
+if(isset($_GET['setoverride']) && !defined('DEMO_MODE'))
 {
-	$board_config['override_user_style'] = intval($HTTP_GET_VARS['setoverride']);
+	$board_config['override_user_style'] = intval($_GET['setoverride']);
 	$sql = "UPDATE " . CONFIG_TABLE . " SET config_value='" . $board_config['override_user_style'] . "' WHERE config_name='override_user_style'";
 	$db->sql_query($sql);
 	// recache config table
@@ -80,9 +80,9 @@ if(isset($HTTP_GET_VARS['setoverride']) && !defined('DEMO_MODE'))
 //
 // move all users to some style
 //
-if(!empty($HTTP_GET_VARS['moveusers']) && !defined('DEMO_MODE'))
+if(!empty($_GET['moveusers']) && !defined('DEMO_MODE'))
 {
-	$id = intval($HTTP_GET_VARS['moveusers']);
+	$id = intval($_GET['moveusers']);
 	$sql = "UPDATE " . USERS_TABLE . " SET user_style='" . $id . "' WHERE user_id > 0";
 	$db->sql_query($sql);
 }
@@ -90,10 +90,10 @@ if(!empty($HTTP_GET_VARS['moveusers']) && !defined('DEMO_MODE'))
 //
 // move all users from some style
 //
-if(!empty($HTTP_GET_VARS['moveaway']) && !defined('DEMO_MODE'))
+if(!empty($_GET['moveaway']) && !defined('DEMO_MODE'))
 {
-	$id = intval($HTTP_GET_VARS['moveaway']);
-	$id2 = intval($HTTP_GET_VARS['movestyle']);
+	$id = intval($_GET['moveaway']);
+	$id2 = intval($_GET['movestyle']);
 	if($id2)
 	{
 		$sql = "UPDATE " . USERS_TABLE . " SET user_style='" . $id2 . "' WHERE user_style = " . $id;
@@ -108,10 +108,10 @@ if(!empty($HTTP_GET_VARS['moveaway']) && !defined('DEMO_MODE'))
 //
 // set admin-only style (Admin Templates mod)
 //
-if(!empty($HTTP_GET_VARS['setadmin']) && !defined('DEMO_MODE'))
+if(!empty($_GET['setadmin']) && !defined('DEMO_MODE'))
 {
-	$id = intval($HTTP_GET_VARS['setadmin']);
-	$setadmin = empty($HTTP_GET_VARS['admin']) ? 0 : 1;
+	$id = intval($_GET['setadmin']);
+	$setadmin = empty($_GET['admin']) ? 0 : 1;
 	$sql = "UPDATE " . THEMES_TABLE . " SET theme_public='{$setadmin}' WHERE themes_id='{$id}'";
 	$db->sql_query($sql);
 	if(defined('XS_MODS_CATEGORY_HIERARCHY210'))
@@ -261,9 +261,9 @@ if($total_users > $num_users)
 //
 // get list of users
 //
-if(isset($HTTP_GET_VARS['list']))
+if(isset($_GET['list']))
 {
-	$id = intval($HTTP_GET_VARS['list']);
+	$id = intval($_GET['list']);
 	$template->assign_block_vars('list_users', array());
 	$sql = "SELECT user_id, username FROM " . USERS_TABLE . " WHERE user_style='{$id}' ORDER BY username ASC";
 	if(!$result = $db->sql_query($sql))

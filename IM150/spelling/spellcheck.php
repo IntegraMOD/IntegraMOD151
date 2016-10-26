@@ -20,13 +20,13 @@
 
   // For Newer versions of PHP which don't globalize the variables
   // We want these globalized.  :)
-  if (isset($HTTP_GET_VARS['inputtext'])) $Document = $HTTP_GET_VARS['inputtext'];
-  if (isset($HTTP_POST_VARS['inputtext'])) $Document = $HTTP_POST_VARS['inputtext'];
-  if (isset($HTTP_GET_VARS['Suggest'])) $Suggest = $HTTP_GET_VARS['Suggest'];
-  if (isset($HTTP_POST_VARS['Suggest'])) $Suggest = $HTTP_POST_VARS['Suggest'];
-  if (isset($HTTP_COOKIE_VARS['SpellLearned'])) $SpellLearned = urldecode($HTTP_COOKIE_VARS['SpellLearned']);
-  if (isset($HTTP_COOKIE_VARS['SpellSettings'])) {
-    $User_Settings = explode(',',$HTTP_COOKIE_VARS['SpellSettings']);
+  if (isset($_GET['inputtext'])) $Document = $_GET['inputtext'];
+  if (isset($_POST['inputtext'])) $Document = $_POST['inputtext'];
+  if (isset($_GET['Suggest'])) $Suggest = $_GET['Suggest'];
+  if (isset($_POST['Suggest'])) $Suggest = $_POST['Suggest'];
+  if (isset($_COOKIE['SpellLearned'])) $SpellLearned = urldecode($_COOKIE['SpellLearned']);
+  if (isset($_COOKIE['SpellSettings'])) {
+    $User_Settings = explode(',',$_COOKIE['SpellSettings']);
   } else {
     $User_Settings = array(-1,   // Language (Not Set / Default)
                            -1,   // Levenshire Distance
@@ -93,7 +93,7 @@
 
   // Start the Scan of the Document for valid words
   $Browser = 'Opera/6';
-  if (isset($HTTP_SERVER_VARS['HTTP_USER_AGENT'])) $Browser = $HTTP_SERVER_VARS['HTTP_USER_AGENT'];
+  if (isset($_SERVER['HTTP_USER_AGENT'])) $Browser = $_SERVER['HTTP_USER_AGENT'];
   echo '<html><head><title>Spellcheck '.PHPSPELL_VERSION.'</title>';
 //  if (isset($Meta_Language)) echo '<meta http-equiv="Content-Type" content="text/html; charset='.$Meta_Language.'">';
   echo '<script language="javascript"><!--'.LINE_FEED;

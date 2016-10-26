@@ -81,13 +81,13 @@ else
 
 $page_title = $lang['Page_title'];
 
-if (isset ($HTTP_GET_VARS['start'])) {
+if (isset ($_GET['start'])) {
 	function onTime () {
 		global $start_time, $time_limit;
 		static $max_execution_time;
 		
 		$current_time = time ();
-		$time_limit = $HTTP_GET_VARS['time_limit'];
+		$time_limit = $_GET['time_limit'];
 
 		if (empty ($max_execution_time)) {
 			if (ini_get ('safe_mode') == false) {
@@ -102,7 +102,7 @@ if (isset ($HTTP_GET_VARS['start'])) {
 		return (($current_time - $start_time) < $max_execution_time) ? true : false;
 	}
 	
-	$start = $HTTP_GET_VARS['start'];
+	$start = $_GET['start'];
 	
 	if ($start == 0) {
 		$sql = "DELETE FROM ". KB_SEARCH_TABLE;
@@ -119,9 +119,9 @@ if (isset ($HTTP_GET_VARS['start'])) {
 		$total_num_rows = $db->sql_numrows ($result);
 	}
 	
-	$total_num_rows = (isset ($HTTP_GET_VARS['total_num_rows'])) ? $HTTP_GET_VARS['total_num_rows'] : $total_num_rows;
+	$total_num_rows = (isset ($_GET['total_num_rows'])) ? $_GET['total_num_rows'] : $total_num_rows;
 		
-	$sql = "SELECT article_id, article_title, article_body FROM ". KB_ARTICLES_TABLE ." LIMIT $start, ". $HTTP_GET_VARS['post_limit'];
+	$sql = "SELECT article_id, article_title, article_body FROM ". KB_ARTICLES_TABLE ." LIMIT $start, ". $_GET['post_limit'];
 	$result = $db->sql_query ($sql);
 		
 	$num_rows = 0;
@@ -135,10 +135,10 @@ if (isset ($HTTP_GET_VARS['start'])) {
 	);
 		
 	if (($start + $num_rows) != $total_num_rows) {
-		$form_action = append_sid ("admin_kb_rebuild_search.$phpEx?start=". ($start + $num_rows) ."&total_num_rows=$total_num_rows&post_limit=". $HTTP_GET_VARS['post_limit'] ."&time_limit=$time_limit&refresh_rate=". $HTTP_GET_VARS['refresh_rate']);
+		$form_action = append_sid ("admin_kb_rebuild_search.$phpEx?start=". ($start + $num_rows) ."&total_num_rows=$total_num_rows&post_limit=". $_GET['post_limit'] ."&time_limit=$time_limit&refresh_rate=". $_GET['refresh_rate']);
 		$next = $lang['Next'];
 		$template->assign_vars(array(
-			"META" => '<meta http-equiv="refresh" content="'. $HTTP_GET_VARS['refresh_rate'] .';url='. $form_action .'">')
+			"META" => '<meta http-equiv="refresh" content="'. $_GET['refresh_rate'] .';url='. $form_action .'">')
 		);
 	} else {
 		$next = $lang['Finished'];

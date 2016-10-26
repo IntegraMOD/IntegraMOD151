@@ -71,15 +71,15 @@ class log_manager
 	function log_manager()
 	{
 
-		global $HTTP_SERVER_VARS;
+		global $_SERVER;
 
 		$this->ct_type_msg      = 0;
 		$this->ct_timestamp     = time();
-		$this->ct_request       = $HTTP_SERVER_VARS['PHP_SELF'] . '?' . $HTTP_SERVER_VARS['QUERY_STRING'];
-		$this->ct_referer       = $HTTP_SERVER_VARS['HTTP_REFERER'];
-		$this->ct_user_agent    = $HTTP_SERVER_VARS['HTTP_USER_AGENT'];
-		$this->ct_remote_addr   = ( !empty($HTTP_SERVER_VARS['REMOTE_ADDR']) ) ? $HTTP_SERVER_VARS['REMOTE_ADDR'] : ( ( !empty($HTTP_ENV_VARS['REMOTE_ADDR']) ) ? $HTTP_ENV_VARS['REMOTE_ADDR'] : getenv('REMOTE_ADDR') );
-		$this->ct_remote_host   = $HTTP_SERVER_VARS['REMOTE_HOST'];
+		$this->ct_request       = $_SERVER['PHP_SELF'] . '?' . $_SERVER['QUERY_STRING'];
+		$this->ct_referer       = $_SERVER['HTTP_REFERER'];
+		$this->ct_user_agent    = $_SERVER['HTTP_USER_AGENT'];
+		$this->ct_remote_addr   = ( !empty($_SERVER['REMOTE_ADDR']) ) ? $_SERVER['REMOTE_ADDR'] : ( ( !empty($_ENV['REMOTE_ADDR']) ) ? $_ENV['REMOTE_ADDR'] : getenv('REMOTE_ADDR') );
+		$this->ct_remote_host   = $_SERVER['REMOTE_HOST'];
 		$this->ct_counter_value = 0;
 
 	}

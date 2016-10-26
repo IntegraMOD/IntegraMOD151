@@ -54,7 +54,7 @@ if(!@function_exists('gzcompress'))
 //
 // Export page
 //
-$export = isset($HTTP_GET_VARS['export']) ? $HTTP_GET_VARS['export'] : '';
+$export = isset($_GET['export']) ? $_GET['export'] : '';
 $export = xs_tpl_name($export);
 if(!empty($export) && @file_exists($phpbb_root_path . $template_dir . $export . '/theme_info.cfg'))
 {
@@ -109,18 +109,18 @@ if(!empty($export) && @file_exists($phpbb_root_path . $template_dir . $export . 
 //
 // Export style
 //
-$export = isset($HTTP_POST_VARS['export']) ? $HTTP_POST_VARS['export'] : '';
+$export = isset($_POST['export']) ? $_POST['export'] : '';
 $export = xs_tpl_name($export);
 if(!empty($export) && @file_exists($phpbb_root_path . $template_dir . $export . '/theme_info.cfg') && !defined('DEMO_MODE'))
 {
-	$total = intval($HTTP_POST_VARS['total']);
-	$comment = substr(stripslashes($HTTP_POST_VARS['export_comment']), 0, 255);
+	$total = intval($_POST['total']);
+	$comment = substr(stripslashes($_POST['export_comment']), 0, 255);
 	$list = array();
 	for($i=0; $i<$total; $i++)
 	{
-		if(!empty($HTTP_POST_VARS['export_style_'.$i]))
+		if(!empty($_POST['export_style_'.$i]))
 		{
-			$list[] = intval($HTTP_POST_VARS['export_style_id_'.$i]);
+			$list[] = intval($_POST['export_style_id_'.$i]);
 		}
 	}
 	if(!count($list))
@@ -128,7 +128,7 @@ if(!empty($export) && @file_exists($phpbb_root_path . $template_dir . $export . 
 		xs_error($lang['xs_export_noselect_themes'] . '<br /><br /> ' . $lang['xs_export_back']);
 	}
 	// Export as...
-	$exportas = empty($HTTP_POST_VARS['export_template']) ? $export : $HTTP_POST_VARS['export_template'];
+	$exportas = empty($_POST['export_template']) ? $export : $_POST['export_template'];
 	$exportas = xs_tpl_name($exportas);
 	// Generate theme_info.cfg
 	$sql = "SELECT * FROM " . THEMES_TABLE . " WHERE template_name = '$export' AND themes_id IN (" . implode(', ', $list) . ")";
@@ -155,9 +155,9 @@ if(!empty($export) && @file_exists($phpbb_root_path . $template_dir . $export . 
 		$theme_name = $theme_rowset[$i]['style_name'];
 		for($j=0; $j<$total; $j++)
 		{
-			if(!empty($HTTP_POST_VARS['export_style_name_'.$j]) && $HTTP_POST_VARS['export_style_id_'.$j] == $id)
+			if(!empty($_POST['export_style_name_'.$j]) && $_POST['export_style_id_'.$j] == $id)
 			{
-				$theme_name = stripslashes($HTTP_POST_VARS['export_style_name_'.$j]);
+				$theme_name = stripslashes($_POST['export_style_name_'.$j]);
 			}
 		}
 		$theme_rowset[$i]['style_name'] = $theme_name;
@@ -177,12 +177,12 @@ if(!empty($export) && @file_exists($phpbb_root_path . $template_dir . $export . 
 	//
 	// Got file. Sending it.
 	//
-	$send_method = isset($HTTP_POST_VARS['export_to']) ? $HTTP_POST_VARS['export_to'] : '';
-	$export_filename = empty($HTTP_POST_VARS['export_filename']) ? $exportas . STYLE_EXTENSION : $HTTP_POST_VARS['export_filename'];
+	$send_method = isset($_POST['export_to']) ? $_POST['export_to'] : '';
+	$export_filename = empty($_POST['export_filename']) ? $exportas . STYLE_EXTENSION : $_POST['export_filename'];
 	if($send_method === 'file')
 	{
 		// store on local server
-		$send_dir = isset($HTTP_POST_VARS['export_to_dir']) ? $HTTP_POST_VARS['export_to_dir'] : '';
+		$send_dir = isset($_POST['export_to_dir']) ? $_POST['export_to_dir'] : '';
 		$send_dir = str_replace('\\', '/', stripslashes($send_dir));
 		if(empty($send_dir))
 		{
@@ -206,10 +206,10 @@ if(!empty($export) && @file_exists($phpbb_root_path . $template_dir . $export . 
 	elseif($send_method === 'ftp')
 	{
 		// upload via ftp
-		$ftp_host = $HTTP_POST_VARS['export_to_ftp_host'];
-		$ftp_login = $HTTP_POST_VARS['export_to_ftp_login'];
-		$ftp_pass = $HTTP_POST_VARS['export_to_ftp_pass'];
-		$ftp_dir = str_replace('\\', '/', $HTTP_POST_VARS['export_to_ftp_dir']);
+		$ftp_host = $_POST['export_to_ftp_host'];
+		$ftp_login = $_POST['export_to_ftp_login'];
+		$ftp_pass = $_POST['export_to_ftp_pass'];
+		$ftp_dir = str_replace('\\', '/', $_POST['export_to_ftp_dir']);
 		if($ftp_dir && substr($ftp_dir, strlen($ftp_dir) - 1) !== '/')
 		{
 			$ftp_dir .= '/';

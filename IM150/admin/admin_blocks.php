@@ -194,9 +194,9 @@ function generate_smilies2($mode, $page_id)
 	}
 }		
 
-if( isset($HTTP_GET_VARS['mode']) || isset($HTTP_POST_VARS['mode']) )
+if( isset($_GET['mode']) || isset($_POST['mode']) )
 {
-	$mode = ($HTTP_GET_VARS['mode']) ? $HTTP_GET_VARS['mode'] : $HTTP_POST_VARS['mode'];
+	$mode = ($_GET['mode']) ? $_GET['mode'] : $_POST['mode'];
 	$mode = htmlspecialchars($mode);
 }
 else 
@@ -204,11 +204,11 @@ else
 	//
 	// These could be entered via a form button
 	//
-	if( isset($HTTP_POST_VARS['add']) )
+	if( isset($_POST['add']) )
 	{
 		$mode = "add";
 	}
-	else if( isset($HTTP_POST_VARS['save']) )
+	else if( isset($_POST['save']) )
 	{
 		$mode = "save";
 	}
@@ -218,7 +218,7 @@ else
 	}
 }
 
-if(isset($HTTP_POST_VARS['cancel']))
+if(isset($_POST['cancel']))
 {
 	$mode="blocks";
 }
@@ -233,10 +233,10 @@ if( $mode != "" && $mode != "blocks" )
 {
 	if( $mode == "edit" || $mode == "add" )
 	{
-		$b_id = ( isset($HTTP_GET_VARS['id']) ) ? intval($HTTP_GET_VARS['id']) : 0;
-		if( isset($HTTP_POST_VARS['lid']) ||  isset($HTTP_GET_VARS['lid']) )
+		$b_id = ( isset($_GET['id']) ) ? intval($_GET['id']) : 0;
+		if( isset($_POST['lid']) ||  isset($_GET['lid']) )
 		{
-			$l_id = ( isset($HTTP_POST_VARS['lid']) ) ? intval($HTTP_POST_VARS['lid']) : intval($HTTP_GET_VARS['lid']);
+			$l_id = ( isset($_POST['lid']) ) ? intval($_POST['lid']) : intval($_GET['lid']);
 		}
 		else
 		{
@@ -432,6 +432,8 @@ if( $mode != "" && $mode != "blocks" )
 			}
 		}
 
+		bbcode_box();
+
 		$template->assign_vars(array(
 			"L_BLOCKS_TITLE" => $lang['Blocks_Title'],
 			"L_BLOCKS_TEXT" => $lang['Blocks_Explain'],
@@ -531,22 +533,22 @@ if( $mode != "" && $mode != "blocks" )
 	}
 	else if( $mode == "save" )
 	{
-		$b_id = ( isset($HTTP_POST_VARS['id']) ) ? intval($HTTP_POST_VARS['id']) : 0;
-		$l_id = ( isset($HTTP_POST_VARS['lid']) ) ? intval($HTTP_POST_VARS['lid']) : 0;
-		$b_title = ( isset($HTTP_POST_VARS['title']) ) ? trim($HTTP_POST_VARS['title']) : "";
-		$b_bposition = ( isset($HTTP_POST_VARS['bposition']) ) ? trim($HTTP_POST_VARS['bposition']) : "";
-		$b_active = ( isset($HTTP_POST_VARS['active']) ) ? intval($HTTP_POST_VARS['active']) : 0;
-		$b_type = ( isset($HTTP_POST_VARS['type']) ) ? intval($HTTP_POST_VARS['type']) : 0;
-		$b_cache = ( isset($HTTP_POST_VARS['cache']) ) ? intval($HTTP_POST_VARS['cache']) : 0;
-		$b_cachetime = ( isset($HTTP_POST_VARS['cachetime']) ) ? intval($HTTP_POST_VARS['cachetime']) : 0;
-		$b_content = ( isset($HTTP_POST_VARS['message']) ) ? trim($HTTP_POST_VARS['message']) : "";
-		$b_blockfile = ( isset($HTTP_POST_VARS['blockfile']) ) ? trim($HTTP_POST_VARS['blockfile']) : "";
-		$b_view = ( isset($HTTP_POST_VARS['view']) ) ? trim($HTTP_POST_VARS['view']) : 0;
-		$b_border = ( isset($HTTP_POST_VARS['border']) ) ? intval($HTTP_POST_VARS['border']) : 0;
-		$b_titlebar = ( isset($HTTP_POST_VARS['titlebar']) ) ? intval($HTTP_POST_VARS['titlebar']) : 0;
-		$b_openclose = ( isset($HTTP_POST_VARS['openclose']) ) ? intval($HTTP_POST_VARS['openclose']) : 0;
-		$b_local = ( isset($HTTP_POST_VARS['local']) ) ? intval($HTTP_POST_VARS['local']) : 0;
-		$b_background = ( isset($HTTP_POST_VARS['background']) ) ? intval($HTTP_POST_VARS['background']) : 0;
+		$b_id = ( isset($_POST['id']) ) ? intval($_POST['id']) : 0;
+		$l_id = ( isset($_POST['lid']) ) ? intval($_POST['lid']) : 0;
+		$b_title = ( isset($_POST['title']) ) ? trim($_POST['title']) : "";
+		$b_bposition = ( isset($_POST['bposition']) ) ? trim($_POST['bposition']) : "";
+		$b_active = ( isset($_POST['active']) ) ? intval($_POST['active']) : 0;
+		$b_type = ( isset($_POST['type']) ) ? intval($_POST['type']) : 0;
+		$b_cache = ( isset($_POST['cache']) ) ? intval($_POST['cache']) : 0;
+		$b_cachetime = ( isset($_POST['cachetime']) ) ? intval($_POST['cachetime']) : 0;
+		$b_content = ( isset($_POST['message']) ) ? trim($_POST['message']) : "";
+		$b_blockfile = ( isset($_POST['blockfile']) ) ? trim($_POST['blockfile']) : "";
+		$b_view = ( isset($_POST['view']) ) ? trim($_POST['view']) : 0;
+		$b_border = ( isset($_POST['border']) ) ? intval($_POST['border']) : 0;
+		$b_titlebar = ( isset($_POST['titlebar']) ) ? intval($_POST['titlebar']) : 0;
+		$b_openclose = ( isset($_POST['openclose']) ) ? intval($_POST['openclose']) : 0;
+		$b_local = ( isset($_POST['local']) ) ? intval($_POST['local']) : 0;
+		$b_background = ( isset($_POST['background']) ) ? intval($_POST['background']) : 0;
 
 		$sql = "SELECT MAX(group_id) max_group_id FROM " . GROUPS_TABLE . " WHERE group_single_user = 0"; 
 		if( !($result = $db->sql_query($sql)) )
@@ -558,7 +560,7 @@ if( $mode != "" && $mode != "blocks" )
 		$not_first = FALSE;
 		for($i = 1; $i <= $row['max_group_id']; $i++)
 		{
-			if(isset($HTTP_POST_VARS['group' . strval($i)]))
+			if(isset($_POST['group' . strval($i)]))
 			{
 				if($not_first)
 				{
@@ -724,25 +726,25 @@ if( $mode != "" && $mode != "blocks" )
 	}
 	else if( $mode == "delete" )
 	{
-		if( isset($HTTP_POST_VARS['bid']) ||  isset($HTTP_GET_VARS['bid']) )
+		if( isset($_POST['bid']) ||  isset($_GET['bid']) )
 		{
-			$b_id = ( isset($HTTP_POST_VARS['bid']) ) ? intval($HTTP_POST_VARS['bid']) : intval($HTTP_GET_VARS['bid']);
+			$b_id = ( isset($_POST['bid']) ) ? intval($_POST['bid']) : intval($_GET['bid']);
 		}
 		else
 		{
 			$b_id = 0;
 		}
 
-		if( isset($HTTP_POST_VARS['id']) ||  isset($HTTP_GET_VARS['id']) )
+		if( isset($_POST['id']) ||  isset($_GET['id']) )
 		{
-			$l_id = ( isset($HTTP_POST_VARS['id']) ) ? intval($HTTP_POST_VARS['id']) : intval($HTTP_GET_VARS['id']);
+			$l_id = ( isset($_POST['id']) ) ? intval($_POST['id']) : intval($_GET['id']);
 		}
 		else
 		{
 			$l_id = 0;
 		}
 
-		if(!isset($HTTP_POST_VARS['confirm']))
+		if(!isset($_POST['confirm']))
 		{
 			$hidden_fields = '<input type="hidden" name="mode" value="'.$mode.'" /><input type="hidden" name="bid" value="'.$b_id.'" /><input type="hidden" name="id" value="'.$l_id.'" />';
 			
@@ -797,21 +799,21 @@ else if ($mode == "blocks")
 		"body" => "admin/blocks_list_body.tpl")
 	);
 
-	if( isset($HTTP_POST_VARS['id']) ||  isset($HTTP_GET_VARS['id']) )
+	if( isset($_POST['id']) ||  isset($_GET['id']) )
 	{
-		$l_id = ( isset($HTTP_POST_VARS['id']) ) ? intval($HTTP_POST_VARS['id']) : intval($HTTP_GET_VARS['id']);
+		$l_id = ( isset($_POST['id']) ) ? intval($_POST['id']) : intval($_GET['id']);
 	}
 	else
 	{
 		$l_id = 0;
 	}
-	$move = ( isset($HTTP_GET_VARS['move']) ) ? $HTTP_GET_VARS['move'] : -1;
+	$move = ( isset($_GET['move']) ) ? $_GET['move'] : -1;
 
 	if( $move == '0' || $move == '1' )
 	{
-		$b_id = ( isset($HTTP_GET_VARS['bid']) ) ? intval($HTTP_GET_VARS['bid']) : 0;
-		$b_weight = ( isset($HTTP_GET_VARS['weight']) ) ? $HTTP_GET_VARS['weight'] : 0;
-		$b_position = ( isset($HTTP_GET_VARS['pos']) ) ? $HTTP_GET_VARS['pos'] : 0;
+		$b_id = ( isset($_GET['bid']) ) ? intval($_GET['bid']) : 0;
+		$b_weight = ( isset($_GET['weight']) ) ? $_GET['weight'] : 0;
+		$b_position = ( isset($_GET['pos']) ) ? $_GET['pos'] : 0;
 		if($b_position == '@' || $b_position == '*')
 		{
 			$layout = 0;

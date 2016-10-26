@@ -39,8 +39,8 @@ if( !empty($setmodules) )
 	return;
 }
 
-$submit = (isset($HTTP_POST_VARS['submit'])) ? TRUE : FALSE;
-$cancel = ( isset($HTTP_POST_VARS['cancel']) ) ? TRUE : FALSE;
+$submit = (isset($_POST['submit'])) ? TRUE : FALSE;
+$cancel = ( isset($_POST['cancel']) ) ? TRUE : FALSE;
 
 if ($cancel)
 {
@@ -48,12 +48,12 @@ if ($cancel)
 }
 
 require('pagestart.' . $phpEx);
-$submit = (isset($HTTP_POST_VARS['submit'])) ? TRUE : FALSE;
-$cancel = ( isset($HTTP_POST_VARS['cancel']) ) ? TRUE : FALSE;
+$submit = (isset($_POST['submit'])) ? TRUE : FALSE;
+$cancel = ( isset($_POST['cancel']) ) ? TRUE : FALSE;
 
-if( isset($HTTP_POST_VARS['mode']) || isset($HTTP_GET_VARS['mode']) )
+if( isset($_POST['mode']) || isset($_GET['mode']) )
 {
-	$mode = ( isset($HTTP_POST_VARS['mode']) ) ? $HTTP_POST_VARS['mode'] : $HTTP_GET_VARS['mode'];
+	$mode = ( isset($_POST['mode']) ) ? $_POST['mode'] : $_GET['mode'];
 }
 else
 {
@@ -111,11 +111,11 @@ if (($mode == 'mod_install') && ($submit))
 		'body' => 'admin/stat_install_module.tpl')
 	);
 
-	$update_id = (isset($HTTP_POST_VARS['update_id'])) ? intval($HTTP_POST_VARS['update_id']) : -1;
+	$update_id = (isset($_POST['update_id'])) ? intval($_POST['update_id']) : -1;
 
-	if (isset($HTTP_POST_VARS['install_module']))
+	if (isset($_POST['install_module']))
 	{
-		$filename = trim(stripslashes(htmlspecialchars($HTTP_POST_VARS['filename'])));
+		$filename = trim(stripslashes(htmlspecialchars($_POST['filename'])));
 		
 		if (!($fp = fopen($filename, 'r')) )
 		{
@@ -137,7 +137,7 @@ if (($mode == 'mod_install') && ($submit))
 		
 		$info_array = parse_info_file($info_file);
 		
-		$install_languages = ( isset($HTTP_POST_VARS['checked_languages']) ) ?  $HTTP_POST_VARS['checked_languages'] : array();
+		$install_languages = ( isset($_POST['checked_languages']) ) ?  $_POST['checked_languages'] : array();
 		for ($i = 0; $i < count($install_languages); $i++)
 		{
 			$install_languages[$i] = 'lang_' . trim($install_languages[$i]);
@@ -157,13 +157,13 @@ if (($mode == 'mod_install') && ($submit))
 		}
 	}
 
-	if ( isset($HTTP_POST_VARS['fileselect']) )
+	if ( isset($_POST['fileselect']) )
 	{
-		$filename = $phpbb_root_path . 'modules/pakfiles/' . trim($HTTP_POST_VARS['selected_pak_file']);
+		$filename = $phpbb_root_path . 'modules/pakfiles/' . trim($_POST['selected_pak_file']);
 	}
-	else if (isset($HTTP_POST_VARS['fileupload']))
+	else if (isset($_POST['fileupload']))
 	{
-		$filename = $HTTP_POST_FILES['package']['tmp_name'];
+		$filename = $_FILES['package']['tmp_name'];
 
 		// check php upload-size
 		if ( ($filename == 'none') || ($filename == '') )
@@ -318,7 +318,7 @@ if (($mode == 'mod_install') && (!$submit))
 	);
 
 	// erst mal package auswählen... oder hochladen
-	if ( (!isset($HTTP_POST_VARS['fileupload'])) && (!isset($HTTP_POST_VARS['fileselect'])) )
+	if ( (!isset($_POST['fileupload'])) && (!isset($_POST['fileselect'])) )
 	{
 		$module_paks = array();
 	
@@ -382,24 +382,24 @@ if (($mode == 'mod_install') && (!$submit))
 // BEGIN Manage Modules
 if ($mode == 'mod_manage')
 {
-	if (isset($HTTP_GET_VARS['move_up']))
+	if (isset($_GET['move_up']))
 	{
-		$module_id = intval($HTTP_GET_VARS['move_up']);
+		$module_id = intval($_GET['move_up']);
 		move_up($module_id);
 	}
-	else if (isset($HTTP_GET_VARS['move_down']))
+	else if (isset($_GET['move_down']))
 	{
-		$module_id = intval($HTTP_GET_VARS['move_down']);
+		$module_id = intval($_GET['move_down']);
 		move_down($module_id);
 	}
-	else if (isset($HTTP_GET_VARS['activate']))
+	else if (isset($_GET['activate']))
 	{
-		$module_id = intval($HTTP_GET_VARS['activate']);
+		$module_id = intval($_GET['activate']);
 		activate($module_id);
 	}
-	else if (isset($HTTP_GET_VARS['deactivate']))
+	else if (isset($_GET['deactivate']))
 	{
-		$module_id = intval($HTTP_GET_VARS['deactivate']);
+		$module_id = intval($_GET['deactivate']);
 		deactivate($module_id);
 	}
 	
@@ -452,13 +452,13 @@ if ($mode == 'mod_manage')
 // BEGIN Delete Module
 if ($mode == 'mod_delete')
 {
-	$confirm = ( isset($HTTP_POST_VARS['confirm']) ) ? TRUE : FALSE;
+	$confirm = ( isset($_POST['confirm']) ) ? TRUE : FALSE;
 
 	if (!$confirm)
 	{
-		if (isset($HTTP_GET_VARS['module']))
+		if (isset($_GET['module']))
 		{
-			$module_id = intval($HTTP_GET_VARS['module']);
+			$module_id = intval($_GET['module']);
 		}
 		else
 		{
@@ -484,9 +484,9 @@ if ($mode == 'mod_delete')
 	}
 	else
 	{
-		if (isset($HTTP_POST_VARS['module_id']))
+		if (isset($_POST['module_id']))
 		{
-			$module_id = intval($HTTP_POST_VARS['module_id']);
+			$module_id = intval($_POST['module_id']);
 		}
 		else
 		{

@@ -50,10 +50,10 @@ $subject = '';
 //
 // Do the job ...
 //
-if ( isset($HTTP_POST_VARS['submit']) )
+if ( isset($_POST['submit']) )
 {
-	$subject = stripslashes(trim($HTTP_POST_VARS['subject']));
-	$message = stripslashes(trim($HTTP_POST_VARS['message']));
+	$subject = stripslashes(trim($_POST['subject']));
+	$message = stripslashes(trim($_POST['message']));
 	
 	$error = FALSE;
 	$error_msg = '';
@@ -70,7 +70,7 @@ if ( isset($HTTP_POST_VARS['submit']) )
 		$error_msg .= ( !empty($error_msg) ) ? '<br />' . $lang['Empty_message'] : $lang['Empty_message'];
 	}
 
-	$group_id = intval($HTTP_POST_VARS[POST_GROUPS_URL]);
+	$group_id = intval($_POST[POST_GROUPS_URL]);
 
 	$sql = ( $group_id != -1 ) ? "SELECT u.user_email FROM " . USERS_TABLE . " u, " . USER_GROUP_TABLE . " ug WHERE ug.group_id = $group_id AND ug.user_pending <> " . TRUE . " AND u.user_id = ug.user_id" : "SELECT user_email FROM " . USERS_TABLE;
 	if ( !($result = $db->sql_query($sql)) )

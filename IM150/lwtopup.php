@@ -125,9 +125,9 @@ if( ($group_info = $db->sql_fetchrow($result)) )
 }
 
 $group_id = -1;
-if( isset($HTTP_POST_VARS['group_id']) || isset($HTTP_GET_VARS['group_id']) )
+if( isset($_POST['group_id']) || isset($_GET['group_id']) )
 {
-	$group_id = isset($HTTP_POST_VARS['group_id']) ? intval($HTTP_POST_VARS['group_id']) : intval($HTTP_GET_VARS['group_id']);
+	$group_id = isset($_POST['group_id']) ? intval($_POST['group_id']) : intval($_GET['group_id']);
 }
 
 //get arrays of the group this user subscribed to

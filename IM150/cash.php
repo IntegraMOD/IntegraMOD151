@@ -39,7 +39,7 @@ if ( !$userdata['session_logged_in'] )
 	redirect(append_sid("login.$phpEx?redirect=cash.$phpEx", true));
 }
 
-$mode = isset($HTTP_POST_VARS['mode'])?$HTTP_POST_VARS['mode']:(isset($HTTP_GET_VARS['mode'])?$HTTP_GET_VARS['mode']:(""));
+$mode = isset($_POST['mode'])?$_POST['mode']:(isset($_GET['mode'])?$_GET['mode']:(""));
 
 switch( $mode )
 {
@@ -47,9 +47,9 @@ switch( $mode )
 //========================================[ Donate Code ]===========================
 //
 	case "donate":
-		$ref = isset($HTTP_GET_VARS['ref'])?$HTTP_GET_VARS['ref']:'index';
-		$target = ( isset($HTTP_GET_VARS[POST_USERS_URL]) )?intval($HTTP_GET_VARS[POST_USERS_URL]):(( isset($HTTP_GET_VARS['u']) )?intval($HTTP_GET_VARS['u']):0);
-		$post = ( isset($HTTP_GET_VARS[POST_POST_URL]) )?intval($HTTP_GET_VARS[POST_POST_URL]):(( isset($HTTP_GET_VARS['p']) )?intval($HTTP_GET_VARS['p']):0);
+		$ref = isset($_GET['ref'])?$_GET['ref']:'index';
+		$target = ( isset($_GET[POST_USERS_URL]) )?intval($_GET[POST_USERS_URL]):(( isset($_GET['u']) )?intval($_GET['u']):0);
+		$post = ( isset($_GET[POST_POST_URL]) )?intval($_GET[POST_POST_URL]):(( isset($_GET['p']) )?intval($_GET['p']):0);
 		if ( ($target == ANONYMOUS) || ($target == $userdata['user_id']) || (!($profiledata = get_userdata($target))) )
 		{
 			if ( ($ref == 'viewtopic') && ($post != 0) )
@@ -121,9 +121,9 @@ switch( $mode )
 //========================================[ Donated Code ]===========================
 //
 	case "donated":
-		$ref = isset($HTTP_POST_VARS['ref'])?$HTTP_POST_VARS['ref']:'index';
-		$target = ( isset($HTTP_POST_VARS[POST_USERS_URL]) )?intval($HTTP_POST_VARS[POST_USERS_URL]):(( isset($HTTP_POST_VARS['u']) )?intval($HTTP_POST_VARS['u']):0);
-		$post = ( isset($HTTP_POST_VARS[POST_POST_URL]) )?intval($HTTP_POST_VARS[POST_POST_URL]):(( isset($HTTP_POST_VARS['p']) )?intval($HTTP_POST_VARS['p']):0);
+		$ref = isset($_POST['ref'])?$_POST['ref']:'index';
+		$target = ( isset($_POST[POST_USERS_URL]) )?intval($_POST[POST_USERS_URL]):(( isset($_POST['u']) )?intval($_POST['u']):0);
+		$post = ( isset($_POST[POST_POST_URL]) )?intval($_POST[POST_POST_URL]):(( isset($_POST['p']) )?intval($_POST['p']):0);
 		if ( ($target == ANONYMOUS) || ($target == $userdata['user_id']) || (!($profiledata = get_userdata($target))) )
 		{
 			if ( ($ref == 'viewtopic') && ($post != 0) )
@@ -140,16 +140,16 @@ switch( $mode )
 		
 		$target = new cash_user($target,$profiledata);
 		$donater = new cash_user($userdata['user_id'],$userdata);
-		if ( ($target->id() != $donater->id()) && isset($HTTP_POST_VARS['cash']) && is_array($HTTP_POST_VARS['cash']) )
+		if ( ($target->id() != $donater->id()) && isset($_POST['cash']) && is_array($_POST['cash']) )
 		{
 			$donate_array = array();
 			$donate = false;
 			while ( $c_cur = &$cash->currency_next($cm_i,CURRENCY_ENABLED | CURRENCY_DONATE) )
 			{
-				if ( isset($HTTP_POST_VARS['cash'][$c_cur->id()]) &&
-					 is_numeric($HTTP_POST_VARS['cash'][$c_cur->id()]) )
+				if ( isset($_POST['cash'][$c_cur->id()]) &&
+					 is_numeric($_POST['cash'][$c_cur->id()]) )
 				{
-					$amount = cash_floatval($HTTP_POST_VARS['cash'][$c_cur->id()]);
+					$amount = cash_floatval($_POST['cash'][$c_cur->id()]);
 					if ( $amount > 0 )
 					{
 						$amount = ( $donater->has($c_cur->id(),$amount) ) ? $amount : $donater->amount($c_cur->id());
@@ -169,7 +169,7 @@ switch( $mode )
 								implode('</b>, <b>',$message_clause),
 								$target->id(),
 								$target->name());
-				$message = ( isset($HTTP_POST_VARS['message']) )?str_replace("\'","''",$HTTP_POST_VARS['message']):'';
+				$message = ( isset($_POST['message']) )?str_replace("\'","''",$_POST['message']):'';
 				cash_create_log(CASH_LOG_DONATE,$action,$message);
 								
 				if ( ($message != '') && $userdata['user_allow_pm'] )
@@ -203,9 +203,9 @@ switch( $mode )
 //========================================[ Modedit Code ]===========================
 //
 	case "modedit":
-		$ref = isset($HTTP_GET_VARS['ref'])?$HTTP_GET_VARS['ref']:'index';
-		$target = ( isset($HTTP_GET_VARS[POST_USERS_URL]) )?intval($HTTP_GET_VARS[POST_USERS_URL]):(( isset($HTTP_GET_VARS['u']) )?intval($HTTP_GET_VARS['u']):0);
-		$post = ( isset($HTTP_GET_VARS[POST_POST_URL]) )?intval($HTTP_GET_VARS[POST_POST_URL]):(( isset($HTTP_GET_VARS['p']) )?intval($HTTP_GET_VARS['p']):0);
+		$ref = isset($_GET['ref'])?$_GET['ref']:'index';
+		$target = ( isset($_GET[POST_USERS_URL]) )?intval($_GET[POST_USERS_URL]):(( isset($_GET['u']) )?intval($_GET['u']):0);
+		$post = ( isset($_GET[POST_POST_URL]) )?intval($_GET[POST_POST_URL]):(( isset($_GET['p']) )?intval($_GET['p']):0);
 		if ( ($target == ANONYMOUS) || (!($profiledata = get_userdata($target))) )
 		{
 			if ( ($ref == 'viewtopic') && ($post != 0) )
@@ -309,9 +309,9 @@ switch( $mode )
 //========================================[ Modedited Code ]===========================
 //
 	case "modedited":
-		$ref = isset($HTTP_POST_VARS['ref'])?$HTTP_POST_VARS['ref']:'index';
-		$target = ( isset($HTTP_POST_VARS[POST_USERS_URL]) )?intval($HTTP_POST_VARS[POST_USERS_URL]):(( isset($HTTP_POST_VARS['u']) )?intval($HTTP_POST_VARS['u']):0);
-		$post = ( isset($HTTP_POST_VARS[POST_POST_URL]) )?intval($HTTP_POST_VARS[POST_POST_URL]):(( isset($HTTP_POST_VARS['p']) )?intval($HTTP_POST_VARS['p']):0);
+		$ref = isset($_POST['ref'])?$_POST['ref']:'index';
+		$target = ( isset($_POST[POST_USERS_URL]) )?intval($_POST[POST_USERS_URL]):(( isset($_POST['u']) )?intval($_POST['u']):0);
+		$post = ( isset($_POST[POST_POST_URL]) )?intval($_POST[POST_POST_URL]):(( isset($_POST['p']) )?intval($_POST['p']):0);
 		if ( ($target == 0) || (!($profiledata = get_userdata($target))) )
 		{
 			if ( ($ref == 'viewtopic') && ($post != 0) )
@@ -345,7 +345,7 @@ switch( $mode )
 		}
 		
 		$target = new cash_user($target,$profiledata);
-		if ( isset($HTTP_POST_VARS['cashtype']) && is_array($HTTP_POST_VARS['cashtype']) && isset($HTTP_POST_VARS['cashchange']) && is_array($HTTP_POST_VARS['cashchange']) )
+		if ( isset($_POST['cashtype']) && is_array($_POST['cashtype']) && isset($_POST['cashchange']) && is_array($_POST['cashchange']) )
 		{
 			$mask = false;
 			if ( $userdata['user_level'] == MOD )
@@ -358,15 +358,15 @@ switch( $mode )
 			$editlist = array();
 			while ( $c_cur = &$cash->currency_next($cm_i,$mask) )
 			{
-				if ( isset($HTTP_POST_VARS['cashtype'][$c_cur->id()]) &&
-					 is_numeric($HTTP_POST_VARS['cashtype'][$c_cur->id()]) &&
-					 ($HTTP_POST_VARS['cashtype'][$c_cur->id()] != 0) &&
-					 isset($HTTP_POST_VARS['cashchange'][$c_cur->id()]) &&
-					 is_numeric($HTTP_POST_VARS['cashchange'][$c_cur->id()]) )
+				if ( isset($_POST['cashtype'][$c_cur->id()]) &&
+					 is_numeric($_POST['cashtype'][$c_cur->id()]) &&
+					 ($_POST['cashtype'][$c_cur->id()] != 0) &&
+					 isset($_POST['cashchange'][$c_cur->id()]) &&
+					 is_numeric($_POST['cashchange'][$c_cur->id()]) )
 				{
-					$amount = cash_floatval($HTTP_POST_VARS['cashchange'][$c_cur->id()]);
+					$amount = cash_floatval($_POST['cashchange'][$c_cur->id()]);
 					$allow_neg = $c_cur->mask(CURRENCY_ALLOWNEG);
-					$type = intval($HTTP_POST_VARS['cashtype'][$c_cur->id()]);
+					$type = intval($_POST['cashtype'][$c_cur->id()]);
 					if ( (($type == 1) || ($type == 2)) && $amount < 0 )
 					{
 						$amount = -$amount;
@@ -404,7 +404,7 @@ switch( $mode )
 
 			if ( $modedit[1] || $modedit[2] || $modedit[3] )
 			{
-				$message = ( isset($HTTP_POST_VARS['message']) )?str_replace("\'","''",$HTTP_POST_VARS['message']):'';
+				$message = ( isset($_POST['message']) )?str_replace("\'","''",$_POST['message']):'';
 				$action = array($userdata['user_id'],
 								$userdata['username'],
 								$target->id(),
@@ -500,17 +500,17 @@ switch( $mode )
 			$exchange_data[$row['ex_cash_id1']][$row['ex_cash_id2']] = 1;
 		}
 		$exchanger = new cash_user($userdata['user_id'],$userdata);
-		if ( isset($HTTP_POST_VARS['exchange']) &&
-			 isset($HTTP_POST_VARS['from_id']) &&
-			 is_numeric($HTTP_POST_VARS['from_id']) &&
-			 isset($HTTP_POST_VARS['to_id']) &&
-			 is_numeric($HTTP_POST_VARS['to_id']) &&
-			 isset($HTTP_POST_VARS['convert_amount']) &&
-			 is_numeric($HTTP_POST_VARS['convert_amount']) )
+		if ( isset($_POST['exchange']) &&
+			 isset($_POST['from_id']) &&
+			 is_numeric($_POST['from_id']) &&
+			 isset($_POST['to_id']) &&
+			 is_numeric($_POST['to_id']) &&
+			 isset($_POST['convert_amount']) &&
+			 is_numeric($_POST['convert_amount']) )
 		{
-			$from_id = intval($HTTP_POST_VARS['from_id']);
-			$to_id = intval($HTTP_POST_VARS['to_id']);
-			$convert_amount = cash_floatval($HTTP_POST_VARS['convert_amount']);
+			$from_id = intval($_POST['from_id']);
+			$to_id = intval($_POST['to_id']);
+			$convert_amount = cash_floatval($_POST['convert_amount']);
 			if ( ( $convert_amount > 0 ) && ($to_id != $from_id) && $cash->currency_exists($to_id) && $cash->currency_exists($from_id) && isset($exchange_data[$from_id]) && is_array($exchange_data[$from_id]) && isset($exchange_data[$from_id][$to_id]) && $cash->currencies[$from_id]->mask(CURRENCY_ENABLED | CURRENCY_EXCHANGEABLE) && $cash->currencies[$to_id]->mask(CURRENCY_ENABLED | CURRENCY_EXCHANGEABLE) )
 			{
 				$c_cur_from = $cash->currency($from_id);

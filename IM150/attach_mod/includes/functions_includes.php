@@ -169,7 +169,7 @@ function attach_build_auth_levels($is_auth, &$s_auth_can)
 //
 function attachment_quota_settings($admin_mode, $submit = FALSE, $mode)
 {
-	global $template, $db, $HTTP_POST_VARS, $HTTP_GET_VARS, $lang, $group_id, $lang, $phpbb_root_path, $phpEx, $attach_config;
+	global $template, $db, $_POST, $_GET, $lang, $group_id, $lang, $phpbb_root_path, $phpEx, $attach_config;
 
 	include_once($phpbb_root_path . 'attach_mod/includes/constants.'.$phpEx);
 
@@ -194,7 +194,7 @@ function attachment_quota_settings($admin_mode, $submit = FALSE, $mode)
 
 	if ($admin_mode == 'user')
 	{
-		$submit = (isset($HTTP_POST_VARS['submit'])) ? true : false;
+		$submit = (isset($_POST['submit'])) ? true : false;
 
 		if (!$submit && $mode != 'save')
 		{
@@ -274,7 +274,7 @@ function attachment_quota_settings($admin_mode, $submit = FALSE, $mode)
 		);
 	}
 
-	if ($admin_mode == 'user' && $submit && $HTTP_POST_VARS['deleteuser'])
+	if ($admin_mode == 'user' && $submit && $_POST['deleteuser'])
 	{
 		process_quota_settings($admin_mode, $user_id, QUOTA_UPLOAD_LIMIT, 0);
 		process_quota_settings($admin_mode, $user_id, QUOTA_PM_LIMIT, 0);
@@ -294,7 +294,7 @@ function attachment_quota_settings($admin_mode, $submit = FALSE, $mode)
 		return;
 	}
 
-	if ($admin_mode == 'group' && !$submit && isset($HTTP_POST_VARS['edit']))
+	if ($admin_mode == 'group' && !$submit && isset($_POST['edit']))
 	{
 		// Get group id again, we do not trust phpBB here, Mods may be installed ;)
 		$group_id = get_var(POST_GROUPS_URL, 0);
@@ -341,7 +341,7 @@ function attachment_quota_settings($admin_mode, $submit = FALSE, $mode)
 		);
 	}
 
-	if ($admin_mode == 'group' && $submit && isset($HTTP_POST_VARS['group_delete']))
+	if ($admin_mode == 'group' && $submit && isset($_POST['group_delete']))
 	{
 		$group_id = get_var(POST_GROUPS_URL, 0);
 	

@@ -54,16 +54,16 @@ $operators = array(
 
 // buddy id
 $buddy_id = -1;
-if ( isset($HTTP_POST_VARS['b']) || isset($HTTP_GET_VARS['b']) )
+if ( isset($_POST['b']) || isset($_GET['b']) )
 {
-	$buddy_id = isset($HTTP_POST_VARS['b']) ? intval($HTTP_POST_VARS['b']) : intval($HTTP_GET_VARS['b']);
+	$buddy_id = isset($_POST['b']) ? intval($_POST['b']) : intval($_GET['b']);
 }
 
 // action
 $set = '';
-if ( isset($HTTP_POST_VARS['set']) || isset($HTTP_GET_VARS['set']) )
+if ( isset($_POST['set']) || isset($_GET['set']) )
 {
-	$set = isset($HTTP_POST_VARS['set']) ? $HTTP_POST_VARS['set'] : $HTTP_GET_VARS['set'];
+	$set = isset($_POST['set']) ? $_POST['set'] : $_GET['set'];
 }
 if ( !in_array($set, array('inv', 'vis', 'add', 'remove')) || ($buddy_id < 0) ) 
 {
@@ -90,7 +90,7 @@ if ($buddy_id > 0)
 // coming from
 $from = '';
 $l_from = '';
-switch ($HTTP_GET_VARS['from'])
+switch ($_GET['from'])
 {
 	case 'profil' :
 		$from = append_sid("profile.$phpEx?mode=viewprofile&" . POST_USERS_URL . "=$buddy_id");
@@ -100,19 +100,19 @@ switch ($HTTP_GET_VARS['from'])
 		break;
 	case 'topic' :
 		$topic_id = 0;
-		if ( isset($HTTP_GET_VARS[POST_TOPICS_URL]) )
+		if ( isset($_GET[POST_TOPICS_URL]) )
 		{
-			$from = append_sid("viewtopic.$phpEx?" . POST_TOPIC_URL . "=" . intval($HTTP_GET_VARS[POST_TOPICS_URL]));
+			$from = append_sid("viewtopic.$phpEx?" . POST_TOPIC_URL . "=" . intval($_GET[POST_TOPICS_URL]));
 			$l_from = sprintf( $lang['Click_return_topic'], '<a href="' . $from . '">', '</a>' );
 		}
-		else if ( isset($HTTP_GET_VARS[POST_POST_URL]) )
+		else if ( isset($_GET[POST_POST_URL]) )
 		{
-			$from = append_sid("viewtopic.$phpEx?" . POST_POST_URL . "=" . intval($HTTP_GET_VARS[POST_POST_URL]) . "#" . intval($HTTP_GET_VARS[POST_POST_URL]));
+			$from = append_sid("viewtopic.$phpEx?" . POST_POST_URL . "=" . intval($_GET[POST_POST_URL]) . "#" . intval($_GET[POST_POST_URL]));
 			$l_from = sprintf( $lang['Click_return_topic'], '<a href="' . $from . '">', '</a>' );
 		}
 		break;
 	case 'privmsg' :
-		$from = append_sid("privmsg.$phpEx?mode=read&" . POST_POST_URL . "=" . intval($HTTP_GET_VARS[POST_POST_URL]));
+		$from = append_sid("privmsg.$phpEx?mode=read&" . POST_POST_URL . "=" . intval($_GET[POST_POST_URL]));
 		$l_from = sprintf( $lang['Click_return_privmsg'], '<a href="' . $from . '">', '</a>' );
 		break;
 	default:
@@ -142,7 +142,7 @@ if ( ($set == 'remove') && ($buddy_id > 0) ) $remove = true;
 // remove from list
 if ($remove)
 {
-	$user_ids = ( $set == 'remove' ) ? array($buddy_id) : $HTTP_POST_VARS['user_ids'];
+	$user_ids = ( $set == 'remove' ) ? array($buddy_id) : $_POST['user_ids'];
 	if ( count($user_ids) > 0 )
 	{
 		$s_user_ids = implode(', ', $user_ids);
@@ -167,7 +167,7 @@ else if ($adduser)
 {
 	if ($set != 'add')
 	{
-		$username = ( isset($HTTP_POST_VARS['username']) ) ? $HTTP_POST_VARS['username'] : '';
+		$username = ( isset($_POST['username']) ) ? $_POST['username'] : '';
 		$sql = "SELECT * FROM " . USERS_TABLE . " WHERE LOWER(username) = '" . strtolower(str_replace("\'", "''", $username)) . "'";
 		if ( !$result = $db->sql_query($sql) )
 		{
@@ -315,14 +315,14 @@ else
 	);
 
 	// get the parms
-	$fields_choosen = isset($HTTP_POST_VARS['fields_choosen']);
-	$filter_active = isset($HTTP_POST_VARS['filter_active']);
-	$start  = ( isset($HTTP_GET_VARS['start']) ) ? intval($HTTP_GET_VARS['start']) : 0;
-	$order  = ( isset($HTTP_GET_VARS['order']) || isset($HTTP_POST_VARS['order']) ) ? ( isset($HTTP_GET_VARS['order']) ? trim(htmlspecialchars($HTTP_GET_VARS['order'])) : trim(htmlspecialchars($HTTP_POST_VARS['order'])) ) : '';
-	$sort   = ( isset($HTTP_GET_VARS['sort'] ) || isset($HTTP_POST_VARS['sort'] ) ) ? ( isset($HTTP_GET_VARS['sort'] ) ? trim(htmlspecialchars($HTTP_GET_VARS['sort'] )) : trim(htmlspecialchars($HTTP_POST_VARS['sort'] )) ) : '';
-	$filter = ( isset($HTTP_GET_VARS['filter']) || isset($HTTP_POST_VARS['filter']) ) ? ( isset($HTTP_GET_VARS['filter']) ? trim(htmlspecialchars($HTTP_GET_VARS['filter'])) : trim(htmlspecialchars($HTTP_POST_VARS['filter'])) ) : '';
-	$comp	= ( isset($HTTP_GET_VARS['comp'] ) || isset($HTTP_POST_VARS['comp'] ) ) ? ( isset($HTTP_GET_VARS['comp'] ) ? trim(htmlspecialchars($HTTP_GET_VARS['comp'] )) : trim(htmlspecialchars($HTTP_POST_VARS['comp'] )) ) : '';
-	$fvalue = ( isset($HTTP_GET_VARS['fvalue'] ) || isset($HTTP_POST_VARS['fvalue'] ) ) ? ( isset($HTTP_GET_VARS['fvalue'] ) ? trim(htmlspecialchars(stripslashes(urldecode($HTTP_GET_VARS['fvalue'])))) : htmlspecialchars(urldecode($HTTP_POST_VARS['fvalue'])) ) : '';
+	$fields_choosen = isset($_POST['fields_choosen']);
+	$filter_active = isset($_POST['filter_active']);
+	$start  = ( isset($_GET['start']) ) ? intval($_GET['start']) : 0;
+	$order  = ( isset($_GET['order']) || isset($_POST['order']) ) ? ( isset($_GET['order']) ? trim(htmlspecialchars($_GET['order'])) : trim(htmlspecialchars($_POST['order'])) ) : '';
+	$sort   = ( isset($_GET['sort'] ) || isset($_POST['sort'] ) ) ? ( isset($_GET['sort'] ) ? trim(htmlspecialchars($_GET['sort'] )) : trim(htmlspecialchars($_POST['sort'] )) ) : '';
+	$filter = ( isset($_GET['filter']) || isset($_POST['filter']) ) ? ( isset($_GET['filter']) ? trim(htmlspecialchars($_GET['filter'])) : trim(htmlspecialchars($_POST['filter'])) ) : '';
+	$comp	= ( isset($_GET['comp'] ) || isset($_POST['comp'] ) ) ? ( isset($_GET['comp'] ) ? trim(htmlspecialchars($_GET['comp'] )) : trim(htmlspecialchars($_POST['comp'] )) ) : '';
+	$fvalue = ( isset($_GET['fvalue'] ) || isset($_POST['fvalue'] ) ) ? ( isset($_GET['fvalue'] ) ? trim(htmlspecialchars(stripslashes(urldecode($_GET['fvalue'])))) : htmlspecialchars(urldecode($_POST['fvalue'])) ) : '';
 
 	if ( !isset($user_fields[$order]) ) $order = 'username';
 	if ( ($order == '') || !in_array($sort, array('ASC', 'DESC')) ) $sort = '';
@@ -355,7 +355,7 @@ else
 	}
 
 	// get the fields from the form or init an empty option field
-	if ( !empty($HTTP_POST_VARS['field_ids']) || empty($view_userdata['user_list_option']) || ( strlen($view_userdata['user_list_option']) != ($last_ind+1) ) )
+	if ( !empty($_POST['field_ids']) || empty($view_userdata['user_list_option']) || ( strlen($view_userdata['user_list_option']) != ($last_ind+1) ) )
 	{
 		// something has changed
 		$fields_choosen = true;
@@ -367,7 +367,7 @@ else
 		$field_inds = array();
 
 		// get the current values of the user options field
-		if ( empty($HTTP_POST_VARS['field_ids']) )
+		if ( empty($_POST['field_ids']) )
 		{
 			// get the last ind in the userfield
 			$max = strlen($view_userdata['user_list_option']);
@@ -402,9 +402,9 @@ else
 		}
 
 		// get the form data
-		if ( !empty($HTTP_POST_VARS['field_ids']) )
+		if ( !empty($_POST['field_ids']) )
 		{
-			$field_inds = $HTTP_POST_VARS['field_ids'];
+			$field_inds = $_POST['field_ids'];
 		}
 
 		// process the field inds choosen

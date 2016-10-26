@@ -30,11 +30,11 @@ if(!function_exists(imp_style_select_block_func))
 	function imp_style_select_block_func()
 	{
 		global $template, $lang, $board_config, $phpbb_root_path, $phpEx, $db, $portal_config, $var_cache;
-		global $HTTP_GET_VARS, $HTTP_POST_VARS, $HTTP_COOKIE_VARS;
+		global $_GET, $_POST, $_COOKIE;
 		// BEGIN Style Select MOD
-		if(isset($HTTP_POST_VARS['STYLE_URL']) || (int)isset($HTTP_GET_VARS['STYLE_URL']))
+		if(isset($_POST['STYLE_URL']) || (int)isset($_GET['STYLE_URL']))
 		{
-			(int)$style = urldecode((isset($HTTP_POST_VARS['STYLE_URL'])) ? $HTTP_POST_VARS['STYLE_URL'] : (int)$HTTP_GET_VARS['STYLE_URL']);
+			(int)$style = urldecode((isset($_POST['STYLE_URL'])) ? $_POST['STYLE_URL'] : (int)$_GET['STYLE_URL']);
 			if ( intval($style) == 0 )
 			{
 				$sql = "SELECT themes_id
@@ -50,9 +50,9 @@ if(!function_exists(imp_style_select_block_func))
 				}
 			}
 		}
-		elseif (isset($HTTP_COOKIE_VARS[$board_config['cookie_name'] . '_style']) )
+		elseif (isset($_COOKIE[$board_config['cookie_name'] . '_style']) )
 		{
-			$style = $HTTP_COOKIE_VARS[$board_config['cookie_name'] . '_style'];
+			$style = $_COOKIE[$board_config['cookie_name'] . '_style'];
 		}
 		else
 		{

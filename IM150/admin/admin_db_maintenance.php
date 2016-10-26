@@ -59,8 +59,8 @@ include($phpbb_root_path . 'language/lang_' . $board_config['default_lang'] . '/
 //
 // Set up variables and constants
 //
-$function = ( isset($HTTP_GET_VARS['function']) ) ? htmlspecialchars(trim( $HTTP_GET_VARS['function'] )) : '';
-$mode_id = ( isset($HTTP_GET_VARS['mode']) ) ? htmlspecialchars(trim( $HTTP_GET_VARS['mode'] )) : '';
+$function = ( isset($_GET['function']) ) ? htmlspecialchars(trim( $_GET['function'] )) : '';
+$mode_id = ( isset($_GET['mode']) ) ? htmlspecialchars(trim( $_GET['mode'] )) : '';
 // append confirm table for phpBB 2.0.5 or newer
 $phpbb_version = explode('.', substr($board_config['version'], 1));
 if ( $phpbb_version[0] == 0 && $phpbb_version[1] >= 5 )
@@ -81,12 +81,12 @@ while (list(, $value) = each ($config_data))
 //
 // Get form-data if specified and override old settings
 //
-if ( isset($HTTP_POST_VARS['mode']) && $HTTP_POST_VARS['mode'] == 'perform' )
+if ( isset($_POST['mode']) && $_POST['mode'] == 'perform' )
 {
-	if ( isset($HTTP_POST_VARS['confirm']) )
+	if ( isset($_POST['confirm']) )
 	{
 		$mode_id = 'perform';
-		$function = ( isset($HTTP_POST_VARS['function']) ) ? htmlspecialchars(trim( $HTTP_POST_VARS['function'] )) : '';
+		$function = ( isset($_POST['function']) ) ? htmlspecialchars(trim( $_POST['function'] )) : '';
 	}
 }
 
@@ -320,19 +320,19 @@ switch($mode_id)
 				$template->pparse("body");
 				break;
 			case 'config': // Configuration
-				if( isset($HTTP_POST_VARS['submit']) )
+				if( isset($_POST['submit']) )
 				{
-					$disallow_postcounter = (isset($HTTP_POST_VARS['disallow_postcounter'])) ? intval($HTTP_POST_VARS['disallow_postcounter']) : 0;
-					$disallow_rebuild = (isset($HTTP_POST_VARS['disallow_rebuild'])) ? intval($HTTP_POST_VARS['disallow_rebuild']) : 0;
-					$rebuildcfg_timelimit = (isset($HTTP_POST_VARS['rebuildcfg_timelimit']) && is_numeric($HTTP_POST_VARS['rebuildcfg_timelimit'])) ? intval($HTTP_POST_VARS['rebuildcfg_timelimit']) : 240;
-					$rebuildcfg_timeoverwrite = (isset($HTTP_POST_VARS['rebuildcfg_timeoverwrite']) && is_numeric($HTTP_POST_VARS['rebuildcfg_timeoverwrite'])) ? intval($HTTP_POST_VARS['rebuildcfg_timeoverwrite']) : 0;
-					$rebuildcfg_maxmemory = (isset($HTTP_POST_VARS['rebuildcfg_maxmemory']) && is_numeric($HTTP_POST_VARS['rebuildcfg_maxmemory'])) ? intval($HTTP_POST_VARS['rebuildcfg_maxmemory']) : 500;
-					$rebuildcfg_minposts = (isset($HTTP_POST_VARS['rebuildcfg_minposts']) && is_numeric($HTTP_POST_VARS['rebuildcfg_minposts'])) ? intval($HTTP_POST_VARS['rebuildcfg_minposts']) : 3;
-					$rebuildcfg_php3only = (isset($HTTP_POST_VARS['rebuildcfg_php3only'])) ? intval($HTTP_POST_VARS['rebuildcfg_php3only']) : 0;
-					$rebuildcfg_php4pps = (isset($HTTP_POST_VARS['rebuildcfg_php4pps']) && is_numeric($HTTP_POST_VARS['rebuildcfg_php4pps'])) ? intval($HTTP_POST_VARS['rebuildcfg_php4pps']) : 8;
-					$rebuildcfg_php3pps = (isset($HTTP_POST_VARS['rebuildcfg_php3pps']) && is_numeric($HTTP_POST_VARS['rebuildcfg_php3pps'])) ? intval($HTTP_POST_VARS['rebuildcfg_php3pps']) : 1;
-					$rebuild_pos = (isset($HTTP_POST_VARS['rebuild_pos']) && is_numeric($HTTP_POST_VARS['rebuild_pos'])) ? intval($HTTP_POST_VARS['rebuild_pos']) : -1;
-					$rebuild_end = (isset($HTTP_POST_VARS['rebuild_end']) && is_numeric($HTTP_POST_VARS['rebuild_end'])) ? intval($HTTP_POST_VARS['rebuild_end']) : 0;
+					$disallow_postcounter = (isset($_POST['disallow_postcounter'])) ? intval($_POST['disallow_postcounter']) : 0;
+					$disallow_rebuild = (isset($_POST['disallow_rebuild'])) ? intval($_POST['disallow_rebuild']) : 0;
+					$rebuildcfg_timelimit = (isset($_POST['rebuildcfg_timelimit']) && is_numeric($_POST['rebuildcfg_timelimit'])) ? intval($_POST['rebuildcfg_timelimit']) : 240;
+					$rebuildcfg_timeoverwrite = (isset($_POST['rebuildcfg_timeoverwrite']) && is_numeric($_POST['rebuildcfg_timeoverwrite'])) ? intval($_POST['rebuildcfg_timeoverwrite']) : 0;
+					$rebuildcfg_maxmemory = (isset($_POST['rebuildcfg_maxmemory']) && is_numeric($_POST['rebuildcfg_maxmemory'])) ? intval($_POST['rebuildcfg_maxmemory']) : 500;
+					$rebuildcfg_minposts = (isset($_POST['rebuildcfg_minposts']) && is_numeric($_POST['rebuildcfg_minposts'])) ? intval($_POST['rebuildcfg_minposts']) : 3;
+					$rebuildcfg_php3only = (isset($_POST['rebuildcfg_php3only'])) ? intval($_POST['rebuildcfg_php3only']) : 0;
+					$rebuildcfg_php4pps = (isset($_POST['rebuildcfg_php4pps']) && is_numeric($_POST['rebuildcfg_php4pps'])) ? intval($_POST['rebuildcfg_php4pps']) : 8;
+					$rebuildcfg_php3pps = (isset($_POST['rebuildcfg_php3pps']) && is_numeric($_POST['rebuildcfg_php3pps'])) ? intval($_POST['rebuildcfg_php3pps']) : 1;
+					$rebuild_pos = (isset($_POST['rebuild_pos']) && is_numeric($_POST['rebuild_pos'])) ? intval($_POST['rebuild_pos']) : -1;
+					$rebuild_end = (isset($_POST['rebuild_end']) && is_numeric($_POST['rebuild_end'])) ? intval($_POST['rebuild_end']) : 0;
 
 					switch(CONFIG_LEVEL)
 					{
@@ -2995,7 +2995,7 @@ switch($mode_id)
 				break;
 			case 'perform_rebuild': // Rebuild search index (perform part)
 				// ATTENTION: page_header not sent yet!
-				$db_state = ( isset($HTTP_GET_VARS['db_state']) ) ? intval( $HTTP_GET_VARS['db_state'] ) : 0;
+				$db_state = ( isset($_GET['db_state']) ) ? intval( $_GET['db_state'] ) : 0;
 				// Load functions
 				include($phpbb_root_path . 'includes/functions_search.'.$phpEx);
 				// Identify PHP version and time limit configuration
@@ -3219,7 +3219,7 @@ switch($mode_id)
 				echo("<h1>" . $lang['Synchronize_posts'] . "</h1>\n");
 				if ($function == 'synchronize_post_direct')
 				{
-					$db_state = ( isset($HTTP_GET_VARS['db_state']) ) ? intval($HTTP_GET_VARS['db_state']) : 1;
+					$db_state = ( isset($_GET['db_state']) ) ? intval($_GET['db_state']) : 1;
 				}
 				else
 				{

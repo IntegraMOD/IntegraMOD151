@@ -53,29 +53,29 @@ class attach_parent
 	//
 	function attach_parent()
 	{
-		global $HTTP_POST_VARS, $HTTP_POST_FILES;
+		global $_POST, $_FILES;
 		
-		if (!empty($HTTP_POST_VARS['add_attachment_body']))
+		if (!empty($_POST['add_attachment_body']))
 		{
-			$this->add_attachment_body = intval($HTTP_POST_VARS['add_attachment_body']);
+			$this->add_attachment_body = intval($_POST['add_attachment_body']);
 		}
 
-		if (!empty($HTTP_POST_VARS['posted_attachments_body']))
+		if (!empty($_POST['posted_attachments_body']))
 		{
-			$this->posted_attachments_body = intval($HTTP_POST_VARS['posted_attachments_body']);
+			$this->posted_attachments_body = intval($_POST['posted_attachments_body']);
 		}
 
-		$this->file_comment = ( isset($HTTP_POST_VARS['filecomment']) ) ? trim( strip_tags($HTTP_POST_VARS['filecomment'])) : '';
-		$this->filename = ($HTTP_POST_FILES['fileupload']['name'] != 'none') ? trim( $HTTP_POST_FILES['fileupload']['name'] ) : '';
-		$this->attachment_list = ( isset($HTTP_POST_VARS['attachment_list']) ) ? $HTTP_POST_VARS['attachment_list'] : array();
-		$this->attachment_comment_list = ( isset($HTTP_POST_VARS['comment_list']) ) ? $HTTP_POST_VARS['comment_list'] : array();
-		$this->attachment_filename_list = ( isset($HTTP_POST_VARS['filename_list']) ) ? $HTTP_POST_VARS['filename_list'] : array();
-		$this->attachment_extension_list = ( isset($HTTP_POST_VARS['extension_list']) ) ? $HTTP_POST_VARS['extension_list'] : array();
-		$this->attachment_mimetype_list = ( isset($HTTP_POST_VARS['mimetype_list']) ) ? $HTTP_POST_VARS['mimetype_list'] : array();
-		$this->attachment_filesize_list = ( isset($HTTP_POST_VARS['filesize_list']) ) ? $HTTP_POST_VARS['filesize_list'] : array();
-		$this->attachment_filetime_list = ( isset($HTTP_POST_VARS['filetime_list']) ) ? $HTTP_POST_VARS['filetime_list'] : array();
-		$this->attachment_id_list = ( isset($HTTP_POST_VARS['attach_id_list']) ) ? $HTTP_POST_VARS['attach_id_list'] : array();
-		$this->attachment_thumbnail_list = ( isset($HTTP_POST_VARS['attach_thumbnail_list']) ) ? $HTTP_POST_VARS['attach_thumbnail_list'] : array();
+		$this->file_comment = ( isset($_POST['filecomment']) ) ? trim( strip_tags($_POST['filecomment'])) : '';
+		$this->filename = ($_FILES['fileupload']['name'] != 'none') ? trim( $_FILES['fileupload']['name'] ) : '';
+		$this->attachment_list = ( isset($_POST['attachment_list']) ) ? $_POST['attachment_list'] : array();
+		$this->attachment_comment_list = ( isset($_POST['comment_list']) ) ? $_POST['comment_list'] : array();
+		$this->attachment_filename_list = ( isset($_POST['filename_list']) ) ? $_POST['filename_list'] : array();
+		$this->attachment_extension_list = ( isset($_POST['extension_list']) ) ? $_POST['extension_list'] : array();
+		$this->attachment_mimetype_list = ( isset($_POST['mimetype_list']) ) ? $_POST['mimetype_list'] : array();
+		$this->attachment_filesize_list = ( isset($_POST['filesize_list']) ) ? $_POST['filesize_list'] : array();
+		$this->attachment_filetime_list = ( isset($_POST['filetime_list']) ) ? $_POST['filetime_list'] : array();
+		$this->attachment_id_list = ( isset($_POST['attach_id_list']) ) ? $_POST['attach_id_list'] : array();
+		$this->attachment_thumbnail_list = ( isset($_POST['attach_thumbnail_list']) ) ? $_POST['attach_thumbnail_list'] : array();
 	}
 	
 	//
@@ -239,7 +239,7 @@ class attach_parent
 	//
 	function handle_attachments($mode)
 	{
-		global $is_auth, $attach_config, $refresh, $HTTP_POST_VARS, $post_id, $submit, $preview, $error, $error_msg, $lang, $template, $userdata, $db;
+		global $is_auth, $attach_config, $refresh, $_POST, $post_id, $submit, $preview, $error, $error_msg, $lang, $template, $userdata, $db;
 		
 		// 
 		// ok, what shall we do ;)
@@ -301,14 +301,14 @@ class attach_parent
 
 		if (!$refresh)
 		{
-			$add = ( isset($HTTP_POST_VARS['add_attachment']) ) ? TRUE : FALSE;
-			$delete = ( isset($HTTP_POST_VARS['del_attachment']) ) ? TRUE : FALSE;
-			$edit = ( isset($HTTP_POST_VARS['edit_comment']) ) ? TRUE : FALSE;
-			$update_attachment = ( isset($HTTP_POST_VARS['update_attachment']) ) ? TRUE : FALSE;
-			$del_thumbnail = ( isset($HTTP_POST_VARS['del_thumbnail']) ) ? TRUE : FALSE;
+			$add = ( isset($_POST['add_attachment']) ) ? TRUE : FALSE;
+			$delete = ( isset($_POST['del_attachment']) ) ? TRUE : FALSE;
+			$edit = ( isset($_POST['edit_comment']) ) ? TRUE : FALSE;
+			$update_attachment = ( isset($_POST['update_attachment']) ) ? TRUE : FALSE;
+			$del_thumbnail = ( isset($_POST['del_thumbnail']) ) ? TRUE : FALSE;
 
-			$add_attachment_box = ( !empty($HTTP_POST_VARS['add_attachment_box']) ) ? TRUE : FALSE;
-			$posted_attachments_box = ( !empty($HTTP_POST_VARS['posted_attachments_box']) ) ? TRUE : FALSE;
+			$add_attachment_box = ( !empty($_POST['add_attachment_box']) ) ? TRUE : FALSE;
+			$posted_attachments_box = ( !empty($_POST['posted_attachments_box']) ) ? TRUE : FALSE;
 
 			$refresh = $add || $delete || $edit || $del_thumbnail || $update_attachment || $add_attachment_box || $posted_attachment_box;
 		}
@@ -360,7 +360,7 @@ class attach_parent
 
 		if ( (!$submit) && ($mode == 'editpost') && ( $auth ))
 		{
-			if ( (!$refresh) && (!$preview) && (!$error) && (!isset($HTTP_POST_VARS['del_poll_option'])) )
+			if ( (!$refresh) && (!$preview) && (!$error) && (!isset($_POST['del_poll_option'])) )
 			{
 				for ($i = 0; $i < count($attachments); $i++)
 				{
@@ -429,12 +429,12 @@ class attach_parent
 
 		if ($preview || $refresh || $error)
 		{
-			$delete_attachment = ( isset($HTTP_POST_VARS['del_attachment']) ) ? TRUE : FALSE;
-			$delete_thumbnail = ( isset($HTTP_POST_VARS['del_thumbnail']) ) ? TRUE : FALSE;
+			$delete_attachment = ( isset($_POST['del_attachment']) ) ? TRUE : FALSE;
+			$delete_thumbnail = ( isset($_POST['del_thumbnail']) ) ? TRUE : FALSE;
 
-			$add_attachment = ( isset($HTTP_POST_VARS['add_attachment']) ) ? TRUE : FALSE;
-			$edit_attachment = ( isset($HTTP_POST_VARS['edit_comment']) ) ? TRUE : FALSE;
-			$update_attachment = ( isset($HTTP_POST_VARS['update_attachment']) ) ? TRUE : FALSE;
+			$add_attachment = ( isset($_POST['add_attachment']) ) ? TRUE : FALSE;
+			$edit_attachment = ( isset($_POST['edit_comment']) ) ? TRUE : FALSE;
+			$update_attachment = ( isset($_POST['update_attachment']) ) ? TRUE : FALSE;
 
 			//
 			// Perform actions on temporary attachments
@@ -442,15 +442,15 @@ class attach_parent
 			if ( ( $delete_attachment ) || ( $delete_thumbnail ) )
 			{
 				// store old values
-				$actual_list = ( isset($HTTP_POST_VARS['attachment_list']) ) ? $HTTP_POST_VARS['attachment_list'] : array();
-				$actual_comment_list = ( isset($HTTP_POST_VARS['comment_list']) ) ? $HTTP_POST_VARS['comment_list'] : array();
-				$actual_filename_list = ( isset($HTTP_POST_VARS['filename_list']) ) ? $HTTP_POST_VARS['filename_list'] : array();
-				$actual_extension_list = ( isset($HTTP_POST_VARS['extension_list']) ) ? $HTTP_POST_VARS['extension_list'] : array();
-				$actual_mimetype_list = ( isset($HTTP_POST_VARS['mimetype_list']) ) ? $HTTP_POST_VARS['mimetype_list'] : array();
-				$actual_filesize_list = ( isset($HTTP_POST_VARS['filesize_list']) ) ? $HTTP_POST_VARS['filesize_list'] : array();
-				$actual_filetime_list = ( isset($HTTP_POST_VARS['filetime_list']) ) ? $HTTP_POST_VARS['filetime_list'] : array();
-				$actual_id_list = ( isset($HTTP_POST_VARS['attach_id_list']) ) ? $HTTP_POST_VARS['attach_id_list'] : array();
-				$actual_thumbnail_list = ( isset($HTTP_POST_VARS['attach_thumbnail_list']) ) ? $HTTP_POST_VARS['attach_thumbnail_list'] : array();
+				$actual_list = ( isset($_POST['attachment_list']) ) ? $_POST['attachment_list'] : array();
+				$actual_comment_list = ( isset($_POST['comment_list']) ) ? $_POST['comment_list'] : array();
+				$actual_filename_list = ( isset($_POST['filename_list']) ) ? $_POST['filename_list'] : array();
+				$actual_extension_list = ( isset($_POST['extension_list']) ) ? $_POST['extension_list'] : array();
+				$actual_mimetype_list = ( isset($_POST['mimetype_list']) ) ? $_POST['mimetype_list'] : array();
+				$actual_filesize_list = ( isset($_POST['filesize_list']) ) ? $_POST['filesize_list'] : array();
+				$actual_filetime_list = ( isset($_POST['filetime_list']) ) ? $_POST['filetime_list'] : array();
+				$actual_id_list = ( isset($_POST['attach_id_list']) ) ? $_POST['attach_id_list'] : array();
+				$actual_thumbnail_list = ( isset($_POST['attach_thumbnail_list']) ) ? $_POST['attach_thumbnail_list'] : array();
 
 				// clean values
 				$this->attachment_list = array();
@@ -464,7 +464,7 @@ class attach_parent
 				$this->attachment_thumbnail_list = array();
 
 				// restore values :)
-				if( isset($HTTP_POST_VARS['attachment_list']) )
+				if( isset($_POST['attachment_list']) )
 				{
 					for ($i = 0; $i < count($actual_list); $i++)
 					{
@@ -473,7 +473,7 @@ class attach_parent
 
 						if ( $delete_thumbnail )
 						{
-							if ( !isset($HTTP_POST_VARS['del_thumbnail'][$actual_list[$i]]) )
+							if ( !isset($_POST['del_thumbnail'][$actual_list[$i]]) )
 							{
 								$restore = TRUE;
 							}
@@ -484,7 +484,7 @@ class attach_parent
 						}
 						if ( $delete_attachment )
 						{
-							if ( !isset($HTTP_POST_VARS['del_attachment'][$actual_list[$i]]) )
+							if ( !isset($_POST['del_attachment'][$actual_list[$i]]) )
 							{
 								$restore = TRUE;
 							}
@@ -559,7 +559,7 @@ class attach_parent
 			{
 				if ($edit_attachment)
 				{
-					$actual_comment_list = ( isset($HTTP_POST_VARS['comment_list']) ) ? $HTTP_POST_VARS['comment_list'] : '';
+					$actual_comment_list = ( isset($_POST['comment_list']) ) ? $_POST['comment_list'] : '';
 				
 					$this->attachment_comment_list = array();
 
@@ -585,15 +585,15 @@ class attach_parent
 
 					if (!$error)
 					{
-						$actual_list = ( isset($HTTP_POST_VARS['attachment_list']) ) ? $HTTP_POST_VARS['attachment_list'] : array();
-						$actual_id_list = ( isset($HTTP_POST_VARS['attach_id_list']) ) ? $HTTP_POST_VARS['attach_id_list'] : array();
+						$actual_list = ( isset($_POST['attachment_list']) ) ? $_POST['attachment_list'] : array();
+						$actual_id_list = ( isset($_POST['attach_id_list']) ) ? $_POST['attach_id_list'] : array();
 				
 						$attachment_id = 0;
 						$actual_element = 0;
 
 						for ($i = 0; $i < count($actual_id_list); $i++)
 						{
-							if (isset($HTTP_POST_VARS['update_attachment'][$actual_id_list[$i]]))
+							if (isset($_POST['update_attachment'][$actual_id_list[$i]]))
 							{
 								$attachment_id = intval($actual_id_list[$i]);
 								$actual_element = $i;
@@ -780,7 +780,7 @@ class attach_parent
 	
 		if ($mode == 'last_attachment')
 		{
-			if ( ($this->post_attach) && (!isset($HTTP_POST_VARS['update_attachment'])) )
+			if ( ($this->post_attach) && (!isset($_POST['update_attachment'])) )
 			{
 				//
 				// insert attachment into db, here the user submited it directly 
@@ -814,7 +814,7 @@ class attach_parent
 	//
 	function display_attachment_bodies()
 	{
-		global $attach_config, $db, $is_auth, $lang, $mode, $phpEx, $template, $upload_dir, $userdata, $HTTP_POST_VARS, $forum_id;
+		global $attach_config, $db, $is_auth, $lang, $mode, $phpEx, $template, $upload_dir, $userdata, $_POST, $forum_id;
 		global $phpbb_root_path;
 	
 		//
@@ -823,7 +823,7 @@ class attach_parent
 		$value_add = $value_posted = 0;
 		if (intval($attach_config['show_apcp']))
 		{
-			if ( !empty($HTTP_POST_VARS['add_attachment_box']) )
+			if ( !empty($_POST['add_attachment_box']) )
 			{
 				$value_add = ( $this->add_attachment_body == 0 ) ? '1' : '0';
 				$this->add_attachment_body = intval($value_add);
@@ -833,7 +833,7 @@ class attach_parent
 				$value_add = ( $this->add_attachment_body == 0 ) ? '0' : '1';
 			}
 		
-			if ( !empty($HTTP_POST_VARS['posted_attachments_box']) )
+			if ( !empty($_POST['posted_attachments_box']) )
 			{
 				$value_posted = ( $this->posted_attachments_body == 0 ) ? '1' : '0';
 				$this->posted_attachments_body = intval($value_posted);
@@ -989,17 +989,17 @@ class attach_parent
 	//
 	function upload_attachment()
 	{
-		global $HTTP_POST_FILES, $db, $HTTP_POST_VARS, $error, $error_msg, $lang, $attach_config, $userdata, $upload_dir, $forum_id;
+		global $_FILES, $db, $_POST, $error, $error_msg, $lang, $attach_config, $userdata, $upload_dir, $forum_id;
 		
 		$this->post_attach = ($this->filename != '') ? TRUE : FALSE;
 
 		if ($this->post_attach) 
 		{
 			$r_file = trim(basename($this->filename));
-			$file = $HTTP_POST_FILES['fileupload']['tmp_name'];
-			$this->type = $HTTP_POST_FILES['fileupload']['type'];
+			$file = $_FILES['fileupload']['tmp_name'];
+			$this->type = $_FILES['fileupload']['type'];
 
-			if (isset($HTTP_POST_FILES['fileupload']['size']) && $HTTP_POST_FILES['fileupload']['size'] == 0)
+			if (isset($_FILES['fileupload']['size']) && $_FILES['fileupload']['size'] == 0)
 			{
 				message_die(GENERAL_ERROR, 'Tried to upload empty file');
 			}
@@ -1364,7 +1364,7 @@ class attach_parent
 			//
 			if ($this->page == PAGE_PRIVMSGS)
 			{
-				$to_user = ( isset($HTTP_POST_VARS['username']) ) ? $HTTP_POST_VARS['username'] : '';
+				$to_user = ( isset($_POST['username']) ) ? $_POST['username'] : '';
 
 				if (intval($attach_config['pm_filesize_limit']) != 0)
 				{
@@ -1598,7 +1598,7 @@ class attach_posting extends attach_parent
 			$this->do_insert_attachment('attach_list', 'post', $post_id);
 			$this->do_insert_attachment('last_attachment', 'post', $post_id);
 
-			if ( ( (count($this->attachment_list) > 0) || ($this->post_attach) ) && (!isset($HTTP_POST_VARS['update_attachment'])) )
+			if ( ( (count($this->attachment_list) > 0) || ($this->post_attach) ) && (!isset($_POST['update_attachment'])) )
 			{
 				$sql = "UPDATE " . POSTS_TABLE . "
 				SET post_attachment = 1
@@ -1636,12 +1636,12 @@ class attach_posting extends attach_parent
 	//
 	function posting_attachment_mod()
 	{
-		global $mode, $confirm, $is_auth, $post_id, $delete, $refresh, $HTTP_POST_VARS;
+		global $mode, $confirm, $is_auth, $post_id, $delete, $refresh, $_POST;
 
 		if (!$refresh)
 		{
-			$add_attachment_box = ( !empty($HTTP_POST_VARS['add_attachment_box']) ) ? TRUE : FALSE;
-			$posted_attachments_box = ( !empty($HTTP_POST_VARS['posted_attachments_box']) ) ? TRUE : FALSE;
+			$add_attachment_box = ( !empty($_POST['add_attachment_box']) ) ? TRUE : FALSE;
+			$posted_attachments_box = ( !empty($_POST['posted_attachments_box']) ) ? TRUE : FALSE;
 
 			$refresh = $add_attachment_box || $posted_attachments_box;
 		}

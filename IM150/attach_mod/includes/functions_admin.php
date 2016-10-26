@@ -383,7 +383,7 @@ function get_formatted_dirsize()
 //
 function search_attachments($order_by, &$total_rows)
 {
-	global $db, $HTTP_POST_VARS, $HTTP_GET_VARS, $lang;
+	global $db, $_POST, $_GET, $lang;
 	
 	$where_sql = array();
 

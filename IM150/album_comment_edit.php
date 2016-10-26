@@ -69,13 +69,13 @@ if( $album_config['comment'] == 0 )
 // Check the request
 // ------------------------------------
 
-if( isset($HTTP_GET_VARS['comment_id']) )
+if( isset($_GET['comment_id']) )
 {
-	$comment_id = intval($HTTP_GET_VARS['comment_id']);
+	$comment_id = intval($_GET['comment_id']);
 }
-elseif( isset($HTTP_POST_VARS['comment_id']) )
+elseif( isset($_POST['comment_id']) )
 {
-	$comment_id = intval($HTTP_POST_VARS['comment_id']);
+	$comment_id = intval($_POST['comment_id']);
 }
 else
 {
@@ -194,7 +194,7 @@ else
 */
 
 
-if( !isset($HTTP_POST_VARS['comment']) )
+if( !isset($_POST['comment']) )
 {
 	/* ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
                Comments Screen
@@ -307,7 +307,7 @@ else
 						Comment Submited
 	~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ */
 
-	$comment_text = str_replace("\'", "''", htmlspecialchars(substr(trim($HTTP_POST_VARS['comment']), 0, $album_config['desc_length'])));
+	$comment_text = str_replace("\'", "''", htmlspecialchars(substr(trim($_POST['comment']), 0, $album_config['desc_length'])));
 
 	if( empty($comment_text) )
 	{

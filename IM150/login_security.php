@@ -19,8 +19,8 @@ init_userprefs($userdata);
 
 include_once($phpbb_root_path .'includes/phpbb_security.'. $phpEx);
 
-	$verify_sq 	= isset($HTTP_GET_VARS['phpBBSecurity']) ? $HTTP_GET_VARS['phpBBSecurity'] : $HTTP_POST_VARS['phpBBSecurity'];		
-	$actions	= isset($HTTP_POST_VARS['actions']) ? $HTTP_POST_VARS['actions'] : '';
+	$verify_sq 	= isset($_GET['phpBBSecurity']) ? $_GET['phpBBSecurity'] : $_POST['phpBBSecurity'];		
+	$actions	= isset($_POST['actions']) ? $_POST['actions'] : '';
 	
 	$template->set_filenames(array(
 		'body' => 'login_security.tpl')
@@ -54,7 +54,7 @@ include_once($phpbb_root_path .'includes/phpbb_security.'. $phpEx);
 	
 	if ($verify_sq == 'caught')
 		{
-	$start			= isset($HTTP_GET_VARS['start']) ? intval($HTTP_GET_VARS['start']) : 0;
+	$start			= isset($_GET['start']) ? intval($_GET['start']) : 0;
 	$caught_data 	= phpBBSecurity_Caught($start, $board_config['phpBBSecurity_per_page']);
 	$caught_count	= count($caught_data);
 	$total 			= phpBBSecurity_Total();
@@ -111,8 +111,8 @@ include_once($phpbb_root_path .'includes/phpbb_security.'. $phpEx);
 			}
 		elseif ($actions == '1')
 			{
-		$ps_username 	= isset($HTTP_POST_VARS['ps_username']) ? $HTTP_POST_VARS['ps_username'] : '';
-		$ps_email 		= isset($HTTP_POST_VARS['ps_email']) ? $HTTP_POST_VARS['ps_email'] : '';
+		$ps_username 	= isset($_POST['ps_username']) ? $_POST['ps_username'] : '';
+		$ps_email 		= isset($_POST['ps_email']) ? $_POST['ps_email'] : '';
 		phpBBSecurity_ValidateStepOne($ps_username, $ps_email);
 		
 		$question = phpBBSecurity_ValidateGetQ($ps_username, $ps_email);
@@ -125,8 +125,8 @@ include_once($phpbb_root_path .'includes/phpbb_security.'. $phpEx);
 			}
 		elseif ($actions == '2')
 			{
-		$ps_username 	= isset($HTTP_POST_VARS['ps_username']) ? $HTTP_POST_VARS['ps_username'] : '';
-		$ps_answer		= isset($HTTP_POST_VARS['ps_answer']) ? $HTTP_POST_VARS['ps_answer'] : '';
+		$ps_username 	= isset($_POST['ps_username']) ? $_POST['ps_username'] : '';
+		$ps_answer		= isset($_POST['ps_answer']) ? $_POST['ps_answer'] : '';
 		
 		phpBBSecurity_ValidateStepTwo($ps_username, $ps_answer);				
 			}			

@@ -30,6 +30,9 @@ if( !empty($setmodules) )
 	return;
 }
 
+define('CT_SECLEVEL', 'LOW');
+$ct_ignoregvar = array('mode');
+
 $no_page_header = TRUE;
 $phpbb_root_path = './../';
 require($phpbb_root_path . 'extension.inc');

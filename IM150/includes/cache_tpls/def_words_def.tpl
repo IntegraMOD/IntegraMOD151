@@ -1,11 +1,11 @@
 /***************************************************************************
- *						def_words_def.php
- *						-----------------
+ *						def_words.php
+ *						-------------
  *	begin			: 12/11/2003
  *	copyright		: Ptirhiik
  *	email			: admin@rpgnet-fr.com
  *
- *	version			: 1.0.0 - 12/11/2003
+ *	version			: 1.0.1 - 17/12/2003
  *
  *	last update		: {TIME} by {USERNAME}
  *
@@ -29,11 +29,12 @@ if ( !defined('IN_PHPBB') )
 
 //--------------------------------------------------------------------------------------------------
 //
-// $word_replacement : words/replacements
-// -----------------
+// $censored_words : words/replacements
+// ----------------
 //--------------------------------------------------------------------------------------------------
 
-$word_replacement = array();
-<!-- BEGIN word -->
-$word_replacement['{word.WORD}'] = '{word.REPLACEMENT}';
-<!-- END word -->
+$censored_words = array(
+	<!-- BEGIN cache_row -->
+	{cache_row.ID} => array({cache_row.CELLS}),
+	<!-- END cache_row -->
+);

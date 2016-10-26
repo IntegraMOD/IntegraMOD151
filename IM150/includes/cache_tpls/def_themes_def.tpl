@@ -1,11 +1,11 @@
 /***************************************************************************
- *						def_themes_def.php
- *						------------------
+ *						def_themes.php
+ *						--------------
  *	begin			: 12/11/2003
  *	copyright		: Ptirhiik
  *	email			: admin@rpgnet-fr.com
  *
- *	version			: 1.0.0 - 12/11/2003
+ *	version			: 1.0.1 - 15/12/2003
  *
  *	last update		: {TIME} by {USERNAME}
  *
@@ -34,7 +34,7 @@ if ( !defined('IN_PHPBB') )
 //--------------------------------------------------------------------------------------------------
 
 $themes_style = array(
-		<!-- BEGIN theme -->
-		{theme.ID} => array({theme.CELLS}),
-		<!-- END theme -->
+	<!-- BEGIN cache_row -->
+	{cache_row.ID} => array({cache_row.CELLS}),
+	<!-- END cache_row -->
 );
