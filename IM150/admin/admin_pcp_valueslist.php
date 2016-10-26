@@ -21,6 +21,8 @@
  ***************************************************************************/
 
 define('IN_PHPBB', true);
+define('CT_SECLEVEL', 'MEDIUM');
+$ct_ignorepvar = array('delete_selection');
 
 if( !empty($setmodules) )
 {
