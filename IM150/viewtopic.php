@@ -2029,11 +2029,11 @@ for($i = 0; $i < $total_posts; $i++)
 	if ( $is_auth['auth_mod'] )
 	{
 		$temp_url = "modcp.$phpEx?mode=ip&amp;" . POST_POST_URL . "=" . $postrow[$i]['post_id'] . "&amp;" . POST_TOPIC_URL . "=" . $topic_id . "&amp;p_sid=" . $userdata['priv_session_id'];
-		$ip_img = '<a href="' . $temp_url . '"><img src="' . $images['icon_ip'] . '" alt="' . $lang['View_IP'] . '" title="' . $lang['View_IP'] . '" border="0" /></a>';
+		$ip_img = '<a class="icon_ip" href="' . $temp_url . '" title="' . $lang['View_IP'] . '"><img src="' . $images['icon_ip'] . '" alt="' . $lang['View_IP'] . '" title="' . $lang['View_IP'] . '" border="0" /></a>';
 		$ip = '<a href="' . $temp_url . '">' . $lang['View_IP'] . '</a>';
 
 		$temp_url = "posting.$phpEx?mode=delete&amp;" . POST_POST_URL . "=" . $postrow[$i]['post_id'] . "&amp;p_sid=" . $userdata['priv_session_id'];
-		$delpost_img = '<a href="' . $temp_url . '"><img src="' . $images['icon_delpost'] . '" alt="' . $lang['Delete_post'] . '" title="' . $lang['Delete_post'] . '" border="0" /></a>';
+		$delpost_img = '<a class="icon_delete" href="' . $temp_url . '" title="' . $lang['Delete_post'] . '"><img src="' . $images['icon_delpost'] . '" alt="' . $lang['Delete_post'] . '" title="' . $lang['Delete_post'] . '" border="0" /></a>';
 		$delpost = '<a href="' . append_sid($temp_url) . '">' . $lang['Delete_post'] . '</a>';
 	}
 	else
