@@ -1,0 +1,280 @@
+/* Based on the original Style Sheet for the fisubsilver v2 Theme for phpBB version 2+
+
+/* The content of the posts (body of text) */
+body{font:12px Verdana,Arial,Helvetica,sans-serif;margin:6px;padding:0;}
+
+/* General font families for common tags */
+font,th,td,p {font: 12px Verdana,Arial,Helvetica,sans-serif;}
+
+/* General text */
+.gensmall{font-size:10px;}
+.gen { font-size : 11px; text-decoration: none;}
+.copyright{font-size:11px;}
+
+td.genmed,.genmed{font-size:11px;}
+.explaintitle{font-size:11px;font-weight:bold;}
+
+/* General page style */
+a:link,a:active,a:visited,a.postlink{text-decoration:none;}
+a:hover{text-decoration:none;}
+
+/* titles for the topics:could specify viewed link color too */
+.topictitle{font-size:11px;font-weight:bold;}
+
+/* Name of poster in viewmsg.php and viewtopic.php and other places */
+.name{font-size:11px;font-weight: bold;}
+
+/* This is the gradient background at the top of the page */
+.topnav{font-size:10px;white-space:nowrap;border-style:solid;border-width: 1px 0px 1px 0px;}
+.qnav{white-space:nowrap;width:100%;text-decoration:none;}
+.qb  {font-size:10px;white-space:nowrap;border-style:solid;border-width: 1px 0px 1px 0px;}
+.cv {position: relative;top: 0%;transform: translateY(-0%);height:3em;}
+.bcv {position: relative;top: 20%;right:0;transform: translateY(-20%) translateX(5%); }
+.fr {position:relative;float:right;}
+.openclose {display: block;float:right;width:15px;height:15px;}
+
+hr{border-top-width:1px;height:0px;}
+
+/* Category gradients*/
+td.cat,td.catHead,td.catSides,td.catLeft,td.catRight,td.catBottom{
+font-weight:bold;letter-spacing:1px;height:29px;text-indent:4px;}
+
+/* Table Header cells */
+th{font-size:11px;font-weight:bold;height:27px;white-space:nowrap;text-align:center;padding-left:8px;padding-right:8px;}
+
+/* The largest text used in the index page title and toptic title etc. */
+.maintitle,h1{font:bold 20px/120% "Trebuchet MS",Verdana,Arial,Helvetica,sans-serif;text-decoration:none;color:#839fbc;margin:0 0 0 20px;}
+.subtitle,h2{font:bold 18px/180% "Trebuchet MS",Verdana,Arial,Helvetica,sans-serif;text-decoration:none;}
+
+/* Used for the navigation text,(Page 1,2,3 etc) and the navigation bar when in a forum */
+.nav{font-size:11px;font-weight:bold;}
+.postbody{font-size:12px;line-height:125%;}
+
+/* Location,number of posts,post date etc */
+.postdetails{font-size:10px;}
+
+/* Quote blocks */
+.quotetitle,.quote {font-size:11px;padding:2px 2px 3px 3px}
+.quotetitle {text-indent:2px;font-weight:bold;margin:10px 20px 0 20px}
+.quote {border-top-width:0px;font-size:11px;margin:0 20px 10px 20px}
+.quote {overflow:auto;height:40px}
+
+/* Code blocks */
+.codetitle,.code {padding:2px 2px 3px 3px}
+.codetitle {font-size:11px;text-indent:2px;font-weight:bold;margin:10px 20px 0 20px}
+.code {border-top-width:0;font:13px Courier,'Courier New',sans-serif;margin:0 20px 0 20px;line-height:110%}
+.code {overflow:auto;height:40px}
+
+/* PHP blocks */
+.phptitle,.php {padding:2px 2px 3px 3px}
+.phptitle {font-size:11px;text-indent:2px;font-weight:bold;margin:10px 20px 0 20px}
+.php {border-top-width:0px;font:13px Courier,'Courier New',sans-serif;margin:0 20px 0 20px;line-height:110%}
+.php {overflow:auto;height:40px}
+
+/* Form elements */
+form{display:inline}
+input, select{font:11px Verdana,Arial,Helvetica,sans-serif}
+input.post,textarea.post{font:11px Verdana,Arial,Helvetica,sans-serif;padding-bottom:2px;padding-left:2px}
+input.button,input.liteoption,.fakebut{font-size:11px}
+input.catbutton{font-size:10px}
+input.mainoption{font-size:11px;font-weight:bold}
+a.but,a.but:hover,a.but:visited{text-decoration:none}
+
+/* This is the line in the posting page which shows the rollover
+help line. Color value in row2 */
+.helpline{border:0px;font-size:10px}
+
+/*-- mod : profile cp --*/
+.foundercolor, a.foundercolor, a.foundercolor:link, a.foundercolor:active, a.foundercolor:visited, .jadmincolor, a.jadmincolor, a.jadmincolor:link, a.jadmincolor:active, a.jadmincolor:visited, .admincolor, a.admincolor, a.admincolor:link, a.admincolor:active, a.admincolor:visited, .modcolor, a.modcolor, a.modcolor:link, a.modcolor:active, a.modcolor:visited, .usercolor, a.usercolor, a.usercolor:link, a.usercolor:active, a.usercolor:visited {font-weight: bold;}
+a.foundercolor:hover, a.jadmincolor:hover, a.admincolor:hover, a.modcolor:hover, a.usercolor:hover {text-decoration: underline;}
+/*-- fin mod : profile cp --*/
+
+/* Admin & Moderator Colors MODification */
+.admin,.mod{font-size:11px;font-weight:bold}
+
+/* Specify the space around images */
+.imgtopic,.imgicon{margin-left:3px}
+.imgspace{margin-left:1px;margin-right:2px}
+.imgfolder{margin:1px 4px 1px 4px}
+
+/* Gets rid of the need for border="0" on hyperlinked images */
+img{border:0 solid}
+
+.abbr, .acronym {font-weight: bold;text-decoration: overline;	cursor: help;}
+
+/* Mighty Gorgon - Full Album Pack - BEGIN */
+.forumline_left {border-top:0px;border-bottom:2px;border-right:0px;border-left:2px;border-style:solid;}
+.tab_links, a.tab_links:hover, a.tab_links:link, a.tab_links:active, a.tab_links:visited {font-size: 11px;text-decoration: none;}
+.tab_links_unsel, a.tab_links_unsel:hover, a.tab_links_unsel:link, a.tab_links_unsel:active, a.tab_links_unsel:visited {font-size: 11px;text-decoration: none;}
+a.tab_links:hover, a.tab_links_unsel:hover {text-decoration: underline;}
+.tab_headers, th.tab_headers {font-size:11px;font-weight:bold;padding-left:4px;padding-right:8px;border-style:solid;border-width:1px 1px 0px 1px;}
+.tab_headers_unsel, th.tab_headers_unsel {font-size:11px;font-weight:bold;padding-left:4px;padding-right:8px;border-style:solid;border-width:1px 1px 0px 1px;}
+.tab_border {border:1px;}
+.filler, th.filler {background-image:none;}
+.picframe{display:block;padding:2px 6px 2px 6px;position:relative;bottom:2px;right:2px;}
+.picshadow{color:inherit;margin-left:4px;margin-top:4px;}
+/* Mighty Gorgon - Full Album Pack - END */
+
+/* Background images for tables */
+.tbl{border-collapse:collapse;height:4px;width:100%}
+.tbll{width:8px}
+.tblbot{width:100%}
+.tblr{width:8px}
+
+.clear-fix {display:block;clear:both;}
+.clearfix:after {content:".";display:block;height:0;clear:both;visibility:hidden;}
+.clearfix {display:inline-block;}  /* for IE/Mac */
+
+.space {margin:4px auto 10px auto;}
+
+.openclose {display:block;float:right;width:15px;height:15px;}
+
+a.kb {display: block;float: left;font: bold 40px 'Nunito', sans-serif;height: 75px;margin-right: 20px;padding-right: 20px;padding-bottom: 20px;text-transform:capitalize;}
+a.kb:hover {background-position: bottom right;outline: none;text-decoration: none;}
+a.kb span {display:block;line-height: 65px;padding: 6px 20px 4px 30px;appearance:button;-moz-appearance:button;-webkit-appearance:button;}
+a.kb:hover span {background-position:bottom left;padding:6px 20px 4px 30px;}
+
+/* Tables to Divs */
+.divTable{display:table;width: 100%;}
+.divTableRow {display:table-row;}
+.divTableHeading {display:table-header-group;}
+.divTableCell, .divTableHead {border:0px;display:table-cell;padding:3px 10px;}
+.divQTableCell {border:0px;display:table-cell;padding:0px;}
+.divTableHeading {display:table-header-group;font-weight:bold;}
+.divTableFoot {display:table-footer-group;font-weight:bold;}
+.divTableBody {display:table-row-group;}
+
+.center {text-align:center;}
+
+.bx {display:table-cell;padding:3px 10px;}
+
+ul.uct {
+    list-style-type: none;
+	height:2.1em;
+	display:inline-block;
+
+
+}
+.uct li {position:relative;float:left;margin:0 .11em;}
+
+/* css buttons */
+.genbtn {
+	-webkit-border-radius: 25;
+	-moz-border-radius: 25;
+	border-radius: 25px;
+	font-size: 1em;
+	font-weight:600;
+	padding: 3px 4px 5px 8px;
+	text-decoration: none;
+	text-transform: lowercase;
+
+}
+.postbtn {
+	-webkit-border-radius: 25;
+	-moz-border-radius: 25;
+	border-radius: 25px;
+	font-size: 1em;
+	font-weight:600;
+	padding: 3px 16px 5px 16px;
+	text-decoration: none;
+	text-transform: lowercase;
+	letter-spacing: -.9px;
+}
+.postbtnsml {
+	-webkit-border-radius: 20;
+	-moz-border-radius: 20;
+	border-radius: 20px;
+	font-size: .9em;
+	font-weight:600;
+	padding: 2px 12px 4px 12px;
+	text-decoration: none;
+	text-transform: lowercase;
+	letter-spacing: -.9px;
+}
+.postbtn:hover, .postbtnsml:hover .genbtn:hover{text-decoration: none;}
+
+a.noi img {display:none}
+
+.fa-twatch:before {content: "\f06e";}
+.fa-tnext:before {content: "\f061";}
+.fa-tprev:before {content: "\f060";}
+
+.fa-tno {display:none}
+
+.fa-21 {
+  font-size: 2.1em;
+}
+
+/* Banner Mod */
+.BannerDivTable{display:table;width:100%;}
+.BannerDivTableRow {display:table-row;}
+.BannerDivTableHeading {display:table-header-group;}
+.BannerDivTableCell, .BannerDivTableHead {border:0px;display:table-cell;padding:3px 10px;}
+.BannerDivTableHeading {display:table-header-group;font-weight:bold;}
+.BannerDivTableFoot {display:table-footer-group;font-weight:bold;}
+.BannerDivTableBody {display:table-row-group;}
+
+/* Responsive qbar qmenu */
+
+.mob-tab-menu-position-fixed {position: fixed;  margin: 0; overflow: auto; box-sizing: border-box; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; }
+.mob-tab-menu-position-fixed-horiz {height: 100%; bottom: 0px; top: 0px; }
+.mob-tab-menu-position-fixed-vert {left: 0px; right: 0px; }
+.mob-tab-menu-position-fixed-left {left: 0px;}
+.mob-tab-menu-position-fixed-top {top: 0px; }
+.mob-tab-menu-position-fixed-right {right: 0px; }
+
+#mob-tab-menu-pseudo-body {width:100%;overflow-x:hidden;position:relative; }
+a.mob-tab-menu-toggle {display:inline-block;width:30px;height:30px;text-decoration:none;}
+.mob-tab-menu-active {background-position:left bottom !important; }
+nav.mobile-menu a{font-weight: 900;}
+nav.mobile-menu {width:200px;padding:20px;}
+nav.mobile-menu a {display:block;}
+
+div#mobile-bar {position:fixed;left:0;top:0;width:100%;text-indent:10px;padding:5px 0 5px 0;}
+
+body.resp nav.mobile-menu {width:auto;border:none;}
+body.resp nav.mobile-menu {text-align:left !important; }
+body.resp nav.desktop-menu {padding:0px;text-align:center;display:none;}
+body.resp div#mobile-bar {position:absolute;}
+
+@media only screen and (min-width: 700px) {
+	body.resp nav.desktop-menu { display: block; }
+	body.resp div#mobile-bar { display: none; }
+	body.resp p.custom-links { display: none; }
+	td.desktopMc { display: block !important; }
+	td.mobileMc { display: none !important; }
+}
+
+@media screen and (device-aspect-ratio: 40/71) {
+	body.resp nav.desktop-menu { display: none; }
+	body.resp div#mobile-bar { display: block; }
+	body.resp p.custom-links { display: block; }
+	td.desktopMc { display: none !important; }
+	td.mobileMc { display: block !important; }
+}
+
+@media screen and (device-aspect-ratio: 375/667) {
+	body.resp nav.desktop-menu { display: none; }
+	body.resp div#mobile-bar { display: block; }
+	body.resp p.custom-links { display: block; }
+	td.desktopMc { display: none !important; }
+	td.mobileMc { display: block !important; }
+}
+
+/*
+@media screen and (device-aspect-ratio: 16/9) {
+	body.resp nav.desktop-menu { display: none; }
+	body.resp div#mobile-bar { display: block; }
+	body.resp p.custom-links { display: block; }
+	td.desktopMc { display: none !important; }
+	td.mobileMc { display: block !important; }
+}
+*/
+
+@media only screen and (max-device-width: 480px) {
+	body.resp nav.desktop-menu { display: none; }
+	body.resp div#mobile-bar { display: block; }
+	body.resp p.custom-links { display: block; }
+	td.desktopMc { display: none !important; }
+	td.mobileMc { display: block !important; }
+}
