@@ -1,5 +1,5 @@
 #
-# Basic DB data for phpBB2 IntegraMOD142
+# Basic DB data for phpBB2.0.24 IntegraMOD151
 #
 
 
