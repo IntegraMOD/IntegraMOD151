@@ -40,9 +40,9 @@ function page_header()
 <meta http-equiv="Content-Type" content="text/html; charset=<?php echo $lang['ENCODING']; ?>">
 <meta http-equiv="Content-Style-Type" content="text/css">
 <title><?php echo $lang['Welcome_install'];?></title>
-<link rel="stylesheet" href="templates/Default/Default.css" type="text/css">
+<link rel="stylesheet" href="templates/fisubice/css/fisubice.css" type="text/css">
 <!--[if IE]>
-<link rel="stylesheet" href="templates/Default/formIE.css" type="text/css">
+<link rel="stylesheet" href="templates/fisubice/formIE.css" type="text/css">
 <![endif]-->
 
 </head>
@@ -625,8 +625,8 @@ function fileicon($path)
 {
 $relpath = './';
 // dir or fileicon begin
-$dirimage = "<img src='".$relpath."templates/Default/images/icon_minicat_new.gif' width='13' height='9' border='0'> ";
-$fileimage = "<img src='".$relpath."templates/Default/images/icon_minipost.gif' width='12' height='9' border='0'> ";
+$dirimage = "<i class=\"fa fa-folder-open-o\"></i>";
+$fileimage = "<i class=\"fa fa-file-text-o\"></i>";
 // dir or fileicon end
 
 // dir or fileicon begin
@@ -666,9 +666,8 @@ function chmod_routine($path, $mod, $chmodmethod, $ftp_details)   // Just to mak
 // -  --  --  --  --  --  --  --  --  --  --  --  --  --  --  --  --  --  --  --  --  --  --  --  --  --  --  --  --  --  --  --  -
   $relpath = './';
   $fileicon = fileicon($path);
-  $errorimage = " <img src='".$relpath."images/smiles/icon_exclaim.gif' width='19' height='19' border='0' align='absmiddle'>";
+  $errorimage = "<i class=\"fa fa-exclamation-triangle fa-2x\" style=\"color:#FFEE00;margin-left:1em;\"></i>";
  
-//  $errorimage = "<img src='".$relpath."images\smiles\icon_exclaim.gif' width='13' height='19' border='19'> ";
 
   $filename = "<font color='#6666CC' size='5'>$path</font>";
 // This function holds the routine for both methods
@@ -930,7 +929,7 @@ $report2 = $afterreport;
 
 
 
-     $errorimage = " <img src='".$relpath."images/smiles/icon_exclaim.gif' width='19' height='19' border='0' align='absmiddle'>";
+     $errorimage = "<i class=\"fa fa-exclamation-triangle fa-2x\" style=\"color:#FFEE00;margin-left:1em;\"></i>";
 
 
 if ($list !== "permissionstatus") tableboxtitle3("Now", "File / Directory", "Pre", "After");
@@ -1468,32 +1467,32 @@ box('System', $system);
   $inside = "";
   $preinstall = autodetect_install();
 
-  $inside .= "<a href=\"" . basename($_SERVER['PHP_SELF']) . "?page=0\"><img src='templates/Default/images/pips/pip.gif' align='absbottom' border='0' hspace='5'>$process[0]</a><br>";
+  $inside .= "<a href=\"" . basename($_SERVER['PHP_SELF']) . "?page=0\"><i class=\"fa fa-circle-o\" style=\"vertical-align:text-bottom;margin-right:.5em;\"></i>$process[0]</a><br>";
 
   $inside .= "<hr>";
 if ($nolinux) {
-  $inside .= "<a href=\"" . basename($_SERVER['PHP_SELF']) . "?page=1\"><img src='templates/Default/images/pips/pip.gif' align='absbottom' border='0' hspace='5'><strike>$process[1]</strike><br>";
-  $inside .= "<a href=\"" . basename($_SERVER['PHP_SELF']) . "?page=2\"><img src='templates/Default/images/pips/pip.gif' align='absbottom' border='0' hspace='5'><strike>$process[2]</strike></a><br>";
-  $inside .= "<a href=\"" . basename($_SERVER['PHP_SELF']) . "?page=3\"><img src='templates/Default/images/pips/pip.gif' align='absbottom' border='0' hspace='5'><strike>$process[3]</strike></a><br>";
+  $inside .= "<a href=\"" . basename($_SERVER['PHP_SELF']) . "?page=1\"><i class=\"fa fa-circle-o\" style=\"vertical-align:text-bottom;margin-right:.5em;\"></i><strike>$process[1]</strike><br>";
+  $inside .= "<a href=\"" . basename($_SERVER['PHP_SELF']) . "?page=2\"><i class=\"fa fa-circle-o\" style=\"vertical-align:text-bottom;margin-right:.5em;\"></i><strike>$process[2]</strike></a><br>";
+  $inside .= "<a href=\"" . basename($_SERVER['PHP_SELF']) . "?page=3\"><i class=\"fa fa-circle-o\" style=\"vertical-align:text-bottom;margin-right:.5em;\"></i><strike>$process[3]</strike></a><br>";
   $inside .= "<div  align='center' class='admin'><strong>(no linux)</strong></div>";
 }
 else if ($preinstall) {
-  $inside .= "<a href=\"" . basename($_SERVER['PHP_SELF']) . "?page=1\"><img src='templates/Default/images/pips/pip.gif' align='absbottom' border='0' hspace='5'>$process[1]</a><br>";
-  $inside .= "<a href=\"" . basename($_SERVER['PHP_SELF']) . "?page=2\"><img src='templates/Default/images/pips/pip.gif' align='absbottom' border='0' hspace='5'><strong>$process[2]</strong></a><br>";
-  $inside .= "<a href=\"" . basename($_SERVER['PHP_SELF']) . "?page=3\"><img src='templates/Default/images/pips/pip.gif' align='absbottom' border='0' hspace='5'><strike>$process[3]</strike></a><br>";
+  $inside .= "<a href=\"" . basename($_SERVER['PHP_SELF']) . "?page=1\"><i class=\"fa fa-circle-o\" style=\"vertical-align:text-bottom;margin-right:.5em;\"></i>$process[1]</a><br>";
+  $inside .= "<a href=\"" . basename($_SERVER['PHP_SELF']) . "?page=2\"><i class=\"fa fa-circle-o\" style=\"vertical-align:text-bottom;margin-right:.5em;\"></i><strong>$process[2]</strong></a><br>";
+  $inside .= "<a href=\"" . basename($_SERVER['PHP_SELF']) . "?page=3\"><i class=\"fa fa-circle-o\" style=\"vertical-align:text-bottom;margin-right:.5em;\"></i><strike>$process[3]</strike></a><br>";
 }
 else {
-  $inside .= "<a href=\"" . basename($_SERVER['PHP_SELF']) . "?page=1\"><img src='templates/Default/images/pips/pip.gif' align='absbottom' border='0' hspace='5'>$process[1]</a><br>";
-  $inside .= "<a href=\"" . basename($_SERVER['PHP_SELF']) . "?page=2\"><img src='templates/Default/images/pips/pip.gif' align='absbottom' border='0' hspace='5'><strike>$process[2]</strike></a><br>";
-  $inside .= "<a href=\"" . basename($_SERVER['PHP_SELF']) . "?page=3\"><img src='templates/Default/images/pips/pip.gif' align='absbottom' border='0' hspace='5'><strong>$process[3]</strong></a><br>";
+  $inside .= "<a href=\"" . basename($_SERVER['PHP_SELF']) . "?page=1\"><i class=\"fa fa-circle-o\" style=\"vertical-align:text-bottom;margin-right:.5em;\"></i>$process[1]</a><br>";
+  $inside .= "<a href=\"" . basename($_SERVER['PHP_SELF']) . "?page=2\"><i class=\"fa fa-circle-o\" style=\"vertical-align:text-bottom;margin-right:.5em;\"></i><strike>$process[2]</strike></a><br>";
+  $inside .= "<a href=\"" . basename($_SERVER['PHP_SELF']) . "?page=3\"><i class=\"fa fa-circle-o\" style=\"vertical-align:text-bottom;margin-right:.5em;\"></i><strong>$process[3]</strong></a><br>";
 }
   $inside .= "<hr>";
-  $inside .= "<a href=\"" . basename($_SERVER['PHP_SELF']) . "?page=4\"><img src='templates/Default/images/pips/pip.gif' align='absbottom' border='0' hspace='5'>$process[4]</a><br>";
+  $inside .= "<a href=\"" . basename($_SERVER['PHP_SELF']) . "?page=4\"><i class=\"fa fa-circle-o\" style=\"vertical-align:text-bottom;margin-right:.5em;\"></i>$process[4]</a><br>";
   $inside .= "<hr>";
-  $inside .= "<a href=\"" . basename($_SERVER['PHP_SELF']) . "?page=5\"><img src='templates/Default/images/pips/pip.gif' align='absbottom' border='0' hspace='5'>$process[5]</a><br>";
-  $inside .= "<a href=\"" . basename($_SERVER['PHP_SELF']) . "?page=6\"><img src='templates/Default/images/pips/pip.gif' align='absbottom' border='0' hspace='5'>$process[6]</a><br>";
+  $inside .= "<a href=\"" . basename($_SERVER['PHP_SELF']) . "?page=5\"><i class=\"fa fa-circle-o\" style=\"vertical-align:text-bottom;margin-right:.5em;\"></i>$process[5]</a><br>";
+  $inside .= "<a href=\"" . basename($_SERVER['PHP_SELF']) . "?page=6\"><i class=\"fa fa-circle-o\" style=\"vertical-align:text-bottom;margin-right:.5em;\"></i>$process[6]</a><br>";
   $inside .= "<hr>";
-  $inside .= "<a href=\"" . basename($_SERVER['PHP_SELF']) . "?page=7\"><img src='templates/Default/images/pips/pip.gif' align='absbottom' border='0' hspace='5'>$process[7]</a><br>";
+  $inside .= "<a href=\"" . basename($_SERVER['PHP_SELF']) . "?page=7\"><i class=\"fa fa-circle-o\" style=\"vertical-align:text-bottom;margin-right:.5em;\"></i>$process[7]</a><br>";
 
 
 box($title, $inside);
