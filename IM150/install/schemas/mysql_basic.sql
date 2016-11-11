@@ -358,7 +358,7 @@ INSERT INTO `phpbb_captcha_config` VALUES ('width', '450');
 INSERT INTO `phpbb_captcha_config` VALUES ('height', '100');
 INSERT INTO `phpbb_captcha_config` VALUES ('exsample_code', 'SAMPLE');
 INSERT INTO `phpbb_captcha_config` VALUES ('background_color', '#E5ECF9');
-INSERT INTO `phpbb_captcha_config` VALUES ('jpeg', '1');
+INSERT INTO `phpbb_captcha_config` VALUES ('jpeg', '0');
 INSERT INTO `phpbb_captcha_config` VALUES ('jpeg_quality', '90');
 INSERT INTO `phpbb_captcha_config` VALUES ('pre_letters', '0');
 INSERT INTO `phpbb_captcha_config` VALUES ('pre_letters_great', '1');
@@ -840,7 +840,7 @@ INSERT INTO phpbb_layout (lid, `name`, template, forum_wide, `view`, groups, pag
 
 #IM Portal blocks
 
-INSERT INTO phpbb_blocks (bid, title, content, bposition, weight, active, blockfile, `view`, layout, `cache`, cache_time, block_bbcode_uid, `type`, border, titlebar, openclose, background, `local`, groups) VALUES(1, 'Welcome to IntegraMOD', '<table border="0" cellspacing="0" cellpadding="0" width="100%"><tr><td align="center"><img src="images/phpbbintegramod.jpg" align="center"></td></tr></table>', 'c', 1, 1, '', 0, 1, 1, 1000000000, '', 0, 1, 1, 1, 1, 1, '');
+INSERT INTO phpbb_blocks (bid, title, content, bposition, weight, active, blockfile, `view`, layout, `cache`, cache_time, block_bbcode_uid, `type`, border, titlebar, openclose, background, `local`, groups) VALUES(1, 'Welcome to IntegraMOD', '<div style="width:100%"><img src="images/phpbbintegramod.jpg" style="display: block;width: 100%; height: auto;max-width:530px;margin:0 auto;overflow:hidden" /></div>', 'c', 1, 1, '', 0, 1, 1, 1000000000, '', 0, 1, 1, 1, 1, 1, '');
 INSERT INTO phpbb_blocks (bid, title, content, bposition, weight, active, blockfile, `view`, layout, `cache`, cache_time, block_bbcode_uid, `type`, border, titlebar, openclose, background, `local`, groups) VALUES(2, 'News', '', 'c', 5, 0, 'blocks_imp_news', 0, 1, 1, 10000, '', 1, 1, 1, 1, 1, 1, '');
 INSERT INTO phpbb_blocks (bid, title, content, bposition, weight, active, blockfile, `view`, layout, `cache`, cache_time, block_bbcode_uid, `type`, border, titlebar, openclose, background, `local`, groups) VALUES(3, 'Board Navigation', '', '@', 2, 1, 'blocks_imp_menu', 0, 0, 0, 25000, '', 1, 1, 1, 1, 1, 1, '');
 INSERT INTO phpbb_blocks (bid, title, content, bposition, weight, active, blockfile, `view`, layout, `cache`, cache_time, block_bbcode_uid, `type`, border, titlebar, openclose, background, `local`, groups) VALUES(4, 'Statistics', '', 'r', 4, 0, 'blocks_imp_statistics', 0, 1, 1, 310, '', 1, 1, 1, 1, 1, 1, '');
