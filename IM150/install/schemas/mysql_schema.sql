@@ -627,6 +627,7 @@ CREATE TABLE phpbb_block_variable (
 CREATE TABLE phpbb_blocks (
   bid int(10) NOT NULL auto_increment,
   title varchar(60) NOT NULL default '',
+  title_image varchar(255) NOT NULL DEFAULT '',
   content text NOT NULL,
   bposition char(1) NOT NULL default '',
   weight int(10) NOT NULL default '1',
