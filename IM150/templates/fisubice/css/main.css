@@ -194,6 +194,9 @@ ul.uct {
 .postbtn:hover, .postbtnsml:hover .genbtn:hover{text-decoration: none;}
 
 a.noi img {display:none}
+.noi img {display:none !important}
+
+
 
 .fa-twatch:before {content: "\f06e";}
 .fa-tnext:before {content: "\f061";}
@@ -278,3 +281,5 @@ body.resp div#mobile-bar {position:absolute;}
 	td.desktopMc { display: none !important; }
 	td.mobileMc { display: block !important; }
 }
+
+

@@ -3,9 +3,9 @@
 
 <!-- BEGIN tail_blocks_row -->
 
-<table width="100%" cellpadding="5" cellspacing="0" border="0" 
+<table width="100%" cellpadding="5" cellspacing="0" border="0"
 <!-- BEGIN border -->
-class="forumline"
+class="forumline shadow"
 <!-- END border -->
 >
 	<!-- BEGIN title -->

@@ -27,7 +27,6 @@
 <th nowrap="nowrap">{L_B_GROUPS}</th>
 </tr>
 <!-- BEGIN blocks -->
-
 <tr> 
 <td nowrap="nowrap" class="{blocks.ROW_CLASS}" align="center"><a href="{blocks.U_MOVE_UP}"><img src="{TEMPLATE}images/p_up.png" alt="{L_MOVE_UP}" title="{L_MOVE_UP}" width="30" height="30" /></a></td>
 <td nowrap="nowrap" class="{blocks.ROW_CLASS}" align="center"><a href="{blocks.U_MOVE_DOWN}"><img src="{TEMPLATE}images/p_down.png" alt="{L_MOVE_DOWN}" title="{L_MOVE_DOWN}" width="30" height="30" /></a></td>

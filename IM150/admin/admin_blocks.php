@@ -438,6 +438,7 @@ if( $mode != "" && $mode != "blocks" )
 			"L_BLOCKS_TITLE" => $lang['Blocks_Title'],
 			"L_BLOCKS_TEXT" => $lang['Blocks_Explain'],
 			"L_B_TITLE" => $lang['B_Title'],
+			"L_B_TITLE_IMAGE" => $lang['B_Title_image'],
 			"L_B_POSITION" => $lang['B_Position'],
 			"L_B_ACTIVE" => $lang['B_Active'],
 			"L_B_CONTENT" => $lang['B_Content'],
@@ -457,6 +458,7 @@ if( $mode != "" && $mode != "blocks" )
 			"L_YES" => $lang['Yes'],
 			"L_NO" => $lang['No'],
 			"TITLE" => $b_info['title'],
+			"TITLE_IMAGE" => $b_info['title_image'],
 			"POSITION" => $position,
 			"ACTIVE" => ( $b_info['active'] ) ? "checked=\"checked\"" : "",
 			"NOT_ACTIVE" =>	( !$b_info['active'] ) ? "checked=\"checked\"" : "",
@@ -536,6 +538,7 @@ if( $mode != "" && $mode != "blocks" )
 		$b_id = ( isset($_POST['id']) ) ? intval($_POST['id']) : 0;
 		$l_id = ( isset($_POST['lid']) ) ? intval($_POST['lid']) : 0;
 		$b_title = ( isset($_POST['title']) ) ? trim($_POST['title']) : "";
+		$b_title_image = ( isset($_POST['title_image']) ) ? trim($_POST['title_image']) : "";
 		$b_bposition = ( isset($_POST['bposition']) ) ? trim($_POST['bposition']) : "";
 		$b_active = ( isset($_POST['active']) ) ? intval($_POST['active']) : 0;
 		$b_type = ( isset($_POST['type']) ) ? intval($_POST['type']) : 0;
@@ -602,6 +605,7 @@ if( $mode != "" && $mode != "blocks" )
 			$sql = "UPDATE " . BLOCKS_TABLE . " 
 				SET 
 				title = '" . str_replace("\'", "''", $b_title) . "', 
+				title_image = '" . str_replace("\'", "''", $b_title_image) . "', 
 				bposition = '" . str_replace("\'", "''", $b_bposition) . "', 
 				active = '" . $b_active . "', 
 				type = '" . $b_type . "',
@@ -674,7 +678,7 @@ if( $mode != "" && $mode != "blocks" )
 			$row = $db->sql_fetchrow($result);
 			$weight=$row['mweight'];
 
-			$sql = "INSERT INTO " . BLOCKS_TABLE . " (title, content, bposition, weight, active, type, cache, cache_time, blockfile, view, layout, block_bbcode_uid, border, titlebar, openclose, background, local, groups) VALUES ('" . str_replace("\'", "''", $b_title) . "', '" . $b_content . "', '" . str_replace("\'", "''", $b_bposition) . "', '" . $weight . "', '" . $b_active . "', '" . $b_type . "', '" . $b_cache . "', '" . $b_cachetime . "', '" . str_replace("\'", "''", $b_blockfile) . "', '" . $b_view . "', '" . $layout . "', '" . $bbcode_uid . "', '" . $b_border . "', '" . $b_titlebar . "', '" . $b_openclose . "', '" . $b_background . "', '" . $b_local . "', '" . $b_group . "')";
+			$sql = "INSERT INTO " . BLOCKS_TABLE . " (title, title_image, content, bposition, weight, active, type, cache, cache_time, blockfile, view, layout, block_bbcode_uid, border, titlebar, openclose, background, local, groups) VALUES ('" . str_replace("\'", "''", $b_title) . "', '" . str_replace("\'", "''", $b_title_image) . "', '" . $b_content . "', '" . str_replace("\'", "''", $b_bposition) . "', '" . $weight . "', '" . $b_active . "', '" . $b_type . "', '" . $b_cache . "', '" . $b_cachetime . "', '" . str_replace("\'", "''", $b_blockfile) . "', '" . $b_view . "', '" . $layout . "', '" . $bbcode_uid . "', '" . $b_border . "', '" . $b_titlebar . "', '" . $b_openclose . "', '" . $b_background . "', '" . $b_local . "', '" . $b_group . "')";
 			$message = $lang['Block_added'];
 			if(!$result = $db->sql_query($sql))
 			{
@@ -869,6 +873,7 @@ else if ($mode == "blocks")
 		"L_BLOCKS_TITLE" => $lang['Blocks_Title'],
 		"L_BLOCKS_TEXT" => $lang['Blocks_Explain'],
 		"L_B_TITLE" => $lang['B_Title'],
+		"L_B_TITLE_IMAGE" => $lang['B_Title_image'],
 		"L_B_POSITION" => $lang['B_Position'],
 		"L_B_ACTIVE" => $lang['B_Active'],
 		"L_B_DISPLAY" => $lang['B_Display'],
@@ -966,6 +971,7 @@ else if ($mode == "blocks")
 			"ROW_COLOR" => "#" . $row_color,
 			"ROW_CLASS" => $row_class,
 			"TITLE" => $b_rows[$i]['title'],
+			"TITLE_IMAGE" => $b_rows[$i]['title_image'],
 			"POSITION" => $position[$b_position],
 			"ACTIVE" => ($b_rows[$i]['active']) ? $lang['Yes'] : $lang['No'],
 			"TYPE" => (empty($b_rows[$i]['blockfile'])) ? (($b_rows[$i]['type']) ? $lang['B_BBCode'] : $lang['B_HTML']) : '',

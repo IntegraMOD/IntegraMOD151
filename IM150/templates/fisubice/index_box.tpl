@@ -1,6 +1,6 @@
 <!-- BEGIN catrow -->
 <!-- BEGIN tablehead -->
-<table width="100%" cellpadding="2" cellspacing="1" border="0" class="forumline">
+<table width="100%" cellpadding="2" cellspacing="1" border="0" class="forumline shadow">
 <tr> 
 	<th colspan="{catrow.tablehead.INC_SPAN}" width="100%" nowrap="nowrap">&nbsp;{catrow.tablehead.L_FORUM}&nbsp;</th>
 	<th width="50" nowrap="nowrap">&nbsp;{L_TOPICS}&nbsp;</th>
@@ -59,7 +59,6 @@
 <!-- END catfoot -->
 <!-- BEGIN tablefoot -->
 </table>
-<table border="0" cellpadding="0" cellspacing="0" class="tbl"><tr><td class="tbll"><img src="images/spacer.gif" alt="" width="8" height="4" /></td><td class="tblbot"><img src="images/spacer.gif" alt="" width="8" height="4" /></td><td class="tblr"><img src="images/spacer.gif" alt="" width="8" height="4" /></td></tr></table>
 <br class="gensmall" />
 <!-- END tablefoot -->
 <!-- END catrow -->

@@ -50,7 +50,7 @@
 <!-- BEGIN switch_user_logged_out -->
 <tr><td>
 <form method="post" action="{S_LOGIN_ACTION}">
-<table width="100%" cellpadding="3" cellspacing="1" border="0" class="forumline">
+<table width="100%" cellpadding="3" cellspacing="1" border="0" class="forumline shadow">
 <tr>
 <td class="cat">{L_LOGIN_LOGOUT}</td>
 </tr>
@@ -71,22 +71,25 @@
 </table></td>
 </tr>
 </table>
-<table border="0" cellpadding="0" cellspacing="0" class="tbl"><tr><td class="tbll"><img src="images/spacer.gif" alt="" width="8" height="4" /></td><td class="tblbot"><img src="images/spacer.gif" alt="" width="8" height="4" /></td><td class="tblr"><img src="images/spacer.gif" alt="" width="8" height="4" /></td></tr></table>
 </form>
 </td></tr>
 <tr><td>&nbsp;</td></tr>
 <!-- END switch_user_logged_out -->
 <tr>
 <td>
-<table width="100%" cellspacing="0" border="0" cellpadding="0">
+
+<table width="100%" cellspacing="0" border="0" cellpadding="1">
 <tr>
-<td valign="top">{MINI_CAL_OUTPUT}</td><td width="10"><img src="images/spacer.gif" alt="" width="10" height="30" /></td>
+
+<td style="display: none;" class="desktopMc" valign="top">{MINI_CAL_OUTPUT}</td><td width="10"><img src="images/spacer.gif" alt="" width="10" height="30" /></td>
+
 <td width="100%" valign="top">
-<table width="100%" cellspacing="0" bordero="0" cellpadding="0">
+<table width="100%" cellspacing="0" border="0" cellpadding="0">
+<tr><td style="display: none;" class="mobileMc">{MINI_CAL_OUTPUT}</td></tr>
 <tr><td>
 <!-- BEGIN switch_user_logged_in -->
 <!-- Start add - Fully integrated shoutbox MOD -->
-<table width="100%" cellspacing="0" border="0" align="center" cellpadding="0" class="forumline"> 
+<table width="100%" cellspacing="1" border="0" align="center" cellpadding="0" class="forumline shadow"> 
 <tr> 
 <td align="center" nowrap="nowrap" class="cat"><span class="cattitle"><a href="{U_SHOUTBOX_MAX}">{L_SHOUTBOX}</a></span></td> 
 </tr> 
@@ -96,7 +99,6 @@
 </td> 
 </tr> 
 </table>
-<table border="0" cellpadding="0" cellspacing="0" class="tbl"><tr><td class="tbll"><img src="images/spacer.gif" alt="" width="8" height="4" /></td><td class="tblbot"><img src="images/spacer.gif" alt="" width="8" height="4" /></td><td class="tblr"><img src="images/spacer.gif" alt="" width="8" height="4" /></td></tr></table>
 <!-- End add - Fully integrated shoutbox MOD -->
 <!-- END switch_user_logged_in -->
 </td>
@@ -104,7 +106,7 @@
 <!-- BEGIN disable_viewonline -->
 <tr><td>&nbsp;</td></tr>
 <tr><td>
-<table width="100%" cellpadding="2" cellspacing="1" border="0" class="forumline">
+<table width="100%" cellpadding="0" cellspacing="1" border="0" class="forumline shadow">
 <tr>
 <td align="center" class="cat" colspan="2"><a href="{U_VIEWONLINE}">{L_WHO_IS_ONLINE}</a></td>
 </tr>
@@ -128,14 +130,13 @@
 <td class="row1" align="left"><span class="gensmall">{USERS_OF_THE_DAY_LIST}</span></td>
 </tr>
 </table>
-<table border="0" cellpadding="0" cellspacing="0" class="tbl"><tr><td class="tbll"><img src="images/spacer.gif" alt="" width="8" height="4" /></td><td class="tblbot"><img src="images/spacer.gif" alt="" width="8" height="4" /></td><td class="tblr"><img src="images/spacer.gif" alt="" width="8" height="4" /></td></tr></table>
 </td>
 </tr>
 <!-- END disable_viewonline -->
 <!-- BEGIN switch_happy_birthday -->
 <tr><td>&nbsp;</td></tr>
 <tr><td>
-<table width="100%" cellpadding="3" cellspacing="1" border="0" class="forumline">
+<table width="100%" cellpadding="3" cellspacing="1" border="0" class="forumline shadow">
 <tr>
 <td align="center" class="cat" colspan="2" height="28"><span class="cattitle">{L_HAPPY_BIRTHDAY}</span></td>
 </tr>
@@ -144,14 +145,16 @@
 <td class="row1" align="left" width="100%"><span class="gensmall">&nbsp;{HAPPY_BIRTHDAY_FELLOWS}&nbsp;</span></td>
 </tr>
 </table>
-<table border="0" cellpadding="0" cellspacing="0" class="tbl"><tr><td class="tbll"><img src="images/spacer.gif" alt="" width="8" height="4" /></td><td class="tblbot"><img src="images/spacer.gif" alt="" width="8" height="4" /></td><td class="tblr"><img src="images/spacer.gif" alt="" width="8" height="4" /></td></tr></table>
 </td></tr>
 <!-- END switch_happy_birthday -->
 </table></td></tr></table></td></tr></table>
 <!-- BEGIN switch_banner_19 -->
 <br />
-<table border="0" cellspacing="0" cellpadding="0" width="100%">
-<tr>
-<td width="100%" align="center">{BANNER_19_IMG}</td>
-</tr></table>
+<div class="divTable">
+	<div class="divTableBody">
+		<div class="divTableRow">
+			<div class="divTableCell">{BANNER_19_IMG}</div>
+		</div>
+	</div>
+</div>
 <!-- END switch_banner_19 -->

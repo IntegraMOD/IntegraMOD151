@@ -1,4 +1,3 @@
-
 <script language="JavaScript" type="text/javascript">
 <!--
 // bbCode control by
@@ -213,7 +212,6 @@ function storeCaret(textEl) {
 
 //-->
 </script>
-{JAVASCRIPT_BBCODE_BOX}
 <div class="maintitle">{L_BLOCKS_TITLE}</div>
 <br />
 <div class="genmed">{L_BLOCKS_TEXT}</div>
@@ -228,6 +226,13 @@ function storeCaret(textEl) {
 <td align="right" class="row1">{L_B_TITLE}:</td>
 <td class="row2"> 
 <input type="text" maxlength="60" size="30" name="title" value="{TITLE}" class="post" />
+</td>
+</tr>
+
+<tr> 
+<td align="right" class="row1">{L_B_TITLE_IMAGE}:</td>
+<td class="row2"> 
+<input type="text" maxlength="100" size="30" name="title_image" value="{TITLE_IMAGE}" class="post" />
 </td>
 </tr>
 

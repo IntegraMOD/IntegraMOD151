@@ -8,7 +8,7 @@ body{background:#ecf0f6;color:#000000;}
 
 .explaintitle{color:#5c81b1;}
 
-.icon_quote, .icon_edit, .icon_delete, .icon_return_top, .icon_go_top, .icon_go_bottom, .icon_ip {
+.icon_quote, .icon_edit, .icon_delete, .icon_return_top, .icon_go_top, .icon_go_bottom, .icon_ip, .bcard, .bhotcard, .gcard, .rcard, .rycard, .ycard {
   	display: inline-block;
   	font: normal normal normal 14px/1 FontAwesome;
   	font-size: inherit;
@@ -18,6 +18,7 @@ body{background:#ecf0f6;color:#000000;}
   	font-size: 1.6em;
   	margin: .15em;
 }
+
 .icon_quote:before {
   	content: "\f0e5";
 	color:#587DA3;
@@ -49,6 +50,46 @@ body{background:#ecf0f6;color:#000000;}
 	content: "\f01a";
 	color:#587DA3;
   	font-size: 1.7em;
+}
+.bcard:before {
+	content: "\f096";
+	color:#2656BE;
+}
+.bhotcard:before {
+	content: "\f071";
+	color:#E4B016;
+}
+.gcard:before {
+	content: "\f071";
+	color:#56B95B;
+}
+.rcard:before {
+	content: "\f071";
+	color:#D7282D;
+}
+.rycard:before {
+	content: "\f017";
+	color:#D7282D;
+}
+.ycard:before {
+	content: "\f071";
+	color:#DBE850;
+}
+
+a.fa-times, a.fa-share, a.fa-lock, a .fa-unlock, a.fa-sort, a.fa-clone, .fa-download {
+	color:#587DA3 !important;
+}
+
+a.fa-times:hover, a.fa-share:hover, a.fa-lock:hover, a .fa-unlock:hover, a.fa-sort:hover, a.fa-clone:hover, .fa-download:hover {
+	color:#32475F !important;
+}
+
+.fa-rotate-45 {
+    -webkit-transform: rotate(45deg);
+    -moz-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    -o-transform: rotate(45deg);
+    transform: rotate(45deg);
 }
 
 .icon_quote span, .icon_edit span {display:none}

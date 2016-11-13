@@ -91,6 +91,21 @@ if(!defined('PORTAL_INIT'))
 	$var_cache = new Cache_Lite($options);
 	define('PORTAL_INIT', TRUE);
 }
+if($portal_config['collapse_layout'] == 1)
+{
+	$template->assign_block_vars('layout_collapse',array(
+		'LAYOUT_IMAGER' => $images['layout_imager'],
+		'LAYOUT_IMAGEL' => $images['layout_imagel']
+		)
+	);
+}
+else
+{
+	$template->assign_block_vars('no_layout_collapse',array(
+		'SPACER' => $images['spacer'],
+		)
+	);
+}
 
 //-- mod : profile cp ------------------------------------------------------------------------------
 //-- add

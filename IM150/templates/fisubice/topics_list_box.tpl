@@ -43,7 +43,7 @@ function check_uncheck_all_{topics_list_box.row.header_table.BOX_ID}()
 </script>
 <!-- END multi_selection -->
 <table border="0" cellpadding="0" cellspacing="0" class="tbt"><tr><td class="tbtl"><img src="images/spacer.gif" alt="" width="22" height="22" /></td><td class="tbtbot"><b></b><span class="gen"><a href="{catrow.U_VIEWCAT}" class="cattitle">{catrow.CAT_DESC}</a></span></td><td class="tbtr"><img src="images/spacer.gif" alt="" width="124" height="22" /></td></tr></table>
-<table border="0" cellpadding="4" cellspacing="1" width="100%" class="forumline">
+<table border="0" cellpadding="4" cellspacing="1" width="100%" class="forumline shadow">
 <tr> 
 	<th colspan="{topics_list_box.row.header_table.COLSPAN}" align="center" nowrap="nowrap">&nbsp;{topics_list_box.row.L_TITLE}&nbsp;</th>
 	<th width="50" align="center" nowrap="nowrap">&nbsp;{topics_list_box.row.L_REPLIES}&nbsp;</th>
@@ -103,7 +103,6 @@ function check_uncheck_all_{topics_list_box.row.header_table.BOX_ID}()
 <!-- END bottom -->
 <!-- BEGIN footer_table -->
 </table>
-<table border="0" cellpadding="0" cellspacing="0" class="tbl"><tr><td class="tbll"><img src="images/spacer.gif" alt="" width="8" height="4" /></td><td class="tblbot"><img src="images/spacer.gif" alt="" width="8" height="4" /></td><td class="tblr"><img src="images/spacer.gif" alt="" width="8" height="4" /></td></tr></table>
 <!-- END footer_table -->
 <!-- END row -->
 <!-- END topics_list_box -->

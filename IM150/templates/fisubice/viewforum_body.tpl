@@ -12,9 +12,9 @@
 {BOARD_ANNOUNCES}
 <table width="100%" cellspacing="2" cellpadding="2" border="0">
 <tr> 
-<td><!-- BEGIN is_auth_post --> 
-<a class="button_new" href="{U_POST_NEW_TOPIC}"><span>{L_POST_NEW_TOPIC}</span></a>
-<!-- END is_auth_post --></td>
+<!-- BEGIN is_auth_post --> 
+<td><a class="postbtn" href="{U_POST_NEW_TOPIC}"><span>{L_POST_NEW_TOPIC}</span></a></td>
+<!-- END is_auth_post -->
 <td nowrap="nowrap" class="nav" align="right">
 <!-- BEGIN switch_banner_13 -->
 {BANNER_13_IMG}<br/>
@@ -29,7 +29,7 @@
 <table width="100%" cellspacing="2" cellpadding="2" border="0">
 <tr>
 <!-- BEGIN is_auth_post -->
-<td align="left" nowrap="nowrap"><a class="button_new" href="{U_POST_NEW_TOPIC}"><span>{L_POST_NEW_TOPIC}</span></a></td>
+<td align="left" nowrap="nowrap"><a class="postbtn" href="{U_POST_NEW_TOPIC}"><span>{L_POST_NEW_TOPIC}</span></a></td>
 <!-- END is_auth_post -->
 <td align="right" class="nav">&nbsp;<a href="{U_INDEX}">{L_INDEX}</a> {NAV_CAT_DESC}</td>
 <td nowrap="nowrap" class="nav">{PAGINATION}</td>

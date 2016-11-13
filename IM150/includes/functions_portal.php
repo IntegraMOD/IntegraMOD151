@@ -98,9 +98,9 @@ function portal_blocks_view($type=true)
 				$bview = '(0,2,3)';
 				$append = '023';
 				break;
-			case ADMIN:
-				$bview = '(0,1,2,3,4)';
-				$append = '01234';
+			case ADMIN: 
+				$bview = '(0,2,3,4)'; 
+				$append = '0234'; 
 				break;
 			default:
 				$bview = '(0)';
@@ -163,7 +163,7 @@ function portal_parse_blocks($layout, $forum_wide = FALSE, $type='')
 				$var_cache->save($layout_pos, 'lp' . strval($layout), 'layout_pos');
 		}
 	}
-	
+
 	$block_info=array();
 	if($forum_wide)
 	{
@@ -264,7 +264,7 @@ function portal_parse_blocks($layout, $forum_wide = FALSE, $type='')
 					)
 				);
 
-				if($block_info[$b_counter]['titlebar'] == 1)
+				if($block_info[$b_counter]['titlebar'] == 1 && $block_info[$b_counter]['title_image'] == '')
 				{
 					if(($lang_exist) && ($block_info[$b_counter]['local'] == 1))
 					{
@@ -280,6 +280,14 @@ function portal_parse_blocks($layout, $forum_wide = FALSE, $type='')
 						);
 					}
 				}
+				elseif($block_info[$b_counter]['titlebar'] == 1 && $block_info[$b_counter]['title_image'] != '')
+				{
+					$template->assign_block_vars($position . '_blocks_row.title_image',array(
+						'TITLE' => $block_info[$b_counter]['title_image']
+						)
+					);
+				}
+
 
 				if($block_info[$b_counter]['border'] == 1)
 				{
@@ -289,7 +297,8 @@ function portal_parse_blocks($layout, $forum_wide = FALSE, $type='')
 				if($block_info[$b_counter]['openclose'] == 1)
 				{
 					$template->assign_block_vars($position . '_blocks_row.openclose',array(
-						'OPEN_CLOSE_IMG' => $images['openclose']
+						'OPEN_IMG' => $images['block_open'],
+						'CLOSE_IMG' => $images['block_close']
 						)
 					);
 				}
@@ -318,7 +327,7 @@ function portal_parse_blocks($layout, $forum_wide = FALSE, $type='')
 					'BLOCKID' => $block_info[$b_counter]['bid']
 					)
 				);
-				if($block_info[$b_counter]['titlebar'] == 1)
+				if($block_info[$b_counter]['titlebar'] == 1 && $block_info[$b_counter]['title_image'] == '')
 				{
 					if(($lang_exist) && ($block_info[$b_counter]['local'] == 1))
 					{
@@ -334,6 +343,14 @@ function portal_parse_blocks($layout, $forum_wide = FALSE, $type='')
 						);
 					}
 				}
+				elseif($block_info[$b_counter]['titlebar'] == 1 && $block_info[$b_counter]['title_image'] != '')
+				{
+					$template->assign_block_vars($position . '_blocks_row.title_image',array(
+						'TITLE' => $block_info[$b_counter]['title_image']
+						)
+					);
+				}
+
 				if($block_info[$b_counter]['border'] == 1)
 				{
 					$template->assign_block_vars($position . '_blocks_row.border','');
@@ -341,7 +358,8 @@ function portal_parse_blocks($layout, $forum_wide = FALSE, $type='')
 				if($block_info[$b_counter]['openclose'] == 1)
 				{
 					$template->assign_block_vars($position . '_blocks_row.openclose',array(
-						'OPEN_CLOSE_IMG' => $images['openclose']
+						'OPEN_IMG' => $images['block_open'],
+						'CLOSE_IMG' => $images['block_close']
 						)
 					);
 				}

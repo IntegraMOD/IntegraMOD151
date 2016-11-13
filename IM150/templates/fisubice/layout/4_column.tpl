@@ -3,9 +3,9 @@
 <td valign="top" colspan="5">
 <!-- BEGIN toprow_blocks_row -->
 
-<table width="100%" cellpadding="5" cellspacing="0" border="0" 
+<table width="100%" cellpadding="0" cellspacing="1" border="0" 
 <!-- BEGIN border -->
-class="forumline"
+class="forumline shadow"
 <!-- END border -->
 >
 	<!-- BEGIN title -->
@@ -45,9 +45,9 @@ if(GetCookie(tmp) == '2')
 
 <!-- BEGIN column1_blocks_row -->
 
-<table width="100%" cellpadding="5" cellspacing="0" border="0" 
+<table width="100%" cellpadding="0" cellspacing="1" border="0" 
 <!-- BEGIN border -->
-class="forumline"
+class="forumline shadow"
 <!-- END border -->
 >
 	<!-- BEGIN title -->
@@ -83,9 +83,9 @@ if(GetCookie(tmp) == '2')
 
 <!-- BEGIN column2_blocks_row -->
 
-<table width="100%" cellpadding="5" cellspacing="0" border="0" 
+<table width="100%" cellpadding="0" cellspacing="1" border="0" 
 <!-- BEGIN border -->
-class="forumline"
+class="forumline shadow"
 <!-- END border -->
 >
 	<!-- BEGIN title -->
@@ -122,9 +122,9 @@ if(GetCookie(tmp) == '2')
 <td valign="top" colspan="5">
 <!-- BEGIN bottomrow_blocks_row -->
 
-<table width="100%" cellpadding="5" cellspacing="0" border="0" 
+<table width="100%" cellpadding="0" cellspacing="1" border="0" 
 <!-- BEGIN border -->
-class="forumline"
+class="forumline shadow"
 <!-- END border -->
 >
 	<!-- BEGIN title -->

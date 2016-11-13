@@ -5,9 +5,9 @@
 
 <!-- BEGIN col_1_blocks_row -->
 
-<table width="100%" cellpadding="5" cellspacing="0" border="0" 
+<table width="100%" cellpadding="0" cellspacing="1" border="0" 
 <!-- BEGIN border -->
-class="forumline"
+class="forumline shadow"
 <!-- END border -->
 >
 	<!-- BEGIN title -->
@@ -44,9 +44,9 @@ if(GetCookie(tmp) == '2')
 
 <!-- BEGIN col_2_blocks_row -->
 
-<table width="100%" cellpadding="5" cellspacing="0" border="0" 
+<table width="100%" cellpadding="0" cellspacing="1" border="0" 
 <!-- BEGIN border -->
-class="forumline"
+class="forumline shadow"
 <!-- END border -->
 >
 	<!-- BEGIN title -->
@@ -82,9 +82,9 @@ if(GetCookie(tmp) == '2')
 
 <!-- BEGIN col_3_blocks_row -->
 
-<table width="100%" cellpadding="5" cellspacing="0" border="0" 
+<table width="100%" cellpadding="0" cellspacing="1" border="0" 
 <!-- BEGIN border -->
-class="forumline"
+class="forumline shadow"
 <!-- END border -->
 >
 	<!-- BEGIN title -->
@@ -120,9 +120,9 @@ if(GetCookie(tmp) == '2')
 
 <!-- BEGIN col_4_blocks_row -->
 
-<table width="100%" cellpadding="5" cellspacing="0" border="0" 
+<table width="100%" cellpadding="0" cellspacing="1" border="0" 
 <!-- BEGIN border -->
-class="forumline"
+class="forumline shadow"
 <!-- END border -->
 >
 	<!-- BEGIN title -->
@@ -159,9 +159,9 @@ if(GetCookie(tmp) == '2')
 
 <!-- BEGIN col_5_blocks_row -->
 
-<table width="100%" cellpadding="5" cellspacing="0" border="0" 
+<table width="100%" cellpadding="0" cellspacing="1" border="0" 
 <!-- BEGIN border -->
-class="forumline"
+class="forumline shadow"
 <!-- END border -->
 >
 	<!-- BEGIN title -->
@@ -198,9 +198,9 @@ if(GetCookie(tmp) == '2')
 
 <!-- BEGIN col_6_blocks_row -->
 
-<table width="100%" cellpadding="5" cellspacing="0" border="0" 
+<table width="100%" cellpadding="0" cellspacing="1" border="0" 
 <!-- BEGIN border -->
-class="forumline"
+class="forumline shadow"
 <!-- END border -->
 >
 	<!-- BEGIN title -->
