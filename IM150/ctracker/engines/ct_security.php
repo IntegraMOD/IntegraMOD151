@@ -258,7 +258,7 @@ else
 					$post_var_field_value = atatwalk($post_var_field_value);
 				}
 
-				// Prevent tricks wich comment out SQL command
+				// Prevent tricks which comment out SQL command
 				$post_var_field_value = strtolower(str_replace('\\', '/', $post_var_field_value));
 
 				// Now we do a very simple method to mark potential Worm activities
