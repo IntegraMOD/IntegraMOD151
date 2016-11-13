@@ -222,6 +222,8 @@ jQuery(document).ready(function(){
 <nav class="desktop-menu">
       <table class="forumline" width="100%" cellpadding="0" cellspacing="1" border="0">
   		<tr>
+    	  	   <th align="center">{SITENAME} </th>
+  	        </tr>
    		  <td>
 	 		<table class="topbkg" width="100%" cellpadding="0" cellspacing="0" border="0">
 			<h1>{SITENAME}</h1>
