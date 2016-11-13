@@ -21,6 +21,8 @@
  ***************************************************************************/
 
 define('IN_PHPBB', true);
+define('CT_SECLEVEL', 'MEDIUM');
+$ct_ignorepvar = array('sql_def');
 
 if( !empty($setmodules) )
 {

@@ -1,21 +1,14 @@
 IntegraMOD150
 =============
 
-This is the Integramod. This was the last build ever released to the general public. This version is built on phpBB 2.0.24 the unofficial release over at phpBB refugees. The images in this cms are all language ran as well if I am not mistaken. Nice touch.
+This is Integramod. It stands for Integrated Modifications. This system is built using many phpBB modifications. It's main mod is IM Portal which is a Flexible and full-featured portal management addon for phpBB (forum-wide integration) Multiple-page version with cache system. IM Portal was developed by masterdavid (Ronald John David).
 
-There are some drawbacks to this package. 
+This system is built on top of the phpBB 2.0.24 unofficial release from phpBB Refugees.
 
-1. It is a resource eater and LOVES it's sql querys. 
-2. Some of the mods are so old in it, they no longer work on the new php and mysql versions.
-3. It is no longer supported as Integramod.com is no more.
-4. If you grab it and use it, I can give pointers but as for full out right support, that I can not do.
 
-I do not have it in my power to update all the code to make it work. I REALLY wish I did as this was a great package at one point in time. It was probably one of the most complete packages on the net that did not cost hundreds of dollars a year per license. This one was free.
-
-If I can get this installed and working, I will come back and post a complete list of mods it has preinstalled. Maybe you have or can update one of the non working mods and we can get this project back on track again...... As far as it can go with being phpBB2.
-
-**UPDATE**
-
-Some fixes were put in place today that made the package work again. I will be trying it out in the morning. Hopefully I have good news.
-
-Well the news is, it actually works and could easily be used in production again. The bad news is, it still loves its resources ;-) and it has has error or two we are working to resolve. Some of the templates needs tweaked too.
+ *   This program is free software; you can redistribute it and/or modify
+ *   it under the terms of the GNU General Public License as published by
+ *   the Free Software Foundation; either version 2 of the License, or
+ *   (at your option) any later version.
+ 
+ Please note: This software is still in Development. We strongly urge you not to use it in a live condition.

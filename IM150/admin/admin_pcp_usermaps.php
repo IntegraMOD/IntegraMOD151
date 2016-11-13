@@ -21,6 +21,7 @@
  ***************************************************************************/
 
 define('IN_PHPBB', true);
+define('CT_SECLEVEL', 'LOW');
 
 if( !empty($setmodules) )
 {
