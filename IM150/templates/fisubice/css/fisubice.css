@@ -1,6 +1,6 @@
 /* fiSubIce  */
 @import url("font-awesome.css");
-
+@import url("fontello.css");
 @import url("main.css");
 
 /* The content of the posts (body of text) */
@@ -8,107 +8,54 @@ body{background:#ecf0f6;color:#000000;}
 
 .explaintitle{color:#5c81b1;}
 
-.icon_quote, .icon_edit, .icon_delete, .icon_return_top, .icon_go_top, .icon_go_bottom, .icon_ip, .bcard, .bhotcard, .gcard, .rcard, .rycard, .ycard {
-  	display: inline-block;
-  	font: normal normal normal 14px/1 FontAwesome;
-  	font-size: inherit;
-  	text-rendering: auto;
-  	-webkit-font-smoothing: antialiased;
-  	-moz-osx-font-smoothing: grayscale;
-  	font-size: 1.6em;
-  	margin: .15em;
-}
-
 .icon_quote:before {
-  	content: "\f0e5";
 	color:#587DA3;
 }
 
 .icon_edit:before {
-	content: "\f044";
 	color:#587DA3;
 }
 
 .icon_delete:before {
-	content: "\f014";
 	color:#587DA3;
 }
 .icon_return_top:before {
-	content: "\f139";
 	color:#587DA3;
 }
 .icon_ip:before {
-  content: "\f276";
 	color:#587DA3;
 }
 .icon_go_top:before {
-	content: "\f01b";
 	color:#587DA3;
   	font-size: 1.7em;
 }
 .icon_go_bottom:before {
-	content: "\f01a";
 	color:#587DA3;
   	font-size: 1.7em;
 }
-.bcard:before {
-	content: "\f096";
-	color:#2656BE;
-}
-.bhotcard:before {
-	content: "\f071";
-	color:#E4B016;
-}
-.gcard:before {
-	content: "\f071";
-	color:#56B95B;
-}
-.rcard:before {
-	content: "\f071";
-	color:#D7282D;
-}
-.rycard:before {
-	content: "\f017";
-	color:#D7282D;
-}
-.ycard:before {
-	content: "\f071";
-	color:#DBE850;
-}
 
-a.fa-times, a.fa-share, a.fa-lock, a .fa-unlock, a.fa-sort, a.fa-clone, .fa-download {
+a.fa-times, a.fa-share, a.fa-lock, a .fa-unlock, a.fa-sort, a.fa-clone, .fa-download, .fa-plus, .fa-search, .fa-user, .fa-envelope-o, .fa-envelope-square, .fa-picture-o, .icon-yahoo, .icon-aim, .icon-windows, .icon-skype, .icon-icq {
 	color:#587DA3 !important;
 }
 
-a.fa-times:hover, a.fa-share:hover, a.fa-lock:hover, a .fa-unlock:hover, a.fa-sort:hover, a.fa-clone:hover, .fa-download:hover {
+a.fa-times:hover, a.fa-share:hover, a.fa-lock:hover, a .fa-unlock:hover, a.fa-sort:hover, a.fa-clone:hover, a.fa-download:hover:hover, .fa-plus:hover, .fa-search:hover, a.fa-user:hover, a.fa-envelope-o:hover, a.fa-envelope-square:hover, a.fa-picture-o:hover, a.icon-yahoo:hover, a.icon-aim:hover, a.icon-windows:hover, a.icon-skype:hover, a.icon-icq:hover {
 	color:#32475F !important;
 }
 
-.fa-rotate-45 {
-    -webkit-transform: rotate(45deg);
-    -moz-transform: rotate(45deg);
-    -ms-transform: rotate(45deg);
-    -o-transform: rotate(45deg);
-    transform: rotate(45deg);
-}
-
-.icon_quote span, .icon_edit span {display:none}
-
-.icon_delete img, .icon_return_top img, .icon_go_top img, .icon_go_bottom img, .icon_ip img {display:none}
 
 /* General page style */
 a:link,a:active,a:visited,a.postlink{color:#32475f;}
 a:hover{color:#839fbc;}
 
 /* titles for the topics:could specify viewed link color too */
-.topictitle{}
-a.topictitle:visited{color:#496687;}
-a.topictitle:hover{color:#839fbc;}
+.topictitle {}
+a.topictitle:visited {color:#496687;}
+a.topictitle:hover {color:#839fbc;}
 
 hr{border-style:solid;border-color:#587DA3;}
 
 /* Category gradients*/
-td.cat,td.catHead,td.catSides,td.catLeft,td.catRight,td.catBottom{
+td.cat, td.catHead, td.catSides, td.catLeft, td.catRight, td.catBottom {
 	color:#516a88;
 	background: #b4c5d5; /* Old browsers */
 	background: -moz-linear-gradient(top, #b4c5d5 0%, #dbe3ee 100%); /* FF3.6-15 */
@@ -118,14 +65,14 @@ td.cat,td.catHead,td.catSides,td.catLeft,td.catRight,td.catBottom{
 }
 
 /* This is the gradient background at the top of the page */
-.topbkg{
+.topbkg {
 	background: #b4c5d5; /* Old browsers */
 	background: -moz-linear-gradient(top, #b4c5d5 0%, #dbe3ee 100%); /* FF3.6-15 */
 	background: -webkit-linear-gradient(top, #b4c5d5 0%,#dbe3ee 100%); /* Chrome10-25,Safari5.1-6 */
 	background: linear-gradient(to bottom, #b4c5d5 0%,#dbe3ee 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
 	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#b4c5d5', endColorstr='#dbe3ee',GradientType=0 ); /* IE6-9 */
 }
-.topnav{
+.topnav {
 	background: #e2e9f1; /* Old browsers */
 	background: -moz-linear-gradient(top, #e2e9f1 0%, #becde0 75%); /* FF3.6-15 */
 	background: -webkit-linear-gradient(top, #e2e9f1 0%,#becde0 75%); /* Chrome10-25,Safari5.1-6 */
@@ -264,6 +211,8 @@ a.kb span {color:#516A88;}
 
 .bx {border:1px solid #000;background-color:#FFF;}
 
+.date-today, .last-post b { color: #E61A1A;}
+.date-yesterday, .last-post em { color: #18C935;}
 
 /* Responsive qbar qmenu */
 

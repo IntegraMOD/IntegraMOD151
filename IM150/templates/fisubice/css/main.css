@@ -7,19 +7,19 @@ body{font:12px Verdana,Arial,Helvetica,sans-serif;margin:6px;padding:0;}
 font,th,td,p {font: 12px Verdana,Arial,Helvetica,sans-serif;}
 
 /* General text */
-.gensmall{font-size:10px;}
-.gen { font-size : 11px; text-decoration: none;}
-.copyright{font-size:11px;}
+.gensmall{font-size:.95em;}
+.gen { font-size : 1em; text-decoration: none;}
+.copyright{font-size:.95em;}
 
-td.genmed,.genmed{font-size:11px;}
-.explaintitle{font-size:11px;font-weight:bold;}
+td.genmed,.genmed{font-size:1em;}
+.explaintitle{font-size:1em;font-weight:bold;}
 
 /* General page style */
 a:link,a:active,a:visited,a.postlink{text-decoration:none;}
 a:hover{text-decoration:none;}
 
 /* titles for the topics:could specify viewed link color too */
-.topictitle{font-size:11px;font-weight:bold;}
+.topictitle{font-size:1em;font-weight:bold;}
 
 /* Name of poster in viewmsg.php and viewtopic.php and other places */
 .name{font-size:11px;font-weight: bold;}
@@ -36,8 +36,7 @@ a:hover{text-decoration:none;}
 hr{border-top-width:1px;height:0px;}
 
 /* Category gradients*/
-td.cat,td.catHead,td.catSides,td.catLeft,td.catRight,td.catBottom{
-font-weight:bold;letter-spacing:1px;height:29px;text-indent:4px;}
+td.cat,td.catHead,td.catSides,td.catLeft,td.catRight,td.catBottom {font-weight:bold;letter-spacing:1px;height:29px;text-indent:4px;}
 
 /* Table Header cells */
 th{font-size:11px;font-weight:bold;height:27px;white-space:nowrap;text-align:center;padding-left:8px;padding-right:8px;}
@@ -47,11 +46,11 @@ th{font-size:11px;font-weight:bold;height:27px;white-space:nowrap;text-align:cen
 .subtitle,h2{font:bold 18px/180% "Trebuchet MS",Verdana,Arial,Helvetica,sans-serif;text-decoration:none;}
 
 /* Used for the navigation text,(Page 1,2,3 etc) and the navigation bar when in a forum */
-.nav{font-size:11px;font-weight:bold;}
-.postbody{font-size:12px;line-height:125%;}
+.nav{font-size:1em;font-weight:bold;}
+.postbody{font-size:1.2em;line-height:125%;}
 
 /* Location,number of posts,post date etc */
-.postdetails{font-size:10px;}
+.postdetails{font-size:.95em;}
 
 /* Quote blocks */
 .quotetitle,.quote {font-size:11px;padding:2px 2px 3px 3px}
@@ -73,16 +72,16 @@ th{font-size:11px;font-weight:bold;height:27px;white-space:nowrap;text-align:cen
 
 /* Form elements */
 form{display:inline}
-input, select{font:11px Verdana,Arial,Helvetica,sans-serif}
-input.post,textarea.post{font:11px Verdana,Arial,Helvetica,sans-serif;padding-bottom:2px;padding-left:2px}
+input, select{font:1em Verdana,Arial,Helvetica,sans-serif}
+input.post,textarea.post{font:1em Verdana,Arial,Helvetica,sans-serif;padding-bottom:2px;padding-left:2px}
 input.button,input.liteoption,.fakebut{font-size:11px}
-input.catbutton{font-size:10px}
-input.mainoption{font-size:11px;font-weight:bold}
+input.catbutton{font-size:.95em}
+input.mainoption{font-size:1em;font-weight:bold}
 a.but,a.but:hover,a.but:visited{text-decoration:none}
 
 /* This is the line in the posting page which shows the rollover
 help line. Color value in row2 */
-.helpline{border:0px;font-size:10px}
+.helpline{border:0px;font-size:.9em}
 
 /*-- mod : profile cp --*/
 .foundercolor, a.foundercolor, a.foundercolor:link, a.foundercolor:active, a.foundercolor:visited, .jadmincolor, a.jadmincolor, a.jadmincolor:link, a.jadmincolor:active, a.jadmincolor:visited, .admincolor, a.admincolor, a.admincolor:link, a.admincolor:active, a.admincolor:visited, .modcolor, a.modcolor, a.modcolor:link, a.modcolor:active, a.modcolor:visited, .usercolor, a.usercolor, a.usercolor:link, a.usercolor:active, a.usercolor:visited {font-weight: bold;}
@@ -90,7 +89,7 @@ a.foundercolor:hover, a.jadmincolor:hover, a.admincolor:hover, a.modcolor:hover,
 /*-- fin mod : profile cp --*/
 
 /* Admin & Moderator Colors MODification */
-.admin,.mod{font-size:11px;font-weight:bold}
+.admin,.mod{font-size:1em;font-weight:bold}
 
 /* Specify the space around images */
 .imgtopic,.imgicon{margin-left:3px}
@@ -157,28 +156,32 @@ ul.uct {
 }
 .uct li {position:relative;float:left;margin:0 .11em;}
 
+.date-today, .last-post b {font-weight: bold; }
+.date-yesterday, .last-post em {font-weight: bold; font-style: italic; }
+
 /* css buttons */
 .genbtn {
 	-webkit-border-radius: 25;
 	-moz-border-radius: 25;
 	border-radius: 25px;
-	font-size: 1em;
+	font-size: 11px;
 	font-weight:600;
-	padding: 3px 4px 5px 8px;
+	padding: 3px 5px 5px 8px;
 	text-decoration: none;
 	text-transform: lowercase;
-
+	margin:2px;
 }
 .postbtn {
 	-webkit-border-radius: 25;
 	-moz-border-radius: 25;
 	border-radius: 25px;
-	font-size: 1em;
+	font-size: 11px;
 	font-weight:600;
 	padding: 3px 16px 5px 16px;
 	text-decoration: none;
 	text-transform: lowercase;
 	letter-spacing: -.9px;
+	margin:2px;
 }
 .postbtnsml {
 	-webkit-border-radius: 20;
@@ -197,16 +200,27 @@ a.noi img {display:none}
 .noi img {display:none !important}
 
 
-
 .fa-twatch:before {content: "\f06e";}
 .fa-tnext:before {content: "\f061";}
 .fa-tprev:before {content: "\f060";}
 
 .fa-tno {display:none}
 
-.fa-21 {
-  font-size: 2.1em;
+.fa-21 {font-size: 2.1em;}
+.up1 {font-size: 1.5em !important;}
+.up2 {font-size: 2em !important;}
+
+.fa-rotate-45 {
+    -webkit-transform: rotate(45deg);
+    -moz-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    -o-transform: rotate(45deg);
+    transform: rotate(45deg);
 }
+
+.icon_quote span, .icon_edit span {display:none}
+
+.icon_delete img, .icon_return_top img, .icon_go_top img, .icon_go_bottom img, .icon_ip img {display:none}
 
 /* Banner Mod */
 .BannerDivTable{display:table;width:100%;}
@@ -216,6 +230,68 @@ a.noi img {display:none}
 .BannerDivTableHeading {display:table-header-group;font-weight:bold;}
 .BannerDivTableFoot {display:table-footer-group;font-weight:bold;}
 .BannerDivTableBody {display:table-row-group;}
+
+.icon_quote, .icon_edit, .icon_delete, .icon_return_top, .icon_go_top, .icon_go_bottom, .icon_ip, .bcard, .bhotcard, .gcard, .rcard, .rycard, .ycard {
+  	display: inline-block;
+  	font: normal normal normal 14px/1 FontAwesome;
+  	font-size: inherit;
+  	text-rendering: auto;
+  	-webkit-font-smoothing: antialiased;
+  	-moz-osx-font-smoothing: grayscale;
+  	font-size: 1.6em;
+  	margin: .15em;
+}
+
+.icon_quote:before {
+  	content: "\f0e5";
+}
+
+.icon_edit:before {
+	content: "\f044";
+}
+
+.icon_delete:before {
+	content: "\f014";
+}
+.icon_return_top:before {
+	content: "\f139";
+}
+.icon_ip:before {
+  content: "\f276";
+}
+.icon_go_top:before {
+	content: "\f01b";
+  	font-size: 1.7em;
+}
+.icon_go_bottom:before {
+	content: "\f01a";
+  	font-size: 1.7em;
+}
+.bcard:before {
+	content: "\f096";
+	color:#2656BE;
+}
+.bhotcard:before {
+	content: "\f071";
+	color:#E4B016;
+}
+.gcard:before {
+	content: "\f071";
+	color:#56B95B;
+}
+.rcard:before {
+	content: "\f071";
+	color:#D7282D;
+}
+.rycard:before {
+	content: "\f017";
+	color:#D7282D;
+}
+.ycard:before {
+	content: "\f071";
+	color:#DBE850;
+}
+
 
 /* Responsive qbar qmenu */
 
