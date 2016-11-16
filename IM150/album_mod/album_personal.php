@@ -320,7 +320,7 @@ if ($row['count'] == 0)
 		{
 			$no_personal_gallery = true;
 			$no_picture_message = sprintf($lang['Personal_gallery_not_created'], $username);
-			$create_personal_cat_link = '<a href="' . append_sid(album_append_uid("album_personal_cat_admin.$phpEx?action=create&amp;user_id=" . $album_user_id)) . '">' . $lang['Create_Personal_Categories'] . '</a><br />';
+			$create_personal_cat_link = '<a class="fa fa-check genbtn" href="' . append_sid(album_append_uid("album_personal_cat_admin.$phpEx?action=create&amp;user_id=" . $album_user_id)) . '">' . $lang['Create_Personal_Categories'] . '</a><br />';
 			if ( album_check_permission($auth_data, ALBUM_AUTH_UPLOAD) == true )
 			{
 				$template->assign_block_vars('index_pics_block.no_pics.manage_personal_gal_folders', array());
@@ -353,11 +353,11 @@ else
 // ------------------------------------------------------------------------
 $upload_img = $images['upload_pic'];
 $upload_link = append_sid(album_append_uid("album_upload.$phpEx?cat_id=$cat_id"));
-$upload_full_link = '<a href="' . $upload_link . '"><img src="' . $upload_img .'" border="0" alt="' . $lang['Upload_Pic'] . '" title="' . $lang['Upload_Pic'] . '" align="absmiddle" /></a>';
+$upload_full_link = '<a class="fa fa-upload genbtn" href="' . $upload_link . '" style="padding-top:6px;margin:4px 0">&nbsp;' . $lang['Upload_Pic'] . '&nbsp;</a>';
 
 $download_img = $images['download_pic'];
 $download_link = append_sid(album_append_uid('album_download.' . $phpEx . '?cat_id=' . $cat_id . ( ($sort_method != '') ? '&sort_method=' . $sort_method : '' ) . ( ($sort_order != '') ? '&sort_order=' . $sort_order : '' ) . ( ($start != '') ? '&start=' . $start : '' )));
-$download_full_link = '<a href="' . $download_link . '"><img src="' . $download_img . '" border="0" alt="' . $lang['Download_page'] . '" title="' . $lang['Download_page'] . '" align="absmiddle" /></a>';
+$download_full_link = '<a class="fa fa-download genbtn" href="' . $download_link . '" style="padding-top:6px;margin:4px 0">&nbsp;' . $lang['Download_page'] . '&nbsp;</a>';
 
 if( $auth_data['upload'] == true )
 {
