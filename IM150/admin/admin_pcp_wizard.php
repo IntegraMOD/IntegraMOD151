@@ -1178,13 +1178,13 @@ function validate($autocorrect=false){
 		$template->assign_block_vars('type.page', array(
 			'text'					=> $map,
 		));
-		if(!strlen($user_maps[$map]['title'])){
+		if(!count($user_maps[$map]['title'])){
 			if($autocorrect){
 				// defailt to map name recursively
-				$mapsplit = split('\.',$map);
+				$mapsplit = preg_split('\.',$map);
 				$map2alter = "";
 				while(list($idxCorr, $submap) = @each($mapsplit)){
-					$map2alter .= strlen($map2alter) ? '.'.$submap : $submap;
+					$map2alter .= count($map2alter) ? '.'.$submap : $submap;
 					$title = ucfirst($submap);
 					$user_maps[$map2alter]['title'] = $title;
 				}
@@ -1820,7 +1820,7 @@ function backups(){
 		$afile = explode('.',$file);
 		$name = $afile[1];
 		$time = mktime(substr($name,8,2), substr($name,10,2), substr($name,12,2), substr($name,4,2), substr($name,6,2), substr($name,0,4));
-		$name = create_date($board_config['default_dateformat'], $time, $board_config['board_timezone']); ;
+		$name = create_date($board_config['default_dateformat'], $time, $board_config['board_timezone']);
 		if( preg_match("/^def_userfields\.[0-9].*?$/", $file) ) {
 			$fcolor = !$fcolor;
 			$template->assign_block_vars('fields', array(
