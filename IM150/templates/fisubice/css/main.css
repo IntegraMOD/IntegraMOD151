@@ -25,13 +25,15 @@ a:hover{text-decoration:none;}
 .name{font-size:11px;font-weight: bold;}
 
 /* This is the gradient background at the top of the page */
-.topnav{font-size:10px;white-space:nowrap;border-style:solid;border-width: 1px 0px 1px 0px;}
+.topnav, .btmnav{font-size:10px;white-space:nowrap;border-style:solid;border-width: 1px 0px 1px 0px;}
 .qnav{white-space:nowrap;width:100%;text-decoration:none;}
 .qb  {font-size:10px;white-space:nowrap;border-style:solid;border-width: 1px 0px 1px 0px;}
-.cv {position: relative;top: 0%;transform: translateY(-0%);height:3em;}
-.bcv {position: relative;top: 20%;right:0;transform: translateY(-20%) translateX(5%); }
+.cv {position: relative;top: 4%;transform: translateY(-4%);height:3em;}
+.bcv {position: relative;top: 4%;transform: translateY(-4%);height:3em;}
 .fr {position:relative;float:right;}
 .openclose {display: block;float:right;width:15px;height:15px;}
+.space {margin:4px auto 10px auto;}
+.center {text-align:center;}
 
 hr{border-top-width:1px;height:0px;}
 
@@ -54,20 +56,20 @@ th{font-size:11px;font-weight:bold;height:27px;white-space:nowrap;text-align:cen
 
 /* Quote blocks */
 .quotetitle,.quote {font-size:11px;padding:2px 2px 3px 3px}
-.quotetitle {text-indent:2px;font-weight:bold;margin:10px 20px 0 20px}
-.quote {border-top-width:0px;font-size:11px;margin:0 20px 10px 20px}
+.quotetitle {text-indent:2px;font-weight:bold;margin:10px 10px 0 10px}
+.quote {border-top-width:0px;font-size:11px;margin:0 10px 10px 10px}
 .quote {overflow:auto;height:40px}
 
 /* Code blocks */
 .codetitle,.code {padding:2px 2px 3px 3px}
-.codetitle {font-size:11px;text-indent:2px;font-weight:bold;margin:10px 20px 0 20px}
-.code {border-top-width:0;font:13px Courier,'Courier New',sans-serif;margin:0 20px 0 20px;line-height:110%}
+.codetitle {font-size:11px;text-indent:2px;font-weight:bold;margin:10px 10px 0 10px}
+.code {border-top-width:0;font:13px Courier,'Courier New',sans-serif;margin:0 10px 0 10px;line-height:110%}
 .code {overflow:auto;height:40px}
 
 /* PHP blocks */
 .phptitle,.php {padding:2px 2px 3px 3px}
-.phptitle {font-size:11px;text-indent:2px;font-weight:bold;margin:10px 20px 0 20px}
-.php {border-top-width:0px;font:13px Courier,'Courier New',sans-serif;margin:0 20px 0 20px;line-height:110%}
+.phptitle {font-size:11px;text-indent:2px;font-weight:bold;margin:10px 10px 0 10px}
+.php {border-top-width:0px;font:13px Courier,'Courier New',sans-serif;margin:0 10px 0 10px;line-height:110%}
 .php {overflow:auto;height:40px}
 
 /* Form elements */
@@ -124,8 +126,6 @@ a.tab_links:hover, a.tab_links_unsel:hover {text-decoration: underline;}
 .clearfix:after {content:".";display:block;height:0;clear:both;visibility:hidden;}
 .clearfix {display:inline-block;}  /* for IE/Mac */
 
-.space {margin:4px auto 10px auto;}
-
 .openclose {display:block;float:right;width:15px;height:15px;}
 
 a.kb {display: block;float: left;font: bold 40px 'Nunito', sans-serif;height: 75px;margin-right: 20px;padding-right: 20px;padding-bottom: 20px;text-transform:capitalize;}
@@ -143,19 +143,19 @@ a.kb:hover span {background-position:bottom left;padding:6px 20px 4px 30px;}
 .divTableFoot {display:table-footer-group;font-weight:bold;}
 .divTableBody {display:table-row-group;}
 
-.center {text-align:center;}
-
 .bx {display:table-cell;padding:3px 10px;}
 
 ul.uct {
     list-style-type: none;
 	height:2.1em;
 	display:inline-block;
-
-
 }
+.tbx ul {display: inline}
 .uct li {position:relative;float:left;margin:0 .11em;}
-
+.lft {position:relative; float:left !important;}
+.rt {position:relative; float:right !important;}
+.pcpvt {vertical-align:bottom !important;}
+.one {list-style-type: none;margin:0px;padding:0px;height:18px !important;}
 .date-today, .last-post b {font-weight: bold; }
 .date-yesterday, .last-post em {font-weight: bold; font-style: italic; }
 
@@ -169,7 +169,7 @@ ul.uct {
 	padding: 3px 5px 5px 8px;
 	text-decoration: none;
 	text-transform: lowercase;
-	margin:2px;
+	margin-left:2px;
 }
 .postbtn {
 	-webkit-border-radius: 25;

@@ -85,7 +85,7 @@ function addquote(post_id)
 		<td width="50%" class="gensmall" align="right" valign="bottom" nowrap="nowrap">
 
 		<ul class="genbtn uct">
-			<a href="{U_VIEW_OLDER_TOPIC}"><li class="fa fa-arrow-left fa-2x"title="{L_VIEW_PREVIOUS_TOPIC}"></li></a>
+			<a href="{U_VIEW_OLDER_TOPIC}"><li class="fa fa-arrow-left fa-2x" title="{L_VIEW_PREVIOUS_TOPIC}"></li></a>
 			<a href="{U_PRINTER_TOPIC}"><li class="fa fa-print fa-2x" title="{L_PRINTER_TOPIC}"></li></a>
 		<!-- BEGIN switch_logged_in -->
 			<a href="tellafriend.php?topic={TOPIC_TITLE2}&link={TELL_LINK}"><li class="fa fa-envelope-o fa-2x" title="{L_TELL_FRIEND}"></li></a>
@@ -99,7 +99,7 @@ function addquote(post_id)
 			<a href="{U_PRIVATEMSGS}"><li class="fa fa-comments-o fa-2x" title="{L_PRIVATEMSGS}"></li></a>
 		<!-- END switch_logged_in -->
 		
-			<a href="{U_POSTINGS_POPUP}" onClick="NewWindow(this.href,'PopupWin');return false" onFocus="this.blur()";><li class="fa fa-user-circle fa-2x" title="{L_POPUP_MESSAGE}"></li></a>
+			<a href="{U_POSTINGS_POPUP}" onClick="NewWindow(this.href,'PopupWin');return false" onFocus="this.blur()";><li class="fa fa-user-times fa-2x" title="{L_POPUP_MESSAGE}"></li></a>
 			<a href="{U_EXPORT}"><li class="fa fa-external-link fa-2x" title="{L_EXPORT}"></li></a>
 			<a href="#bot"><li class="fa fa-arrow-down fa-2x" title="{L_TOPIC_DOWN_IMAGE}"></li></a>
 			<a href="{U_VIEW_NEWER_TOPIC}"><li class="fa fa-arrow-right fa-2x" title="{L_VIEW_NEXT_TOPIC}"></li></a>
@@ -177,29 +177,21 @@ function addquote(post_id)
 			</tr>
 			<!-- BEGIN switch_no_buddy_ignore -->
 			<tr>
-				<td class="{postrow.ROW_CLASS}" width="100%" colspan="2" valign="bottom" nowrap="nowrap">
+				<td class="{postrow.ROW_CLASS}" width="100%" colspan="2" valign="bottom">
 
 
-<!--
-					<div class="divTable">
-						<div class="divTableBody">
-							<div class="divTableRow">
-								<div class="divTableCell">{postrow.BUTTONS_PANEL}</div>
-								<div class="divTableCell"><span class="gen"><a class="genmed" href="{postrow.DOWNLOAD_POST}"><img title="{L_DOWNLOAD_POST}" src="{ICON_DISK_IMAGE}" alt="{L_DOWNLOAD_POST}" border="0" /></a>&nbsp;{postrow.POST_RATING}&nbsp;&nbsp;{postrow.QUICK_QUOTE}</span></div>
-							</div>
-						</div>
-					</div>
- -->
+				<div class="tbx">
+					<ul class="lft uct one">
+						{postrow.BUTTONS_PANEL}
+					</ul>
+					<ul class="one">
+						<li class="rt"><span class="gen"><a class="fa fa-download fa-2x" href="{postrow.DOWNLOAD_POST}" title="{L_DOWNLOAD_POST}">&nbsp;</a>&nbsp;{postrow.POST_RATING}</span><li>
+					</ul>
+				</div>
 
 
-					<table cellspacing="0" cellpadding="0" border="0" height="18" width="100%">
-						<tr>
-							<td align="left">{postrow.BUTTONS_PANEL}</td>
-							<td align="right">
-								<span class="gen"><a class="fa fa-download fa-2x" href="{postrow.DOWNLOAD_POST}" title="{L_DOWNLOAD_POST}">&nbsp;</a>&nbsp;{postrow.POST_RATING}&nbsp;&nbsp;{postrow.QUICK_QUOTE}</span>
-							</td>
-						</tr>
-					</table>
+
+
 
 				</td>
 			</tr>
@@ -286,28 +278,8 @@ function addquote(post_id)
 <br />
 <table width="100%" border="0" cellspacing="0" cellpadding="2">
 	<tr>
-		<td width="100%">{S_TOPIC_ADMIN}</td>
-	</tr>
-	<tr>
-		<td width="100%">
-		<div class="fastreply">
-		{QUICK_REPLY_FORM}<br />
-		</div>
-		<br />
-		{JUMPBOX}<br />
-		<!-- BEGIN switch_info -->
-			<table width="100%" cellspacing="0" cellpadding="0" border="0">
-				<tr>
-					<td align="left" colspan="2">
-						<form method="post" action="{S_INFO_ACTION}"><span class="gensmall">{L_TOPIC_INFO}:&nbsp;
-						<input type="text" name="topic_info" maxlength="20" size="20" value="{TOPIC_INFO}">&nbsp;&nbsp;<input type="submit" name="submit_topic_info" value="{L_GO}" class="liteoption" /></span>
-						</form>
-					</td>
-				</tr>
-			</table>
-		<!-- END switch_info -->
-		</td>
-		<td class="gensmall" align="right" valign="top" nowrap="nowrap">
+		<td width="30%">{S_TOPIC_ADMIN}</td>
+		<td width="70%" class="gensmall" align="right" valign="top" nowrap="nowrap">
 			<ul class="genbtn uct">
 			<a href="{U_VIEW_OLDER_TOPIC}"><li class="fa fa-arrow-left fa-2x"title="{L_VIEW_PREVIOUS_TOPIC}"></li></a>
 			<a href="{U_PRINTER_TOPIC}"><li class="fa fa-print fa-2x" title="{L_PRINTER_TOPIC}"></li></a>
@@ -323,13 +295,36 @@ function addquote(post_id)
 			<a href="{U_PRIVATEMSGS}"><li class="fa fa-comments-o fa-2x" title="{L_PRIVATEMSGS}"></li></a>
 		<!-- END switch_logged_in -->
 		
-			<a href="{U_POSTINGS_POPUP}" onClick="NewWindow(this.href,'PopupWin');return false" onFocus="this.blur()";><li class="fa fa-user-circle fa-2x" title="{L_POPUP_MESSAGE}"></li></a>
+			<a href="{U_POSTINGS_POPUP}" onClick="NewWindow(this.href,'PopupWin');return false" onFocus="this.blur()";><li class="fa fa-user-times fa-2x" title="{L_POPUP_MESSAGE}"></li></a>
 			<a href="{U_EXPORT}"><li class="fa fa-external-link fa-2x" title="{L_EXPORT}"></li></a>
 			<a href="#top"><li class="fa fa-arrow-up fa-2x" title="{L_TOPIC_UP_IMAGE}"></li></a>
 			<a href="{U_VIEW_NEWER_TOPIC}"><li class="fa fa-arrow-right fa-2x" title="{L_VIEW_NEXT_TOPIC}"></li></a>
-		    </ul><br />
-		
+		    </ul>
+		</td>
+	</tr>
+</table>
+<div class="fastreply">{QUICK_REPLY_FORM}</div>
+<table width="100%" border="0" cellspacing="0" cellpadding="2">
+	<tr>
+		<td>
+		<br />
+		{JUMPBOX}
+		<!-- BEGIN switch_info -->
+			<table width="100%" cellspacing="0" cellpadding="0" border="0">
+				<tr>
+					<td align="left" colspan="2">
+						<form method="post" action="{S_INFO_ACTION}"><span class="gensmall">{L_TOPIC_INFO}:&nbsp;
+						<input type="text" name="topic_info" maxlength="20" size="20" value="{TOPIC_INFO}">&nbsp;&nbsp;<input type="submit" name="submit_topic_info" value="{L_GO}" class="liteoption" /></span>
+						</form>
+					</td>
+				</tr>
+			</table>
+		<!-- END switch_info -->
+		</td>
+		<td width="40%" align="right">
+			<table width="100%" border="0" cellspacing="0" cellpadding="0"><tr><td align="left">
 			{S_AUTH_LIST}
+			</td></tr></table>
 		</td>
 	</tr>
 	<tr>

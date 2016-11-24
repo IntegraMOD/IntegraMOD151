@@ -1,10 +1,19 @@
 /* fiSubOrange  */
-
-@import url("orange_buttons.css");
+@import url("font-awesome.css");
+@import url("fontello.css");
 @import url("main.css");
 
 /* The content of the posts (body of text) */
 body{background:#F9ECE4;color:#2C2C2C;}
+
+/* This is the border line & background color round the entire page */
+.bodyline{background:#f7f8fc;border:1px solid #98aab1;}
+
+/* This is the outline round the main forum tables */
+.forumline{background:#BB3804;border:1px solid #000;}
+
+/* The largest text used in the index page title and toptic title etc. */
+.maintitle,h1{color:#000;}
 
 .explaintitle{color:#5c81b1;}
 
@@ -13,11 +22,43 @@ a:link,a:active,a:visited,a.postlink{color:#000;}
 a:hover{color:#CF4F04;}
 
 /* titles for the topics:could specify viewed link color too */
-a.topictitle{color:#000;}
+.topictitle{color:#000;}
 a.topictitle:visited{color:#414A5C;}
 a.topictitle:hover{color:#CF4F04;}
 
-hr{border-style:solid;border-color:#BA3604;}
+hr {border-style:solid;border-color:#BA3604;}
+
+.icon_quote:before {
+	color:#16191D;
+}
+
+.icon_edit:before {
+	color:#16191D;
+}
+
+.icon_delete:before {
+	color:#16191D;
+}
+.icon_return_top:before {
+	color:#16191D;
+}
+.icon_ip:before {
+	color:#16191D;
+}
+.icon_go_top:before !important {
+	color:#16191D;
+}
+.icon_go_bottom:before !important {
+	color:#16191D;
+}
+
+a.fa-times, a.fa-share, a.fa-lock, a .fa-unlock, a.fa-sort, a.fa-clone, .fa-download, .fa-plus, .fa-search, .fa-user, .fa-envelope-o, .fa-envelope-square, .fa-picture-o, .icon-yahoo, .icon-aim, .icon-windows, .icon-skype, .icon-icq {
+	color:#16191D !important;
+}
+
+a.icon_return_top:hover:before, a.icon_delete:hover:before, a.icon_ip:hover:before, .icon_edit:hover:before, .icon_quote:hover:before, .fa-times:hover, a.fa-share:hover, a.fa-lock:hover, a .fa-unlock:hover, a.fa-sort:hover, a.fa-clone:hover, a.fa-download:hover, .fa-plus:hover, a.fa-user:hover, a.fa-envelope-square:hover, a.fa-picture-o:hover, .icon-yahoo:hover, .icon-aim:hover, .icon-windows:hover, .icon-skype:hover, .icon-icq:hover {
+	color:#BB3704 !important;
+}
 
 /* Category gradients*/
 td.cat,td.catHead,td.catSides,td.catLeft,td.catRight,td.catBottom{
@@ -37,7 +78,7 @@ td.cat,td.catHead,td.catSides,td.catLeft,td.catRight,td.catBottom{
 	background: linear-gradient(to bottom, #ba3604 22%,#fc8704 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
 	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ba3604', endColorstr='#fc8704',GradientType=0 ); /* IE6-9 */
 }
-.topnav{
+.topnav, .btmnav{
 	background: #fc8704; /* Old browsers */
 	background: -moz-linear-gradient(top, #fc8704 2%, #ba3604 60%); /* FF3.6-15 */
 	background: -webkit-linear-gradient(top, #fc8704 2%,#ba3604 60%); /* Chrome10-25,Safari5.1-6 */
@@ -55,13 +96,7 @@ td.cat,td.catHead,td.catSides,td.catLeft,td.catRight,td.catBottom{
 	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#fc8704', endColorstr='#ba3604',GradientType=0 ); /* IE6-9 */
 	border-color:#BA3604;
 }
-.openclose {background:transparent url('images/orange/icon_openclose.png') no-repeat;}
-
-/* Nav bar images */
-.hdr_left{background: url(images/orange/navtr.gif) top left no-repeat;}
-.hdr_right{background: url(images/orange/navtl.gif) top right no-repeat;}
-.ftr_left{background: url(images/orange/navbr.gif) top left no-repeat;}
-.ftr_right{background: url(images/orange/navbl.gif) top right no-repeat;}
+.openclose {background:transparent url('../images/orange/icon_openclose.png') no-repeat;}
 
 /* Main table cell colors and backgrounds */
 .row1{background:#F57E04;}
@@ -83,22 +118,13 @@ td.rowpic{
 
 /* Table Header cells */
 th{
-	color:#FFF;
+	color:#16191D;
 	background: #fc8704; /* Old browsers */
 	background: -moz-linear-gradient(top, #fc8704 20%, #ba3604 100%); /* FF3.6-15 */
 	background: -webkit-linear-gradient(top, #fc8704 20%,#ba3604 100%); /* Chrome10-25,Safari5.1-6 */
 	background: linear-gradient(to bottom, #fc8704 20%,#ba3604 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
 	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#fc8704', endColorstr='#ba3604',GradientType=0 ); /* IE6-9 */
 }
-
-/* This is the border line & background color round the entire page */
-.bodyline{background:#f7f8fc;border:1px solid #98aab1;}
-
-/* This is the outline round the main forum tables */
-.forumline{background:#BB3804;border:1px solid #000;}
-
-/* The largest text used in the index page title and toptic title etc. */
-.maintitle,h1{color:#000;}
 
 /* Used for the navigation text,(Page 1,2,3 etc) and the navigation bar when in a forum */
 .nav{}
@@ -178,11 +204,6 @@ a.admin:hover,a.mod:hover{color:#839fbc}
 .picshadow{background-color: #888888;}
 /* Mighty Gorgon - Full Album Pack - END */
 
-/* Background images for tables */
-.tbll{background: url(images/orange/tb4_l.gif) no-repeat;}
-.tblbot{background: url(images/orange/tb4_m.gif) repeat-x;}
-.tblr{background: url(images/orange/tb4_r.gif) no-repeat;}
-
 a.kb {background: transparent;text-shadow: 2px 2px 2px #323232;}
 a.kb span {color:#516A88;}
 
@@ -201,16 +222,16 @@ div#mobile-bar {background-color:#000000;}
 .shadow {box-shadow: 2px 2px 2px #CDCDCD;}
 .blockshadow {border:1px solid #BA3604;box-shadow: 2px 2px 2px #CDCDCD;}
 
-.postbtn {
+.postbtn, .genbtn {
 	  background: #FB8604;
 	  background-image: -webkit-linear-gradient(top, #FB8604, #BA3604);
 	  background-image: -moz-linear-gradient(top, #FB8604, #BA3604);
 	  background-image: -ms-linear-gradient(top, #FB8604, #BA3604);
 	  background-image: -o-linear-gradient(top, #FB8604, #BA3604);
 	  background-image: linear-gradient(to bottom, #FB8604, #BA3604);
-	  border: solid #A8B9C8 1px;
+	  border: solid #444649 1px;
 }
-.postbtn:hover {
+.postbtn:hover, .genbtn:hover {
 	  background: #E1E8EF;
 	  background-image: -webkit-linear-gradient(top, #E36804, #BA3604);
 	  background-image: -moz-linear-gradient(top, #E36804, #BA3604);
@@ -218,4 +239,6 @@ div#mobile-bar {background-color:#000000;}
 	  background-image: -o-linear-gradient(top, #E36804, #BA3604);
 	  background-image: linear-gradient(to bottom, #E36804, #BA3604);
 }
-a.postbtn, a.postbtn:hover {color:#FFF;}
+
+a.postbtn, a.postbtn:hover, .genbtn li, .genbtn a {color:#16191D;}
+.genbtn li:hover, .genbtn a:hover {color:#FC8704;}

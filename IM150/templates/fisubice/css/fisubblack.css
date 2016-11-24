@@ -1,3 +1,4 @@
+/* fiSubBlack  */
 @import url("font-awesome.css");
 @import url("fontello.css");
 @import url("main.css");
@@ -5,24 +6,44 @@
 /* The content of the posts (body of text) */
 body{background:#272727;color:#DD6901;}
 
+/* This is the border line & background color round the entire page */
+.bodyline{background:#303030;border:1px solid #D77700}
+
+/* This is the outline round the main forum tables */
+.forumline{background:#272727;border:1px solid #FFCC00}
+
+/* The largest text used in the index page title and toptic title etc. */
+.maintitle,h1{color:#FFCC00;}
+
 .explaintitle{color:#5c81b1;}
 
+/* General page style */
+a:link,a:active,a:visited,a.postlink {color:#FFCC00;}
+a:hover {color:#DD6900;text-decoration:none}
+
+/* titles for the topics:could specify viewed link color too */
+.topictitle{};
+a.topictitle:visited {color:#DD6900}
+a.topictitle:hover {color:#FFCC00}
+
+hr {border: 0px solid #303030;}
+
 .icon_quote:before {
-	color:#F8C600;
+	color:#D36400;
 }
 
 .icon_edit:before {
-	color:#F8C600;
+	color:#D36400;
 }
 
 .icon_delete:before {
-	color:#F8C600;
+	color:#D36400;
 }
 .icon_return_top:before {
-	color:#F8C600;
+	color:#D36400;
 }
 .icon_ip:before {
-	color:#F8C600;
+	color:#D36400;
 }
 .icon_go_top:before {
 	color:#F8C600;
@@ -33,27 +54,17 @@ body{background:#272727;color:#DD6901;}
   	font-size: 1.7em;
 }
 
-a.fa-times, a.fa-share, a.fa-lock, a.fa-unlock, a.fa-sort, a.fa-clone, a.fa-download, a.fa-plus, a.fa-search, .fa-user, a.fa-envelope-o, .fa-envelope-square, .fa-picture-o, .icon-yahoo, .icon-aim, .icon-windows, .icon-skype, .icon-icq {
+.hov, a.fa-times, a.fa-share, a.fa-lock, a .fa-unlock, a.fa-sort, a.fa-clone, .fa-download, .fa-plus, .fa-search, .fa-user, .fa-envelope-o, .fa-envelope-square, .fa-picture-o, .icon-yahoo, .icon-aim, .icon-windows, .icon-skype, .icon-icq {
 	color:#D3621B !important;
 }
 
-a.fa-times:hover, a.fa-share:hover, a.fa-lock:hover, a.fa-unlock:hover, a.fa-sort:hover, a.fa-clone:hover, a.fa-download:hover, a.fa-plus:hover, a.fa-search:hover, .fa-user:hover, a.fa-envelope-o:hover, .fa-envelope-square:hover, .fa-picture-o:hover, .icon-yahoo:hover, .icon-aim:hover, .icon-windows:hover, .icon-skype:hover, .icon-icq:hover {
+a.icon_return_top:hover:before, a.icon_delete:hover:before, a.icon_ip:hover:before, a.icon_edit:hover:before, a.icon_quote:hover:before, a.fa-times:hover, a.fa-share:hover, a.fa-lock:hover, a .fa-unlock:hover, a.fa-sort:hover, a.fa-clone:hover, a.fa-download:hover, .fa-plus:hover, a.fa-user:hover, a.fa-envelope-square:hover, a.fa-picture-o:hover, .icon-yahoo:hover, .icon-aim:hover, .icon-windows:hover, .icon-skype:hover, .icon-icq:hover, .fa-search:hover, .fa-envelope-o:hover {
 	color:#F8C600 !important;
 }
 
-
-/* General page style */
-a:link,a:active,a:visited,a.postlink {color:#FFCC00;}
-a:hover {color:#DD6900;text-decoration:none}
-
-/* titles for the topics:could specify viewed link color too */
-a.topictitle:visited {color:#DD6900}
-a.topictitle:hover {color:#FFCC00}
-
-hr {border: 0px solid #303030;}
-
 /* Category gradients*/
 td.cat, td.catHead, td.catSides, td.catLeft, td.catRight, td.catBottom {
+	overflow:auto;
 	color:#516a88;
 	background: #272727; /* Old browsers */
 	background: -moz-linear-gradient(top, #272727 0%, #57595A 100%); /* FF3.6-15 */
@@ -64,13 +75,15 @@ td.cat, td.catHead, td.catSides, td.catLeft, td.catRight, td.catBottom {
 
 /* This is the gradient background at the top of the page */
 .topbkg {
+	overflow:auto;
 	background: #282929; /* Old browsers */
 	background: -moz-linear-gradient(top, #282929 0%, #525455 100%); /* FF3.6-15 */
 	background: -webkit-linear-gradient(top, #282929 0%,#525455 100%); /* Chrome10-25,Safari5.1-6 */
 	background: linear-gradient(to bottom, #282929 0%,#525455 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
 	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#282929', endColorstr='#525455',GradientType=0 ); /* IE6-9 */
 }
-.topnav {
+.topnav, .btmnav{
+	overflow:auto;
 	background: #272727; /* Old browsers */
 	background: -moz-linear-gradient(top, #272727 0%, #525455 75%); /* FF3.6-15 */
 	background: -webkit-linear-gradient(top, #272727 0%,#525455 75%); /* Chrome10-25,Safari5.1-6 */
@@ -112,15 +125,6 @@ th{
 	background: linear-gradient(to bottom, #272727 0%,#57595A 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
 	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#272727', endColorstr='#57595A',GradientType=0 ); /* IE6-9 */
 }
-
-/* This is the border line & background color round the entire page */
-.bodyline{background:#303030;border:1px solid #D77700}
-
-/* This is the outline round the main forum tables */
-.forumline{background:#272727;border:1px solid #FFCC00}
-
-/* The largest text used in the index page title and toptic title etc. */
-.maintitle,h1{color:#FFCC00;}
 
 /* Used for the navigation text,(Page 1,2,3 etc) and the navigation bar when in a forum */
 .nav{}

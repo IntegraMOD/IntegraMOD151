@@ -1236,6 +1236,9 @@ $template->assign_vars(array(
 	'L_POST_REPLY_TOPIC' => $reply_alt,
 	'L_PRINTER_TOPIC' => $lang['Printer_topic'],
 	'L_BACK_TO_TOP' => $lang['Back_to_top'],
+	'L_GO_TO_BOTTOM' => $lang['Go_to_bottom'],
+	'L_GO_TO_TOP' => $lang['Go_to_top'],
+
 	'L_DISPLAY_POSTS' => $lang['Display_posts'],
 	'L_LOCK_TOPIC' => $lang['Lock_topic'],
 	'L_UNLOCK_TOPIC' => $lang['Unlock_topic'],
@@ -2004,20 +2007,20 @@ for($i = 0; $i < $total_posts; $i++)
 
 	$temp_url = append_sid("posting.$phpEx?mode=quote&amp;" . POST_POST_URL . "=" . $postrow[$i]['post_id']);
 	/* Hide Buttons :: Altered
-	$quote_img = '<a class="icon_quote" href="' . $temp_url . '"title="' . $lang['Reply_with_quote'] . '"><span>' . $lang['Quote'] . '</span></a>';*/
+	$quote_img = '<a class="icon_quote noi" href="' . $temp_url . '"title="' . $lang['Reply_with_quote'] . '"><span>' . $lang['Quote'] . '</span></a>';*/
 	if($is_auth['auth_reply']){ 
-        $quote_img = '<a class="icon_quote" href="' . $temp_url . '"title="' . $lang['Reply_with_quote'] . '"><span>' . $lang['Quote'] . '</span></a>'; 
+        $quote_img = '<a class="icon_quote noi" href="' . $temp_url . '"title="' . $lang['Reply_with_quote'] . '"><span>' . $lang['Quote'] . '</span></a>'; 
     }
 	$quote = '<a href="' . $temp_url . '">' . $lang['Reply_with_quote'] . '</a>';
 
 	$temp_url = append_sid("search.$phpEx?search_author=" . urlencode($postrow[$i]['username']) . "&amp;showresults=posts");
-	$search_img = '<a class="icon_search" href="' . $temp_url . '" title="' . sprintf($lang['Search_user_posts'], $postrow[$i]['username'])  . '"><span>' . $lang['Search'] . '</span></a>';
+	$search_img = '<a class="icon_search noi" href="' . $temp_url . '" title="' . sprintf($lang['Search_user_posts'], $postrow[$i]['username'])  . '"><span>' . $lang['Search'] . '</span></a>';
 	$search = '<a href="' . $temp_url . '">' . sprintf($lang['Search_user_posts'], $postrow[$i]['username'])  . '</a>';
 
 	if ( ( $userdata['user_id'] == $poster_id && $is_auth['auth_edit'] ) || $is_auth['auth_mod'] )
 	{
 		$temp_url = append_sid("posting.$phpEx?mode=editpost&amp;" . POST_POST_URL . "=" . $postrow[$i]['post_id']);
-		$edit_img = '<a class="icon_edit" href="' . $temp_url . '" title="' . $lang['Edit_delete_post'] . '"><span>' . $lang['edit_lofi'] . '</span></a>';
+		$edit_img = '<a class="icon_edit noi" href="' . $temp_url . '" title="' . $lang['Edit_delete_post'] . '"><span>' . $lang['edit_lofi'] . '</span></a>';
 		$edit = '<a href="' . $temp_url . '">' . $lang['Edit_delete_post'] . '</a>';
 	}
 	else
@@ -2029,11 +2032,11 @@ for($i = 0; $i < $total_posts; $i++)
 	if ( $is_auth['auth_mod'] )
 	{
 		$temp_url = "modcp.$phpEx?mode=ip&amp;" . POST_POST_URL . "=" . $postrow[$i]['post_id'] . "&amp;" . POST_TOPIC_URL . "=" . $topic_id . "&amp;p_sid=" . $userdata['priv_session_id'];
-		$ip_img = '<a class="icon_ip" href="' . $temp_url . '" title="' . $lang['View_IP'] . '"><img src="' . $images['icon_ip'] . '" alt="' . $lang['View_IP'] . '" title="' . $lang['View_IP'] . '" border="0" /></a>';
+		$ip_img = '<a class="icon_ip noi" href="' . $temp_url . '" title="' . $lang['View_IP'] . '"><img src="' . $images['icon_ip'] . '" alt="' . $lang['View_IP'] . '" title="' . $lang['View_IP'] . '" border="0" /></a>';
 		$ip = '<a href="' . $temp_url . '">' . $lang['View_IP'] . '</a>';
 
 		$temp_url = "posting.$phpEx?mode=delete&amp;" . POST_POST_URL . "=" . $postrow[$i]['post_id'] . "&amp;p_sid=" . $userdata['priv_session_id'];
-		$delpost_img = '<a class="icon_delete" href="' . $temp_url . '" title="' . $lang['Delete_post'] . '"><img src="' . $images['icon_delpost'] . '" alt="' . $lang['Delete_post'] . '" title="' . $lang['Delete_post'] . '" border="0" /></a>';
+		$delpost_img = '<a class="icon_delete noi" href="' . $temp_url . '" title="' . $lang['Delete_post'] . '"><img src="' . $images['icon_delpost'] . '" alt="' . $lang['Delete_post'] . '" title="' . $lang['Delete_post'] . '" border="0" /></a>';
 		$delpost = '<a href="' . append_sid($temp_url) . '">' . $lang['Delete_post'] . '</a>';
 	}
 	else
@@ -2044,7 +2047,7 @@ for($i = 0; $i < $total_posts; $i++)
 		if ( $userdata['user_id'] == $poster_id && $is_auth['auth_delete'] && $forum_topic_data['topic_last_post_id'] == $postrow[$i]['post_id'] )
 		{
 			$temp_url = "posting.$phpEx?mode=delete&amp;" . POST_POST_URL . "=" . $postrow[$i]['post_id'] . "&amp;p_sid=" . $userdata['priv_session_id'];
-			$delpost_img = '<a href="' . $temp_url . '"><img src="' . $images['icon_delpost'] . '" alt="' . $lang['Delete_post'] . '" title="' . $lang['Delete_post'] . '" border="0" /></a>';
+			$delpost_img = '<a class="icon_delete noi" href="' . $temp_url . '"><img src="' . $images['icon_delpost'] . '" alt="' . $lang['Delete_post'] . '" title="' . $lang['Delete_post'] . '" border="0" /></a>';
 			$delpost = '<a href="' . append_sid($temp_url) . '">' . $lang['Delete_post'] . '</a>';
 		}
 		else

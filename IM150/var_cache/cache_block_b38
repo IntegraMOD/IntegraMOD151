@@ -1,0 +1,12 @@
+547096045f9f4bf28292fb2ec7433b39s:371:"<table width="100%" cellspacing="1" cellpadding="0" border="0">
+  <tr>
+    <td>
+    <div class="nav" style=" padding: 0; margin: 10px 0;">
+    <a href="portal.php" alt="Index">Index</a> |
+    <a href="portal.php?news=categories" alt="Index">Categories</a> |
+    <a href="portal.php?news=archives" alt="Index">Archives</a>
+    </div>
+
+    </td>
+  </tr>
+</table>";

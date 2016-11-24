@@ -258,14 +258,10 @@ window.open('{buddy_alert.U_BUDDY_ALERT}', '_buddyalert', 'HEIGHT=225,resizable=
 <nav class="desktop-menu">
 			<div class="divTable topnav">
 				<div class="divTableBody">
-					<div class="divTableRow">
-						<div class="divQTableCell">
-							<div><a class="icon_go_bottom" href="#bot" title="{L_GO_TO_BOTTOM}">&nbsp;</a></div>
-						</div>
-						<div class="divQTableCell cv">{QMENUS}</div>
-						<div class="divQTableCell">
-							<div><a class="icon_go_bottom" href="#bot" title="{L_GO_TO_BOTTOM}">&nbsp;</a></div>
-						</div>
+					<div class="divTableRow cv">
+						<div class="divQTableCell"><a class="icon_go_bottom" href="#bot" title="{L_GO_TO_BOTTOM}">&nbsp;</a></div>
+						<div class="divQTableCell">{QMENUS}</div>
+						<div class="divQTableCell"><a class="icon_go_bottom" href="#bot" title="{L_GO_TO_BOTTOM}">&nbsp;</a></div>
 					</div>
 				</div>
 			</div>

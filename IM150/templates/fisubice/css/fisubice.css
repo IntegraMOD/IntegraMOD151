@@ -6,7 +6,31 @@
 /* The content of the posts (body of text) */
 body{background:#ecf0f6;color:#000000;}
 
+/* This is the border line & background color round the entire page */
+.bodyline{background:#f7f8fc;border:1px solid #98aab1;}
+
+/* This is the outline round the main forum tables */
+.forumline{background:#ffffff;border:1px solid #486386;}
+
+/* The largest text used in the index page title and toptic title etc. */
+.maintitle,h1{color:#839fbc;}
+
 .explaintitle{color:#5c81b1;}
+
+/* General page style */
+a:link,a:active,a:visited,a.postlink{color:#32475f;}
+a:hover{color:#839fbc;}
+
+/* titles for the topics:could specify viewed link color too */
+.topictitle {}
+a.topictitle:visited {color:#496687;}
+a.topictitle:hover {color:#839fbc;}
+
+hr{border-style:solid;border-color:#587DA3;}
+
+.icon_quote:before {
+	color:#587DA3;
+}
 
 .icon_quote:before {
 	color:#587DA3;
@@ -27,32 +51,20 @@ body{background:#ecf0f6;color:#000000;}
 }
 .icon_go_top:before {
 	color:#587DA3;
-  	font-size: 1.7em;
 }
 .icon_go_bottom:before {
 	color:#587DA3;
-  	font-size: 1.7em;
 }
 
-a.fa-times, a.fa-share, a.fa-lock, a .fa-unlock, a.fa-sort, a.fa-clone, .fa-download, .fa-plus, .fa-search, .fa-user, .fa-envelope-o, .fa-envelope-square, .fa-picture-o, .icon-yahoo, .icon-aim, .icon-windows, .icon-skype, .icon-icq {
+.hov, a.fa-times, a.fa-share, a.fa-lock, a .fa-unlock, a.fa-sort, a.fa-clone, .fa-download, .fa-plus, .fa-search, .fa-user, .fa-envelope-o, .fa-envelope-square, .fa-picture-o, .icon-yahoo, .icon-aim, .icon-windows, .icon-skype, .icon-icq {
 	color:#587DA3 !important;
 }
 
-a.fa-times:hover, a.fa-share:hover, a.fa-lock:hover, a .fa-unlock:hover, a.fa-sort:hover, a.fa-clone:hover, a.fa-download:hover:hover, .fa-plus:hover, .fa-search:hover, a.fa-user:hover, a.fa-envelope-o:hover, a.fa-envelope-square:hover, a.fa-picture-o:hover, a.icon-yahoo:hover, a.icon-aim:hover, a.icon-windows:hover, a.icon-skype:hover, a.icon-icq:hover {
+a.icon_return_top:hover:before, a.icon_delete:hover:before, a.icon_ip:hover:before, .icon_edit:hover:before, .icon_quote:hover:before, .fa-times:hover, a.fa-share:hover, a.fa-lock:hover, a .fa-unlock:hover, a.fa-sort:hover, a.fa-clone:hover, a.fa-download:hover, .fa-plus:hover, a.fa-user:hover, a.fa-envelope-square:hover, a.fa-picture-o:hover, .icon-yahoo:hover, .icon-aim:hover, .icon-windows:hover, .icon-skype:hover, .icon-icq:hover {
 	color:#32475F !important;
 }
 
-
-/* General page style */
-a:link,a:active,a:visited,a.postlink{color:#32475f;}
-a:hover{color:#839fbc;}
-
-/* titles for the topics:could specify viewed link color too */
-.topictitle {}
-a.topictitle:visited {color:#496687;}
-a.topictitle:hover {color:#839fbc;}
-
-hr{border-style:solid;border-color:#587DA3;}
+.fa-search:hover, .fa-envelope-o:hover {color:#6E9BD5 !important;}
 
 /* Category gradients*/
 td.cat, td.catHead, td.catSides, td.catLeft, td.catRight, td.catBottom {
@@ -72,7 +84,7 @@ td.cat, td.catHead, td.catSides, td.catLeft, td.catRight, td.catBottom {
 	background: linear-gradient(to bottom, #b4c5d5 0%,#dbe3ee 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
 	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#b4c5d5', endColorstr='#dbe3ee',GradientType=0 ); /* IE6-9 */
 }
-.topnav {
+.topnav, .btmnav {
 	background: #e2e9f1; /* Old browsers */
 	background: -moz-linear-gradient(top, #e2e9f1 0%, #becde0 75%); /* FF3.6-15 */
 	background: -webkit-linear-gradient(top, #e2e9f1 0%,#becde0 75%); /* Chrome10-25,Safari5.1-6 */
@@ -96,12 +108,14 @@ td.cat, td.catHead, td.catSides, td.catLeft, td.catRight, td.catBottom {
 td.spacerow{background:#cad9ea;}
 
 /* This is for the table cell above the Topics,Post & Last posts on the index.php */
-td.rowpic{	color:#516a88;
+td.rowpic{
+	color:#516a88;
 	background: #e2e9f1; /* Old browsers */
 	background: -moz-linear-gradient(top, #e2e9f1 0%, #becde0 75%); /* FF3.6-15 */
 	background: -webkit-linear-gradient(top, #e2e9f1 0%,#becde0 75%); /* Chrome10-25,Safari5.1-6 */
 	background: linear-gradient(to bottom, #e2e9f1 0%,#becde0 75%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
 	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#e2e9f1', endColorstr='#becde0',GradientType=0 ); /* IE6-9 */border-color:#91a0ae;
+	border-color:#0850BD;
 }
 
 /* Table Header cells */
@@ -113,15 +127,6 @@ th{
 	background: linear-gradient(to bottom, #e2e9f1 0%,#becde0 75%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
 	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#e2e9f1', endColorstr='#becde0',GradientType=0 ); /* IE6-9 */border-color:#91a0ae;
 }
-
-/* This is the border line & background color round the entire page */
-.bodyline{background:#f7f8fc;border:1px solid #98aab1;}
-
-/* This is the outline round the main forum tables */
-.forumline{background:#ffffff;border:1px solid #486386;}
-
-/* The largest text used in the index page title and toptic title etc. */
-.maintitle,h1{color:#839fbc;}
 
 /* Used for the navigation text,(Page 1,2,3 etc) and the navigation bar when in a forum */
 .nav{}
@@ -200,11 +205,6 @@ a.admin:hover,a.mod:hover{color:#839fbc}
 .picframe{background-color:#FFFFFF;border:1px solid #555555;}
 .picshadow{background-color: #888888;}
 /* Mighty Gorgon - Full Album Pack - END */
-
-/* Background images for tables */
-.tbll{background: url(../images/tb4_l.gif) no-repeat;}
-.tblbot{background: url(../images/tb4_m.gif) repeat-x;}
-.tblr{background: url(../images/tb4_r.gif) no-repeat;}
 
 a.kb {background: transparent;text-shadow: 2px 2px 2px #323232;}
 a.kb span {color:#516A88;}

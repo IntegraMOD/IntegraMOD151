@@ -13,21 +13,15 @@
 							</div>
 						</div>
 						<!-- END switch_banner_17 -->
-						<div class="divTable topnav">
+						<div class="divTable btmnav">
 							<div class="divTableBody">
-								<div class="divTableRow">
-
-									<div class="divQTableCell">
-										<div><a class="icon_go_top" href="#top" title="{L_GO_TO_TOP}">&nbsp;</a></div>
-									</div>
-									<div class="divQTableCell cv"><nav class="desktop-menu">{QMENUS}</nav></div>
-									<div class="divQTableCell">
-										<div><a class="icon_go_top" href="#top" title="{L_GO_TO_TOP}">&nbsp;</a></div>
-									</div>
+								<div class="divTableRow bcv center">
+									<div class="divQTableCell"><a class="icon_go_top" href="#top" title="{L_GO_TO_TOP}">&nbsp;</a></div>
+									<div class="divQTableCell"><nav class="desktop-menu">{QMENUS}</nav></div>
+									<div class="divQTableCell"><a class="icon_go_top" href="#top" title="{L_GO_TO_TOP}">&nbsp;</a></div>
 								</div>
 							</div>
 						</div>
-
           			</td>
         		</tr>
       		</table>
@@ -37,11 +31,7 @@
 
 <div align="center" class="copyright">
 <br />
-<<<<<<< HEAD
 <a href="http://www.integramod.com/" target="_phpbb">IntegraMOD</a> <a href="hacks_list.php" target="_phpbb">{INTEGRAMOD_VERSION}</a> &copy; 2004 - 2011 <a href="http://www.integramod.com/forum/memberlist.php?mode=leaders" target="_phpbb">The Integramod Group</a><br />
-=======
-<a href="http://www.integramod.com/" target="_phpbb">IntegraMOD</a> <a href="hacks_list.php" target="_phpbb">{INTEGRAMOD_VERSION}</a> &copy; 2004 - 2016 <a href="http://www.integramod.com/forum/memberlist.php?mode=leaders" target="_phpbb">The Integramod Group</a><br />
->>>>>>> origin/master
 Powered by <a href="http://www.phpbb.com/" target="_phpbb">phpBB</a>{PHPBB_VERSION}&reg; Forum Software &copy; phpBB Group<br /> 
 {S_TIMEZONE}&nbsp;&bull;&nbsp;{COOKIES_LINK}<!-- Begin Lo-Fi Mod -->&nbsp;&bull;&nbsp;{LOFI}<!-- End Lo-Fi Mod -->
 {STYLECWSI}  <!--replace this with style author info -->

@@ -1,4 +1,4 @@
-<SCRIPT LANGUAGE="JavaScript"> 
+<script type="text/javascript">
 <!-- 
 	function mpFoto(img)
 	{
@@ -59,25 +59,26 @@
 
 	<table cellpadding="3" cellspacing="1">
   		<tr>
-			<td>	
+			<td class="genbtn">
 			<!-- IF IS_AUTH_SEARCH -->		
-			<a class="icon_search" href="{U_PASEARCH}"><span>{L_SEARCH}</span></a>
+			<a class="icon_search" href="{U_PASEARCH}" title="{L_SEARCH}">&nbsp;<span class="fa fa-search fa-lg"></span>&nbsp;</a>
 			<!-- ENDIF -->
 			<!-- IF IS_AUTH_STATS -->	
-			<a class="icon_stats" href="{U_PASTATS}"><span>{L_STATS}</span></a>
+			<a class="icon_stats" href="{U_PASTATS}" title="{L_STATS}">&nbsp;<span class="fa fa-bar-chart fa-lg"></span>&nbsp;</a>
 			<!-- ENDIF -->
 			<!-- IF IS_AUTH_TOPLIST -->	
-			<a class="icon_toplist" href="{U_TOPLIST}"><span>{L_TOPLIST}</span></a>
+			<a class="icon_toplist" href="{U_TOPLIST}" title="{L_TOPLIST}">&nbsp;<span class="fa fa-line-chart fa-lg"></span>&nbsp;</a>
 			<!-- ENDIF -->
 			<!-- IF IS_AUTH_UPLOAD -->
-			<a class="icon_upload" href="{U_UPLOAD}"><span>{L_UPLOAD}</span></a>
+			<a class="icon_upload" href="{U_UPLOAD}" title="{L_UPLOAD}">&nbsp;<span class="fa fa-upload fa-lg"></span>&nbsp;</a>
 			<!-- ENDIF -->	
 			<!-- IF IS_AUTH_VIEWALL -->	
-			<a class="icon_va" href="{U_VIEW_ALL}"><span>{L_VIEW_ALL}</span></a>	
+			<a class="icon_va" href="{U_VIEW_ALL}" title="{L_VIEW_ALL}">&nbsp;<span class="fa fa-th fa-lg"></span>&nbsp;</a>	
 			<!-- ENDIF -->	
 			<!-- IF IS_AUTH_MCP -->	
-			<a class="icon_mod" href="{U_MCP}"><span>{L_MCP_LINK}</span></a>	
-			<!-- ENDIF -->	
+			<a class="icon_mod" href="{U_MCP}" title="{L_MCP_LINK}">&nbsp;<span class="fa fa-flag fa-lg"></span>&nbsp;</a>	
+			<!-- ENDIF -->
+
 			</td>
   		</tr>
 	</table>

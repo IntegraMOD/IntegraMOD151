@@ -8,7 +8,7 @@
  *
  *	version			: 1.0.2 - 17/10/2003
  *
- *	last update		: 2012-03-05 11:45:20 by HelterSkelter *
+ *	last update		: 2016-11-20 22:27:56 by Helter *
  ***************************************************************************/
 
 /***************************************************************************
@@ -1317,13 +1317,13 @@ $user_fields = array(
 	// pm informations
 		'user_pm' => array(
 				'lang_key'     => 'Private_Message',
-				'image'        => 'icon_pm',
 				'title'        => 'Send_private_message',
 				'class'        => 'pm',
 				'type'         => 'TINYINT',
-				'sql_def'      => '1',
 				'dsp_func'     => 'pcp_output_user_pm',
+				'auth'         => USER,
 				'ind'          => '3',
+				'sql_def'      => '1',
 			),
 		
 	// real informations

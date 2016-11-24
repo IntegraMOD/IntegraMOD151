@@ -8,7 +8,7 @@
  *
  *	version			: 1.0.2 - 23/10/2003
  *
- *	last update		: 2005-08-07 16:40:47 by ednique *
+ *	last update		: 2016-11-20 22:27:56 by Helter *
  ***************************************************************************/
 
 /***************************************************************************
@@ -58,7 +58,7 @@ $user_maps = array(
 	
 	'PCP.viewprofile.base.avatar' => array(
 						'split'		=> true,
-										'title'		=> 'Avatar',
+								'title'		=> 'Avatar',
 						'fields'	=> array(
 						'user_avatar' => array(
 								'img'          => true,
@@ -314,7 +314,7 @@ $user_maps = array(
 							),
 					),
 			),
-
+	
 	'PCP.viewprofile.photo' => array(
 				'order'		=> 10,
 								'custom'	=> 2,
@@ -331,7 +331,7 @@ $user_maps = array(
 							),
 					),
 			),
-
+	
 	'PCP.home' => array(
 				'order'		=> 10,
 										'title'		=> 'profilcp_index_shortcut',
@@ -376,9 +376,9 @@ $user_maps = array(
 							),
 						'phpBBSecurity_answer' => array(
 							),
-						'user_attachsig' => array(
-							),
 						'user_notify' => array(
+							),
+						'user_attachsig' => array(
 							),
 						'user_notify_pm' => array(
 							),
@@ -392,7 +392,7 @@ $user_maps = array(
 			),
 	
 	'PCP.profil.profile_prefer.base' => array(
-			'order'		=> 10,
+				'order'		=> 10,
 										'title'		=> 'profilcp_profil_base_shortcut',
 					),
 	
@@ -498,7 +498,7 @@ $user_maps = array(
 	'PCP.profil.profile_prefer.PCP.notification' => array(
 				'order'		=> 20,
 										'title'		=> 'Profile_control_panel_notification',
-			),
+					),
 	
 	'PCP.profil.profile_prefer.PCP.posting' => array(
 				'order'		=> 30,
@@ -528,9 +528,9 @@ $user_maps = array(
 						'user_buddy_ignored_by_display' => array(
 							),
 						'user_privmsgs_per_page' => array(
-					),
+							),
 						'user_watched_topics_per_page' => array(
-			),
+							),
 						'user_topics_last_per_page' => array(
 							),
 					),
@@ -630,7 +630,6 @@ $user_maps = array(
 	'PCP.profil.Preferences.home' => array(
 										'title'		=> 'Preferences',
 					),
-	
 	
 	'PCP.profil.avatar' => array(
 				'order'		=> 20,
@@ -771,55 +770,55 @@ $user_maps = array(
 						'fields'	=> array(
 						'username' => array(
 								'img'          => true,
-								'style'        => '<td valign="absbottom" nowrap="nowrap"><span class="gensmall">%s </span></td>',
+								'style'        => '<td valign="absbottom" nowrap="nowrap"><span class="genbtn fa fa-user">&nbsp;%s</span></td>',
 							),
 						'user_birthday' => array(
 								'img'          => true,
-								'style'        => '<td valign="absbottom" nowrap="nowrap"><span class="gensmall">%s </span></td>',
+								'style'        => '<td valign="absbottom" nowrap="nowrap"><span class="gensmall">%s</span></td>',
 							),
 						'user_my_friend' => array(
 								'img'          => true,
-								'style'        => '<td valign="absbottom" nowrap="nowrap"><span class="gensmall">%s </span></td>',
+								'style'        => '<td valign="absbottom" nowrap="nowrap"><span class="gensmall">%s</span></td>',
 							),
 						'user_my_ignore' => array(
 								'img'          => true,
-								'style'        => '<td valign="absbottom" nowrap="nowrap"><span class="gensmall">%s </span></td>',
+								'style'        => '<td valign="absbottom" nowrap="nowrap"><span class="gensmall">%s</span></td>',
 							),
 						'user_pm' => array(
 								'img'          => true,
-								'style'        => '<td valign="absbottom" nowrap="nowrap"><span class="gensmall">%s </span></td>',
+								'style'        => '<td valign="absbottom" nowrap="nowrap"><span class="genbtn fa fa-envelope-square">&nbsp;%s</span></td>',
 							),
 						'user_album' => array(
 								'img'          => true,
-								'style'        => '<td valign="absbottom" nowrap="nowrap"><span class="gensmall">%s </span></td>',
+								'style'        => '<td valign="absbottom" nowrap="nowrap"><span class="genbtn fa fa-picture-o">&nbsp;%s</span></td>',
 							),
 						'user_email' => array(
 								'img'          => true,
-								'style'        => '<td valign="absbottom" nowrap="nowrap"><span class="gensmall">%s </span></td>',
+								'style'        => '<td valign="absbottom" nowrap="nowrap"><span class="genbtn fa fa-user">&nbsp;%s</span></td>',
 							),
 						'user_website' => array(
 								'img'          => true,
-								'style'        => '<td valign="absbottom" nowrap="nowrap"><span class="gensmall">%s </span></td>',
+								'style'        => '<td valign="absbottom" nowrap="nowrap">&nbsp;<span class="genbtn">%s</span></td>',
 							),
 						'user_aim' => array(
 								'img'          => true,
-								'style'        => '<td valign="absbottom" nowrap="nowrap"><span class="gensmall">%s </span></td>',
+								'style'        => '<td valign="absbottom" nowrap="nowrap"><span class="gensmall">&nbsp;%s</span></td>',
 							),
 						'user_yim' => array(
 								'img'          => true,
-								'style'        => '<td valign="absbottom" nowrap="nowrap"><span class="gensmall">%s </span></td>',
+								'style'        => '<td valign="absbottom" nowrap="nowrap"><span class="gensmall">&nbsp;%s</span></td>',
 							),
 						'user_msnm' => array(
 								'img'          => true,
-								'style'        => '<td valign="absbottom" nowrap="nowrap"><span class="gensmall">%s </span></td>',
+								'style'        => '<td valign="absbottom" nowrap="nowrap"><span class="gensmall">&nbsp;%s</span></td>',
 							),
 						'user_skype' => array(
 								'img'          => true,
-								'style'        => '<td valign="absbottom" nowrap="nowrap"><span class="gensmall">%s </span></td>',
+								'style'        => '<td valign="absbottom" nowrap="nowrap" title="%s">&nbsp;%s</td>',
 							),
 						'user_icq' => array(
 								'img'          => true,
-								'style'        => '<td valign="absbottom" nowrap="nowrap"><span class="gensmall">%s</span></td>',
+								'style'        => '<td valign="absbottom" nowrap="nowrap"><span class="gensmall">&nbsp;%s</span></td>',
 							),
 					),
 			),
@@ -845,7 +844,7 @@ $user_maps = array(
 							),
 						'user_online' => array(
 								'img'          => true,
-								'style'        => ' %s',
+								'style'        => '%s',
 							),
 					),
 			),
@@ -874,35 +873,35 @@ $user_maps = array(
 							),
 						'user_pm' => array(
 								'img'          => true,
-								'style'        => '<td valign="absbottom" nowrap="nowrap"><span class="gensmall">%s </span></td>',
+								'style'        => '<td valign="absbottom" nowrap="nowrap"><span class="genbtn fa fa-envelope-square">&nbsp;%s</span></td>',
 							),
 						'user_album' => array(
 								'img'          => true,
-								'style'        => '<td valign="absbottom" nowrap="nowrap"><span class="gensmall">%s </span></td>',
+								'style'        => '<td valign="absbottom" nowrap="nowrap"><span class="genbtn fa fa-picture-o">&nbsp;%s</span></td>',
 							),
 						'user_email' => array(
 								'img'          => true,
-								'style'        => '<td valign="absbottom" nowrap="nowrap"><span class="gensmall">%s </span></td>',
+								'style'        => '<td valign="absbottom" nowrap="nowrap"><span class="genbtn fa fa-user">&nbsp;%s</span></td>',
 							),
 						'user_website' => array(
 								'img'          => true,
-								'style'        => '<td valign="absbottom" nowrap="nowrap"><span class="gensmall">%s </span></td>',
+								'style'        => '<td valign="absbottom" nowrap="nowrap">&nbsp;<span class="genbtn">%s</span></td>',
 							),
 						'user_aim' => array(
 								'img'          => true,
-								'style'        => '<td valign="absbottom" nowrap="nowrap"><span class="gensmall">%s </span></td>',
+								'style'        => '<td valign="absbottom" nowrap="nowrap"><span class="gensmall">&nbsp;%s</span></td>',
 							),
 						'user_yim' => array(
 								'img'          => true,
-								'style'        => '<td valign="absbottom" nowrap="nowrap"><span class="gensmall">%s </span></td>',
+								'style'        => '<td valign="absbottom" nowrap="nowrap"><span class="gensmall">&nbsp;%s</span></td>',
 							),
 						'user_msnm' => array(
 								'img'          => true,
-								'style'        => '<td valign="absbottom" nowrap="nowrap"><span class="gensmall">%s </span></td>',
+								'style'        => '<td valign="absbottom" nowrap="nowrap"><span class="gensmall">&nbsp;%s</span></td>',
 							),
 						'user_icq' => array(
 								'img'          => true,
-								'style'        => '<td valign="absbottom" nowrap="nowrap"><span class="gensmall">%s</span></td>',
+								'style'        => '<td valign="absbottom" nowrap="nowrap"><span class="gensmall">&nbsp;%s</span></td>',
 							),
 					),
 			),
@@ -989,55 +988,55 @@ $user_maps = array(
 						'fields'	=> array(
 						'username' => array(
 								'img'          => true,
-								'style'        => '<td valign="absbottom" nowrap="nowrap"><span class="gensmall">%s </span></td>',
+								'style'        => '<li class="pcpvt"><span class="genbtn fa fa-user">&nbsp;%s</span></li>',
 							),
 						'user_birthday' => array(
 								'img'          => true,
-								'style'        => '<td valign="absbottom" nowrap="nowrap"><span class="gensmall">%s </span></td>',
+								'style'        => '<li class="pcpvt"><span class="gensmall">%s</span></li>',
 							),
 						'user_my_friend' => array(
 								'img'          => true,
-								'style'        => '<td valign="absbottom" nowrap="nowrap"><span class="gensmall">%s </span></td>',
+								'style'        => '<li class="pcpvt"><span class="gensmall">%s</span></li>',
 							),
 						'user_my_ignore' => array(
 								'img'          => true,
-								'style'        => '<td valign="absbottom" nowrap="nowrap"><span class="gensmall">%s </span></td>',
+								'style'        => '<li class="pcpvt"><span class="gensmall">%s</span></li>',
 							),
 						'user_pm' => array(
 								'img'          => true,
-								'style'        => '<td valign="absbottom" nowrap="nowrap"><span class="gensmall">%s </span></td>',
+								'style'        => '<li class="pcpvt"><span class="genbtn fa fa-envelope-square">&nbsp;%s</span></li>',
 							),
 						'user_album' => array(
 								'img'          => true,
-								'style'        => '<td valign="absbottom" nowrap="nowrap"><span class="gensmall">%s </span></td>',
+								'style'        => '<li class="pcpvt"><span class="genbtn fa fa-picture-o">&nbsp;%s</span></li>',
 							),
 						'user_email' => array(
 								'img'          => true,
-								'style'        => '<td valign="absbottom" nowrap="nowrap"><span class="gensmall">%s </span></td>',
+								'style'        => '<li class="pcpvt"><span class="genbtn fa fa-envelope-o">&nbsp;%s</span></li>',
 							),
 						'user_website' => array(
 								'img'          => true,
-								'style'        => '<td valign="absbottom" nowrap="nowrap"><span class="gensmall">%s </span></td>',
+								'style'        => '<li class="pcpvt"><span class="genbtn">%s</span></li>',
 							),
 						'user_aim' => array(
 								'img'          => true,
-								'style'        => '<td valign="absbottom" nowrap="nowrap"><span class="gensmall">%s </span></td>',
+								'style'        => '<li class="pcpvt">%s</li>',
 							),
 						'user_yim' => array(
 								'img'          => true,
-								'style'        => '<td valign="absbottom" nowrap="nowrap"><span class="gensmall">%s </span></td>',
+								'style'        => '<li class="pcpvt">%s</li>',
 							),
 						'user_msnm' => array(
 								'img'          => true,
-								'style'        => '<td valign="absbottom" nowrap="nowrap"><span class="gensmall">%s </span></td>',
+								'style'        => '<li class="pcpvt">%s</li>',
 							),
 						'user_skype' => array(
 								'img'          => true,
-								'style'        => '<td valign="absbottom" nowrap="nowrap"><span class="gensmall">%s </span></td>',
+								'style'        => '<li class="pcpvt">%s</li>',
 							),
 						'user_icq' => array(
 								'img'          => true,
-								'style'        => '<td valign="absbottom" nowrap="nowrap"><span class="gensmall">%s</span></td>',
+								'style'        => '<li class="pcpvt">%s</li>',
 							),
 					),
 			),
@@ -1062,7 +1061,7 @@ $user_maps = array(
 							),
 						'user_online' => array(
 								'img'          => true,
-								'style'        => '<div align="center">%s</div>',
+								'style'        => '<div class="fa fa-user-circle-o" align="center">%s</div>',
 							),
 						'user_rank_title' => array(
 								'txt'          => true,
@@ -1175,32 +1174,32 @@ $user_maps = array(
 						'user_regdate' => array(
 								'leg'          => true,
 								'txt'          => true,
-								'style'        => '%s<br><br>',
+								'style'        => '%s<br /><br />',
 							),
 						'user_lastvisit' => array(
 								'leg'          => true,
 								'txt'          => true,
-								'style'        => '%s<br><br>',
+								'style'        => '%s<br /><br />',
 							),
 						'user_posts_stat' => array(
 								'leg'          => true,
 								'txt'          => true,
 								'crlf'         => true,
-								'style'        => '%s<br><br>',
+								'style'        => '%s<br /><br />',
 							),
 						'user_topics_stat' => array(
 								'leg'          => true,
 								'txt'          => true,
 								'img'          => true,
 								'crlf'         => true,
-								'style'        => '%s<br><br>',
+								'style'        => '%s<br /><br />',
 							),
 						'user_forums_stat' => array(
 								'leg'          => true,
 								'txt'          => true,
 								'img'          => true,
 								'crlf'         => true,
-								'style'        => '%s<br><br>',
+								'style'        => '%s<br /><br />',
 							),
 					),
 			),
@@ -1212,51 +1211,51 @@ $user_maps = array(
 						'fields'	=> array(
 						'username' => array(
 								'img'          => true,
-								'style'        => '<span valign="absbottom" class="gensmall clearfix">%s </span><br>',
+								'style'        => '<span valign="absbottom" class="gensmall clearfix">%s&nbsp;</span><br />',
 							),
 						'user_pm' => array(
 								'img'          => true,
-								'style'        => '<span valign="absbottom" class="gensmall clearfix">%s </span><br>',
+								'style'        => '<span valign="absbottom" class="gensmall clearfix">%s&nbsp;</span><br />',
 							),
 						'user_email' => array(
 								'img'          => true,
-								'style'        => '<span valign="absbottom" class="gensmall clearfix">%s </span><br>',
+								'style'        => '<span valign="absbottom" class="gensmall clearfix">%s&nbsp;</span><br />',
 							),
 						'user_website' => array(
 								'img'          => true,
-								'style'        => '<span valign="absbottom" class="gensmall clearfix">%s </span><br>',
-							),
-						'user_msnm' => array(
-								'img'          => true,
-								'style'        => '<span valign="absbottom" class="gensmall clearfix">%s </span><br>',
-							),
-						'user_skype' => array(
-								'img'          => true,
-								'style'        => '<span valign="absbottom" class="gensmall clearfix">%s </span><br>',
+								'style'        => '<span valign="absbottom" class="gensmall clearfix">%s&nbsp;</span><br />',
 							),
 						'user_aim' => array(
 								'img'          => true,
-								'style'        => '<span valign="absbottom" class="gensmall clearfix">%s </span><br>',
+								'style'        => '<span class="pcpvt">%s</span><br />',
 							),
 						'user_yim' => array(
 								'img'          => true,
-								'style'        => '<span valign="absbottom" class="gensmall clearfix">%s </span><br>',
+								'style'        => '<span class="pcpvt">%s</span><br />',
+							),
+						'user_msnm' => array(
+								'img'          => true,
+								'style'        => '<span class="pcpvt">%s</span><br />',
+							),
+						'user_skype' => array(
+								'img'          => true,
+								'style'        => '<span class="pcpvt">%s</span><br />',
 							),
 						'user_icq' => array(
 								'img'          => true,
-								'style'        => '<span valign="absbottom" class="gensmall clearfix">%s </span><br>',
+								'style'        => '<span class="pcpvt">%s</span><br />',
 							),
 						'user_birthday' => array(
 								'img'          => true,
-								'style'        => '<span valign="absbottom" class="gensmall clearfix">%s </span><br>',
+								'style'        => '<span valign="absbottom" class="gensmall clearfix">%s&nbsp;</span><br />',
 							),
 						'user_my_friend' => array(
 								'img'          => true,
-								'style'        => '<span valign="absbottom" class="gensmall clearfix">%s </span><br>',
+								'style'        => '<span valign="absbottom" class="gensmall clearfix">%s&nbsp;</span><br />',
 							),
 						'user_my_ignore' => array(
 								'img'          => true,
-								'style'        => '<span valign="absbottom" class="gensmall clearfix">%s </span><br>',
+								'style'        => '<span valign="absbottom" class="gensmall clearfix">%s&nbsp;</span><br />',
 							),
 					),
 			),

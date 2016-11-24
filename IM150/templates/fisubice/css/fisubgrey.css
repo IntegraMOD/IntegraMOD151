@@ -1,51 +1,11 @@
-@import url("grey_buttons.css");
-
-/* Based on the original Style Sheet for the fisubsilver v2 Theme for phpBB version 2+
-Edited by Auke Douma  - http://www.douma.ws - last updated 09/09/2004 */
+/* fiSubGrey  */
+@import url("font-awesome.css");
+@import url("fontello.css");
+@import url("main.css");
 
 /* The content of the posts (body of text) */
 body{background:#F1F1F1;color:#000000;font:12px Verdana,Arial,Helvetica,sans-serif;margin:6px;padding:0;
 }
-
-/* General font families for common tags */
-font,th,td,p{font:12px Verdana,Arial,Helvetica,sans-serif}
-
-/* General text */
-.gensmall{font-size:10px}
-.copyright{font-size:10px}
-td.genmed,.genmed{font-size:11px}
-.explaintitle{font-size:11px;font-weight:bold;color:#5c81b1}
-
-/* General page style */
-a:link,a:active,a:visited,a.postlink{color:#32475f;text-decoration:none}
-a:hover{color:#939393;text-decoration:none}
-
-/* titles for the topics:could specify viewed link color too */
-.topictitle{font-size:11px;font-weight:bold}
-a.topictitle:visited{color:#496687}
-a.topictitle:hover{color:#939393}
-
-/* Name of poster in viewmsg.php and viewtopic.php and other places */
-.name{font-size:11px;font-weight: bold}
-
-hr{border: 0px solid #999999;border-top-width:1px;height:0px}
-
-/* Category gradients*/
-td.cat,td.catHead,td.catSides,td.catLeft,td.catRight,td.catBottom{font-weight:bold;letter-spacing:1px;color:#516a88;background:#C7C7C7 url(images/grey/cellpic1.gif);
-height:29px;text-indent:4px}
-
-/* Main table cell colors and backgrounds */
-.row1{background:#EFEFEF}
-.row2,.helpline{background:#E2E2E2}
-.row3{background:#E9E9E9}
-td.spacerow{background:#DBDBDB}
-
-/* This is for the table cell above the Topics,Post & Last posts on the index.php */
-td.rowpic{background:url(images/grey/cellpic2.jpg) #ffffff repeat-y}
-
-/* Table Header cells */
-th{background:#C7C7C7 url(images/grey/cellpic3.gif);color:#516a88;font-size:11px;
-font-weight:bold;height:27px;white-space:nowrap;text-align:center;padding-left:8px;padding-right:8px}
 
 /* This is the border line & background color round the entire page Binnekantpaginablock */
 .bodyline{background:#F9F9F9;border:1px solid #98aab1}
@@ -54,471 +14,233 @@ font-weight:bold;height:27px;white-space:nowrap;text-align:center;padding-left:8
 .forumline{background:#ffffff;border:1px solid #999999}
 
 /* The largest text used in the index page title and toptic title etc. */
-.maintitle,h1{
-font:bold 20px/120% "Trebuchet MS",Verdana,Arial,Helvetica,sans-serif;text-decoration:none;color:#999999;margin:0 0 0 20px;}
+.maintitle,h1{color:#999999;}
 
-.subtitle,h2{font:bold 18px/180% "Trebuchet MS",Verdana,Arial,Helvetica,sans-serif;
-text-decoration:none}
+.explaintitle{color:#5c81b1;}
+
+/* General page style */
+a:link,a:active,a:visited,a.postlink{color:#32475f;}
+a:hover{color:#939393;}
+
+/* titles for the topics:could specify viewed link color too */
+.topictitle {}
+a.topictitle:visited {color:#496687;}
+a.topictitle:hover {color:#939393;}
+
+hr{border-style:solid;border-color:#999999;}
+
+.icon_quote:before {
+	color:#818181;
+}
+
+.icon_quote:before {
+	color:#818181;
+}
+
+.icon_edit:before {
+	color:#818181;
+}
+
+.icon_delete:before {
+	color:#818181;
+}
+.icon_return_top:before {
+	color:#818181;
+}
+.icon_ip:before {
+	color:#818181;
+}
+.icon_go_top:before {
+	color:#818181;
+}
+.icon_go_bottom:before {
+	color:#818181;
+}
+
+.hov, a.fa-times, a.fa-share, a.fa-lock, a .fa-unlock, a.fa-sort, a.fa-clone, .fa-download, .fa-plus, .fa-search, .fa-user, .fa-envelope-o, .fa-envelope-square, .fa-picture-o, .icon-yahoo, .icon-aim, .icon-windows, .icon-skype, .icon-icq {
+	color:#818181 !important;
+}
+
+a.icon_return_top:hover:before, a.icon_delete:hover:before, a.icon_ip:hover:before, .icon_edit:hover:before, .icon_quote:hover:before, .fa-times:hover, a.fa-share:hover, a.fa-lock:hover, a .fa-unlock:hover, a.fa-sort:hover, a.fa-clone:hover, a.fa-download:hover, .fa-plus:hover, a.fa-user:hover, a.fa-envelope-square:hover, a.fa-picture-o:hover, .icon-yahoo:hover, .icon-aim:hover, .icon-windows:hover, .icon-skype:hover, .icon-icq:hover, .fa-search:hover, .fa-envelope-o:hover {
+	color:#383838 !important;
+}
+
+/* Category gradients*/
+td.cat, td.catHead, td.catSides, td.catLeft, td.catRight, td.catBottom {
+	color:#516a88;
+	background: #C0C0C0; /* Old browsers */
+	background: -moz-linear-gradient(top, #C0C0C0 0%, #E1E8EF 100%); /* FF3.6-15 */
+	background: -webkit-linear-gradient(top, #C0C0C0 0%,#E1E8EF 100%); /* Chrome10-25,Safari5.1-6 */
+	background: linear-gradient(to bottom, #C0C0C0 0%,#E1E8EF 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#C0C0C0', endColorstr='#E1E8EF',GradientType=0 ); /* IE6-9 */
+}
+
+/* This is the gradient background at the top of the page */
+.topbkg {
+	background: #C0C0C0; /* Old browsers */
+	background: -moz-linear-gradient(top, #C0C0C0 0%, #E1E8EF 100%); /* FF3.6-15 */
+	background: -webkit-linear-gradient(top, #C0C0C0 0%,#E1E8EF 100%); /* Chrome10-25,Safari5.1-6 */
+	background: linear-gradient(to bottom, #C0C0C0 0%,#E1E8EF 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#C0C0C0', endColorstr='#E1E8EF',GradientType=0 ); /* IE6-9 */
+}
+.topnav, .btmnav {
+	background: #E1E8EF; /* Old browsers */
+	background: -moz-linear-gradient(top, #E1E8EF 0%, #C0C0C0 75%); /* FF3.6-15 */
+	background: -webkit-linear-gradient(top, #E1E8EF 0%,#C0C0C0 75%); /* Chrome10-25,Safari5.1-6 */
+	background: linear-gradient(to bottom, #E1E8EF 0%,#C0C0C0 75%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#E1E8EF', endColorstr='#C0C0C0',GradientType=0 ); /* IE6-9 */border-color:#91a0ae;
+}
+.qb  {
+	background: #E1E8EF; /* Old browsers */
+	background: -moz-linear-gradient(top, #E1E8EF 0%, #C0C0C0 75%); /* FF3.6-15 */
+	background: -webkit-linear-gradient(top, #E1E8EF 0%,#C0C0C0 75%); /* Chrome10-25,Safari5.1-6 */
+	background: linear-gradient(to bottom, #E1E8EF 0%,#C0C0C0 75%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#E1E8EF', endColorstr='#C0C0C0',GradientType=0 ); /* IE6-9 */border-color:#91a0ae;
+}
+.openclose {background:transparent url('../images/icon_openclose.png') no-repeat;}
+
+/* Main table cell colors and backgrounds */
+.row1{background:#EFEFEF}
+.row2,.helpline{background:#E2E2E2}
+.row3{background:#E9E9E9}
+
+td.spacerow{background:#DBDBDB}
+
+/* This is for the table cell above the Topics,Post & Last posts on the index.php */
+td.rowpic{
+	color:#516a88;
+	background: #E1E8EF; /* Old browsers */
+	background: -moz-linear-gradient(top, #E1E8EF 0%, #C0C0C0 75%); /* FF3.6-15 */
+	background: -webkit-linear-gradient(top, #E1E8EF 0%,#C0C0C0 75%); /* Chrome10-25,Safari5.1-6 */
+	background: linear-gradient(to bottom, #E1E8EF 0%,#C0C0C0 75%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#E1E8EF', endColorstr='#C0C0C0',GradientType=0 ); /* IE6-9 */border-color:#91a0ae;
+	border-color:#8D8D8D;
+}
+
+/* Table Header cells */
+th{
+	color:#516a88;
+	background: #E1E8EF; /* Old browsers */
+	background: -moz-linear-gradient(top, #E1E8EF 0%, #C0C0C0 75%); /* FF3.6-15 */
+	background: -webkit-linear-gradient(top, #E1E8EF 0%,#C0C0C0 75%); /* Chrome10-25,Safari5.1-6 */
+	background: linear-gradient(to bottom, #E1E8EF 0%,#C0C0C0 75%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#E1E8EF', endColorstr='#C0C0C0',GradientType=0 ); /* IE6-9 */border-color:#91a0ae;
+}
 
 /* Used for the navigation text,(Page 1,2,3 etc) and the navigation bar when in a forum */
-.nav{font-size:11px;font-weight:bold}
-.postbody{font-size:12px;line-height:125%}
+.nav{}
+.postbody{}
 
 /* Location,number of posts,post date etc */
-.postdetails{font-size:10px;color:#00396a}
+.postdetails{color:#00396a}
 
 /* Quote blocks */
-.quotetitle,.quote {color:#475e61;font-size:11px;border: 1px solid #a4bad2;padding:2px 2px 3px 3px}
-.quotetitle {background:#e1e7ec;text-indent:2px;font-weight:bold;margin:10px 20px 0 20px}
-.quote {background:#FFFFFF;border-top-width:0;color:#cc6633;font-size:11px;margin:0 20px 10px 20px}
-.quote {overflow:auto;height:40px}
+.quotetitle,.quote {color:#475e61;border:1px solid #a4bad2}
+.quotetitle {background:#e1e7ec;}
+.quote {background:#fafafa;color:#cc6633;}
+
 
 /* Code blocks */
-.codetitle,.code {border:1px solid #a4bad2;padding:2px 2px 3px 3px}
-.codetitle {font-size:11px;background: #d8dfe4;text-indent:2px;font-weight:bold;margin:10px 20px 0 20px}
-.code {background:#FFFFFF;border-top-width:0;color:#555;
-font:13px Courier,'Courier New',sans-serif;margin:0 20px 0 20px;line-height:110%}
-.code {overflow:auto;height:40px}
+.codetitle,.code {border:1px solid #a4bad2;}
+.codetitle {background: #d8dfe4;}
+.code {background:#fafafa;color:#555;}
 .code {color:#060}
 
 /* PHP blocks */
-.phptitle,.php {border:1px solid #a4bad2;padding:2px 2px 3px 3px}
-.phptitle {font-size:11px;background: #d8dfe4;text-indent:2px;font-weight:bold;margin:10px 20px 0 20px}
-.php {background:#FFFFFF;border-top-width:0;color:#555;
-font:13px Courier,'Courier New',sans-serif;margin:0 20px 0 20px;line-height:110%}
-.php {overflow:auto;height:40px}
+.phptitle,.php {border:1px solid #a4bad2;}
+.phptitle {background: #d8dfe4;}
+.php {background:#fafafa;color:#555;}
 .php {color:#060}
 
 /* This is for the error messages that pop up */
-
 .errorline{background:#add8e6;border:1px solid #000000}
 
 /* Form elements */
-form{display:inline}
-
-input{font:11px Verdana,Arial,Helvetica,sans-serif}
-
-select{background:#ffffff;font:11px Verdana,Arial,Helvetica,sans-serif}
-
-input.post,textarea.post{background:#ffffff;border:1px solid #000000;
-font:11px Verdana,Arial,Helvetica,sans-serif;padding-bottom:2px;padding-left:2px}
-
-input.button,input.liteoption,.fakebut{border:1px solid #000000;background:#DBDBDB;font-size:11px}
-input.catbutton{border:1px solid #000000;background:#DBDBDB;font-size:10px}
-input.mainoption{border:1px solid #000000;background:#DBDBDB;font-size:11px;font-weight:bold}
-
-a.but,a.but:hover,a.but:visited{color:#000000;text-decoration:none}
+select{background:#ffffff;}
+input.post,textarea.post{background:#ffffff;border:1px solid #000000;}
+input.button,input.liteoption,.fakebut{border:1px solid #000000;background:#fafafa;}
+input.catbutton{border:1px solid #000000;background:#fafafa;}
+input.mainoption{border:1px solid #000000;background:#fafafa;}
+a.but,a.but:hover,a.but:visited{color:#000000;}
 
 /* This is the line in the posting page which shows the rollover
 help line. Color value in row2 */
-.helpline{border:0 solid;font-size:10px}
+.helpline{}
 
 /*-- mod : profile cp --*/
-.foundercolor, a.foundercolor, a.foundercolor:link, a.foundercolor:active, a.foundercolor:visited {
-	color: #FF0000;
-	font-weight: bold;
-}
-a.foundercolor:hover {
-	color:	#FF0000;
-	text-decoration: underline;
-}
-.jadmincolor, a.jadmincolor, a.jadmincolor:link, a.jadmincolor:active, a.jadmincolor:visited {
-	color: #129DED;
-	font-weight: bold;
-}
-a.jadmincolor:hover {
-	color:	#129DED;
-	text-decoration: underline;
-}
-.admincolor, a.admincolor, a.admincolor:link, a.admincolor:active, a.admincolor:visited {
-	color: #FFA34F;
-	font-weight: bold;
-}
-a.admincolor:hover {
-	color:	#FF0000;
-	text-decoration: underline;
-}
+.foundercolor, a.foundercolor, a.foundercolor:link, a.foundercolor:active, a.foundercolor:visited {color: #FF0000;}
+a.foundercolor:hover {color:#FF0000;}
 
-.modcolor, a.modcolor, a.modcolor:link, a.modcolor:active, a.modcolor:visited {
-	color: #006600;
-	font-weight: bold;
-}
-a.modcolor:hover {
-	color:	#008000;
-	text-decoration: underline;
-}
+.jadmincolor, a.jadmincolor, a.jadmincolor:link, a.jadmincolor:active, a.jadmincolor:visited {color: #129DED;}
+a.jadmincolor:hover {color:#129DED;}
 
-.usercolor, a.usercolor, a.usercolor:link, a.usercolor:active, a.usercolor:visited {
-	color : #000000;
-	font-weight: bold;
-}
-a.usercolor:hover {
-	color: #DD6900;
-	text-decoration: underline;
-}
+.admincolor, a.admincolor, a.admincolor:link, a.admincolor:active, a.admincolor:visited {color:#FFA34F;}
+a.admincolor:hover {color:#FF0000;}
+
+.modcolor, a.modcolor, a.modcolor:link, a.modcolor:active, a.modcolor:visited {color:#006600;}
+a.modcolor:hover {color:#008000;}
+
+.usercolor, a.usercolor, a.usercolor:link, a.usercolor:active, a.usercolor:visited {color:#000000;}
+a.usercolor:hover {color:#DD6900;}
 /*-- fin mod : profile cp --*/
 
-/* This is the gradient background at the top of the page */
-.topbkg{background: url(images/grey/cellpic_bkg.jpg) repeat-x}
-.topnav{font-size:10px;background: #82BBEB url(images/grey/cellpic_nav.gif) repeat-x;height:28px;white-space:nowrap;border: 0px solid #91a0ae;border-width: 1px 0px 1px 0px}
-.qnav{white-space:nowrap;text-align:center;width:100%;}
-.qb  { font-size:10px;background: #b0c4d8 url(images/grey/cellpic_nav.gif) repeat-x;height:28px;white-space:nowrap;border: 0px solid #91a0ae;border-width: 1px 0px 1px 0px }
-.cv {position: relative;top: 20%;transform: translateY(-20%);}
-.bcv {position: relative;top: 20%;right:0;transform: translateY(-20%) translateX(5%); }
-.fr {position:relative;float:right;}
-
-.openclose {background: transparent url('images/grey/icon_openclose.png') no-repeat;display: block;float:right;width:15px;height:15px;}
-
-/* Nav bar images */
-.hdr_left{	background: url(images/grey/navtr.gif) top left no-repeat;
-}
-.hdr_right{ background: url(images/grey/navtl.gif) top right no-repeat;
-}
-.ftr_left{	background: url(images/grey/navbr.gif) top left no-repeat;
-}
-.ftr_right{ background: url(images/grey/navbl.gif) top right no-repeat;
-}
-
 /* Admin & Moderator Colors MODification */
-.admin,.mod{font-size:11px;font-weight:bold}
 .admin,a.admin,a.admin:visited{color:#ff0000}
 .mod,a.mod,a.mod:visited{color:#006600}
-a.admin:hover,a.mod:hover{color:#008000}
-
-/* Specify the space around images */
-.imgtopic,.imgicon{margin-left:3px}
-.imgspace{margin-left:1px;margin-right:2px}
-.imgfolder{margin:1px 4px 1px 4px}
-
-/* Gets rid of the need for border="0" on hyperlinked images */
-img{border:0 solid}
-
-abbr, acronym {
-	font-weight: bold;
-	text-decoration: underline;
-	cursor: help;
-}
+a.admin:hover,a.mod:hover{color:#839fbc}
 
 .acronym{background:#FFFFCC}
 
 .alert{color:#FF3300}
 
 /* Mighty Gorgon - Full Album Pack - BEGIN */
-.forumline_left {
-	background-color: #7A7A7A;
-	border-bottom: 2px #7A7A7A solid;
-	border-left: 2px #7A7A7A solid;
-}
-
-.tab_links, a.tab_links:hover, a.tab_links:link, a.tab_links:active, a.tab_links:visited { 
-	font-size: 11px;
-	color: #FF8866; 
-	text-decoration: none;
-}
-
-.tab_links_unsel, a.tab_links_unsel:hover, a.tab_links_unsel:link, a.tab_links_unsel:active, a.tab_links_unsel:visited { 
-	font-size: 11px;
-	color: #FFFFAA; 
-	text-decoration: none;
-}
-
-a.tab_links:hover, a.tab_links_unsel:hover { 
-	text-decoration: underline;
-}
-
-.tab_headers, th.tab_headers {
-	color: #FF8866; 
-	font-size: 11px; 
-	font-weight : bold;
-	padding-left: 4px;
-	padding-right: 8px;
-	border: #003366; 
-	border-style: solid; 
-	border-width: 1px 1px 0px 1px;
-	background-color: #006699;
-}
-
-.tab_headers_unsel, th.tab_headers_unsel {
-	color: #FFFFAA; 
-	font-size: 11px; 
-	font-weight : bold;
-	padding-left: 4px;
-	padding-right: 8px;
-	border: #336699; 
-	border-style: solid; 
-	border-width: 1px 1px 0px 1px;
-	background-color: #6699AA;
-}
-
-.tab_border {
-	background-color: #888888;
-	border: 1px;
-}
-
-.filler, th.filler {
-	background-color:#6699AA; 
-	background-image:none;
-}
-
-.picframe{
-	display: block;
-	background-color: #FFFFFF;
-	border: 1px solid #555555;
-	padding: 2px 6px 2px 6px;
-	position: relative;
-	bottom: 2px;
-	right: 2px;
-}
-
-.picshadow{
-	background-color: #888888;
-	color: inherit;
-	margin-left: 4px;
-	margin-top: 4px;
-}
+.forumline_left {background-color: #7A7A7A;border-color:#808080;}
+.tab_links, a.tab_links:hover, a.tab_links:link, a.tab_links:active, a.tab_links:visited {color:#FF8866;}
+.tab_links_unsel, a.tab_links_unsel:hover, a.tab_links_unsel:link, a.tab_links_unsel:active, a.tab_links_unsel:visited {color:#FFFFAA;}
+.tab_headers, th.tab_headers {color:#FF8866;border-color:#003366;background-color:#006699;}
+.tab_headers_unsel, th.tab_headers_unsel {color: #FFFFAA;border-color:#336699;background-color:#6699AA;}
+.tab_border {background-color: #888888;}
+.filler, th.filler {background-color:#6699AA;background-image:none;}
+.picframe{background-color:#FFFFFF;border:1px solid #555555;}
+.picshadow{background-color: #888888;}
 /* Mighty Gorgon - Full Album Pack - END */
 
-/* Background images for tables */
-.tbl{border-collapse:collapse;height:4px;width:100%}
-.tbll{background: url(images/grey/tb4_l.gif) no-repeat;width:8px}
-.tblbot{background: url(images/grey/tb4_m.gif) repeat-x;width:100%}
-.tblr{background: url(images/grey/tb4_r.gif) no-repeat;width:8px}
+a.kb {background: transparent;text-shadow: 2px 2px 2px #323232;}
+a.kb span {color:#516A88;}
 
-.clear-fix {
-    display: block;
-    clear: both;
-}
+.bx {border:1px solid #000;background-color:#FFF;}
 
- .clearfix:after {
-    content: ".";
-    display: block;
-    height: 0;
-    clear: both;
-    visibility: hidden;
- }
-
-.clearfix {display: inline-block;}  /* for IE/Mac */
-
-.space {
-	margin: 4px auto 10px auto;
-}
-
-.openclose {
-    background: transparent url('images/grey/icon_openclose.png') no-repeat;
-    display: block;
-	float:right;
-	width:15px;
-	height:15px;
-}
-
-a.kb {
-    background: transparent;
-    display: block;
-    float: left;
-    font: bold 40px 'Nunito', sans-serif;
-	text-shadow: 2px 2px 2px #000000;
-    height: 75px;
-    margin-right: 20px;
-    padding-right: 20px;
-    padding-bottom: 20px;
-	text-transform:capitalize;
-
-}
-
-a.kb:hover {
-    background-position: bottom right;
-    outline: none; /* hide dotted outline in Firefox */
-    text-decoration: none;
-}
-
-a.kb span {
-    display: block;
-    line-height: 65px;
-    padding: 6px 20px 4px 30px;
-    color: #ADADAD;
-	appearance:button;
-	-moz-appearance:button; /* Firefox */
-	-webkit-appearance:button; /* Safari and Chrome */
-}
-
-a.kb:hover span {
-    background-position: bottom left;
-    padding: 6px 20px 4px 30px;
-}
-
-/* Tables to Divs */
-.divTable{
-	display: table;
-	width: 100%;
-}
-.divTableRow {
-	display: table-row;
-}
-.divTableHeading {
-	display: table-header-group;
-}
-.divTableCell, .divTableHead {
-	border: 0px;
-	display: table-cell;
-	padding: 3px 10px;
-}
-.divQTableCell {
-	border: 0px;
-	display: table-cell;
-	padding: 0px;
-}
-.divTableHeading {
-	display: table-header-group;
-	font-weight: bold;
-}
-.divTableFoot {
-	display: table-footer-group;
-	font-weight: bold;
-}
-.divTableBody {
-	display: table-row-group;
-}
-
-.center {
-	text-align: center;
-}
-
-.bx {
-	border: 1px solid #000;
-	background-color: #FFF;
-	display: table-cell;
-	padding: 3px 10px;	
-}
-
-/* Banner Mod */
-.BannerDivTable{
-	display: table;
-	width: 100%;
-}
-.BannerDivTableRow {
-	display: table-row;
-}
-.BannerDivTableHeading {
-	display: table-header-group;
-}
-.BannerDivTableCell, .BannerDivTableHead {
-	border: 0px;
-	display: table-cell;
-	padding: 3px 10px;
-}
-.BannerDivTableHeading {
-	display: table-header-group;
-	font-weight: bold;
-}
-.BannerDivTableFoot {
-	display: table-footer-group;
-	font-weight: bold;
-}
-.BannerDivTableBody {
-	display: table-row-group;
-}
+.date-today, .last-post b { color: #E61A1A;}
+.date-yesterday, .last-post em { color: #18C935;}
 
 /* Responsive qbar qmenu */
 
-.mob-tab-menu-position-fixed { position: fixed;  margin: 0; overflow: auto; box-sizing: border-box; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; }
-.mob-tab-menu-position-fixed-horiz { height: 100%; bottom: 0px; top: 0px; }
-.mob-tab-menu-position-fixed-vert { left: 0px; right: 0px; }
-.mob-tab-menu-position-fixed-left { left: 0px;}
-.mob-tab-menu-position-fixed-top { top: 0px; }
-.mob-tab-menu-position-fixed-right { right: 0px; }
-
-#mob-tab-menu-pseudo-body { width: 100%; overflow-x: hidden; position: relative; }
-
-a.mob-tab-menu-toggle {
-	display: inline-block;
-	width: 30px;
-	height: 30px;
-	background: transparent url('images/button.gif') no-repeat left top;
-	text-decoration: none;
-}
-
-.mob-tab-menu-active { background-position: left bottom !important; }
-
-nav.mobile-menu a{color:#B4C5D5;font-weight: 900;}
-
+a.mob-tab-menu-toggle {background:transparent url('../images/button.gif') no-repeat left top;}
+nav.mobile-menu a{color:#B4C5D5;}
 nav.mobile-menu a:hover{color:#D8D8D8;}
+nav.mobile-menu {background-color: #111111;border-right:1px solid #000000;}
+nav.mobile-menu a {border-bottom:1px solid #000000;}
+div#mobile-bar {background-color:#000000;}
 
-nav.mobile-menu {
-	width: 200px;
-	padding: 20px;
-	background-color: #111111;
-	border-right: 1px solid #000000;
+.shadow {box-shadow: 2px 2px 2px #888888;}
+.blockshadow {border:1px solid #486386;box-shadow: 2px 2px 2px #888888;}
+
+.postbtn, .genbtn {
+	  background: #E1E1E1;
+	  background-image: -webkit-linear-gradient(top, #E1E1E1, #C0C0C0);
+	  background-image: -moz-linear-gradient(top, #E1E1E1, #C0C0C0);
+	  background-image: -ms-linear-gradient(top, #E1E1E1, #C0C0C0);
+	  background-image: -o-linear-gradient(top, #E1E1E1, #C0C0C0);
+	  background-image: linear-gradient(to bottom, #E1E1E1, #C0C0C0);
+	  border: solid #8D8D8D 1px;
 }
-
-nav.mobile-menu a {
-	display: block;
-	border-bottom: 1px solid #000000;
-	
+.postbtn:hover, .genbtn:hover {
+	  background: #E1E8EF;
+	  background-image: -webkit-linear-gradient(top, #E1E8EF, #C0C0C0);
+	  background-image: -moz-linear-gradient(top, #E1E8EF, #C0C0C0);
+	  background-image: -ms-linear-gradient(top, #E1E8EF, #C0C0C0);
+	  background-image: -o-linear-gradient(top, #E1E8EF, #C0C0C0);
+	  background-image: linear-gradient(to bottom, #E1E8EF, #C0C0C0);
 }
-
-div#mobile-bar {
-	position: fixed;
-	left: 0;
-	top: 0;
-	width: 100%;
-	background-color: #000000;
-	text-indent: 10px;
-	padding: 5px 0 5px 0;
-}
-
-body.resp nav.mobile-menu {
-	width: auto;
-	border: none;
-}
-
-body.resp nav.mobile-menu { text-align: left !important; }
-
-body.resp nav.desktop-menu {
-	padding: 0px;
-	text-align: center;
-	display: none;
-}
-
-body.resp div#mobile-bar { position: absolute; }
-
-@media only screen and (min-width: 700px) {
-	body.resp nav.desktop-menu { display: block; }
-	body.resp div#mobile-bar { display: none; }
-	body.resp p.custom-links { display: none; }
-	td.desktopMc { display: block !important; }
-	td.mobileMc { display: none !important; }
-}
-
-@media screen and (device-aspect-ratio: 40/71) {
-	body.resp nav.desktop-menu { display: none; }
-	body.resp div#mobile-bar { display: block; }
-	body.resp p.custom-links { display: block; }
-	td.desktopMc { display: none !important; }
-	td.mobileMc { display: block !important; }
-}
-
-@media screen and (device-aspect-ratio: 375/667) {
-	body.resp nav.desktop-menu { display: none; }
-	body.resp div#mobile-bar { display: block; }
-	body.resp p.custom-links { display: block; }
-	td.desktopMc { display: none !important; }
-	td.mobileMc { display: block !important; }
-}
-
-/*
-@media screen and (device-aspect-ratio: 16/9) {
-	body.resp nav.desktop-menu { display: none; }
-	body.resp div#mobile-bar { display: block; }
-	body.resp p.custom-links { display: block; }
-	td.desktopMc { display: none !important; }
-	td.mobileMc { display: block !important; }
-}
-*/
-
-@media only screen and (max-device-width: 480px) {
-	body.resp nav.desktop-menu { display: none; }
-	body.resp div#mobile-bar { display: block; }
-	body.resp p.custom-links { display: block; }
-	td.desktopMc { display: none !important; }
-	td.mobileMc { display: block !important; }
-}
+a.postbtn, a.postbtn:hover, .genbtn li, .genbtn a {color:#818181;}
+.genbtn li:hover, .genbtn a:hover {color:#383838;}

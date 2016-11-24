@@ -18,11 +18,7 @@
 //-->
 
 <div align="center" class="gensmall">
-<<<<<<< HEAD
 	{SITENAME} is powered by <a href="http://www.phpbb.com/" target="_phpbb" class="copyright">phpBB</a>{PHPBB_VERSION} &copy; 2001, 2005 phpBB Group & <a href="http://www.integramod.com" target="_phpbb" class="copyright">IntegraMOD</a>{INTEGRAMOD_VERSION} &copy; 2004, 2016 The IntegraTeam
-=======
-	Powered by <a href="http://www.phpbb.com/" target="_phpbb" class="copyright">phpBB</a>{PHPBB_VERSION} &copy; 2001, 2005 phpBB Group + <a href="http://www.integramod.com" target="_phpbb" class="copyright">IntegraMOD</a>{INTEGRAMOD_VERSION} &copy; 2004, 2016 The Integramod Group
->>>>>>> origin/master
 </div>
 </body>
 </html>

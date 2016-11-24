@@ -13,7 +13,7 @@
 <!-- END no_layout_collapse -->
 
 <!-- The td cell that closes when the collapse column button is clicked -->
-<td id="header_block" style="display: ''; width:{HEADER_WIDTH}px">
+<td id="header_block" valign="top" style="display: ''; width:{HEADER_WIDTH}px">
 	<table cellpadding="0" cellspacing="0" border="0">
 		<tr>
 			<td valign="top">
@@ -46,8 +46,6 @@
 						class="row1"
 						<!-- END background -->
 						>
-
-<!-- The button that is shown when the block is closed -->
 							<!-- BEGIN openclose -->
 							<div onclick="ShowHide('block1_{header_blocks_row.BLOCKID}','block2_{header_blocks_row.BLOCKID}','block1_{header_blocks_row.BLOCKID}');" style="display: none; width:100%; cursor: pointer; cursor: hand;" id="block2_{header_blocks_row.BLOCKID}" align="center">
 								<img src="{header_blocks_row.openclose.OPEN_IMG}" title="OPEN" />

@@ -39,7 +39,7 @@ function pcp_output_skype($field_name, $view_userdata, $map_name='')
    { 
       $temp_url = 'callto://' . $view_userdata[$field_name]; 
       $txt = '<a href="' . $temp_url . '" title="' . $view_userdata[$field_name] . '">' . $lang['SKYPE'] . '</a>'; 
-      $img = '<a class="icon_contact_skype" href="' . $temp_url . '"><span>' . $lang['SKYPE'] . '</span></a>'; 
+      $img = '<a class="icon_contact_skype" href="' . $temp_url . '" title="' . $lang['SKYPE'] . '"><span class="icon-skype">&nbsp;</span></a>'; 
 
       // result 
       $res = pcp_output_format($field_name, $txt, $img, $map_name); 

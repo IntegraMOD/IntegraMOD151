@@ -8,7 +8,7 @@
  *
  *	version			: 1.0.2 - 17/10/2003
  *
- *	last update		: 2012-02-05 14:56:16 by HelterSkelter *
+ *	last update		: 2016-11-20 22:27:56 by Helter *
  ***************************************************************************/
 
 /***************************************************************************
@@ -708,12 +708,12 @@ $user_fields = array(
 				'class'        => 'email',
 				'type'         => 'VARCHAR',
 				'dsp_func'     => 'pcp_output_user_email',
+				'ind'          => '4',
 				'auth'         => USER,
 				'required'     => true,
 				'visibility'   => true,
 				'get_func'     => 'mods_get_email',
 				'chk_func'     => 'mods_check_email',
-				'ind'          => '4',
 			),
 		
 	// generic informations
@@ -799,20 +799,20 @@ $user_fields = array(
 				'explain'      => 'PS_security_answer_exp',
 				'class'        => 'generic',
 				'type'         => 'VARCHAR',
-				'required'     => true,
-				'get_func'     => 'mods_get_phpBBSecurity_answer',
-				'chk_func'     => 'mods_check_phpBBSecurity_answer',
 				'auth'         => USER,
+				'required'     => true,
+				'get_func'     => 'mods_get_phpbbsecurity_answer',
+				'chk_func'     => 'mods_check_phpbbsecurity_answer',
 			),
 			'phpBBSecurity_question' => array(
 				'lang_key'     => 'PS_security_question',
 				'explain'      => 'PS_security_question_exp',
 				'class'        => 'generic',
 				'type'         => 'VARCHAR',
-				'required'     => true,
-				'get_func'     => 'mods_get_phpBBSecurity_question',
-				'chk_func'     => 'mods_check_phpBBSecurity_question',
 				'auth'         => USER,
+				'required'     => true,
+				'get_func'     => 'mods_get_phpbbsecurity_question',
+				'chk_func'     => 'mods_check_phpbbsecurity_question',
 			),
 			'robotic_register' => array(
 				'lang_key'     => 'anti_robotic',
@@ -943,6 +943,7 @@ $user_fields = array(
 				'lang_key'     => 'Always_add_sig',
 				'class'        => 'generic',
 				'type'         => 'TINYINT',
+				'auth'         => USER,
 				'get_mode'     => 'LIST_RADIO',
 				'values'       => 'list_yes_no',
 			),
@@ -991,11 +992,11 @@ $user_fields = array(
 				'class'        => 'generic',
 				'type'         => 'VARCHAR',
 				'dsp_func'     => 'pcp_output_country',
+				'auth'         => USER,
 				'required'     => true,
 				'visibility'   => true,
 				'get_mode'     => 'LIST_DROP',
 				'values'       => 'list_country',
-				'auth'         => USER,
 			),
 			'user_custom_rank' => array(
 				'lang_key'     => 'User_custom_rank',
@@ -1064,6 +1065,7 @@ $user_fields = array(
 				'explain'      => 'Always_notify_explain',
 				'class'        => 'generic',
 				'type'         => 'TINYINT',
+				'auth'         => USER,
 				'get_mode'     => 'LIST_RADIO',
 				'values'       => 'list_yes_no',
 			),
@@ -1071,6 +1073,7 @@ $user_fields = array(
 				'lang_key'     => 'Notify_on_privmsg',
 				'class'        => 'generic',
 				'type'         => 'TINYINT',
+				'auth'         => USER,
 				'get_mode'     => 'LIST_RADIO',
 				'values'       => 'list_yes_no',
 			),
@@ -1085,6 +1088,7 @@ $user_fields = array(
 				'explain'      => 'Popup_on_privmsg_explain',
 				'class'        => 'generic',
 				'type'         => 'TINYINT',
+				'auth'         => USER,
 				'get_mode'     => 'LIST_RADIO',
 				'values'       => 'list_yes_no',
 			),
@@ -1147,10 +1151,10 @@ $user_fields = array(
 				'class'        => 'generic',
 				'type'         => 'VARCHAR',
 				'dsp_func'     => 'pcp_output_state',
+				'auth'         => USER,
 				'visibility'   => true,
 				'get_mode'     => 'LIST_DROP',
 				'values'       => 'list_state',
-				'auth'         => USER,
 			),
 			'user_topics_last_per_page' => array(
 				'lang_key'     => 'PCP_topics_last_per_page',
@@ -1313,13 +1317,13 @@ $user_fields = array(
 	// pm informations
 		'user_pm' => array(
 				'lang_key'     => 'Private_Message',
-				'image'        => 'icon_pm',
 				'title'        => 'Send_private_message',
 				'class'        => 'pm',
 				'type'         => 'TINYINT',
-				'sql_def'      => '1',
 				'dsp_func'     => 'pcp_output_user_pm',
+				'auth'         => USER,
 				'ind'          => '3',
+				'sql_def'      => '1',
 			),
 		
 	// real informations
@@ -1631,6 +1635,7 @@ $user_fields = array(
 				'class'        => 'webdisplay',
 				'type'         => 'MEDIUMINT',
 				'dsp_func'     => 'pcp_output_value_list',
+				'auth'         => USER,
 				'get_mode'     => 'LIST_DROP',
 				'values'       => 'list_styles',
 			),

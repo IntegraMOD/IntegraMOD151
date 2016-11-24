@@ -357,8 +357,8 @@ function pcp_output_icq($field_name, $view_userdata, $map_name='')
 	if ( !empty($view_userdata[$field_name]) && ($view_userdata['user_id'] != ANONYMOUS) )
 	{
 		$temp_url = 'http://wwp.icq.com/' . $view_userdata[$field_name] . '#pager';
-		$img = '<a class="icon_contact_icq" href="http://wwp.icq.com/scripts/search.dll?to=' . $view_userdata[$field_name] . '"><span>' . $lang['icq_lofi'] . '</span></a>';
-		$txt = '<a href="' . $temp_url . '" title="' . $view_userdata[$field_name] . '" title="' . $view_userdata[$field_name] . '">' . $lang['ICQ'] . '</a>';
+		$img = '<a class="icon_contact_icq" href="http://wwp.icq.com/scripts/search.dll?to=' . $view_userdata[$field_name] . '" title="' . $lang['icq_lofi'] . '" target="_blank"><span class="icon-icq">&nbsp;</span></a>';
+		$txt = '<a href="' . $temp_url . '" title="' . $view_userdata[$field_name] . '" title="' . $view_userdata[$field_name] . '" target="_blank">' . $lang['ICQ'] . '</a>';
 
 		// result
 		$res = pcp_output_format($field_name, $txt, $img, $map_name);
@@ -381,8 +381,8 @@ function pcp_output_aim($field_name, $view_userdata, $map_name='')
 	if ( !empty($view_userdata[$field_name]) && ($view_userdata['user_id'] != ANONYMOUS) )
 	{
 		$temp_url = 'aim:goim?screenname=' . $view_userdata[$field_name] . '&amp;message=Hello+Are+you+there?';
-		$txt = '<a href="' . $temp_url . '" title="' . $view_userdata[$field_name] . '">' . $lang['AIM'] . '</a>';
-		$img = '<a class="icon_contact_aol" href="' . $temp_url . '"><span>' . $lang['aim_lofi'] . '</span></a>';
+		$txt = '<a href="' . $temp_url . '" title="' . $view_userdata[$field_name] . '" target="_blank">' . $lang['AIM'] . '</a>';
+		$img = '<a class="icon_contact_aol" href="' . $temp_url . '" title="' . $lang['aim_lofi'] . '" target="_blank"><span class="icon-aim">&nbsp;</span></a>';
 
 		// result
 		$res = pcp_output_format($field_name, $txt, $img, $map_name);
@@ -407,7 +407,10 @@ function pcp_output_yim($field_name, $view_userdata, $map_name='')
 	{
 		$temp_url = 'http://edit.yahoo.com/config/send_webmesg?.target=' . $view_userdata[$field_name] . '&amp;.src=pg';
 		$txt = '<a href="' . $temp_url . '" title="' . $view_userdata[$field_name] . '">' . $lang['YIM'] . '</a>';
-		$img = '<a class="icon_contact_yim" href="' . $temp_url . '"><span>' . $lang['yim_lofi'] . '</span></a>';
+		$img = '<a class="icon_contact_yim" href="' . $temp_url . '" title="' . $lang['yim_lofi'] . '"><span class="icon-yahoo">&nbsp;</span></a>';
+
+
+//<a href="ymsgr:sendIM?YM_ID"><img border=0 src="http://opi.yahoo.com/online?u=YM_ID&m=g&t=1" /> </a> 
 
 		// result
 		$res = pcp_output_format($field_name, $txt, $img, $map_name);
@@ -430,7 +433,7 @@ function pcp_output_msnm($field_name, $view_userdata, $map_name='')
 	{
 		$temp_url = (substr($map_name, 0, 6) == 'PHPBB.') ? append_sid("./profile.$phpEx?mode=viewprofile&amp;" . POST_USERS_URL . '=' . $view_userdata['user_id']) : 'mailto:' . $view_userdata[$field_name];
 		$txt = '<a href="' . $temp_url . '" title="' . $view_userdata[$field_name] . '">' . $lang['MSNM'] . '</a>';
-		$img = '<a class="icon_contact_msnm" href="' . $temp_url . '"><span>' . $lang['msnm_lofi'] . '</span></a>';
+		$img = '<a class="icon_contact_msnm" href="' . $temp_url . '" title="' . $lang['MSNM'] . '"><span class="icon-windows">&nbsp;</span></a>';
 
 		// result
 		$res = pcp_output_format($field_name, $txt, $img, $map_name);
