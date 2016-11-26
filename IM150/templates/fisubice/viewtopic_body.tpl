@@ -178,8 +178,6 @@ function addquote(post_id)
 			<!-- BEGIN switch_no_buddy_ignore -->
 			<tr>
 				<td class="{postrow.ROW_CLASS}" width="100%" colspan="2" valign="bottom">
-
-
 				<div class="tbx">
 					<ul class="lft uct one">
 						{postrow.BUTTONS_PANEL}
@@ -188,11 +186,6 @@ function addquote(post_id)
 						<li class="rt"><span class="gen"><a class="fa fa-download fa-2x" href="{postrow.DOWNLOAD_POST}" title="{L_DOWNLOAD_POST}">&nbsp;</a>&nbsp;{postrow.POST_RATING}</span><li>
 					</ul>
 				</div>
-
-
-
-
-
 				</td>
 			</tr>
 			<!-- END switch_no_buddy_ignore -->

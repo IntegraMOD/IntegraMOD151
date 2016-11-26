@@ -111,8 +111,7 @@
 <td align="center" class="cat" colspan="2"><a href="{U_VIEWONLINE}">{L_WHO_IS_ONLINE}</a></td>
 </tr>
 <tr>
-<td class="row1" rowspan="4"><img src="{WHOSONLINE_IMAGE}" alt="{L_WHO_IS_ONLINE}" width="25" height="25" class="imgfolder" title="{L_WHO_IS_ONLINE}" /> 
-</td>
+<td class="row1" rowspan="4"><i class="fa fa-users fa-3x pad hov" title="{L_WHO_IS_ONLINE}"></i></td>
 <td class="row1" width="100%"><span class="gensmall">{TOTAL_POSTS}<br />
 {TOTAL_USERS}<br />
 {NEWEST_USER}</span></td>

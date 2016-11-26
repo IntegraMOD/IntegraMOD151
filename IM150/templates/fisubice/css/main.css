@@ -34,7 +34,7 @@ a:hover{text-decoration:none;}
 .openclose {display: block;float:right;width:15px;height:15px;}
 .space {margin:4px auto 10px auto;}
 .center {text-align:center;}
-
+.pad {padding: 0 2px;}
 hr{border-top-width:1px;height:0px;}
 
 /* Category gradients*/
