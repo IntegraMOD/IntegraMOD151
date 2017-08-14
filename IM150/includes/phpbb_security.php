@@ -361,11 +361,11 @@
 	function phpBBSecurity_QueryString()
 		{
 		if (isset($_SERVER['QUERY_STRING']))
-    		return eregi_replace('%09', '%20', $_SERVER['QUERY_STRING']);
+    		return preg_replace('%09', '%20', $_SERVER['QUERY_STRING']);
 		elseif (isset($_SERVER['QUERY_STRING']))
-    		return eregi_replace('%09', '%20', $_SERVER['QUERY_STRING']);
+    		return preg_replace('%09', '%20', $_SERVER['QUERY_STRING']);
 		elseif (getenv('QUERY_STRING'))
-			return eregi_replace('%09', '%20', getenv('QUERY_STRING'));
+			return preg_replace('%09', '%20', getenv('QUERY_STRING'));
 		else
     		return 'unknown';		
 		}
