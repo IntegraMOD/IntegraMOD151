@@ -1252,8 +1252,13 @@ if ($processcall) {
 			<td class="row1"><span class="gen">This step will check your file permissions and <a href="chmod.php?page=4">chmod</a> files and folders as necessary.</span></td>
 		</tr>
 		<tr>
-			<td class="row2"><span class="gen">Please make a choice from the menu on the left.</span></td>
+			<td class="row2"><span class="gen">Please make a choice from the menu on the left or click here:</span></td>
 		</tr>
+    <tr>
+      <td class="row1"><span class="gen">
+       <a href="install/install.php"><b>Install now</b></a>
+      </span></td>
+    </tr>
 	</table>
 
 
