@@ -646,7 +646,7 @@ switch ( $mode )
 			$edit = '<a class="icon_edit" href="' . $temp_url . '"><span>' . $lang['edit_lofi'] . '</span></a>';
 
 			$temp_url = append_sid( $module_root_path . "admin/admin_kb_cat.$phpEx?mode=delete&amp;cat=$category_id" );
-			$delete = '<a href="' . $temp_url . '" class="gen"><img src="' . $phpbb_root_path . $images['icon_delpost'] . '" border="0" alt="' . $lang['Delete'] . '"></a>';
+			$delete = '<a class="icon_delete" href="' . $temp_url . '" class="gen"></a>';
 
 			$temp_url = append_sid( $module_root_path . "admin/admin_kb_cat.$phpEx?mode=up&amp;cat=$category_id" );
 			$up = '<a href="' . $temp_url . '" class="gen">' . $lang['Move_up'] . '</a>';

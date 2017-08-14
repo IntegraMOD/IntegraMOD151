@@ -1089,10 +1089,10 @@ function get_kb_cat_subs_admin( $parent, $select = 1, $indent, $ss )
 		$category2 = '<a href="' . $temp_url . '" class="gen">' . $category_name2 . '</a>';
 
 		$temp_url = $module_root_path . "admin/admin_kb_cat.$phpEx?mode=edit&amp;cat=$category_id2" . "&amp;sid=".$userdata['session_id'];
-		$edit2 = '<a href="' . $temp_url . '"><img src="' . $phpbb_root_path . $images['icon_edit'] . '" border="0" alt="' . $lang['Edit'] . '"></a>';
+		$edit2 = '<a class="icon_edit" href="' . $temp_url . '"></a>';
 
 		$temp_url = $module_root_path . "admin/admin_kb_cat.$phpEx?mode=delete&amp;cat=$category_id2" . "&amp;sid=".$userdata['session_id'];
-		$delete2 = '<a href="' . $temp_url . '" class="gen"><img src="' . $phpbb_root_path . $images['icon_delpost'] . '" border="0" alt="' . $lang['Delete'] . '"></a>';
+		$delete2 = '<a class="icon_delete" href="' . $temp_url . '" class="gen"></a>';
 
 		$temp_url = $module_root_path . "admin/admin_kb_cat.$phpEx?mode=up&amp;cat=$category_id2" . "&amp;sid=".$userdata['session_id'];
 		$up2 = '<a href="' . $temp_url . '" class="gen">' . $lang['Move_up'] . '</a>';
