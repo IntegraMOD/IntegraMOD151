@@ -37,7 +37,7 @@ if(!function_exists(imp_referers_block_func))
 		{
 			message_die(GENERAL_ERROR, "Could not query referers table", "Error", __LINE__, __FILE__, $sql);
 		}
-		$total_referers = (int)$db->sql_fetchfield("count", 0, $result);		
+		$total_referers = (int)$db->sql_fetchfield("count");
 		
 		// Query referer info...
 		$sql = "SELECT DISTINCT referer_host, SUM(referer_hits) AS referer_hits, MIN(referer_firstvisit) AS referer_firstvisit, MAX(referer_lastvisit) AS referer_lastvisit 
