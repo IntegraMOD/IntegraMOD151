@@ -44,8 +44,7 @@ $template->set_filenames(array("body" => "admin/user_list_body.tpl"));
 $sql = "SELECT *
   FROM " . USERS_TABLE . "
 	WHERE user_level='1'";
-$result = mysql_query($sql);	
-if( !$result = $db->sql_query($sql) )
+if( !($result = $db->sql_query($sql)) )
 	{
 		message_die(GENERAL_ERROR, "Could not query database.", $lang['Error'], __LINE__, __FILE__, $sql);
 	}
@@ -74,8 +73,7 @@ for($i = 0; $i < $baner_count; $i++)
 $sql2 = "SELECT *
   FROM " . USERS_TABLE . "
 	WHERE user_level='2'";
-$result2 = mysql_query($sql2);	
-if( !$result2 = $db->sql_query($sql2) )
+if( !($result2 = $db->sql_query($sql2)) )
 	{
 		message_die(GENERAL_ERROR, "Could not query database.", $lang['Error'], __LINE__, __FILE__, $sql2);
 	}
@@ -106,29 +104,28 @@ $sql3 = "SELECT u.*
          WHERE u.user_id = j.user_id
             AND j.user_jr_admin <> ''";
 
-$result3 = mysql_query($sql3);	
-if( !$result3 = $db->sql_query($sql3) )
+if( !($result3 = $db->sql_query($sql3)) )
 	{
 		message_die(GENERAL_ERROR, "Could not query database.", $lang['Error'], __LINE__, __FILE__, $sql3);
 	}
 $baner_rows3 = $db->sql_fetchrowset($result3);
 $baner_count3 = count($baner_rows3);
 
-
 for($i = 0; $i < $baner_count3; $i++)
-	{
-		$baner_link3 = $baner_rows3[$i]['username'];
-		$baner_desc3 = $baner_rows3[$i]['user_id'];
-	
-		$row_color = ( !($i % 2) ) ? $theme['td_color1'] : $theme['td_color2'];
-		$row_class = ( !($i % 2) ) ? $theme['td_class1'] : $theme['td_class2'];
+{
+  $baner_link3 = $baner_rows3[$i]['username'];
+  $baner_desc3 = $baner_rows3[$i]['user_id'];
 
-		$template->assign_block_vars("LIST3",array(
-			"ROW_COLOR" => "#" . $row_color,
-			"ROW_CLASS" => $row_class,
-			"BANER_DESC" => $baner_desc3,
-			"BANER_LINK" => $baner_link3));
-  }
+  $row_color = ( !($i % 2) ) ? $theme['td_color1'] : $theme['td_color2'];
+  $row_class = ( !($i % 2) ) ? $theme['td_class1'] : $theme['td_class2'];
+
+  $template->assign_block_vars("LIST3",array(
+    "ROW_COLOR" => "#" . $row_color,
+    "ROW_CLASS" => $row_class,
+    "BANER_DESC" => $baner_desc3,
+    "BANER_LINK" => $baner_link3
+  ));
+}
   
 $template->assign_vars(array(
 	"TITLE" => $lang['Admin_mod_list'],

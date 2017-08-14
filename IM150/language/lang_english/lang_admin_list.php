@@ -22,7 +22,7 @@
 
 // admin mod list
 $lang['Admin_mod_list'] = 'Admin, Junior Admin, Moderators list';
-$lang['Admin_mod_explain'] = "Here you will find a list for all members with 'higher powers'.<br \>Firstly listed are all the members with admin powers, you have <b>%s admin</b> members.........<br \>Secondly is all the members with any kind of moderating powers, you have <b>%s moderating</b> members.........<br ]>Thirdly is the members who are set as Junior admin, you have <b>%s Junior admin</b> members.........<br>";
+$lang['Admin_mod_explain'] = "Here you will find a list for all members with 'higher powers'.<br \>Firstly listed are all the members with admin powers, you have <b>%s admin</b> members.<br \>Secondly is all the members with any kind of moderating powers, you have <b>%s moderating</b> members.<br ]>Thirdly is the members who are set as Junior admin, you have <b>%s Junior admin</b> members.<br>";
 $lang['Admin_admin'] = "Administrators";
 $lang['Admin_moderator'] = "Moderators";
 $lang['Admin_junior'] = "Junior Administrators";

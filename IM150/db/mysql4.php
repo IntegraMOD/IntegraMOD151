@@ -236,18 +236,19 @@ class sql_db
 			unset($this->rowset[(int)$query_id]);
 			unset($this->row[(int)$query_id]);
 
+      $result = array();
 			while($this->rowset[(int)$query_id] = @mysql_fetch_array($query_id, MYSQL_ASSOC))
 			{				
 				$result[] = $this->rowset[(int)$query_id];
 			}
 			
-            if (isset($result))
+            if ($result)
             {
                 return $result;
             }
 			else
 			{
-                return false;
+                return array();
             } 
 		}
 		else
