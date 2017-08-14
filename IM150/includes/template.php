@@ -106,7 +106,7 @@ class Template {
 
 	// Default template directory.
 	// If file for default template isn't found file from this template is used.
-	var $tpldef = 'subSilver';
+	var $tpldef = 'Default';
 
 	// this will hash handle names to the compiled code for that handle.
 	var $compiled_code = array();
@@ -205,7 +205,7 @@ class Template {
 			'xs_auto_recompile'			=> 1,
 			'xs_use_cache'				=> 1,
 			'xs_php'					=> $phpEx,
-			'xs_def_template'			=> 'subSilver',
+			'xs_def_template'			=> 'Default',
 			'xs_check_switches'			=> 1,
 			'xs_warn_includes'			=> 1,
 			'xs_add_comments'			=> 0,
@@ -399,7 +399,7 @@ class Template {
 			$str = substr($dir, $pos + strlen($tpl), strlen($dir));
 		}
 		// searching for one more 'templates/'
-		// that can happen if full path is like /home/some_dude/templates/phpbb/templates/subSilver/
+		// that can happen if full path is like /home/some_dude/templates/phpbb/templates/Default/
 		$dir = $this->template_name($str);
 		if(!$dir)
 		{
@@ -860,7 +860,7 @@ class Template {
 		// checking if tpl and/or php file exists
 		if(empty($this->files_cache[$handle]) && !@file_exists($this->files[$handle]))
 		{
-			// trying to load alternative filename (usually subSilver)
+			// trying to load alternative filename (in IM it's Default)
 			if(!empty($this->tpldef) && !empty($this->tpl) && ($this->tpldef !== $this->tpl))
 			{
 				$this->files[$handle] = '';
