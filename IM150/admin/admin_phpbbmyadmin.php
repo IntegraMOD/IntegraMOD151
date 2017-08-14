@@ -296,7 +296,7 @@ if(!strcmp($mode,'optimizeall'))
 // Any options given?
 
 // BEGIN browse
-if (!strcmp($mode, 'browse'))
+if ($mode == 'browse')
 // Browse a table...
 {
 	if (empty($tablename))
@@ -332,6 +332,7 @@ if (!strcmp($mode, 'browse'))
 		// No results?
 		message_die(GENERAL_ERROR, sprintf($lang['SQL_Admin_Browse_Error'], $tablename));
 	}
+  $field = array();
 	// Remember the number of fields (aka columns) and the number of rows:
 	$field_count = $db->sql_numfields($result);
 	$row_count = $db->sql_numrows($result);
@@ -459,6 +460,7 @@ $template->assign_vars(array(
 );
 // Start table list:
 $totaldatalength = 0;
+$tablecount = 0;
 while ($row = $db->sql_fetchrow($result))
 {
 	$tablecount++;
@@ -470,7 +472,7 @@ while ($row = $db->sql_fetchrow($result))
 		'TABLE_REPAIR' => $file . '&amp;mode=submit&amp;this_query=REPAIR TABLE ' . $row['Name'],
 		'TABLE_EMPTY' => (!strcmp($dbms, 'mysql3')) ? $file . '&amp;mode=submit&amp;this_query=DELETE FROM ' . $row['Name'] . '&amp;confirm=yes' : $file . '&amp;mode=submit&amp;this_query=TRUNCATE TABLE ' . $row['Name'] . '&amp;confirm=yes',
 		'TABLE_DROP' => $file . '&amp;mode=submit&amp;this_query=DROP TABLE ' . $row['Name'] . '&amp;confirm=yes',
-		'TABLE_TYPE' => $row['Type'],
+    'TABLE_TYPE' => isset($row['Type']) ? $row['Type'] : '', /* V: not sure what this is supposed to be */
 		'TABLE_ROWS' => $row['Rows'],
 		'TABLE_DATA_LENGTH' => $row['Data_length'],
 		'TABLE_OPTIMIZATION_LEVEL' => $row['Data_length'] > 0 ? round(100 - ((100 * $row['Data_free']) / $row['Data_length']), 2) : 100)
