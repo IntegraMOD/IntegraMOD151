@@ -75,14 +75,14 @@ function setup_db_data()
 			'COMMENTS'		=> 'remove_remarks'
 		), 
 		'mysql4' => array(
-			'LABEL'			=> 'MySQL 4.x/5.x',
+			'LABEL'			=> 'MySQL',
 			'SCHEMA'		=> 'mysql', 
 			'DELIM'			=> ';', 
 			'DELIM_BASIC'	=> ';',
 			'COMMENTS'		=> 'remove_remarks'
 		), 
 		'mysqli' => array(
-			'LABEL'			=> 'MySQL 4.x/5.x /w MySQLi',
+			'LABEL'			=> 'MySQLi',
 			'SCHEMA'		=> 'mysql', 
 			'DELIM'			=> ';', 
 			'DELIM_BASIC'	=> ';',
