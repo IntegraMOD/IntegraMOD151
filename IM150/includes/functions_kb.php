@@ -1088,16 +1088,16 @@ function get_kb_cat_subs_admin( $parent, $select = 1, $indent, $ss )
 		$temp_url = append_sid( $module_root_path . "kb.$phpEx?mode=cat&amp;cat=$category_id2" );
 		$category2 = '<a href="' . $temp_url . '" class="gen">' . $category_name2 . '</a>';
 
-		$temp_url = $module_root_path . "admin/admin_kb_cat.$phpEx?mode=edit&amp;cat=$category_id2" . "&amp;sid=".$userdata['session_id'];
+		$temp_url = append_sid($module_root_path . "admin/admin_kb_cat.$phpEx?mode=edit&amp;cat=$category_id2");
 		$edit2 = '<a class="icon_edit" href="' . $temp_url . '"></a>';
 
-		$temp_url = $module_root_path . "admin/admin_kb_cat.$phpEx?mode=delete&amp;cat=$category_id2" . "&amp;sid=".$userdata['session_id'];
+		$temp_url = append_sid($module_root_path . "admin/admin_kb_cat.$phpEx?mode=delete&amp;cat=$category_id2");
 		$delete2 = '<a class="icon_delete" href="' . $temp_url . '" class="gen"></a>';
 
-		$temp_url = $module_root_path . "admin/admin_kb_cat.$phpEx?mode=up&amp;cat=$category_id2" . "&amp;sid=".$userdata['session_id'];
+		$temp_url = append_sid($module_root_path . "admin/admin_kb_cat.$phpEx?mode=up&amp;cat=$category_id2");
 		$up2 = '<a href="' . $temp_url . '" class="gen">' . $lang['Move_up'] . '</a>';
 
-		$temp_url = $module_root_path . "admin/admin_kb_cat.$phpEx?mode=down&amp;cat=$category_id2" . "&amp;sid=".$userdata['session_id'];
+		$temp_url = append_sid($module_root_path . "admin/admin_kb_cat.$phpEx?mode=down&amp;cat=$category_id2");
 		$down2 = '<a href="' . $temp_url . '" class="gen">' . $lang['Move_down'] . '</a>';
 
 		$row_color = ( !( $ss % 2 ) ) ? $theme['td_color1'] : $theme['td_color2'];
