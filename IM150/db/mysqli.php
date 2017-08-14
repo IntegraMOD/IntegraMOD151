@@ -31,8 +31,6 @@ if(!defined("SQL_LAYER"))
 
 		var $db_connect_id;
 		var $query_result;
-		var $row = array();
-		var $rowset = array();
 		var $num_queries = 0;
 		var $in_transaction = 0;
 
@@ -51,6 +49,9 @@ if(!defined("SQL_LAYER"))
 			$port = (!$port) ? NULL : $port;
 
 			$this->db_connect_id = @mysqli_connect($this->server, $this->user, $this->password, $this->dbname, $port);
+
+      $this->row = new SplObjectStorage();
+      $this->rowset = new SplObjectStorage();
 			
 			if( $this->db_connect_id && $database != '')
 			{
@@ -134,8 +135,12 @@ if(!defined("SQL_LAYER"))
 			$this->query_result = (isset($this->query_result)) ? $this->query_result : false;
 			if ($this->query_result)
 			{
-				unset($this->row[(bool)$this->query_result]);
-				unset($this->rowset[(bool)$this->query_result]);
+        if ($this->query_result !== true)
+        {
+          // if the query wasn't a SELECT, mysqli_query returns simply true
+          unset($this->row[$this->query_result]);
+          unset($this->rowset[$this->query_result]);
+        }
 
 				if( $transaction == END_TRANSACTION && $this->in_transaction )
 				{
@@ -172,7 +177,7 @@ if(!defined("SQL_LAYER"))
 			}
 			
 
-			return ( $query_id ) ? @mysqli_num_rows($query_id) : false;
+			return ( $query_id ) ? mysqli_num_rows($query_id) : false;
 		}
 
 		function sql_affectedrows()
@@ -180,14 +185,14 @@ if(!defined("SQL_LAYER"))
 			return ( $this->db_connect_id ) ? @mysqli_affected_rows($this->db_connect_id) : false;
 		}
 
-		function sql_numfields($query_id = 0)
+		function sql_numfields($query_id)
 		{
 			if ($query_id === false)
 			{
 				$query_id = $this->query_result;
 			}
 
-			return ( $query_id ) ? @mysqli_field_count($query_id) : false;
+			return ( $query_id ) ? $query_id->field_count : false;
 		}
 
 		function sql_fieldname($offset, $query_id = 0)
@@ -223,8 +228,8 @@ if(!defined("SQL_LAYER"))
 
 			if( $query_id )
 			{
-				$this->row[(bool)$query_id] = mysqli_fetch_array($query_id, MYSQLI_ASSOC);
-				return $this->row[(bool)$query_id];
+				$this->row[$query_id] = mysqli_fetch_array($query_id, MYSQLI_ASSOC);
+				return $this->row[$query_id];
 			}
 			else
 			{
@@ -241,12 +246,10 @@ if(!defined("SQL_LAYER"))
 
 			if( $query_id )
 			{
-				unset($this->rowset[(bool)$query_id]);
-				unset($this->row[(bool)$query_id]);
 
-				while($this->rowset[(bool)$query_id] = @mysqli_fetch_array($query_id, MYSQLI_ASSOC))
+				while($this->rowset[$query_id] = @mysqli_fetch_array($query_id, MYSQLI_ASSOC))
 				{
-					$result[] = $this->rowset[(bool)$query_id];
+					$result[] = $this->rowset[$query_id];
 				}
 
 				if (isset($result))
@@ -294,22 +297,22 @@ if(!defined("SQL_LAYER"))
 				}
 				else
 				{
-					if( empty($this->row[(bool)$query_id]) && empty($this->rowset[(bool)$query_id]) )
+					if( empty($this->row[$query_id]) && empty($this->rowset[$query_id]) )
 					{
 						if( $this->sql_fetchrow() )
 						{
-							$result = $this->row[(bool)$query_id][$field];
+							$result = $this->row[$query_id][$field];
 						}
 					}
 					else
 					{
-						if( $this->rowset[(bool)$query_id] )
+						if( $this->rowset[$query_id] )
 						{
-							$result = $this->rowset[(bool)$query_id][0][$field];
+							$result = $this->rowset[$query_id][0][$field];
 						}
-						else if( $this->row[(bool)$query_id] )
+						else if( $this->row[$query_id] )
 						{
-							$result = $this->row[(bool)$query_id][$field];
+							$result = $this->row[$query_id][$field];
 						}
 					}
 				}
@@ -345,8 +348,8 @@ if(!defined("SQL_LAYER"))
 
 			if ( $query_id === true)
 			{
-				unset($this->row[(bool)$query_id]);
-				unset($this->rowset[(bool)$query_id]);
+				unset($this->row[$query_id]);
+				unset($this->rowset[$query_id]);
 
 				@mysqli_free_result($query_id);
 
