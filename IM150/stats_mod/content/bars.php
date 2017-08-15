@@ -70,57 +70,7 @@ class Content_bars
 		// Getting voting bar info
 		//
 		
-		// Fix for change style and statistics graph image //
-		// Change style does not set the user_style, it uses cookies //
-		// So we have to examine the cookie to get the value to use for this image //
-		
-		// Fix (statistics graph image) code added Michaelo 09/July/06 //
-		global $_GET, $_POST, $_COOKIE;								
-		global $theme, $template;
-		if ( isset($_COOKIE[$board_config['cookie_name'] . '_style']) )
-		{
-			$style = $_COOKIE[$board_config['cookie_name'] . '_style'];
-		}		
-		else
-			$style = $userdata['user_style'];				
-		// end of (statistics graph image) fix //
-			
-		if( !$board_config['override_user_style'] )
-		{
-			//fix (statistics graph image) code removed //
-			//$style = $userdata['user_style'];				
-			if( ($userdata['user_id'] != ANONYMOUS) && (isset($userdata['user_style'])) )
-			{
-				if( !$theme )
-				{
-					$style =  $board_config['default_style'];
-				}
-			}
-			else
-			{
-				$style =  $board_config['default_style'];
-			}
-		}
-		else
-		{
-			$style =  $board_config['default_style'];
-		}
-
-		$sql = 'SELECT * 
-		FROM ' . THEMES_TABLE . ' 
-		WHERE themes_id = ' . $style;
-
-		if ( !($result = $db->sql_query($sql)) )
-		{
-			message_die(CRITICAL_ERROR, 'Couldn\'t query database for theme info.');
-		}
-
-		if( !$row = $db->sql_fetchrow($result) )
-		{
-			message_die(CRITICAL_ERROR, 'Couldn\'t get theme data for themes_id=' . $style . '.');
-		}
-
-		$this->current_template_path = 'templates/' . $row['template_name'] . '/';
+		$this->current_template_path = $template->root . '/';
 		
 		$stats_template->assign_vars(array(
 			'LEFT_GRAPH_IMAGE' => $phpbb_root_path . $this->current_template_path . $this->loaded_bar_images['left'],
