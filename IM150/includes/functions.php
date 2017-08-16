@@ -906,7 +906,7 @@ function init_userprefs($userdata)
 	if ( (int)isset($_POST[STYLE_URL]) || (int)isset($_GET[STYLE_URL]) ) 
 	{
 		(int)$style = urldecode( (isset($_POST[STYLE_URL])) ? $_POST[STYLE_URL] : (int)$_GET[STYLE_URL] );
-		if($style == 0) { die('Hacking attempt'); exit; }
+		if($style == 0) { die('Hacking attempt'); }
 		if ( $theme = setup_style((int)$style) )
 		{
 			setcookie($board_config['cookie_name'] . '_style', $style, time() + 31536000, $board_config['cookie_path'], $board_config['cookie_domain'], $board_config['cookie_secure']);
@@ -914,13 +914,19 @@ function init_userprefs($userdata)
 		}
 	}
 
-	if ( isset($_COOKIE[$board_config['cookie_name'] . '_style']) )
+  $style_key = $board_config['cookie_name'] . '_style';
+	if ( isset($_COOKIE[$style_key]) )
 	{
-		$style = $_COOKIE[$board_config['cookie_name'] . '_style'];
+		$style = $_COOKIE[$style_key];
 		if ( $theme = setup_style((int)$style) )
 		{
 			return;
 		}
+    else
+    {
+      setcookie($style_key, "", time()-3600);
+      unset($_COOKIE[$style_key]);
+    }
 	}
 // Security update 02 September 2006 B ends// 
 
@@ -1155,6 +1161,7 @@ function setup_style($style)
 					{
 						message_die(CRITICAL_ERROR, 'Could not update user theme info');
 					}
+          return false;
 				}
 				else
 				{
