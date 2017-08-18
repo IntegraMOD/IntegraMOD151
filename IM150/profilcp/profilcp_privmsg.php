@@ -2175,62 +2175,66 @@ else
 	{
 		message_die(GENERAL_ERROR, 'Could not query private messages', '', __LINE__, __FILE__, $sql);
 	}
+	$rows = $db->sql_fetchrowset($result);
+	$attachment_ids = array();
+	foreach ($rows as $row)
+		$attachment_ids[] = $row['privmsgs_id'];
+	$attachment_images = privmsgs_attachment_image_many($attachment_ids);
 
-	if ( $row = $db->sql_fetchrow($result) )
+	foreach ($rows as $row)
 	{
-		do
+		$privmsg_id = $row['privmsgs_id'];
+
+		$flag = $row['privmsgs_type'];
+
+		$icon_flag = ( $flag == PRIVMSGS_NEW_MAIL || $flag == PRIVMSGS_UNREAD_MAIL ) ? $images['pm_unreadmsg'] : $images['pm_readmsg'];
+		$icon_flag_alt = ( $flag == PRIVMSGS_NEW_MAIL || $flag == PRIVMSGS_UNREAD_MAIL ) ? $lang['Unread_message'] : $lang['Read_message'];
+
+		$msg_userid = $row['user_id'];
+		$msg_username = $row['username'];
+
+		$u_from_user_profile = append_sid("profile.$phpEx?mode=viewprofile&" . POST_USERS_URL . "=$msg_userid");
+
+		$msg_subject = $row['privmsgs_subject'];
+
+		if ( count($orig_word) )
 		{
-			$privmsg_id = $row['privmsgs_id'];
-
-			$flag = $row['privmsgs_type'];
-
-			$icon_flag = ( $flag == PRIVMSGS_NEW_MAIL || $flag == PRIVMSGS_UNREAD_MAIL ) ? $images['pm_unreadmsg'] : $images['pm_readmsg'];
-			$icon_flag_alt = ( $flag == PRIVMSGS_NEW_MAIL || $flag == PRIVMSGS_UNREAD_MAIL ) ? $lang['Unread_message'] : $lang['Read_message'];
-
-			$msg_userid = $row['user_id'];
-			$msg_username = $row['username'];
-
-			$u_from_user_profile = append_sid("profile.$phpEx?mode=viewprofile&" . POST_USERS_URL . "=$msg_userid");
-
-			$msg_subject = $row['privmsgs_subject'];
-
-			if ( count($orig_word) )
-			{
-				$msg_subject = preg_replace($orig_word, $replacement_word, $msg_subject);
-			}
-		
-			$u_subject = append_sid("profile.$phpEx?mode=privmsg&sub=$folder&privmsg_mode=read&" . POST_POST_URL . "=$privmsg_id");
-
-			$msg_date = create_date($board_config['default_dateformat'], $row['privmsgs_date'], $board_config['board_timezone']);
-
-			if ( $flag == PRIVMSGS_NEW_MAIL && $folder == 'inbox' )
-			{
-				$msg_subject = '<b>' . $msg_subject . '</b>';
-				$msg_date = '<b>' . $msg_date . '</b>';
-				$msg_username = '<b>' . $msg_username . '</b>';
-			}
-
-			$row_class = ( !($i % 2) ) ? 'row1' : 'row2';
-
-			$template->assign_block_vars('listrow', array(
-				'CLASS_NAME' => get_user_level_class($row['user_level'], 'name', $row),
-				'ROW_CLASS' => $row_class,
-				'FROM' => $msg_username,
-				'SUBJECT' => $msg_subject,
-				'DATE' => $msg_date,
-				'PRIVMSG_ATTACHMENTS_IMG' => privmsgs_attachment_image($privmsg_id),
-				'PRIVMSG_FOLDER_IMG' => $icon_flag,
-
-				'L_PRIVMSG_FOLDER_ALT' => $icon_flag_alt, 
-
-				'S_MARK_ID' => $privmsg_id, 
-
-				'U_READ' => $u_subject,
-				'U_FROM_USER_PROFILE' => $u_from_user_profile)
-			);
+			$msg_subject = preg_replace($orig_word, $replacement_word, $msg_subject);
 		}
-		while( $row = $db->sql_fetchrow($result) );
 
+		$u_subject = append_sid("profile.$phpEx?mode=privmsg&sub=$folder&privmsg_mode=read&" . POST_POST_URL . "=$privmsg_id");
+
+		$msg_date = create_date($board_config['default_dateformat'], $row['privmsgs_date'], $board_config['board_timezone']);
+
+		if ( $flag == PRIVMSGS_NEW_MAIL && $folder == 'inbox' )
+		{
+			$msg_subject = '<b>' . $msg_subject . '</b>';
+			$msg_date = '<b>' . $msg_date . '</b>';
+			$msg_username = '<b>' . $msg_username . '</b>';
+		}
+
+		$row_class = ( !($i % 2) ) ? 'row1' : 'row2';
+
+		$template->assign_block_vars('listrow', array(
+			'CLASS_NAME' => get_user_level_class($row['user_level'], 'name', $row),
+			'ROW_CLASS' => $row_class,
+			'FROM' => $msg_username,
+			'SUBJECT' => $msg_subject,
+			'DATE' => $msg_date,
+			'PRIVMSG_ATTACHMENTS_IMG' => isset($attachment_images[$privmsg_id]) ? $attachment_images[$privmsg_id] : '',
+			'PRIVMSG_FOLDER_IMG' => $icon_flag,
+
+			'L_PRIVMSG_FOLDER_ALT' => $icon_flag_alt, 
+
+			'S_MARK_ID' => $privmsg_id, 
+
+			'U_READ' => $u_subject,
+			'U_FROM_USER_PROFILE' => $u_from_user_profile)
+		);
+	}
+
+	if ($rows)
+	{
 		$template->assign_vars(array(
 			'PAGINATION' => generate_pagination("profile.$phpEx?mode=privmsg&sub=$folder", $pm_total, $board_config['topics_per_page'], $start),
 			'PAGE_NUMBER' => sprintf($lang['Page_of'], ( floor( $start / $board_config['topics_per_page'] ) + 1 ), ceil( $pm_total / $board_config['topics_per_page'] )), 

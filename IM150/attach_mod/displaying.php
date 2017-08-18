@@ -265,6 +265,26 @@ function init_display_post_attachments($switch_attachment)
 //
 
 //
+// Same as privmsgs_attachment_image below, but with an array of IDs to save sql queries
+//
+function privmsgs_attachment_image_many($ids)
+{
+	global $attach_config, $userdata;
+	$auth = ($userdata['user_level'] == ADMIN) ? 1 : intval($attach_config['allow_pm_attach']);
+
+	if (!$ids || !$auth || intval($attach_config['disable_mod']))
+	{
+		return array();
+	}
+	$result = array();
+	$image = '<img src="' . $attach_config['topic_icon'] . '" alt="" border="0" /> ';
+	foreach (attachment_exists_db($ids, PAGE_PRIVMSGS) as $row)
+	{
+		$result[$row['privmsgs_id']] = $image;
+	}
+}
+
+//
 // Returns the image-tag for the PM image icon
 //
 function privmsgs_attachment_image($privmsg_id)

@@ -470,9 +470,17 @@ function attachment_exists_db($post_id, $page = 0)
 		$sql_id = 'post_id';
 	}
 
-	$sql = 'SELECT attach_id
-		FROM ' . ATTACHMENTS_TABLE . "
-		WHERE $sql_id = $post_id 
+	if (is_array($post_id))
+	{
+		$op = 'IN';
+		$post_id = '(' . implode(', ', $post_id) . ')';
+	}
+	else
+		$op = '=';
+
+	$sql = "SELECT attach_id, $sql_id
+		FROM " . ATTACHMENTS_TABLE . "
+		WHERE $sql_id $op $post_id 
 		LIMIT 1";
 
 	if ( !($result = $db->sql_query($sql)) )
@@ -480,14 +488,10 @@ function attachment_exists_db($post_id, $page = 0)
 		message_die(GENERAL_ERROR, 'Could not get attachment informations for specific posts', '', __LINE__, __FILE__, $sql);
 	}
 
-	if (($db->sql_numrows($result)) > 0)
-	{
-		return true;
-	}
+	if ($op == 'IN')
+		return $db->sql_fetchrowset($result);
 	else
-	{
-		return false;
-	}
+		return $db->sql_numrows($result) > 0;
 }
 
 //
