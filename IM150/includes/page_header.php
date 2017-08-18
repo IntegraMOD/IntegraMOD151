@@ -319,25 +319,24 @@ if (defined('SHOW_ONLINE'))
 		$s_user_ids = implode(', ', $user_ids);
 
 		// get base info
-		$sql = "SELECT * FROM " . BUDDYS_TABLE . " WHERE user_id=" . $userdata['user_id'] . " and buddy_id in ($s_user_ids)";
+		$sql = "SELECT * FROM " . BUDDYS_TABLE . " WHERE (user_id=" . $userdata['user_id'] . " OR buddy_id=" . $userdata['user_id'] .") and buddy_id in ($s_user_ids)";
 		if ( !($result = $db->sql_query($sql)) ) message_die(GENERAL_ERROR, "Could not obtain buddys information.", '', __LINE__, __FILE__, $sql);
 		while ( $row = $db->sql_fetchrow($result) )
 		{
-			$buddys[ $row['buddy_id'] ]['buddy_ignore'] = $row['buddy_ignore'];
-			$buddys[ $row['buddy_id'] ]['buddy_my_friend'] = !$row['buddy_ignore'];
-			$buddys[ $row['buddy_id'] ]['buddy_friend'] = false;
-			$buddys[ $row['buddy_id'] ]['buddy_visible'] = false;
-		}
-
-		// check if in the topic author's friend list and "always visible" status he granted
-		$sql = "SELECT * FROM " . BUDDYS_TABLE . " WHERE buddy_id=" . $userdata['user_id'] . " and user_id in ($s_user_ids)";
-		if ( !($result = $db->sql_query($sql)) ) message_die(GENERAL_ERROR, "Could not obtain buddys information.", '', __LINE__, __FILE__, $sql);
-		while ( $row = $db->sql_fetchrow($result) )
-		{
-			if ( !isset($buddys[ $row['user_id'] ]) ) $buddys[ $row['user_id'] ]['buddy_ignore'] = false;
-			if ( !isset($buddys[ $row['user_id'] ]) ) $buddys[ $row['user_id'] ]['buddy_my_friend'] = false;
-			$buddys[ $row['user_id'] ]['buddy_friend'] = !$row['buddy_ignore'];
-			$buddys[ $row['user_id'] ]['buddy_visible'] = $row['buddy_visible'];
+			if ($row['user_id'] == $userdata['user_id'])
+			{
+				$buddys[ $row['buddy_id'] ]['buddy_ignore'] = $row['buddy_ignore'];
+				$buddys[ $row['buddy_id'] ]['buddy_my_friend'] = !$row['buddy_ignore'];
+				$buddys[ $row['buddy_id'] ]['buddy_friend'] = false;
+				$buddys[ $row['buddy_id'] ]['buddy_visible'] = false;
+			}
+			else
+			{
+				if ( !isset($buddys[ $row['user_id'] ]) ) $buddys[ $row['user_id'] ]['buddy_ignore'] = false;
+				if ( !isset($buddys[ $row['user_id'] ]) ) $buddys[ $row['user_id'] ]['buddy_my_friend'] = false;
+				$buddys[ $row['user_id'] ]['buddy_friend'] = !$row['buddy_ignore'];
+				$buddys[ $row['user_id'] ]['buddy_visible'] = $row['buddy_visible'];
+			}
 		}
 		$db->sql_freeresult($result);
 	}
