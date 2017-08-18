@@ -403,6 +403,19 @@ function session_pagestart($user_ip, $thispage_id)
 				//
 				if ( $current_time - $userdata['session_time'] > 60 )
 				{
+					//
+					// Smartor's Visit Counter MOD
+					// V: only increment visit counter every minute
+					$visit_counter=$board_config['visit_counter'];
+					$visit_counter++;
+					$sql = "UPDATE " . CONFIG_TABLE . "
+						SET config_value = '" . $visit_counter . "'
+						WHERE config_name = 'visit_counter'";
+					if( !($result = $db->sql_query($sql)) )
+					{
+						message_die(GENERAL_ERROR, 'Could not update counter information', '', __LINE__, __FILE__, $sql);
+					}
+
 					// A little trick to reset session_admin on session re-usage
 					$update_admin = (!defined('IN_ADMIN') && $current_time - $userdata['session_time'] > ($board_config['session_length']+60)) ? ', session_admin = 0' : '';
 

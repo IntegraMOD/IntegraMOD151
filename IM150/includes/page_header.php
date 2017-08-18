@@ -116,18 +116,6 @@ include_once($phpbb_root_path . 'profilcp/functions_profile.' . $phpEx);
 // gzip_compression 
 // 
 
-//
-// Smartor's Visit Counter MOD
-//
-$visit_counter=$board_config['visit_counter'];
-$visit_counter++;
-$sql = "UPDATE " . CONFIG_TABLE . "
-		SET config_value = '" . $visit_counter . "'
-		WHERE config_name = 'visit_counter'";
-if( !($result = $db->sql_query($sql)) )
-{
-	message_die(GENERAL_ERROR, 'Could not update counter information', '', __LINE__, __FILE__, $sql);
-}
 // ------------------------------------
 //
 //
