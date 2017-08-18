@@ -974,11 +974,12 @@
 		{
 		global $db;
 		
-		$q = "SELECT session_id
+		$q = "SELECT COUNT(session_id) as num
 			  FROM ". SESSIONS_TABLE ."
 			  WHERE session_user_id <> '". ANONYMOUS ."'";
 		$r 		= $db->sql_query($q);
-		$amount = $db->sql_numrows($r);
+		$row_count = $db->sql_fetchrow($r);
+		$amount = $row_count['num'];
 		
 		#==== We are deleting user sessions because of mods such as users
 		#==== of the day, if guests get deleted, these mods wont work right
