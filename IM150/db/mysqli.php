@@ -102,7 +102,7 @@ if(!defined("SQL_LAYER"))
 		//
 		// Base query method
 		//
-		function sql_query($query = "", $transaction = FALSE)
+		function sql_query($query = "", $transaction = FALSE, $cache = null)
 		{
 			//
 			// Remove any pre-existing queries
@@ -367,6 +367,10 @@ if(!defined("SQL_LAYER"))
 			$result['code'] = @mysqli_errno($this->db_connect_id);
 
 			return $result;
+		}
+
+		function clear_cache($prefix = '')
+		{
 		}
 
 	} // class sql_db

@@ -28,10 +28,14 @@ class sql_db
 {
 	var $db_connect_id;
 	var $query_result;
+  var $queries = array();
 	var $row = array();
 	var $rowset = array();
 	var $num_queries = 0;
 	var $sql_time = 0; // SQL excution time - added by Smartor
+	var $cache = null;
+	var $cached = null;
+	var $caching = false;
 
 	//
 	// Constructor
@@ -135,12 +139,40 @@ class sql_db
 	//
 	// Base query method
 	//
-	function sql_query($query = "", $transaction = FALSE)
+	function sql_query($query = "", $transaction = FALSE, $cache = null)
 	{
 		$mtime = microtime();
 		$mtime = explode(" ",$mtime);
 		$mtime = $mtime[1] + $mtime[0];
 		$starttime = $mtime;
+    // Check cache
+    $this->caching = false;
+    $this->cache = array();
+    $this->cached = false;
+    if($query !== '' && $cache)
+    {
+      global $phpbb_root_path;
+      $hash = md5($query);
+      if(strlen($cache))
+      {
+        $hash = $cache . $hash;
+      }
+      $filename = $phpbb_root_path . 'cache/sql_' . $hash . '.php';
+      if(@file_exists($filename))
+      {
+        $set = array();
+        @include($filename);
+				// This isset is important just in case someone removed the file while we included it
+				if (isset($set))
+				{
+					$this->cache = $set;
+					$this->cached = true;
+					$this->caching = false;
+					return 'cache';
+				}
+      }
+      $this->caching = $hash;
+    }
 
 		// Remove any pre-existing queries
 		unset($this->query_result);
@@ -148,7 +180,21 @@ class sql_db
 		{
 			$this->num_queries++;
 
-			$this->query_result = @mysql_query($query, $this->db_connect_id);
+
+			if (defined('DEBUG') && DEBUG)
+			{
+				ob_start();
+				debug_print_backtrace();
+				$backtrace = ob_get_clean();
+				$qstart = microtime(true);
+			}
+			$this->query_result = mysql_query($query, $this->db_connect_id);
+			if (defined('DEBUG') && DEBUG)
+			{
+				$qend = microtime(true);
+				$this->queries[] = array($query, $backtrace, $qend - $qstart);
+			}
+
 		}
 		if($this->query_result)
 		{
@@ -358,6 +404,8 @@ class sql_db
 	}
 	function sql_fetchrow($query_id = 0)
 	{
+		if ($query_id === 'cache' && $this->cached)
+			return count($this->cache) ? array_shift($this->cache) : false;
 		$mtime = microtime();
 		$mtime = explode(" ",$mtime);
 		$mtime = $mtime[1] + $mtime[0];
@@ -369,7 +417,8 @@ class sql_db
 		}
 		if($query_id)
 		{
-			$this->row[$query_id] = @mysql_fetch_array($query_id);
+			$this->row[$query_id] = @mysql_fetch_array($query_id, MYSQL_ASSOC);
+			$this->cache[] = $this->row[$query_id];
 
 			$mtime = microtime();
 			$mtime = explode(" ",$mtime);
@@ -407,10 +456,12 @@ class sql_db
 		{
 			unset($this->rowset[$query_id]);
 			unset($this->row[$query_id]);
+			$result = array();
 			while($this->rowset[$query_id] = @mysql_fetch_array($query_id))
 			{
 				$result[] = $this->rowset[$query_id];
 			}
+			$this->cache = $result;
 
 			$mtime = microtime();
 			$mtime = explode(" ",$mtime);
@@ -563,6 +614,13 @@ class sql_db
 	}
 	function sql_freeresult($query_id = 0)
 	{
+		if ($query_id === 'cache')
+		{
+			$this->caching = false;
+			$this->cached = false;
+			$this->cache = array();
+			return;
+		}
 		$mtime = microtime();
 		$mtime = explode(" ",$mtime);
 		$mtime = $mtime[1] + $mtime[0];
@@ -575,6 +633,8 @@ class sql_db
 
 		if ( $query_id )
 		{
+			if ($this->caching)
+				$this->write_cache();
 			unset($this->row[$query_id]);
 			unset($this->rowset[$query_id]);
 
@@ -620,6 +680,44 @@ class sql_db
 
 		return $result;
 	}
+
+	function write_cache()
+	{
+		if(!$this->caching)
+		{
+			return;
+		}
+		global $phpbb_root_path;
+		$f = fopen($phpbb_root_path . 'cache/sql_' . $this->caching . '.php', 'w');
+		$data = var_export($this->cache, true);
+		@fputs($f, '<?php $set = ' . $data . '; ?>');
+		@fclose($f);
+		@chmod($phpbb_root_path . 'cache/sql_' . $this->caching . '.php', 0777);
+		$this->caching = false;
+		$this->cached = false;
+		$this->cache = array();
+	}
+
+  function clear_cache($prefix = '')
+  {
+    global $phpbb_root_path;
+    $this->caching = false;
+    $this->cached = false;
+    $this->cache = array();
+    $prefix = 'sql_' . $prefix;
+    $prefix_len = strlen($prefix);
+    if($res = opendir($phpbb_root_path . 'cache'))
+    {
+      while(($file = readdir($res)) !== false)
+      {
+        if(substr($file, 0, $prefix_len) === $prefix)
+        {
+          @unlink($phpbb_root_path . 'cache/' . $file);
+        }
+      }
+    }
+    @closedir($res);
+  }
 
 } // class sql_db
 
