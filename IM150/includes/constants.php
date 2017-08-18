@@ -296,4 +296,6 @@ define('DIGEST_TEXT', 0);
 define('CATEGORIES_HIERARCHY_INSTALLED', true);
 //-- fin mod : categories hierarchy ----------------------------------------------------------------
 
+define('THEMES_SELECT_INFO_TABLE', $table_prefix.'themes_select_info');
+
 ?>

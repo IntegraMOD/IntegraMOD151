@@ -33,8 +33,6 @@ $phpbb_root_path = "../";
 require($phpbb_root_path . 'extension.inc');
 require('./pagestart.' . $phpEx);
 
-define('THEMES_SELECT_INFO_TABLE', $table_prefix.'themes_select_info');
-
 if( isset($_GET['mode']) || isset($_POST['mode']) )
 {
 	$mode = ( isset($_GET['mode']) ) ? $_GET['mode'] : $_POST['mode'];
