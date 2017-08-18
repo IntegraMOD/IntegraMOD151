@@ -258,6 +258,7 @@ if (strcmp ($res, "VERIFIED") == 0) {
 			{
 				//do nothing
 			}	
+			$db->clear_cache('acct_hist');
 			fclose ($fp);
 			exit;
 		}
