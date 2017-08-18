@@ -54,6 +54,7 @@ if ( ($board_config['nextcron'] < $current_time) && $board_config['pseudocron'] 
 	{ 
 	//		message_die(GENERAL_ERROR, 'Error updating cron status', '', __LINE__, __FILE__, $sql); 
 	} 
+	$db->clear_cache('board_config');
 	include('./mail_digests.' . $phpEx);
 } 
 

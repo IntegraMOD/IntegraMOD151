@@ -656,12 +656,8 @@ class cash_table
 		$this->id_list = array();
 		
 		$sql = "SELECT * FROM " . CASH_TABLE . " ORDER BY cash_order ASC";
-		if ( !($result = $db->sql_query($sql)) )
+		if ( !($result = $db->sql_query($sql, false, "cash")) )
 		{
-			if ( defined('IN_ADMIN') )
-			{
-				message_die(GENERAL_ERROR, 'Error retrieving Cash Mod data<br /><br /><i>Please make sure that you have run <b>sql_install.php</b> from your browser</i>.', '', __LINE__, $sql);
-			}
 			message_die(GENERAL_ERROR, 'Error retrieving cash data', '', __LINE__, __FILE__, $sql);
 		}
 		while ( $row = $db->sql_fetchrow($result) )
@@ -671,6 +667,7 @@ class cash_table
 			$this->id_list[$cash_id] = true;
 			$this->currencies[$cash_id] = new cash_currency($row);
 		}
+		$db->sql_freeresult($result);
 	}
 	function refresh_table()
 	{

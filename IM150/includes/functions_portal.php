@@ -52,7 +52,7 @@ function portal_config_init(&$portal_config)
 
 	$portal_config = array();
 	$sql = "SELECT * FROM " . PORTAL_CONFIG_TABLE;
-	if( !($result = $db->sql_query($sql)) )
+	if( !($result = $db->sql_query($sql, false, 'portal_config')) )
 	{
 		message_die(CRITICAL_ERROR, "Could not query portal config table", "", __LINE__, __FILE__, $sql);
 	}
@@ -60,6 +60,7 @@ function portal_config_init(&$portal_config)
 	{
 		$portal_config[$row['config_name']] = $row['config_value'];
 	}
+	$db->sql_freeresult($result);
 }
 
 function block_config_init(&$block_config)

@@ -42,6 +42,11 @@ $template->assign_vars(array(
 $template->pparse('page_footer');
 
 //
+// Clear the whole cache.
+//
+$db->clear_cache('');
+
+//
 // Close our DB connection.
 //
 $db->sql_close();

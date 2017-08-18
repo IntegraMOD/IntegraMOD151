@@ -496,13 +496,16 @@
 		 #-> We have found, quite a few of us, that phpBB's ban system is weak. Instant bans are not always
 		 #-> instant, sometimes they can roam the site for a bit before getting the ban message, etc..
 		 #-> So lets fix that.
-		$q = "SELECT *
-			  FROM ". BANLIST_TABLE ."
-			  WHERE ban_ip = '". encode_ip(phpBBSecurity_IP()) ."'";
-		$r 		= $db->sql_query($q);
-		$match 	= $db->sql_fetchrow($r);
-		if ($match['ban_ip'])
-			return phpBBSecurity_Error('banned', 0);
+		$sql = "SELECT *
+			  FROM ". BANLIST_TABLE;
+		$result = $db->sql_query($sql, false, 'banlist_table');
+		$my_ip = encode_ip(phpBBSecurity_IP());
+		while ($row = $db->sql_fetchrow($result))
+		{
+			if ($row['ban_ip'] == $my_ip)
+				return phpBBSecurity_Error('banned', 0);
+		}
+		$db->sql_freeresult($result);
 		 	
 		#==== DDoS Prevention Help
 		#==== Since i once made a DDoS attacker, and made prevention help for it, it helps here.
@@ -1203,6 +1206,7 @@
 				  SET config_value = '". date('d') ."'
 				  WHERE config_name = 'phpBBSecurity_last_backup_date'";
 			$db->sql_query($q);
+			$db->clear_cache('board_config');
 			
 			$dest_user 	= intval(phpBBSecurity_OldestAdmin());
 			$msg_time 	= time();
@@ -1298,34 +1302,34 @@
 		else
 			return;
 		}
-		
+
 	function phpBBSecurity_Guests()
+	{
+		global $db, $board_config;
+
+		// V: only try to clear guests once in a while
+		$do_clear = rand(1, 20) == 20;
+
+		if ($board_config['phpBBSecurity_guest_matches'] > 0 && $do_clear)
 		{
-	global $db, $board_config;
-	
-		if ($board_config['phpBBSecurity_guest_matches'] > 0)
+			$q = "SELECT count(session_id) AS total, session_ip
+				FROM ". SESSIONS_TABLE ." 
+				WHERE session_user_id = '". ANONYMOUS ."'
+				GROUP BY session_ip
+				ORDER BY total DESC";
+			$r = $db->sql_query($q);
+			$rows = $db->sql_fetchrowset($r);
+
+			foreach ($rows as $row)
 			{
-		$q = "SELECT count(session_id) AS total, session_ip
-			  FROM ". SESSIONS_TABLE ." 
-			  WHERE session_user_id = '". ANONYMOUS ."'
-			  GROUP BY session_ip
-			  ORDER BY total DESC";
-		$r = $db->sql_query($q);
-		$rows = $db->sql_fetchrowset($r);
-		
-			for ($x = 0; $x < count($rows); $x++)
+				if ($row['total'] > $board_config['phpBBSecurity_guest_matches'])
 				{
-				if (!$rows[$x])
-					break;
-					
-				if ($rows[$x]['total'] > $board_config['phpBBSecurity_guest_matches'])
-					{
-				$q = "DELETE FROM ". SESSIONS_TABLE ."
-					  WHERE session_ip = '". $rows[$x]['session_ip'] ."'
-					  AND session_user_id = '". ANONYMOUS ."'";
-				$db->sql_query($q);
-					}
+					$q = "DELETE FROM ". SESSIONS_TABLE ."
+						WHERE session_ip = '". $row['session_ip'] ."'
+						AND session_user_id = '". ANONYMOUS ."'";
+					$db->sql_query($q);
 				}
 			}
 		}
+	}
 ?>

@@ -65,21 +65,20 @@ if(!function_exists(imp_style_select_block_func))
 				FROM ( " . THEMES_TABLE . "  t
 				LEFT JOIN " . THEMES_SELECT_INFO_TABLE . " tdi ON t.themes_id = tdi.themes_id )
 				WHERE t.themes_id = " . $style;
-		if( ($result = $db->sql_query($sql)) && ($row = $db->sql_fetchrow($result)) )
+		if( ($result = $db->sql_query($sql, false, "theme_info_{$style}_")))
 		{
-			$style_author = $row['style_author'];
-			$style_version = $row['style_version'];
-			$style_website = $row['style_website'];
-			//$style_views = ( !empty($row['style_views']) ) ? $row['style_views'] : '0&nbsp;';
-			$style_dlurl = $row['style_dlurl'];
-			$style_dls = ( !empty($row['style_dls']) ) ? $row['style_dls'] : '0';
-			$style_loaclurl = $row['style_loaclurl'];
-			$style_ludls = $row['style_ludls'];
-		}
-		else
-		{
-		//	$style_views = '&nbsp';
-		//	$style_dls = '&nbsp';
+			if ($row = $db->sql_fetchrow($result))
+			{
+				$style_author = $row['style_author'];
+				$style_version = $row['style_version'];
+				$style_website = $row['style_website'];
+				//$style_views = ( !empty($row['style_views']) ) ? $row['style_views'] : '0&nbsp;';
+				$style_dlurl = $row['style_dlurl'];
+				$style_dls = ( !empty($row['style_dls']) ) ? $row['style_dls'] : '0';
+				$style_loaclurl = $row['style_loaclurl'];
+				$style_ludls = $row['style_ludls'];
+			}
+			$db->sql_freeresult($result);
 		}
 		if(!empty($style_website))
 		{
@@ -128,7 +127,7 @@ if(!function_exists(imp_style_select_block_func))
 			FROM " . THEMES_TABLE . "
 			ORDER BY style_name";
 		
-		if(!$result = $db->sql_query($sql))
+		if(!$result = $db->sql_query($sql, false, 'themes'))
 		{
 			message_die(GENERAL_ERROR, "Could not get list of styles!", "", __LINE__, __FILE__, $sql);
 		}
@@ -139,6 +138,7 @@ if(!function_exists(imp_style_select_block_func))
 			$selected = ($row['themes_id'] == $style) ? " selected=\"selected\"" : "";
 			$select_theme .= "<option value=\"" . $row['themes_id'] . "\"$selected>" . $row['style_name'] . "</option>";
 		}
+		$db->sql_freeresult($result);
 		$select_theme .= "</select>\n";
 		$template->assign_vars(array(
 			'L_STYLE_SITENAME' => $board_config['sitename'],

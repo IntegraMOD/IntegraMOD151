@@ -169,7 +169,7 @@ function read_tree($force=false)
 	}
 	$sql = "SELECT f.forum_id AS forum_id_main, f.forum_last_post_id $sql_select
 				FROM ((" . FORUMS_TABLE . " f $sql_from";
-	if ( !$result = $db->sql_query($sql) )
+	if ( !$result = $db->sql_query($sql, false, "forum_sql") )
 	{
 		message_die(GENERAL_ERROR, 'Couldn\'t access list of last posts from forums', '', __LINE__, __FILE__, $sql);
 	}
@@ -192,6 +192,7 @@ function read_tree($force=false)
 			$u_access[ $row['forum_id_main'] ] = $row;
 		}
 	}
+	$db->sql_freeresult($result);
 
 	$userdata['user_forums_auth'] = $u_access;
 	$sql_last_posts = empty($s_last_posts) ? '' : " OR p.post_id IN ($s_last_posts)";

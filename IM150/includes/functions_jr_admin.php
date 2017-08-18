@@ -127,18 +127,20 @@ if (!function_exists('sql_query_nivisec'))
 			}
 			case false:
 			{
-				if (!$result = $db->sql_query($sql))
+				if (!$result = $db->sql_query($sql, false, 'nivisec_query'))
 				{
 					message_die(GENERAL_ERROR, $error, '', __LINE__, __FILE__, $sql);
 				}
 				if ($return_items != 1)
 				{
-					return ($db->sql_fetchrowset($result));
+					$ret = ($db->sql_fetchrowset($result));
 				}
 				else
 				{
-					return ($db->sql_fetchrow($result));
+					$ret = ($db->sql_fetchrow($result));
 				}
+				$db->sql_freeresult($result);
+				return $ret;
 			}
 			
 		}

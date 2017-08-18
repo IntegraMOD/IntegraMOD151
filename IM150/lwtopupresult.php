@@ -565,6 +565,7 @@ if (strcmp ($res, "VERIFIED") == 0) {
 		{
 			//do nothing
 		}
+		$db->clear_cache('acct_hist');
 }
 else if (strcmp ($res, "INVALID") == 0) {
 // log for manual investigation
@@ -573,6 +574,7 @@ else if (strcmp ($res, "INVALID") == 0) {
 	{
 		//do nothing
 	}
+	$db->clear_cache('acct_hist');
 
 }
 }

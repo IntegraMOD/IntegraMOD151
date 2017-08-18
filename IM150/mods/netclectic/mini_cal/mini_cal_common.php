@@ -104,7 +104,7 @@
 	              AND f.forum_id IN (' . $mini_cal_post_auth . ')' . 
 				  $and_post_auth_sql;
 			
-	       if( $result = $db->sql_query($sql) )
+	       if( $result = $db->sql_query($sql, false, 'forum_event_list') )
 		   {
 	           $num_rows = $db->sql_numrows($result);
 	           if ( $num_rows > 0 )
@@ -127,6 +127,7 @@
 	                    $forums_list .=  '<option value="' . $row['forum_id'] . '"' . $selected . '>  - ' . $row['forum_name'] . '</option>';
 	                    $cat_id = $row['cat_id'];
 	               }
+								 $db->sql_freeresult($result);
 	               $forums_list .= '<option value="-2"></option>';
 	               $forums_list .= '</select>';
 	               

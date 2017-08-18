@@ -172,7 +172,12 @@
                 0," . MINI_CAL_LIMIT;
     
         // did we get a result? 
-    	if( $result = $db->sql_query($sql) )
+			// V: added caching here.
+			// this means the cache will get bigger as days pass.
+			// this is why we have a rand(100) to clean - in case no one used the admin to clean it
+			// TODO add timed cache
+			if (rand(1, 100) == 100) $db->clear_cache('cal_mini');
+    	if( $result = $db->sql_query($sql, false, 'cal_mini') )
     	{
            $template->assign_block_vars('switch_mini_cal_events', array());
            if ( $db->sql_numrows($result) > 0 )

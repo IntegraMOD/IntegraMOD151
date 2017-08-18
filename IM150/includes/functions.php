@@ -2039,11 +2039,12 @@ function is_robot()
 	$sql = "SELECT bot_agent, bot_ip, bot_id, bot_visits, last_visit, bot_pages 
 	FROM " . BOTS_TABLE;
 
-	if ( !($result = $db->sql_query($sql)) )
+	if ( !($result = $db->sql_query($sql, false, 'bots')) )
 	{
 		message_die(GENERAL_ERROR, 'Could not obtain bot data.', '', __LINE__, __FILE__, $sql);
 	}
 
+	$update_bot = false;
 	// loop through bots table
 	while ($row = $db->sql_fetchrow($result))
 	{
@@ -2107,6 +2108,7 @@ function is_robot()
 			{
 				message_die(GENERAL_ERROR, 'Couldn\'t update data in bots table.', '', __LINE__, __FILE__, $sql);
 			}
+			$db->clear_cache('bots');
 
 			return true;
 
@@ -2154,10 +2156,14 @@ function is_robot()
 				{
 					message_die(GENERAL_ERROR, 'Couldn\'t update data in bots table.', '', __LINE__, __FILE__, $sql);
 				}
+				$update_bot = true;
 			}		
 		}
 
 	}
+	if ($update_bot)
+		$db->clear_cache('bots');
+	$db->sql_freeresult($result);
 
 	return false;
 }
@@ -2294,7 +2300,7 @@ function last_donors()
 	// Show All
 	$count = 0;
 	$sql = "SELECT COUNT(*) FROM " . ACCT_HIST_TABLE . " WHERE comment LIKE 'donate from%' GROUP BY user_id";
-	if ( !($result = $db->sql_query($sql)) )
+	if ( !($result = $db->sql_query($sql, false, 'acct_hist')) )
 	{
 		message_die(GENERAL_ERROR, 'Could not query forum donors information', '', __LINE__, __FILE__, $sql);
 	}
@@ -2302,6 +2308,7 @@ function last_donors()
 	{
 		$count = $row['COUNT(*)'];		
 	}
+	$db->sql_freeresult($result);
 	
 	$orderby = "ORDER BY date DESC";
 	$selectcolums = "MAX(a.lw_date) as date, SUM(a.lw_money) as lw_money, a.MNY_CURRENCY, u.*";
@@ -2315,7 +2322,7 @@ function last_donors()
 		
 	$sql = "SELECT $selectcolums from " . ACCT_HIST_TABLE . " a, " . USERS_TABLE . " u where a.comment like 'donate from%' AND u.user_id = a.user_id group by a.user_id"
 	 	.  " $orderby LIMIT $str_input";
-	if ( !($result = $db->sql_query($sql)) )
+	if ( !($result = $db->sql_query($sql, false, 'acct_hist_users')) )
 	{
 		message_die(GENERAL_ERROR, 'Could not query forum donors information', '', __LINE__, __FILE__, $sql);
 	}
@@ -2343,6 +2350,7 @@ function last_donors()
 			$last_donors .= '<b><a href="' . append_sid("profile.$phpEx?mode=viewprofile&amp;" . POST_USERS_URL . "=" . $row['user_id']) . '"' . $style_color .'>' . $row['username'] . '</a></b>(' . $row['MNY_CURRENCY'] . sprintf("%.2f", $row['lw_money']) . '), ';
 		}
 	}
+	$db->sql_freeresult($result);
 	if($count > $str_input)
 	{
 		$last_donors .= '<a href="' . append_sid("lwdonors.$phpEx?mode=viewall") . '"' . $style_color .'>' . $lang['LW_MORE_DONORS'] . '</a>';

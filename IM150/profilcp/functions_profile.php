@@ -199,14 +199,11 @@ if ( $is_called == FALSE )
 		global $db;
 
 		$sql = "SELECT * FROM " . RANKS_TABLE . " ORDER BY rank_special DESC, rank_min";
-		if ( !$result = $db->sql_query($sql) )
+		if ( !$result = $db->sql_query($sql, false, 'ranks') )
 		{
 			message_die(GENERAL_ERROR, 'Could not obtain ranks information.', '', __LINE__, __FILE__, $sql);
 		}
-		while ( $row = $db->sql_fetchrow($result) )
-		{
-			$ranks[] = $row;
-		}
+		$ranks = $db->sql_fetchrowset($result);
 		$db->sql_freeresult($result);
 
 		$rank_maxi = 99999999;

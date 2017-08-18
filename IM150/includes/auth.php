@@ -369,7 +369,7 @@ function auth($type, $forum_id, $userdata, $f_access = '')
 		$sql = "SELECT r.rank_id, r.rank_title  
 			FROM " . RANKS_TABLE . " r 
 			WHERE r.rank_id = " . $userdata['user_rank'];
-		if ( ($resultr = $db->sql_query($sql)) )
+		if ( ($resultr = $db->sql_query($sql, false, 'ranks')) )
 		{
 			if( $rowr = $db->sql_fetchrow($resultr) )
 			{
@@ -378,6 +378,7 @@ function auth($type, $forum_id, $userdata, $f_access = '')
 					$uservip = 1;
 				}
 			}	
+			$db->sql_freeresult($resultr);
 		}
 	}
 	//or is it a temp vip: within trial period

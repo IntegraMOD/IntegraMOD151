@@ -92,7 +92,7 @@ $db->sql_freeresult($result);
 // Gather an array of all the forums for this board
 //
 $sql = "SELECT * FROM " . FORUMS_TABLE;
-if ( !($result = $db->sql_query($sql)))
+if ( !($result = $db->sql_query($sql, false, 'forum_list')))
 {
 	$error_code = TRUE;
 	$error = $db->sql_error();

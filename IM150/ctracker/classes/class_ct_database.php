@@ -55,7 +55,7 @@ class ct_database
 		// Load CrackerTracker configuration from database
 		$sql = 'SELECT * FROM ' . CTRACKER_CONFIG;
 
-		if ( !($result = $db->sql_query($sql)) )
+		if ( !($result = $db->sql_query($sql, false, 'ctracker_config')) )
 		{
 			message_die(GENERAL_ERROR, $lang['ctracker_error_loading_config'], '', __LINE__, __FILE__, $sql);
 		}
@@ -65,6 +65,7 @@ class ct_database
 			$this->fieldnames_set[] = $row['ct_config_name'];
 			$this->settings[$row['ct_config_name']] = $row['ct_config_value'];
 		}
+		$db->sql_freeresult($result);
 	}
 
 
@@ -125,7 +126,7 @@ class ct_database
 		// Load CrackerTracker blocklist from database
 		$sql = 'SELECT * FROM ' . CTRACKER_IPBLOCKER . ' ORDER BY ct_blocker_value ASC';
 
-		if ( !($result = $db->sql_query($sql)) )
+		if ( !($result = $db->sql_query($sql, false, 'ctracker_ipblocker')) )
 		{
 			message_die(GENERAL_ERROR, $lang['ctracker_error_loading_blocklist'], '', __LINE__, __FILE__, $sql);
 		}
@@ -143,6 +144,7 @@ class ct_database
 				$this->blocklist_id[] = $row['id'];
 			}
 		}
+		$db->sql_freeresult($result);
 
 		// How much entrys do we have?
 		$this->blocklist_count = count($this->blocklist);

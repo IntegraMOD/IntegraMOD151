@@ -250,7 +250,7 @@ include($phpbb_root_path . 'ctracker/engines/ct_ipblocker.' . $phpEx);
 //
 $sql = "SELECT *
 	FROM " . CONFIG_TABLE;
-if( !($result = $db->sql_query($sql)) )
+if( !($result = $db->sql_query($sql, false, 'board_config')) )
 {
 message_die(CRITICAL_ERROR, "Could not query config information", "", __LINE__, __FILE__, $sql);
 }
@@ -259,6 +259,7 @@ while ( $row = $db->sql_fetchrow($result) )
 {
 	$board_config[$row['config_name']] = $row['config_value'];
 }
+$db->sql_freeresult($result);
 if ($board_config['summer_time'] != date('I') && $board_config['summer_time_auto']) 
 { 
 	$board_config['summer_time'] = date('I'); 
@@ -326,12 +327,13 @@ if (!empty ($language))
 
 ///added by crxgames to optimize the Integramod Beast
 	$sql = 'SELECT * FROM ' . ACRONYMS_TABLE;
-	if( !$result = $db->sql_query($sql) )
+	if( !$result = $db->sql_query($sql, false, 'acronyms') )
 	{
 		message_die(GENERAL_ERROR, "Couldn't obtain acronyms data", "", __LINE__, __FILE__, $sql);
 	}
 			
 	$_acronyms = $db->sql_fetchrowset($result);
+	$db->sql_freeresult($result);
 
 //-- mod : today at   yesterday at ------------------------------------------------------------------------ 
 //-- add 
