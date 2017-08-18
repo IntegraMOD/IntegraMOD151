@@ -2388,12 +2388,7 @@ function user2boardtime(&$usertime){
 function board2usertime(&$usertime){ 
 	global $board_config, $db, $userdata; 
 	if(!isset($board_config['real_board_timezone'])){
-		$sql = "select config_value from ".CONFIG_TABLE." where config_name = 'board_timezone'"; 
-		if(!$result = $db->sql_query($sql) ) { 
-				message_die(GENERAL_ERROR, 'Could not retrieve board_timezone', '', __LINE__, __FILE__, $sql); 
-		} 
-		$row = $db->sql_fetchrow($result); 
-		$board_config['real_board_timezone'] = $row['config_value'];
+		$board_config['real_board_timezone'] = $board_config['board_timezone'];
 	}
 	$zonediff = $board_config['board_timezone'] - $board_config['real_board_timezone']; 
 	$usersummer = 0;
