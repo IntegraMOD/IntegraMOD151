@@ -1907,22 +1907,26 @@ else
 
 	//
 	// Update unread status 
+	// ... but only if we have new privmsgs.
 	//
-	$sql = "UPDATE " . USERS_TABLE . "
-		SET user_unread_privmsg = user_unread_privmsg + user_new_privmsg, user_new_privmsg = 0, user_last_privmsg = " . $userdata['session_start'] . " 
-		WHERE user_id = " . $userdata['user_id'];
-	if ( !$db->sql_query($sql) )
+	if ($userdata['user_new_privmsg'] != 0)
 	{
-		message_die(GENERAL_ERROR, 'Could not update private message new/read status for user', '', __LINE__, __FILE__, $sql);
-	}
+		$sql = "UPDATE " . USERS_TABLE . "
+			SET user_unread_privmsg = user_unread_privmsg + user_new_privmsg, user_new_privmsg = 0, user_last_privmsg = " . $userdata['session_start'] . " 
+			WHERE user_id = " . $userdata['user_id'];
+		if ( !$db->sql_query($sql) )
+		{
+			message_die(GENERAL_ERROR, 'Could not update private message new/read status for user', '', __LINE__, __FILE__, $sql);
+		}
 
-	$sql = "UPDATE " . PRIVMSGS_TABLE . "
-		SET privmsgs_type = " . PRIVMSGS_UNREAD_MAIL . " 
-		WHERE privmsgs_type = " . PRIVMSGS_NEW_MAIL . " 
-			AND privmsgs_to_userid = " . $userdata['user_id'];
-	if ( !$db->sql_query($sql) )
-	{
-		message_die(GENERAL_ERROR, 'Could not update private message new/read status (2) for user', '', __LINE__, __FILE__, $sql);
+		$sql = "UPDATE " . PRIVMSGS_TABLE . "
+			SET privmsgs_type = " . PRIVMSGS_UNREAD_MAIL . " 
+			WHERE privmsgs_type = " . PRIVMSGS_NEW_MAIL . " 
+				AND privmsgs_to_userid = " . $userdata['user_id'];
+		if ( !$db->sql_query($sql) )
+		{
+			message_die(GENERAL_ERROR, 'Could not update private message new/read status (2) for user', '', __LINE__, __FILE__, $sql);
+		}
 	}
 
 	//
@@ -2049,12 +2053,19 @@ else
 
 	$pm_total = ( $row = $db->sql_fetchrow($result) ) ? $row['total'] : 0;
 
-	if ( !($result = $db->sql_query($sql_all_tot)) )
+	if ($limit_msg_time_total != '')
 	{
-		message_die(GENERAL_ERROR, 'Could not query private message information', '', __LINE__, __FILE__, $sql_tot);
-	}
+		if ( !($result = $db->sql_query($sql_all_tot)) )
+		{
+			message_die(GENERAL_ERROR, 'Could not query private message information', '', __LINE__, __FILE__, $sql_tot);
+		}
 
-	$pm_all_total = ( $row = $db->sql_fetchrow($result) ) ? $row['total'] : 0;
+		$pm_all_total = ( $row = $db->sql_fetchrow($result) ) ? $row['total'] : 0;
+	}
+	else
+	{
+		$pm_all_total = $pm_total;
+	}
 
 	//
 	// Build select box
