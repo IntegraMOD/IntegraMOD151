@@ -723,7 +723,7 @@ if ($mode == 'shadow')
 	// Go through all Files on the filespace and see if all are stored within the DB
 	for ($i = 0; $i < count($file_attachments); $i++)
 	{
-		if (count($table_attachments['attach_id']) > 0)
+		if (count_safe($table_attachments['attach_id']) > 0)
 		{
 			if ($file_attachments[$i] != '')
 			{
@@ -747,7 +747,7 @@ if ($mode == 'shadow')
 	}
 
 	// Go through the Database and get those Files not stored at the Filespace
-	for ($i = 0; $i < count($table_attachments['attach_id']); $i++)
+	for ($i = 0; $i < count_safe($table_attachments['attach_id']); $i++)
 	{
 		if ($table_attachments['physical_filename'][$i] != '')
 		{
@@ -766,7 +766,7 @@ if ($mode == 'shadow')
 	}
 
 	// Now look at the missing posts and PM's
-	for ($i = 0; $i < count($table_attachments['attach_id']); $i++)
+	for ($i = 0; $i < count_safe($table_attachments['attach_id']); $i++)
 	{
 		if ($table_attachments['attach_id'][$i])
 		{
@@ -800,7 +800,7 @@ if ($mode == 'shadow')
 		);
 	}
 
-	for ($i = 0; $i < count($shadow_row['attach_id']); $i++)
+	for ($i = 0; $i < count_safe($shadow_row['attach_id']); $i++)
 	{
 		$template->assign_block_vars('table_shadow_row', array(
 			'ATTACH_ID' => $shadow_row['attach_id'][$i],

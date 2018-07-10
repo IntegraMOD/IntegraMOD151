@@ -301,7 +301,7 @@
 	
 	$template->assign_vars(array(
 		'U_MINI_CAL_CALENDAR' => append_sid($phpbb_root_path . 'calendar.' . $phpEx),
-		'U_MINI_CAL_ADD_EVENT' => append_sid($phpbb_root_path . 'posting.' . $phpEx . '?mode=newtopic&f=' . MINI_CAL_EVENTS_FORUM )
+		'U_MINI_CAL_ADD_EVENT' => append_sid($phpbb_root_path . 'posting.' . $phpEx . '?mode=newtopic&f=' . 'MINI_CAL_EVENTS_FORUM' ) // V: doesn't seem to be a constant
         )
     );    
     

@@ -1518,8 +1518,10 @@ class Template {
 					$line .= "\n" . 'for ($'. $var. '_i = 0; $'. $var. '_i < $'. $var. '_count; $'. $var. '_i++)';
 					$line .= "\n". '{'. "\n";
 					$line .= ' $'. $var. '_item = &$this->_tpldata[\''. $var. '.\'][$'. $var. '_i];'."\n";
-					$line .= " \${$var}_item['S_ROW_COUNT'] = \${$var}_i;\n";
-					$line .= " \${$var}_item['S_NUM_ROWS'] = \${$var}_count;\n";
+          $line .= " if (is_array(\${$var}_item))\n {\n";
+					$line .= "  \${$var}_item['S_ROW_COUNT'] = \${$var}_i;\n";
+					$line .= "  \${$var}_item['S_NUM_ROWS'] = \${$var}_count;\n";
+          $line .= " }\n";
 					$line .= "\n?".">";
 				}
 				else
@@ -1545,8 +1547,10 @@ class Template {
 					$line .= "\n". 'for ($'. $var. '_i = 0; $'. $var. '_i < $'. $var. '_count; $'. $var. '_i++)';
 					$line .= "\n". '{'. "\n";
 					$line .= ' $'. $var. '_item = &'. $varref. '[$'. $var. '_i];'."\n";
-					$line .= " \${$var}_item['S_ROW_COUNT'] = \${$var}_i;\n";
-					$line .= " \${$var}_item['S_NUM_ROWS'] = \${$var}_count;\n";
+          $line .= " if (is_array(\${$var}_item))\n {\n";
+					$line .= "  \${$var}_item['S_ROW_COUNT'] = \${$var}_i;\n";
+					$line .= "  \${$var}_item['S_NUM_ROWS'] = \${$var}_count;\n";
+          $line .= " }\n";
 					$line .= "\n?".">";
 				}
 				$compiled[] = $line;

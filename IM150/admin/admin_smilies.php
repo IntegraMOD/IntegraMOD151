@@ -97,7 +97,7 @@ while($file = @readdir($dir))
 		{
 			$smiley_images[] = $file;
 		}
-		else if( eregi('.pak$', $file) )
+		else if( preg_match('/.pak$/', $file) )
 		{	
 			$smiley_paks[] = $file;
 		}

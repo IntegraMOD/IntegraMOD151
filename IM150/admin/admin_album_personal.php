@@ -92,7 +92,7 @@ if( !isset($_POST['submit']) )
 
 	$moderator_groups = @explode(',', $thiscat['cat_moderator_groups']);
 
-	for($i = 0; $i < count($groupdata); $i++)
+	for($i = 0; $i < count_safe($groupdata); $i++)
 	{
 		$template->assign_block_vars('creation_grouprow', array(
 			'GROUP_ID' => $groupdata[$i]['group_id'],

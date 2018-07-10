@@ -42,9 +42,9 @@ include($phpbb_root_path . 'includes/bbcode.'.$phpEx);
 include($phpbb_root_path . 'includes/emailer.'.$phpEx);
 include($phpbb_root_path . 'language/lang_' . $board_config['default_lang'] . '/lang_rule.' . $phpEx); 
 
-if ( !isset( $_GET[mode] ) || $_GET[mode] =="" ) $_GET[mode] = "modify";
+if ( !isset( $_GET['mode'] ) || $_GET['mode'] =="" ) $_GET['mode'] = "modify";
 
-switch ($_GET[mode]) {
+switch ($_GET['mode']) {
    
 
 	case "save":

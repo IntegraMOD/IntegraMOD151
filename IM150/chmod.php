@@ -833,8 +833,8 @@ $aftermodcheck = $filenumber;
 $nofilechmod = "---";
 $prereport = "";
 $afterreport = "";
-$predifference = "";
-$afterdifference = "";
+$predifference = [];
+$afterdifference = [];
 
   foreach($preinstall_list as $path => $mod)
   {

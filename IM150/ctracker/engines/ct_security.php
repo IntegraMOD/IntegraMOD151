@@ -238,7 +238,7 @@ else
 	  $ct_attack_detection = true;
 	  ct_debugger($crackcheck, 'RAWGET');
   }
-  elseif ( CT_SECLEVEL != 'LOW' || !defined('CT_SECLEVEL') )
+  elseif ( !defined('CT_SECLEVEL') || CT_SECLEVEL != 'LOW'  )
   {
     // We create a copy of the $_POST for checking
     $checkpost = ( is_array($_POST) ) ? $_POST : array();

@@ -32,7 +32,10 @@ $mtime = $mtime[1] + $mtime[0];
 $starttime = $mtime;
 
 error_reporting  (E_ERROR | E_WARNING | E_PARSE); // This will NOT report uninitialized variables
-set_magic_quotes_runtime(0); // Disable magic_quotes_runtime
+if (function_exists('set_magic_quotes_runtime'))
+{
+  set_magic_quotes_runtime(0); // Disable magic_quotes_runtime
+}
 date_default_timezone_set(@date_default_timezone_get());
 
 // The following code (unsetting globals)
@@ -340,8 +343,8 @@ if (!empty ($language))
 // 
 // PARSE DATEFORMAT TO GET TIME FORMAT 
 // 
-$time_reg = '([gh][[:punct:][:space:]]{1,2}[i][[:punct:][:space:]]{0,2}[a]?[[:punct:][:space:]]{0,2}[S]?)'; 
-eregi($time_reg, $board_config['default_dateformat'], $regs); 
+$time_reg = '/([gh][[:punct:][:space:]]{1,2}[i][[:punct:][:space:]]{0,2}[a]?[[:punct:][:space:]]{0,2}[S]?)/i'; 
+preg_match($time_reg, $board_config['default_dateformat'], $regs); 
 $board_config['default_timeformat'] = $regs[1]; 
 unset($time_reg); 
 unset($regs); 

@@ -221,7 +221,8 @@ function qbar_init_tree_list($cur='Root', $level = 0)
 	$qbar_maps['default_tree']['fields'][$cur] = $row;
 
 	// get the sub-levels
-	for ($i = 0; $i < count($tree['sub'][$cur]); $i++ )
+  $tree_count = $tree['sub'][$cur] ? count($tree['sub'][$cur]) : 0;
+  for ($i=0; $i < $tree_count; $i++)
 	{
 		qbar_init_tree_list( $tree['sub'][$cur][$i], ($level+1) );
 	}
@@ -298,7 +299,7 @@ function qbar_display_qbars($display=false)
 	$unread_pms = intval($userdata['user_unread_privmsg']);
 
 	// is categories hierarchy v 2 installed ?
-	$cat_hierarchy = function_exists(get_auth_keys);
+	$cat_hierarchy = function_exists('get_auth_keys');
 
 	// get the style used
 	$style = $theme['themes_id'];
@@ -488,7 +489,7 @@ function qbar_display_qbars($display=false)
 	{
 		if ($obj == 0)
 		{
-			$obj_count = count($qbars['fields']);
+			$obj_count = $qbars['fields'] ? count($qbars['fields']) : 0;
 			if($obj_count){
 				$template->set_filenames(array(
 					'_qbars' => 'qbar_qbars.tpl')
@@ -695,7 +696,7 @@ function qbar_display_qbars($display=false)
 		// send it to main template
 		if ($obj == 0)
 		{
-			if (count($qbars['fields']) > 0)
+			if ($qbars['fields'] && count($qbars['fields']) > 0)
 			{
 				$template->assign_var_from_handle('QBARS', '_qbars');
 			}

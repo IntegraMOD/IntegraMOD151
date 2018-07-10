@@ -132,7 +132,7 @@ if ($mode=='delete')
 //
 
 // is categories hierarchy v 2 installed ?
-$cat_hierarchy = function_exists(get_auth_keys);
+$cat_hierarchy = function_exists('get_auth_keys');
 
 // get the array of sub-templates for a specific main template, and the board front end display
 if ( in_array( $mode, array('stpl', 'edit', 'delete') ) )

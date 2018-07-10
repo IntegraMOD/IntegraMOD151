@@ -517,7 +517,8 @@ function get_auth_keys($cur='Root', $all=false, $level=-1, $max=-1, $auth_key='a
 			$keys['idx'][$last_i]			= (isset($tree['keys'][$cur]) ? $tree['keys'][$cur] : -1);
 
 			// get sub-levels
-			for ($i=0; $i < count($tree['sub'][$cur]); $i++)
+      $tree_count = $tree['sub'][$cur] ? count($tree['sub'][$cur]) : 0;
+			for ($i=0; $i < $tree_count; $i++)
 			{
 				$tkeys = array();
 				$tkeys = get_auth_keys($tree['sub'][$cur][$i], $all, $orig_level+1, $max, $auth_key, $align_level);
@@ -857,7 +858,7 @@ function build_index($cur='Root', $cat_break=false, &$forum_moderators, $real_le
 			$moderator_list = '';
 			if ($type == POST_FORUM_URL)
 			{
-				if ( count($forum_moderators[$id]) > 0 )
+				if ( $forum_moderators[$id] && count($forum_moderators[$id]) > 0 )
 				{
 					$l_moderators = ( count($forum_moderators[$id]) == 1 ) ? $lang['Moderator'] : $lang['Moderators'];
 					$moderator_list = implode(', ', $forum_moderators[$id]);
@@ -1038,7 +1039,8 @@ function build_index($cur='Root', $cat_break=false, &$forum_moderators, $real_le
 	}
 
 	// display sub-levels
-	for ($i=0; $i < count($tree['sub'][$cur]); $i++) if (!empty($keys['keys'][$tree['sub'][$cur][$i]]))
+  $tree_count = $tree['sub'][$cur] ? count($tree['sub'][$cur]) : 0;
+	for ($i=0; $i < $tree_count; $i++) if (!empty($keys['keys'][$tree['sub'][$cur][$i]]))
 	{
 		$wdisplay = build_index($tree['sub'][$cur][$i], $cat_break, $forum_moderators, $level+1, $max_level, $keys);
 		if ($wdisplay) $display = true;

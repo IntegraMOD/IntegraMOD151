@@ -268,7 +268,7 @@ function is_output_map($var){
 	global $profil_map, $register_map, $ignore_map_string;
 	// remove ignore
 	if (substr($var,0,strlen($profil_map)) != $profil_map && substr($var,0,strlen($register_map)) != $register_map && substr($var,-strlen($ignore_map_string)) != $ignore_map_string){
-		if (count($user_maps[$var]['fields'])){
+		if (count_safe($user_maps[$var]['fields'])){
 			return 1;
 		}
 	}
@@ -1672,7 +1672,7 @@ function pageimportupdate(){
 	pageimport();
 }
 
-if (!function_exists(pcp_sort_usermaps)) {
+if (!function_exists('pcp_sort_usermaps')) {
 	function pcp_sort_usermaps($user_maps) {
 		// taken from admin_pcp_usermaps.php
 		// working array
@@ -1747,7 +1747,7 @@ if (!function_exists(pcp_sort_usermaps)) {
 	}
 }
 
-if (!function_exists(pcp_affect_order)) {
+if (!function_exists('pcp_affect_order')) {
 	function pcp_affect_order(&$maps) {
 		// taken from admin_pcp_usermaps.php
 		$stack = array();

@@ -23,7 +23,7 @@ if ( !defined('IN_PHPBB') )
 	die("Hacking attempt");
 }
 
-if(!function_exists(imp_shoutbox_block_func))
+if(!function_exists('imp_shoutbox_block_func'))
 {
 	function imp_shoutbox_block_func()
 	{

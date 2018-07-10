@@ -50,6 +50,15 @@ include_once( $phpbb_root_path . './includes/functions_cache.' . $phpEx);
 include_once( $phpbb_root_path . './includes/functions_categories_hierarchy.' . $phpEx );
 //-- fin mod : categories hierarchy ----------------------------------------------------------------
 
+/**
+ * A count function that's null-safe.
+ * Added for migration of Integramod to PHP7.
+ */
+function count_safe($o)
+{
+  return $o ? count($o) : 0;
+}
+
 //-- mod : post icon -------------------------------------------------------------------------------
 //-- add
 function get_icon_title($icon, $empty=0, $topic_type=-1, $admin=false)
@@ -903,7 +912,7 @@ function init_userprefs($userdata)
 	// BEGIN Style Select MOD
 	
 	// Security update 02 September 2006 B starts// 
-	if ( (int)isset($_POST[STYLE_URL]) || (int)isset($_GET[STYLE_URL]) ) 
+	if ( (int)isset($_POST['STYLE_URL']) || (int)isset($_GET['STYLE_URL']) ) 
 	{
 		(int)$style = urldecode( (isset($_POST[STYLE_URL])) ? $_POST[STYLE_URL] : (int)$_GET[STYLE_URL] );
 		if($style == 0) { die('Hacking attempt'); }

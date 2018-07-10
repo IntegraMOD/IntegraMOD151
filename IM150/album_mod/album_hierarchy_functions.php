@@ -184,7 +184,7 @@ function album_display_admin_index($cur = ALBUM_ROOT_CATEGORY, $level = 0, $max_
 	} // if we are above the root level
 
 	// display the sub-level
-	for ($i = 0; $i < count($album_data['sub'][$cur]); $i++)
+	for ($i = 0; $i < count_safe($album_data['sub'][$cur]); $i++)
 	{
 		$column_offset = album_display_admin_index($album_data['sub'][$cur][$i], $level + 1, $max_level, $column_offset);
 	}

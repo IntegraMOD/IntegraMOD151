@@ -118,7 +118,7 @@ while ( list($map_name, $map_data) = @each($user_maps) )
 //		mods_settings_check_datefmt() : check and format the datefmt fields value
 //
 //-------------------------------------------
-if (!function_exists(mods_settings_get_datefmt))
+if (!function_exists('mods_settings_get_datefmt'))
 {
 	function mods_settings_get_datefmt($field, $value)
 	{
@@ -155,7 +155,7 @@ if (!function_exists(mods_settings_get_datefmt))
 	}
 }
 
-if (!function_exists(mods_settings_check_datefmt))
+if (!function_exists('mods_settings_check_datefmt'))
 {
 	function mods_settings_check_datefmt($field, $value)
 	{
@@ -174,7 +174,7 @@ if (!function_exists(mods_settings_check_datefmt))
 //		mods_settings_check_url() : check and format the url fields value
 //
 //-------------------------------------------
-if (!function_exists(mods_settings_get_url))
+if (!function_exists('mods_settings_get_url'))
 {
 	function mods_settings_get_url($field, $value)
 	{
@@ -186,7 +186,7 @@ if (!function_exists(mods_settings_get_url))
 	}
 }
 
-if (!function_exists(mods_settings_check_url))
+if (!function_exists('mods_settings_check_url'))
 {
 	function mods_settings_check_url($field, $value)
 	{
@@ -219,7 +219,7 @@ if (!function_exists(mods_settings_check_url))
 //		mods_settings_check_birthday() : check and format the birthday fields value
 //
 //-------------------------------------------
-if (!function_exists(mods_settings_get_birthday))
+if (!function_exists('mods_settings_get_birthday'))
 {
 	function mods_settings_get_birthday($field, $value)
 	{
@@ -280,7 +280,7 @@ if (!function_exists(mods_settings_get_birthday))
 	}
 }
 
-if (!function_exists(mods_settings_check_birthday))
+if (!function_exists('mods_settings_check_birthday'))
 {
 	function mods_settings_check_birthday($field, $value)
 	{
@@ -316,7 +316,7 @@ if (!function_exists(mods_settings_check_birthday))
 //		mods_settings_check_icq() : check and format the icq fields value
 //
 //-------------------------------------------
-if (!function_exists(mods_settings_get_icq))
+if (!function_exists('mods_settings_get_icq'))
 {
 	function mods_settings_get_icq($field, $value)
 	{
@@ -328,7 +328,7 @@ if (!function_exists(mods_settings_get_icq))
 	}
 }
 
-if (!function_exists(mods_settings_check_icq))
+if (!function_exists('mods_settings_check_icq'))
 {
 	function mods_settings_check_icq($field, $value)
 	{
@@ -353,7 +353,7 @@ if (!function_exists(mods_settings_check_icq))
 //		mods_settings_check_messenger() : check and format the messengers fields value
 //
 //-------------------------------------------
-if (!function_exists(mods_settings_get_messenger))
+if (!function_exists('mods_settings_get_messenger'))
 {
 	function mods_settings_get_messenger($field, $value)
 	{
@@ -365,7 +365,7 @@ if (!function_exists(mods_settings_get_messenger))
 	}
 }
 
-if (!function_exists(mods_settings_check_messenger))
+if (!function_exists('mods_settings_check_messenger'))
 {
 	function mods_settings_check_messenger($field, $value)
 	{
@@ -384,7 +384,7 @@ if (!function_exists(mods_settings_check_messenger))
 //		mods_settings_check_msnm() : check and format the MSNM fields value
 //
 //-------------------------------------------
-if (!function_exists(mods_settings_get_msnm))
+if (!function_exists('mods_settings_get_msnm'))
 {
 	function mods_settings_get_msnm($field, $value)
 	{
@@ -396,7 +396,7 @@ if (!function_exists(mods_settings_get_msnm))
 	}
 }
 
-if (!function_exists(mods_settings_check_msnm))
+if (!function_exists('mods_settings_check_msnm'))
 {
 	function mods_settings_check_msnm($field, $value)
 	{
@@ -442,7 +442,7 @@ if (!function_exists(mods_settings_check_msnm))
 //		mods_settings_check_delete_user() : perform the delete
 //
 //-------------------------------------------
-if (!function_exists(mods_settings_get_delete_user))
+if (!function_exists('mods_settings_get_delete_user'))
 {
 	function mods_settings_get_delete_user($field, $value)
 	{
@@ -454,7 +454,7 @@ if (!function_exists(mods_settings_get_delete_user))
 	}
 }
 
-if (!function_exists(mods_settings_check_delete_user))
+if (!function_exists('mods_settings_check_delete_user'))
 {
 	function mods_settings_check_delete_user($field, $value)
 	{
@@ -660,7 +660,7 @@ if (!function_exists(mods_settings_check_delete_user))
 		return '';
 	}
 }
-if (!function_exists(mods_get_username))
+if (!function_exists('mods_get_username'))
 {
 	function mods_get_username($field, $value)
 	{
@@ -679,7 +679,7 @@ if (!function_exists(mods_get_username))
 	}
 }
 
-if (!function_exists(mods_check_username))
+if (!function_exists('mods_check_username'))
 {
 	function mods_check_username($field, $value)
 	{
@@ -705,7 +705,7 @@ if (!function_exists(mods_check_username))
 	}
 }
 
-if (!function_exists(mods_get_email))
+if (!function_exists('mods_get_email'))
 {
 	function mods_get_email($field, $value)
 	{
@@ -734,7 +734,7 @@ if (!function_exists(mods_get_email))
 	}
 }
 
-if (!function_exists(mods_check_email))
+if (!function_exists('mods_check_email'))
 {
 	function mods_check_email($field, $value)
 	{
@@ -758,7 +758,7 @@ if (!function_exists(mods_check_email))
 	}
 }
 
-if (!function_exists(mods_get_email_confirm))
+if (!function_exists('mods_get_email_confirm'))
 {
 	function mods_get_email_confirm($field, $value)
 	{
@@ -776,7 +776,7 @@ if (!function_exists(mods_get_email_confirm))
 	}
 }
 
-if (!function_exists(mods_check_email_confirm))
+if (!function_exists('mods_check_email_confirm'))
 {
 	function mods_check_email_confirm($field, $value)
 	{
@@ -794,7 +794,7 @@ if (!function_exists(mods_check_email_confirm))
 	}
 }
 
-if (!function_exists(mods_get_confirm_code))
+if (!function_exists('mods_get_confirm_code'))
 {
     function mods_get_confirm_code($field, $value)
     {
@@ -878,7 +878,7 @@ if (!function_exists(mods_get_confirm_code))
 	}
 }
 
-if (!function_exists(mods_check_confirm_code))
+if (!function_exists('mods_check_confirm_code'))
 {
 	function mods_check_confirm_code($field, $value)
 	{
@@ -939,7 +939,7 @@ if (!function_exists(mods_check_confirm_code))
 	}
 }
 
-if (!function_exists(mods_get_password)) 
+if (!function_exists('mods_get_password')) 
 { 
     function mods_get_password($field, $value) 
     { 
@@ -958,7 +958,7 @@ if (!function_exists(mods_get_password))
     } 
 }
 
-if (!function_exists(mods_check_password))
+if (!function_exists('mods_check_password'))
 {
 	function mods_check_password($field, $value)
 	{
@@ -1057,7 +1057,7 @@ if (!function_exists(mods_check_password))
 	}
 }
 
-if (!function_exists(mods_check_password_confirm))
+if (!function_exists('mods_check_password_confirm'))
 {
 	function mods_check_password_confirm($field, $value)
 	{
@@ -1077,7 +1077,7 @@ if (!function_exists(mods_check_password_confirm))
 	}
 }
 
-if (!function_exists(mods_get_user_rules)) 
+if (!function_exists('mods_get_user_rules')) 
 { 
     function mods_get_user_rules($field, $value) 
     { 
@@ -1106,7 +1106,7 @@ if (!function_exists(mods_get_user_rules))
     } 
 }
 
-if (!function_exists(mods_check_user_rules))
+if (!function_exists('mods_check_user_rules'))
 {
 	function mods_check_user_rules($field, $value)
 	{
@@ -1118,7 +1118,7 @@ if (!function_exists(mods_check_user_rules))
 	}
 }
 
-if (!function_exists(mods_get_phpBBSecurity_question)) 
+if (!function_exists('mods_get_phpBBSecurity_question')) 
 { 
     function mods_get_phpBBSecurity_question($field, $value) 
     { 
@@ -1134,7 +1134,7 @@ if (!function_exists(mods_get_phpBBSecurity_question))
     } 
 } 
 
-if (!function_exists(mods_check_phpBBSecurity_question)) 
+if (!function_exists('mods_check_phpBBSecurity_question')) 
 { 
     function mods_check_phpBBSecurity_question($field, $value) 
     { 
@@ -1142,7 +1142,7 @@ if (!function_exists(mods_check_phpBBSecurity_question))
     } 
 } 
 
-if (!function_exists(mods_get_phpBBSecurity_answer)) 
+if (!function_exists('mods_get_phpBBSecurity_answer')) 
 { 
     function mods_get_phpBBSecurity_answer($field, $value) 
     { 
@@ -1160,7 +1160,7 @@ if (!function_exists(mods_get_phpBBSecurity_answer))
     } 
 } 
 
-if (!function_exists(mods_check_phpBBSecurity_answer)) 
+if (!function_exists('mods_check_phpBBSecurity_answer')) 
 { 
     function mods_check_phpBBSecurity_answer($field, $value) 
     { 
@@ -1174,7 +1174,7 @@ if (!function_exists(mods_check_phpBBSecurity_answer))
     } 
 }
 
-if (!function_exists(mods_get_security_option)) 
+if (!function_exists('mods_get_security_option')) 
 { 
     function mods_get_security_option($field, $value) 
     { 
@@ -1183,7 +1183,7 @@ if (!function_exists(mods_get_security_option))
     } 
 } 
 
-if (!function_exists(mods_check_force_security)) 
+if (!function_exists('mods_check_force_security')) 
 { 
     function mods_check_force_security($field, $value) 
     { 
@@ -1198,7 +1198,7 @@ if (!function_exists(mods_check_force_security))
     } 
 }
 
-if (!function_exists(mods_check_reset_security)) 
+if (!function_exists('mods_check_reset_security')) 
 { 
     function mods_check_reset_security($field, $value) 
     { 
@@ -1212,7 +1212,7 @@ if (!function_exists(mods_check_reset_security))
       return $value; 
     } 
 }
-if (!function_exists(mods_check_clear_security)) 
+if (!function_exists('mods_check_clear_security')) 
 { 
     function mods_check_clear_security($field, $value) 
     { 

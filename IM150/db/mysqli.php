@@ -246,20 +246,13 @@ if(!defined("SQL_LAYER"))
 
 			if( $query_id )
 			{
-
+        $result = [];
 				while($this->rowset[$query_id] = @mysqli_fetch_array($query_id, MYSQLI_ASSOC))
 				{
 					$result[] = $this->rowset[$query_id];
 				}
 
-				if (isset($result))
-				{
-					return $result;
-				}
-				else
-				{
-					return false;
-				} 
+        return $result;
 			}
 			else
 			{
@@ -293,7 +286,14 @@ if(!defined("SQL_LAYER"))
 			{
 				if( $rownum > -1 )
 				{
-					$result = @mysqlx_result($query_id, $rownum, $field);
+          // V TODO: this probably (definitely...) doesn't work with cached results!
+          mysqli_data_seek($query_id, $rownum);
+          $resrow = (is_numeric($col)) ? mysqli_fetch_row($query_id) : mysqli_fetch_assoc($query_id);
+          if (isset($resrow[$field])){
+            return $resrow[$field];
+          } else {
+            return false;
+          }
 				}
 				else
 				{

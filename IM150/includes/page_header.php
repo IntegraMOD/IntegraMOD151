@@ -650,7 +650,7 @@ while( list($nav_item, $nav_array) = @each($nav_links) )
 //--------------------------------------------------------------------------------
 // HTTP Referers 
 //
-if ($_SERVER['HTTP_REFERER'] && !eregi($_SERVER['HTTP_HOST'] . $board_config['script_path'], $_SERVER['HTTP_REFERER'])) 
+if ($_SERVER['HTTP_REFERER'] && false === stripos($_SERVER['HTTP_REFERER'], $_SERVER['HTTP_HOST'] . $board_config['script_path'])) 
 {
 	$referer_url = $_SERVER['HTTP_REFERER'];
 	$referer_host = substr($referer_url, strpos($referer_url, "//") + 2);

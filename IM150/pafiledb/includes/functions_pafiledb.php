@@ -631,7 +631,7 @@ class pafiledb
 	{
 		$auth_user = 0;
 
-		if ( count($u_access) )
+		if ( count_safe($u_access) )
 		{
 			for($j = 0; $j < count($u_access); $j++)
 			{

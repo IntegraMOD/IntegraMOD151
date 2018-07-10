@@ -90,7 +90,7 @@ function album_read_tree($user_id = ALBUM_PUBLIC_GALLERY, $options = ALBUM_AUTH_
 	// read categories and categories with right user access rights
 	$cats = array();
 
-	if ( count($album_data['data']) > 0)
+	if ( count_safe($album_data['data']) > 0)
 	{
 		return ALBUM_DATA_ALREADY_READ;
 	}

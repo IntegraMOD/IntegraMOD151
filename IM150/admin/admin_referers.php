@@ -77,7 +77,6 @@ if ( $mode == 'delete')
 	$message = $lang['referer_del_success'] . "<br /><br />" . sprintf($lang['Click_return_referersadmin'], "<a href=\"" . append_sid("admin_referers.$phpEx") . "\">", "</a>") . "<br /><br />" . sprintf($lang['Click_return_admin_index'], "<a href=\"" . append_sid("index.$phpEx?pane=right") . "\">", "</a>");
 
 	message_die(GENERAL_MESSAGE, $message);
-	break;
 }		
 else
 {

@@ -375,7 +375,7 @@ switch( $mode2 )
 				$user_groups[] = $srow;
 			}
 
-			for($i = 0; $i < count($user_groups);$i++)
+			for($i = 0; $i < count_safe($user_groups);$i++)
 			{
 				$group_iden = $user_groups[$i]['group_id'];
 				$psql = "SELECT u.username , u.user_id , g.group_name , g.group_id

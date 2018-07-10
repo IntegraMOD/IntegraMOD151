@@ -227,10 +227,12 @@ function kb_auth( $type, $cat_id, $userdata, $f_access = '', $f_access_group = '
 						$auth_user[$f_cat_id][$key . '_type'] = $lang['Auth_Registered_Users'];
 						break;
 		
+            /* V: this doesn't actually exist
 					case AUTH_ANONYMOUS:
 						$auth_user[$f_cat_id][$key] = ( ! $userdata['session_logged_in'] ) ? true : 0;
 						$auth_user[$f_cat_id][$key . '_type'] = $lang['Auth_Anonymous_users'];
 						break;
+             */
 		
 					case AUTH_ACL: // PRIVATE
 						$auth_user[$f_cat_id][$key] = ( $userdata['session_logged_in'] ) ? mx_is_group_member( $value_groups ) || $is_admin : 0;

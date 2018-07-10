@@ -376,7 +376,7 @@ function pcp_check_sql_actions($field_name, $fields, $fields_table, &$create, &$
 	$delete = false;
 
 	// check the name
-	if ( !ereg("^[a-z0-9_]+", $field_name) )
+	if ( !preg_match("/^[a-z0-9_]+/", $field_name) )
 	{
 		return;
 	}
@@ -1391,7 +1391,7 @@ if ( $mode == '' )
 			'SQL_ACTIONS'	=> $sql_actions,
 			)
 		);
-		for ($i = 0; $i < count($maps_usage[$field_name]); $i++ )
+		for ($i = 0; $i < count_safe($maps_usage[$field_name]); $i++ )
 		{
 			$template->assign_block_vars('fields.maps', array(
 				'NAME'		=> $maps_usage[$field_name][$i],

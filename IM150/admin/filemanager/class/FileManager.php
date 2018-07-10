@@ -222,7 +222,7 @@ class FileManager {
 	 * @param string $startDir		optional: directory path
 	 * @return FileManager
 	 */
-	function FileManager($startDir = '') {
+	function __construct($startDir = '') {
 		$this->_incPath = str_replace('\\', '/', realpath(dirname(__FILE__) . '/..'));
 		$this->_tmpDir = $this->_incPath . '/tmp';
 		$this->initFromConfig();

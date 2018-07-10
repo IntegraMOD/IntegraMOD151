@@ -154,7 +154,7 @@ else
 
 		$moderator_groups = @explode( ',', $thiscat['auth_moderator_groups'] );
 
-		for ( $i = 0; $i < count( $groupdata ); $i++ )
+		for ( $i = 0; $i < count_safe( $groupdata ); $i++ )
 		{
 			$template->assign_block_vars( 'grouprow', array( 'GROUP_ID' => $groupdata[$i]['group_id'],
 					'GROUP_NAME' => $groupdata[$i]['group_name'],

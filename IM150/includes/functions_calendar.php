@@ -269,7 +269,7 @@ function get_event_topics(&$events, &$number, $start_date, $end_date, $limit=fal
 	}
 
 	// get the forums authorized (compliency with categories hierarchy v2 mod)
-	$cat_hierarchy = function_exists(get_auth_keys);
+	$cat_hierarchy = function_exists('get_auth_keys');
 	$s_forums_ids = '';
 	if (!$cat_hierarchy)
 	{
@@ -782,7 +782,7 @@ function get_recurring_events(&$events, &$number, $start_date, $end_date, $limit
 	}
 
 	// get the forums authorized (compliency with categories hierarchy v2 mod)
-	$cat_hierarchy = function_exists(get_auth_keys);
+	$cat_hierarchy = function_exists('get_auth_keys');
 	$s_forums_ids = '';
 	if (!$cat_hierarchy)
 	{
@@ -1452,7 +1452,7 @@ function display_calendar($main_template, $nb_days=0, $start=0, $fid='')
 	$s_year .= '</select>';
 
 	// build a forum select list
-	$cat_hierarchy = function_exists(get_auth_keys);
+	$cat_hierarchy = function_exists('get_auth_keys');
 	if (!$cat_hierarchy)
 	{
 		$s_forum_list = '<select name="selected_id" onchange="forms[\'_calendar\'].submit();">' . calendar_get_tree_option($fid) . '</select>';
@@ -1552,8 +1552,9 @@ function display_calendar($main_template, $nb_days=0, $start=0, $fid='')
 
 				// send events
 				$more = false;
-				$over = ( count($map[$offset_date]) > $nb_row_per_cell);
-				for ($k=0; $k < count($map[$offset_date]); $k++)
+        $map_offset_date = ( $map[$offset_date] ? count($map[$offset_date]) : 0 );
+				$over = $map_offset_date > $nb_row_per_cell;
+				for ($k=0; $k < $map_offset_date; $k++)
 				{
 					// we are just over the limit
 					if ( $over && ($k == $nb_row_per_cell) )

@@ -274,7 +274,7 @@ $phpbb_user_fields = array(
 		'default'	=> NULL,
 	),
 	'user_sig'	=> array(
-		'type'		=> text,
+		'type'		=> 'text',
 	),
 	'user_sig_bbcode_uid' => array(
 		'type'		=> 'VARCHAR',

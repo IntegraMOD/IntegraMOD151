@@ -30,7 +30,10 @@ if( !defined( 'IN_PHPBB' ) )
 include_once( $phpbb_root_path . 'common.' . $phpEx );
 
 error_reporting  (E_ERROR | E_WARNING | E_PARSE); // This will NOT report uninitialized variables
-set_magic_quotes_runtime(0); // Disable magic_quotes_runtime
+if (function_exists('set_magic_quotes_runtime'))
+{
+  set_magic_quotes_runtime(0); // Disable magic_quotes_runtime
+}
 
 if(!defined('CHAT_CONFIG_ONLY')){
 	//

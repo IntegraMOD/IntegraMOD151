@@ -1654,7 +1654,7 @@ if ( $mode == '' )
 
 			// sub level link
 			$sub_folder = $phpbb_root_path . $sub_folder;
-			$link = '<a href="' . append_sid("./admin_forums_extend.$phpEx?selected_id=$sub_this") . '" class="gensmall" title="' . ereg_replace('<[^>]+>', '', get_object_lang($sub_this, 'desc', true)) . '">';
+			$link = '<a href="' . append_sid("./admin_forums_extend.$phpEx?selected_id=$sub_this") . '" class="gensmall" title="' . preg_replace('/<[^>]+>/', '', get_object_lang($sub_this, 'desc', true)) . '">';
 			$link .= '<img src="' . $sub_folder . '" border="0" alt="' . $sub_l_folder . '" title="' . $sub_l_folder . '" align="middle" />';
 			$link .= '&nbsp;' . get_object_lang($sub_this, 'name', true) . '</a>';
 			$links .= ( empty($links) ? '' : ', ' ) . $link;

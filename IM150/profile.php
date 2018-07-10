@@ -215,7 +215,7 @@ if ( !isset($module['sub'][$curopt]['mode']) || !in_array($sub, $module['sub'][$
 
 // get cur subopt
 $cur_subopt = -1;
-for ($i=0; ( ($i < count($module['sub'][$curopt]['mode'])) && ($cur_subopt < 0) ); $i++ ) if ($sub == $module['sub'][$curopt]['mode'][$i]) $cur_subopt = $i;
+for ($i=0; ( ($i < count_safe($module['sub'][$curopt]['mode'])) && ($cur_subopt < 0) ); $i++ ) if ($sub == $module['sub'][$curopt]['mode'][$i]) $cur_subopt = $i;
 if ( ($cur_subopt < 0) && (count($module['sub'][$curopt]) > 0) )
 {
 	$cur_subopt = 0;
@@ -314,7 +314,7 @@ else
 		$switch = ($curopt==$i) ? 'curopt' : ( ($userdata['session_logged_in'] && ( ($userdata['user_id'] == $view_user_id) || (is_admin($userdata) && ($level_prior[get_user_level($userdata)] > $level_prior[get_user_level($view_userdata)])))) ? 'otheropt' : 'inactopt' );
 		$template->assign_block_vars('opt', array());
 		$link = append_sid("./profile.$phpEx?mode=" . $module['mode'][$i] . ( ($view_userdata['user_id'] != ANONYMOUS) ? '&' . POST_USERS_URL . '=' . $view_userdata['user_id'] : '') );
-		if ( count($module['sub'][$i]['mode']) == 1 )
+		if ( count_safe($module['sub'][$i]['mode']) == 1 )
 		{
 			// only one sub-module
 			$link = append_sid("./profile.$phpEx?mode=" . $module['mode'][$i] . "&sub=" . $module['sub'][$i]['mode'][0] . ( ($view_userdata['user_id'] != ANONYMOUS) ? '&' . POST_USERS_URL . '=' . $view_userdata['user_id'] : '') );

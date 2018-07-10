@@ -19,7 +19,7 @@
  *     ('at your option) any later version.
  */
 
-	if ( !function_exists( mx_smilies_pass ) )
+	if ( !function_exists('mx_smilies_pass' ) )
 	{	
 		function mx_smilies_pass($message)
 		{
@@ -32,7 +32,7 @@
 		}
 	}
 
-	if ( !function_exists( mx_generate_smilies ) )
+	if ( !function_exists('mx_generate_smilies' ) )
 	{	
 		function mx_generate_smilies($mode, $page_id)
 		{
@@ -47,7 +47,7 @@
 		}
 	}
 		
-	if ( !function_exists( mx_message_die ) )
+	if ( !function_exists('mx_message_die' ) )
 	{
 		
 		function mx_message_die($msg_code, $msg_text = '', $msg_title = '', $err_line = '', $err_file = '', $sql = '')
@@ -61,7 +61,7 @@
 		
 	}
 	
-	if ( !function_exists( mx_is_group_member ) )
+	if ( !function_exists('mx_is_group_member' ) )
 	{	
 		// Validates if user belongs to group included in group_ids list
 		// Also, adds all usergroups to userdata array
@@ -134,7 +134,7 @@
 		}
 	}
 	
-	if ( !function_exists( mx_add_search_words ) )
+	if ( !function_exists('mx_add_search_words' ) )
 	{	
 		// Add search words for blocks
 		function mx_add_search_words($mode, $post_id, $post_text, $post_title = '', $mx_mode = 'mx')
@@ -418,7 +418,7 @@
 		}	
 	}
 
-	if ( !function_exists(mx_do_install_upgrade) )
+	if ( !function_exists('mx_do_install_upgrade') )
 	{
 		// Generating output
 		

@@ -900,10 +900,10 @@ function pcp_user_photo_upload($photo_mode, &$current_photo, &$current_type, &$e
 		global $user_maps;
 
 		// get the menu idx
-		$idx = count($module['mode']);
+		$count_mode = $idx = $module['mode'] ? count($module['mode']) : 0;
 		$new = false;
 		$found = false;
-		for ( $i = 0; $i < count($module['mode']); $i++ )
+		for ( $i = 0; $i < $count_mode; $i++ )
 		{
 			$found = ( $module['mode'][$i] == $mode );
 			if ( $found )
@@ -948,9 +948,9 @@ function pcp_user_photo_upload($photo_mode, &$current_photo, &$current_type, &$e
 		$idx = pcp_set_menu($mode);
 
 		// check if the sub_menu exists
-		$sub_idx = count($module['sub'][$idx]['mode']);
+		$sub_count = $sub_idx = $module['sub'][$idx]['mode'] ? count($module['sub'][$idx]['mode']) : 0;
 		$found = false;
-		for ( $i = 0; $i < count($module['sub'][$idx]['mode']); $i++ )
+		for ( $i = 0; $i < $sub_count; $i++ )
 		{
 			$found = ( $module['sub'][$idx]['mode'][$i] == $sub_mode );
 			if ( $found )

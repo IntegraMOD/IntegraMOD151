@@ -26,7 +26,7 @@ $template->set_filenames(array(
 
 // Send some vars to the template
 $template->assign_vars(array(
-		'L_YEAR'     => date(Y),
+		'L_YEAR'     => date('Y'),
 		'L_VERSION'  => CTRACKER_VERSION)
 	);
 

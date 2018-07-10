@@ -123,7 +123,7 @@ function album_get_auth_keys($cur_cat_id = ALBUM_ROOT_CATEGORY, $auth_key = ALBU
 			$keys['idx'][$last_i] = (isset ($album_data['keys'][$cur_cat_id]) ? $album_data['keys'][$cur_cat_id] : ALBUM_ROOT_CATEGORY);
 
 			// get sub-levels
-			for ($i = 0; $i < count($album_data['sub'][$cur_cat_id]); $i ++)
+			for ($i = 0; $i < count_safe($album_data['sub'][$cur_cat_id]); $i ++)
 			{
 				$subkeys = array ();
 				$subkeys = album_get_auth_keys($album_data['sub'][$cur_cat_id][$i], $auth_key, $all, $orig_level +1, $max);
@@ -142,7 +142,7 @@ function album_get_auth_keys($cur_cat_id = ALBUM_ROOT_CATEGORY, $auth_key = ALBU
 		} // if ($cur_cat_id == ALBUM_ROOT....
 	} // if (($max < 0 .....
 
-	if ($level <= ALBUM_ROOT_CATEGORY && ALBUM_HIERARCHY_DEBUG_ENABLED == true)
+	if ($level <= ALBUM_ROOT_CATEGORY && defined('ALBUM_HIERARCHY_DEBUG_ENABLED') && ALBUM_HIERARCHY_DEBUG_ENABLED == true)
 	{
 		album_debug('album_get_auth_keys = %s', $keys);
 	}
