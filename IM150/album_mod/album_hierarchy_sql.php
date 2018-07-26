@@ -103,7 +103,7 @@ function album_read_tree($user_id = ALBUM_PUBLIC_GALLERY, $options = ALBUM_AUTH_
 		$sql = "SELECT c.*, COUNT(p.pic_id) AS count, u.username AS username
 				FROM " . ALBUM_CAT_TABLE . " AS c
 					LEFT JOIN " . ALBUM_TABLE . " AS p ON c.cat_id = p.pic_cat_id
-					LEFT JOIN " . USERS_TABLE . " AS u ON c.cat_user_id = u.user_id					
+					LEFT JOIN " . USERS_TABLE . " AS u ON c.cat_user_id = u.user_id
 				WHERE cat_id <> 0
 				GROUP BY cat_id " . album_get_sql_category_sort();
 	}
@@ -126,7 +126,7 @@ function album_read_tree($user_id = ALBUM_PUBLIC_GALLERY, $options = ALBUM_AUTH_
 						LEFT JOIN " . ALBUM_TABLE . " AS p ON c.cat_id = p.pic_cat_id
 						LEFT JOIN " . USERS_TABLE . " AS u ON c.cat_user_id = u.user_id
 					WHERE u.user_id = " . $user_id ."
-					GROUP BY c.cat_id " . album_get_sql_category_sort();				
+					GROUP BY c.cat_id " . album_get_sql_category_sort();
 		}
 	}
 
@@ -192,14 +192,14 @@ function album_read_tree($user_id = ALBUM_PUBLIC_GALLERY, $options = ALBUM_AUTH_
 					($album_data['auth'][$cat_id]["comment"] >= $can_comment) &&
 					($album_data['auth'][$cat_id]["edit"] >= $can_edit) &&
 					($album_data['auth'][$cat_id]["delete"] >= $can_delete) )
-				{	
+				{
 					if (checkFlag($options, ALBUM_CREATE_CAT_ID_LIST))
 					{
 						$cats[0] .= ( (empty($cats[0])) ? '' : ',') . $album_data['data'][$idx]['cat_id'];
 					}
 					else
 					{
-						$cats[] = $album_data['data'][$idx];				
+						$cats[] = $album_data['data'][$idx];
 					}
 				}
 			}
@@ -223,16 +223,16 @@ function album_read_tree($user_id = ALBUM_PUBLIC_GALLERY, $options = ALBUM_AUTH_
 function album_init_personal_gallery($user_id)
 {
 	global $db, $album_data , $userdata;
-	
+
 	// parent categories
 	$parents = array();
 	// read categories and categories with right user access rights
-	$cats = array();	
-	
+	$cats = array();
+
 	$parent_root_id = ALBUM_ROOT_CATEGORY;
 
 	$row = init_personal_gallery_cat($user_id);
-	
+
 	if ($row['cat_parent'] == $row['cat_id'])
 	{
 		$row['cat_parent'] = 0;
@@ -291,7 +291,7 @@ function album_get_personal_root_id($user_id)
 		}
 
 		$row = $db->sql_fetchrow($result);
-		
+
 		$db->sql_freeresult($result);
 
 		return $row['cat_id'];
@@ -347,7 +347,7 @@ function album_get_nonexisting_personal_gallery_info()
 			$userinfo[] = $row;
 		}
 	}
-	
+
 	$db->sql_freeresult($result);
 
 	return $userinfo;
@@ -416,14 +416,14 @@ function album_create_personal_gallery($user_id, $view_level, $upload_level, $op
 			//message_die(GENERAL_ERROR, 'Could not create new Personal Root Category', '', __LINE__, __FILE__, $sql);
 			return false;
 		}
-	
+
 	}
 	else
 	{
 		$db->sql_freeresult($result);
 	}
-	
-	
+
+
 	return true;
 }
 
@@ -572,8 +572,8 @@ function album_no_newest_pictures($check_date, $cats, $exclude_cat_id = 0)
 	if (strstr($check_date,'W') != false)
 	{
 	 	$multiplier = (7 * 24 * 60 * 60);  // in my world a month is always 30 days ;)
-	}	
-	
+	}
+
 		// are we checking days (default) ? - yes if multiplier is zero
 	if (strstr($check_date,'D') != false || $multiplier == 0)
 	{
@@ -627,7 +627,7 @@ function album_no_newest_pictures($check_date, $cats, $exclude_cat_id = 0)
 	}
 
 	$db->sql_freeresult($result);
-	
+
 		if (album_is_debug_enabled() == true)
 		{
 			album_debug('album_no_newest_pictures sql = %s', $sql);
@@ -659,7 +659,7 @@ function album_get_cat_user_id($cat_id)
 		}
 
 		$row = $db->sql_fetchrow($result);
-		
+
 		$db->sql_freeresult($result);
 
 		return ($row['cat_user_id'] != 0) ? $row['cat_user_id'] : false;
@@ -709,7 +709,7 @@ function album_get_user_name($user_id)
 
 	$row = $db->sql_fetchrow($result);
 	$db->sql_freeresult($result);
-	
+
 	return $row['username'];
 }
 
@@ -725,7 +725,7 @@ function album_get_last_pic_info($cats, &$last_pic_id)
 	// and correct album picture url
 	$album_pic_url = 'album_showpage.'.$phpEx;
 
-	$categories = implode(",", $cats);
+	$where_sql = is_array($cats) && count($cats) ? "p.pic_cat_id IN (" . implode(",", $cats)  .")" : "p.pic_cat_id = ".(int)$cats;
 
 	$AH_this = isset($album_data['keys'][$cats[0]]) ? $album_data['keys'][$cats[0]] : ALBUM_ROOT_CATEGORY;
 	$cat = $album_data['data'][$AH_this];
@@ -745,7 +745,7 @@ function album_get_last_pic_info($cats, &$last_pic_id)
 	$sql = "SELECT p.pic_id, p.pic_title, p.pic_user_id, p.pic_username, p.pic_time, p.pic_cat_id, u.user_id, u.username
 			FROM " . ALBUM_TABLE . " AS p
 			LEFT JOIN " . USERS_TABLE . " AS u  ON p.pic_user_id = u.user_id
-			WHERE p.pic_cat_id IN (" . $categories  .") $pic_approval_sql
+			WHERE $where_sql $pic_approval_sql
 			ORDER BY p.pic_time DESC
 			LIMIT 1";
 
@@ -874,7 +874,7 @@ function album_get_total_pic_cat($ss_cat_id)
 function album_get_last_comment_info($cats)
 {
 	global $phpEx, $board_config, $lang, $db, $album_data;
-	
+
 	$album_pic_url = 'album_showpage.'.$phpEx;
 
 	$categories = implode(",", $cats);
@@ -897,7 +897,7 @@ function album_get_last_comment_info($cats)
 	{
 		message_die(GENERAL_ERROR, 'Could not get last comment information', '', __LINE__, __FILE__, $sql);
 	}
-		
+
 	$row = $db->sql_fetchrow($result);
 
 	// last comment
@@ -907,7 +907,7 @@ function album_get_last_comment_info($cats)
 	}
 
 	$db->sql_freeresult($result);
-	
+
 	$info = create_date($board_config['default_dateformat'], $row['comment_time'], $board_config['board_timezone']);
 	$info .= '<br />' . $lang['Pic_Poster'] . ': ';
 
@@ -955,7 +955,7 @@ function album_get_moderator_info($cat) {
 	}
 
 	$db->sql_freeresult($result);
-	
+
 	if (count($grouprows) > 0)
 	{
 		for ($j = 0; $j < count($grouprows); $j++)
@@ -975,13 +975,13 @@ function album_get_comment_count($cat)
 {
 	global $db;
 
-	if (is_array($cat))
+	if (is_array($cat) && count($cat))
 	{
 		$sql_where = " WHERE pic_cat_id IN (". implode(",", $cat) .")";
 	}
 	else
 	{
-		$sql_where = " WHERE pic_cat_id = '" . $cat  ."'";
+		$sql_where = " WHERE pic_cat_id = '" . (int)$cat  ."'";
 	}
 
 	$sql = "SELECT COUNT(comment_id) AS comment_count
@@ -1005,7 +1005,7 @@ function album_get_total_pics($cats)
 {
 	global $db;
 
-	$sql_where = " WHERE c.cat_id " . ( (is_array($cats)) ? "IN (". implode(",", $cats) .")" : "= " . $cats);
+	$sql_where = " WHERE c.cat_id " . ( (is_array($cats) && count($cats)) ? "IN (". implode(",", $cats) .")" : "= " . (int)$cats);
 
 	$sql = "SELECT COUNT(p.pic_id) AS count
 			FROM " . ALBUM_CAT_TABLE . " AS c
@@ -1035,11 +1035,11 @@ function album_build_picture_table($user_id, $cat_ids, $AH_thiscat, $auth_data, 
 	global $board_config, $album_data, $album_config, $template, $lang, $phpEx, $userdata, $db;
 
 	$viewmode = (strpos($cat_ids, ',') != false) ? '&mode=' . ALBUM_VIEW_ALL : '';
-	
+
 	$album_show_pic_url = 'album_showpage.'.$phpEx;
 	$album_rate_pic_url = $album_show_pic_url;
 	$album_comment_pic_url = $album_show_pic_url;
-	
+
 	if (intval($cat_ids) == album_get_personal_root_id($user_id) && $user_id != ALBUM_PUBLIC_GALLERY)
 	{
 		$album_pagination_page_url = 'album.' . $phpEx;
@@ -1086,7 +1086,7 @@ function album_build_picture_table($user_id, $cat_ids, $AH_thiscat, $auth_data, 
 	{
 		$picrow[] = $row;
 	}
-	
+
 	$db->sql_freeresult($result);
 
 	$template->assign_block_vars('index_pics_block', array());
@@ -1171,7 +1171,7 @@ function album_build_picture_table($user_id, $cat_ids, $AH_thiscat, $auth_data, 
 				'IMG_BBCODE' => ( ($userdata['user_level'] == ADMIN) || ($userdata['user_id'] == $picrow[$j]['pic_user_id']) ) ? '<br /><a href="javasript://" OnClick="window.clipboardData.setData(\'Text\', \'[albumimg]' . $picrow[$j]['pic_id'] . '[/albumimg]\'); return false;">' . $lang['BBCode_Copy'] . '</a>' : ''
 				)
 			);
-			
+
 			// Mighty Gorgon - Slideshow - BEGIN
 			if ($album_config['show_slideshow'] == 1)
 			{
@@ -1208,7 +1208,7 @@ function album_build_picture_table($user_id, $cat_ids, $AH_thiscat, $auth_data, 
 			}
 		}
 	}
-	
+
 	$template->assign_vars(array(
 		'PAGINATION' => generate_pagination(append_sid(album_append_uid($album_pagination_page_url . "?cat_id=" . intval($cat_ids) . "&amp;sort_method=$sort_method&amp;sort_order=$sort_order$viewmode")), $total_pics, $pics_per_page, $start),
 		'SLIDESHOW' => $slideshow_link_full,
@@ -1258,7 +1258,7 @@ function album_build_recent_pics($cats)
 		}
 
 		$db->sql_freeresult($result);
-		
+
 		$template->assign_block_vars('recent_pics_block', array());
 
 		if (count($recentrow) > 0)
@@ -1322,7 +1322,7 @@ function album_build_recent_pics($cats)
 	if (empty($cats))
 	{
 		// No Cats Found
-		$template->assign_block_vars('recent_pics_block', array());	
+		$template->assign_block_vars('recent_pics_block', array());
 		$template->assign_block_vars('recent_pics_block.no_pics', array());
 	}
 }
@@ -1365,7 +1365,7 @@ function album_build_highest_rated_pics($cats)
 		{
 			$highestrow[] = $row;
 		}
-		
+
 		$db->sql_freeresult($result);
 
 		$template->assign_block_vars('highest_pics_block', array());
@@ -1487,7 +1487,7 @@ function album_build_most_viewed_pics($cats)
 		{
 			$mostviewed[] = $row;
 		}
-		
+
 		$db->sql_freeresult($result);
 
 		$template->assign_block_vars('mostviewed_pics_block', array());
@@ -1597,7 +1597,7 @@ function album_build_random_pics($cats)
 		{
 			$randrow[] = $row;
 		}
-		
+
 		$db->sql_freeresult($result);
 
 		$template->assign_block_vars('random_pics_block', array());
