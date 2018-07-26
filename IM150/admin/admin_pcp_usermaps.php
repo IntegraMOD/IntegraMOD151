@@ -310,8 +310,9 @@ while ( list($map_name, $map_data) = @each($maps) )
 }
 
 // fix the mode with the button
-if ( $edit && !empty($map) )
+if ( ($edit || $mode == 'edit') && !empty($map) )
 {
+	$edit = 1;
 	$mode = 'edit';
 }
 

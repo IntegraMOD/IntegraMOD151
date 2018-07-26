@@ -145,7 +145,8 @@ else
 
 	if ($row = $db->sql_fetchrow($result))
 	{
-		if ($row['attempts'] > 3)
+		// CTracker uses 3 by default, which is insanely low
+		if ($row['attempts'] > 15)
 		{
 			message_die(GENERAL_MESSAGE, $lang['ctracker_code_count']);
 		}

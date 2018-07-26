@@ -1049,7 +1049,8 @@ function pcp_output_maps($user_maps)
 				@reset($field_def);
 				while ( list($def_key, $def_value) = @each($field_def) )
 				{
-					if ( ($def_key != 'field_name') && ($field_data[$def_key] != $user_fields[$field_name][$def_key]) && !empty($field_data[$def_key]) )
+					// use array_key_exists here, because we want to allow an empty value
+					if ( ($def_key != 'field_name') && ($field_data[$def_key] != $user_fields[$field_name][$def_key]) && array_key_exists($def_key, $field_data) )
 					{
 						$data = $field_data[$def_key];
 						$pres = "'%s'";
@@ -1066,20 +1067,17 @@ function pcp_output_maps($user_maps)
 								$data = $auth_list[$data];
 								break;
 						}
-						if ( !empty($data) )
+						// do NOT check if data is set here, we know we have data if we arrived here after the if
+						if ($def_value['type'] == 'BOOLEAN')
 						{
-							if ($def_value['type'] == 'BOOLEAN')
-							{
-								$data = $data ? 'true' : 'false';
-								$pres = '%s';
-							}
-							$template->assign_block_vars('map.block.field.def', array(
-								'DEF_KEY'	=> str_replace( "''", "\'", $def_key),
-								'VALUE'		=> sprintf($pres, str_replace('\"', '"', str_replace( "''", "\'", $data))),
-								'PAD'		=> str_pad( '', $max_length - strlen($def_key) ),
-								)
-							);
+							$data = $data ? 'true' : 'false';
+							$pres = '%s';
 						}
+						$template->assign_block_vars('map.block.field.def', array(
+							'DEF_KEY'	=> str_replace( "''", "\'", $def_key),
+							'VALUE'		=> sprintf($pres, str_replace('\"', '"', str_replace( "''", "\'", $data))),
+							'PAD'		=> str_pad( '', $max_length - strlen($def_key) ),
+						));
 					}
 				}
 			}

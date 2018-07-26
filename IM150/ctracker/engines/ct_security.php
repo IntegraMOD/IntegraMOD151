@@ -166,6 +166,11 @@ $unchecked_post_fields   = array('username', 'password', 'subject', 'message',
 
 // Some fields in $_GET don't get checked to prevent wrong detection
 $unchecked_get_fields = array('submit', 'search_author');
+if (defined('IN_ADMIN'))
+{
+  // avoid tripping up on PCP
+  $unchecked_get_fields = array_merge($unchecked_get_fields, array('field'));
+}
 
 /*
  * Let's check if a security level is set
