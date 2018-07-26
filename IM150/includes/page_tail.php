@@ -29,11 +29,11 @@ if ( !defined('IN_PHPBB') )
 if ($banner_show_list)
 {
 	$banner_show_list['0'] = ($banner_show_list) ? ' ':'';
-	$sql = "UPDATE ".BANNERS_TABLE." SET banner_view=banner_view+1 WHERE banner_id IN ($banner_show_list)"; 
+	$sql = "UPDATE ".BANNERS_TABLE." SET banner_view=banner_view+1 WHERE banner_id IN ($banner_show_list)";
 	if ( !($result = $db->sql_query($sql)) )
 	{
 		message_die(GENERAL_ERROR, "Couldn't update banners data", "", __LINE__, __FILE__, $sql);
-	} 
+	}
 }
 
 // End add - Complete banner MOD
@@ -159,13 +159,20 @@ if( $do_gzip_compress && headers_sent() != TRUE )
 	$gzip_contents = gzcompress($gzip_contents, 9);
 	$gzip_contents = substr($gzip_contents, 0, strlen($gzip_contents) - 4);
 	$gzip_contents .= pack("V",$gzip_crc) . pack("V", $gzip_size);
-	header("Content-Encoding: gzip"); 
-  	header("Vary: Accept-Encoding"); 
-  	header("Content-Length: ".strlen($gzip_contents)); 
-  	header('X-Content-Encoded-By: Integramod '.$board_config['integramod_version']);
+	header("Content-Encoding: gzip");
+	header("Vary: Accept-Encoding");
+	header("Content-Length: ".strlen($gzip_contents));
+	header('X-Content-Encoded-By: Integramod '.$board_config['integramod_version']);
 	echo "\x1f\x8b\x08\x00\x00\x00\x00\x00";
 	echo $gzip_contents;
 }
-exit;
-
-?>
+if (defined('DEBUG_SQL') && DEBUG_SQL)
+{
+	foreach ($db->queries as $query)
+	{
+		list($sql, $bt, $time) = $query;
+		echo "Query: $time <pre>$sql
+			
+	" . str_replace($sql, '*QUERY*', $bt) . "</pre>";
+	}
+}

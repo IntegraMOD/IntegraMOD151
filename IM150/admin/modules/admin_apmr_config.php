@@ -12,7 +12,7 @@
 if( !empty($setmodules) )
 {
 	$file = basename(__FILE__);
-	$module['APMR Admin']['Configuration'] = $file;
+	$module['General']['APMR Admin'] = $file;
 	return;
 }
 
