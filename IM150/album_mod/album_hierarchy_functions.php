@@ -741,14 +741,14 @@ function album_get_sub_cat_ids($cur_cat_id = ALBUM_ROOT_CATEGORY, $cats, $auth_k
 		}
 	}
 
-	// get all the sub categori id for current sub category
+	// get all the sub category id for current sub category
 	for ($j=0; $j < count($album_data['sub'][$cur_cat_id]); $j++)
 	{
 		$subcur = $album_data['sub'][$cur_cat_id][$j];
 		$subthis = $album_data['keys'][$subcur];
 		$subdata = $album_data['data'][$subthis];
 
-		// add the 	category id
+		// add the category id
 		//if ($album_data['auth'][$cur][$auth_key] == 1)
 		//if (album_check_permission($wdata['cat_id'], $auth_key))
 		if (album_check_permission($album_data['auth'][$subcur], $auth_key))

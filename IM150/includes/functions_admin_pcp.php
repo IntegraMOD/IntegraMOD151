@@ -309,13 +309,13 @@ function pcp_input_fieldname($name, $value)
 {
 	global $user_fields, $lang;
 
-	$opt = '<option value="" selected="selected">' . $lang['PCP_userfields_field_pick_up'] . '</option>';
+	$opt = '<option value="" ' . ($value ? '' : 'selected="selected"') . '>' . $lang['PCP_userfields_field_pick_up'] . '</option>';
 	$fields = $user_fields;
 	@ksort($fields);
 	@reset($fields);
 	while ( list($field_name, $field_data) = @each($fields) )
 	{
-		$opt .= "\n" . '<option value="' . $field_name . '">' . $field_name . '</option>';
+		$opt .= "\n" . '<option value="' . $field_name . '" ' . ($value == $field_name ? 'selected="selected"' : '') . '>' . $field_name . '</option>';
 	}
 	$res = '<select name="' . $name . '_pickup_list" onChange="javascript:' . $name . '.value=this.options[this.selectedIndex].value; this.selectedIndex=0;">' . $opt . '</select>';
 	$res .= '<br /><input type="text" name="' . $name .'" value="' . $value .'" size="60" />';
@@ -391,11 +391,11 @@ function pcp_input_lang($name, $value)
 	@ksort($normal_lang);
 
 	// process a list
-	$opt = '<option value="" selected="selected">' . $lang['PCP_userfields_lang_key_pick_up'] . '</option>';
+	$opt = '<option value="" ' . ($value ? '' : 'selected="selected"') . '>' . $lang['PCP_userfields_lang_key_pick_up'] . '</option>';
 	@reset($normal_lang);
 	while ( list($field_name, $field_data) = @each($normal_lang) )
 	{
-		$opt .= "\n" . '<option value="' . $field_name . '">' . $field_name . '</option>';
+		$opt .= "\n" . '<option value="' . $field_name . '" ' . ($value === $field_name ? 'selected="selected"' : '') . '>' . $field_name . '</option>';
 	}
 	$res = '<select name="' . $name . '_pickup_list" onChange="javascript:' . $name . '.value=this.options[this.selectedIndex].value; this.selectedIndex=0;">' . $opt . '</select>';
 
@@ -417,7 +417,7 @@ function pcp_input_class($name, $value)
 	@reset($classes_fields);
 	while ( list($class_name, $class_data) = @each($classes_fields) )
 	{
-		$selected = ($class_name == $value) ? ' selected="selected"' : '';
+		$selected = ($class_name === $value) ? ' selected="selected"' : '';
 		$res .= '<option value="' . $class_name . '"' . $selected . '>' . pcp_format_lang($class_name) . '</option>';
 	}
 	$res .= '</select>';
