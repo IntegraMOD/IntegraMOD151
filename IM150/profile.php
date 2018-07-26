@@ -204,6 +204,7 @@ for ($i=0; ( ($i < count($module['mode'])) && ($curopt < 0) ); $i++ )
 	if ($mode == $module['mode'][$i])
 	{
 		$curopt = $i;
+		break;
 	}
 }
 
@@ -215,7 +216,14 @@ if ( !isset($module['sub'][$curopt]['mode']) || !in_array($sub, $module['sub'][$
 
 // get cur subopt
 $cur_subopt = -1;
-for ($i=0; ( ($i < count_safe($module['sub'][$curopt]['mode'])) && ($cur_subopt < 0) ); $i++ ) if ($sub == $module['sub'][$curopt]['mode'][$i]) $cur_subopt = $i;
+for ($i=0; ( ($i < count_safe($module['sub'][$curopt]['mode'])) && ($cur_subopt < 0) ); $i++ )
+{
+	if ($sub == $module['sub'][$curopt]['mode'][$i])
+	{
+		$cur_subopt = $i;
+		break;
+	}
+}
 if ( ($cur_subopt < 0) && (count($module['sub'][$curopt]) > 0) )
 {
 	$cur_subopt = 0;

@@ -691,16 +691,16 @@ if ($submit)
 			}
 			// show who can see the info depending on class
 			if ($field['visibility']){
-if ($field['class'] != 'generic'){ 
-                    $see_field = $classes_fields[$field['class']]['user_field']; 
-                    if($board_config[$see_field.'_over']){ 
-                        $viewed_by = $board_config[$see_field]; 
-                    } else { 
-                        $viewed_by = $view_userdata[$see_field]; 
-                    } 
-                } else { 
-                    $viewed_by = YES; 
-                }
+				if ($field['class'] != 'generic'){ 
+					$see_field = $classes_fields[$field['class']]['user_field']; 
+					if($board_config[$see_field.'_over']){ 
+						$viewed_by = $board_config[$see_field]; 
+					} else { 
+						$viewed_by = $view_userdata[$see_field]; 
+					} 
+				} else { 
+					$viewed_by = YES; 
+				}
 				switch ($viewed_by) {
 					case FRIEND_ONLY:
 						if ($user_field == 'user_email' && $board_config['board_email_form']){

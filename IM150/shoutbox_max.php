@@ -62,8 +62,8 @@ init_userprefs($userdata);
 //
 switch ($userdata['user_level'])
 {
-	//Costomice this, if you need other permission settings
-      // please also make same changes to other shoutbox php files
+	//Customize this, if you need other permission settings
+	// please also make same changes to other shoutbox php files
 	case ADMIN : 
 	case MOD :	$is_auth['auth_mod'] = 1;
 	default:
@@ -425,8 +425,8 @@ if ((isset($_POST['start']) || isset($_GET['start'])) && !$submit)
 	$start=(isset($_POST['start'])) ? intval($_POST['start']) : intval($_GET['start']);
 } else $start=0;
 
-	require_once($phpbb_root_path . 'includes/functions_post.'.$phpEx);
-	require_once($phpbb_root_path . 'includes/page_header.'.$phpEx);
+require_once($phpbb_root_path . 'includes/functions_post.'.$phpEx);
+require_once($phpbb_root_path . 'includes/page_header.'.$phpEx);
 
 // 
 // Was a highlight request part of the URI? 
@@ -474,324 +474,328 @@ obtain_word_list($orig_word, $replacement_word);
 
 bbcode_box();
 
-	// get statistics
-	$sql = "SELECT COUNT(*) as total FROM " . SHOUTBOX_TABLE; 
-	if ( !($result = $db->sql_query($sql)) )
-	{
-		message_die(GENERAL_ERROR, 'Could not get shoutbox stat information', '', __LINE__, __FILE__, $sql);
-	}
-	$total_shouts = $db->sql_fetchrow($result);
-	$total_shouts = $total_shouts['total'];
-	// parse post permission 
-	if ($is_auth['auth_post'])
-	{
-		$template->set_filenames(array('body' => 'shoutbox_max_body.tpl'));
-	} else
-	{
-		$template->set_filenames(array('body' => 'shoutbox_max_guest_body.tpl'));
-	}
-	// Generate pagination for shoutbox view
-	$pagination = ( $highlight_match ) ? generate_pagination("shoutbox_max.$phpEx?highlight=".$highlight, $total_shouts, $board_config['posts_per_page'], $start) : generate_pagination("shoutbox_max.$phpEx?dummy=1", $total_shouts, $board_config['posts_per_page'], $start);
+// get statistics
+$sql = "SELECT COUNT(*) as total FROM " . SHOUTBOX_TABLE; 
+if ( !($result = $db->sql_query($sql)) )
+{
+	message_die(GENERAL_ERROR, 'Could not get shoutbox stat information', '', __LINE__, __FILE__, $sql);
+}
+$total_shouts = $db->sql_fetchrow($result);
+$total_shouts = $total_shouts['total'];
+// parse post permission 
+if ($is_auth['auth_post'])
+{
+	$template->set_filenames(array('body' => 'shoutbox_max_body.tpl'));
+} else
+{
+	$template->set_filenames(array('body' => 'shoutbox_max_guest_body.tpl'));
+}
+// Generate pagination for shoutbox view
+$pagination = ( $highlight_match ) ? generate_pagination("shoutbox_max.$phpEx?highlight=".$highlight, $total_shouts, $board_config['posts_per_page'], $start) : generate_pagination("shoutbox_max.$phpEx?dummy=1", $total_shouts, $board_config['posts_per_page'], $start);
 
-	// Generate smilies listing for page output
-	generate_smilies('inline', PAGE_SHOUTBOX_MAX);
+// Generate smilies listing for page output
+generate_smilies('inline', PAGE_SHOUTBOX_MAX);
 
-	//
-	// Smilies toggle selection
-	//
-	if ( $board_config['allow_smilies'] )
-	{
-		$smilies_status = $lang['Smilies_are_ON'];
-		$template->assign_block_vars('switch_smilies_checkbox', array());
-	}
-	else
-	{
-		$smilies_status = $lang['Smilies_are_OFF'];
-	}
-	//
-	// HTML toggle selection
-	//
-	if ( $board_config['allow_html'] )
-	{
-		$html_status = $lang['HTML_is_ON'];
-		$template->assign_block_vars('switch_html_checkbox', array());
-	}
-	else
-	{
-		$html_status = $lang['HTML_is_OFF'];
-	}
-	//
-	// BBCode toggle selection
-	//
-	if ( $board_config['allow_bbcode'] )
-	{
-		$bbcode_status = $lang['BBCode_is_ON'];
-		$template->assign_block_vars('switch_bbcode_checkbox', array());
-	}
-	else
-	{
-		$bbcode_status = $lang['BBCode_is_OFF'];
-	}
+//
+// Smilies toggle selection
+//
+if ( $board_config['allow_smilies'] )
+{
+	$smilies_status = $lang['Smilies_are_ON'];
+	$template->assign_block_vars('switch_smilies_checkbox', array());
+}
+else
+{
+	$smilies_status = $lang['Smilies_are_OFF'];
+}
+//
+// HTML toggle selection
+//
+if ( $board_config['allow_html'] )
+{
+	$html_status = $lang['HTML_is_ON'];
+	$template->assign_block_vars('switch_html_checkbox', array());
+}
+else
+{
+	$html_status = $lang['HTML_is_OFF'];
+}
+//
+// BBCode toggle selection
+//
+if ( $board_config['allow_bbcode'] )
+{
+	$bbcode_status = $lang['BBCode_is_ON'];
+	$template->assign_block_vars('switch_bbcode_checkbox', array());
+}
+else
+{
+	$bbcode_status = $lang['BBCode_is_OFF'];
+}
 
-	//
-	// display the shoutbox
-	//
-	$sql = "SELECT s.*, u.* FROM " . SHOUTBOX_TABLE . " s, ".USERS_TABLE." u
-		WHERE s.shout_user_id=u.user_id ORDER BY s.shout_session_time DESC LIMIT $start, ".$board_config['posts_per_page'];
-	if ( !($result = $db->sql_query($sql)) )
+//
+// display the shoutbox
+//
+$sql = "SELECT s.*, u.*
+	FROM " . SHOUTBOX_TABLE . " s, ".USERS_TABLE." u
+	WHERE s.shout_user_id=u.user_id
+	ORDER BY s.shout_session_time DESC
+	LIMIT $start, ".$board_config['posts_per_page'];
+if ( !($result = $db->sql_query($sql)) )
+{
+	message_die(GENERAL_ERROR, 'Could not get shoutbox information', '', __LINE__, __FILE__, $sql);
+}
+	while ($shout_row = $db->sql_fetchrow($result))
 	{
-		message_die(GENERAL_ERROR, 'Could not get shoutbox information', '', __LINE__, __FILE__, $sql);
-	}
-		while ($shout_row = $db->sql_fetchrow($result))
+		$i++;
+		$row_color = ( !($i % 2) ) ? $theme['td_color1'] : $theme['td_color2'];
+		$row_class = ( !($i % 2) ) ? $theme['td_class1'] : $theme['td_class2'];
+		$user_id = $shout_row['shout_user_id'];
+		$user_name = colorize_username($shout_row);
+		$shout_username = ( $user_id == ANONYMOUS && $shout_row['shout_username'] !== '' ) ? $shout_row['shout_username'] : "<a href='".append_sid("profile.$phpEx?mode=viewprofile&amp;" . POST_USERS_URL . "=".$shout_row['shout_user_id'])."' target='_top'>".$user_name."</a>" ;
+
+		$user_profile = append_sid("profile.$phpEx?mode=viewprofile&amp;" . POST_USERS_URL . "=$user_id");
+		$user_posts = ( $shout_row['user_id'] != ANONYMOUS ) ? $lang['Posts'] . ': ' . $shout_row['user_posts'] : '';
+		$user_from = ( $shout_row['user_from'] && $shout_row['user_id'] != ANONYMOUS ) ? $lang['Location'] . ': ' . $shout_row['user_from'] : '';
+		$user_joined = ( $shout_row['user_id'] != ANONYMOUS ) ? $lang['Joined'] . ': ' . create_date($lang['DATE_FORMAT'], $shout_row['user_regdate'], $board_config['board_timezone']) : '';
+		if ( $shout_row['user_avatar_type'] && $user_id != ANONYMOUS && $shout_row['user_allowavatar'] )
 		{
-			$i++;
-			$row_color = ( !($i % 2) ) ? $theme['td_color1'] : $theme['td_color2'];
-			$row_class = ( !($i % 2) ) ? $theme['td_class1'] : $theme['td_class2'];
-			$user_id = $shout_row['shout_user_id'];
-			$shout_username = ( $user_id == ANONYMOUS ) ? (( $shout_row['shout_username'] == '' ) ? $lang['Guest'] : $shout_row['shout_username'] ) : "<a href='".append_sid("profile.$phpEx?mode=viewprofile&amp;" . POST_USERS_URL . "=".$shout_row['shout_user_id'])."' target='_top'>".$shout_row['username']."</a>" ;
-
-			$user_profile = append_sid("profile.$phpEx?mode=viewprofile&amp;" . POST_USERS_URL . "=$user_id");
-			$user_posts = ( $shout_row['user_id'] != ANONYMOUS ) ? $lang['Posts'] . ': ' . $shout_row['user_posts'] : '';
-			$user_from = ( $shout_row['user_from'] && $shout_row['user_id'] != ANONYMOUS ) ? $lang['Location'] . ': ' . $shout_row['user_from'] : '';
-			$user_joined = ( $shout_row['user_id'] != ANONYMOUS ) ? $lang['Joined'] . ': ' . create_date($lang['DATE_FORMAT'], $shout_row['user_regdate'], $board_config['board_timezone']) : '';
-			if ( $shout_row['user_avatar_type'] && $user_id != ANONYMOUS && $shout_row['user_allowavatar'] )
+			switch( $shout_row['user_avatar_type'] )
 			{
-				switch( $shout_row['user_avatar_type'] )
-				{
-					case USER_AVATAR_UPLOAD:
-						$user_avatar = ( $board_config['allow_avatar_upload'] ) ? '<img src="' . $board_config['avatar_path'] . '/' . $shout_row['user_avatar'] . '" alt="" border="0" />' : '';
-						break;
-					case USER_AVATAR_REMOTE:
-						$user_avatar = ( $board_config['allow_avatar_remote'] ) ? '<img src="' . $shout_row['user_avatar'] . '" alt="" border="0" />' : '';
-						break;
-					case USER_AVATAR_GALLERY:
-						$user_avatar = ( $board_config['allow_avatar_local'] ) ? '<img src="' . $board_config['avatar_gallery_path'] . '/' . $shout_row['user_avatar'] . '" alt="" border="0" />' : '';
-						break;
-				}
-				$user_avatar = ($shout_row['user_avatar_url']) ? '<a href="'.$shout_row['user_avatar_url'].'">'.$user_avatar.'</a>' : $user_avatar;
-			} else $user_avatar='';
-			$shout = (! $shout_row['shout_active']) ? $shout_row['shout_text'] : $lang['Shout_censor'].(($is_auth['auth_mod']) ? '<br/><hr/><br/>'.$shout_row['shout_text'] : '');
-			$user_sig = ( $shout_row['enable_sig'] && $shout_row['user_sig'] != '' && $board_config['allow_sig'] ) ? $shout_row['user_sig'] : '';
-			$user_sig_bbcode_uid = $shout_row['user_sig_bbcode_uid'];
+				case USER_AVATAR_UPLOAD:
+					$user_avatar = ( $board_config['allow_avatar_upload'] ) ? '<img src="' . $board_config['avatar_path'] . '/' . $shout_row['user_avatar'] . '" alt="" border="0" />' : '';
+					break;
+				case USER_AVATAR_REMOTE:
+					$user_avatar = ( $board_config['allow_avatar_remote'] ) ? '<img src="' . $shout_row['user_avatar'] . '" alt="" border="0" />' : '';
+					break;
+				case USER_AVATAR_GALLERY:
+					$user_avatar = ( $board_config['allow_avatar_local'] ) ? '<img src="' . $board_config['avatar_gallery_path'] . '/' . $shout_row['user_avatar'] . '" alt="" border="0" />' : '';
+					break;
+			}
+			$user_avatar = ($shout_row['user_avatar_url']) ? '<a href="'.$shout_row['user_avatar_url'].'">'.$user_avatar.'</a>' : $user_avatar;
+		} else $user_avatar='';
+		$shout = (! $shout_row['shout_active']) ? $shout_row['shout_text'] : $lang['Shout_censor'].(($is_auth['auth_mod']) ? '<br/><hr/><br/>'.$shout_row['shout_text'] : '');
+		$user_sig = ( $shout_row['enable_sig'] && $shout_row['user_sig'] != '' && $board_config['allow_sig'] ) ? $shout_row['user_sig'] : '';
+		$user_sig_bbcode_uid = $shout_row['user_sig_bbcode_uid'];
 
 
-			$user_rank = '';
-			$rank_image = '';
-			if ( $shout_row['user_rank'])
+		$user_rank = '';
+		$rank_image = '';
+		if ( $shout_row['user_rank'])
+		{
+			for($j = 0; $j < count($ranksrow); $j++)
 			{
-				for($j = 0; $j < count($ranksrow); $j++)
+				if ( $shout_row['user_rank'] == $ranksrow[$j]['rank_id'] && $ranksrow[$j]['rank_special'] )
 				{
-					if ( $shout_row['user_rank'] == $ranksrow[$j]['rank_id'] && $ranksrow[$j]['rank_special'] )
-					{
-						$user_rank = ($shout_row['user_id'] != ANONYMOUS) ? $ranksrow[$j]['rank_title'] : '';
-						$rank_image = ( $ranksrow[$j]['rank_image'] && $shout_row['user_id'] != ANONYMOUS) ? '<img src="' . $ranksrow[$j]['rank_image'] . '" alt="' . $user_rank . '" title="' . $user_rank . '" border="0" /><br />' : '';
-					}
-				}
-			} else
-			{
-				for($j = 0; $j < count($ranksrow); $j++)
-				{
-					if ( $shout_row['user_posts'] >= $ranksrow[$j]['rank_min'] && !$ranksrow[$j]['rank_special'] )
-					{
-						$user_rank = ($shout_row['user_id'] != ANONYMOUS) ? $ranksrow[$j]['rank_title'] : '';
-						$rank_image = ( $ranksrow[$j]['rank_image'] && $shout_row['user_id'] != ANONYMOUS) ? '<img src="' . $ranksrow[$j]['rank_image'] . '" alt="' . $user_rank . '" title="' . $user_rank . '" border="0" /><br />' : '';
-					}
+					$user_rank = ($shout_row['user_id'] != ANONYMOUS) ? $ranksrow[$j]['rank_title'] : '';
+					$rank_image = ( $ranksrow[$j]['rank_image'] && $shout_row['user_id'] != ANONYMOUS) ? '<img src="' . $ranksrow[$j]['rank_image'] . '" alt="' . $user_rank . '" title="' . $user_rank . '" border="0" /><br />' : '';
 				}
 			}
-
-			if ( $user_sig != '' )
+		} else
+		{
+			for($j = 0; $j < count($ranksrow); $j++)
 			{
-				$user_sig = make_clickable($user_sig);
+				if ( $shout_row['user_posts'] >= $ranksrow[$j]['rank_min'] && !$ranksrow[$j]['rank_special'] )
+				{
+					$user_rank = ($shout_row['user_id'] != ANONYMOUS) ? $ranksrow[$j]['rank_title'] : '';
+					$rank_image = ( $ranksrow[$j]['rank_image'] && $shout_row['user_id'] != ANONYMOUS) ? '<img src="' . $ranksrow[$j]['rank_image'] . '" alt="' . $user_rank . '" title="' . $user_rank . '" border="0" /><br />' : '';
+				}
 			}
-			$message = make_clickable($message);
+		}
 
-	// 
-   	// Highlight active words (primarily for search) 
-   	// 
-   	if ($highlight_match) 
-   	{ 
-      	$shout = str_replace('\"', '"', substr(preg_replace('#(\>(((?>([^><]+|(?R)))*)\<))#se', "preg_replace('#\b(" . $highlight_match . ")\b#i', '<span style=\"color:#" . $theme['fontcolor3'] . "\"><b>\\\\1</b></span>', '\\0')", '>' . $shout . '<'), 1, -1)); 
-   	}
-	//
-	// Replace naughty words
-	//
-	if ( count($orig_word) )
-	{
 		if ( $user_sig != '' )
 		{
-			$user_sig = preg_replace($orig_word, $replacement_word, $user_sig);
+			$user_sig = make_clickable($user_sig);
 		}
-		$shout = preg_replace($orig_word, $replacement_word, $shout);
+		$message = make_clickable($message);
+
+// 
+	// Highlight active words (primarily for search) 
+	// 
+	if ($highlight_match) 
+	{ 
+			$shout = str_replace('\"', '"', substr(preg_replace('#(\>(((?>([^><]+|(?R)))*)\<))#se', "preg_replace('#\b(" . $highlight_match . ")\b#i', '<span style=\"color:#" . $theme['fontcolor3'] . "\"><b>\\\\1</b></span>', '\\0')", '>' . $shout . '<'), 1, -1)); 
 	}
-
-	if ( $smilies_on && $shout != '' && $shout_row['enable_smilies'])
+//
+// Replace naughty words
+//
+if ( count($orig_word) )
+{
+	if ( $user_sig != '' )
 	{
-		$shout = smilies_pass($shout);
-	} 
-	$shout = bbencode_second_pass($shout,$shout_row['shout_bbcode_uid']);
-	$shout = str_replace("\n", "\n<br />\n", $shout);
+		$user_sig = preg_replace($orig_word, $replacement_word, $user_sig);
+	}
+	$shout = preg_replace($orig_word, $replacement_word, $shout);
+}
 
-	if ( $is_auth['auth_mod'] && $is_auth['auth_delete'])
+if ( $smilies_on && $shout != '' && $shout_row['enable_smilies'])
+{
+	$shout = smilies_pass($shout);
+} 
+$shout = bbencode_second_pass($shout,$shout_row['shout_bbcode_uid']);
+$shout = str_replace("\n", "\n<br />\n", $shout);
+
+if ( $is_auth['auth_mod'] && $is_auth['auth_delete'])
+{
+	$temp_url = append_sid("shoutbox_max.$phpEx?mode=ip&amp;" . POST_POST_URL . "=" . $shout_row['shout_id']);
+	$ip_img = '<a href="' . $temp_url . '"><img src="' . $images['icon_ip'] . '" alt="' . $lang['View_IP'] . '" title="' . $lang['View_IP'] . '" border="0" /></a>';
+	$ip = '<a href="' . $temp_url . '">' . $lang['View_IP'] . '</a>';
+
+	$temp_url = append_sid("shoutbox_max.$phpEx?mode=delete&amp;" . POST_POST_URL . "=" . $shout_row['shout_id']);
+	$delshout_img = '<a href="' . $temp_url . '"><img src="' . $images['icon_delpost'] . '" alt="' . $lang['Delete_post'] . '" title="' . $lang['Delete_post'] . '" border="0" /></a>&nbsp;';
+	$delshout = '<a href="' . $temp_url . '">' . $lang['Delete_post'] . '</a>';
+
+	$temp_url = append_sid("shoutbox_max.$phpEx?mode=censor&amp;" . POST_POST_URL . "=" . $shout_row['shout_id']);
+	$censorshout_img = '<a href="' . $temp_url . '"><img src="' . $images['icon_censor'] . '" alt="' . $lang['Censor'] . '" title="' . $lang['Censor'] . '" border="0" /></a>&nbsp;';
+	$censorshout = '<a href="' . $temp_url . '">' . $lang['Delete_post'] . '</a>';
+}
+else
+{
+	$ip_img = '';
+	$ip = '';
+
+	if ( ($userdata['user_id'] == $user_id && $is_auth['auth_delete'] ) &&
+($userdata['user_id'] != ANONYMOUS || ( $userdata['user_id'] == ANONYMOUS && $userdata['session_ip'] == $shout_row['shout_ip'])) 
+)
+
 	{
-		$temp_url = append_sid("shoutbox_max.$phpEx?mode=ip&amp;" . POST_POST_URL . "=" . $shout_row['shout_id']);
-		$ip_img = '<a href="' . $temp_url . '"><img src="' . $images['icon_ip'] . '" alt="' . $lang['View_IP'] . '" title="' . $lang['View_IP'] . '" border="0" /></a>';
-		$ip = '<a href="' . $temp_url . '">' . $lang['View_IP'] . '</a>';
-
-		$temp_url = append_sid("shoutbox_max.$phpEx?mode=delete&amp;" . POST_POST_URL . "=" . $shout_row['shout_id']);
-		$delshout_img = '<a href="' . $temp_url . '"><img src="' . $images['icon_delpost'] . '" alt="' . $lang['Delete_post'] . '" title="' . $lang['Delete_post'] . '" border="0" /></a>&nbsp;';
-		$delshout = '<a href="' . $temp_url . '">' . $lang['Delete_post'] . '</a>';
-
 		$temp_url = append_sid("shoutbox_max.$phpEx?mode=censor&amp;" . POST_POST_URL . "=" . $shout_row['shout_id']);
 		$censorshout_img = '<a href="' . $temp_url . '"><img src="' . $images['icon_censor'] . '" alt="' . $lang['Censor'] . '" title="' . $lang['Censor'] . '" border="0" /></a>&nbsp;';
 		$censorshout = '<a href="' . $temp_url . '">' . $lang['Delete_post'] . '</a>';
 	}
 	else
 	{
-		$ip_img = '';
-		$ip = '';
-
-		if ( ($userdata['user_id'] == $user_id && $is_auth['auth_delete'] ) &&
-($userdata['user_id'] != ANONYMOUS || ( $userdata['user_id'] == ANONYMOUS && $userdata['session_ip'] == $shout_row['shout_ip'])) 
-)
-
-		{
-			$temp_url = append_sid("shoutbox_max.$phpEx?mode=censor&amp;" . POST_POST_URL . "=" . $shout_row['shout_id']);
-			$censorshout_img = '<a href="' . $temp_url . '"><img src="' . $images['icon_censor'] . '" alt="' . $lang['Censor'] . '" title="' . $lang['Censor'] . '" border="0" /></a>&nbsp;';
-			$censorshout = '<a href="' . $temp_url . '">' . $lang['Delete_post'] . '</a>';
-		}
-		else
-		{
-			$delshout_img = '';
-			$delshout = '';
-			$censorshout_img = '';
-			$censorshout = '';
-		}
+		$delshout_img = '';
+		$delshout = '';
+		$censorshout_img = '';
+		$censorshout = '';
 	}
-		$mini_post_img = $images['icon_minipost'];
-		$mini_post_alt = $lang['Post'];
-		$mini_post_url = append_sid("shoutbox_max.$phpEx?" . POST_POST_URL . '=' . $shout_row['shout_id']) . '#' . $shout_row['shout_id'];
+}
+	$mini_post_img = $images['icon_minipost'];
+	$mini_post_alt = $lang['Post'];
+	$mini_post_url = append_sid("shoutbox_max.$phpEx?" . POST_POST_URL . '=' . $shout_row['shout_id']) . '#' . $shout_row['shout_id'];
 
-		$template->assign_block_vars('shoutrow', array(
-			'ROW_COLOR' => '#' . $row_color,
-			'ROW_CLASS' => $row_class,
-			'SHOUT' => $shout,
-			'TIME' => create_date($board_config['default_dateformat'], $shout_row['shout_session_time'], $board_config['board_timezone']),
-			'SHOUT_USERNAME' => $shout_username,
-			'U_VIEW_USER_PROFILE' => $user_profile,
-			'USER_RANK' => $user_rank,
-			'RANK_IMAGE' => $rank_image,
-			'IP_IMG' => $ip_img, 
-			'IP' => $ip, 
+	$template->assign_block_vars('shoutrow', array(
+		'ROW_COLOR' => '#' . $row_color,
+		'ROW_CLASS' => $row_class,
+		'SHOUT' => $shout,
+		'TIME' => create_date($board_config['default_dateformat'], $shout_row['shout_session_time'], $board_config['board_timezone']),
+		'SHOUT_USERNAME' => $shout_username,
+		'U_VIEW_USER_PROFILE' => $user_profile,
+		'USER_RANK' => $user_rank,
+		'RANK_IMAGE' => $rank_image,
+		'IP_IMG' => $ip_img, 
+		'IP' => $ip, 
 
-			'L_MINI_POST_ALT' => $mini_post_alt,
+		'L_MINI_POST_ALT' => $mini_post_alt,
 
-			'MINI_POST_IMG' => $mini_post_img,
-			'DELETE_IMG' => $delshout_img, 
-			'DELETE' => $delshout, 
-			'CENSOR_IMG' => $censorshout_img, 
-			'CENSOR' => $censorshout, 
-			'USER_JOINED' => $user_joined,
-			'USER_POSTS' => $user_posts,
-			'USER_FROM' => $user_from,
-			'USER_AVATAR' => $user_avatar,
-			'U_MINI_POST' => $mini_post_url,
-			'U_SHOUT_ID' => $shout_row['shout_id']
-			));
-	}
+		'MINI_POST_IMG' => $mini_post_img,
+		'DELETE_IMG' => $delshout_img, 
+		'DELETE' => $delshout, 
+		'CENSOR_IMG' => $censorshout_img, 
+		'CENSOR' => $censorshout, 
+		'USER_JOINED' => $user_joined,
+		'USER_POSTS' => $user_posts,
+		'USER_FROM' => $user_from,
+		'USER_AVATAR' => $user_avatar,
+		'U_MINI_POST' => $mini_post_url,
+		'U_SHOUT_ID' => $shout_row['shout_id']
+		));
+}
 
-	//
-	// Show post options
-	//
-	if ( $is_auth['auth_post'] )
-	{
-		$template->assign_block_vars('switch_auth_post', array());
-	}	
-	else
-	{	
-		$template->assign_block_vars('switch_auth_no_post', array());
-	}
-		$template->assign_vars(array( 
-			'USERNAME' => $username,
-			'PAGINATION' => $pagination,
-			'NUMBER_OF_SHOUTS' => $total_shouts,
-			'HTML_STATUS' => $html_status,
-			'BBCODE_STATUS' => sprintf($bbcode_status, '<a href="' . append_sid("faq.$phpEx?mode=bbcode") . '" target="_phpbbcode">', '</a>'), 
-		'L_SHOUTBOX_LOGIN' => $lang['Login_join'],
-		'L_POSTED' => $lang['Posted'], 
-		'L_AUTHOR' => $lang['Author'],
-		'L_MESSAGE' => $lang['Message'],
-	'U_SHOUTBOX' => append_sid("shoutbox_max.$phpEx?start=$start"),
-	'T_NAME' => $theme['template_name'],
+//
+// Show post options
+//
+if ( $is_auth['auth_post'] )
+{
+	$template->assign_block_vars('switch_auth_post', array());
+}	
+else
+{	
+	$template->assign_block_vars('switch_auth_no_post', array());
+}
+	$template->assign_vars(array( 
+		'USERNAME' => $username,
+		'PAGINATION' => $pagination,
+		'NUMBER_OF_SHOUTS' => $total_shouts,
+		'HTML_STATUS' => $html_status,
+		'BBCODE_STATUS' => sprintf($bbcode_status, '<a href="' . append_sid("faq.$phpEx?mode=bbcode") . '" target="_phpbbcode">', '</a>'), 
+	'L_SHOUTBOX_LOGIN' => $lang['Login_join'],
+	'L_POSTED' => $lang['Posted'], 
+	'L_AUTHOR' => $lang['Author'],
+	'L_MESSAGE' => $lang['Message'],
+'U_SHOUTBOX' => append_sid("shoutbox_max.$phpEx?start=$start"),
+'T_NAME' => $theme['template_name'],
 'T_URL' => "templates/".$theme['template_name'],
-	'L_SHOUTBOX' => $lang['Shoutbox'],
-	'L_SHOUT_PREVIEW' => $lang['Preview'],
-	'L_SHOUT_SUBMIT' => $lang['Go'],
-	'L_SHOUT_TEXT' => $lang['Shout_text'],
-	'L_SHOUT_REFRESH' => $lang['Shout_refresh'],
-	'S_HIDDEN_FIELDS' => $s_hidden_fields,
+'L_SHOUTBOX' => $lang['Shoutbox'],
+'L_SHOUT_PREVIEW' => $lang['Preview'],
+'L_SHOUT_SUBMIT' => $lang['Go'],
+'L_SHOUT_TEXT' => $lang['Shout_text'],
+'L_SHOUT_REFRESH' => $lang['Shout_refresh'],
+'S_HIDDEN_FIELDS' => $s_hidden_fields,
 
-	'SMILIES_STATUS' => $smilies_status,
-	'L_BBCODE_B_HELP' => $lang['bbcode_b_help'], 
-	'L_BBCODE_I_HELP' => $lang['bbcode_i_help'], 
-	'L_BBCODE_U_HELP' => $lang['bbcode_u_help'], 
-	'L_BBCODE_Q_HELP' => $lang['bbcode_q_help'], 
-	'L_BBCODE_C_HELP' => $lang['bbcode_c_help'], 
-	'L_BBCODE_L_HELP' => $lang['bbcode_l_help'], 
-	'L_BBCODE_O_HELP' => $lang['bbcode_o_help'], 
-	'L_BBCODE_P_HELP' => $lang['bbcode_p_help'], 
-	'L_BBCODE_W_HELP' => $lang['bbcode_w_help'], 
-	'L_BBCODE_A_HELP' => $lang['bbcode_a_help'], 
-	'L_BBCODE_S_HELP' => $lang['bbcode_s_help'], 
-	'L_BBCODE_F_HELP' => $lang['bbcode_f_help'], 
-	'L_EMPTY_MESSAGE' => $lang['Empty_message'],
+'SMILIES_STATUS' => $smilies_status,
+'L_BBCODE_B_HELP' => $lang['bbcode_b_help'], 
+'L_BBCODE_I_HELP' => $lang['bbcode_i_help'], 
+'L_BBCODE_U_HELP' => $lang['bbcode_u_help'], 
+'L_BBCODE_Q_HELP' => $lang['bbcode_q_help'], 
+'L_BBCODE_C_HELP' => $lang['bbcode_c_help'], 
+'L_BBCODE_L_HELP' => $lang['bbcode_l_help'], 
+'L_BBCODE_O_HELP' => $lang['bbcode_o_help'], 
+'L_BBCODE_P_HELP' => $lang['bbcode_p_help'], 
+'L_BBCODE_W_HELP' => $lang['bbcode_w_help'], 
+'L_BBCODE_A_HELP' => $lang['bbcode_a_help'], 
+'L_BBCODE_S_HELP' => $lang['bbcode_s_help'], 
+'L_BBCODE_F_HELP' => $lang['bbcode_f_help'], 
+'L_EMPTY_MESSAGE' => $lang['Empty_message'],
 
-	'L_FONT_COLOR' => $lang['Font_color'], 
-	'L_COLOR_DEFAULT' => $lang['color_default'], 
-	'L_COLOR_DARK_RED' => $lang['color_dark_red'], 
-	'L_COLOR_RED' => $lang['color_red'], 
-	'L_COLOR_ORANGE' => $lang['color_orange'], 
-	'L_COLOR_BROWN' => $lang['color_brown'], 
-	'L_COLOR_YELLOW' => $lang['color_yellow'], 
-	'L_COLOR_GREEN' => $lang['color_green'], 
-	'L_COLOR_OLIVE' => $lang['color_olive'], 
-	'L_COLOR_CYAN' => $lang['color_cyan'], 
-	'L_COLOR_BLUE' => $lang['color_blue'], 
-	'L_COLOR_DARK_BLUE' => $lang['color_dark_blue'], 
-	'L_COLOR_INDIGO' => $lang['color_indigo'], 
-	'L_COLOR_VIOLET' => $lang['color_violet'], 
-	'L_COLOR_WHITE' => $lang['color_white'], 
-	'L_COLOR_BLACK' => $lang['color_black'], 
+'L_FONT_COLOR' => $lang['Font_color'], 
+'L_COLOR_DEFAULT' => $lang['color_default'], 
+'L_COLOR_DARK_RED' => $lang['color_dark_red'], 
+'L_COLOR_RED' => $lang['color_red'], 
+'L_COLOR_ORANGE' => $lang['color_orange'], 
+'L_COLOR_BROWN' => $lang['color_brown'], 
+'L_COLOR_YELLOW' => $lang['color_yellow'], 
+'L_COLOR_GREEN' => $lang['color_green'], 
+'L_COLOR_OLIVE' => $lang['color_olive'], 
+'L_COLOR_CYAN' => $lang['color_cyan'], 
+'L_COLOR_BLUE' => $lang['color_blue'], 
+'L_COLOR_DARK_BLUE' => $lang['color_dark_blue'], 
+'L_COLOR_INDIGO' => $lang['color_indigo'], 
+'L_COLOR_VIOLET' => $lang['color_violet'], 
+'L_COLOR_WHITE' => $lang['color_white'], 
+'L_COLOR_BLACK' => $lang['color_black'], 
 
-	'L_FONT_SIZE' => $lang['Font_size'], 
-	'L_FONT_TINY' => $lang['font_tiny'], 
-	'L_FONT_SMALL' => $lang['font_small'], 
-	'L_FONT_NORMAL' => $lang['font_normal'], 
-	'L_FONT_LARGE' => $lang['font_large'], 
-	'L_FONT_HUGE' => $lang['font_huge'], 
-	'L_DISABLE_HTML' => $lang['Disable_HTML_post'], 
-	'L_DISABLE_BBCODE' => $lang['Disable_BBCode_post'], 
-	'L_DISABLE_SMILIES' => $lang['Disable_Smilies_post'], 
+'L_FONT_SIZE' => $lang['Font_size'], 
+'L_FONT_TINY' => $lang['font_tiny'], 
+'L_FONT_SMALL' => $lang['font_small'], 
+'L_FONT_NORMAL' => $lang['font_normal'], 
+'L_FONT_LARGE' => $lang['font_large'], 
+'L_FONT_HUGE' => $lang['font_huge'], 
+'L_DISABLE_HTML' => $lang['Disable_HTML_post'], 
+'L_DISABLE_BBCODE' => $lang['Disable_BBCode_post'], 
+'L_DISABLE_SMILIES' => $lang['Disable_Smilies_post'], 
 
-	'L_BBCODE_CLOSE_TAGS' => $lang['Close_Tags'], 
-	'L_STYLES_TIP' => $lang['Styles_tip'],
-	'S_HTML_CHECKED' => ( !$html_on ) ? 'checked="checked"' : '', 
-	'S_BBCODE_CHECKED' => ( !$bbcode_on ) ? 'checked="checked"' : '', 
-	'S_SMILIES_CHECKED' => ( !$smilies_on ) ? 'checked="checked"' : ''
+'L_BBCODE_CLOSE_TAGS' => $lang['Close_Tags'], 
+'L_STYLES_TIP' => $lang['Styles_tip'],
+'S_HTML_CHECKED' => ( !$html_on ) ? 'checked="checked"' : '', 
+'S_BBCODE_CHECKED' => ( !$bbcode_on ) ? 'checked="checked"' : '', 
+'S_SMILIES_CHECKED' => ( !$smilies_on ) ? 'checked="checked"' : ''
 
-	));
+));
 
-	if( $error_msg != '' )
-	{
-		$template->set_filenames(array(
-			'reg_header' => 'error_body.tpl')
-		);
-		$template->assign_vars(array(
-			'ERROR_MESSAGE' => $error_msg)
-		);
-		$template->assign_var_from_handle('ERROR_BOX', 'reg_header');
-		$message = ( !empty($_POST['message']) ) ? htmlspecialchars(trim(stripslashes($_POST['message']))) : '';
-		$template->assign_vars(array('MESSAGE' => $message));
-	}
+if( $error_msg != '' )
+{
+	$template->set_filenames(array(
+		'reg_header' => 'error_body.tpl')
+	);
+	$template->assign_vars(array(
+		'ERROR_MESSAGE' => $error_msg)
+	);
+	$template->assign_var_from_handle('ERROR_BOX', 'reg_header');
+	$message = ( !empty($_POST['message']) ) ? htmlspecialchars(trim(stripslashes($_POST['message']))) : '';
+	$template->assign_vars(array('MESSAGE' => $message));
+}
 
  $template->pparse('body'); 
 

@@ -144,10 +144,43 @@ if ( $is_called == FALSE )
 		return in_array(get_user_level($userdata),$admin_level);
 	}
 
+	// Integramod-specific function
+	// TODO move
+	function get_user_color_html($user, $user_level = null)
+	{
+		if (false)
+		{
+			// TODO per-group
+			return;
+		}
+		if (empty($user_level))
+		{
+			$user_level = get_user_level($user);
+		}
+		return ' class="'.get_user_level_class($user_level, 'gen', $user).'"';
+	}
+
+	function colorize_username($user, $user_level = null, $user_name = null)
+	{
+		global $lang;
+
+		if (isset($user['user_id']) && $user['user_id'] === ANONYMOUS)
+		{
+			return $lang['Guest'];
+		}
+
+		if (empty($user_name))
+		{
+			$user_name = $user['username'];
+		}
+
+		return '<span ' . get_user_color_html($user, $user_level) . '>'.$user_name.'</span>';
+	}
+
 	function get_user_level_class($user_level, $default='gen', $user=array())
 	{
 		$ret = $default;
-		if (!empty($user)) $user_level = get_user_level($user);
+		if (!empty($user) && empty($user_level)) $user_level = get_user_level($user);
 		switch( $user_level )
 		{
 				case ADMIN_FOUNDER:
