@@ -12,7 +12,7 @@
 if( !empty($setmodules) )
 {
 	$file = basename(__FILE__);
-	$module['Download'][$lang['Settings']] = $file;
+	$module['Download']['Settings'] = $file;
 	return;
 }
 

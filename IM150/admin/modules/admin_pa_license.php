@@ -13,9 +13,9 @@ if( !empty($setmodules) )
 {
 	$file = basename(__FILE__);
 // MX mod
-    $module['Download'][$lang['License_title']] = $file;    
-//    $module['Download'][$lang['Alicense']] = "$file?license=add";    
-//    $module['Download'][$lang['Elicense']] = "$file?license=edit";    
+    $module['Download']['License_title'] = $file;
+//    $module['Download'][$lang['Alicense']] = "$file?license=add";
+//    $module['Download'][$lang['Elicense']] = "$file?license=edit";
 //    $module['Download'][$lang['Dlicense']] = "$file?license=delete";
 	return;
 }

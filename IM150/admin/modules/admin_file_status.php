@@ -17,21 +17,16 @@ style permissions, numerical permissions, errors.
 That is all, I hope you enjoy it and thanks for using it.
 */
 
-  header('Cache-control: private, no-cache, must-revalidate');
-  header('Expires: Sat, 01 Jan 2000 00:00:00 GMT');
-  header('Date: Sat, 01 Jan 2000 00:00:00 GMT');
-  header('Pragma: no-cache');
-
 define('IN_PHPBB', TRUE);
 
-	if (!empty($setmodules))
-		{
+if (!empty($setmodules))
+{
 	$file = basename(__FILE__);
-	
+
 	$module['Tools']['File Status']    = append_sid("modules/admin_file_status.$phpEx?");		
 
 	return;
-		}
+}
 ?>
 
 <html>

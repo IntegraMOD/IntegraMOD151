@@ -13,7 +13,7 @@
 if( !empty($setmodules) )
 {
 	$file = basename(__FILE__);
-	$module['Download'][$lang['Fchecker']] = $file;
+	$module['Download']['Fchecker'] = $file;
 	return;
 }
 

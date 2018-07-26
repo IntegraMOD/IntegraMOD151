@@ -5,23 +5,19 @@
  redistributing it over the Internet or in any other medium. In all cases copyright must remain intact.
 *********************************************************************************************************/
 
-  header('Cache-control: private, no-cache, must-revalidate');
-  header('Expires: Sat, 01 Jan 2000 00:00:00 GMT');
-  header('Date: Sat, 01 Jan 2000 00:00:00 GMT');
-  header('Pragma: no-cache');
 
 define('IN_PHPBB', TRUE);
 
-	if (!empty($setmodules))
-		{
+if (!empty($setmodules))
+{
 	$file = basename(__FILE__);
 
-if ( ($userdata['user_level'] == ADMIN) && ($userdata['user_id'] == 2) )
+	if ( ($userdata['user_level'] == ADMIN) && ($userdata['user_id'] == 2) )
 	{
-	$module['Tools']['Filemanager']    = append_sid("./filemanager/filemanager.$phpEx?");		
+		$module['Tools']['Filemanager']    = append_sid("./filemanager/filemanager.$phpEx?");		
 	}
 
 	return;
-		}
+}
 
 ?>
