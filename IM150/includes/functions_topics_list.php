@@ -55,7 +55,7 @@ include_once($phpbb_root_path . './includes/bbcode.' . $phpEx);
 // ---------------------------------
 // standard sql request in order to fill the topic_rowset array :
 // ---------------------------------
-// $sql = "SELECT t.*, u.username, u.user_id, u2.username as user2, u2.user_id as id2, p.post_username, p2.post_username AS post_username2, p2.post_time 
+// $sql = "SELECT t.*, u.username, u.user_id, u.user_level, u2.username as user2, u2.user_id as id2, p.post_username, p2.post_username AS post_username2, p2.post_time 
 //	FROM " . TOPICS_TABLE . " t, " . USERS_TABLE . " u, " . POSTS_TABLE . " p, " . POSTS_TABLE . " p2, " . USERS_TABLE . " u2
 //	WHERE t.topic_poster = u.user_id
 //		AND p.post_id = t.topic_first_post_id
@@ -473,14 +473,14 @@ function topic_list($box, $tpl='', $topic_rowset, $list_title='', $split_type=fa
 			default:
 				$view_topic_url		= append_sid("viewtopic.$phpEx?" . POST_TOPIC_URL . "=$topic_id");
 				$topic_author		= ( $topic_rowset[$i]['user_id'] != ANONYMOUS ) ? '<a href="' . append_sid("profile.$phpEx?mode=viewprofile&amp;" . POST_USERS_URL . '=' . $topic_rowset[$i]['user_id']) . '">' : '';
-				$topic_author		.= ( $topic_rowset[$i]['user_id'] != ANONYMOUS ) ? $topic_rowset[$i]['username'] : ( ( $topic_rowset[$i]['post_username'] != '' ) ? $topic_rowset[$i]['post_username'] : $lang['Guest'] );
+				$topic_author		.= ( $topic_rowset[$i]['user_id'] != ANONYMOUS ) ? colorize_username($topic_rowset[$i]) : ( ( $topic_rowset[$i]['post_username'] != '' ) ? $topic_rowset[$i]['post_username'] : $lang['Guest'] );
 				$topic_author		.= ( $topic_rowset[$i]['user_id'] != ANONYMOUS ) ? '</a>' : '';
 //-- mod : today at   yesterday at ------------------------------------------------------------------------ 
 //-- add 
 				$first_post_time   = create_date_day($board_config['default_dateformat'], $topic_rowset[$i]['topic_time'], $board_config['board_timezone']); 
 				$last_post_time      = create_date_day($board_config['default_dateformat'], $topic_rowset[$i]['post_time'], $board_config['board_timezone']); 
 //-- end mod : today at   yesterday at ------------------------------------------------------------------------ 
-				$last_post_author	= ( $topic_rowset[$i]['id2'] == ANONYMOUS ) ? ( ($topic_rowset[$i]['post_username2'] != '' ) ? $topic_rowset[$i]['post_username2'] . ' ' : $lang['Guest'] . ' ' ) : '<a href="' . append_sid("profile.$phpEx?mode=viewprofile&amp;" . POST_USERS_URL . '='  . $topic_rowset[$i]['id2']) . '">' . $topic_rowset[$i]['user2'] . '</a>';
+				$last_post_author	= ( $topic_rowset[$i]['id2'] == ANONYMOUS ) ? ( ($topic_rowset[$i]['post_username2'] != '' ) ? $topic_rowset[$i]['post_username2'] . ' ' : $lang['Guest'] . ' ' ) : '<a href="' . append_sid("profile.$phpEx?mode=viewprofile&amp;" . POST_USERS_URL . '='  . $topic_rowset[$i]['id2']) . '">' . colorize_username(array(), $topic_rowset[$i]['level2'], $topic_rowset[$i]['user2'], $topic_rowset[$i]['id2']) . '</a>';
 				$last_post_url		= '<a href="' . append_sid("viewtopic.$phpEx?"  . POST_POST_URL . '=' . $topic_rowset[$i]['topic_last_post_id']) . '#' . $topic_rowset[$i]['topic_last_post_id'] . '"><img src="' . $images['icon_latest_reply'] . '" alt="' . $lang['View_latest_post'] . '" title="' . $lang['View_latest_post'] . '" border="0" /></a>';
 				$views				= $topic_rowset[$i]['topic_views'];
 				$news_label = ( $topic_rowset[$i]['news_id'] > 0 ) ? '[ ' . $lang['News'] . ' ] ' : '';
