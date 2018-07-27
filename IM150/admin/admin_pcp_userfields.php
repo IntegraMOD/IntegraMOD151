@@ -21,7 +21,9 @@
  ***************************************************************************/
 
 define('IN_PHPBB', true);
-define('CT_SECLEVEL', 'LOW');
+define('CT_SECLEVEL', 'MEDIUM');
+$ct_ignoregvar = array('field');
+$ct_ignorepvar = array('field');
 
 if( !empty($setmodules) )
 {

@@ -22,7 +22,7 @@
 
 define('IN_PHPBB', true);
 define('CT_SECLEVEL', 'MEDIUM');
-$ct_ignorepvar = array('sql_def');
+$ct_ignorepvar = array('sql_def', 'field', 'user_field', 'config_field');
 
 if( !empty($setmodules) )
 {
