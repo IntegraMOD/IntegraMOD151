@@ -841,6 +841,10 @@ function init_userprefs($userdata)
       //-- end mod : today at   yesterday at updates by evolver				
 
 		include($phpbb_root_path . 'language/lang_' . $board_config['default_lang'] . '/lang_main.' . $phpEx);
+		// IntegraMOD Ez ADR Integration
+		include($phpbb_root_path . 'adr/language/lang_' . $board_config['default_lang'] . '/lang_adr_common_main.' . $phpEx); 
+		include($phpbb_root_path . 'adr/language/lang_' . $board_config['default_lang'] . '/lang_adr_TownMap_main.' . $phpEx); 
+		// END IntegraMOD Ez ADR Integration
 		include($phpbb_root_path . 'language/lang_' . $board_config['default_lang'] . '/lang_cback_ctracker.' . $phpEx);
 	//-- mod : language settings -----------------------------------------------------------------------
 	//-- add
@@ -868,6 +872,9 @@ function init_userprefs($userdata)
 			}
 
 			include($phpbb_root_path . 'language/lang_' . $board_config['default_lang'] . '/lang_admin.' . $phpEx);
+			// IntegraMOD Ez ADR Integration
+			include_once($phpbb_root_path . 'adr/language/lang_' . $board_config['default_lang'] . '/lang_adr_common_admin.' . $phpEx); 
+			// END IntegraMOD Ez ADR Integration
 			include($phpbb_root_path . 'language/lang_' . $board_config['default_lang'] . '/lang_admin_captcha.' . $phpEx);
 		}
 

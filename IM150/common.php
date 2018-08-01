@@ -437,4 +437,6 @@ if (!empty($_GET['lofi']) || !empty($_COOKIE['lofi']))
 }
 //End Lo-Fi Mod
 
-?>
+// IntegraMOD Ez ADR Integration
+include_once($phpbb_root_path . 'adr/includes/adr_functions_alone.'.$phpEx); 
+// END IntegraMOD Ez ADR Integration

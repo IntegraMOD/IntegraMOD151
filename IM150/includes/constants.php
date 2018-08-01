@@ -400,3 +400,14 @@ define('CASH_LOGS_TABLE', $table_prefix.'cash_log');
 //
 //=============[ END Cash mod Defines ]=========================
 //
+// IntegraMOD Ez ADR Integration
+define('RABBITOSHI_CONFIG_TABLE',$table_prefix.'rabbitoshi_config'); 
+define('RABBITOSHI_GENERAL_TABLE',$table_prefix.'rabbitoshi_general'); 
+define('RABBITOSHI_SHOP_TABLE',$table_prefix.'rabbitoshi_shop'); 
+define('RABBITOSHI_SHOP_USERS_TABLE',$table_prefix.'rabbitoshi_shop_users'); 
+define('RABBITOSHI_USERS_TABLE',$table_prefix.'rabbitoshi_users'); 
+define('PAGE_ADR', -9900);
+define('PAGE_RAB', -9901);
+// END IntegraMOD Ez ADR Integration
+
+?>
