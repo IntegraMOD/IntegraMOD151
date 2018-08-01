@@ -1636,9 +1636,14 @@ class Template {
 					$compiled[] = $keyword_str;
 					continue;
 				}
+				$include_filename = $params_str;
+				if (false === strpos($include_filename, '.tpl'))
+				{
+					$include_filename .= '.tpl';
+				}
 				$line = '<'.'?php ';
 				$filehash = md5($params_str . $this->include_count . time());
-				$line .= ' $this->set_filename(\'xs_include_' . $filehash . '\', \'' . $params_str .'\', true); ';
+				$line .= ' $this->set_filename(\'xs_include_' . $filehash . '\', \'' . $include_filename .'\', true); ';
 				$line .= ' $this->pparse(\'xs_include_' . $filehash . '\'); ';
 				$line .= ' ?'.'>';
 				$this->include_count ++;
