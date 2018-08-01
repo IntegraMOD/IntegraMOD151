@@ -1,0 +1,262 @@
+<?php
+
+if ( defined ('IN_ADR_ZONES_ADMIN'))
+{
+   $lang['Adr_Zone_acp_title']='Configurations des Zones';
+   $lang['Adr_Zone_acp_title_explain']='Ici vous pouvez créer, editer et supprimer les zones';
+   $lang['Adr_Zone_acp_settings_title']='Configurations de base';
+   $lang['Adr_Zone_acp_name']='Nom de la zone';
+   $lang['Adr_Zone_acp_name_explain']='Mettez ici le nom de votre zone';
+   $lang['Adr_Zone_acp_desc']='Description de la zone';
+   $lang['Adr_Zone_acp_desc_explain']='Ajoutez une description à votre zone qui renseignera les personnages du milieu dans lequel ils se trouvent.';
+   $lang['Adr_Zone_acp_img']='Image de la zone';
+   $lang['Adr_Zone_acp_img_explain']='Mettez ici l\'image que vous souhaitez utiliser pour votre zone<br \>Attention ! Uniquement les images en .jpg fonctionneront';
+   $lang['Adr_Zone_acp_element']='Element de la zone';
+   $lang['Adr_Zone_acp_element_explain']='Choisissez l\'élément prédominant de la zone';
+   $lang['Adr_Zone_acp_destination1']='Destination Spéciale';
+   $lang['Adr_Zone_acp_destination1_explain']='Choisissez la destination spéciale<br \>Attention ! Vous devez choisir une destination spéciale.';
+   $lang['Adr_Zone_acp_destination2']='Sud';
+   $lang['Adr_Zone_acp_destination2_explain']='Choisissez la destination du sud<br \>Cette destination est aussi facultative, vous pouvez la laisser vierge';
+   $lang['Adr_Zone_acp_destination3']='Est';
+   $lang['Adr_Zone_acp_destination3_explain']='Choisissez la destination de l\'est<br \>Cette destination est aussi facultative, vous pouvez la laisser vierge';
+   $lang['Adr_Zone_acp_destination4']='Ouest';
+   $lang['Adr_Zone_acp_destination4_explain']='Choisissez la destination de l\'ouest<br \>Cette destination est aussi facultative, vous pouvez la laisser vierge';
+   $lang['Adr_Zone_acp_return']='Nord';
+   $lang['Adr_Zone_acp_return_explain']='Choisissez la destination du nord<br \>Cette destination est aussi facultative, vous pouvez la laisser vierge';
+   $lang['Adr_Zone_acp_destination1_cost']='Prix de la destination spéciale';
+   $lang['Adr_Zone_acp_destination1_cost_explain']='Choisissez un prix pour la route spécial.<br \>Si vous ne voulez pas de restriction de prix laissé 0';
+   $lang['Adr_Zone_acp_destination2_cost']='Prix de la route sud';
+   $lang['Adr_Zone_acp_destination2_cost_explain']='Choisissez un prix pour la route sud.<br \>Si vous ne voulez pas de restriction de prix laissé 0';
+   $lang['Adr_Zone_acp_destination3_cost']='Prix de la route est';
+   $lang['Adr_Zone_acp_destination3_cost_explain']='Choisissez un prix pour la route est.<br \>Si vous ne voulez pas de restriction de prix laissé 0';
+   $lang['Adr_Zone_acp_destination4_cost']='Prix de la route ouest';
+   $lang['Adr_Zone_acp_destination4_cost_explain']='Choisissez un prix pour la route ouest.<br \>Si vous ne voulez pas de restriction de prix laissé 0';
+   $lang['Adr_Zone_acp_return_cost']='Prix de la route nord';
+   $lang['Adr_Zone_acp_return_cost_explain']='Choisissez un prix pour la route nord.<br \>Si vous ne voulez pas de restriction de prix laissé 0';
+   $lang['Adr_Zone_acp_temple']='Disponibilité du Temple';
+   $lang['Adr_Zone_acp_temple_explain']='Cochez la case pour que le temple soit disponible dans cette zone';
+   $lang['Adr_Zone_acp_forge']='Disponibilité de la Forge';
+   $lang['Adr_Zone_acp_forge_explain']='Cochez la case pour que la forge soit disponible dans cette zone';
+   $lang['Adr_Zone_acp_mine']='Disponibilité de la Mine';
+   $lang['Adr_Zone_acp_mine_explain']='Cochez la case pour que la mine soit disponible dans cette zone';
+   $lang['Adr_Zone_acp_enchant']='Disponibilité de l\'autel d\'enchantement';
+   $lang['Adr_Zone_acp_enchant_explain']='Cochez la case pour que l\'autel d\'enchantement soit disponible dans cette zone';
+   $lang['Adr_Zone_acp_bank']='Disponibilité de la Banque';
+   $lang['Adr_Zone_acp_bank_explain']='Cochez la case pour que la banque soit disponible dans cette zone';
+   $lang['Adr_Zone_acp_prison']='Disponibilité de la Prison';
+   $lang['Adr_Zone_acp_prison_explain']='Cochez la case pour que la prison soit disponible dans cette zone';
+   $lang['Adr_Zone_acp_shops']='Disponibilité des Magasins';
+   $lang['Adr_Zone_acp_shops_explain']='Cochez la case pour que les magasins soient disponibles dans cette zone';
+   $lang['Adr_Zone_acp_config']='Configurations de la Navigation';
+   $lang['Adr_Zone_acp_buildings']='Configurations des Batiments';
+   $lang['Adr_Zone_acp_events']='Configurations des Evenements';
+   $lang['Adr_Zone_acp_chance']='Chance &Eacute;vènements';
+   $lang['Adr_Zone_acp_chance_explain']='Mettez ici le pourcentage de chance pour lequel un évènement peut survenir<br \>Laissez 0 pour ne pas activer les évènements.';
+   $lang['Adr_Zone_acp_pointwin1']='Points recus minimum';
+   $lang['Adr_Zone_acp_pointwin1_explain']='Nombre de points minimum que vous pouvez recevoir lors d\'un évènement';
+   $lang['Adr_Zone_acp_pointwin2']='Points recus maximum';
+   $lang['Adr_Zone_acp_pointwin2_explain']='Nombre de points maximum que vous pouvez recevoir lors d\'un évènement';
+   $lang['Adr_Zone_acp_pointloss1']='Points perdus minimum';
+   $lang['Adr_zone_acp_item_nothing']='Pas d\'objet';
+   $lang['Adr_Zone_acp_pointloss1_explain']='Nombre de points minimum que vous pouvez perdre lors d\'un évènement';
+   $lang['Adr_Zone_acp_pointloss2']='Points perdus maximum';
+   $lang['Adr_Zone_acp_pointloss2_explain']='Nombre de points maximum que vous pouvez perdre lors d\'un évènement';
+   $lang['Adr_Zone_acp_event1']='Gain de points';
+   $lang['Adr_Zone_acp_event1_explain']='Le personnage gagne de l\'argent<br \>Cochez la case pour autoriser le gain de points dans la zone';
+   $lang['Adr_Zone_acp_event2']='Perte de points';
+   $lang['Adr_Zone_acp_event2_explain']='Le personnage perd de l\'argent<br \>Cochez la case pour autoriser la perte de points dans la zone';
+   $lang['Adr_Zone_acp_event3']='Fontaine de Jouvence';
+   $lang['Adr_Zone_acp_event3_explain']='Le personnage récupère tous ses points de vie<br \>Cochez la case pour autoriser la fontaine de jouvence dans la zone';
+   $lang['Adr_Zone_acp_event4']='Fontaine de Mana';
+   $lang['Adr_Zone_acp_event4_explain']='Le personnage récupère tous ses points de mana<br \>Cochez la case pour autoriser la fontaine de mana dans la zone';
+   $lang['Adr_Zone_acp_event5']='Empoisonnement';
+   $lang['Adr_Zone_acp_event5_explain']='Le personnage perd tous ses points de vie (il ne lui en restera qu\'un point de vie)<br \>Cochez la case pour autoriser l\'empoisonnement dans la zone';
+   $lang['Adr_Zone_acp_event6']='Affaiblissement';
+   $lang['Adr_Zone_acp_event6_explain']='Le personnage perd tous ses points de mana<br \>Cochez la case pour autoriser l\'affaiblissement dans la zone';
+   $lang['Adr_Zone_acp_event7']='Gain d\'objets';
+   $lang['Adr_Zone_acp_event7_explain']='Le personnage recoit un objet spécifique à la zone<br \>Cochez la case pour autoriser le gain d\'objets dans la zone';
+   $lang['Adr_Zone_acp_event8']='Embuscade';
+   $lang['Adr_Zone_acp_event8_explain']='Le personnage perd de l\'argent et est envoyé au combat<br \>Cochez la case pour autoriser l\'embuscade dans la zone';
+   $lang['Adr_Zone_acp_add']='Ajouter une zone';
+   $lang['Adr_zone_add_success']='Zone ajoutée avec succès';
+   $lang['Adr_zone_edit_success']='Zone éditée avec succès';
+   $lang['Adr_zone_successful_deleted']='Zone supprimée avec succès';
+   $lang['Adr_zone_default_undeletable']='Vous ne pouvez pas supprimer la zone par défaut';
+   $lang['Adr_zone_acp_choose_element']='Choisir un élément';
+   $lang['Adr_zone_acp_choose_destination']='Choisir une destination';
+   $lang['Adr_zone_acp_choose_nothing']='Pas de destination';
+   $lang['Adr_Zone_acp_npc_title']='Personnages Non Joueurs';
+   $lang['Adr_Zone_acp_item']='Objet requis pour entrer dans cette zone';
+   $lang['Adr_Zone_acp_item_explain']='Choisissez un objet que le membre devra avoir dans son inventaire pour pouvoir entrer dans cette zone';
+   $lang['Adr_zone_acp_general_title']='Configuration Générale des zones';
+   $lang['Adr_zone_acp_general_explain']='Configurez ici les options générales pour les zones';
+   $lang['Adr_zone_acp_dead_travel']='Cocher pour empecher les voyages en étant mort';
+   $lang['Adr_zone_acp_bonus_stat']='Cocher pour activer les bonus sur une zone du même élément que le personnage';
+   $lang['Adr_zone_acp_bonus_att']='Bonus en Attaque pour une zone du même élément';
+   $lang['Adr_zone_acp_bonus_def']='Bonus en Défense pour une zone du même élément';
+   $lang['Adr_zone_acp_submit']='Envoyer';
+   $lang['Adr_zone_general_change_successful']='Configurations générales changées avec succès';
+   $lang['Adr_zone_acp_race_zone']='Choisissez la zone de départ pour cette race';
+   $lang['Adr_zone_acp_race_zone_explain']='Selon la race choisie, le personnage debutera dans une zone différente';
+   $lang['Adr_zone_acp_race_zone_list']='Zone';
+   $lang['Adr_Zone_acp_battle']='Combat';
+   $lang['Adr_Zone_acp_monsters_list']='Quels monstres apparaîtront dans cette zone ?';
+   $lang['Adr_Zone_acp_monsters_list_explain']='Comme pour toutes les sélections, gardez CTRL appuyé pour sélectionner plusieurs éléments ou MAJ pour sélectionner d\'un monstre A à B. Si vous ne voulez pas avoir de monstre dans cette zone, ne sélectionnez rien';
+   $lang['Adr_zones_all_monsters']='-Tous les monstres-';
+   $lang['Adr_zones_monster_level']='Niv.';
+}
+
+
+if ( defined ('IN_ADR_ZONES'))
+{
+   $lang['Adr_zone_buildings_title']='Bâtiments Disponibles';
+   $lang['Adr_zone_action_title']='Zones Actions';
+   $lang['Adr_zone_connected_title']='Personnages Connectés';
+   $lang['Adr_zone_connected']='Personnages également dans cette zone';
+   $lang['Adr_zone_description_title']='Description de la zone';
+   $lang['Adr_zone_element_title']='Element de la zone';
+   $lang['Adr_zone_season_title']='Saison';
+   $lang['Adr_zone_weather_title']='Temps';
+   $lang['Adr_zone_goto_title']='Destinations à partir de cette zone';
+   $lang['Adr_zone_goto1_title']='Destination spéciale';
+   $lang['Adr_zone_goto2_title']='Sud';
+   $lang['Adr_zone_goto3_title']='Est';
+   $lang['Adr_zone_goto4_title']='Ouest';
+   $lang['Adr_zone_return_title']='Nord';
+   $lang['Adr_zone_cost_title']='Prix du trajet';
+   $lang['Adr_zone_town_title']='Village';
+   $lang['Adr_zone_battle_title']='Combats';
+   $lang['Adr_zone_other_title']='Shoutbox';
+   $lang['Adr_zone_goto']='Aller';
+   $lang['Adr_zone_goto_bank']='Banque';
+   $lang['Adr_zone_goto_temple']='Temple';
+   $lang['Adr_zone_goto_shops']='Magasins';
+   $lang['Adr_zone_goto_forge']='Forge';
+   $lang['Adr_zone_goto_mine']='Mine';
+   $lang['Adr_zone_goto_enchant']='Autel d\'enchantement';
+   $lang['Adr_zone_goto_prison']='Prison';
+   $lang['Adr_zone_building_disable']='Indisponible';
+   $lang['Adr_zone_change_success']='Vous êtes arrivé à la nouvelle zone avec succès !';
+   $lang['Adr_zone_change_failed']='Vous n\'avez pas assez d\'argent pour effectuer ce trajet';
+   $lang['Adr_zone_points']='Vos possessions';
+   $lang['Adr_zone_battle']='Monstres';
+   $lang['Adr_zone_pvp_battle']='Duels';
+   $lang['Adr_zone_destination_none']='Pas de destination';
+   $lang['Adr_Zone_Season_1']='Printemps';
+   $lang['Adr_Zone_Season_2']='Eté';
+   $lang['Adr_Zone_Season_3']='Automne';
+   $lang['Adr_Zone_Season_4']='Hiver';
+   $lang['Adr_Zone_Weather_1']='Soleil';
+   $lang['Adr_Zone_Weather_2']='Brumeux';
+   $lang['Adr_Zone_Weather_3']='Nuages';
+   $lang['Adr_Zone_Weather_4']='Pluie';
+   $lang['Adr_Zone_Weather_5']='Eclaircie';
+   $lang['Adr_Zone_Weather_6']='Neige';
+   $lang['Adr_zone_event_battle']='Cliquez <a href="'.append_sid("adr_battle.$phpEx").'">ici</a> pour retrouver ces brigands et vous venger.';
+   $lang['Adr_zone_event_return']='Cliquez <a href="'.append_sid("adr_zones.$phpEx").'">ici</a> pour retourner sur la page des zones.';
+   $lang['Adr_zone_event_winpoint']='En vous promenant, vous apercevez un petit coffre caché dans un buisson. Il contient';
+   $lang['Adr_zone_event_losspoint']='Vous êtes très maladroit ! Vous venez de vous rendre compte que vous avez perdu votre bourse.... Elle contenait';
+   $lang['Adr_zone_event_fountain_youth']='Cachée dans une grotte, vous découvrez la fontaine de jouvence.<br \>Vous buvez un peu de cette eau et vous sentez en pleine forme.<br \>Vous récupérez tous vos points de vie.';
+   $lang['Adr_zone_event_fountain_mana']='Dans un coin sombre d\'un temple perdu, vous découvrez la fontaine de mana.<br \>Vous buvez un peu de cette eau et vous sentez envahi par une grande force.<br \>Vous récupérez tous vos points de mana.';
+   $lang['Adr_zone_event_poison']='Vous vous faites mordre par un serpent très venimeux !<br \>Vous échappez de peu à la mort...vous avez eu de la chance cette fois.<br \>Il ne vous reste qu\'un seul point de vie';
+   $lang['Adr_zone_event_weakness']='Vous vous sentez envahi par une très grande fatigue.<br \>Vous en faites peu être un peu trop ces derniers temps. vous devriez vous reposer.<br \>Vous perdez tous vos points de mana.';
+   $lang['Adr_zone_event_item']='Quelle chance ! Dans des ruines, vous trouvez un objet derrière une grande statue.<br \>Voici sa description :';
+   $lang['Adr_zone_event_ambush']='Malheur ! Une bande de brigands vous a tendu une embuscade et vous a détroussé de votre bourse. Elle contenait';
+   $lang['Adr_zone_npc_title']='Personnages Non Joueurs';
+   $lang['Adr_zone_npc_event']='Selectionner';
+   $lang['Adr_zone_change_unavaible']='Cette destination est désactivée. Veuillez en choisir une autre';
+   $lang['Adr_zone_tower_title']='Tour';
+   $lang['Adr_zone_character_skills']='Compétences de votre personnage';
+   $lang['Adr_zone_character_equip']='Equipement de votre personnage';
+   $lang['Adr_zone_house_title']='Votre Maison';
+   $lang['Adr_zone_character_sheet']='Feuille de personnage';
+   $lang['Adr_zone_character_inventory']='Inventaire du personnage';
+   $lang['Adr_zone_library_title']='Bibliothèque';
+   $lang['Adr_zone_character_faq']='FAQ du RPG';
+   $lang['Adr_zone_character_list']='Liste des personnages';
+   $lang['Adr_zone_character_prefs']='Préférences';
+   $lang['Adr_zone_item_lack']='Vous n\'avez pas l\'objet requis pour entrer dans cette zone. Il vous faut';
+   $lang['Adr_zone_change_dead']='Vous ne pouvez pas voyager en étant mort';
+}
+
+// -- Advanced NPC System Expansion
+// ADR Zone General and Cheat Settings
+$lang['Adr_zone_npc_display_enable']='Afficher les PNJ<br /><span class="gensmall">Affiche les PNJ dans la page des zones.</span>';
+$lang['Adr_zone_npc_display_text']='Afficher le nom et le prix au dessus du PNJ';
+$lang['Adr_zone_npc_image_link']='Transformer l\'image du PNJ est un lien pour lui parler';
+$lang['Adr_zone_npc_button_link']='Ajouter un bouton en dessous du PNJ pour lui parler';
+$lang['Adr_zone_npc_image_count']='Nombre de PNJs par ligne';
+$lang['Adr_zone_npc_image_size']='Hauteur de l\'image';
+$lang['Adr_zone_cheat_member_pm']='Modérateurs globaux des zones<br /><span class="gensmall">Membres qui recevront des MPs pour tentative de triche dans TOUTES LES ZONES.</span>';
+$lang['Adr_zone_moderators']='Modérateurs ADR';
+$lang['Adr_zone_acp_cheat_entry_successful_deleted']='Entrée du journal des tentatives de triche supprimée';
+$lang['Adr_zone_acp_cheat_entry_successful_hidden']='Entrée du journal des tentatives de triche cachée';
+$lang['Adr_zone_acp_cheat_entry_successful_public']='Entrée du journal des tentatives de triche rendue publique';
+$lang['Adr_zone_acp_banned_adr_ok']='L\'utilisateur a été banni du RPG.';
+$lang['Adr_zone_acp_banned_board_ok']='L\'utilisateur a été banni du forum.';
+$lang['Adr_zone_acp_zones_all']='Toutes les zones';
+$lang['Adr_zone_acp_level_all']='Tous les utilisateurs';
+$lang['Adr_zone_acp_level_admin']='Administrateur';
+$lang['Adr_zone_acp_level_mod']='Modérateur ADR';
+$lang['Adr_zone_genral_cheat_log_title']='Réglages de la page des rapports';
+$lang['Adr_zone_genral_cheat_log_ban_adr']='ACTIVER le bannissement automatique du <b>RPG</b> quand un utilisateur est pris à tricher :';
+$lang['Adr_zone_genral_cheat_log_ban_board']='ACTIVER le bannissement automatique du <b>FORUM</b> quand un utilisateur est pris à tricher :';
+$lang['Adr_zone_genral_cheat_log_impisonment']='ACTIVER l\'emprisonnement automatique du RPG quand un utilisateur est pris à tricher :';
+$lang['Adr_zone_genral_cheat_log_auto_imprisonment']='Réglage de l\'emprisonnement %s:<br /><span class="gensmall">%s</span>';
+$lang['Adr_zone_genral_cheat_log_auto_public']='Est-ce que les entrées du journal de triche doivent être rendues publique par défaut (sans intervention d\'un modérateur/administrateur) ?';
+
+$lang['Adr_zone_npc_title']='Parlez aux habitants';
+$lang['Adr_zone_npc_talk']='Parler';
+$lang['Adr_zone_npc_link_text']='Parler à %s pour %s %s';
+$lang['Adr_zone_npc_title_text']='<b>%s</b><br /><i>%s %s</i><br /><br />'; // npc name, price, currency name
+$lang['Adr_zone_npc_title_text_simple']='<b>%s</b><br /><br />'; // npc name (used if talking to npc is free)
+$lang['Adr_zone_npc_give_item']='Donner %s ) %s';
+$lang['Adr_zone_npc_pay_price']='Payer %s à %s pour savoir ce qu\'il veut';
+$lang['Adr_zone_npc_points_prize']='Vous gagnez <b>%d %s</b>!<br>';
+$lang['Adr_zone_npc_exp_prize']='Vous gagnez <b>%d points d\'expérience</b>!<br>';
+$lang['Adr_zone_npc_sp_prize']='Vous gagnez <b>%d points de spiritualité</b>!<br>';
+$lang['Adr_zone_npc_item_prize']='%s vous donne <b>%s</b>!<br><br>';
+$lang['Adr_zone_npc_cheating']='Vous avez été repéré en train de tricher. Les modérateurs et les administrateurs ont été notifiés de votre tentative.';
+$lang['Adr_zone_npc_cheating_pm_subject']='%s a été repéré en pleine triche !';
+$lang['Adr_zone_npc_cheating_pm_message']='Le personnage de %s, %s, a été pris en flagrant délit de triche ! Ils ont essayé d\'utiliser le %s! %s Vous pouvez voir leur profil [url=%s]ici[/url].';
+$lang['Adr_zone_npc_cheating_type_1']='Rafraîchissement de la page d\'un PNJ';
+$lang['Adr_zone_npc_cheating_type_2']='Accès à un PNJ par changement d\'URL';
+$lang['Adr_zone_no_thief_npc']='Désolé, les prisonniers ne sont pas autorisés à parler aux habitants depuis leur celulle.';
+$lang['Adr_Npc_speaking_with']='Vous parlez avec %s';
+$lang['Adr_Npc_race_no_talk_message']='Quelqu\'un d\'autre pourra peut-être répondre à vos questions.';
+$lang['Adr_Npc_class_no_talk_message']='Malheureusement, vos questions restent sans réponse.';
+$lang['Adr_Npc_alignment_no_talk_message']='Vous avez l\'air d\'avoir un esprit fermé ... Veuillez me laisser seul ...';
+$lang['Adr_Npc_element_no_talk_message']='Vous avez l\'air d\'être loin de chez vous, faites attention durant votre voyage !';
+$lang['Adr_Npc_character_level_no_talk_message']='Vous n\'avez pas l\'air d\'être digne de mon temps. Veuillez disposer !';
+$lang['Adr_Npc_character_visit_no_talk_message']='Vous DEVEZ d\'abord chercher la connaissance d\'autrui avant que je ne puisse vous aider. Au revoir ...';
+$lang['Adr_Npc_character_quest_no_talk_message']='Vous DEVEZ d\'abord assister autrui avant que je ne puisse vous aider. Au revoir ...';
+
+// Quest Book
+$lang['Adr_zone_acp_choose_quest_kill_monster']='Pas de monstre';
+$lang['Adr_zone_npc_complete_kill_quest']='J\'ai tué %s %s !';
+
+$lang['Adr_Npc_acp_quest_kill_name']='Monstres à tuer';
+$lang['Adr_Npc_acp_quest_kill']='Réglez le monstre à tuer';
+$lang['Adr_Npc_acp_quest_monsterkill_name']='Quels monstres doivent être tués ?';
+$lang['Adr_Npc_acp_quest_monsterkill_amount']='Combien doivent être tués ';
+$lang['Adr_Npc_acp_quest_monsterkill_explain']='Choisissez les monstres que le joueur doit tuer.';
+$lang['Adr_Npc_acp_quest_monsteramount_explain']='Combien de monstres doivent être tués ? Laissez blanc pour que le joueur n\'ait pas à tuer de monstre.';
+
+// Zones by level
+$lang['Adr_Zone_acp_level']='Niveau requis';
+$lang['Adr_zone_change_level']='Vous n\'avez pas le niveau requis pour accéder à cette zone.';
+
+// Dynamic Town Maps
+$lang['Adr_zone_acp_enable_dynamic_zone_townmaps']='Activer les cartes de zone dynamiques';
+$lang['Adr_zone_acp_world_map_name']='Le nom de votre carte du Monde (laisser vide pour mettre le nom du site)';
+$lang['Adr_zone_acp_picture_link']='Activer les liens images à la place des liens textes dans l\'header et l\'affichage des zones.';
+$lang['Adr_zone_acp_zone_dynamic_maps_current_zone']='Zone actuellement assignée en tant que "World Map" (mapmonde)';
+$lang['Adr_zone_acp_zone_dynamic_maps_config_zone']='Zone actuellement <b>dans la configuration</b> en tant que "World Map" (mapmonde).<br/><span class="gensmall">Si cette valeur ne correspond pas à celle ci-dessus, votre mapmonde n\'affichera pas.</span>';
+$lang['Adr_zone_acp_zone_dynamic_maps_display_required']='Afficher les objets/points/niveau nécessaires dans la pop-up de téléportation';
+
+// Day & Night
+$lang['Adr_zone_time_title']='Heure de la journée';
+$lang['Adr_Zone_Time_1']='Aube';
+$lang['Adr_Zone_Time_2']='Jour';
+$lang['Adr_Zone_Time_3']='Crépuscule';
+$lang['Adr_Zone_Time_4']='Nuit';
