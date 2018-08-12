@@ -209,7 +209,9 @@ if ($highlight_match)
 {
 	// This was shamelessly 'borrowed' from volker at multiartstudio dot de
 	// via php.net's annotated manual
-	$article = str_replace('\"', '"', substr(@preg_replace('#(\>(((?>([^><]+|(?R)))*)\<))#se', "@preg_replace('#\b(" . $highlight_match . ")\b#i', '<span style=\"color:#" . $theme['fontcolor3'] . "\"><b>\\\\1</b></span>', '\\0')", '>' . $article . '<'), 1, -1));
+	$article = str_replace('\"', '"', substr(preg_replace_callback('#(\>(((? >([^><]+|(?R)))*)\<))#s', function ($matches) use ($highlight_match, $theme) {
+		return preg_replace('#\b(' . $highlight_match . ')\b#i', '<span style="color:#"' . $theme['fontcolor3'] . '"><b>\\1</b></span>', $matches[0]);
+	}, '>' . $article . '<'), 1, -1));
 } 
 
 // Replace naughty words
@@ -218,7 +220,9 @@ if ( count( $orig_word ) )
 {
 	$article_title = preg_replace( $orig_word, $replacement_word, $article_title );
 
-	$article = str_replace( '\"', '"', substr( preg_replace( '#(\>(((?>([^><]+|(?R)))*)\<))#se', "preg_replace(\$orig_word, \$replacement_word, '\\0')", '>' . $article . '<' ), 1, -1 ) );
+	$article = str_replace('\"', '"', substr(preg_replace_callback('#(\>(((? >([^><]+|(?R)))*)\<))#s', function ($matches) use ($orig_word, $replacement_word) {
+		return preg_replace($orig_word, $replacement_word, $matches[0]);
+	}, '>' . $article . '<'), 1, -1));
 } 
 
 // Replace newlines (we use this rather than nl2br because
@@ -232,7 +236,9 @@ if ( $highlight_match )
 { 
 	// This was shamelessly 'borrowed' from volker at multiartstudio dot de
 	// via php.net's annotated manual
-	$article = str_replace( '\"', '"', substr( preg_replace( '#(\>(((?>([^><]+|(?R)))*)\<))#se', "preg_replace('#\b(" . $highlight_match . ")\b#i', '<span style=\"color:#" . $theme['fontcolor3'] . "\"><b>\\\\1</b></span>', '\\0')", '>' . $article . '<' ), 1, -1 ) );
+	$article = str_replace('\"', '"', substr(preg_replace_callback('#(\>(((? >([^><]+|(?R)))*)\<))#s', function ($matches) use ($orig_word, $replacement_word) {
+		return preg_replace($orig_word, $replacement_word, $matches[0]);
+	}, '>' . $article . '<'), 1, -1));
 }
 
 $page_title = $article_title;
@@ -499,7 +505,9 @@ else
 			
 			if ( count( $orig_word ) )
 			{
-				$article_toc = str_replace( '\"', '"', substr( preg_replace( '#(\>(((?>([^><]+|(?R)))*)\<))#se', "preg_replace(\$orig_word, \$replacement_word, '\\0')", '>' . $article_toc . '<' ), 1, -1 ) );
+				$article_toc = str_replace('\"', '"', substr(preg_replace_callback('#(\>(((? >([^><]+|(?R)))*)\<))#s', function ($matches) use ($highlight_match, $theme) {
+					return preg_replace('#\b(' . $highlight_match . ')\b#i', '<span style="color:#"' . $theme['fontcolor3'] . '"><b>\\1</b></span>', $matches[0]);
+				}, '>' . $article_toc . '<'), 1, -1));
 			} 
 			
 			// Replace newlines (we use this rather than nl2br because

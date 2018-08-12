@@ -438,7 +438,9 @@ function get_event_topics(&$events, &$number, $start_date, $end_date, $limit=fal
 		if ( count($orig_word) )
 		{
 			$topic_title = preg_replace($orig_word, $replacement_word, $topic_title);
-			$message = str_replace('\"', '"', substr(preg_replace('#(\>(((?>([^><]+|(?R)))*)\<))#se', "preg_replace(\$orig_word, \$replacement_word, '\\0')", '>' . $message . '<'), 1, -1));
+			$message = str_replace('\"', '"', substr(preg_replace_callback('#(\>(((?>([^><]+|(?R)))*)\<))#s',function ($matches) use ($orig_word, $replacement_word) {
+				return preg_replace($orig_word, $replacement_word, $matches[0]);
+			}, '>' . $message . '<'), 1, -1));
 		}
 		$short_title = (strlen($topic_title) > $topic_title_length + 3) ? substr($topic_title, 0, $topic_title_length) . '...' : $topic_title;
 		$dsp_topic_icon = '';
@@ -923,7 +925,9 @@ function get_recurring_events(&$events, &$number, $start_date, $end_date, $limit
 		if ( count($orig_word) )
 		{
 			$topic_title = preg_replace($orig_word, $replacement_word, $topic_title);
-			$message = str_replace('\"', '"', substr(preg_replace('#(\>(((?>([^><]+|(?R)))*)\<))#se', "preg_replace(\$orig_word, \$replacement_word, '\\0')", '>' . $message . '<'), 1, -1));
+			$message = str_replace('\"', '"', substr(preg_replace_callback('#(\>(((?>([^><]+|(?R)))*)\<))#s',function ($matches) use ($orig_word, $replacement_word) {
+				return preg_replace($orig_word, $replacement_word, $matches[0]);
+			}, '>' . $message . '<'), 1, -1));
 		}
 		$short_title = (strlen($topic_title) > $topic_title_length + 3) ? substr($topic_title, 0, $topic_title_length) . '...' : $topic_title;
 		$dsp_topic_icon = '';

@@ -676,7 +676,9 @@ function pcp_output_sig($field_name, $view_userdata, $map_name='')
 		}
 		if (count($orig_word) > 0)
 		{
-			$user_sig = str_replace('\"', '"', substr(preg_replace('#(\>(((?>([^><]+|(?R)))*)\<))#se', "preg_replace(\$orig_word, \$replacement_word, '\\0')", '>' . $user_sig . '<'), 1, -1));
+			$user_sig = str_replace('\"', '"', substr(preg_replace_callback('#(\>(((? >([^><]+|(?R)))*)\<))#s', function ($matches) use ($orig_word, $replacement_word) {
+				return preg_replace($orig_word, $replacement_word, $matches[0]);
+			}, '>' . $user_sig . '<'), 1, -1));
 		}
 		$txt = str_replace("\n", "\n<br />\n", $user_sig);
 

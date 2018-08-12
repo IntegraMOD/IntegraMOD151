@@ -345,7 +345,7 @@ function cache_tree_level($main, &$parents, &$cats, &$forums, $level=-1)
 	$level++;
 
 	// get the forums of the level
-	for ($i=0; $i < count($parents[POST_FORUM_URL][$main]); $i++)
+	for ($i=0; $i < count_safe($parents[POST_FORUM_URL][$main]); $i++)
 	{
 		$idx = $parents[POST_FORUM_URL][$main][$i];
 		$forums[$idx]['tree_level'] = $level;
@@ -356,7 +356,7 @@ function cache_tree_level($main, &$parents, &$cats, &$forums, $level=-1)
 	}
 
 	// add the categories of this level
-	for ($i=0; $i < count($parents[POST_CAT_URL][$main]); $i++)
+	for ($i=0; $i < count_safe($parents[POST_CAT_URL][$main]); $i++)
 	{
 		$idx = $parents[POST_CAT_URL][$main][$i];
 		$cats[$idx]['tree_level'] = $level;
@@ -371,9 +371,9 @@ function cache_tree_level($main, &$parents, &$cats, &$forums, $level=-1)
 
 	// add the tree_level to the tree
 	$order = 0;
-	for ($i=0; $i < count($tree_level['data']); $i++)
+	for ($i=0; $i < count_safe($tree_level['data']); $i++)
 	{
-		$this_key = count($tree['data']);
+		$this_key = count_safe($tree['data']);
 		$key = $tree_level['type'][$i] . $tree_level['id'][$i];
 		$order = $order + 10;
 		$tree['keys'][$key] = $this_key;
@@ -437,7 +437,7 @@ function cache_tree($write=false)
 	{
 		$main_type = (empty($row['main_type'])) ? POST_CAT_URL : $row['main_type'];
 		$row['main'] = ($row['cat_id'] == 0) ? 'Root' : $main_type . $row['cat_id'];
-		$idx = count($forums);
+		$idx = count_safe($forums);
 		$forums[$idx] = $row;
 		$parents[POST_FORUM_URL][ $row['main'] ][] = $idx;
 	}

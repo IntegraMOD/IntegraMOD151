@@ -614,7 +614,9 @@ if ( !($result = $db->sql_query($sql)) )
 	// 
 	if ($highlight_match) 
 	{ 
-			$shout = str_replace('\"', '"', substr(preg_replace('#(\>(((?>([^><]+|(?R)))*)\<))#se', "preg_replace('#\b(" . $highlight_match . ")\b#i', '<span style=\"color:#" . $theme['fontcolor3'] . "\"><b>\\\\1</b></span>', '\\0')", '>' . $shout . '<'), 1, -1)); 
+		$shout = str_replace('\"', '"', substr(preg_replace_callback('#(\>(((? >([^><]+|(?R)))*)\<))#s', function ($matches) use ($highlight_match, $theme) {
+			return preg_replace('#\b(' . $highlight_match . ')\b#i', '<span style="color:#"' . $theme['fontcolor3'] . '"><b>\\1</b></span>', $matches[0]);
+		}, '>' . $shout . '<'), 1, -1));
 	}
 //
 // Replace naughty words

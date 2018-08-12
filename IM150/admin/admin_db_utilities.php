@@ -1115,7 +1115,7 @@ $i++;
 			{
 				if(ereg(",", $additional_tables))
 				{
-					$additional_tables = split(",", $additional_tables);
+					$additional_tables = explode(",", $additional_tables);
 
 					for($i = 0; $i < count($additional_tables); $i++)
 					{

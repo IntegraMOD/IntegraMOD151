@@ -46,11 +46,10 @@ function load_bbcode_template()
 	$tpl  = str_replace("\n", '', $tpl);
 
 	// Turn template blocks into PHP assignment statements for the values of $bbcode_tpls..
-	$tpl = preg_replace('#<!-- BEGIN (.*?) -->(.*?)<!-- END (.*?) -->#', "\n" . '$bbcode_tpls[\'\\1\'] = \'\\2\';', $tpl);
-
 	$bbcode_tpls = array();
-
-	eval($tpl);
+	$tpl = preg_replace_callback('#<!-- BEGIN (.*?) -->(.*?)<!-- END (.*?) -->#', function ($matches) use (&$bbcode_tpls) {
+		$bbcode_tpls[$matches[1]] = $matches[2];
+	}, $tpl);
 
 	return $bbcode_tpls;
 }
@@ -143,12 +142,16 @@ function prepare_bbcode_template($bbcode_tpl)
 
 	$bbcode_tpl['acronym_open'] = str_replace('{DESCRIPTION}', '\\1', $bbcode_tpl['acronym_open']);
 
-	$bbcode_tpl['google'] = '\'' . $bbcode_tpl['google'] . '\'';
-	$bbcode_tpl['google'] = str_replace('{STRING}', "' . str_replace('\\\"', '\"', '\\1') . '", $bbcode_tpl['google']);
-	$bbcode_tpl['google'] = str_replace('{QUERY}', "' . urlencode(str_replace('\\\"', '\"', '\\1')) . '", $bbcode_tpl['google']);
+	$google_tpl = $bbcode_tpl['google'];
+	$bbcode_tpl['google'] = function ($matches) use ($google_tpl) {
+		return strtr($google_tpl, array(
+			'{STRING}' => str_replace('\\\"', '\"', $matches[1]),
+			'{QUERY}' => urlencode(str_replace('\\\"', '\"', $matches[1])),
+		));
+	};
 
 	global $userdata;
-	$bbcode_tpl['you'] = str_replace('{YOU}', '"' . $userdata['username'] . '"', $bbcode_tpl['you']);
+	$bbcode_tpl['you'] = str_replace('{YOU}', $userdata['username'], $bbcode_tpl['you']);
 
 	// Anchor
 	$bbcode_tpl['anchor'] = str_replace('{URL}', '%s_\\1', $bbcode_tpl['anchor']);
@@ -343,6 +346,10 @@ function bbencode_second_pass($text, $uid)
 	$patterns = array();
 	$replacements = array();
 
+	// preg_replace_callback powered replacements ("e"val flag)
+	$patterns_e = array();
+	$replacements_e = array();
+
 	// [img]image_url_here[/img] code..
 	// This one gets first-passed..
 //-- mod : profile cp ------------------------------------------------------------------------------
@@ -467,16 +474,16 @@ function bbencode_second_pass($text, $uid)
 	$patterns[] = "#\[email\]([a-z0-9&\-_.]+?@[\w\-]+\.([\w\-\.]+\.)?[\w]+)\[/email\]#si";
 	$replacements[] = $bbcode_tpl['email'];
 
-    // [youtube]YouTube URL[/youtube] code..
-    $patterns[] = "#\[youtube\](?:http|https)?://(?:www\.)?(youtube.com|youtu.be|gaming.youtube.com|m.youtube.com)/(watch\?v=|v/|)([0-9A-Za-z-_]{11})[^[]*\[/youtube\]#is";
-    $replacements[] = $bbcode_tpl['youtube']; 
+	// [youtube]YouTube URL[/youtube] code..
+	$patterns[] = "#\[youtube\](?:http|https)?://(?:www\.)?(youtube.com|youtu.be|gaming.youtube.com|m.youtube.com)/(watch\?v=|v/|)([0-9A-Za-z-_]{11})[^[]*\[/youtube\]#is";
+	$replacements[] = $bbcode_tpl['youtube']; 
 
 	// [google]string for search[/google] code..
-	$patterns[] = "#\[google\](.*?)\[/google\]#ise";
-	$replacements[] = $bbcode_tpl['google'];
+	$patterns_e[] = "#\[google\](.*?)\[/google\]#is";
+	$replacements_e[] = $bbcode_tpl['google'];
 
 	// [you] - inserts the name of the person viewing the post
-	$patterns[] = "#\[you\]#ise";
+	$patterns[] = "#\[you\]#is";
 	$replacements[] = $bbcode_tpl['you'];
 
 	// [nbsp]
@@ -601,6 +608,10 @@ function bbencode_second_pass($text, $uid)
 //===================================================================== |
 
 	$text = preg_replace($patterns, $replacements, $text);
+	foreach ($patterns_e as $i => $pattern)
+	{
+		$text = preg_replace_callback($pattern, $replacements_e[$i], $text);
+	}
 
 	// Remove our padding from the string..
 	$text = substr($text, 1);
@@ -677,7 +688,9 @@ function bbencode_first_pass($text, $uid)
 	$text = preg_replace("#\[i\](.*?)\[/i\]#si", "[i:$uid]\\1[/i:$uid]", $text);
 
 	// [img]image_url_here[/img] code..
-	$text = preg_replace("#\[img\]((http|ftp|https|ftps)://)([^\r\n\t<\"]*?)\[/img\]#sie", "'[img:$uid]\\1' . str_replace(' ', '%20', '\\3') . '[/img:$uid]'", $text);
+	$text = preg_replace_callback("#\[img\]((http|ftp|https|ftps)://)([^\r\n\t<\"]*?)\[/img\]#si", function ($matches) use ($uid) {
+		return "[img:$uid]".$matches[1].str_replace(' ', '%20', $matches[3])."[/img:$uid]";
+	}, $text);
 
 	// [PHP] and [/PHP] for posting PHP code in your posts.
 	$text = bbencode_first_pass_pda($text, $uid, '[php]', '[/php]', '', true, '');
@@ -685,18 +698,18 @@ function bbencode_first_pass($text, $uid)
 	//BBCode Search Mod
 	$text = preg_replace("#\[search\](.*?)\[/search\]#si", "[search:$uid]\\1[/search:$uid]", $text);
 
-	$text = preg_replace("#\[theme\]([^ \?&=\#\"\n\r\t<]*?)\[/theme\]#sie", "'[theme:$uid]\\1' . str_replace(' ', '%20', '\\3') . '[/theme:$uid]'", $text);
-	$text = preg_replace("#\[theme=left\]([^ \?&=\#\"\n\r\t<]*?)\[/theme\]#sie", "'[theme=left:$uid]\\1' . str_replace(' ', '%20', '\\3') . '[/theme:$uid]'", $text);
-	$text = preg_replace("#\[theme=right\]([^ \?&=\#\"\n\r\t<]*?)\[/theme\]#sie", "'[theme=right:$uid]\\1' . str_replace(' ', '%20', '\\3') . '[/theme:$uid]'", $text);
+	$text = preg_replace_callback("#\[theme(=(?:left|right))?\]([^ \?&=\#\"\n\r\t<]*?)\[/theme\]#si", function ($matches) use ($uid) {
+		return "[theme".$matches[1].":$uid]" . $matches[2] . "[/theme:$uid]";
+	}, $text);
 
-	$text = preg_replace("#\[imgrel\]([^ \?&=\#\"\n\r\t<]*?)\[/imgrel\]#sie", "'[imgrel:$uid]\\1' . str_replace(' ', '%20', '\\3') . '[/imgrel:$uid]'", $text);
-	$text = preg_replace("#\[imgrel=left\]([^\r\n\t<\"]*?)\[/imgrel\]#sie", "'[imgrel=left:$uid]\\1' . str_replace(' ', '%20', '\\3') . '[/imgrel:$uid]'", $text);
-	$text = preg_replace("#\[imgrel=right\]([^\r\n\t<\"]*?)\[/imgrel\]#sie", "'[imgrel=right:$uid]\\1' . str_replace(' ', '%20', '\\3') . '[/imgrel:$uid]'", $text);
+	$text = preg_replace_callback("#\[imgrel(=(?:left|right))?\]([^ \?&=\#\"\n\r\t<]*?)\[/imgrel\]#si", function ($matches) use ($uid) {
+		return "[imgrel".$matches[1].":$uid]" . $matches[2] . "[/imgrel:$uid]";
+	}, $text);
 
 // LEFT-RIGHT-start
-	$text = preg_replace("#\[img=left\]((http|ftp|https|ftps)://)([^\r\n\t<\"]*?)\[/img\]#sie", "'[img=left:$uid]\\1' . str_replace(' ', '%20', '\\3') . '[/img:$uid]'", $text);
-	$text = preg_replace("#\[img=right\]((http|ftp|https|ftps)://)([^\r\n\t<\"]*?)\[/img\]#sie", "'[img=right:$uid]\\1' . str_replace(' ', '%20', '\\3') . '[/img:$uid]'", $text);
-	$text = preg_replace("#\[img=center\]((http|ftp|https|ftps)://)([^\r\n\t<\"]*?)\[/img\]#sie", "'[img=center:$uid]\\1' . str_replace(' ', '%20', '\\3') . '[/img:$uid]'", $text);
+	$text = preg_replace_callback("#\[img(=(?:left|=right))?\]((http|ftp|https|ftps)://)([^\r\n\t<\"]*?)\[/img\]#si", function ($matches) use ($uid) {
+		return "[img".$matches[1].":$uid]" . $matches[2] . str_replace(' ', '%20', $matches[4]) . "[/img:$uid]";
+	}, $text);
 // LEFT-RIGHT-end
 
 	// [nbsp]
@@ -747,14 +760,14 @@ function bbencode_first_pass($text, $uid)
 
 	// Mighty Gorgon - Full Album Pack - BEGIN
 	// [albumimg]album image id here[/albumimg]
-	$text = preg_replace("#\[fullalbumimg\]([0-9]+)\[/fullalbumimg\]#sie", "'[fullalbumimg:$uid]\\1[/fullalbumimg:$uid]'", $text);
-	$text = preg_replace("#\[fullalbumimgl\]([0-9]+)\[/fullalbumimgl\]#sie", "'[fullalbumimgl:$uid]\\1[/fullalbumimgl:$uid]'", $text);
-	$text = preg_replace("#\[fullalbumimgr\]([0-9]+)\[/fullalbumimgr\]#sie", "'[fullalbumimgr:$uid]\\1[/fullalbumimgr:$uid]'", $text);
-	$text = preg_replace("#\[fullalbumimgc\]([0-9]+)\[/fullalbumimgc\]#sie", "'[fullalbumimgc:$uid]\\1[/fullalbumimgc:$uid]'", $text);
-	$text = preg_replace("#\[albumimg\]([0-9]+)\[/albumimg\]#sie", "'[albumimg:$uid]\\1[/albumimg:$uid]'", $text);
-	$text = preg_replace("#\[albumimgl\]([0-9]+)\[/albumimgl\]#sie", "'[albumimgl:$uid]\\1[/albumimgl:$uid]'", $text);
-	$text = preg_replace("#\[albumimgr\]([0-9]+)\[/albumimgr\]#sie", "'[albumimgr:$uid]\\1[/albumimgr:$uid]'", $text);
-	$text = preg_replace("#\[albumimgc\]([0-9]+)\[/albumimgc\]#sie", "'[albumimgc:$uid]\\1[/albumimgc:$uid]'", $text);
+	$text = preg_replace("#\[fullalbumimg\]([0-9]+)\[/fullalbumimg\]#si", "'[fullalbumimg:$uid]\\1[/fullalbumimg:$uid]'", $text);
+	$text = preg_replace("#\[fullalbumimgl\]([0-9]+)\[/fullalbumimgl\]#si", "'[fullalbumimgl:$uid]\\1[/fullalbumimgl:$uid]'", $text);
+	$text = preg_replace("#\[fullalbumimgr\]([0-9]+)\[/fullalbumimgr\]#si", "'[fullalbumimgr:$uid]\\1[/fullalbumimgr:$uid]'", $text);
+	$text = preg_replace("#\[fullalbumimgc\]([0-9]+)\[/fullalbumimgc\]#si", "'[fullalbumimgc:$uid]\\1[/fullalbumimgc:$uid]'", $text);
+	$text = preg_replace("#\[albumimg\]([0-9]+)\[/albumimg\]#si", "'[albumimg:$uid]\\1[/albumimg:$uid]'", $text);
+	$text = preg_replace("#\[albumimgl\]([0-9]+)\[/albumimgl\]#si", "'[albumimgl:$uid]\\1[/albumimgl:$uid]'", $text);
+	$text = preg_replace("#\[albumimgr\]([0-9]+)\[/albumimgr\]#si", "'[albumimgr:$uid]\\1[/albumimgr:$uid]'", $text);
+	$text = preg_replace("#\[albumimgc\]([0-9]+)\[/albumimgc\]#si", "'[albumimgc:$uid]\\1[/albumimgc:$uid]'", $text);
 	// Mighty Gorgon - Full Album Pack - END
 
 //====================================================================== |
@@ -1453,7 +1466,7 @@ function smilies_pass($message)
 //	}
 //-- fin mod : cache -------------------------------------------------------------------------------
 
-	if (count($orig))
+	if (count_safe($orig))
 	{
 		$message = preg_replace($orig, $repl, ' ' . $message . ' ');
 		$message = substr($message, 1, -1);
@@ -1502,7 +1515,9 @@ function acronym_pass($message)
 		{
 			if( $seg[0] != '<' && $seg[0] != '[' )
 			{
-				$message .= str_replace('\"', '"', substr(preg_replace('#(\>(((?>([^><]+|(?R)))*)\<))#se', "preg_replace(\$orig, \$repl, '\\0')", '>' . $seg . '<'), 1, -1));
+				$message .= str_replace('\"', '"', substr(preg_replace_callback('#(\>(((?>([^><]+|(?R)))*)\<))#', function ($matches) use ($orig, $repl) {
+					return preg_replace($orig, $repl, $matches[0]);
+				}, '>' . $seg . '<'), 1, -1));
 			}
 			else
 			{

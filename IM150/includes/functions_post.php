@@ -422,7 +422,7 @@ function submit_post($mode, &$post_data, &$message, &$meta, &$forum_id, &$topic_
 	$delayed = 0;
 
 	$old_forcetime = '';
-if (mode != 'newtopic') { 
+if ($mode != 'newtopic') { 
         // how do I read from the topic? 
         $myquery = "SELECT topic_time FROM ". TOPICS_TABLE ." WHERE topic_id = $topic_id"; 
         if ($myresult = $db->sql_query($myquery)) { 

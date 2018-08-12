@@ -157,7 +157,9 @@ if ( $download )
 		{
 			$post_subject = preg_replace($orig_word, $replacement_word, $post_subject);
 
-			$message = str_replace('\"', '"', substr(preg_replace('#(\>(((?>([^><]+|(?R)))*)\<))#se', "preg_replace(\$orig_word, \$replacement_word, '\\0')", '>' . $message . '<'), 1, -1));
+			$message = str_replace('\"', '"', substr(preg_replace_callback('#(\>(((? >([^><]+|(?R)))*)\<))#s', function ($matches) use ($orig_word, $replacement_word) {
+				return preg_replace($orig_word, $replacement_word, $matches[0]);
+			}, '>' . $message . '<'), 1, -1));
 		}
 
 		$break = "\n";
@@ -1959,7 +1961,7 @@ for($i = 0; $i < $total_posts; $i++)
 	$ignore_buttons	= pcp_output_panel('PHPBB.viewtopic.buttons.ignore', $postrow[$i]);
 //-- fin mod : profile cp --------------------------------------------------------------------------
 
-	if ( count($post_rank_set) > 0 && ( $i == 0 || $rating_config[2] == 0 ) )
+	if ( count_safe($post_rank_set) > 0 && ( $i == 0 || $rating_config[2] == 0 ) )
 	{
 		$post_rating = ( $postrow[$i]['rating_rank_id'] > 0 ) ? $lang['Rating'].':&nbsp;'.$post_rank_set[$postrow[$i]['rating_rank_id']] : $lang['No_rating'];
 		$rating_url = append_sid($phpbb_root_path.'rating.php?p='.$postrow[$i]['post_id']);
@@ -2263,10 +2265,14 @@ if ( $userdata['user_allowsignature'] != 2 && $board_config['sig_allow_font_size
 
 		if ($user_sig != '')
 		{
-			$user_sig = str_replace('\"', '"', substr(@preg_replace('#(\>(((?>([^><]+|(?R)))*)\<))#se', "@preg_replace(\$orig_word, \$replacement_word, '\\0')", '>' . $user_sig . '<'), 1, -1));
+			$user_sig = str_replace('\"', '"', substr(preg_replace_callback('#(\>(((? >([^><]+|(?R)))*)\<))#s', function ($matches) use ($orig_word, $replacement_word) {
+				return preg_replace($orig_word, $replacement_word, $matches[0]);
+			}, '>' . $user_sig . '<'), 1, -1));
 		}
 
-		$message = str_replace('\"', '"', substr(@preg_replace('#(\>(((?>([^><]+|(?R)))*)\<))#se', "@preg_replace(\$orig_word, \$replacement_word, '\\0')", '>' . $message . '<'), 1, -1));
+		$message = str_replace('\"', '"', substr(preg_replace_callback('#(\>(((? >([^><]+|(?R)))*)\<))#s', function ($matches) use ($orig_word, $replacement_word) {
+			return preg_replace($orig_word, $replacement_word, $matches[0]);
+		}, '>' . $message . '<'), 1, -1));
 	}
 
 	//

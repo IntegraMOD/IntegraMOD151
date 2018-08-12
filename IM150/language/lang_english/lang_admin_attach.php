@@ -223,7 +223,7 @@ $lang['Test_settings_successful'] = 'Settings Test finished, configuration seems
 // Some basic definitions
 $lang['Attachments'] = 'Attachments';
 $lang['Attachment'] = 'Attachment';
-$lang['Extensions'] = 'Extensions';
+$lang['Extensions'] = 'File Extensions';
 $lang['Extension'] = 'Extension';
 
 // Auth pages

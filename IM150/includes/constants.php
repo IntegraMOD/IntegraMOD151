@@ -207,6 +207,8 @@ define('POST_ANNOUNCE', 2);
 define('POST_GLOBAL_ANNOUNCE', 3);
 define('POST_BIRTHDAY', 9);
 define('POST_CALENDAR', 10);
+define('POST_PICTURE', 11);
+define('POST_ATTACHMENT', 11);
 
 // ### Prillian Constants ###
 // prillian installed?

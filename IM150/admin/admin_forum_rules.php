@@ -213,7 +213,7 @@ switch ($_GET['mode']) {
 			if ( isset($_POST['user_notview_rules']) ) $user_to_send = $_POST['user_notview_rules'];
 		} 
 
-		else $user_to_send = split(",", $_POST['all_user_notview_rules'] );
+		else $user_to_send = explode(",", $_POST['all_user_notview_rules'] );
 
 		//
 		//Send PMs to Users

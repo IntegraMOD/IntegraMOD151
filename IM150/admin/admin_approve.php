@@ -1060,7 +1060,9 @@ if ( $modevar['d'] == true )
 			//
 			//note: i split the ? and > to keep syntax highlighting
 			//
-					$message = str_replace('\"', '"', substr(preg_replace('#(\>(((? >([^><]+|(?R)))*)\<))#se', "preg_replace('#\b(" . $highlight_match . ")\b#i', '<span style=\"color:#" . $theme['fontcolor3'] . "\"><b>\\\\1</b></span>', '\\0')", '>' . $message . '<'), 1, -1));
+					$message = str_replace('\"', '"', substr(preg_replace_callback('#(\>(((? >([^><]+|(?R)))*)\<))#s', function ($matches) use ($highlight_match, $theme) {
+						return preg_replace('#\b(' . $highlight_match . ')\b#i', '<span style="color:#"' . $theme['fontcolor3'] . '"><b>\\1</b></span>', $matches[0]);
+					}, '>' . $message . '<'), 1, -1));
 				}
 
 				//
@@ -1072,10 +1074,14 @@ if ( $modevar['d'] == true )
 
 					if ( $user_sig != '' )
 					{
-						$user_sig = str_replace('\"', '"', substr(preg_replace('#(\>(((? >([^><]+|(?R)))*)\<))#se', "preg_replace(\$orig_word, \$replacement_word, '\\0')", '>' . $user_sig . '<'), 1, -1));
+						$user_sig = str_replace('\"', '"', substr(preg_replace_callback('#(\>(((? >([^><]+|(?R)))*)\<))#s', function ($matches) use ($orig_word, $replacement_word) {
+							return preg_replace($orig_word, $replacement_word, $matches[0]);
+						}, '>' . $user_sig . '<'), 1, -1));
 					}
 
-					$message = str_replace('\"', '"', substr(preg_replace('#(\>(((? >([^><]+|(?R)))*)\<))#se', "preg_replace(\$orig_word, \$replacement_word, '\\0')", '>' . $message . '<'), 1, -1));
+					$message = str_replace('\"', '"', substr(preg_replace_callback('#(\>(((? >([^><]+|(?R)))*)\<))#s', function ($matches) use ($orig_word, $replacement_word) {
+						return preg_replace($orig_word, $replacement_word, $matches[0]);
+					}, '>' . $message . '<'), 1, -1));
 				}
 
 				//
