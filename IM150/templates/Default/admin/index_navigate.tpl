@@ -51,7 +51,7 @@ function menuCat(id, rows)
 	this.cat_rows = rows;
 	this.status = 'block';
 }
-var menuCats = new Array();
+var menuCats = [];
 <!-- BEGIN catrow -->
 menuCats['menuCat_{catrow.MENU_CAT_ID}'] = new menuCat('{catrow.MENU_CAT_ID}', {catrow.MENU_CAT_ROWS});
 <!-- END catrow -->
@@ -190,6 +190,9 @@ window.onload = doOnLoadMenuACP;
 <tr> 
 <td class="row1"><a href="{U_PORTAL_INDEX}" target="main" class="genmed">{L_PREVIEW_PORTAL}</a></td>
 </tr>
+<!-- BEGIN other_modes -->
+<td class="row1"><a href="{U_ADMIN_INDEX}&pane=left&board_admin_mode={other_modes.KEY}" class="genmed">&rarr; {other_modes.NAME}</a></td>
+<!-- END other_modes -->
 <!-- BEGIN catrow -->
 <tr> 
 <td align="center" class="cat" style="cursor:pointer;cursor:hand;" onclick="onMenuCatClick('{catrow.MENU_CAT_ID}');"><span class="genmed">{catrow.ADMIN_CATEGORY}</span></td>
@@ -215,9 +218,5 @@ window.onload = doOnLoadMenuACP;
 </table>
 <br />
 <div align="center"><span class="copyright">
-<script>
-<!--
-	document.write(menuVersion);
-// -->
-</script>
+Slide Menu v1.0.0
 </span></div>

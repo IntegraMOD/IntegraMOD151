@@ -340,7 +340,7 @@ function CompareNoCase($a, $b)
    return ($a < $b) ? -1 : 1;
 }
 
-function jr_admin_make_left_pane()
+function jr_admin_make_left_pane($filter = null)
 {
 	global $template, $lang, $module, $phpEx, $userdata;
 	
@@ -355,6 +355,11 @@ function jr_admin_make_left_pane()
 	//Loop through and set up all the nice form names, etc
 	foreach ($module as $cat => $module_array)
 	{
+    // V: create ACP "modes"
+    if ($filter && !preg_match($filter, $cat))
+    {
+      continue;
+    }
 		$template->assign_block_vars("catrow", array(
 			//+MOD: DHTML Menu for ACP
 			'MENU_CAT_ID' => $menu_cat_id,

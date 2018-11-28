@@ -90,7 +90,25 @@ if( isset($_GET['pane']) && $_GET['pane'] == 'left' )
 		"L_PREVIEW_FORUM" => $lang['Preview_forum'])
 	);
 
-	jr_admin_make_left_pane();
+  $mode_filters = array(
+    'default' => '/^[^a][^d][^r]/i',
+    'adr' => '/adr/i',
+  );
+  $mode_names = array(
+    'default' => 'General', // TODO lang key
+    'adr' => 'ADR',
+  );
+  $mode = isset($mode_filters[$_GET['board_admin_mode']]) ? $_GET['board_admin_mode'] : 'default';
+  foreach ($mode_names as $mode_key => $mode_name)
+  {
+    if ($mode_key == $mode)
+      continue; // skip current
+    $template->assign_block_vars('other_modes', array(
+      'KEY' => $mode_key,
+      'NAME' => "mode: $mode_name",
+    ));
+  }
+	jr_admin_make_left_pane($mode_filters[$mode]);
 
 	$template->pparse("body");
 

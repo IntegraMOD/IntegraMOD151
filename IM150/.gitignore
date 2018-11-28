@@ -2,4 +2,5 @@ cache/**/*.php
 var_cache/*
 !var_cache/index.html
 pafiledb/cache/**/*.php
+adr/cache/*.php
 modules/cache/**/*.php
