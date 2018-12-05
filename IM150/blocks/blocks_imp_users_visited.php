@@ -30,8 +30,9 @@ if(!function_exists(imp_users_visited_block_func))
 	function imp_users_visited_block_func()
 	{
 		global $template, $lang, $db, $portal_config, $images, $phpEx;
+		global $agcm_color;
 
-		$sql = "SELECT user_id, username, user_allow_viewonline, user_level, user_session_time
+		$sql = "SELECT user_group_id, user_id, username, user_allow_viewonline, user_level, user_session_time
 			FROM ".USERS_TABLE."
 			WHERE user_id > 0
 			ORDER BY user_level DESC, username ASC";
@@ -52,17 +53,6 @@ if(!function_exists(imp_users_visited_block_func))
 
 		for ($i = 0; $i < $counter; $i++)
 		{
-			$style_color = '';
-			if ( $day_users_array[$i]['user_level'] == ADMIN )
-			{
-				$day_users_array[$i]['username'] = '<b>' . $day_users_array[$i]['username'] . '</b>';
-				$style_color = 'style="color:#' . $theme['fontcolor3'] . '"';
-			}
-			else if ( $day_users_array[$i]['user_level'] == MOD )
-			{
-				$day_users_array[$i]['username'] = '<b>' . $day_users_array[$i]['username'] . '</b>';
-				$style_color = 'style="color:#' . $theme['fontcolor2'] . '"';
-			}
 			if ( $day_users_array[$i]['user_session_time'] >= ( time() - intval($portal_config['md_hours_track_users']) * 3600 ) )
 			{
 				$scroll_num = '1';
@@ -70,14 +60,7 @@ if(!function_exists(imp_users_visited_block_func))
 			{
 				$scroll_num = '2';
 			}
-			if ( $day_users_array[$i]['user_allow_viewonline'] )
-			{
-				$user_day_link = '<a href="' . append_sid("privmsg.php?mode=post&amp;" . POST_USERS_URL . "=" . $day_users_array[$i]['user_id']) . '"' . $style_color .' title="Send User a PM"><img src="' . $images['scroll_pm'] . '" align=top border=0></a> <a href="' . append_sid("profile.$phpEx?mode=viewprofile&amp;" . POST_USERS_URL . "=" . $day_users_array[$i]['user_id']) . '"' . $style_color .' title="View Users Profile">' . $day_users_array[$i]['username'] . '</a>';
-			}
-			else
-			{
-				$user_day_link = '<a href="' . append_sid("privmsg.php?mode=post&amp;" . POST_USERS_URL . "=" . $day_users_array[$i]['user_id']) . '"' . $style_color .' title="Send User a PM"><img src="' . $images['scroll_pm'] . '" align=top border=0></a> <a href="' . append_sid("profile.$phpEx?mode=viewprofile&amp;" . POST_USERS_URL . "=" . $day_users_array[$i]['user_id']) . '"' . $style_color .' title="View Users Profile"><i>' . $day_users_array[$i]['username'] . '</i></a>';
-			}
+      $user_day_link = '<a href="' . append_sid("privmsg.php?mode=post&amp;" . POST_USERS_URL . "=" . $day_users_array[$i]['user_id']) . '" title="Send User a PM"><img src="' . $images['scroll_pm'] . '" align=top></a> <a href="' . append_sid("profile.$phpEx?mode=viewprofile&amp;" . POST_USERS_URL . "=" . $day_users_array[$i]['user_id']) . '" class="' . $agcm_color->get_user_color($day_users_array[$i]['user_group_id'], $day_users_array[$i]['user_session_time']) . '" title="View Users Profile">' . $day_users_array[$i]['username'] . '</a>';
 			if ( $day_users_array[$i]['user_allow_viewonline'] || $userdata['user_level'] == ADMIN )
 			{
 				if ( $day_users_array[$i]['user_session_time'] >= ( time() - intval($portal_config['md_hours_track_users']) * 3600 ) )

@@ -138,6 +138,10 @@ else
 header ('Expires: 0');
 header ('Pragma: no-cache');
 
+//-- mod : Advanced Group Color Management -------------------------------------
+//-- add
+$agcm_color->generate_css();
+//-- fin mod : Advanced Group Color Management ---------------------------------
 $template->pparse('header');
 
 ?>

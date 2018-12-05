@@ -315,6 +315,11 @@ if ( isset($_POST['edit']) || isset($_GET['edit']) || isset($_POST['new']) )
 }
 else if ( isset($_POST['group_update']) )
 {
+//-- mod : Advanced Group Color Management -------------------------------------
+//-- add
+	// Read the users in the specified group
+	$agcm_color->read_group_users($group_id, ($mode == 'newgroup'));
+//-- fin mod : Advanced Group Color Management ---------------------------------
 	//
 	// Ok, they are submitting a group, let's save the data based on if it's new or editing
 	//
@@ -391,6 +396,17 @@ else if ( isset($_POST['group_update']) )
 			message_die(GENERAL_ERROR, 'Could not update auth_access', '', __LINE__, __FILE__, $sql);
 		}
 
+//-- mod : Advanced Group Color Management -------------------------------------
+//-- add
+		// reset the users in this group
+		$agcm_color->set_group_users($group_id, true);
+
+		// Remove the column and do various tasks when removeing a group
+		$agcm_color->remove_group($group_id);
+
+		// Regnerate group color cache
+		$agcm_color->read(true);
+//-- fin mod : Advanced Group Color Management ---------------------------------
 		$message = $lang['Deleted_group'] . '<br /><br />' . sprintf($lang['Click_return_groupsadmin'], '<a href="' . append_sid("admin_groups.$phpEx") . '">', '</a>') . '<br /><br />' . sprintf($lang['Click_return_admin_index'], '<a href="' . append_sid("index.$phpEx?pane=right") . '">', '</a>');
 
 		message_die(GENERAL_MESSAGE, $message);
@@ -556,6 +572,11 @@ if ($group_count_delete)
 					$group_count_added++;
 				}
 			}
+//-- mod : Advanced Group Color Management -------------------------------------
+//-- add
+			// reset the users in this group
+			$agcm_color->set_group_users($group_id);
+//-- fin mod : Advanced Group Color Management ---------------------------------
 			$message = $lang['Updated_group'] .'<br />'.sprintf($lang['group_count_updated'],$group_count_remove,$group_count_added). '<br /><br />' . sprintf($lang['Click_return_groupsadmin'], '<a href="' . append_sid("admin_groups.$phpEx") . '">', '</a>') . '<br /><br />' . sprintf($lang['Click_return_admin_index'], '<a href="' . append_sid("index.$phpEx?pane=right") . '">', '</a>');;
 
 			message_die(GENERAL_MESSAGE, $message);
@@ -613,6 +634,17 @@ if ($group_count_delete)
 					$group_count_added++;
 				}
 			}			
+//-- mod : Advanced Group Color Management -------------------------------------
+//-- add
+			// Add the column and do various tasks when adding a new group
+			$agcm_color->add_group($new_group_id);
+
+			// reset the users in this group
+			$agcm_color->set_group_users($new_group_id);
+
+			// Regnerate group color cache
+			$agcm_color->read(true);
+//-- fin mod : Advanced Group Color Management ---------------------------------
 			$message = $lang['Added_new_group'] .'<br />'.sprintf($lang['group_count_updated'],$group_count_remove,$group_count_added). '<br /><br />' . sprintf($lang['Click_return_groupsadmin'], '<a href="' . append_sid("admin_groups.$phpEx") . '">', '</a>') . '<br /><br />' . sprintf($lang['Click_return_admin_index'], '<a href="' . append_sid("index.$phpEx?pane=right") . '">', '</a>');;
 
 			message_die(GENERAL_MESSAGE, $message);

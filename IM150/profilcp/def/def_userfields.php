@@ -333,6 +333,9 @@ $values_list = array(
 						1 => array('txt' => 'Yes', 'img' => 'Yes'),
 					),
 			),
+		'list_groups' => array(
+				'func' => 'get_group_list',
+							),
 		'list_langs' => array(
 				'func' => 'get_langs_list',
 							),
@@ -1022,6 +1025,16 @@ $user_fields = array(
 				'type'         => 'TINYINT',
 				'sql_def'      => '(CASE WHEN [BUDDY_OF].buddy_ignore = 0 THEN 1 ELSE 0 END)',
 				'hidden'       => true,
+			),
+			'user_group_id' => array(
+				'lang_key'     => 'AGCM_user_color',
+				'explain'      => 'AGCM_user_color_explain',
+				'class'        => 'generic',
+				'type'         => 'MEDIUMINT',
+				'visibility'   => true,
+				'get_mode'     => 'LIST_DROP',
+				'values'       => 'list_groups',
+				'auth'         => USER,
 			),
 			'user_groups' => array(
 				'lang_key'     => 'Usergroups',

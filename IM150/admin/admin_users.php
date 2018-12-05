@@ -435,6 +435,10 @@ $sql = "UPDATE " . SHOUTBOX_TABLE . "
 
 		$user_style = ( isset( $_POST['style'] ) ) ? intval( $_POST['style'] ) : $board_config['default_style'];
 		$user_lang = ( $_POST['language'] ) ? $_POST['language'] : $board_config['default_lang'];
+//-- mod : Advanced Group Color Management -------------------------------------
+//-- add
+		$user_group_id = ( isset($_POST['user_group_id']) ) ? intval($_POST['user_group_id']) : NULL;
+//-- fin mod : Advanced Group Color Management ---------------------------------
 		$user_timezone = ( isset( $_POST['timezone']) ) ? doubleval( $_POST['timezone'] ) : $board_config['board_timezone'];
 
 		$user_dateformat = ( $_POST['dateformat'] ) ? trim( $_POST['dateformat'] ) : $board_config['default_dateformat'];
@@ -889,8 +893,10 @@ $user_allowsignature = ( !empty($_POST['user_allowsignature']) ) ? intval( $_POS
 				  message_die(GENERAL_ERROR, "Couldn't remove ban_userid info into database", "", __LINE__, __FILE__, $sql); 
 			   else $no_error_ban=true; 
 			} 
+      // TODO remove avatar_sql since it's not used
+      $group_color_sql = ', user_group_id = ' . ( $user_group_id == NULL ? 'NULL' : $user_group_id );
 			$sql = "UPDATE " . USERS_TABLE . "
-				SET " . $username_sql . $passwd_sql . "user_email = '" . str_replace("\'", "''", $email) . "', user_icq = '" . str_replace("\'", "''", $icq) . "', user_website = '" . str_replace("\'", "''", $website) . "', user_occ = '" . str_replace("\'", "''", $occupation) . "', user_from = '" . str_replace("\'", "''", $location) . "', user_interests = '" . str_replace("\'", "''", $interests) . "', user_extra = '$user_extra', user_sig = '" . str_replace("\'", "''", $signature) . "', user_viewemail = $viewemail, user_aim = '" . str_replace("\'", "''", $aim) . "', user_yim = '" . str_replace("\'", "''", $yim) . "', user_msnm = '" . str_replace("\'", "''", $msn) . "', user_attachsig = $attachsig,user_setbm = $setbm, user_sig_bbcode_uid = '$signature_bbcode_uid', user_allowsmile = $allowsmilies, user_allowhtml = $allowhtml, user_allowavatar = $user_allowavatar, user_allowsignature = $user_allowsignature, user_allowbbcode = $allowbbcode, user_allow_viewonline = $allowviewonline, user_notify = $notifyreply, user_allow_pm = $user_allowpm, user_notify_pm = $notifypm, user_popup_pm = $popuppm, user_lang = '" . str_replace("\'", "''", $user_lang) . "', user_style = $user_style, user_timezone = $user_timezone, user_dateformat = '" . str_replace("\'", "''", $user_dateformat) . "', user_active = $user_status, user_warnings = $user_ycard, user_rank = $user_rank" . $avatar_sql . "
+				SET " . $username_sql . $passwd_sql . "user_email = '" . str_replace("\'", "''", $email) . "', user_icq = '" . str_replace("\'", "''", $icq) . "', user_website = '" . str_replace("\'", "''", $website) . "', user_occ = '" . str_replace("\'", "''", $occupation) . "', user_from = '" . str_replace("\'", "''", $location) . "', user_interests = '" . str_replace("\'", "''", $interests) . "', user_extra = '$user_extra', user_sig = '" . str_replace("\'", "''", $signature) . "', user_viewemail = $viewemail, user_aim = '" . str_replace("\'", "''", $aim) . "', user_yim = '" . str_replace("\'", "''", $yim) . "', user_msnm = '" . str_replace("\'", "''", $msn) . "', user_attachsig = $attachsig,user_setbm = $setbm, user_sig_bbcode_uid = '$signature_bbcode_uid', user_allowsmile = $allowsmilies, user_allowhtml = $allowhtml, user_allowavatar = $user_allowavatar, user_allowsignature = $user_allowsignature, user_allowbbcode = $allowbbcode, user_allow_viewonline = $allowviewonline, user_notify = $notifyreply, user_allow_pm = $user_allowpm, user_notify_pm = $notifypm, user_popup_pm = $popuppm, user_lang = '" . str_replace("\'", "''", $user_lang) . "', user_style = $user_style, user_timezone = $user_timezone, user_dateformat = '" . str_replace("\'", "''", $user_dateformat) . "', user_active = $user_status, user_warnings = $user_ycard, user_rank = $user_rank $avatar_sql $group_color_sql
 				WHERE user_id = $user_id";
 
 			if( $result = $db->sql_query($sql) )
@@ -1043,6 +1049,10 @@ $user_allowsignature = ( !empty($_POST['user_allowsignature']) ) ? intval( $_POS
 		$user_avatar_type = $this_userdata['user_avatar_type'];
 		$user_style = $this_userdata['user_style'];
 		$user_lang = $this_userdata['user_lang'];
+//-- mod : Advanced Group Color Management -------------------------------------
+//-- add
+		$user_group_id = $this_userdata['user_group_id'];
+//-- fin mod : Advanced Group Color Management ---------------------------------
 		$user_timezone = $this_userdata['user_timezone'];
 		$user_dateformat = htmlspecialchars($this_userdata['user_dateformat']);
 		
@@ -1172,6 +1182,10 @@ $user_allowsignature = $this_userdata['user_allowsignature'];
 			$s_hidden_fields .= '<input type="hidden" name="hideonline" value="' . !$allowviewonline . '" />';
 			$s_hidden_fields .= '<input type="hidden" name="style" value="' . $user_style . '" />'; 
 			$s_hidden_fields .= '<input type="hidden" name="language" value="' . $user_lang . '" />';
+//-- mod : Advanced Group Color Management -------------------------------------
+//-- add
+			$s_hidden_fields .= '<input type="hidden" name="user_group_id" value="' . $user_group_id .'" />';
+//-- fin mod : Advanced Group Color Management ---------------------------------
 			$s_hidden_fields .= '<input type="hidden" name="timezone" value="' . $user_timezone . '" />';
 			$s_hidden_fields .= '<input type="hidden" name="dateformat" value="' . str_replace("\"", "&quot;", $user_dateformat) . '" />';
 
@@ -1310,6 +1324,10 @@ $s_hidden_fields .= '<input type="hidden" name="user_allowsignature" value="' . 
 			'ALWAYS_ALLOW_SMILIES_NO' => (!$allowsmilies) ? 'checked="checked"' : '',
 			'AVATAR' => $avatar,
 			'LANGUAGE_SELECT' => language_select($user_lang),
+//-- mod : Advanced Group Color Management -------------------------------------
+//-- add
+			'GROUP_COLOR_SELECT' => $agcm_color->group_color_select($user_group_id, $user_id),
+//-- fin mod : Advanced Group Color Management ---------------------------------
 			'TIMEZONE_SELECT' => tz_select($user_timezone),
 			'STYLE_SELECT' => style_select($user_style, 'style'),
 			'DATE_FORMAT' => $user_dateformat,
@@ -1344,6 +1362,11 @@ $s_hidden_fields .= '<input type="hidden" name="user_allowsignature" value="' . 
 			'L_LOCATION' => $lang['Location'],
 			'L_OCCUPATION' => $lang['Occupation'],
 			'L_BOARD_LANGUAGE' => $lang['Board_lang'],
+//-- mod : Advanced Group Color Management -------------------------------------
+//-- add
+			'L_GROUP_COLOR_SELECT' => $lang['AGCM_user_color'],
+			'L_GROUP_COLOR_SELECT_EXPLAIN' => $lang['AGCM_user_color_explain'],
+//-- fin mod : Advanced Group Color Management ---------------------------------
 			'L_BOARD_STYLE' => $lang['Board_style'],
 			'L_TIMEZONE' => $lang['Timezone'],
 			'L_DATE_FORMAT' => $lang['Date_format'],

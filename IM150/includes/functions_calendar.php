@@ -562,6 +562,7 @@ function get_event_PCP_birthday(&$events, &$number, $start_date, $end_date, $lim
 {
 	global $template, $lang, $images, $userdata, $board_config, $db, $phpbb_root_path, $phpEx;
 	global $tree;
+	global $agcm_color;
 
 	// init results
 	$number = 0;
@@ -638,7 +639,7 @@ function get_event_PCP_birthday(&$events, &$number, $start_date, $end_date, $lim
 			{
 				// user info
 				$user_id		= $row['user_id'];
-				$username		= $row['username'];
+				$username		= $agcm_color->get_user_color($row['user_group_id'], $row['user_session_time'], $row['username']);
 				$user_birthday	= $row['user_birthday'];
 
 				// get user relational status

@@ -177,6 +177,11 @@ $total_users = get_db_stat('usercount');
 $newest_userdata = get_db_stat('newestuser');
 $newest_user = $newest_userdata['username'];
 $newest_uid = $newest_userdata['user_id'];
+//-- mod : Advanced Group Color Management -------------------------------------
+//-- add
+$newest_user_group_id = $newest_userdata['user_group_id'];
+$newest_user_session_time = $newest_userdata['user_session_time'];
+//-- fin mod : Advanced Group Color Management ---------------------------------
 
 if( $total_posts == 0 )
 {
@@ -458,7 +463,12 @@ if (($board_config['display_viewonline'] == 2) || (($viewcat < 0) && ($board_con
 		'L_LW_LAST_DONORS' => $donationtitle,
 		'TOTAL_POSTS' => sprintf($l_total_post_s, $total_posts),
 		'TOTAL_USERS' => sprintf($l_total_user_s, $total_users),
-		'NEWEST_USER' => sprintf($lang['Newest_user'], '<a href="' . append_sid("profile.$phpEx?mode=viewprofile&amp;" . POST_USERS_URL . "=$newest_uid") . '">', $newest_user, '</a>'), 
+//-- mod : Advanced Group Color Management -------------------------------------
+//-- delete
+//	'NEWEST_USER' => sprintf($lang['Newest_user'], '<a href="' . append_sid("profile.$phpEx?mode=viewprofile&amp;" . POST_USERS_URL . "=$newest_uid") . '">' , $newest_user , '</a>'), 
+//-- add
+		'NEWEST_USER' => sprintf($lang['Newest_user'], '<a href="' . append_sid("profile.$phpEx?mode=viewprofile&amp;" . POST_USERS_URL . "=$newest_uid") . '" class="' . $agcm_color->get_user_color($newest_user_group_id, $newest_user_session_time) . '">' , $newest_user , '</a>'), 
+//-- fin mod : Advanced Group Color Management ---------------------------------
 
 		'FORUM_IMG' => $images['forum'],
 		'FORUM_NEW_IMG' => $images['forum_new'],
@@ -687,6 +697,14 @@ if ( !$display )
 include($phpbb_root_path . 'mods/netclectic/mini_cal/mini_cal.'.$phpEx); 
 // MOD MINI CAL END
 
+//-- mod : Advanced Group Color Management -------------------------------------
+//-- add
+//
+// Display Legend
+//
+$agcm_color->display_legend();
+//-- fin mod : Advanced Group Color Management ---------------------------------
+//
 //
 // Generate the page
 //

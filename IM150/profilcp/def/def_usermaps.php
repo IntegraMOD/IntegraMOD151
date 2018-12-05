@@ -550,6 +550,15 @@ $user_maps = array(
 							),
 					),
 			),
+	'PCP.profil.profile_prefer.PCP.group_color' => array(
+				'order'		=> 55,
+										'title'		=> 'Color_options',
+						'fields'	=> array(
+						'user_group_id' => array(
+								'txt'          => true,
+							),
+					),
+			),
 	
 	'PCP.profil.profile_prefer.PCP.system' => array(
 				'order'		=> 50,

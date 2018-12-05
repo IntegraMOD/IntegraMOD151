@@ -142,6 +142,7 @@ window.open('{buddy_alert.U_BUDDY_ALERT}', '_buddyalert', 'HEIGHT=225,resizable=
 <script type="text/javascript" src="templates/jQuery.mobTabMenu.js"></script>
 <script type="text/javascript" src="templates/immenu.js"></script>
 
+{COLOR_CSS}
 </head>
 <body class="resp">
 	<div id="mobile-bar">

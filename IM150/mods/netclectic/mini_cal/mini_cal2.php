@@ -23,23 +23,23 @@ define ('IN_MINI_CAL', 1);
 	global $mini_cal_today, $mini_cal_this_month, $mini_cal_this_year, $mini_cal_this_day, $lang;
     
     // get the mode (if any)
-    if( isset($HTTP_GET_VARS['mode']) || isset($HTTP_POST_VARS['mode']) )
+    if( isset($_GET['mode']) || isset($_POST['mode']) )
     {
-    	$mini_cal_mode = ( isset($HTTP_POST_VARS['mode']) ) ? $HTTP_POST_VARS['mode'] : $HTTP_GET_VARS['mode'];
+    	$mini_cal_mode = ( isset($_POST['mode']) ) ? $_POST['mode'] : $_GET['mode'];
     }
     $mini_cal_mode = ($mini_cal_mode == 'personal') ? $mini_cal_mode : 'default';
     
     // get the user (for personal calendar)
-    if( isset($HTTP_GET_VARS[POST_USERS_URL]) || isset($HTTP_POST_VARS[POST_USERS_URL]) )
+    if( isset($_GET[POST_USERS_URL]) || isset($_POST[POST_USERS_URL]) )
     {
-    	$mini_cal_user = ( isset($HTTP_POST_VARS[POST_USERS_URL]) ) ? intval($HTTP_POST_VARS[POST_USERS_URL]) : intval($HTTP_GET_VARS[POST_USERS_URL]);
+    	$mini_cal_user = ( isset($_POST[POST_USERS_URL]) ) ? intval($_POST[POST_USERS_URL]) : intval($_GET[POST_USERS_URL]);
     }
     
     // get the calendar month
     $mini_cal_month = 0;
-    if( isset($HTTP_GET_VARS['month']) || isset($HTTP_POST_VARS['month']) )
+    if( isset($_GET['month']) || isset($_POST['month']) )
     {
-    	$mini_cal_month = ( isset($HTTP_POST_VARS['month']) ) ? intval($HTTP_POST_VARS['month']) : intval($HTTP_GET_VARS['month']);
+    	$mini_cal_month = ( isset($_POST['month']) ) ? intval($_POST['month']) : intval($_GET['month']);
     }
     
     // initialise our calendarsuite class
@@ -150,7 +150,7 @@ define ('IN_MINI_CAL', 1);
     // output our general calendar bits
     $prev_qs = setQueryStringVal('month', $mini_cal_month -1);
     $next_qs = setQueryStringVal('month', $mini_cal_month +1);
-	$page = ( isset($HTTP_GET_VARS['page']) ) ? '&page=' . trim($HTTP_GET_VARS['page']) : '';
+	$page = ( isset($_GET['page']) ) ? '&page=' . trim($_GET['page']) : '';
     $prev_month = '<a href="' . append_sid($HTTP_SERVER_VARS["PHP_SELF"] . $prev_qs . $page) . '" class="gen"><img src="' . $images['mini_cal_icon_left_arrow'] . '" title="' . $lang['View_previous_month'] . '" border="0" alt="&lt;&lt;"></a>';
     $next_month = '<a href="' . append_sid($HTTP_SERVER_VARS["PHP_SELF"] . $next_qs . $page) . '" class="gen"><img src="' . $images['mini_cal_icon_right_arrow'] . '" title="' . $lang['View_next_month'] . '" border="0" alt="&gt;&gt;"></a>';
 	$template->assign_vars(array(

@@ -433,6 +433,10 @@ function username_search($search_match)
 {
 	global $db, $board_config, $template, $lang, $images, $theme, $phpEx, $phpbb_root_path;
 	global $starttime, $gen_simple_header;
+//-- mod : Advanced Group Color Management -------------------------------------
+//-- add
+	global $agcm_color;
+//-- fin mod : Advanced Group Color Management ---------------------------------
 //-- mod : sub-template ----------------------------------------------------------------------------
 //-- add
 	global $sub_template_key_image, $sub_templates;
@@ -511,4 +515,31 @@ function username_search($search_match)
 	return;
 }
 
+//-- mod : Advanced Group Color Management -------------------------------------
+//-- add
+function color_search()
+{
+	global $template, $lang, $theme;
+	$page_title = $lang['AGCM_color_search'];
+
+	$template->set_filenames(array(
+		'search_color' => 'search_color.tpl')
+	);
+
+	$template->assign_vars(array(
+		'L_WEB_SAFE' => $lang['AGCM_web_safe'],
+		'L_WINDOWS_SYSTEM' => $lang['AGCM_windows_system'],
+		'L_GREY_SCALE' => $lang['AGCM_grey_scale'],
+		'L_MAC_OS' => $lang['AGCM_mac_os'],
+		'PAGE_TITLE' => $page_title,
+		'S_CONTENT_DIRECTION' => $lang['DIRECTION'],
+		'S_CONTENT_ENCODING' => $lang['ENCODING'],
+		'T_BODY_BGCOLOR' => '#'.$theme['body_bgcolor'])
+	);
+
+	$template->pparse('search_color');
+
+	return;
+}
+//-- fin mod : Advanced Group Color Management ---------------------------------
 ?>

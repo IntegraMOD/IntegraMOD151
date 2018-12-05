@@ -30,6 +30,7 @@ if(!function_exists(imp_recent_topics_block_func))
 	function imp_recent_topics_block_func()
 	{
 		global $template, $portal_config, $userdata, $board_config, $db, $phpEx, $var_cache;
+		global $agcm_color;
 
 		$forum_data = array();
 		if($portal_config['cache_enabled'])
@@ -85,7 +86,7 @@ if(!function_exists(imp_recent_topics_block_func))
 
 		if ($portal_config['md_approve_mod_installed'])
 		{ 
-			$sql = "SELECT t.topic_id, t.topic_title, t.topic_last_post_id, t.forum_id, p.post_id, p.poster_id, p.post_time, u.user_id, u.username, p.post_username 
+			$sql = "SELECT u.user_group_id, u.user_session_time, t.topic_id, t.topic_title, t.topic_last_post_id, t.forum_id, p.post_id, p.poster_id, p.post_time, u.user_id, u.username, p.post_username 
 				FROM " . TOPICS_TABLE . " AS t LEFT OUTER JOIN " . APPROVE_POSTS_TABLE . " AS a ON (t.topic_first_post_id = a.post_id), " . POSTS_TABLE . " AS p, " . USERS_TABLE . " AS u 
 				WHERE t.forum_id NOT IN (" . $except_forum_id . ") 
 					AND t.topic_status <> 2 
@@ -98,7 +99,7 @@ if(!function_exists(imp_recent_topics_block_func))
 		}
 		else
 		{
-			$sql = "SELECT t.topic_id, t.topic_title, t.topic_last_post_id, t.forum_id, p.post_id, p.poster_id, p.post_time, u.user_id, u.username
+			$sql = "SELECT u.user_group_id, u.user_session_time, t.topic_id, t.topic_title, t.topic_last_post_id, t.forum_id, p.post_id, p.poster_id, p.post_time, u.user_id, u.username
 				FROM " . TOPICS_TABLE . " AS t, " . POSTS_TABLE . " AS p, " . USERS_TABLE . " AS u
 				WHERE t.forum_id NOT IN (" . $except_forum_id . ")
 					AND t.topic_status <> 2
@@ -145,7 +146,7 @@ if(!function_exists(imp_recent_topics_block_func))
 					'U_TITLE' => append_sid("viewtopic.$phpEx?" . POST_POST_URL . '=' . $recent_topic_row[$i]['post_id']) . '#' .$recent_topic_row[$i]['post_id'], 
 					'L_TITLE' => smilies_pass($recent_topic_row[$i]['topic_title']), 
 					'U_POSTER' => append_sid("profile.$phpEx?mode=viewprofile&amp;" . POST_USERS_URL . "=" . $recent_topic_row[$i]['user_id']), 
-					'S_POSTER' => $recent_topic_row[$i]['username'], 
+					'S_POSTER' => $agcm_color->get_user_color($recent_topic_row[$i]['user_group_id'], $recent_topic_row[$i]['user_session_time'], $recent_topic_row[$i]['username']), 
 					'S_POSTTIME' => create_date($board_config['default_dateformat'], $recent_topic_row[$i]['post_time'], $board_config['board_timezone']) 
 					) 
 				); 

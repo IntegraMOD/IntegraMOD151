@@ -551,7 +551,7 @@ if ( !($result = $db->sql_query($sql)) )
 		$row_color = ( !($i % 2) ) ? $theme['td_color1'] : $theme['td_color2'];
 		$row_class = ( !($i % 2) ) ? $theme['td_class1'] : $theme['td_class2'];
 		$user_id = $shout_row['shout_user_id'];
-		$user_name = colorize_username($shout_row);
+    $user_name = $agcm_color->get_user_color($shout_row['user_group_id'], $shout_row['user_session_time'], $shout_row['username']);
 		$shout_username = ( $user_id == ANONYMOUS && $shout_row['shout_username'] !== '' ) ? $shout_row['shout_username'] : "<a href='".append_sid("profile.$phpEx?mode=viewprofile&amp;" . POST_USERS_URL . "=".$shout_row['shout_user_id'])."' target='_top'>".$user_name."</a>" ;
 
 		$user_profile = append_sid("profile.$phpEx?mode=viewprofile&amp;" . POST_USERS_URL . "=$user_id");

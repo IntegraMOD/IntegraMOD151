@@ -490,6 +490,13 @@ for($i=0; $i<count($install); $i++)
 		}
 		xs_error($lang['xs_import_notinstall5'] . '<br /><br />' . $lang['xs_import_back']);
 	}
+//-- mod : Advanced Group Color Management -------------------------------------
+//-- add
+	$style_id = $db->sql_nextid($result);
+
+// Add the column and do various tasks when adding a new group
+	$agcm_color->add_theme($style_id);
+//-- fin mod : Advanced Group Color Management ---------------------------------
 	if($default_name === $style_name)
 	{
 		$sql = "UPDATE " . CONFIG_TABLE . " SET config_value='{$installed}' WHERE config_name='default_style'";

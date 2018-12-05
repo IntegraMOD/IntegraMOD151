@@ -424,7 +424,12 @@ function get_db_stat($mode)
 			return intval($board_config['max_users']);
 			break;
 		case 'newestuser':
-			$row = array( 'user_id' => intval($board_config['record_last_user_id']), 'username' => $board_config['record_last_username']);
+      $row = array(
+        'user_id' => intval($board_config['record_last_user_id']),
+        'username' => $board_config['record_last_username'],
+        'user_group_id' => $board_config['record_last_user_group_id'],
+        'user_session_time' => $board_config['record_user_session_time'],
+      );
 			return $row;
 			break;
 		case 'postcount':
@@ -449,7 +454,7 @@ function get_db_stat($mode)
 			break;
 
 		case 'newestuser':
-			$sql = "SELECT user_id, username
+			$sql = "SELECT user_id, username, user_group_id, user_session_time 
 				FROM " . USERS_TABLE . "
 				WHERE user_id <> " . ANONYMOUS . "
 				ORDER BY user_id DESC
@@ -1097,6 +1102,10 @@ phpBBSecurity_Elimination($board_config[phpBBSecurity_AdminConfigName()], $board
 function setup_style($style)
 {
 	global $db, $board_config, $template, $images, $phpbb_root_path, $var_cache, $portal_config, $current_template_path;
+//-- mod : Advanced Group Color Management -------------------------------------
+//-- add
+	global $agcm_color;
+//-- fin mod : Advanced Group Color Management ---------------------------------
 
 	// BEGIN Style Select MOD
 	if ( intval($style) == 0 )
@@ -1218,6 +1227,10 @@ function setup_style($style)
 		}
 	}
 
+//-- mod : Advanced Group Color Management -------------------------------------
+//-- add
+	$agcm_color->read_theme($style);
+//-- fin mod : Advanced Group Color Management ---------------------------------
 	return $row;
 }
 
@@ -1657,6 +1670,10 @@ function message_die($msg_code, $msg_text = '', $msg_title = '', $err_line = '',
 	global $db, $template, $board_config, $theme, $lang, $phpEx, $phpbb_root_path, $nav_links, $gen_simple_header, $images;
 	global $userdata, $user_ip, $session_length;
 	global $starttime;
+//-- mod : Advanced Group Color Management -------------------------------------
+//-- add
+	global $agcm_color;
+//-- fin mod : Advanced Group Color Management ---------------------------------
 	global $_COOKIE;
 	//-- mod : profile cp ------------------------------------------------------------------------------
 //-- add

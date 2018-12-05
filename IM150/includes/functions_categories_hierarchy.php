@@ -206,6 +206,13 @@ function read_tree($force=false)
 						AND p.post_id = t.topic_last_post_id
 						AND t.topic_id = p.topic_id AND t.forum_id = p.forum_id AND t.topic_moved_id = 0
 						AND u.user_id = p.poster_id";
+//-- mod : Advanced Group Color Management -------------------------------------
+//-- add
+if (!defined('IN_INSTALL'))
+{
+	$sql = str_replace('SELECT ', 'SELECT u.user_group_id, u.user_session_time, ', $sql);
+}
+//-- fin mod : Advanced Group Color Management ---------------------------------
 	if ( !$result = $db->sql_query($sql) )
 	{
 		message_die(GENERAL_ERROR, 'Couldn\'t access list of unread posts from forums', '', __LINE__, __FILE__, $sql);
@@ -422,6 +429,8 @@ function set_tree_user_auth()
 				$tree['data'][$i]['tree.post_username']			= ($tree['data'][$i]['user_id'] != ANONYMOUS) ? $tree['data'][$i]['username'] : ( (!empty($tree['data'][$i]['post_username'])) ? $tree['data'][$i]['post_username'] : $lang['Guest'] );
 				$tree['data'][$i]['tree.topic_title']			= $tree['data'][$i]['topic_title'];
 				$tree['data'][$i]['tree.unread_topics']			= $tree['unread_topics'][$i];
+				$tree['data'][$i]['tree.user_group_id']			= $tree['data'][$i]['user_group_id'];
+				$tree['data'][$i]['tree.user_session_time']		= $tree['data'][$i]['user_session_time'];
 			}
 		}
 
@@ -436,6 +445,8 @@ function set_tree_user_auth()
 				$tree['data'][$main_idx]['tree.post_username']		= $tree['data'][$i]['tree.post_username'];
 				$tree['data'][$main_idx]['tree.topic_title']		= $tree['data'][$i]['tree.topic_title'];
 				$tree['data'][$main_idx]['tree.unread_topics']		= $tree['data'][$i]['tree.unread_topics'];
+				$tree['data'][$main_idx]['tree.user_group_id']		= $tree['data'][$i]['tree.user_group_id'];
+				$tree['data'][$main_idx]['tree.user_session_time']	= $tree['data'][$i]['tree.user_session_time'];
 			}
 		}
 	}
@@ -679,6 +690,7 @@ function build_index($cur='Root', $cat_break=false, &$forum_moderators, $real_le
 {
 	global $template, $phpEx, $board_config, $lang, $images;
 	global $tree;
+	global $agcm_color;
 	//
 	// init
 	//
@@ -882,8 +894,7 @@ function build_index($cur='Root', $cat_break=false, &$forum_moderators, $real_le
           'user_id' => $data['tree.post_user_id'],
           'user_level' => $data['user_level'],
         );
-        $colored_username = '<span class="'.get_user_level_class('', 'gen', $last_poster_userdata) . '">' . $data['tree.post_username'] . '</span>';
-				$last_post .= ( $data['tree.post_user_id'] == ANONYMOUS ) ? $data['tree.post_username'] . ' ' : '<a href="' . append_sid("profile.$phpEx?mode=viewprofile&amp;" . POST_USERS_URL . '='  . $data['tree.post_user_id']) . '">' . $colored_username . '</a> ';
+				$last_post .= ( $data['tree.post_user_id'] == ANONYMOUS ) ? $agcm_color->get_user_color($data['user_group_id'], $data['user_session_time'], $data['tree.post_username']) . ' ' : '<a href="' . append_sid("profile.$phpEx?mode=viewprofile&amp;" . POST_USERS_URL . '='  . $data['tree.post_user_id']) . '" class="'.$agcm_color->get_user_color($data['user_group_id'], $data['user_session_time']).'">' . $data['tree.post_username'] . '</a> ';
 				$last_post .= '<a href="' . append_sid("viewtopic.$phpEx?"  . POST_POST_URL . '=' . $data['tree.topic_last_post_id']) . '#' . $data['tree.topic_last_post_id'] . '"><img src="' . $images['icon_latest_reply'] . '" border="0" alt="' . $lang['View_latest_post'] . '" title="' . $lang['View_latest_post'] . '" /></a>';
 			}
 
@@ -1094,6 +1105,7 @@ function display_index($cur='Root')
 	global $board_config, $template, $userdata, $lang, $db, $nav_links, $phpEx;
 	global $images, $nav_separator, $nav_cat_desc;
 	global $tree;
+	global $agcm_color;
 
 	$template->set_filenames(array(
 		'index' => 'index_box.tpl')
@@ -1108,10 +1120,11 @@ function display_index($cur='Root')
 		{
 			for ( $i = 0; $i < count($data['user_id']); $i++ )
 			{
-				$forum_moderators[ $tree['id'][$idx] ][] = '<a href="' . append_sid("./profile.$phpEx?mode=viewprofile&amp;" . POST_USERS_URL . "=" . $data['user_id'][$i]) . '">' . $data['username'][$i] . '</a>';
+				$forum_moderators[ $tree['id'][$idx] ][] = '<a href="' . append_sid("profile.$phpEx?mode=viewprofile&amp;" . POST_USERS_URL . "=" . $data['user_id'][$i]) . '" class="' . $agcm_color->get_user_color($data['user_group_id'][$i], $data['user_session_time'][$i]) . '">' . $data['username'][$i] . '</a>';
 			}
 			for ( $i = 0; $i < count($data['group_id']); $i++ )
 			{
+				$forum_moderators[ $tree['id'][$idx] ][] = '<a href="' . append_sid("./groupcp.$phpEx?" . POST_GROUPS_URL . "=" . $data['group_id'][$i]) . '">' . $data['group_name'][$i] . '</a>';
 				$forum_moderators[ $tree['id'][$idx] ][] = '<a href="' . append_sid("./groupcp.$phpEx?" . POST_GROUPS_URL . "=" . $data['group_id'][$i]) . '">' . $data['group_name'][$i] . '</a>';
 			}
 		}

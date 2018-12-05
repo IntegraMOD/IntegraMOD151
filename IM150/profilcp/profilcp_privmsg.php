@@ -152,7 +152,7 @@ if ( $mode == 'read' )
 	//
 	// Major query obtains the message ...
 	//
-	$sql = "SELECT u.username AS username_1, u.user_id AS user_id_1, u2.username AS username_2, u2.user_id AS user_id_2, u.user_sig_bbcode_uid, u.user_posts, u.user_from, u.user_website, u.user_email, u.user_icq, u.user_aim, u.user_yim, u.user_regdate, u.user_msnm, u.user_viewemail, u.user_rank, u.user_sig, u.user_avatar, pm.*, pmt.privmsgs_bbcode_uid, pmt.privmsgs_text
+	$sql = "SELECT u.user_group_id AS user_group_id_1, u2.user_group_id AS user_group_id_2, u.user_session_time AS user_session_time_1, u2.user_session_time AS user_session_time_2,  u.username AS username_1, u.user_id AS user_id_1, u2.username AS username_2, u2.user_id AS user_id_2, u.user_sig_bbcode_uid, u.user_posts, u.user_from, u.user_website, u.user_email, u.user_icq, u.user_aim, u.user_yim, u.user_regdate, u.user_msnm, u.user_viewemail, u.user_rank, u.user_sig, u.user_avatar, pm.*, pmt.privmsgs_bbcode_uid, pmt.privmsgs_text
 		FROM " . PRIVMSGS_TABLE . " pm, " . PRIVMSGS_TEXT_TABLE . " pmt, " . USERS_TABLE . " u, " . USERS_TABLE . " u2 
 		WHERE pm.privmsgs_id = $privmsgs_id
 			AND pmt.privmsgs_text_id = pm.privmsgs_id 
@@ -399,9 +399,19 @@ if ( $mode == 'read' )
 		'S_HIDDEN_FIELDS' => $s_hidden_fields)
 	);
 
-	$username_from = $privmsg['username_1'];
+//-- mod : Advanced Group Color Management -------------------------------------
+//-- delete
+//	$username_from = $privmsg['username_1'];
+//-- add
+	$username_from = $agcm_color->get_user_color($privmsg['user_group_id_1'], $privmsg['user_session_time_1'], $privmsg['username_1']);
+//-- fin mod : Advanced Group Color Management ---------------------------------
 	$user_id_from = $privmsg['user_id_1'];
-	$username_to = $privmsg['username_2'];
+//-- mod : Advanced Group Color Management -------------------------------------
+//-- delete
+//	$username_to = $privmsg['username_2'];
+//-- add
+	$username_to = $agcm_color->get_user_color($privmsg['user_group_id_2'], $privmsg['user_session_time_2'], $privmsg['username_2']);
+//-- fin mod : Advanced Group Color Management ---------------------------------
 	$user_id_to = $privmsg['user_id_2'];
 	init_display_pm_attachments($privmsg['privmsgs_attachment']);
 
@@ -1136,7 +1146,32 @@ else if ( $submit || $refresh || $mode != '' )
 
 		if ( !empty($_POST['username']) )
 		{
-			$to_username = $_POST['username'];
+//-- mod : Advanced Group Color Management -------------------------------------
+//-- delete
+//	$to_username = (isset($HTTP_POST_VARS['username']) ) ? trim(htmlspecialchars(stripslashes($HTTP_POST_VARS['username']))) : '';
+//-- add
+		if (isset($_POST['username']))
+		{
+			$to_username = phpbb_clean_username($_POST['username']);
+
+			$sql = "SELECT username, user_group_id, user_session_time
+				FROM " . USERS_TABLE . "
+				WHERE username = '" . str_replace("\'", "''", $to_username) . "'
+					AND user_id <> " . ANONYMOUS;
+			if ( !($result = $db->sql_query($sql)) )
+			{
+				$error = TRUE;
+				$error_msg = $lang['No_such_user'];
+			}
+
+			if ( $row = $db->sql_fetchrow($result) )
+			{
+				$to_username = $row['username'];
+				$to_user_group_id = $row['user_group_id'];
+				$to_user_session_time = $row['user_session_time'];
+			}
+		}
+//-- fin mod : Advanced Group Color Management ---------------------------------
 			$sql = "SELECT * FROM " . USERS_TABLE . " 
 					WHERE username = '" . str_replace("\'", "''", $to_username) . "' 
 						AND user_id <> " . ANONYMOUS;
@@ -1656,8 +1691,14 @@ else if ( $submit || $refresh || $mode != '' )
 		$template->assign_vars(array(
 			'TOPIC_TITLE' => $preview_subject,
 			'POST_SUBJECT' => $preview_subject,
-			'MESSAGE_TO' => $to_username, 
-			'MESSAGE_FROM' => $userdata['username'], 
+//-- mod : Advanced Group Color Management -------------------------------------
+//-- delete
+//	'MESSAGE_TO' => $to_username,
+//	'MESSAGE_FROM' => $userdata['username'],
+//-- add
+			'MESSAGE_TO' => $agcm_color->get_user_color($to_user_group_id, $to_user_session_time, $to_username),
+			'MESSAGE_FROM' => $agcm_color->get_user_color($userdata['user_group_id'], $userdata['user_session_time'], $userdata['username']),
+//-- fin mod : Advanced Group Color Management ---------------------------------
 			'POST_DATE' => create_date($board_config['default_dateformat'], time(), $board_config['board_timezone']),
 			'MESSAGE' => $preview_message,
 
@@ -2240,8 +2281,12 @@ else
 			'S_MARK_ID' => $privmsg_id, 
 
 			'U_READ' => $u_subject,
-			'U_FROM_USER_PROFILE' => $u_from_user_profile)
-		);
+			'U_FROM_USER_PROFILE' => $u_from_user_profile,
+//-- mod : Advanced Group Color Management -------------------------------------
+//-- add
+				'S_FROM' => $agcm_color->get_user_color($row['user_group_id'], $row['user_session_time']),
+//-- fin mod : Advanced Group Color Management ---------------------------------
+		));
 	}
 
 	if ($rows)

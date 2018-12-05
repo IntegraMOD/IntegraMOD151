@@ -84,6 +84,7 @@ function generate_smilies_album($mode, $page_id) //borrowed from phpbbforums...m
 	global $db, $board_config, $template, $lang, $images, $theme, $phpEx, $phpbb_root_path;
 	global $user_ip, $session_length, $starttime;
 	global $userdata;
+	global $agcm_color;
 	// Vars needed for CH 2.1.4
 	global $config, $user, $censored_words, $icons, $navigation, $themes, $smilies;
 

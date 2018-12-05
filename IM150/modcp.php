@@ -1008,7 +1008,7 @@ if ( sizeof($user_updated) )
 				'split_body' => 'modcp_split.tpl')
 			);
 
-			$sql = "SELECT u.username, p.*, pt.post_text, pt.bbcode_uid, pt.post_subject, p.post_username
+			$sql = "SELECT u.user_group_id, u.user_session_time, u.username, p.*, pt.post_text, pt.bbcode_uid, pt.post_subject, p.post_username
 				FROM " . POSTS_TABLE . " p, " . USERS_TABLE . " u, " . POSTS_TEXT_TABLE . " pt
 				WHERE p.topic_id = $topic_id
 					AND p.poster_id = u.user_id
@@ -1119,7 +1119,12 @@ if ( sizeof($user_updated) )
 					$template->assign_block_vars('postrow', array(
 						'ROW_COLOR' => '#' . $row_color,
 						'ROW_CLASS' => $row_class,
-						'POSTER_NAME' => $poster,
+//-- mod : Advanced Group Color Management -------------------------------------
+//-- delete
+//	'POSTER_NAME' => $poster,
+//-- add
+						'POSTER_NAME' => $agcm_color->get_user_color($postrow[$i]['user_group_id'], $postrow[$i]['user_session_time'], $poster),
+//-- fin mod : Advanced Group Color Management ---------------------------------
 						'POST_DATE' => $post_date,
 						'POST_SUBJECT' => $post_subject,
 						'MESSAGE' => $message,
@@ -1237,7 +1242,7 @@ if ( sizeof($user_updated) )
 		//
 		// Get other users who've posted under this IP
 		//
-		$sql = "SELECT u.user_id, u.username, COUNT(*) as postings 
+		$sql = "SELECT u.user_group_id, u.user_session_time, u.user_id, u.username, COUNT(*) as postings 
 			FROM " . USERS_TABLE ." u, " . POSTS_TABLE . " p 
 			WHERE p.poster_id = u.user_id 
 				AND p.poster_ip = '" . $post_row['poster_ip'] . "'
@@ -1265,6 +1270,10 @@ if ( sizeof($user_updated) )
 					'USERNAME' => $username,
 					'POSTS' => $row['postings'] . ' ' . ( ( $row['postings'] == 1 ) ? $lang['Post'] : $lang['Posts'] ),
 					'L_SEARCH_POSTS' => sprintf($lang['Search_user_posts'], $username), 
+//-- mod : Advanced Group Color Management -------------------------------------
+//-- add
+					'S_USERNAME' => $agcm_color->get_user_color($row['user_group_id'], $row['user_session_time']),
+//-- fin mod : Advanced Group Color Management ---------------------------------
 
 					'U_PROFILE' => ($id == ANONYMOUS) ? append_sid("modcp.$phpEx?mode=ip&amp;" . POST_POST_URL . "=" . $post_id . "&amp;" . POST_TOPIC_URL . "=" . $topic_id . "&amp;p_sid=" . $userdata['priv_session_id']) : append_sid("profile.$phpEx?mode=viewprofile&amp;" . POST_USERS_URL . "=$id"),
 					'U_SEARCHPOSTS' => append_sid("search.$phpEx?search_author=" . (( $id == ANONYMOUS ) ? 'Anonymous' : urlencode($username)) . "&amp;showresults=topics"))
@@ -1315,7 +1324,7 @@ if ( sizeof($user_updated) )
 		$replacement_word = array();
 		obtain_word_list($orig_word, $replacement_word);
 
-		$sql = "SELECT t.*, u.username, u.user_id, p.post_time
+		$sql = "SELECT u.user_group_id, u.user_session_time, t.*, u.username, u.user_id, p.post_time
 			FROM " . TOPICS_TABLE . " t, " . USERS_TABLE . " u, " . POSTS_TABLE . " p
 			WHERE t.forum_id = $forum_id
 				AND t.topic_poster = u.user_id

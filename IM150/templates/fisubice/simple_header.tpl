@@ -21,6 +21,7 @@
 </script>
 <!-- END buddy_alert -->
 <!-- Prillian - End Code Additions -->
+{COLOR_CSS}
 </head>
 <body {IM_RELOAD} > 
 <a name="top" id="top"></a>

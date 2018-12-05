@@ -1,3 +1,4 @@
+{COLOR_CSS}
 <script language="JavaScript" type="text/javascript" src="templates/post_message.js"></script>
 {JAVASCRIPT_BBCODE_BOX}
 <script language='javascript' src='spelling/spellmessage.js'></script>

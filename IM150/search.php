@@ -203,6 +203,17 @@ if ( $mode == 'removebm' )
 	// Reset settings
 	$mode = '';
 }
+//-- mod : Advanced Group Color Management -------------------------------------
+//-- add
+if ($mode == 'searchcolor')
+{
+	//
+	// This handles the simple windowed user color
+	//
+	color_search();
+
+	exit;
+}
 if ( $mode == 'searchuser' )
 {
 	//
@@ -1015,7 +1026,7 @@ else if ( $search_keywords != '' || $search_author != '' || $search_id )
 		}
 		else
 		{
-			$sql = "SELECT t.*, f.forum_id, f.forum_name, u.username, u.user_id, u2.username as user2, u2.user_id as id2, p.post_username, p2.post_username AS post_username2, p2.post_time 
+			$sql = "SELECT u.user_group_id, u.user_session_time, t.*, f.forum_id, f.forum_name, u.username, u.user_id, u2.username as user2, u2.user_id as id2, p.post_username, p2.post_username AS post_username2, p2.post_time 
 				FROM " . TOPICS_TABLE . " t, " . FORUMS_TABLE . " f, " . USERS_TABLE . " u, " . POSTS_TABLE . " p, " . POSTS_TABLE . " p2, " . USERS_TABLE . " u2
 				WHERE t.topic_id IN ($search_results) 
 					AND t.topic_poster = u.user_id
@@ -1025,6 +1036,10 @@ else if ( $search_keywords != '' || $search_author != '' || $search_id )
 					AND u2.user_id = p2.poster_id";
 		}
 
+//-- mod : Advanced Group Color Management -------------------------------------
+//-- add
+    $sql = str_replace('SELECT ', 'SELECT u.user_group_id as user_group_id_1, u2.user_group_id as user_group_id_2, u.user_session_time as user_session_time_1, u2.user_session_time as user_session_time_2, ', $sql);
+//-- fin mod : Advanced Group Color Management ---------------------------------
 		$per_page = ( $show_results == 'posts' ) ? $board_config['posts_per_page'] : $board_config['topics_per_page'];
 
 		$sql .= " ORDER BY ";
@@ -1336,9 +1351,16 @@ else if ( $search_keywords != '' || $search_author != '' || $search_id )
 
 				}
 
-				$poster = ( $searchset[$i]['user_id'] != ANONYMOUS ) ? '<a href="' . append_sid("profile.$phpEx?mode=viewprofile&amp;" . POST_USERS_URL . "=" . $searchset[$i]['user_id']) . '">' : '';
+//-- mod : Advanced Group Color Management -------------------------------------
+//-- delete
+//	$poster = ( $searchset[$i]['user_id'] != ANONYMOUS ) ? '<a href="' . append_sid("profile.$phpEx?mode=viewprofile&amp;" . POST_USERS_URL . "=" . $searchset[$i]['user_id']) . '">' : '';
+//	$poster .= ( $searchset[$i]['user_id'] != ANONYMOUS ) ? $searchset[$i]['username'] : ( ( $searchset[$i]['post_username'] != "" ) ? $searchset[$i]['post_username'] : $lang['Guest'] );
+//	$poster .= ( $searchset[$i]['user_id'] != ANONYMOUS ) ? '</a>' : '';
+//-- add
+				$poster = ( $searchset[$i]['user_id'] != ANONYMOUS ) ? '<a href="' . append_sid("profile.$phpEx?mode=viewprofile&amp;" . POST_USERS_URL . "=" . $searchset[$i]['user_id']) . '" class="' . $agcm_color->get_user_color($searchset[$i]['user_group_id'], $searchset[$i]['user_session_time']) . '">' : '<span class="' . $agcm_color->get_user_color(GROUP_ANONYMOUS) . '">';
 				$poster .= ( $searchset[$i]['user_id'] != ANONYMOUS ) ? $searchset[$i]['username'] : ( ( $searchset[$i]['post_username'] != "" ) ? $searchset[$i]['post_username'] : $lang['Guest'] );
-				$poster .= ( $searchset[$i]['user_id'] != ANONYMOUS ) ? '</a>' : '';
+				$poster .= ( $searchset[$i]['user_id'] != ANONYMOUS ) ? '</a>' : '</span>';
+//-- fin mod : Advanced Group Color Management ---------------------------------
 
 //-- mod : keep unread -----------------------------------------------------------------------------
 //-- delete
@@ -1721,10 +1743,16 @@ else if ( $search_keywords != '' || $search_author != '' || $search_id )
 				}
 
 
-				$topic_author = ( $searchset[$i]['user_id'] != ANONYMOUS ) ? '<a href="' . append_sid("profile.$phpEx?mode=viewprofile&amp;" . POST_USERS_URL . '=' . $searchset[$i]['user_id']) . '">' : '';
+//-- mod : Advanced Group Color Management -------------------------------------
+//-- delete
+//	$topic_author = ( $searchset[$i]['user_id'] != ANONYMOUS ) ? '<a href="' . append_sid("profile.$phpEx?mode=viewprofile&amp;" . POST_USERS_URL . '=' . $searchset[$i]['user_id']) . '">' : '';
+//	$topic_author .= ( $searchset[$i]['user_id'] != ANONYMOUS ) ? $searchset[$i]['username'] : ( ( $searchset[$i]['post_username'] != '' ) ? $searchset[$i]['post_username'] : $lang['Guest'] );
+//	$topic_author .= ( $searchset[$i]['user_id'] != ANONYMOUS ) ? '</a>' : '';
+//-- add
+				$topic_author = ( $searchset[$i]['user_id'] != ANONYMOUS ) ? '<a href="' . append_sid("profile.$phpEx?mode=viewprofile&amp;" . POST_USERS_URL . '=' . $searchset[$i]['user_id']) . '" class="' . $agcm_color->get_user_color($searchset[$i]['user_group_id_1'], $searchset[$i]['user_session_time_1']) . '">' : '<span class="' . $agcm_color->get_user_color(GROUP_ANONYMOUS) . '">';
 				$topic_author .= ( $searchset[$i]['user_id'] != ANONYMOUS ) ? $searchset[$i]['username'] : ( ( $searchset[$i]['post_username'] != '' ) ? $searchset[$i]['post_username'] : $lang['Guest'] );
-
-				$topic_author .= ( $searchset[$i]['user_id'] != ANONYMOUS ) ? '</a>' : '';
+				$topic_author .= ( $searchset[$i]['user_id'] != ANONYMOUS ) ? '</a>' : '</span>';
+//-- fin mod : Advanced Group Color Management ---------------------------------
 
 				$first_post_time = create_date($board_config['default_dateformat'], $searchset[$i]['topic_time'], $board_config['board_timezone']);
 
@@ -1733,7 +1761,12 @@ else if ( $search_keywords != '' || $search_author != '' || $search_id )
 				$last_post_time = create_date_day($board_config['default_dateformat'], $searchset[$i]['post_time'], $board_config['board_timezone']); 
 //-- end mod : today at   yesterday at ------------------------------------------------------------------------ 
 
-				$last_post_author = ( $searchset[$i]['id2'] == ANONYMOUS ) ? ( ($searchset[$i]['post_username2'] != '' ) ? $searchset[$i]['post_username2'] . ' ' : $lang['Guest'] . ' ' ) : '<a href="' . append_sid("profile.$phpEx?mode=viewprofile&amp;" . POST_USERS_URL . '='  . $searchset[$i]['id2']) . '">' . $searchset[$i]['user2'] . '</a>';
+//-- mod : Advanced Group Color Management -------------------------------------
+//-- delete
+//	$last_post_author = ( $searchset[$i]['id2'] == ANONYMOUS ) ? ( ($searchset[$i]['post_username2'] != '' ) ? $searchset[$i]['post_username2'] . ' ' : $lang['Guest'] . ' ' ) : '<a href="' . append_sid("profile.$phpEx?mode=viewprofile&amp;" . POST_USERS_URL . '='  . $searchset[$i]['id2']) . '">' . $searchset[$i]['user2'] . '</a>';
+//-- add
+				$last_post_author = ( $searchset[$i]['id2'] == ANONYMOUS ) ? '<span class="' . $agcm_color->get_user_color(GROUP_ANONYMOUS) . '">' .  ( ($searchset[$i]['post_username2'] != '' ) ? $searchset[$i]['post_username2'] . ' ' : $lang['Guest'] . ' ' ) . '</span>' : '<a href="' . append_sid("profile.$phpEx?mode=viewprofile&amp;" . POST_USERS_URL . '='  . $searchset[$i]['id2']) . '" class="' . $agcm_color->get_user_color($searchset[$i]['user_group_id_2'], $searchset[$i]['user_session_time_2']) . '">' . $searchset[$i]['user2'] . '</a>';
+//-- fin mod : Advanced Group Color Management ---------------------------------
 
 				$last_post_url = '<a href="' . append_sid("viewtopic.$phpEx?"  . POST_POST_URL . '=' . $searchset[$i]['topic_last_post_id']) . '#' . $searchset[$i]['topic_last_post_id'] . '"><img src="' . $images['icon_latest_reply'] . '" alt="' . $lang['View_latest_post'] . '" title="' . $lang['View_latest_post'] . '" border="0" /></a>';
 

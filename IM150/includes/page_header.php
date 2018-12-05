@@ -294,7 +294,7 @@ if (defined('SHOW_ONLINE'))
 //
 // Prillian - End Code Addition
 //--------------------------------------------------------------------------------
-				$row['style'] = ' class="' . get_user_level_class($row['user_level'], 'gen', $row) . '"';
+				$row['style'] = ' class="' . $agcm_color->get_user_color($row['user_group_id'], $row['user_session_time']) . '"';
 				$connected[] = $row;
 				$user_ids[] = $row['user_id'];
 			}
@@ -409,7 +409,7 @@ if (defined('SHOW_ONLINE'))
 		if ( ($status == 'online') || ($status == 'hidden') )
 		{
 			$online_userlist .= ( $online_userlist != '' ) ? ', ' : '';
-			$online_userlist .= '<a href="' . append_sid("profile.$phpEx?mode=viewprofile&" . POST_USERS_URL . "=" . $connected[$i]['user_id'] ) . '"' . $connected[$i]['style'] . '>' . $connected[$i]['username'] . '</a>';
+			$online_userlist .= '<a href="' . append_sid("profile.$phpEx?mode=viewprofile&" . POST_USERS_URL . "=" . $connected[$i]['user_id'] ) . '"' . $connected[$i]['style'] . '>' . $agcm_color->get_user_color($connected[$i]['user_group_id'], $connected[$i]['user_session_time'], $connected[$i]['username']) . '</a>';
 		}
 	}
 //-- fin mod : profile cp --------------------------------------------------------------------------
@@ -503,62 +503,63 @@ if (defined('SHOW_ONLINE'))
 	$l_online_users .= sprintf($l_g_user_s, $guests_online);
 }
 
-// ############ Edit below ############
-$display_not_day_userlist = 0; // change to 1 here if you also want the list of the users who didn't visit to be displayed
-$users_list_delay = 24; // change here to the number of hours wanted for the list
-$time_min = time() - ($users_list_delay * 3600);
-// ############ Edit above ############
-
-$sql = "SELECT user_id, username, user_allow_viewonline, user_level, user_session_time
-        FROM ".USERS_TABLE."
-        WHERE user_id > 0 "
-        . ($display_not_day_userlist ? '' : ("AND user_session_time >= " . $time_min)) .
-        " ORDER BY IF(user_level=1,3,user_level) DESC, username ASC";
-
-if( !($result = $db->sql_query($sql)) )
+if (defined('SHOW_ONLINE'))
 {
-message_die(GENERAL_ERROR, 'Could not obtain user/day information', '', __LINE__, __FILE__, $sql);
-}
+  // ############ Edit below ############
+  $display_not_day_userlist = 0; // change to 1 here if you also want the list of the users who didn't visit to be displayed
+  $users_list_delay = 24; // change here to the number of hours wanted for the list
+  $time_min = time() - ($users_list_delay * 3600);
+  // ############ Edit above ############
 
-$day_userlist = '';
-$day_users = 0;
-$not_day_userlist = '';
-$not_day_users = 0;
-while( $row = $db->sql_fetchrow($result) )
-{
+  $sql = "SELECT user_group_id, user_id, username, user_allow_viewonline, user_level, user_session_time
+          FROM ".USERS_TABLE."
+          WHERE user_id > 0 "
+          . ($display_not_day_userlist ? '' : ("AND user_session_time >= " . $time_min)) .
+          " ORDER BY IF(user_level=1,3,user_level) DESC, username ASC";
 
-	$style_color = '';
-	$style_color = get_user_level_class($row['user_level'], 'genmed', $row);
+  if( !($result = $db->sql_query($sql)) )
+  {
+  message_die(GENERAL_ERROR, 'Could not obtain user/day information', '', __LINE__, __FILE__, $sql);
+  }
 
-	if ( $row['user_allow_viewonline'] )
-	{
-		$temp_url = append_sid("profile.$phpEx?mode=viewprofile&" . POST_USERS_URL . "=" . $row['user_id']);
-		$user_day_link = '<a href="' . $temp_url . '" class="' . $style_color . '">' . $row['username'] . '</a>';
-	}
-	else
-	{
-		$user_day_link = '<i>' . $row['username'] . '</i>';
-	}
-	if ( $row['user_allow_viewonline'] || $userdata['user_level'] == ADMIN )
-	{
-		if ( $row['user_session_time'] >= ( time() - $users_list_delay * 3600 ) )
-		{
-			$day_userlist .= ( $day_userlist != '' ) ? ', ' . $user_day_link : $user_day_link;
-			$day_users++;
-		}
-		else
-		{
-			$not_day_userlist .= ( $not_day_userlist != '' ) ? ', ' . $user_day_link : $user_day_link;
-			$not_day_users++;
-		}
-	}
-}
+  $day_userlist = '';
+  $day_users = 0;
+  $not_day_userlist = '';
+  $not_day_users = 0;
+  while( $row = $db->sql_fetchrow($result) )
+  {
+    $style_color = $agcm_color->get_user_color($row['user_group_id'], $row['user_session_time']);
 
-$day_userlist = ( ( isset($forum_id) ) ? '' : sprintf($lang['Day_users'], $day_users, $users_list_delay) ) . ' ' . $day_userlist;
-$not_day_userlist = ( ( isset($forum_id) ) ? '' : sprintf($lang['Not_day_users'], $not_day_users, $users_list_delay) ) . ' ' . $not_day_userlist;
-if ( $display_not_day_userlist )
-{
-	$day_userlist .= '<br />' . $not_day_userlist;
+    if ( $row['user_allow_viewonline'] )
+    {
+      $temp_url = append_sid("profile.$phpEx?mode=viewprofile&" . POST_USERS_URL . "=" . $row['user_id']);
+      $user_day_link = '<a href="' . $temp_url . '" class="' . $style_color . '">' . $row['username'] . '</a>';
+    }
+    else
+    {
+      $user_day_link = '<i>' . $row['username'] . '</i>';
+    }
+    if ( $row['user_allow_viewonline'] || $userdata['user_level'] == ADMIN )
+    {
+      if ( $row['user_session_time'] >= ( time() - $users_list_delay * 3600 ) )
+      {
+        $day_userlist .= ( $day_userlist != '' ) ? ', ' . $user_day_link : $user_day_link;
+        $day_users++;
+      }
+      else
+      {
+        $not_day_userlist .= ( $not_day_userlist != '' ) ? ', ' . $user_day_link : $user_day_link;
+        $not_day_users++;
+      }
+    }
+  }
+
+  $day_userlist = ( ( isset($forum_id) ) ? '' : sprintf($lang['Day_users'], $day_users, $users_list_delay) ) . ' ' . $day_userlist;
+  $not_day_userlist = ( ( isset($forum_id) ) ? '' : sprintf($lang['Not_day_users'], $not_day_users, $users_list_delay) ) . ' ' . $not_day_userlist;
+  if ( $display_not_day_userlist )
+  {
+    $day_userlist .= '<br />' . $not_day_userlist;
+  }
 }
 
 
@@ -1007,6 +1008,10 @@ $template->assign_vars(array(
 	'L_WHO_IS_ONLINE' => $lang['Who_is_Online'],
 //	'L_MEMBERLIST' => $lang['Memberlist'],
 //	'L_FAQ' => $lang['FAQ'],
+//-- mod : Advanced Group Color Management -------------------------------------
+//-- add
+	'L_GROUP_LEGEND' => $lang['AGCM_legend'],
+//-- fin mod : Advanced Group Color Management ---------------------------------
  	'L_USERGROUPS' => $lang['Usergroups'],
 	"L_LW_DONATE_SITE" => '<a href="' . append_sid('lwdonate.'.$phpEx) . '" class="mainmenu"><img src="http://www.paypal.com/en_US/i/btn/x-click-but04.gif" border="0" alt="' . $lang['LW_DONATION_TO_HELP'] . '" hspace="3" /></a>',  
 	'L_SEARCH_NEW' => $lang['Search_new'],
@@ -1024,8 +1029,9 @@ $template->assign_vars(array(
 	'U_LW_TRANSACTIONS' => append_sid('lwacctrecords.'.$phpEx),
 	'L_LW_PAYMENTS' => $lang['L_LW_PAYMENTS'],
 	'U_LW_PAYMENTS' => append_sid('lwtopup.'.$phpEx),
-//-- add
-	'L_WHOSONLINE' => get_users_online_color(),
+  //-- add
+  // V: REMOVED BY AGCM
+// 'L_WHOSONLINE' => get_users_online_color(),
 //-- fin mod : profile cp --------------------------------------------------------------------------
 	'U_PORTAL' =>  append_sid('portal.'.$phpEx),
 	'U_SEARCH_UNANSWERED' => append_sid('search.'.$phpEx.'?search_id=unanswered'),
@@ -1374,6 +1380,10 @@ if(empty($gen_simple_header))
 // end of IM Portal blocks
 //
 
+//-- mod : Advanced Group Color Management -------------------------------------
+//-- add
+$agcm_color->generate_css();
+//-- fin mod : Advanced Group Color Management ---------------------------------
 $template->pparse('overall_header');
 
 #======================================================================= |

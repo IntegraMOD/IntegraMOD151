@@ -36,6 +36,12 @@ class ct_userfunctions
 			return;
 		}
 
+    if (is_admin($userdata))
+    {
+      // V: no search flood limits for admins
+      return;
+    }
+
 		// Initialize later used vars
 		$max_searches = 0;
 		$wait_time    = 0;

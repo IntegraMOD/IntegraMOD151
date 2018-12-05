@@ -63,6 +63,13 @@ if(isset($_GET['remove']) && !defined('DEMO_MODE'))
 	{
 		xs_error($lang['xs_no_style_info'] . '<br /><br />' . $lang['xs_uninstall_back'], __LINE__, __FILE__);
 	}
+//-- mod : Advanced Group Color Management -------------------------------------
+//-- add
+	$style_id = $row['themes_id'];
+
+	// Remove the theme from the colors table
+	$agcm_color->remove_theme($style_id);
+//-- fin mod : Advanced Group Color Management ---------------------------------
 	$sql = "UPDATE " . USERS_TABLE . " SET user_style=NULL WHERE user_style='{$remove_id}'";
 	$db->sql_query($sql);
 	$sql = "DELETE FROM " . THEMES_TABLE . " WHERE themes_id='{$remove_id}'";

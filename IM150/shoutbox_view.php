@@ -91,7 +91,7 @@ obtain_word_list($orig_word, $replacement_word);
 //
 // display the shoutbox
 //
-$sql = "SELECT s.*, u.user_allowsmile, u.username, u.user_level, u.user_id
+$sql = "SELECT s.*, u.user_allowsmile, u.username, u.user_level, u.user_id, u.user_group_id, u.user_session_time
 	FROM " . SHOUTBOX_TABLE . " s, ".USERS_TABLE." u
 	WHERE s.shout_user_id=u.user_id
 	ORDER BY s.shout_session_time DESC
@@ -106,7 +106,7 @@ $sql = "SELECT s.*, u.user_allowsmile, u.username, u.user_level, u.user_id
 		$row_color = ( !($i % 2) ) ? $theme['td_color1'] : $theme['td_color2'];
 		$row_class = ( !($i % 2) ) ? $theme['td_class1'] : $theme['td_class2'];
 		$user_id = $shout_row['shout_user_id'];
-		$user_name = colorize_username($shout_row);
+		$user_name = $agcm_color->get_user_color($shout_row['user_group_id'], $shout_row['user_session_time'], $shout_row['username']);
 		$username = ( $user_id == ANONYMOUS && $shout_row['shout_username'] !== '' ) ? $shout_row['shout_username'] : "<a href='".append_sid("profile.$phpEx?mode=viewprofile&amp;" . POST_USERS_URL . "=".$shout_row['shout_user_id'])."' target='_top'>".$user_name."</a>" ;
 		$shout = (! $shout_row['shout_active']) ? $shout_row['shout_text'] : $lang['Shout_censor'];
 		if ( $board_config['allow_smilies'] && $shout_row['user_allowsmile'] && $shout != '' & $shout_row['enable_smilies'])
@@ -133,6 +133,7 @@ $template->assign_vars(array(
 'S_CONTENT_ENCODING' => $lang['ENCODING']
 ));
 
- $template->pparse('body'); 
+$agcm_color->generate_css();
+$template->pparse('body'); 
 
 ?>

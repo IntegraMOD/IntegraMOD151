@@ -74,6 +74,10 @@ $start = ($start < 0) ? 0 : $start;
 // Default var values
 //
 $is_moderator = FALSE;
+//-- mod : Advanced Group Color Management -------------------------------------
+//-- add
+$agcm_color->read_group_users($group_id);
+//-- fin mod : Advanced Group Color Management ---------------------------------
 
 if ( isset($_POST['groupstatus']) && $group_id )
 {
@@ -311,6 +315,10 @@ else if ( isset($_POST['unsub']) || isset($_POST['unsubpending']) && $group_id )
 			'META' => '<meta http-equiv="refresh" content="3;url=' . append_sid("index.$phpEx") . '">')
 		);
 
+//-- mod : Advanced Group Color Management -------------------------------------
+//-- add
+		$agcm_color->set_group_users($group_id);
+//-- fin mod : Advanced Group Color Management ---------------------------------
 		$message = $lang['Unsub_success'] . '<br /><br />' . sprintf($lang['Click_return_group'], '<a href="' . append_sid("groupcp.$phpEx?" . POST_GROUPS_URL . "=$group_id") . '">', '</a>') . '<br /><br />' . sprintf($lang['Click_return_index'], '<a href="' . append_sid("index.$phpEx") . '">', '</a>');
 
 		message_die(GENERAL_MESSAGE, $message);
@@ -737,16 +745,20 @@ else if ( $group_id )
 						{
 							$emailer->bcc($bcc_list[$i]);
 						}
-					        if ( isset($_POST['deny']) )
-					        {
-						$emailer->use_template('group_denied');
-						$emailer->set_subject($lang['Group_deny']);
-                                                }
-                                                else 
-					        {
-						$emailer->use_template('group_removed');
-						$emailer->set_subject($lang['Group_removed']);
-                                                }
+//-- mod : Advanced Group Color Management -------------------------------------
+//-- add
+						$agcm_color->set_group_users($group_id);
+//-- fin mod : Advanced Group Color Management ---------------------------------
+            if ( isset($_POST['deny']) )
+            {
+              $emailer->use_template('group_denied');
+              $emailer->set_subject($lang['Group_deny']);
+            }
+            else 
+            {
+              $emailer->use_template('group_removed');
+              $emailer->set_subject($lang['Group_removed']);
+            }
 
 						$emailer->assign_vars(array(
 							'SITENAME' => $board_config['sitename'], 
@@ -863,7 +875,7 @@ else if ( $group_id )
 		WHERE ug.group_id = $group_id
 			AND u.user_id = ug.user_id
 			AND ug.user_pending = 0 
-			AND ug.user_id <> " . $group_moderator['user_id'] . " 
+			AND ug.user_id <> " . intval($group_moderator['user_id']) . " 
 		ORDER BY ug.group_moderator DESC, u.username"; 
 	if ( !($result = $db->sql_query($sql)) )
 	{
@@ -1073,7 +1085,12 @@ if ( $modgroup_pending_count )
 		'L_FIND_USERNAME' => $lang['Find_username'],
 		'L_USER' => $lang['User'],
 		
-		'GROUP_NAME' => $group_info['group_name'],
+//-- mod : Advanced Group Color Management -------------------------------------
+//-- delete
+//	'GROUP_NAME' => $group_info['group_name'],
+//-- add
+		'GROUP_NAME' => $agcm_color->get_user_color($group_info['group_id'], 0, $group_info['group_name']),
+//-- fin mod : Advanced Group Color Management ---------------------------------
 		'GROUP_DESC' => $group_info['group_description'],
 		'GROUP_DETAILS' => $group_details,
 		'MOD_ROW_CLASS' => $theme['td_class1'],

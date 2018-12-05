@@ -111,15 +111,26 @@
 <td align="center" class="cat" colspan="2"><a href="{U_VIEWONLINE}">{L_WHO_IS_ONLINE}</a></td>
 </tr>
 <tr>
-<td class="row1" rowspan="4"><i class="fa fa-users fa-3x pad hov" title="{L_WHO_IS_ONLINE}"></i></td>
+<td class="row1" rowspan="6"><i class="fa fa-users fa-3x pad hov" title="{L_WHO_IS_ONLINE}"></i></td>
 <td class="row1" width="100%"><span class="gensmall">{TOTAL_POSTS}<br />
 {TOTAL_USERS}<br />
 {NEWEST_USER}</span></td>
 </tr>
 <tr>
-<td class="row1"><span class="gensmall">{TOTAL_USERS_ONLINE} <br /> {L_WHOSONLINE}<br />
+<tr>
+<td class="row1"><span class="gensmall">{TOTAL_USERS_ONLINE} <br />
 {RECORD_USERS}<br />
-{LOGGED_IN_USER_LIST}</span></td>
+{LOGGED_IN_USER_LIST}</span></td></tr>
+<!-- END disable_viewonline -->
+<tr>
+<td class="row1" align="left">
+<span class="gensmall" style="font-weight:bold;">{L_GROUP_LEGEND}</span>
+<!-- BEGIN legend -->
+<!-- BEGIN color -->
+<span style="white-space:nowrap;font-weight:bold;" class="gensmall">{legend.color.L_COMMA}<a href="{legend.U_GROUP}" title="{legend.GROUP_DESCRIPTION}" class="{legend.GROUP_COLOR}">{legend.GROUP_NAME}</a>{legend.color.L_COMMA2}</span>
+<!-- END color -->
+<!-- END legend -->
+</td>
 </tr>
 <tr>
 <td height="20" class="row1"><span class="gensmall">{L_ONLINE_EXPLAIN}</span></td>
@@ -131,7 +142,6 @@
 </table>
 </td>
 </tr>
-<!-- END disable_viewonline -->
 <!-- BEGIN switch_happy_birthday -->
 <tr><td>&nbsp;</td></tr>
 <tr><td>

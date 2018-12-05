@@ -25,11 +25,12 @@ if ( !defined('IN_PHPBB') )
 	die("Hacking attempt");
 }
 
-if(!function_exists(imp_online_users2_block_func))
+if(!function_exists('imp_online_users2_block_func'))
 {
 	function imp_online_users2_block_func()
 	{
 		global $template, $lang, $db, $theme, $phpEx, $lang, $board_config, $userdata, $phpbb_root_path, $table_prefix, $portal_config, $var_cache;
+		global $agcm_color;
 
 		$jadmin_ary = array();
 		if($portal_config['cache_enabled'])
@@ -59,7 +60,7 @@ if(!function_exists(imp_online_users2_block_func))
 			}
 		}
 
-		$sql = "SELECT u.username, u.user_id, u.user_allow_viewonline, u.user_level, s.session_logged_in, s.session_ip
+		$sql = "SELECT u.user_group_id, u.user_session_time, u.username, u.user_id, u.user_allow_viewonline, u.user_level, s.session_logged_in, s.session_ip
 			FROM ".USERS_TABLE." u, ".SESSIONS_TABLE." s
 			WHERE u.user_id = s.session_user_id
 				AND s.session_time >= ".( time() - 300 ) . "
@@ -83,41 +84,7 @@ if(!function_exists(imp_online_users2_block_func))
 				// Skip multiple sessions for one user
 				if ( $row['user_id'] != $prev_user_id )
 				{
-					$style_color = '';
-					if ( ($row['user_level'] == ADMIN) && ($row['user_id'] == 2) )
-					{
-						$row['username'] = '<b>' . $row['username'] . '</b>';
-						$style_color = 'foundercolor';
-					}
-					else if ($row['user_level'] == ADMIN)
-					{
-						$row['username'] = '<b>' . $row['username'] . '</b>';
-						$style_color = 'admincolor';
-					}
-					else if (is_array($jadmin_ary))
-					{
-						if (in_array($row['user_id'], $jadmin_ary))
-						{
-							$row['username'] = '<b>' . $row['username'] . '</b>';
-							$style_color = 'jadmincolor';
-						}
-						else if ($row['user_level'] == MOD)
-						{
-							$row['username'] = '<b>' . $row['username'] . '</b>';
-							$style_color = 'modcolor';
-						}else{
-							$row['username'] = '<b>' . $row['username'] . '</b>';
-							$style_color = 'usercolor';
-						}
-					}
-					else if ($row['user_level'] == MOD)
-					{
-						$row['username'] = '<b>' . $row['username'] . '</b>';
-						$style_color = 'modcolor';
-					}else{
-						$row['username'] = '<b>' . $row['username'] . '</b>';
-						$style_color = 'usercolor';
-					}
+					$style_color = $agcm_color->get_user_color($row['user_group_id'], $row['user_session_time']);
 
 					if ( $row['user_allow_viewonline'] )
 					{

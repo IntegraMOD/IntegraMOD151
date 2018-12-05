@@ -25,11 +25,12 @@ if ( !defined('IN_PHPBB') )
 	die("Hacking attempt");
 }
 
-if(!function_exists(imp_statistics_block_func))
+if(!function_exists('imp_statistics_block_func'))
 {
 	function imp_statistics_block_func()
 	{
 		global $template, $lang, $phpEx;
+		global $agcm_color;
 
 		$total_posts = get_db_stat('postcount');
 		$total_users = get_db_stat('usercount');
@@ -37,6 +38,11 @@ if(!function_exists(imp_statistics_block_func))
 		$newest_userdata = get_db_stat('newestuser');
 		$newest_user = $newest_userdata['username'];
 		$newest_uid = $newest_userdata['user_id'];
+//-- mod : Advanced Group Color Management -------------------------------------
+//-- add
+		$newest_user_group_id = $newest_userdata['user_group_id'];
+		$newest_user_session_time = $newest_userdata['user_session_time'];
+//-- fin mod : Advanced Group Color Management ---------------------------------
 
 		if( $total_posts == 0 )
 		{
@@ -66,7 +72,12 @@ if(!function_exists(imp_statistics_block_func))
 
 		$template->assign_vars(array(
 			'TOTAL_USERS' => sprintf($l_total_user_s, $total_users),
-			'NEWEST_USER' => sprintf($lang['Newest_user'], '<a href="' . append_sid("profile.$phpEx?mode=viewprofile&amp;" . POST_USERS_URL . "=$newest_uid") . '">', $newest_user, '</a>'),
+//-- mod : Advanced Group Color Management -------------------------------------
+//-- delete
+//	'NEWEST_USER' => sprintf($lang['Newest_user'], '<a href="' . append_sid("profile.$phpEx?mode=viewprofile&amp;" . POST_USERS_URL . "=$newest_uid") . '">' , $newest_user , '</a>'), 
+//-- add
+			'NEWEST_USER' => sprintf($lang['Newest_user'], '<a href="' . append_sid("profile.$phpEx?mode=viewprofile&amp;" . POST_USERS_URL . "=$newest_uid") . '" class="' . $agcm_color->get_user_color($newest_user_group_id, $newest_user_session_time) . '">' , $newest_user , '</a>'), 
+//-- fin mod : Advanced Group Color Management ---------------------------------
 			'TOTAL_POSTS' => sprintf($l_total_post_s, $total_posts),
 			'TOTAL_TOPICS' => sprintf($lang['total_topics'], $total_topics)
 			)

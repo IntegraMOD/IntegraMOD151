@@ -109,7 +109,7 @@ if ($process == 'pre')
 				$limit_topics_time = " AND (t.topic_time <= $current_time OR t.topic_poster = " . $userdata['user_id'] . ")";
 			}
 
-			$sql = "SELECT t.*, u.username, u.user_id, u2.username as user2, u2.user_id as id2, p.post_username, p2.post_username AS post_username2, p2.post_time, f.forum_name
+			$sql = "SELECT u.user_group_id, u.user_session_time, u2.user_group_id as user_group_id_2, u2.user_session_time as user_session_time_2,  t.*, u.username, u.user_id, u2.username as user2, u2.user_id as id2, p.post_username, p2.post_username AS post_username2, p2.post_time, f.forum_name
 					FROM " . TOPICS_TABLE . " t, " . USERS_TABLE . " u, " . POSTS_TABLE . " p, " . POSTS_TABLE . " p2, " . USERS_TABLE . " u2, " . FORUMS_TABLE . " f
 					WHERE t.forum_id IN ($s_forum_ids)
 						AND f.forum_id = t.forum_id

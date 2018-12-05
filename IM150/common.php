@@ -350,6 +350,10 @@ unset($time_reg);
 unset($regs); 
 
 include($phpbb_root_path . 'attach_mod/attachment_mod.'.$phpEx);
+//-- mod : Advanced Group Color Management -------------------------------------
+//-- add
+include($phpbb_root_path . 'includes/class_color.' . $phpEx);
+//-- fin mod : Advanced Group Color Management ---------------------------------
 
 if(!defined("IN_LOGIN")){
 	if ((file_exists('install')) && ( !file_exists('prill_install') )) {

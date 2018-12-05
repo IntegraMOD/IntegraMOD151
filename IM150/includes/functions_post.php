@@ -1095,6 +1095,10 @@ function generate_smilies($mode, $page_id)
 	global $db, $board_config, $template, $lang, $images, $theme, $phpEx, $phpbb_root_path;
 	global $user_ip, $session_length, $starttime;
 	global $userdata;
+//-- mod : Advanced Group Color Management -------------------------------------
+//-- add
+	global $agcm_color;
+//-- fin mod : Advanced Group Color Management ---------------------------------
 	//-- mod : profile cp ------------------------------------------------------------------------------
 //-- add
 	global $admin_level, $level_prior;

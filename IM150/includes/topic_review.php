@@ -26,6 +26,10 @@ function topic_review($topic_id, $is_inline_review)
 	global $userdata, $user_ip;
 	global $orig_word, $replacement_word;
 	global $starttime;
+//-- mod : Advanced Group Color Management -------------------------------------
+//-- add
+	global $agcm_color;
+//-- fin mod : Advanced Group Color Management ---------------------------------
 
   //evolver time fix #1//	
   if ( isset($userdata['user_timezone']) )
@@ -151,7 +155,7 @@ function topic_review($topic_id, $is_inline_review)
 	//
 	// Go ahead and pull all data for this topic
 	//
-	$sql = "SELECT u.username, u.user_id, p.*,  pt.post_text, pt.post_subject, pt.bbcode_uid
+	$sql = "SELECT u.user_group_id, u.user_session_time, u.username, u.user_id, p.*,  pt.post_text, pt.post_subject, pt.bbcode_uid
 		FROM " . POSTS_TABLE . " p, " . USERS_TABLE . " u, " . POSTS_TEXT_TABLE . " pt
 		WHERE p.topic_id = $topic_id
 			AND p.poster_id = u.user_id
@@ -353,7 +357,14 @@ function topic_review($topic_id, $is_inline_review)
 				'ROW_CLASS' => $row_class, 
 
 				'MINI_POST_IMG' => $mini_post_img, 
-				'POSTER_NAME' => $poster, 
+//-- mod : Advanced Group Color Management --------------------------------------
+//-- here we replaced
+//	$poster,
+//-- with
+//	$agcm_color->get_user_color($row['user_group_id'], $row['user_session_time'], $poster),
+//-- modify
+				'POSTER_NAME' => $agcm_color->get_user_color($row['user_group_id'], $row['user_session_time'], $poster),
+//-- fin mod : Avanced Group Color Management ----------------------------------
 				'POST_DATE' => $post_date, 
 				'POST_SUBJECT' => $post_subject, 
 				'MESSAGE' => $message,

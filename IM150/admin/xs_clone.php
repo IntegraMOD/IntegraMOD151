@@ -99,6 +99,13 @@ if(!empty($_POST['clone_style']) && !defined('DEMO_MODE'))
 	{
 		xs_error($lang['xs_error_new_row'] . '<br /><br />' . $lang['xs_clone_back'], __LINE__, __FILE__);
 	}
+//-- mod : Advanced Group Color Management -------------------------------------
+//-- add
+	$style_id = $db->sql_nextid($result);
+
+// Add the column and do various tasks when adding a new group
+	$agcm_color->add_theme($style_id);
+//-- fin mod : Advanced Group Color Management ---------------------------------
 	// recache themes
 	if(defined('XS_MODS_CATEGORY_HIERARCHY210'))
 	{

@@ -239,7 +239,7 @@ function announces_from_forums($cur='Root', $force_prune=false)
     $limit_topics_time .= ')';
 
 	// get topics data
-	$sql = "SELECT t.*, u.username, u.user_id, u2.username as user2, u2.user_id as id2, p.post_time, p.post_username, f.forum_name
+	$sql = "SELECT u.user_group_id, u.user_session_time, u2.user_group_id as user_group_id_2, u2.user_session_time as user_session_time_2, t.*, u.username, u.user_id, u2.username as user2, u2.user_id as id2, p.post_time, p.post_username, f.forum_name
 			FROM " . TOPICS_TABLE . " t, " . USERS_TABLE . " u, " . POSTS_TABLE . " p, " . USERS_TABLE . " u2, " . FORUMS_TABLE . " f
 			WHERE ($sql_where)
 				AND t.topic_poster = u.user_id

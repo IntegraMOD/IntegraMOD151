@@ -347,7 +347,7 @@ elseif( isset($_GET['pane']) && $_GET['pane'] == 'right' )
 	//
 	// Get users online information.
 	//
-	$sql = "SELECT u.user_id, u.username, u.user_session_time, u.user_session_page, s.session_logged_in, s.session_ip, s.session_start, u.user_level
+	$sql = "SELECT u.user_group_id, u.user_id, u.username, u.user_session_time, u.user_session_page, s.session_logged_in, s.session_ip, s.session_start, u.user_level
 		FROM " . USERS_TABLE . " u, " . SESSIONS_TABLE . " s
 		WHERE s.session_logged_in = " . TRUE . " 
 			AND u.user_id = s.session_user_id 
@@ -397,7 +397,7 @@ elseif( isset($_GET['pane']) && $_GET['pane'] == 'right' )
 			{
 				$reg_userid_ary[] = $onlinerow_reg[$i]['user_id'];
 
-				$username = colorize_username($onlinerow_reg[$i]);
+				$username = $onlinerow_reg[$i]['username'];
 
 				if( $onlinerow_reg[$i]['user_allow_viewonline'] || $userdata['user_level'] == ADMIN )
 				{
@@ -562,7 +562,14 @@ elseif( isset($_GET['pane']) && $_GET['pane'] == 'right' )
 				$template->assign_block_vars("reg_user_row", array(
 					"ROW_COLOR" => "#" . $row_color,
 					"ROW_CLASS" => $row_class,
-					"USERNAME" => $username, 
+//-- mod : Advanced Group Color Management -------------------------------------
+//-- here we replaced
+//	$username,
+//-- with
+//	$color->get_user_color($onlinerow_reg[$i]['user_group_id'], $onlinerow_reg[$i]['user_session_time'], $username),
+//-- modify
+					"USERNAME" => $agcm_color->get_user_color($onlinerow_reg[$i]['user_group_id'], $onlinerow_reg[$i]['user_session_time'], $username),
+//-- fin mod : Advanced Group Color Management ---------------------------------
 					"STARTED" => create_date($board_config['default_dateformat'], $onlinerow_reg[$i]['session_start'], $board_config['board_timezone']), 
 					"LASTUPDATE" => create_date($board_config['default_dateformat'], $onlinerow_reg[$i]['user_session_time'], $board_config['board_timezone']),
 					"FORUM_LOCATION" => $location,

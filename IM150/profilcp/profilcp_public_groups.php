@@ -104,7 +104,7 @@ if (count($groups) > 0)
 			$nb++;
 			$class = !$class;
 			$u_group_name = append_sid("groupcp.$phpEx?" . POST_GROUPS_URL . '=' . $groups[$i]['group_id']);
-			$l_group_name = $groups[$i]['group_name'];
+			$l_group_name = $agcm_color->get_user_color($groups[$i]['group_id'], 0, $groups[$i]['group_name'], $groups[$i]['group_name']);
 			$l_group_desc = $groups[$i]['group_description'];
 			$template->assign_block_vars('groups',array(
 				'CLASS'			=> ($class) ? "row1" : "row2",

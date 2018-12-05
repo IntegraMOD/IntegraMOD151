@@ -795,7 +795,7 @@ function xs_get_themeinfo($tpl)
 // install style
 function xs_install_style($tpl, $num)
 {
-	global $db;
+	global $db, $agcm_color;
 	$data = xs_get_themeinfo($tpl);
 	if(empty($data[$num]))
 	{
@@ -847,6 +847,12 @@ function xs_install_style($tpl, $num)
 	{
 		define('REFRESH_NAVBAR', true);
 	}
+//-- mod : Advanced Group Color Management -------------------------------------
+//-- add
+	$style_id = $db->sql_nextid($result);
+// Add the column and do various tasks when adding a new group
+	$agcm_color->add_theme($style_id);
+//-- fin mod : Advanced Group Color Management ---------------------------------
 	return true;
 }
 

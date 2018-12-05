@@ -481,10 +481,11 @@ if ( $is_auth['auth_mod'] && $board_config['prune_enable'] )
 $moderators = array(); 
 $idx = $tree['keys'][ POST_FORUM_URL . $forum_id ]; 
 for ( $i = 0; $i < count($tree['mods'][$idx]['user_id']); $i++ ) { 
-    $moderators[] = '<a href="' . append_sid("./profile.$phpEx?mode=viewprofile&amp;" . POST_USERS_URL . "=" . $tree['mods'][$idx]['user_id'][$i]) . '">' . $tree['mods'][$idx]['username'][$i] . '</a>'; 
+    $moderators[] = '<a href="' . append_sid("./profile.$phpEx?mode=viewprofile&amp;" . POST_USERS_URL . "=" . $tree['mods'][$idx]['user_id'][$i]) . '" class="'.$agcm_color->get_user_color($tree['mods'][$idx]['user_group_id'][$i], $tree['mods'][$idx]['user_session_time'][$i]).'">' . $tree['mods'][$idx]['username'][$i] . '</a>'; 
 } 
 for ( $i = 0; $i < count($tree['mods'][$idx]['group_id']); $i++ ) { 
-    $moderators[] = '<a href="' . append_sid("./groupcp.$phpEx?" . POST_GROUPS_URL . "=" . $tree['mods'][$idx]['group_id'][$i]) . '">' . $tree['mods'][$idx]['group_name'][$i] . '</a>'; 
+  // V: AGCM is not doing this properly, add it myself
+    $moderators[] = '<a href="' . append_sid("./groupcp.$phpEx?" . POST_GROUPS_URL . "=" . $tree['mods'][$idx]['group_id'][$i]) . '" class="' . $agcm_color->get_user_color($data['group_id'][$i]) . '">' . $tree['mods'][$idx]['group_name'][$i] . '</a>'; 
 }
 //-- fin mod : categories hierarchy ----------------------------------------------------------------
 
@@ -573,7 +574,7 @@ $select_topic_days .= '</select>';
 // and
 //	t.topic_type DESC,
 //-- modify
-$sql = "SELECT t.*, u.username, u.user_id, u2.username as user2, u2.user_id as id2, p.post_time, p.post_username
+$sql = "SELECT u.user_group_id, u.user_session_time, u2.user_group_id as user_group_id_2, u2.user_session_time as user_session_time_2, t.*, u.username, u.user_id, u2.username as user2, u2.user_id as id2, p.post_time, p.post_username
 	FROM " . TOPICS_TABLE . " t, " . USERS_TABLE . " u, " . POSTS_TABLE . " p, " . USERS_TABLE . " u2
 	WHERE (t.forum_id = $forum_id" . ( (intval($board_config['announcement_display_forum']) == 0) ? " OR t.topic_type = " . POST_GLOBAL_ANNOUNCE : '' ) . ") 
 		AND t.topic_poster = u.user_id
@@ -608,7 +609,7 @@ $db->sql_freeresult($result);
 // here we added
 //	AND t.topic_type <> " . POST_GLOBAL_ANNOUNCE . "
 //-- modify
-$sql = "SELECT t.*, u.username, u.user_id, u2.username as user2, u2.user_id as id2, p.post_username, p2.post_username AS post_username2, p2.post_time 
+$sql = "SELECT u.user_group_id, u.user_session_time, u2.user_group_id as user_group_id_2, u2.user_session_time as user_session_time_2,  t.*, u.username, u.user_id, u2.username as user2, u2.user_id as id2, p.post_username, p2.post_username AS post_username2, p2.post_time 
 	FROM " . TOPICS_TABLE . " t, " . USERS_TABLE . " u, " . POSTS_TABLE . " p, " . POSTS_TABLE . " p2, " . USERS_TABLE . " u2
 	WHERE t.forum_id = $forum_id
 		AND t.topic_poster = u.user_id

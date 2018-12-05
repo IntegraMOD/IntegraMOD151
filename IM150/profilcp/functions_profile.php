@@ -145,38 +145,6 @@ if ( $is_called == FALSE )
 	}
 
 	// Integramod-specific function
-	// TODO move
-	function get_user_color_html($user, $user_level = null)
-	{
-		if (false)
-		{
-			// TODO per-group
-			return;
-		}
-		if (empty($user_level))
-		{
-			$user_level = get_user_level($user);
-		}
-		return ' class="'.get_user_level_class($user_level, 'gen', $user).'"';
-	}
-
-	function colorize_username($user, $user_level = null, $user_name = null)
-	{
-		global $lang;
-
-		if (isset($user['user_id']) && $user['user_id'] === ANONYMOUS)
-		{
-			return $lang['Guest'];
-		}
-
-		if (empty($user_name))
-		{
-			$user_name = $user['username'];
-		}
-
-		return '<span ' . get_user_color_html($user, $user_level) . '>'.$user_name.'</span>';
-	}
-
 	function get_user_level_class($user_level, $default='gen', $user=array())
 	{
 		$ret = $default;
@@ -200,26 +168,6 @@ if ( $is_called == FALSE )
 					break;
 		}
 		return $ret;
-	}
-
-	function get_users_online_color()
-	{
-		global $lang;
-		global $level_prior, $level_desc;
-
-		$res = '';
-
-		// read the defined levels
-		@arsort($level_prior);
-		@reset($level_prior);
-		while ( list($key, $value) = @each($level_prior) )
-		{
-			if ( !empty($lang[ $level_desc[$key] ]) )
-			{
-				$res .= ( empty($res) ? '' : '&nbsp; ' ) . sprintf($lang[ $level_desc[$key] ], '[&nbsp;<span class="' . get_user_level_class($key) . '">', '</span>&nbsp;]'); 
-			}
-		}
-		return $res;
 	}
 
 	//-------------------------------------------

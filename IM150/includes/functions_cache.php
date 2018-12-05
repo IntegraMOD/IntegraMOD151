@@ -43,7 +43,7 @@ function users_stats()
 	global $phpbb_root_path, $phpEx, $db;
 
 	// read registered users info (number and last)
-	$sql = "SELECT user_id, username
+	$sql = "SELECT user_id, username, user_group_id, user_session_time 
 				FROM " . USERS_TABLE . " 
 				WHERE user_id > 0
 				ORDER BY user_id DESC";
@@ -114,6 +114,46 @@ function users_stats()
 			$sql = "INSERT INTO " . CONFIG_TABLE . " 
 						(config_name, config_value)
 						VALUES( 'record_last_username', '" . str_replace("\'", "''", $board_config['record_last_username']) . "')";
+		}
+		if ( !$db->sql_query($sql) )
+		{
+			message_die(GENERAL_ERROR, 'Couldn\'t update/create config table', '', __LINE__, __FILE__, $sql);
+		}
+
+		// last user group id
+		if ( isset($board_config['record_last_user_group_id']) )
+		{
+			$board_config['record_last_user_group_id'] = $last_user['user_group_id'];
+			$sql = "UPDATE " . CONFIG_TABLE . " 
+						SET config_value = '" . str_replace("\'", "''", $board_config['record_last_user_group_id']) . "'
+						WHERE config_name = 'record_last_user_group_id'";
+		}
+		else
+		{
+			$board_config['record_last_user_group_id'] = $last_user['user_group_id'];
+			$sql = "INSERT INTO " . CONFIG_TABLE . " 
+						(config_name, config_value)
+						VALUES( 'record_last_user_group_id', '" . str_replace("\'", "''", $board_config['record_last_user_group_id']) . "')";
+		}
+		if ( !$db->sql_query($sql) )
+		{
+			message_die(GENERAL_ERROR, 'Couldn\'t update/create config table', '', __LINE__, __FILE__, $sql);
+		}
+
+		// last user session time
+		if ( isset($board_config['record_last_user_session_time']) )
+		{
+			$board_config['record_last_user_session_time'] = $last_user['user_session_time'];
+			$sql = "UPDATE " . CONFIG_TABLE . " 
+						SET config_value = '" . str_replace("\'", "''", $board_config['record_last_user_session_time']) . "'
+						WHERE config_name = 'record_last_user_session_time'";
+		}
+		else
+		{
+			$board_config['record_last_user_session_time'] = $last_user['user_session_time'];
+			$sql = "INSERT INTO " . CONFIG_TABLE . " 
+						(config_name, config_value)
+						VALUES( 'record_last_user_session_time', '" . str_replace("\'", "''", $board_config['record_last_user_session_time']) . "')";
 		}
 		if ( !$db->sql_query($sql) )
 		{
@@ -195,6 +235,7 @@ function board_stats()
 function cache_tree_output()
 {
 	global $tree, $phpbb_root_path, $phpEx, $userdata;
+  # global $agcm_color;
 
 	if ( !defined('CACHE_TREE') )
 	{
@@ -301,12 +342,12 @@ function cache_tree_output()
 		$s_usernames = '';
 		for ( $j = 0; $j < count($data['username']); $j++ )
 		{
-			$s_usernames .= ( empty($s_usernames) ? '' : ', ' ) . sprintf("'%s'", str_replace("'", "\'", $data['username'][$j]));
+			$s_usernames .= ( empty($s_usernames) ? '' : ', ' ) . sprintf("'%s'", str_replace("'", "\'", $agcm_color->get_user_color($data['user_group_id'][$j], $data['user_session_time'][$j], $data['username'][$j])));
 		}
 		$s_group_names = '';
 		for ( $j = 0; $j < count($data['group_name']); $j++ )
 		{
-			$s_group_names .= ( empty($s_group_names) ? '' : ', ' ) . sprintf("'%s'", str_replace("'", "\'", $data['group_name'][$j]));
+			$s_group_names .= ( empty($s_group_names) ? '' : ', ' ) . sprintf("'%s'", str_replace("'", "\'", $agcm_color->get_user_color($data['user_group_id'][$j], $data['group_name'][$j])));
 		}
 		$template->assign_block_vars('mods', array(
 			'IDX'			=> $idx,
@@ -450,7 +491,7 @@ function cache_tree($write=false)
 	// Obtain list of moderators of each forum
 	// First users, then groups ... broken into two queries
 	//
-	$sql = "SELECT aa.forum_id, u.user_id, u.username 
+	$sql = "SELECT u.user_group_id, u.user_session_time, aa.forum_id, u.user_id, u.username 
 			FROM " . AUTH_ACCESS_TABLE . " aa, " . USER_GROUP_TABLE . " ug, " . GROUPS_TABLE . " g, " . USERS_TABLE . " u
 			WHERE aa.auth_mod = " . TRUE . " 
 				AND g.group_single_user = 1 
@@ -469,6 +510,8 @@ function cache_tree($write=false)
 		$idx = $tree['keys'][ POST_FORUM_URL . $row['forum_id'] ];
 		$tree['mods'][$idx]['user_id'][] = $row['user_id'];
 		$tree['mods'][$idx]['username'][] = $row['username'];
+		$tree['mods'][$idx]['user_group_id'][] = $row['user_group_id'];
+		$tree['mods'][$idx]['user_session_time'][] = $row['user_session_time'];
 	}
 
 	$sql = "SELECT aa.forum_id, g.group_id, g.group_name 

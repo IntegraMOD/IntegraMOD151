@@ -88,4 +88,37 @@ function get_auth_list(){
 	return $auths;
 }
 
+// AGCM Advanced Group Color Mod
+function get_group_list()
+{
+	global $db, $userdata;
+
+	$sql = 'SELECT group_id
+			FROM ' . GROUPS_TABLE . '
+			WHERE group_color = 1
+				AND group_id = ' . GROUP_REGISTERED;
+	$result = $db->sql_query($sql, false, __LINE__, __FILE__);
+	if ( $row = $db->sql_fetchrow($result) )
+	{
+		$list_color[GROUP_REGISTERED] = array('txt' => 'Group_registered');
+	}
+	$db->sql_freeresult($result);
+
+	$sql = 'SELECT g.group_id, g.group_name 
+			FROM ' . USER_GROUP_TABLE . ' ug, ' . GROUPS_TABLE . ' g 
+			WHERE ug.user_id = ' . intval($userdata['user_id']) . '
+				AND g.group_id = ug.group_id 
+				AND g.group_color = 1 
+				AND ug.user_pending <> 1 
+			ORDER BY g.group_weight ASC';
+	$result = $db->sql_query($sql, false, __LINE__, __FILE__);
+
+	while ( $group_data = $db->sql_fetchrow($result) )
+	{
+		$list_color[ intval($group_data['group_id']) ] = array( 'txt' => $group_data['group_name'] );
+	}
+
+	$db->sql_freeresult($result);
+	return $list_color;
+}
 ?>

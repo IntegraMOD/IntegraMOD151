@@ -5,18 +5,20 @@
   // This is (c)Copyright 2002, Team phpSpell.
   // --------------------------------------------------------------------
 
+  exit("Disabled until admin check is in place");
+
   define ("IN_SPELL_ADMIN", true);
 
   $start_time = time();
   $safe_mode = (bool) ini_get("safe_mode");
 
   // Override Safe Mode
-  if (isset($HTTP_POST_VARS["SM"])) $safe_mode = true;
+  if (isset($_POST["SM"])) $safe_mode = true;
   if ($safe_mode == false) @set_time_limit(6000);
   $exec_time = ini_get("max_execution_time")-2;
 
   // Override Exec Time
-  if (isset($HTTP_POST_VARS["SM"])) {
+  if (isset($_POST["SM"])) {
     if ($exec_time > 28) $exec_time = 28;
   }
 
@@ -42,7 +44,7 @@
     echo "Configuration file is missing language setting.<br>Please set \$Spell_Config[\"Default_Language\"] to your language in the <b>spell_config.php</b> file.";
     exit;
   }
-  if (isset($HTTP_POST_VARS["CL"])) $CL = $HTTP_POST_VARS["CL"];
+  if (isset($_POST["CL"])) $CL = $_POST["CL"];
   else $CL = 0;
 
   if (!isset($Spell_Config["Languages_Supported"][$CL])) $Current_Language = $Spell_Config["Default_Language"];
@@ -53,13 +55,13 @@
 
 
   // Globalize variables
-  if (isset($HTTP_POST_VARS["Install_Dictionary"])) $Install_Dictionary = $HTTP_POST_VARS["Install_Dictionary"];
-  if (isset($HTTP_POST_VARS["Clear_Dictionary"])) $Clear_Dictionary = $HTTP_POST_VARS["Clear_Dictionary"];
-  if (isset($HTTP_POST_VARS["New_Word_To_Add"])) $New_Word_To_Add = $HTTP_POST_VARS["New_Word_To_Add"];
-  if (isset($HTTP_POST_VARS["Offset"])) $Offset = $HTTP_POST_VARS["Offset"];
-  if (isset($HTTP_POST_VARS["WP"])) $WP = $HTTP_POST_VARS["WP"];
-  if (isset($HTTP_POST_VARS["WA"])) $WA = $HTTP_POST_VARS["WA"];
-  if (isset($HTTP_POST_VARS["SM"])) $SM = $HTTP_POST_VARS["SM"];
+  if (isset($_POST["Install_Dictionary"])) $Install_Dictionary = $_POST["Install_Dictionary"];
+  if (isset($_POST["Clear_Dictionary"])) $Clear_Dictionary = $_POST["Clear_Dictionary"];
+  if (isset($_POST["New_Word_To_Add"])) $New_Word_To_Add = $_POST["New_Word_To_Add"];
+  if (isset($_POST["Offset"])) $Offset = $_POST["Offset"];
+  if (isset($_POST["WP"])) $WP = $_POST["WP"];
+  if (isset($_POST["WA"])) $WA = $_POST["WA"];
+  if (isset($_POST["SM"])) $SM = $_POST["SM"];
 
 
   if (isset($Install_Dictionary) && $Install_Dictionary == "NONE") unset($Install_Dictionary);

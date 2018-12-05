@@ -592,6 +592,7 @@ function pafiledb_page_header($page_title)
 	global $pafiledb_config, $lang, $pafiledb_template, $userdata, $images, $action, $_REQUEST, $pafiledb;
 	global $template, $db, $theme, $gen_simple_header, $starttime, $phpEx, $board_config, $user_ip, $phpbb_root_path;
 	global $admin_level, $level_prior, $tree, $do_gzip_compress, $portal_config, $var_cache; 
+	global $agcm_color;
 	
 	if($action != 'download')
 	{

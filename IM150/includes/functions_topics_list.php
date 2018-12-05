@@ -73,6 +73,7 @@ function topic_list($box, $tpl='', $topic_rowset, $list_title='', $split_type=fa
 {
 	global $db, $template, $board_config, $userdata, $phpEx, $lang, $images, $_COOKIE;
 	global $tree;
+	global $agcm_color;
 	static $box_id;
 
 	$current_time = time();	// MOD: Delayed Topics
@@ -472,15 +473,15 @@ function topic_list($box, $tpl='', $topic_rowset, $list_title='', $split_type=fa
 				break;
 			default:
 				$view_topic_url		= append_sid("viewtopic.$phpEx?" . POST_TOPIC_URL . "=$topic_id");
-				$topic_author		= ( $topic_rowset[$i]['user_id'] != ANONYMOUS ) ? '<a href="' . append_sid("profile.$phpEx?mode=viewprofile&amp;" . POST_USERS_URL . '=' . $topic_rowset[$i]['user_id']) . '">' : '';
-				$topic_author		.= ( $topic_rowset[$i]['user_id'] != ANONYMOUS ) ? colorize_username($topic_rowset[$i]) : ( ( $topic_rowset[$i]['post_username'] != '' ) ? $topic_rowset[$i]['post_username'] : $lang['Guest'] );
-				$topic_author		.= ( $topic_rowset[$i]['user_id'] != ANONYMOUS ) ? '</a>' : '';
+				$topic_author 		= ( $topic_rowset[$i]['user_id'] != ANONYMOUS ) ? '<a href="' . append_sid("profile.$phpEx?mode=viewprofile&amp;" . POST_USERS_URL . '=' . $topic_rowset[$i]['user_id']) . '" class="' . $agcm_color->get_user_color($topic_rowset[$i]['user_group_id'], $topic_rowset[$i]['user_session_time']) . '">' : '<span class="' . $agcm_color->get_user_color(GROUP_ANONYMOUS) . '">';
+				$topic_author 		.= ( $topic_rowset[$i]['user_id'] != ANONYMOUS ) ? $topic_rowset[$i]['username'] : ( ( $topic_rowset[$i]['post_username'] != '' ) ? $topic_rowset[$i]['post_username'] : $lang['Guest'] );
+				$topic_author 		.= ( $topic_rowset[$i]['user_id'] != ANONYMOUS ) ? '</a>' : '</span>';
 //-- mod : today at   yesterday at ------------------------------------------------------------------------ 
 //-- add 
 				$first_post_time   = create_date_day($board_config['default_dateformat'], $topic_rowset[$i]['topic_time'], $board_config['board_timezone']); 
 				$last_post_time      = create_date_day($board_config['default_dateformat'], $topic_rowset[$i]['post_time'], $board_config['board_timezone']); 
 //-- end mod : today at   yesterday at ------------------------------------------------------------------------ 
-				$last_post_author	= ( $topic_rowset[$i]['id2'] == ANONYMOUS ) ? ( ($topic_rowset[$i]['post_username2'] != '' ) ? $topic_rowset[$i]['post_username2'] . ' ' : $lang['Guest'] . ' ' ) : '<a href="' . append_sid("profile.$phpEx?mode=viewprofile&amp;" . POST_USERS_URL . '='  . $topic_rowset[$i]['id2']) . '">' . colorize_username(array(), $topic_rowset[$i]['level2'], $topic_rowset[$i]['user2'], $topic_rowset[$i]['id2']) . '</a>';
+				$last_post_author = ( $topic_rowset[$i]['id2'] == ANONYMOUS ) ? '<span class="' . $agcm_color->get_user_color(GROUP_ANONYMOUS) . '">' . ( ($topic_rowset[$i]['post_username2'] != '' ) ? $topic_rowset[$i]['post_username2'] . ' ' : $lang['Guest'] . ' ' ) . '</span>' : '<a href="' . append_sid("profile.$phpEx?mode=viewprofile&amp;" . POST_USERS_URL . '='  . $topic_rowset[$i]['id2']) . '" class="' . $agcm_color->get_user_color($topic_rowset[$i]['user_group_id_2'], $topic_rowset[$i]['user_session_time_2']) . '">' . $topic_rowset[$i]['user2'] . '</a>';
 				$last_post_url		= '<a href="' . append_sid("viewtopic.$phpEx?"  . POST_POST_URL . '=' . $topic_rowset[$i]['topic_last_post_id']) . '#' . $topic_rowset[$i]['topic_last_post_id'] . '"><img src="' . $images['icon_latest_reply'] . '" alt="' . $lang['View_latest_post'] . '" title="' . $lang['View_latest_post'] . '" border="0" /></a>';
 				$views				= $topic_rowset[$i]['topic_views'];
 				$news_label = ( $topic_rowset[$i]['news_id'] > 0 ) ? '[ ' . $lang['News'] . ' ] ' : '';

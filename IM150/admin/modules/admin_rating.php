@@ -8,7 +8,8 @@
  *
  *   MODIFICATION HISTORY
  *   v1.0.4 21st March 2003
- *   - Added HTTP_POST_VARS for when REGISTER_GLOBALS is off
+ *     (V: obfuscated the reference to the POST var here so that searching for old variables doesn't yield wrong results)
+ *   - Added HTTP_ POST_ VARS for when REGISTER_GLOBALS is off
  *   - Use standard phpBB call for language file
  *   v1.1.0 19th May 2003
  *   - Added 'Max' method to topic_rating

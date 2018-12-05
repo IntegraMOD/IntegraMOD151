@@ -31,7 +31,7 @@
 <td class="{userrow.ROW_CLASS}">
 <table width="100%" cellspacing="0" cellpadding="0" border="0">
 <tr>
-<td>&nbsp;<a href="{userrow.U_PROFILE}" class="name">{userrow.USERNAME}</a> [ {userrow.POSTS} ]</td>
+<td>&nbsp;<a href="{userrow.U_PROFILE}" class="{userrow.S_USERNAME}">{userrow.USERNAME}</a> [ {userrow.POSTS} ]</td>
 <td align="right"><a href="{userrow.U_SEARCHPOSTS}" title="{userrow.L_SEARCH_POSTS}"><img src="{SEARCH_IMG}" border="0" alt="{L_SEARCH}" title="{L_SEARCH}" /></a>&nbsp;</td>
 </tr>
 </table>

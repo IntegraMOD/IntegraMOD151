@@ -221,10 +221,12 @@ function pcp_output_username($field_name, $view_userdata, $map_name='')
 { 
     global $board_config, $phpbb_root_path, $phpEx, $lang, $images, $userdata; 
     global $values_list, $tables_linked, $classes_fields, $user_maps, $user_fields; 
+    global $agcm_color;
 
     $txt = ''; 
     $img = ''; 
     $username = ($view_userdata['user_id'] != ANONYMOUS) ? $view_userdata[$field_name] : ( (isset($view_userdata['post_username']) && ($view_userdata['post_username'] !='') ) ? $view_userdata['post_username'] : $lang['Guest'] ); 
+	$username = $agcm_color->get_user_color($view_userdata['user_group_id'], $view_userdata['user_session_time'], $username);
 
     // txt 
     $txt = '<span class="' . get_user_level_class($view_userdata['user_level'], 'gen', $view_userdata) . '">' . $username . '</span>'; 
@@ -250,10 +252,12 @@ function pcp_output_username_linked($field_name, $view_userdata, $map_name='')
 { 
     global $board_config, $phpbb_root_path, $phpEx, $lang, $images, $userdata; 
     global $values_list, $tables_linked, $classes_fields, $user_maps, $user_fields; 
+    global $agcm_color;
 
     $txt = ''; 
     $img = ''; 
     $username = ($view_userdata['user_id'] != ANONYMOUS) ? $view_userdata[$field_name] : ( (isset($view_userdata['post_username']) && ($view_userdata['post_username'] !='') ) ? $view_userdata['post_username'] : $lang['Guest'] ); 
+    $username = $agcm_color->get_user_color($view_userdata['user_group_id'], $view_userdata['user_session_time'], $username);
 
     // txt 
 	/* Hide Buttons :: Altered
