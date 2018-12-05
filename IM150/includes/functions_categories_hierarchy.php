@@ -122,10 +122,13 @@ function read_tree($force=false)
 	$replacement_word = array();
 	obtain_word_list($orig_word, $replacement_word);
 
-	// read the user cookie
-	$tracking_topics	= ( isset($HTTP_COOKIE_VARS[$board_config['cookie_name'] . '_t']) ) ? unserialize($HTTP_COOKIE_VARS[$board_config['cookie_name'] . "_t"]) : array();
-	$tracking_forums	= ( isset($HTTP_COOKIE_VARS[$board_config['cookie_name'] . '_f']) ) ? unserialize($HTTP_COOKIE_VARS[$board_config['cookie_name'] . "_f"]) : array();
-	$tracking_all		= ( isset($HTTP_COOKIE_VARS[$board_config['cookie_name'] . '_f_all']) ) ? intval($HTTP_COOKIE_VARS[$board_config['cookie_name'] . '_f_all']) : -1;
+//-- mod : keep unread -----------------------------------------------------------------------------
+//-- delete
+//	// read the user cookie
+//	$tracking_topics	= ( isset($HTTP_COOKIE_VARS[$board_config['cookie_name'] . '_t']) ) ? unserialize($HTTP_COOKIE_VARS[$board_config['cookie_name'] . "_t"]) : array();
+//	$tracking_forums	= ( isset($HTTP_COOKIE_VARS[$board_config['cookie_name'] . '_f']) ) ? unserialize($HTTP_COOKIE_VARS[$board_config['cookie_name'] . "_f"]) : array();
+//	$tracking_all		= ( isset($HTTP_COOKIE_VARS[$board_config['cookie_name'] . '_f_all']) ) ? intval($HTTP_COOKIE_VARS[$board_config['cookie_name'] . '_f_all']) : -1;
+//-- fin mod : keep unread -------------------------------------------------------------------------
 
 	// extended auth compliancy
 	$sql_extend_auth = '';
@@ -198,14 +201,54 @@ function read_tree($force=false)
 	$sql_last_posts = empty($s_last_posts) ? '' : " OR p.post_id IN ($s_last_posts)";
 
 	// read the last or unread posts
-	$user_lastvisit = $userdata['session_logged_in'] ? $userdata['user_lastvisit'] : 99999999999;
+//-- mod : keep unread -----------------------------------------------------------------------------
+//-- delete
+//	$user_lastvisit = $userdata['session_logged_in'] ? $userdata['user_lastvisit'] : 99999999999;
+//-- add
+	// get last visit for guest
+	if ( !$userdata['session_logged_in'] )
+	{
+		$userdata['user_lastvisit'] = $board_config['guest_lastvisit'];
+	}
+	$user_lastvisit = $userdata['user_lastvisit'];
 
-	$sql = "SELECT p.forum_id, p.topic_id, p.post_time, p.post_username, u.username, u.user_id, u.user_level, t.topic_last_post_id, t.topic_title
-				FROM " . POSTS_TABLE . " p, " . TOPICS_TABLE . " t, " . USERS_TABLE . " u
-				WHERE ( p.post_time > $user_lastvisit $sql_last_posts )
-						AND p.post_id = t.topic_last_post_id
-						AND t.topic_id = p.topic_id AND t.forum_id = p.forum_id AND t.topic_moved_id = 0
-						AND u.user_id = p.poster_id";
+	// unreads
+	$sql_unreads = '';
+	if ( !empty($board_config['tracking_unreads']) )
+	{
+		// get the unreads topic id
+		@reset($board_config['tracking_unreads']);
+		while ( list($id, $time) = @each($board_config['tracking_unreads']) )
+		{
+			// don't add obsolete cookies
+			if ( ($time > intval($board_config['tracking_all'])) && ($time > intval($board_config['tracking_topics'][$id])) )
+			{
+				$sql_unreads .= ( empty($sql_unreads) ? '' : ', ' ) . $id;
+			}
+		}
+		if ( !empty($sql_unreads) )
+		{
+			$sql_unreads = " OR p.topic_id IN ($sql_unreads)";
+		}
+	}
+
+	// prepare the result
+	$new_unreads = array();
+//-- fin mod : keep unread -------------------------------------------------------------------------
+//-- mod : keep unread -----------------------------------------------------------------------------
+// here we added
+//	 $sql_unreads
+//-- modify
+$sql = "SELECT p.forum_id, p.topic_id, p.post_time, p.post_username, u.username, u.user_id, u.user_level, t.topic_last_post_id, t.topic_title 
+                FROM (((" . POSTS_TABLE . " p 
+                    LEFT JOIN " . TOPICS_TABLE . " t ON t.topic_id = p.topic_id AND t.forum_id = p.forum_id AND t.topic_moved_id = 0) 
+                    LEFT JOIN " . USERS_TABLE . " u ON u.user_id = p.poster_id ) 
+                    LEFT OUTER JOIN ".APPROVE_POSTS_TABLE." ap ON ap.post_id = p.post_id ) 
+                WHERE ( p.post_time > $user_lastvisit $sql_last_posts $sql_unreads ) 
+                     AND p.post_id = t.topic_last_post_id 
+                     AND p.post_time < ".time()." 
+                     AND ap.post_id IS NULL";
+//-- fin mod : keep unread -------------------------------------------------------------------------
 //-- mod : Advanced Group Color Management -------------------------------------
 //-- add
 if (!defined('IN_INSTALL'))
@@ -213,6 +256,7 @@ if (!defined('IN_INSTALL'))
 	$sql = str_replace('SELECT ', 'SELECT u.user_group_id, u.user_session_time, ', $sql);
 }
 //-- fin mod : Advanced Group Color Management ---------------------------------
+//-- fin mod : keep unread -------------------------------------------------------------------------
 	if ( !$result = $db->sql_query($sql) )
 	{
 		message_die(GENERAL_ERROR, 'Couldn\'t access list of unread posts from forums', '', __LINE__, __FILE__, $sql);
@@ -220,8 +264,73 @@ if (!defined('IN_INSTALL'))
 	$new_topic_data = array();
 	while ($row = $db->sql_fetchrow($result))
 	{
-		if ( $row['post_time'] > $user_lastvisit )
+//-- mod : keep unread -----------------------------------------------------------------------------
+//-- delete
+//		if ( $row['post_time'] > $user_lastvisit )
+//		{
+//-- add
+		// get some ids
+		$topic_id = $row['topic_id'];
+		$forum_id = $row['forum_id'];
+
+		// check the validity of the cookies : forum
+		if ( isset($board_config['tracking_forums'][$forum_id]) )
 		{
+			if ( !empty($board_config['tracking_all']) && ($board_config['tracking_all'] >= $board_config['tracking_forums'][$forum_id]) )
+			{
+				unset($board_config['tracking_forums'][$forum_id]);
+			}
+		}
+
+		// topic cookie still valid ?
+		if ( isset($board_config['tracking_topics'][$topic_id]) )
+		{
+			if ( 
+				( !empty($board_config['tracking_all']) && ($board_config['tracking_all'] >= $board_config['tracking_topics'][$topic_id]) ) ||
+				( isset($board_config['tracking_forums'][$forum_id]) && ($board_config['tracking_forums'][$forum_id] >= $board_config['tracking_topics'][$topic_id]) )
+			)
+			{
+				unset($board_config['tracking_topics'][$topic_id]);
+			}
+		}
+
+		// unread cookie still valid ?
+		if ( isset($board_config['tracking_unreads'][$topic_id]) )
+		{
+			if ( 
+				( !empty($board_config['tracking_all']) && ($board_config['tracking_all'] >= $board_config['tracking_unreads'][$topic_id]) ) ||
+				( isset($board_config['tracking_forums'][$forum_id]) && ($board_config['tracking_forums'][$forum_id] >= $board_config['tracking_unreads'][$topic_id]) ) ||
+				( isset($board_config['tracking_topics'][$topic_id]) && ($board_config['tracking_topics'][$topic_id] >= $board_config['tracking_unreads'][$topic_id]) )
+			)
+			{
+				unset($board_config['tracking_unreads'][$topic_id]);
+			}
+		}
+
+		// have we got a last visit time for this topic
+		$topic_last_read = intval($board_config['tracking_unreads'][$topic_id]);
+		if ( !empty($board_config['tracking_all']) && ($board_config['tracking_all'] > $topic_last_read) )
+		{
+			$topic_last_read = $board_config['tracking_all'];
+		}
+		if ( isset($board_config['tracking_forums'][$forum_id]) && ($board_config['tracking_forums'][$forum_id] > $topic_last_read) )
+		{
+			$topic_last_read = $board_config['tracking_forums'][$forum_id];
+		}
+		if ( isset($board_config['tracking_topics'][$topic_id]) && ($board_config['tracking_topics'][$topic_id] > $topic_last_read) )
+		{
+			$topic_last_read = $board_config['tracking_topics'][$topic_id];
+		}
+		if ( empty($topic_last_read) )
+		{
+			$topic_last_read = $userdata['user_lastvisit'];
+		}
+
+		// check the topic last visit time
+		if ( $row['post_time'] > $topic_last_read )
+		{
+			$new_unreads[$topic_id] = $topic_last_read;
+//-- fin mod : keep unread -------------------------------------------------------------------------
 			$new_topic_data[ $row['forum_id'] ][ $row['topic_id'] ] = $row['post_time'];
 		}
 		if ( isset($last_posts[ $row['topic_last_post_id'] ]) )
@@ -246,6 +355,14 @@ if (!defined('IN_INSTALL'))
 		}
 	}
 
+//-- mod : keep unread -----------------------------------------------------------------------------
+//-- add
+	// update the unread topics from the list readed
+	$board_config['tracking_unreads'] = $new_unreads;
+
+	// except the cookies
+	write_cookies($userdata);
+//-- fin mod : keep unread -------------------------------------------------------------------------
 	// set the unread flag
 	$tree['unread_topics'] = array();
 	for ($i=0; $i < count($tree['data']); $i++)
@@ -261,35 +378,42 @@ if (!defined('IN_INSTALL'))
 				@reset($new_topic_data[$forum_id]);
 				while( list($check_topic_id, $check_post_time) = @each($new_topic_data[$forum_id]) )
 				{
-					if ( empty($tracking_topics[$check_topic_id]) )
-					{
+//-- mod : keep unread -----------------------------------------------------------------------------
+//-- delete
+//				if ( empty($tracking_topics[$check_topic_id]) )
+//				{
+//-- fin mod : keep unread -------------------------------------------------------------------------
 						$unread_topics = true;
 						$forum_last_post_time = max($check_post_time, $forum_last_post_time);
-					}
-					else
-					{
-						if ( $tracking_topics[$check_topic_id] < $check_post_time )
-						{
-							$unread_topics = true;
-							$forum_last_post_time = max($check_post_time, $forum_last_post_time);
-						}
-					}
-				}
-
-				// is there a cookie for this forum ?
-				if ( !empty($tracking_forums[$forum_id]) )
-				{
-					if ( $tracking_forums[$forum_id] > $forum_last_post_time )
-					{
-						$unread_topics = false;
-					}
-				}
-
-				// is there a cookie for all forums ?
-				if ( $tracking_all > $forum_last_post_time )
-				{
-					$unread_topics = false;
-				}
+//-- mod : keep unread -----------------------------------------------------------------------------
+//-- delete
+//				}
+//				else
+//				{
+//					if ( $tracking_topics[$check_topic_id] < $check_post_time )
+//					{
+//						$unread_topics = true;
+//						$forum_last_post_time = max($check_post_time, $forum_last_post_time);
+//					}
+//				}
+//			}
+//
+//			// is there a cookie for this forum ?
+//      // V: Note! this code doesn't exist in AGCM's version, but I still commented it out. Hope that's fine. Would probably be good to check KUF's install at some point...
+//			if ( !empty($tracking_forums[$forum_id]) )
+//			{
+//				if ( $tracking_forums[$forum_id] > $forum_last_post_time )
+//				{
+//					$unread_topics = false;
+//				}
+//			}
+//
+//			// is there a cookie for all forums ?
+//			if ( $tracking_all > $forum_last_post_time )
+//			{
+//				$unread_topics = false;
+//-- fin mod : keep unread -------------------------------------------------------------------------
+  			}
 			}
 
 			// store the result
@@ -688,7 +812,7 @@ function get_tree_option($cur='', $all=false)
 //--------------------------------------------------------------------------------------------------
 function build_index($cur='Root', $cat_break=false, &$forum_moderators, $real_level=-1, $max_level=-1, &$keys)
 {
-	global $template, $phpEx, $board_config, $lang, $images;
+	global $template, $phpEx, $board_config, $lang, $images, $db, $userdata;
 	global $tree;
 	global $agcm_color;
 	//
@@ -988,6 +1112,98 @@ function build_index($cur='Root', $cat_break=false, &$forum_moderators, $real_le
 
 			// forum icon
 			$icon_img = empty($data['icon']) ? '' : ( isset($images[ $data['icon'] ]) ? $images[ $data['icon'] ] : $data['icon'] );
+
+//
+// Begin Approve_Mod Block : 1
+//
+							$approve_mod = array();
+							$approve_sql = "SELECT enabled, approve_moderators, forum_hide_unapproved_posts, forum_hide_unapproved_topics
+								FROM " . APPROVE_FORUMS_TABLE . " 
+								WHERE forum_id = " . intval($id) . " LIMIT 0,1"; 
+							if ( !($approve_result = $db->sql_query($approve_sql)) ) 
+							{ 
+								message_die(GENERAL_ERROR, $lang['approve_posts_error_obtain'], '', __LINE__, __FILE__, $approve_sql); 
+							} 
+							if ( $approve_row = $db->sql_fetchrow($approve_result) ) 
+							{    
+								if ( intval($approve_row['enabled']) == 1 )
+								{
+									$approve_mod = $approve_row;
+									$approve_mod['enabled'] = true;
+								}
+							}
+							if ( $approve_mod['enabled'] )
+							{
+								if ( $data['tree.post_user_id'] == ANONYMOUS || $approve_mod['forum_hide_unapproved_posts'] || $approve_mod['forum_hide_unapproved_topics'] )
+								{
+									
+									$approve_mod['moderators'] = explode('|', get_moderators_user_id_of_forum($id));
+									
+									if ( !in_array($userdata['user_id'], $approve_mod['moderators']) && $tree['auth'][$cur]['tree.auth_view'] && $last_post != $lang['No_Posts'] )
+									{
+										$approve_sql = "SELECT * 
+											FROM " . APPROVE_POSTS_TABLE . " 
+											WHERE post_id = " . intval($data['tree.topic_last_post_id']) . " 
+											LIMIT 0,1"; 
+										if ( !$approve_result = $db->sql_query($approve_sql) ) 
+										{ 
+											message_die(GENERAL_ERROR, $lang['approve_posts_error_obtain'], '', __LINE__, __FILE__, $approve_sql); 
+										}	
+										$approve_row = $db->sql_fetchrow($approve_result);
+										if ( intval($approve_row['post_id']) == intval($data['tree.topic_last_post_id']) )
+										{
+											if ( $approve_mod['forum_hide_unapproved_posts'] || $approve_mod['forum_hide_unapproved_topics'] )
+											{
+												$approve_sql = "SELECT p.post_id, p.poster_id, p.post_time, p.post_username, u.username, u.user_id, u.user_group_id, u.user_session_time, t.topic_title, t.topic_last_post_id, u.user_group_id, u.user_session_time
+													FROM " . POSTS_TABLE . " p, " . USERS_TABLE . " u, " . TOPICS_TABLE . " t
+													WHERE p.forum_id = " . intval($id) . "
+													AND u.user_id = p.poster_id 
+													AND t.topic_id = p.topic_id
+													ORDER BY p.post_time DESC";
+												if ( !($approve_result = $db->sql_query($approve_sql)) ) 
+												{ 
+													message_die(GENERAL_ERROR, $lang['approve_posts_error_obtain'], '', __LINE__, __FILE__, $approve_sql); 
+												} 
+												while( $approve_row = $db->sql_fetchrow($approve_result) )
+												{
+													$approve_sql = "SELECT * FROM " . APPROVE_POSTS_TABLE . " 
+														WHERE post_id = " . intval($approve_row['post_id']) . " 
+														LIMIT 0,1";
+													if ( !($approve_result2 = $db->sql_query($approve_sql)) ) 
+													{ 
+														message_die(GENERAL_ERROR, $lang['approve_posts_error_obtain'], '', __LINE__, __FILE__, $approve_sql); 
+													} 
+													$approve_row2 = $db->sql_fetchrow($approve_result2);
+													if ( !$approve_row2['post_id'] )
+													{
+														// resize
+														$topic_title = $approve_row['topic_title'];
+														if ( strlen($topic_title) > (intval($board_config['last_topic_title_length'])-3) ) $topic_title = substr($topic_title, 0, intval($board_config['last_topic_title_length'])) . '...';
+														$topic_title = '<a href="' . append_sid("viewtopic.$phpEx?"  . POST_POST_URL . "=" . $approve_row['topic_last_post_id']) . '#' . $approve_row['topic_last_post_id'] . '" title="' . $approve_row['topic_title'] . '">' . $topic_title . '</a><br />';
+
+														$last_post  = (($board_config['last_topic_title']) ? $topic_title : '');
+														$last_post_time = create_date($board_config['default_dateformat'], $approve_row['post_time'], $board_config['board_timezone']);
+														$last_post .= $last_post_time . '<br />';
+
+														$last_post .= ( $approve_row['user_id'] == ANONYMOUS ) ? ( ($approve_row['post_username'] != '' ) ? $approve_row['post_username'] . ' ' : $lang['Guest'] . ' ' ) : '<a href="' . append_sid("profile.$phpEx?mode=viewprofile&amp;" . POST_USERS_URL . '='  . $approve_row['poster_id']) . '" class="'.$agcm_color->get_user_color($approve_row['user_group_id'], $approve_row['user_session_time']) .'">' . $approve_row['username'] . '</a> ';
+														
+														$last_post .= '<a href="' . append_sid("viewtopic.$phpEx?"  . POST_POST_URL . '=' . $approve_row['post_id']) . '#' . $approve_row['post_id'] . '"><img src="' . $images['icon_latest_reply'] . '" border="0" alt="' . $lang['View_latest_post'] . '" title="' . $lang['View_latest_post'] . '" /></a>';
+														break;
+													}
+												}		
+											}
+											else
+											{
+												$last_post = $last_post_time . '<br />';
+												$last_post .= $lang['Guest'] . '  ' . '<a href="' . append_sid("viewforum.$phpEx?"  . POST_FORUM_URL . '=' . $data['tree.forum_id']) . '"><img src="' . $images['icon_latest_reply'] . '" border="0" alt="' . $lang['View_latest_post'] . '" title="' . $lang['View_latest_post'] . '" /></a>';
+											}
+										}
+									}
+								}
+							}
+//
+// End Approve_Mod Block : 1
+//
 
 			// send to template
 			$template->assign_block_vars('catrow', array());
