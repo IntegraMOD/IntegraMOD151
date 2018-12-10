@@ -64,6 +64,7 @@ $lang['Blocks_Title'] = 'Blocks Management';
 $lang['Blocks_Explain'] = 'From this control panel, you can add, edit, delete and move blocks for each available portal page.  A block template must exist for every block file added.  When a block file is specified, the content filed is being disregarded by the portal engine.';
 $lang['Choose_Layout'] = 'Choose portal page';
 $lang['B_Title'] = 'Block Title';
+$lang['B_Title_image'] = 'Block Image';
 $lang['B_Position'] = 'Block Position';
 $lang['B_Active'] = 'Active?';
 $lang['B_Display'] = 'Content';

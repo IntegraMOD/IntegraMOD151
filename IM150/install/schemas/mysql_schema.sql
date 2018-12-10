@@ -1081,6 +1081,9 @@ CREATE TABLE phpbb_groups (
   group_sub_recurring_stop integer default '0',
   group_sub_recurring_stop_num integer default '0',
   group_sub_reattempt integer default '1',
+  group_weight MEDIUMINT(8) DEFAULT '0' NOT NULL,
+  group_legend SMALLINT(1) DEFAULT '0' NOT NULL,
+  group_color SMALLINT(1) DEFAULT '0' NOT NULL,
   PRIMARY KEY  (group_id),
   KEY group_single_user (group_single_user)
 );
@@ -2458,6 +2461,7 @@ CREATE TABLE phpbb_users (
   phpBBSecurity_question TEXT NOT NULL,
   phpBBSecurity_login_tries smallint(5) NOT NULL default '0',
   phpBBSecurity_pm_sent smallint(1) NOT NULL default '0',
+  user_group_id MEDIUMINT(8) DEFAULT 0 NOT NULL,
   PRIMARY KEY  (user_id),
   KEY user_session_time (user_session_time)
 );
@@ -2534,6 +2538,26 @@ CREATE TABLE phpbb_words (
 CREATE TABLE phpbb_wpm (
 	name varchar(255) NOT NULL default '',
 	value text NOT NULL
+);
+
+# --------------------------------------------------------
+
+#
+# Table structure for table `phpbb_wpm`
+#
+
+CREATE TABLE phpbb_color (
+  group_id mediumint(8) NOT NULL default '0',
+  color_code varchar(6) NOT NULL default '',
+  themes_id mediumint(8) NOT NULL default '0',
+  hover_bold smallint(1) NOT NULL default '0',
+  hover_italic smallint(1) NOT NULL default '0',
+  hover_underline smallint(1) NOT NULL default '0',
+  bold smallint(1) NOT NULL default '0',
+  italic smallint(1) NOT NULL default '0',
+  underline smallint(1) NOT NULL default '0',
+  KEY group_id (group_id),
+  KEY themes_id (themes_id)
 );
 
 # --------------------------------------------------------

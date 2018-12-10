@@ -306,9 +306,9 @@ if( $mode != "" && $mode != "blocks" )
 						$pos = strpos($file, ".".$phpEx);
 						if ($pos!==false)
 						{
-							$temp = ereg_replace("\.".$phpEx,"",$file);
-							$temp1 = ereg_replace('blocks_imp_','',$temp);
-							$temp1 = ereg_replace('_',' ',$temp1);
+							$temp = str_replace(".".$phpEx,"",$file);
+							$temp1 = str_replace('blocks_imp_','',$temp);
+							$temp1 = str_replace('_',' ',$temp1);
 							$blockfile .= '<option value="' . $temp .'" ';
 							if($b_info['blockfile']==$temp)
 							{
@@ -394,9 +394,9 @@ if( $mode != "" && $mode != "blocks" )
 					$pos = strpos($file, ".".$phpEx);
 					if ($pos!==false)
 					{
-						$temp = ereg_replace("\.".$phpEx,"",$file);
-						$temp1 = ereg_replace('blocks_imp_','',$temp);
-						$temp1 = ereg_replace('_',' ',$temp1);
+						$temp = str_replace(".".$phpEx,"",$file);
+						$temp1 = str_replace('blocks_imp_','',$temp);
+						$temp1 = str_replace('_',' ',$temp1);
 						$blockfile .= '<option value="' . $temp .'">' . $temp1;
 					}
 				}
@@ -669,7 +669,7 @@ if( $mode != "" && $mode != "blocks" )
 		}
 		else
 		{
-			$sql = "SELECT max(weight) mweight FROM " . BLOCKS_TABLE . " WHERE layout ='" . $l_id . "' AND bposition ='" . $b_bposition . "'";
+			$sql = "SELECT coalesce(max(weight), 0) AS mweight FROM " . BLOCKS_TABLE . " WHERE layout ='" . $l_id . "' AND bposition ='" . $b_bposition . "'";
 			if(!$result = $db->sql_query($sql))
 			{
 				message_die(GENERAL_ERROR, "Could not query from blocks table", $lang['Error'], __LINE__, __FILE__, $sql);
@@ -678,7 +678,7 @@ if( $mode != "" && $mode != "blocks" )
 			$row = $db->sql_fetchrow($result);
 			$weight=$row['mweight'];
 
-			$sql = "INSERT INTO " . BLOCKS_TABLE . " (title, title_image, content, bposition, weight, active, type, cache, cache_time, blockfile, view, layout, block_bbcode_uid, border, titlebar, openclose, background, local, groups) VALUES ('" . str_replace("\'", "''", $b_title) . "', '" . str_replace("\'", "''", $b_title_image) . "', '" . $b_content . "', '" . str_replace("\'", "''", $b_bposition) . "', '" . $weight . "', '" . $b_active . "', '" . $b_type . "', '" . $b_cache . "', '" . $b_cachetime . "', '" . str_replace("\'", "''", $b_blockfile) . "', '" . $b_view . "', '" . $layout . "', '" . $bbcode_uid . "', '" . $b_border . "', '" . $b_titlebar . "', '" . $b_openclose . "', '" . $b_background . "', '" . $b_local . "', '" . $b_group . "')";
+			$sql = "INSERT INTO " . BLOCKS_TABLE . " (title, title_image, content, bposition, weight, active, type, cache, cache_time, blockfile, view, layout, block_bbcode_uid, border, titlebar, openclose, background, local, groups) VALUES ('" . str_replace("\'", "''", $b_title) . "', '" . str_replace("\'", "''", $b_title_image) . "', '" . $b_content . "', '" . str_replace("\'", "''", $b_bposition) . "', '" . intval($weight) . "', '" . $b_active . "', '" . $b_type . "', '" . $b_cache . "', '" . $b_cachetime . "', '" . str_replace("\'", "''", $b_blockfile) . "', '" . $b_view . "', '" . $layout . "', '" . $bbcode_uid . "', '" . $b_border . "', '" . $b_titlebar . "', '" . $b_openclose . "', '" . $b_background . "', '" . $b_local . "', '" . $b_group . "')";
 			$message = $lang['Block_added'];
 			if(!$result = $db->sql_query($sql))
 			{

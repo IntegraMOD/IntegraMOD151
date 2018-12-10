@@ -1290,10 +1290,8 @@ INSERT INTO phpbb_rules (date, rules, pm_subject, pm_message) VALUES (1088516758
 INSERT INTO phpbb_hacks_list VALUES (18, 'Hacks List', 'Provides an admin panel for you to enter information about hacks you have installed on your board.', 'Nivisec', 'support@nivisec.com', 'http://www.nivisec.com/', '1.20', 'No', 'http://www.nivisec.com/downloads/phpbb/hacks_list.zip', '', 1168727612);
 INSERT INTO phpbb_hacks_list VALUES (4, 'Admin Private Message Manager', 'An Admin panel plug in that allows the management of Private Messages on the board. You may sort by a variety of options, delete any PMs you choose, or optionally archive them for later use.', 'Nivisec', 'support@nivisec.com', 'http://www.nivisec.com/', '1.5.1', 'No', 'http://www.nivisec.com/downloads/phpbb/admin_prv_msgs.zip', '', 1168727612);
 INSERT INTO phpbb_hacks_list VALUES (7, 'Admin Userlist', 'This MOD lets you view a list of every user on your board from the ACP.  While browsing the list you can activate, de-activate, delete, and ban multiple users at a time.  You can also edit one users permissions or manage their account.  Also see how many', 'wGEric', 'eric@egcnetwork.com', 'http://mods.best-dev.com/', '2.0.1', 'No', 'http://eric.best-1.biz', '', 1168727612);
-INSERT INTO phpbb_hacks_list VALUES (129, 'Cash Mod', 'Cash Mod for users to gain money/points by posting', 'Xore', 'mods@xore.ca', 'http://www.xore.ca', '2.2.3a', 'No', 'http://www.xore.ca', '', 0);
 INSERT INTO phpbb_hacks_list VALUES (12, 'File Attachment Mod v2', 'This Mod adds the ability to attach files in phpBB2.', 'Acyd Burn', '', 'http://www.opentools.de', '2.3.10', 'No', 'http://www.opentools.de', '', 1168727612);
 INSERT INTO phpbb_hacks_list VALUES (13, 'Auto group', 'This mod will make it posible to add member to a user group, depending on there post count this makes it posible to make a group \\"Everyone\\" (0 posts) where all members are members by default or a group like \\"Posters\\" (1 posts) where all users witch ha', 'Niels Chr. Denmark', 'ncr@db9.dk', 'http://mods.db9.dk', '1.2.1', 'No', 'http://mods.db9.dk', '', 1168727612);
-INSERT INTO phpbb_hacks_list VALUES (131, 'Lo-Fi Mod', 'This Mod will add a Textual/Low Graphic Layout to your Board. It\\''s Ideal for Google Bot and for all Search Engine that spider your site, and also for printing in an easy way.', 'Bicet/CyberAlien/Justas', 'bicets@gmail.com', 'http://www.phpbbstyles.com', '1.0.0', 'No', 'http://www.phpbbstyles.com', '', 0);
 INSERT INTO phpbb_hacks_list VALUES (15, 'Complete banner', 'This mod makes it posible to add banners to your phpbb2 pages, by default banners are placed in top/botton but you may place the tags, inside any template file.', 'Niels Chr. RÃ¸d', 'ncr@db9.dk', 'http://mods.db9.dk', '1.3.4', 'No', 'http://mods.db9.dk', '', 1168727612);
 INSERT INTO phpbb_hacks_list VALUES (16, 'phpBB2 Fast Hack', 'This makes your phpBB 2 forum faster.', 'dwing', 'dwing@weingarten-net.de', 'http://www.weingarten-net.de', '1.0.0', 'No', 'http://www.weingarten-net.de', '', 1168727612);
 INSERT INTO phpbb_hacks_list VALUES (19, 'IntegraMOD', 'A pre-modded version of phpBB which integrates the best and most useful phpBB modifications.', 'masterdavid', 'webmaster@integramod.com', 'http://www.integramod.com', '1.5.1', 'No', 'http://www.integramod.com', '', 1168727612);
@@ -1316,7 +1314,6 @@ INSERT INTO phpbb_hacks_list VALUES (35, 'Page Generation Time', 'This MOD will 
 INSERT INTO phpbb_hacks_list VALUES (36, 'PHP Syntax Highlighter BBCode', 'Highlights PHP specific code when used.', 'Fubonis', 'php_fubonis@yahoo.com', 'http://www.fubonis.com', '3.0.4', 'No', 'http://www.fubonis.com', '', 1168727612);
 INSERT INTO phpbb_hacks_list VALUES (37, 'Approve Mod', 'Designate a forum for moderation by admins & chosen moderators', 'Aceman', 'phpbbmods@synace.com', 'http://www.synace.com', '1.0.9', 'No', 'http://www.synace.com', '', 1168727612);
 INSERT INTO phpbb_hacks_list VALUES (38, 'PHP Info', 'This Mod shows the PHP Info in your Admin Panel.', 'Dwing', 'dwing@weingarten-net.de', 'http://www.dseitz.de', '1.1.2', 'No', 'http://www.dseitz.de', '', 1168727612);
-INSERT INTO phpbb_hacks_list VALUES (130, 'Advanced BBCode Box MOD', 'This MOD adds lots of useful BBCode features and makes the bbcode buttons look just like Microsoft Office 2003. It also improves the functions of phpBB\\''s BBCode function. It adds the bbcode exactly where the cursor is, inserts smilies where the cursor is', 'Disturbed One/AL Tnen', 'anthony@anthonycoy.com', 'http://www.hvmdesign.com', '6', 'No', 'http://www.hvmdesign.com', '', 0);
 INSERT INTO phpbb_hacks_list VALUES (40, 'Quick Reply with Quote', 'This will add a quick-reply form below every topics', 'Smartor', 'smartor_xp@hotmail.com', 'http://smartor.is-root.com', '1.1.3', 'No', 'http://smartor.is-root.com', '', 1168727612);
 INSERT INTO phpbb_hacks_list VALUES (41, 'Rebuild Search Mod', 'This will index every post in your phpBB, rebuilding the search tables', 'GUI', 'spam@nickm.org', 'http://www.nickm.org/', '1.0.0', 'No', 'http://www.nickm.org/', '', 1168727612);
 INSERT INTO phpbb_hacks_list VALUES (43, 'Send PM On User Registration', 'This MOD will send a PM to all new users when they register', 'AbelaJohnB', 'abela@phpbb.com', 'http://www.JohnAbela.Com', '1.0.4', 'No', 'http://www.JohnAbela.Com', '', 1168727612);
@@ -1397,10 +1394,14 @@ INSERT INTO phpbb_hacks_list VALUES (121, 'phpBB Spell', 'Adds a spellchecker to
 INSERT INTO phpbb_hacks_list VALUES (122, 'PCP Wizard', 'An Addon for PCP 2.0.0 that adds a more userfriendly interface to PCP.', 'Ednique', '', 'http://www.integramod.com/', '', 'No', '', 'http://www.integramod.com/', 1168727612);
 INSERT INTO phpbb_hacks_list VALUES (123, 'Donation MOD', 'Allows Paypal donations to be sent through your phpBB.', 'sandodo', 'zouxiong@loewen.com.sg', 'http://forum.loewen.com.sg', '1.0.2', 'No', '', 'http://forum.loewen.com.sg', 1168727612);
 INSERT INTO phpbb_hacks_list VALUES (124, 'Paypal IPN Subscription', 'Adds group subscriptions through Paypal.', 'sandodo', 'zouxiong@loewen.com.sg', 'http://forum.loewen.com.sg', '1.0.3', 'No', '', 'http://forum.loewen.com.sg', 1168727612);
-INSERT INTO phpbb_hacks_list VALUES (128, 'Photo for Profile Control Panel', 'This Mod adds the ability to let your users attach a photo to their profile.  This works exactly like the avatar function with all the ACP settings. You can even turn off the feature per user.', 'MrDSL', 'naugher@sbcglobal.net', 'http://www.thehottub.net', '0.9.0', 'No', 'http://www.thehottub.net', '', 0);
 INSERT INTO phpbb_hacks_list VALUES (125, 'CrackerTracker Professional G5', 'A fully integrated and complete Security System for your Forum. Blocks known Worm Attacks and Floods.', 'cback/cYbercOsmOnauT', 'webmaster@cback.de', 'http://www.cback.de', '5.0.3', 'No', 'http://www.cback.de', '', 0);
 INSERT INTO phpbb_hacks_list VALUES (126, 'Advanced Visual Confirmation', 'This MOD replaces the original CAPTCHA of the phpBB Visual Confirmation.', 'AmigaLink', 'webmaster@amigalink.de', 'http://www.EssenMitFreude.info', '1.2.0', 'No', 'http://www.EssenMitFreude.info', '', 0);
 INSERT INTO phpbb_hacks_list VALUES (127, 'Full Album Pack', 'An integration of Smartor\\''s Photo Album with many of it\\''s addons.  Supercharged Album Pack, Album Category Hierarchy, Album Multiple Uploads, Archive Mod, Thumbnail Dimension Mod, Picture Rotation Mod, Album Nuffload, Nuffimage, and many other modificat', 'Mighty Gorgon', '', 'http://www.icyphoenix.com', '1.2.3', 'No', 'http://www.icyphoenix.com', '', 0);
+INSERT INTO phpbb_hacks_list VALUES (128, 'Photo for Profile Control Panel', 'This Mod adds the ability to let your users attach a photo to their profile.  This works exactly like the avatar function with all the ACP settings. You can even turn off the feature per user.', 'MrDSL', 'naugher@sbcglobal.net', 'http://www.thehottub.net', '0.9.0', 'No', 'http://www.thehottub.net', '', 0);
+INSERT INTO phpbb_hacks_list VALUES (129, 'Cash Mod', 'Cash Mod for users to gain money/points by posting', 'Xore', 'mods@xore.ca', 'http://www.xore.ca', '2.2.3a', 'No', 'http://www.xore.ca', '', 0);
+INSERT INTO phpbb_hacks_list VALUES (130, 'Advanced BBCode Box MOD', 'This MOD adds lots of useful BBCode features and makes the bbcode buttons look just like Microsoft Office 2003. It also improves the functions of phpBB\\''s BBCode function. It adds the bbcode exactly where the cursor is, inserts smilies where the cursor is', 'Disturbed One/AL Tnen', 'anthony@anthonycoy.com', 'http://www.hvmdesign.com', '6', 'No', 'http://www.hvmdesign.com', '', 0);
+INSERT INTO phpbb_hacks_list VALUES (131, 'Lo-Fi Mod', 'This Mod will add a Textual/Low Graphic Layout to your Board. It\\''s Ideal for Google Bot and for all Search Engine that spider your site, and also for printing in an easy way.', 'Bicet/CyberAlien/Justas', 'bicets@gmail.com', 'http://www.phpbbstyles.com', '1.0.0', 'No', 'http://www.phpbbstyles.com', '', 0);
+INSERT INTO phpbb_hacks_list VALUES (132, 'Advanced Group Color Management', 'This mod adds colored username, configurable per group, everywhere', 'Teelk', '', '', '1.2.5', 'No', '', '', 0);
 
 # -- IP Tracker
 INSERT INTO phpbb_ip_tracking_config (max) VALUES ('25000');
@@ -1417,3 +1418,43 @@ INSERT INTO phpbb_wpm VALUES ('wpm_message', 'Hi there, [username]!  I hope you 
 
 INSERT INTO phpbb_force_read VALUES (1, 'Please read the following post as it contains important update information pertaining to this forum.', 0, 0, 1);
 INSERT INTO phpbb_chatspot_rooms VALUES ('1', 'Lobby', '1', '0', NULL, '0');
+
+# -- Advanced Group Color Management
+
+-- Create three "fake" groups
+INSERT INTO phpbb_groups (group_type, group_name, group_description, group_moderator, group_single_user) VALUES (1, 'Group_registered', 'Group_registered_desc', 0, 1);
+INSERT INTO phpbb_groups (group_type, group_name, group_description, group_moderator, group_single_user) VALUES (1, 'Group_anonymous', 'Group_anonymous_desc', 0, 1);
+INSERT INTO phpbb_groups (group_type, group_name, group_description, group_moderator, group_single_user) VALUES (1, 'Group_session', 'Group_session_desc', 0, 1);
+
+-- Insert the values for these groups (or any other groups created before in this SQL file)
+INSERT INTO phpbb_color (group_id, themes_id, color_code)
+SELECT g.group_id, t.themes_id, ''
+FROM phpbb_groups g, phpbb_themes t;
+
+-- Create the config keys associated, values are wrong here but will be updated below
+INSERT INTO phpbb_config (config_name , config_value) VALUES ('mod_advanced_group_color_management', '1.2.5');
+INSERT INTO phpbb_config (config_name , config_value) VALUES ('group_registered', 'GROUP_REGISTERED');
+INSERT INTO phpbb_config (config_name , config_value) VALUES ('group_anonymous', 'GROUP_ANONYMOUS');
+INSERT INTO phpbb_config (config_name , config_value) VALUES ('group_session', 'GROUP_SESSION');
+INSERT INTO phpbb_config (config_name , config_value) VALUES ('agcm_check', '0');
+INSERT INTO phpbb_config (config_name , config_value) VALUES ('agcm_time', '2');
+INSERT INTO phpbb_config (config_name , config_value) VALUES ('agcm_value', '1200');
+
+-- Update phpbb_config with the correct values
+UPDATE phpbb_config
+  SET config_value = (SELECT group_id FROM phpbb_groups WHERE group_name = 'Group_registered')
+  WHERE config_name = 'group_registered';
+UPDATE phpbb_config
+  SET config_value = (SELECT group_id FROM phpbb_groups WHERE group_name = 'Group_anonymous')
+  WHERE config_name = 'group_anonymous';
+UPDATE phpbb_config
+  SET config_value = (SELECT group_id FROM phpbb_groups WHERE group_name = 'Group_session')
+  WHERE config_name = 'group_session';
+UPDATE phpbb_config SET config_value = (SELECT group_id FROM phpbb_groups WHERE group_name = 'Group_registered')
+  WHERE config_name = 'user_group_id';
+
+  -- Update users' "color group id"
+  -- (order of these two queries is important so that Anonymous, -1, doesn't end up in Registered group)
+UPDATE phpbb_users SET user_group_id = (SELECT group_id FROM phpbb_groups WHERE group_name = 'Group_registered');
+UPDATE phpbb_users SET user_group_id = (SELECT group_id FROM phpbb_groups WHERE group_name = 'Group_anonymous')
+  WHERE user_id = -1;

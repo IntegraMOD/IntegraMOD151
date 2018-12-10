@@ -232,6 +232,13 @@ function storeCaret(textEl) {
 </tr>
 
 <tr> 
+<td align="right" class="row1">{L_B_TITLE_IMAGE}:</td>
+<td class="row2"> 
+<input type="text" maxlength="100" size="30" name="title_image" value="{TITLE_IMAGE}" class="post" />
+</td>
+</tr>
+
+<tr> 
 <td align="right" class="row1">{L_B_POSITION}:</td>
 <td class="row2"> 
 <select name="bposition" class="post">{POSITION}</select>

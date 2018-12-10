@@ -25,13 +25,15 @@ if ( !defined('IN_PHPBB') )
 	die("Hacking attempt");
 }
 
-if(!function_exists(imp_poll_block_func))
+if(!function_exists('imp_poll_block_func'))
 {
 	function imp_poll_block_func()
 	{
 		global $template, $portal_config, $db, $userdata, $images, $lang, $phpEx;
 
 		$template->assign_block_vars('PORTAL_POLL', array());
+    // pre-assign PORTAL_POLL, it'll get overloaded later if we have polls
+    $template->assign_var('PORTAL_POLL', $lang['No_poll']);
 
 		$sql = 'SELECT
 			  t.*, vd.*
@@ -121,7 +123,7 @@ if(!function_exists(imp_poll_block_func))
 					}
 
 					$vote_graphic = 0;
-					$vote_graphic_max = count($images['voting_graphic']);
+					$vote_graphic_max = count_safe($images['voting_graphic']);
 
 					for($i = 0; $i < $vote_options; $i++)
 					{
@@ -133,7 +135,7 @@ if(!function_exists(imp_poll_block_func))
 						$vote_graphic_img_right = $images['voting_graphic_right'];
 						$vote_graphic = ($vote_graphic < $vote_graphic_max - 1) ? $vote_graphic + 1 : 0;
 
-						if( count($orig_word) )
+						if( count_safe($orig_word) )
 						{
 							$vote_info[$i]['vote_option_text'] = preg_replace($orig_word, $replacement_word, $vote_info[$i]['vote_option_text']);
 						}
@@ -166,7 +168,7 @@ if(!function_exists(imp_poll_block_func))
 
 					for($i = 0; $i < $vote_options; $i++)
 					{
-						if( count($orig_word) )
+						if( count_safe($orig_word) )
 						{
 							$vote_info[$i]['vote_option_text'] = preg_replace($orig_word, $replacement_word, $vote_info[$i]['vote_option_text']);
 						}
@@ -183,7 +185,7 @@ if(!function_exists(imp_poll_block_func))
 					$s_hidden_fields = '<input type="hidden" name="topic_id" value="' . $topic_id . '"><input type="hidden" name="mode" value="vote">';
 				}
 
-				if( count($orig_word) )
+				if( count_safe($orig_word) )
 				{
 					$vote_title = preg_replace($orig_word, $replacement_word, $vote_title);
 				}

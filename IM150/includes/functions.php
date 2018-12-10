@@ -2346,7 +2346,8 @@ function last_donors()
 	
 	$str_input = intval($board_config['dislay_x_donors']);
 		
-	$sql = "SELECT $selectcolums from " . ACCT_HIST_TABLE . " a, " . USERS_TABLE . " u where a.comment like 'donate from%' AND u.user_id = a.user_id group by a.user_id"
+  $sql = "SELECT $selectcolums from " . ACCT_HIST_TABLE . " a, " . USERS_TABLE . " u where a.comment like 'donate from%' AND u.user_id = a.user_id
+    group by a.user_id, a.MNY_CURRENCY"
 	 	.  " $orderby LIMIT $str_input";
 	if ( !($result = $db->sql_query($sql, false, 'acct_hist_users')) )
 	{

@@ -117,8 +117,8 @@ if( $mode != "" )
 						$pos = strpos($file, ".".$phpEx);
 						if ($pos!==false)
 						{
-							$temp = ereg_replace("\.".$phpEx,"",$file);
-							$temp1 = ereg_replace('blocks_imp_','',$temp);
+							$temp = str_replace(".".$phpEx,"",$file);
+							$temp1 = str_replace('blocks_imp_','',$temp);
 							$block .= '<option value="' . $temp1 .'" ';
 							if($bv_info['block']==$temp1)
 							{
@@ -154,8 +154,8 @@ if( $mode != "" )
 					$pos = strpos($file, ".".$phpEx);
 					if ($pos!==false)
 					{
-						$temp = ereg_replace("\.".$phpEx,"",$file);
-						$temp1 = ereg_replace('blocks_imp_','',$temp);
+						$temp = str_replace(".".$phpEx,"",$file);
+						$temp1 = str_replace('blocks_imp_','',$temp);
 						$block .= '<option value="' . $temp1 .'">' . $temp1;
 					}
 				}

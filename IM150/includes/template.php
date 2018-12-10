@@ -1069,8 +1069,7 @@ class Template {
 	{
 		ob_start();
 		$res = $this->pparse($handle);
-		$this->vars[$varname] = ob_get_contents();
-		ob_end_clean();
+		$this->vars[$varname] = ob_get_clean();
 		return $res;
 	}
 

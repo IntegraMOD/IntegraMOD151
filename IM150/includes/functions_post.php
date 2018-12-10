@@ -558,6 +558,8 @@ if($old_forcetime > time()){
 	// 
 	if (($mode == 'newtopic' || ($mode == 'editpost' && $post_data['edit_poll'])) && !empty($poll_title) && count($poll_options) >= 2)
 	{
+    $hide_vote = intval($hide_vote);
+    $tothide_vote = intval($tothide_vote);
 		$sql = (!$post_data['has_poll']) ? "INSERT INTO " . VOTE_DESC_TABLE . " (topic_id, vote_text, vote_start, vote_length, vote_max, vote_hide, vote_tothide) VALUES ($topic_id, '$poll_title', $current_time, " . ($poll_length * 86400) . ", '$max_vote', '$hide_vote', '$tothide_vote')" : "UPDATE " . VOTE_DESC_TABLE . " SET vote_text = '$poll_title', vote_length = " . ($poll_length * 86400) . ", vote_max = '$max_vote', vote_hide = '$hide_vote', vote_tothide = '$tothide_vote' WHERE topic_id = $topic_id";
 		if (!$db->sql_query($sql))
 		{
