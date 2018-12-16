@@ -275,7 +275,7 @@ function pcp_output_username_linked($field_name, $view_userdata, $map_name='')
         $txt = '<span class="' . get_user_level_class($view_userdata['user_level'], 'gen', $view_userdata) . '">' . $username . '</span>'; 
     } else { 
         $temp_url = append_sid("./profile.$phpEx?mode=viewprofile&amp;" . POST_USERS_URL . '=' . $view_userdata['user_id']); 
-        $txt = '<a href="' . $temp_url . '" title="' . $lang['Read_profile'] . '">' . colorize_username($view_userdata) . '</a>'; 
+        $txt = '<a href="' . $temp_url . '" title="' . $lang['Read_profile'] . '">' . $username . '</a>'; 
 		$img = '<a class="icon_profile" href="' . $temp_url . ' "title="' . $lang['Read_profile'] . '"><span>' . $lang['profile_lofi'] . '</span></a>';
 
     } 
