@@ -889,7 +889,7 @@ function pcp_output_forums_stat($field_name, $view_userdata, $map_name='')
 				// forum
 				$temp_url = append_sid("./viewforum.$phpEx?" . POST_FORUM_URL . "=$most_active_forum_id");
 				$txt = '<a href="' . $temp_url . '" class="topictitle">' . $most_active_forum_name . '</a>';
-				$txt .= '<br /><span class="genmed">' . sprintf( '[' . $lang['Most_active_forum_stat'] . ']', $most_active_forum_posts, ( ($most_active_forum_posts*100) / $most_active_forum_posts_total ), ( ($most_active_forum_posts*100) / $total_posts ) ) . '</span>';
+				$txt .= '<br /><span class="genmed">' . sprintf( '[' . $lang['Most_active_forum_stat'] . ']', $most_active_forum_posts, ( $most_active_forum_posts_total == 0 ? 0 : ($most_active_forum_posts*100) / $most_active_forum_posts_total ), ( $total_posts == 0 ? 0 : ($most_active_forum_posts*100) / $total_posts ) ) . '</span>';
 			}
 		}
 
