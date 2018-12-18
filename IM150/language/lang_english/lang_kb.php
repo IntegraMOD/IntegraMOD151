@@ -395,4 +395,5 @@ $lang['No_cat_comments_forum_id'] = 'Comments are enabled but you have not speci
 $lang['Quick_nav'] = 'Quick KB Navigation';
 $lang['Quick_jump'] = 'Go';
 
-?>
+$lang['KB_error_no_category_name'] = 'Please put a category name in!';
+$lang['KB_error_no_forum_selected'] = 'Select a Forum';

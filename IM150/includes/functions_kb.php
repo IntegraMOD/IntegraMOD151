@@ -1126,7 +1126,7 @@ function get_kb_cat_subs_admin( $parent, $select = 1, $indent, $ss )
 	return $ss;
 }
 
-function get_kb_cat_subs_list( $auth_type, $parent, $select = 1, $selected = false, $is_admin = false, $kb_is_auth_all, $indent )
+function get_kb_cat_subs_list( $auth_type, $parent, $select = 1, $selected = false, $is_admin = false, $kb_is_auth_all, $indent, $current_id = 0)
 {
 	global $db; 
 
@@ -1135,7 +1135,8 @@ function get_kb_cat_subs_list( $auth_type, $parent, $select = 1, $selected = fal
 	
 	$sql = "SELECT *  
        		FROM " . KB_CATEGORIES_TABLE . " 
-			WHERE parent = " . $parent; 
+			WHERE parent = " . $parent . "
+			AND $idfield != " . intval($current_id); 
 
 	if ( $select == 0 )
 	{
@@ -1175,7 +1176,7 @@ function get_kb_cat_subs_list( $auth_type, $parent, $select = 1, $selected = fal
 
 // get category list for adding and editing articles
 
-function get_kb_cat_list( $auth_type, $id = 0, $select = 1, $selected = false, $kb_is_auth_all = false, $is_admin = false )
+function get_kb_cat_list( $auth_type, $id = 0, $select = 1, $selected = false, $kb_is_auth_all = false, $is_admin = false, $current_id = 0)
 {
 	global $db, $userdata;
 
@@ -1184,7 +1185,8 @@ function get_kb_cat_list( $auth_type, $id = 0, $select = 1, $selected = false, $
 
 	$sql = "SELECT *  
        	FROM " . KB_CATEGORIES_TABLE . " 
-		WHERE parent = 0 ";
+		WHERE parent = 0
+		AND $idfield != " . intval($current_id);
 
 	if ( $select == 0 )
 	{
@@ -1227,7 +1229,7 @@ function get_kb_cat_list( $auth_type, $id = 0, $select = 1, $selected = false, $
 			{
 				$catlist .= "<option value=\"$category[$idfield]\" $status>" . $category[$namefield] . "</option>\n";
 		
-				$catlist .= get_kb_cat_subs_list( $auth_type, $category[$idfield], $select, $selected, $is_admin, $kb_is_auth_all, '&nbsp;&nbsp;' );
+				$catlist .= get_kb_cat_subs_list( $auth_type, $category[$idfield], $select, $selected, $is_admin, $kb_is_auth_all, '&nbsp;&nbsp;', $current_id );
 			}
 	}
 				

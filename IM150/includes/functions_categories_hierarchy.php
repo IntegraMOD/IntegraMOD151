@@ -745,7 +745,7 @@ function get_max_depth($cur='Root', $all=false, $level=-1, &$keys, $max=-1)
 // get_tree_option() : return a drop down menu list of <option></option> 
 // 
 //-------------------------------------------------------------------------------------------------- 
-function get_tree_option($cur='', $all=false)
+function get_tree_option($cur='', $all=false, $disable_non_forum = false)
 {
 	global $tree, $lang;
 
@@ -753,6 +753,8 @@ function get_tree_option($cur='', $all=false)
 	$keys = get_auth_keys('Root', $all);
 	$last_level = -1;
 
+	// if we only want the user to select a forum (i.e. for KB), disable the rest
+	$disabled = $disable_non_forum ? ' disabled="disabled"' : '';
 	for ($i=0; $i < count($keys['id']); $i++)
 	{
 		// only get object that are not forum links type
@@ -769,7 +771,7 @@ function get_tree_option($cur='', $all=false)
 			if ($level < $last_level)
 			{
 				//insert spacer if level goes down
-				$res .='<option value="-1">' . $inc . '|&nbsp;&nbsp;&nbsp;</option>';
+				$res .='<option value="-1" ' . $disabled . '>' . $inc . '|&nbsp;&nbsp;&nbsp;</option>';
 				// make valid lines solid
 				$res = str_replace("[*$level*]", "|", $res);
 
@@ -779,15 +781,19 @@ function get_tree_option($cur='', $all=false)
 					$res = str_replace("[*$k*]", "&nbsp;", $res);
 				}
             
-			} elseif ($level == 0 && $last_level == -1) $res .='<option value="-1">|</option>';
-
+			}
+			elseif ($level == 0 && $last_level == -1)
+			{
+				$res .='<option value="-1" ' . $disabled . '>|</option>';
+			}
 			$last_level = $level;
 
-			$selected = ($cur == $keys['id'][$i]) ? ' selected="selected"' : '';
-			$res .= '<option value="' . $keys['id'][$i] . '"' .  $selected . '>';
+			$key = $keys['id'][$i];
+			$selected = ($cur == $key) ? ' selected="selected"' : '';
+			$res .= '<option value="' . $key . '"' .  $selected . (substr($key, 0, 1) == 'f' ? '' : $disabled) . '>';
 
 			// name
-			$name = get_object_lang($keys['id'][$i], 'name', $all);
+			$name = get_object_lang($key, 'name', $all);
 
 			if ($keys['level'][$i] >=0) $res .= $inc . '|--';
 

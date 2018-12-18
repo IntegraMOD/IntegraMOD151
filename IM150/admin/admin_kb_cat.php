@@ -19,6 +19,9 @@
  *    (at your option) any later version.
  */
 
+define('CT_SECLEVEL', 'MEDIUM');
+$ct_ignorepvar = array('new_cat_name', 'catname');
+
 if ( file_exists( './../viewtopic.php' ) )
 {
 	define( 'IN_PHPBB', 1 );
@@ -74,35 +77,11 @@ else
 
 function get_forums( $sel_id = 0 )
 {
-	global $db;
-
-	$sql = "SELECT forum_id, forum_name
-		FROM " . FORUMS_TABLE;
-
-	if ( !$result = $db->sql_query( $sql ) )
-	{
-		message_die( GENERAL_ERROR, "Couldn't get list of forums", "", __LINE__, __FILE__, $sql );
-	}
-
 	$forumlist = '<select name="forum_id">';
 
 	if ( $sel_id == 0 )
-	$forumlist .= '<option value="0" selected > Select a Forum !</option>';
-	
-	while ( $row = $db->sql_fetchrow( $result ) )
-	{
-		if ( $sel_id == $row['forum_id'] )
-		{
-			$status = "selected";
-		}
-		else
-		{
-			$status = '';
-		}
-		$forumlist .= '<option value="' . $row['forum_id'] . '" ' . $status . '>' . $row['forum_name'] . '</option>';
-	}
-
-	$forumlist .= '</select>';
+		$forumlist .= '<option value="0" selected > Select a Forum !</option>';
+	$forumlist .= get_tree_option($sel_id, true, true);
 
 	return $forumlist;
 }
@@ -157,7 +136,7 @@ switch ( $mode )
 					'L_PARENT' => $lang['Parent'],
 					'L_NONE' => $lang['None'],
 
-					'PARENT_LIST' => get_kb_cat_list( '', 0, 1, 0, 0, true ),
+					'PARENT_LIST' => get_kb_cat_list( '', 0, 1, 0, 0, true, $cat_id),
 
 					'L_FORUM_ID' => $lang['Forum_id'],
 					'L_FORUM_ID_EXPLAIN' => $lang['Forum_id_explain'],
@@ -206,16 +185,20 @@ switch ( $mode )
 
 			if ( !$cat_name )
 			{
-				echo "Please put a category name in!";
+				mx_message_die(GENERAL_MESSAGE , $lang['KB_error_no_category_name']);
 			}
 
 			$cat_desc = $_POST['catdesc'];
 			$parent = intval( $_POST['parent'] );
-			$comments_forum_id = intval( $_POST['forum_id'] );
+			$forum_id = $_POST['forum_id'];
+			// remove the leading "f" that CH adds to its select box
+			if (substr($forum_id, 0, 1) == 'f')
+				$forum_id = substr($forum_id, 1);
+			$comments_forum_id = intval( $forum_id );
 			
 			if ( $comments_forum_id == 0 )
 			{
-				mx_message_die(GENERAL_MESSAGE , 'Select a Forum');	
+				mx_message_die(GENERAL_MESSAGE, $lang['KB_error_no_forum_selected']);
 			}
 			$view_level = intval( $_POST['auth_view'] );
 			$post_level = intval( $_POST['auth_post'] );
@@ -378,11 +361,23 @@ switch ( $mode )
 		{
 			$cat_id = intval( $_POST['catid'] );
 			$cat_name = trim( $_POST['catname'] );
+			if ( !$cat_name )
+			{
+				mx_message_die(GENERAL_MESSAGE , $lang['KB_error_no_category_name']);
+			}
 			$cat_desc = $_POST['catdesc'];
 			$number_articles = intval( $_POST['number_articles'] );
 			$parent = intval( $_POST['parent'] );
-			$comments_forum_id = intval( $_POST['forum_id'] );
-			
+			$forum_id = $_POST['forum_id'];
+			// remove the leading "f" that CH adds to its select box
+			if (substr($forum_id, 0, 1) == 'f')
+				$forum_id = substr($forum_id, 1);
+			$comments_forum_id = intval( $forum_id );
+			if ( $comments_forum_id == 0 )
+			{
+				mx_message_die(GENERAL_MESSAGE, $lang['KB_error_no_forum_selected']);
+			}
+
 			$view_level = intval( $_POST['auth_view'] );
 			$post_level = intval( $_POST['auth_post'] );
 			$rate_level = intval( $_POST['auth_rate'] );
@@ -391,12 +386,6 @@ switch ( $mode )
 			$delete_level = intval( $_POST['auth_delete'] );
 			$approval_level = intval( $_POST['auth_approval'] );
 			$approval_edit_level = intval( $_POST['auth_approval_edit'] );
-
-
-			if ( !$cat_name )
-			{
-				echo "Please put a category name in!";
-			}
 
 			$sql = "UPDATE " . KB_CATEGORIES_TABLE . " SET category_name = '" . $cat_name . "', category_details = '" . $cat_desc . "', number_articles = '" . $number_articles . "', parent = '" . $parent . "', auth_view = '" . $view_level . "', auth_post = '" . $post_level . "', auth_rate = '" . $rate_level . "', auth_comment = '" . $comment_level . "', auth_edit = '" . $edit_level . "', auth_delete = '" . $delete_level . "', auth_approval = '" . $approval_level . "', auth_approval_edit = '" . $approval_edit_level . "', comments_forum_id = '" . $comments_forum_id . "' WHERE category_id = " . $cat_id;
 
