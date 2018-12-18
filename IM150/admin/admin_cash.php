@@ -24,9 +24,9 @@
 define('IN_PHPBB', 1);
 $phpbb_root_path = "./../";
 $phpEx = substr(strrchr(__FILE__, '.'), 1);
-require('./pagestart.' . $phpEx);
 if ( !empty($navbar) && defined('IN_PHPBB') )
 {
+	/* V: disabled navbar. ACP menus are strictly superior.
 	$menu = array();
 	if ( !defined('CASH_INCLUDE') )
 	{
@@ -50,49 +50,7 @@ if ( !empty($navbar) && defined('IN_PHPBB') )
 		}
 	}
 	$template->assign_var_from_handle('NAVBAR', 'navbar');
-	return;
-}
-
-if ( !empty($setmodules) && defined('IN_PHPBB') )
-{
-	if ( empty($table_prefix) )
-	{
-		// jr admin mod
-		/*
-			since this gets included from within a function,
-			and we require these base-scope variables, we
-			copy them in from the global scope
-		*/
-		$table_prefix = $GLOBALS['table_prefix'];
-		$phpbb_root_path = $GLOBALS['phpbb_root_path'];
-		$phpEx = $GLOBALS['phpEx'];
-		$board_config = $GLOBALS['board_config'];
-		$lang = $GLOBALS['lang'];
-	}
-	include($phpbb_root_path . 'includes/functions_cash.'.$phpEx);
-	$menu = array();
-	admin_menu($menu);
-
-	if ( $board_config['cash_adminbig'] )
-	{
-		for ( $i = 0; $i < count($menu); $i++ )
-		{
-			for ( $j = 0; $j < $menu[$i]->num(); $j++ )
-			{
-				$module['Cash Mod'][$menu[$i]->items[$j]->title] = $menu[$i]->items[$j]->linkage($phpEx);
-				if ( ($j == $menu[$i]->num() - 1) && !($i == count($menu) - 1) )
-				{
-					$lang[$menu[$i]->items[$j]->title] = $lang[$menu[$i]->items[$j]->title] . '</a></span></td></tr><tr><td class="row2" height="7"><span class="genmed"><a name="cm' . $menu[$i]->num() . '">';
-				}
-			}
-		}
-	}
-	else
-	{
-		$file = basename(__FILE__);
-		$module['Cash Mod']['Cash_Admin'] = "$file";
-		$module['Cash Mod']['Cash_Help'] = "cash_help.$phpEx";
-	}
+	*/
 	return;
 }
 
@@ -103,7 +61,6 @@ define('IN_CASHMOD', 1);
 // Let's set the root dir for phpBB
 //
 $phpbb_root_path = "./../";
-require($phpbb_root_path . 'extension.inc');
 require('./pagestart.' . $phpEx);
 include($phpbb_root_path . 'includes/functions_selects.'.$phpEx);
 
