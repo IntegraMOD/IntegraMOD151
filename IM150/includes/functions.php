@@ -384,7 +384,7 @@ function write_cookies($userdata)
 							SET user_unread_topics = '$sql'
 							WHERE user_id = " . intval($userdata['user_id']);
 			}
-			else
+			else if ($userdata['user_unread_topics'] != NULL)
 			{
 				$sql = "UPDATE " . USERS_TABLE . "
 							SET user_unread_topics = NULL

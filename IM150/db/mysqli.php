@@ -21,18 +21,23 @@
  *   at achaab@hotmail.fr so i can do the changes myself and diffuse them
  *
  ***************************************************************************/
- 
+
 if(!defined("SQL_LAYER"))
 {
+	class sql_cache_fake_key
+	{}
+
 	define("SQL_LAYER","mysqli");
 
 	class sql_db
 	{
-
 		var $db_connect_id;
 		var $query_result;
 		var $num_queries = 0;
 		var $in_transaction = 0;
+		public $queries;
+		public $sql_time;
+		public $cache, $cached, $caching;
 
 		//
 		// Constructor
@@ -50,8 +55,8 @@ if(!defined("SQL_LAYER"))
 
 			$this->db_connect_id = @mysqli_connect($this->server, $this->user, $this->password, $this->dbname, $port);
 
-      $this->row = new SplObjectStorage();
-      $this->rowset = new SplObjectStorage();
+			$this->row = new SplObjectStorage();
+			$this->rowset = new SplObjectStorage();
 			
 			if( $this->db_connect_id && $database != '')
 			{
@@ -104,11 +109,39 @@ if(!defined("SQL_LAYER"))
 		//
 		function sql_query($query = "", $transaction = FALSE, $cache = null)
 		{
+			// Check cache
+			$this->caching = false;
+			$this->cache = array();
+			$this->cached = false;
+			if($query !== '' && $cache)
+			{
+				global $phpbb_root_path;
+				$hash = md5($query);
+				if(strlen($cache))
+				{
+					$hash = $cache . $hash;
+				}
+				$filename = $phpbb_root_path . 'cache/sql_' . $hash . '.php';
+				if(@file_exists($filename))
+				{
+					$set = array();
+					@include($filename);
+					// This isset is important just in case someone removed the file while we included it
+					if (isset($set))
+					{
+						$this->cache = $set;
+						$this->cached = true;
+						$this->caching = false;
+						return new sql_cache_fake_key();
+					}
+				}
+				$this->caching = $hash;
+			}
+
 			//
 			// Remove any pre-existing queries
 			//
 			unset($this->query_result);
-
 			if( $query != "" )
 			{
 				$this->num_queries++;
@@ -122,7 +155,18 @@ if(!defined("SQL_LAYER"))
 					$this->in_transaction = TRUE;
 				}
 
+				$qstart = microtime(true);
 				$this->query_result = @mysqli_query($this->db_connect_id, $query);
+				$qend = microtime(true);
+				$this->sql_time += $qend - $qstart;
+
+				if (defined('DEBUG_SQL') && DEBUG_SQL)
+				{
+					ob_start();
+					debug_print_backtrace();
+					$backtrace = ob_get_clean();
+					$this->queries[] = array($query, $backtrace, $qend - $qstart);
+				}
 			}
 			else
 			{
@@ -135,12 +179,12 @@ if(!defined("SQL_LAYER"))
 			$this->query_result = (isset($this->query_result)) ? $this->query_result : false;
 			if ($this->query_result)
 			{
-        if ($this->query_result !== true)
-        {
-          // if the query wasn't a SELECT, mysqli_query returns simply true
-          unset($this->row[$this->query_result]);
-          unset($this->rowset[$this->query_result]);
-        }
+				if ($this->query_result !== true)
+				{
+					// if the query wasn't a SELECT, mysqli_query returns simply true
+					unset($this->row[$this->query_result]);
+					unset($this->rowset[$this->query_result]);
+				}
 
 				if( $transaction == END_TRANSACTION && $this->in_transaction )
 				{
@@ -170,14 +214,21 @@ if(!defined("SQL_LAYER"))
 		// Other query methods
 		//
 		function sql_numrows($query_id = 0)
-		{			
+		{
+			if ($query_id instanceof sql_cache_fake_key)
+			{
+				return count($this->cache);
+			}
 			if ($query_id === false)
 			{
 				$query_id = $this->query_result;
 			}
 			
 
-			return ( $query_id ) ? mysqli_num_rows($query_id) : false;
+			$qstart = microtime(true);
+			$result = ( $query_id ) ? mysqli_num_rows($query_id) : false;
+			$qend = microtime(true);
+			$this->sql_time += $qend - $qstart;
 		}
 
 		function sql_affectedrows()
@@ -220,7 +271,9 @@ if(!defined("SQL_LAYER"))
 		}
 		
 		function sql_fetchrow($query_id = 0)
-		{			
+		{
+			if ($query_id instanceof sql_cache_fake_key && $this->cached)
+				return count($this->cache) ? array_shift($this->cache) : false;
 			if ($query_id === false)
 			{
 				$query_id = $this->query_result;
@@ -228,7 +281,11 @@ if(!defined("SQL_LAYER"))
 
 			if( $query_id )
 			{
+				$qstart = microtime(true);
 				$this->row[$query_id] = mysqli_fetch_array($query_id, MYSQLI_ASSOC);
+				$qend = microtime(true);
+				$this->sql_time += $qend - $qstart;
+				$this->cache[] = $this->row[$query_id];
 				return $this->row[$query_id];
 			}
 			else
@@ -246,13 +303,17 @@ if(!defined("SQL_LAYER"))
 
 			if( $query_id )
 			{
-        $result = [];
+				$qstart = microtime(true);
+				$result = [];
 				while($this->rowset[$query_id] = @mysqli_fetch_array($query_id, MYSQLI_ASSOC))
 				{
 					$result[] = $this->rowset[$query_id];
 				}
+				$this->cache = $result;
+				$qend = microtime(true);
+				$this->sql_time += $qend - $qstart;
 
-        return $result;
+        		return $result;
 			}
 			else
 			{
@@ -286,14 +347,14 @@ if(!defined("SQL_LAYER"))
 			{
 				if( $rownum > -1 )
 				{
-          // V TODO: this probably (definitely...) doesn't work with cached results!
-          mysqli_data_seek($query_id, $rownum);
-          $resrow = (is_numeric($col)) ? mysqli_fetch_row($query_id) : mysqli_fetch_assoc($query_id);
-          if (isset($resrow[$field])){
-            return $resrow[$field];
-          } else {
-            return false;
-          }
+					// V TODO: this probably (definitely...) doesn't work with cached results!
+					mysqli_data_seek($query_id, $rownum);
+					$resrow = (is_numeric($col)) ? mysqli_fetch_row($query_id) : mysqli_fetch_assoc($query_id);
+					if (isset($resrow[$field])){
+						return $resrow[$field];
+					} else {
+						return false;
+					}
 				}
 				else
 				{
@@ -340,14 +401,24 @@ if(!defined("SQL_LAYER"))
 		}
 
 		function sql_freeresult($query_id = 0)
-		{			
+		{
+			if ($query_id === 'cache')
+			{
+				$this->caching = false;
+				$this->cached = false;
+				$this->cache = array();
+				return;
+			}
+
 			if ($query_id === false)
 			{
 				$query_id = $this->query_result;
 			}
 
-			if ( $query_id === true)
+			if ($query_id)
 			{
+				if ($this->caching)
+					$this->write_cache();
 				unset($this->row[$query_id]);
 				unset($this->rowset[$query_id]);
 
@@ -369,10 +440,43 @@ if(!defined("SQL_LAYER"))
 			return $result;
 		}
 
-		function clear_cache($prefix = '')
+		function write_cache()
 		{
+			if(!$this->caching)
+			{
+				return;
+			}
+			global $phpbb_root_path;
+			$f = fopen($phpbb_root_path . 'cache/sql_' . $this->caching . '.php', 'w');
+			$data = var_export($this->cache, true);
+			@fputs($f, '<?php $set = ' . $data . '; ?>');
+			@fclose($f);
+			@chmod($phpbb_root_path . 'cache/sql_' . $this->caching . '.php', 0777);
+			$this->caching = false;
+			$this->cached = false;
+			$this->cache = array();
 		}
 
+		  function clear_cache($prefix = '')
+		  {
+			global $phpbb_root_path;
+			$this->caching = false;
+			$this->cached = false;
+			$this->cache = array();
+			$prefix = 'sql_' . $prefix;
+			$prefix_len = strlen($prefix);
+			if($res = opendir($phpbb_root_path . 'cache'))
+			{
+				while(($file = readdir($res)) !== false)
+				{
+					if(substr($file, 0, $prefix_len) === $prefix)
+					{
+						@unlink($phpbb_root_path . 'cache/' . $file);
+					}
+				}
+			}
+			@closedir($res);
+		}
 	} // class sql_db
 
 } // if ... define

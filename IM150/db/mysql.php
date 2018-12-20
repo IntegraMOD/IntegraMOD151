@@ -145,23 +145,23 @@ class sql_db
 		$mtime = explode(" ",$mtime);
 		$mtime = $mtime[1] + $mtime[0];
 		$starttime = $mtime;
-    // Check cache
-    $this->caching = false;
-    $this->cache = array();
-    $this->cached = false;
-    if($query !== '' && $cache)
-    {
-      global $phpbb_root_path;
-      $hash = md5($query);
-      if(strlen($cache))
-      {
-        $hash = $cache . $hash;
-      }
-      $filename = $phpbb_root_path . 'cache/sql_' . $hash . '.php';
-      if(@file_exists($filename))
-      {
-        $set = array();
-        @include($filename);
+		// Check cache
+		$this->caching = false;
+		$this->cache = array();
+		$this->cached = false;
+		if($query !== '' && $cache)
+		{
+			global $phpbb_root_path;
+			$hash = md5($query);
+			if(strlen($cache))
+			{
+				$hash = $cache . $hash;
+			}
+			$filename = $phpbb_root_path . 'cache/sql_' . $hash . '.php';
+			if(@file_exists($filename))
+			{
+				$set = array();
+				@include($filename);
 				// This isset is important just in case someone removed the file while we included it
 				if (isset($set))
 				{
@@ -170,16 +170,15 @@ class sql_db
 					$this->caching = false;
 					return 'cache';
 				}
-      }
-      $this->caching = $hash;
-    }
+			}
+			$this->caching = $hash;
+		}
 
 		// Remove any pre-existing queries
 		unset($this->query_result);
 		if($query != "")
 		{
 			$this->num_queries++;
-
 
 			if (defined('DEBUG') && DEBUG)
 			{
