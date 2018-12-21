@@ -29,25 +29,10 @@ if ( !defined('IN_PHPBB') )
 // The New Gzip :: start
 $do_gzip_compress = FALSE;
 if($board_config['gzip_compress']){
-	$phpver = phpversion();
 	$useragent = (isset($_SERVER['HTTP_USER_AGENT'])) ? $_SERVER['HTTP_USER_AGENT'] : getenv('HTTP_USER_AGENT');
 	$accept_encoding = (isset($_SERVER['HTTP_ACCEPT_ENCODING'])) ? $_SERVER['HTTP_ACCEPT_ENCODING'] : getenv('HTTP_ACCEPT_ENCODING');
-	if ( $phpver >= '4.0.4pl1' && ( strstr($useragent,'compatible') || strstr($useragent,'Gecko') ) ){
-		if ( extension_loaded('zlib') )	{
-			if (headers_sent() != TRUE)	{
-				if(strstr($accept_encoding,'gzip')) {
-					ob_start("ob_gzhandler"); 
-				}
-      } 
-		}
-	} else if ( $phpver > '4.0' )	{
-		if ( strstr($accept_encoding, 'gzip') ) {
-			if (extension_loaded('zlib') ) {
-				$do_gzip_compress = TRUE;
-		ob_start();
-				ob_implicit_flush(0);
-	}
-}
+	if ( extension_loaded('zlib') && !headers_sent() && strstr($accept_encoding,'gzip')) {
+		ob_start("ob_gzhandler");
 	}
 }
 // The New Gzip :: end

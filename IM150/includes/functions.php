@@ -1957,7 +1957,7 @@ function phpbb_realpath($path)
 	return (!@function_exists('realpath') || !@realpath($phpbb_root_path . 'includes/functions.'.$phpEx)) ? $path : @realpath($path);
 }
 
-function redirect($url)
+function redirect($url, $sanitize_slashes = true)
 {
 	global $db, $board_config;
 
@@ -1976,7 +1976,10 @@ function redirect($url)
 	$server_port = ($board_config['server_port'] <> 80) ? ':' . trim($board_config['server_port']) : '';
 	$script_name = preg_replace('#^\/?(.*?)\/?$#', '\1', trim($board_config['script_path']));
 	$script_name = ($script_name == '') ? $script_name : '/' . $script_name;
-	$url = preg_replace('#^\/?(.*?)\/?$#', '/\1', trim($url));
+	if ($sanitize_slashes)
+	{
+		$url = preg_replace('#^\/?(.*?)\/?$#', '/\1', trim($url));
+	}
 
 	// Redirect via an HTML form for PITA webservers
 	if (@preg_match('/Microsoft|WebSTAR|Xitami/', getenv('SERVER_SOFTWARE')))

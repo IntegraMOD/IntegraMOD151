@@ -62,14 +62,14 @@ function wizurl($mode,$extra=''){
 	global $phpEx;
 	
 	if($extra){
-		return append_sid("admin_pcp_wizard.$phpEx?mode=$mode&$extra");
+		return append_sid("admin_pcp_wizard.$phpEx?mode=$mode&$extra", true);
 	} else {
-		return append_sid("admin_pcp_wizard.$phpEx?mode=$mode");
+		return append_sid("admin_pcp_wizard.$phpEx?mode=$mode", true);
 	}
 }
 
 function wizredirect($nextmode,$extra=''){
-	redirect('./admin/'.wizurl($nextmode,$extra));
+	redirect("/admin/".wizurl($nextmode,$extra), false);
 }
 
 function menu(){
