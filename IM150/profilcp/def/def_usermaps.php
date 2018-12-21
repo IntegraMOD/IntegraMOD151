@@ -388,6 +388,8 @@ $user_maps = array(
 							),
 						'user_rules' => array(
 							),
+						'user_group_id' => array(
+							),
 					),
 			),
 	
@@ -550,6 +552,7 @@ $user_maps = array(
 							),
 					),
 			),
+	
 	'PCP.profil.profile_prefer.PCP.group_color' => array(
 				'order'		=> 55,
 										'title'		=> 'Color_options',

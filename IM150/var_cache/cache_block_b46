@@ -1,5 +1,0 @@
-1f502bf0ff5706cb2c2de7e051ab94d7s:791:"<table border="0" cellpadding="0" cellspacing="1" width="100%">
-	<tr>
-		<td align="center"><span class="genmed">1 registered users visited during the last 24 hours:<br /><marquee scrolldelay=100 id=userscroll1 loop="true" onmouseover="this.stop()" onmouseout="this.start()"><a href="privmsg.php?mode=post&amp;u=2"style="color:#" title="Send User a PM"><img src="templates/fisubice/images//icon_scroll_pm.gif" align=top border=0></a> <a href="profile.php?mode=viewprofile&amp;u=2"style="color:#" title="View Users Profile"><b>Helter</b></a></marquee><br />0 registered users <span style="color:red">DIDN'T</span> visit during the last 24 hours:<br /><marquee scrolldelay=100 id=userscroll2 loop="true" onmouseover="this.stop()" onmouseout="this.start()"></marquee></span></td>
-	</tr>
-</table>";
