@@ -129,7 +129,7 @@ function secure_superglobals()
 // Runs addslashes on superglobal $_REQUEST if magic_quotes_gpc is off.
 // phpBB uses the depreciated HTTP_*_VARS and does not do this for superglobals.
 {
-	if( get_magic_quotes_gpc() )
+	if( function_exists('get_magic_quotes_gpc') && @get_magic_quotes_gpc() )
 	{
 		return; // magic_quotes_gpc is on, we can skip this and continue.
 	}
