@@ -155,7 +155,7 @@ $read_options = ($album_view_mode == ALBUM_VIEW_LIST ) ? ALBUM_READ_ALL_CATEGORI
 $catrows = album_read_tree($album_user_id, $read_options);
 
 // check if the category exists in the album_tree data
-if (@!array_key_exists($cat_id, $album_data['keys']) )
+if (!array_key_exists($cat_id, $album_data['keys']) )
 {
 	message_die(GENERAL_MESSAGE, $lang['Category_not_exist']);
 }
