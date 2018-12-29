@@ -21,23 +21,23 @@ define ('IN_MINI_CAL', 1);
 
     
     // get the mode (if any)
-    if( isset($HTTP_GET_VARS['mode']) || isset($_POST['mode']) )
+    if( isset($_GET['mode']) || isset($_POST['mode']) )
     {
-    	$mini_cal_mode = ( isset($_POST['mode']) ) ? $_POST['mode'] : $HTTP_GET_VARS['mode'];
+    	$mini_cal_mode = ( isset($_POST['mode']) ) ? $_POST['mode'] : $_GET['mode'];
     }
     $mini_cal_mode = ($mini_cal_mode == 'personal') ? $mini_cal_mode : 'default';
     
     // get the user (for personal calendar)
-    if( isset($HTTP_GET_VARS[POST_USERS_URL]) || isset($_POST[POST_USERS_URL]) )
+    if( isset($_GET[POST_USERS_URL]) || isset($_POST[POST_USERS_URL]) )
     {
-    	$mini_cal_user = ( isset($_POST[POST_USERS_URL]) ) ? intval($_POST[POST_USERS_URL]) : intval($HTTP_GET_VARS[POST_USERS_URL]);
+    	$mini_cal_user = ( isset($_POST[POST_USERS_URL]) ) ? intval($_POST[POST_USERS_URL]) : intval($_GET[POST_USERS_URL]);
     }
     
     // get the calendar month
     $mini_cal_month = 0;
-    if( isset($HTTP_GET_VARS['month']) || isset($_POST['month']) )
+    if( isset($_GET['month']) || isset($_POST['month']) )
     {
-    	$mini_cal_month = ( isset($_POST['month']) ) ? intval($_POST['month']) : intval($HTTP_GET_VARS['month']);
+    	$mini_cal_month = ( isset($_POST['month']) ) ? intval($_POST['month']) : intval($_GET['month']);
     }
     
     // initialise our calendarsuite class
