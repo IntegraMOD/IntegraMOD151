@@ -55,7 +55,10 @@ function inarray($needle, $haystack)
 //
 // End functions
 // -------------
+
 include($phpbb_root_path . 'language/lang_' . $board_config['default_lang'] . '/lang_admin_pafiledb.' . $phpEx);
+include($phpbb_root_path . 'language/lang_' . $board_config['default_lang'] . '/lang_dbmtnc.' . $phpEx);
+
 //
 // Generate relevant output
 //
@@ -149,6 +152,7 @@ elseif( isset($_GET['pane']) && $_GET['pane'] == 'right' )
 ***************************************************************************/
 	$template->assign_vars(array(
 		"L_WELCOME" => $lang['Welcome_phpBB'],
+		"L_WELCOME_IM" => $lang['Welcome_IM'],
 		"L_ADMIN_INTRO" => $lang['Admin_intro'],
 		"L_FORUM_STATS" => $lang['Forum_stats'],
 		"L_WHO_IS_ONLINE" => $lang['Who_is_Online'],
@@ -252,7 +256,7 @@ elseif( isset($_GET['pane']) && $_GET['pane'] == 'right' )
 		if($result = $db->sql_query($sql))
 		{
 			$row = $db->sql_fetchrow($result);
-			$version = $row['mysql_version'];
+			$mysql_version = $row['mysql_version'];
 
 			if( preg_match("/^(3\.23|4\.|5\.)/", $version) )
 			{
@@ -333,13 +337,17 @@ elseif( isset($_GET['pane']) && $_GET['pane'] == 'right' )
 		"NUMBER_OF_TOPICS" => $total_topics,
 		"NUMBER_OF_USERS" => $total_users,
 		"START_DATE" => $start_date,
-		"POSTS_PER_DAY" => $posts_per_day,
+		"MYSQL_VERSION" => $mysql_version,
+		"PHP_VERSION" => phpversion(),
+      	"POSTS_PER_DAY" => $posts_per_day,
 		"TOPICS_PER_DAY" => $topics_per_day,
 		"USERS_PER_DAY" => $users_per_day,
 		"AVATAR_DIR_SIZE" => $avatar_dir_size,
 		"DB_SIZE" => $dbsize, 
-		"GZIP_COMPRESSION" => ( $board_config['gzip_compress'] ) ? $lang['ON'] : $lang['OFF'])
-	);
+		"GZIP_COMPRESSION" => ( $board_config['gzip_compress'] ) ? $lang['ON'] : $lang['OFF'],
+		"L_PHP_VERSION" => $lang['Version_of_PHP'],
+		"L_MYSQL_VERSION" => $lang['Version_of_MySQL'],
+	));
 	//
 	// End forum statistics
 	//
