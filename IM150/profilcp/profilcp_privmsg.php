@@ -198,7 +198,9 @@ if ( $mode == 'read' )
 			WHERE user_id = " . $userdata['user_id'];
 		if ( !$db->sql_query($sql) )
 		{
-			message_die(GENERAL_ERROR, 'Could not update private message read status for user', '', __LINE__, __FILE__, $sql);
+			//V: ignore this error. This means we messed up the unread count at some point.
+			//   the error only happens if user_xxx - 1 would be negative. We can safely ignore it and stay at 0.
+			//message_die(GENERAL_ERROR, 'Could not update private message read status for user', '', __LINE__, __FILE__, $sql);
 		}
 
 		$sql = "UPDATE " . PRIVMSGS_TABLE . "
