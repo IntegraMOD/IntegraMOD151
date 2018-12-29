@@ -446,6 +446,11 @@ function jr_admin_make_admin_link()
 {
 	global $lang, $userdata, $phpEx;
 	
+	if ($userdata['user_id'] == ANONYMOUS)
+	{ // disallow admin access for anonymous, always
+		return '';
+	}
+
 	$jr_admin_userdata = jr_admin_get_user_info($userdata['user_id']);
 	
 	if (!empty($jr_admin_userdata['user_jr_admin']) || $userdata['user_level'] == ADMIN)
