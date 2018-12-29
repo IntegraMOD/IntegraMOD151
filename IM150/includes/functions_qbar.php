@@ -106,7 +106,7 @@ function qbar_get_tree()
 	if (!empty($tree)) return;
 
 	// is categories hierarchy v 2 installed ?
-	$cat_hierarchy = function_exists(get_auth_keys);
+	$cat_hierarchy = function_exists('get_auth_keys');
 
 	// fill the tree
 	if (!$cat_hierarchy)
