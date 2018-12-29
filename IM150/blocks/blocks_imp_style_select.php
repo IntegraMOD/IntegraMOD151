@@ -32,22 +32,21 @@ if(!function_exists('imp_style_select_block_func'))
 		global $template, $lang, $board_config, $phpbb_root_path, $phpEx, $db, $portal_config, $var_cache;
 		global $_GET, $_POST, $_COOKIE;
 		// BEGIN Style Select MOD
+		// Security update 02 September 2006 B starts// 
 		if(isset($_POST['STYLE_URL']) || (int)isset($_GET['STYLE_URL']))
 		{
-			(int)$style = urldecode((isset($_POST['STYLE_URL'])) ? $_POST['STYLE_URL'] : (int)$_GET['STYLE_URL']);
-			if ( intval($style) == 0 )
+			$style = (int)urldecode((isset($_POST['STYLE_URL'])) ? $_POST['STYLE_URL'] : (int)$_GET['STYLE_URL']);
+			if($style == 0) { die('Hacking attempt'); }
+			$sql = "SELECT themes_id
+					FROM " . THEMES_TABLE . "
+					WHERE style_name = '$style'";
+			if( ($result = $db->sql_query($sql)) && ($row = $db->sql_fetchrow($result)) )
 			{
-				$sql = "SELECT themes_id
-						FROM " . THEMES_TABLE . "
-						WHERE style_name = '$style'";
-				if( ($result = $db->sql_query($sql)) && ($row = $db->sql_fetchrow($result)) )
-				{
-					$style = $row['themes_id'];
-				}
-				else
-				{
-					message_die(GENERAL_ERROR, "Hacking attempt... Could not find style name $style.");
-				}
+				$style = $row['themes_id'];
+			}
+			else
+			{
+				message_die(GENERAL_ERROR, "Hacking attempt... Could not find style name $style.");
 			}
 		}
 		elseif (isset($_COOKIE[$board_config['cookie_name'] . '_style']) )
@@ -64,7 +63,7 @@ if(!function_exists('imp_style_select_block_func'))
 		$sql = "SELECT t.themes_id, tdi.* 
 				FROM ( " . THEMES_TABLE . "  t
 				LEFT JOIN " . THEMES_SELECT_INFO_TABLE . " tdi ON t.themes_id = tdi.themes_id )
-				WHERE t.themes_id = " . $style;
+				WHERE t.themes_id = " . intval($style);
 		if( ($result = $db->sql_query($sql, false, "theme_info_{$style}_")))
 		{
 			if ($row = $db->sql_fetchrow($result))
