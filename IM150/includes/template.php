@@ -1067,10 +1067,15 @@ class Template {
 	 */
 	function assign_var_from_handle($varname, $handle)
 	{
+		$this->vars[$varname] = $this->render_to_string($handle);
+		return $res;
+	}
+
+	function render_to_string($handle)
+	{
 		ob_start();
 		$res = $this->pparse($handle);
-		$this->vars[$varname] = ob_get_clean();
-		return $res;
+		return ob_get_clean();
 	}
 
 	/**
