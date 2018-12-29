@@ -29,7 +29,7 @@
 <td width="100%" class="row2"><table width="100%" border="0" cellspacing="1" cellpadding="0">
 	<tr>
 		<td class="genmed">{POST_SUBJECT}</td>
-		<td align="right">{QUOTE_PM_IMG}{EDIT_PM_IMG}</td>
+		<td align="right">{QUOTE_PM_IMG}{EDIT_PM_IMG} {REPORT_PM_IMG}</td>
 	</tr>
 </table></td>
 </tr>

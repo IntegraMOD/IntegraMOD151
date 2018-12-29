@@ -118,7 +118,8 @@ if ( $user_id )
 $is_auth = array(); 
 $is_auth = auth(AUTH_ALL, $forum_id, $userdata);
 
-if ($mode=="report_reset") 
+// V: Disable the report/reset reset features. Advanced Report Hack handles that.
+if ($mode=="report_reset" && false)
 { 
 	if (! $is_auth['auth_mod'])
 		message_die(GENERAL_ERROR, $lang['Not_Authorised']);
@@ -137,7 +138,7 @@ if ($mode=="report_reset")
 	sprintf($lang['Click_return_viewtopic'], "<a href=\"" . append_sid("viewtopic.$phpEx?p=".$post_id."#".$post_id). "\">", "</a>")); 
 
 } else 
-if ($mode=="report") 
+if ($mode=="report" && false)
 { 
 	if (!$is_auth['auth_bluecard']) 
 	{

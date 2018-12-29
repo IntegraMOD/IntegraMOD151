@@ -608,6 +608,54 @@ else
 }
 
 //
+// Report list link
+//
+if (empty($gen_simple_header) && ($userdata['user_level'] == ADMIN || (!$board_config['report_list_admin'] && $userdata['user_level'] == MOD)))
+{
+	include_once($phpbb_root_path . "includes/functions_report.$phpEx");
+	
+	$report_count = report_count_obtain();
+	if ($report_count > 0)
+	{
+		$template->assign_block_vars('switch_report_list_new', array());
+		
+		$report_list = $lang['Reports'];
+		$report_list .= ($report_count == 1) ? $lang['New_report'] : sprintf($lang['New_reports'], $report_count);
+	}
+	else
+	{
+		$template->assign_block_vars('switch_report_list', array());
+		
+		$report_list = $lang['Reports'];
+	}
+}
+else
+{
+	$report_list = '';
+}
+
+//
+// Get report general module and create report link
+//
+if (empty($gen_simple_header))
+{
+	include_once($phpbb_root_path . "includes/functions_report.$phpEx");
+	$report_general = report_modules('name', 'report_general');
+	
+	if ($report_general && $report_general->auth_check('auth_write'))
+	{
+		$template->assign_block_vars('switch_report_general', array(
+			'HAS_SEPARATOR' => $report_list != '', // todo $images['menu_delimeter']?
+		));
+		
+		$template->assign_vars(array(
+			'U_WRITE_REPORT' => append_sid("report.$phpEx?mode=" . $report_general->mode),
+			'L_WRITE_REPORT' => $report_general->lang['Write_report'])
+		);
+	}
+}
+
+//
 // Generate HTML required for Mozilla Navigation bar
 //
 if (!isset($nav_links))
@@ -967,6 +1015,7 @@ $template->assign_vars(array(
 	'PRIVATE_MESSAGE_INFO' => $l_privmsgs_text,
 	'PRIVATE_MESSAGE_INFO_UNREAD' => $l_privmsgs_text_unread,
 	'PRIVATE_MESSAGE_NEW_FLAG' => $s_privmsg_new,
+	'REPORT_LIST' => $report_list,
 	'USER_EXTRA' => ($userdata['user_extra']) ? '0' : '1',
 	'L_NO_CLICK' => $lang['No_r_click'],
 	'L_NO_COPY' => $lang['No_copy'],
@@ -1037,6 +1086,7 @@ $template->assign_vars(array(
 	'U_VIEWONLINE' => append_sid('viewonline.'.$phpEx),
 	'U_LOGIN_LOGOUT' => append_sid($u_login_logout),
 	'U_GROUP_CP' => append_sid('groupcp.'.$phpEx),
+	'U_REPORT_LIST' => append_sid("report.$phpEx"),
 	// Mighty Gorgon - Full Album Pack - BEGIN
 	'L_ALBUM' => $lang['Album'],
 	'U_ALBUM' => append_sid('album.'.$phpEx),

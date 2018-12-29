@@ -31,7 +31,6 @@ $lang['Postings_popup_message'] = 'Display number of posts for each poster in th
 $lang['Tell_Friend'] = "Send as e-mail to a Friend";
 $lang['Topic_info'] = 'Topic Status';
 $lang['Topic_info_updated'] = 'Topic Status updated.';
-
 $lang['Give_G_card']='Re-activate user';
 $lang['Give_Y_card']='Give user warning #%d'; 
 $lang['Give_R_card']='Ban this user now'; 
@@ -42,6 +41,7 @@ $lang['Yellow_card_warning'] = 'You are about to give the user:%s a yellow card,
 $lang['Green_card_warning'] = 'You are about to give the user:%s a green card, this will unban the user, are you sure ?'; 
 $lang['Blue_card_warning'] = 'You are about to give the post a blue card, this will alert the moderators about this post, Are you sure you want to Alert the moderators about this post ?'; 
 $lang['Clear_blue_card_warning'] = 'You are about to reset the blue card counter for this post, Do you wan to continue ?';
+
 $lang['Banned'] = 'Currently banned';//shown beside users post, if user are banned
 $lang['Quick_Reply'] = 'Quick Reply';
 $lang['Quote_last'] = 'Quote the last message';

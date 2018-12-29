@@ -1167,12 +1167,12 @@ $lang['Smilies'] = 'Smilies';
 
 // End add - Fully integrated shoutbox MOD
 
-$lang['Message_preview'] = 'Message Received Preview';
-
 // Start add - Yellow card admin MOD
 $lang['Rules_ban_can'] = 'You <b>can</b> ban other users in this forum'; 
 $lang['Rules_greencard_can'] = 'You <b>can</b> un-ban users in this forum'; 
 $lang['Rules_bluecard_can'] = 'You <b>can</b> report post to moderators in this forum'; 
+
+$lang['Message_preview'] = 'Message Received Preview';
 
 $lang['Viewing_RULES'] = 'Viewing the Rules';
 $lang['Forum_Rules'] = 'Rules';
@@ -1486,4 +1486,66 @@ $lang['FT_admin'] = 'Administrator';
 // That's all, Folks!
 // -------------------------------------------------
 
-?>
+//
+// Reports
+//
+$lang['Reports'] = 'Reports';
+$lang['New_report'] = ' (one open)';
+$lang['New_reports'] = ' (%d open)';
+$lang['Report_index'] = 'Index';
+$lang['Statistics'] = 'Statistics';
+$lang['Statistic'] = 'Statistic';
+$lang['Value'] = 'Value';
+$lang['Report_count'] = 'Current report count';
+$lang['Report_modules_count'] = 'Report modules count';
+$lang['Report_hack_count'] = 'Overall report count';
+$lang['Deleted_reports'] = 'Reports suggested for deletion';
+$lang['Report_type'] = 'Report type';
+$lang['Report_by'] = 'by';
+$lang['No_reports'] = 'No reports';
+$lang['Invert_select'] = 'Invert selection';
+$lang['Reported_by'] = 'Reported by';
+$lang['Reported_time'] = 'Reported on';
+$lang['Status'] = 'Status';
+$lang['Last_changed_by'] = 'Last changed by';
+$lang['Changes'] = 'Changes';
+$lang['Report_change_text'] = 'Marked as "%1$s" by %2$s on %3$s.';
+$lang['Report_change_text_comment'] = 'Marked as "%1$s" by %2$s on %3$s:<br />%4$s';
+$lang['Report_change_delete_text'] = 'Suggested for deletion by %1$s on %2$s.';
+$lang['Action'] = 'Action';
+$lang['Report_mark'] = 'Mark as';
+$lang['Open_reports'] = 'Offene Meldungen';
+$lang['No_reports_found'] = 'No matching reports found.';
+$lang['No_reports_selected'] = 'No reports were selected.';
+$lang['Report_not_exists'] = 'The selected report doesn\'t exist.';
+$lang['Report_not_supported'] = 'This feature isn\'t supported.';
+$lang['Click_return_report'] = '%sClick here%s to return to the report.';
+$lang['Click_return_report_list'] = '%sClick here%s to return to the report list.';
+
+$lang['Report_status'] = array(
+	REPORT_NEW => 'new',
+	REPORT_OPEN => 'open',
+	REPORT_IN_PROCESS => 'in process',
+	REPORT_CLEARED => 'cleared',
+	REPORT_DELETE => 'suggested for deletion');
+
+$lang['Reason'] = 'Reason';
+$lang['Report_subject'] = 'Subject';
+$lang['Report_title_empty'] = 'You have to enter a title of the report.';
+$lang['Report_desc_empty'] = 'You have to enter a message.';
+$lang['Report_inserted'] = 'The report was sent to the team.';
+
+$lang['Change_report'] = 'Change report';
+$lang['Change_reports'] = 'Change reports';
+$lang['Change_report_explain'] = 'Are you sure you want to change the status of the selected report?';
+$lang['Change_reports_explain'] = 'Are you sure you want to change the status of the selected reports?';
+$lang['Comment'] = 'Comment';
+$lang['Report_changed'] = 'The status of the selected report was changed.';
+$lang['Reports_changed'] = 'The status of the selected reports was changed.';
+
+$lang['Delete_report'] = 'Delete report';
+$lang['Delete_reports'] = 'Delete reports';
+$lang['Delete_report_explain'] = 'Are you sure you want to delete the selected report?';
+$lang['Delete_reports_explain'] = 'Are you sure you want to delete the selected reports?';
+$lang['Report_deleted'] = 'The selected report was deleted.';
+$lang['Reports_deleted'] = 'The selected reports were deleted.';

@@ -467,6 +467,36 @@ $attachment_mod['pm']->duplicate_attachment_pm($privmsg['privmsgs_attachment'], 
 		$l_box_name = $lang['Sent'];
 	}
 
+
+	//
+	// Get report privmsg module and create report links
+	//
+	if ($folder == 'inbox')
+	{
+		include_once($phpbb_root_path . "includes/functions_report.$phpEx");
+		$report_privmsg = report_modules('name', 'report_privmsg');
+		
+		if ($report_privmsg && $report_privmsg->auth_check('auth_write'))
+		{
+			if ($privmsg['privmsgs_reported'])
+			{
+				$report_img = '<img src="' . $images['icon_reported'] . '" alt="' . $report_privmsg->lang['Duplicate_report'] . '" title="' . $report_privmsg->lang['Duplicate_report'] . '" border="0" />';
+				$report = $report_privmsg->lang['Duplicate_report'];
+			}
+			else
+			{
+				$temp_url = append_sid("report.$phpEx?mode=" . $report_privmsg->mode . "&amp;id=$privmsg_id");
+				$report_img = '<a href="' . $temp_url . '"><img src="' . $images['icon_report'] . '" alt="' . $report_privmsg->lang['Write_report'] . '" title="' . $report_privmsg->lang['Write_report'] . '" border="0" /></a>';
+				$report = '<a href="' . $temp_url . '">' . $report_privmsg->lang['Write_report'] . '</a>';
+			}
+			
+			$template->assign_vars(array(
+				'REPORT_PM_IMG' => $report_img,
+				'REPORT_PM' => $report)
+			);
+		}
+	}
+
 	$s_hidden_fields = '<input type="hidden" name="mark[]" value="' . $privmsgs_id . '" />';
 
 	$page_title = $lang['Read_pm'];

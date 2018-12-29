@@ -173,6 +173,14 @@ $qbar_maps = array(
 								'internal' 		=> true,
 								'auth_logged' 	=> 1,
 							),
+						'Reports' => array(
+								'shortcut' 		=> 'a',
+								'explain' 		=> 'a',
+								'use_value' 	=> true,
+								'url' 			=> 'a',
+								'internal' 		=> true,
+								'php_function' => 'report_integrate_with_qbar',
+							),
 					),
 	),
 	

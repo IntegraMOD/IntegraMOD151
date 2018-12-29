@@ -24,6 +24,7 @@ $lang['Max_bookmarks_links'] = 'Maximum bookmarks sent in link-tag';
 $lang['Max_bookmarks_links_explain'] = 'Number of bookmarks maximal send in link-tag at the beginning of the document. This information is e.g. used by Mozilla. Enter 0 to disable this function.';
 $lang['Max_user_bancard'] = 'Maximum number of warnings';
 $lang['Max_user_bancard_explain'] = 'If a user gets more yellow cards than this limit, the user will be banned'; 
+// TODO remove blue cards (Advanced Report Hack handles that)
 $lang['Bluecard_limit'] = 'Interval of bluecard'; 
 $lang['Bluecard_limit_explain'] = 'Notify the moderators again for every x bluecards given to a post'; 
 $lang['Bluecard_limit_2'] = 'Limit of bluecard'; 

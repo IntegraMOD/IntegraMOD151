@@ -987,4 +987,69 @@ $lang['Admin_photo_explain'] = 'Here you can see and delete the user\'s current 
 // That's all Folks!
 // -------------------------------------------------
 
-?>
+//
+// Reports
+//
+$lang['Report_config_explain'] = 'On this page you can change the general configuration of the report feature.';
+$lang['Report_subject_auth'] = 'Individual permissions';
+$lang['Report_subject_auth_explain'] = 'If this setting is enabled, moderators can only view reports they can edit. For example a post report will be hidden if the user isn\'t a moderator of the forum the post belongs to.';
+$lang['Report_modules_cache'] = 'Cache modules in a file';
+$lang['Report_modules_cache_explain'] = 'Note: The cache directory must be set to <em>CHMOD 777</em> (full write permissions).';
+$lang['Report_notify'] = 'Email notification';
+$lang['Report_notify_change'] = 'on status changes and new reports';
+$lang['Report_notify_new'] = 'on new reports';
+$lang['Report_list_admin'] = 'Admin-only report list';
+$lang['Report_new_window'] = 'Open subjects in a new window';
+$lang['Report_new_window_explain'] = 'This setting also affects direct links to the reports at the view topic page.';
+$lang['Report_config_updated'] = 'The configuration was updated.';
+$lang['Click_return_report_config'] = 'Click %sHere%s to return to the configuration.';
+
+$lang['Modules_reasons'] = 'Modules &amp; Reasons';
+$lang['Report_admin_explain'] = 'On this page you can install new report modules and edit or uninstall currently installed modules. In addition you can set up predefined reasons for every report module.';
+$lang['Report_module'] = 'Report module';
+$lang['Installed_modules'] = 'Installed modules';
+$lang['No_modules_installed'] = 'No modules installed';
+$lang['Reasons'] = 'Reasons (%d)';
+$lang['Sync'] = 'Sync';
+$lang['Uninstall'] = 'Uninstall';
+$lang['Install2'] = 'Install';
+$lang['Inactive_modules'] = 'Inactive modules';
+$lang['No_modules_inactive'] = 'No inactive modules';
+$lang['Report_module_not_exists'] = 'The selected module doesn\'t exist.';
+$lang['Click_return_report_admin'] = 'Click %sHere%s to return to the Modules &amp; Reasons administration.';
+
+$lang['Back_modules'] = 'Back to the modules';
+$lang['Report_reason'] = 'Report reason';
+$lang['No_reasons'] = 'No reasons for this module';
+$lang['Add_reason'] = 'Add reason';
+$lang['Edit_reason'] = 'Edit reason';
+$lang['Reason_desc_explain'] = 'If the description matches with a language variable, the variable will be used instead.';
+$lang['Reason_desc_empty'] = 'You have to enter a report reason.';
+$lang['Report_reason_added'] = 'The report reason was added.';
+$lang['Report_reason_edited'] = 'The report reason was edited.';
+$lang['Delete_reason'] = 'Delete reason';
+$lang['Delete_report_reason_explain'] = 'Are you sure you want to delete the selected report reason?';
+$lang['Report_reason_deleted'] = 'The report reason was deleted.';
+$lang['Report_reason_not_exists'] = 'The selected report reason doesn\'t exist.';
+$lang['Click_return_report_reasons'] = 'Click %sHere%s to return to the report reasons administration.';
+
+$lang['Report_module_synced'] = 'The module was synced.';
+
+$lang['Uninstall_report_module'] = 'Uninstall module';
+$lang['Uninstall_report_module_explain'] = 'Are you sure you want to uninstall the selected report module? <br />Note: All reports in the module will be deleted, too.';
+$lang['Report_module_uninstalled'] = 'The module was uninstalled.';
+
+$lang['Install_report_module'] = 'Install module';
+$lang['Edit_report_module'] = 'Edit module';
+$lang['Report_prune'] = 'Prune reports';
+$lang['Report_prune_explain'] = 'Cleared reports and reports marked for deletion will be deleted automatically after <var>x</var> days. Set to <em>zero</em> to disable the feature.';
+$lang['Write'] = 'Write';
+$lang['Report_auth'] = array(
+	REPORT_AUTH_USER => 'Users',
+	REPORT_AUTH_MOD => 'Moderators',
+	REPORT_AUTH_CONFIRM => 'Moderators (after confirmation)',
+	REPORT_AUTH_ADMIN => 'Administrators');
+$lang['Report_auth_notify_explain'] = 'Moderators will only be notified if they can view and edit the report.';
+$lang['Report_auth_delete_explain'] = 'If you select <em>Moderators (after confirmation)</em>, deletions have to be confirmed by an administrator.';
+$lang['Report_module_installed'] = 'The module was installed.';
+$lang['Report_module_edited'] = 'The module was edited.';

@@ -482,11 +482,14 @@ $count_sql = (!$post_id) ? '' : ", COUNT(p2.post_id) AS prev_posts";
 
 $order_sql = (!$post_id) ? '' : "GROUP BY p.post_id, t.topic_id, t.topic_title, t.topic_status, t.topic_replies, t.topic_time, t.topic_type, t.topic_vote, t.topic_last_post_id, f.forum_name, f.forum_status, f.forum_id, f.auth_view, f.auth_read, f.auth_post, f.auth_reply, f.auth_edit, f.auth_delete, f.auth_sticky, f.auth_announce, f.auth_pollcreate, f.auth_vote, f.auth_attachments, f.auth_delayedpost, f.auth_ban, f.auth_greencard, f.auth_bluecard ORDER BY p.post_id ASC";
 
+//-- mod : advanced report hack
+// here we added
+//	, t.topic_last_post_id
 //-- mod : calendar --------------------------------------------------------------------------------
 // here we added
 //	, t.topic_first_post_id, t.topic_calendar_time, t.topic_calendar_duration
 //-- modify
-$sql = "SELECT t.topic_id, t.topic_title, t.topic_info, t.topic_status, t.topic_replies, t.topic_time, t.topic_type, t.topic_vote, t.topic_last_post_id, t.topic_first_post_id, t.topic_calendar_time, t.topic_calendar_duration, f.forum_name, f.forum_status, f.forum_id, f.auth_view, f.auth_read, f.auth_post, f.auth_reply, f.auth_edit, f.auth_delete, f.auth_sticky, f.auth_announce, f.auth_pollcreate, f.auth_vote, f.auth_attachments, f.auth_delayedpost, f.auth_ban, f.auth_greencard, f.auth_bluecard" . $count_sql . "
+$sql = "SELECT t.topic_id, t.topic_title, t.topic_info, t.topic_status, t.topic_replies, t.topic_time, t.topic_type, t.topic_vote, t.topic_last_post_id, t.topic_first_post_id, t.topic_first_post_id, t.topic_calendar_time, t.topic_calendar_duration, f.forum_name, f.forum_status, f.forum_id, f.auth_view, f.auth_read, f.auth_post, f.auth_reply, f.auth_edit, f.auth_delete, f.auth_sticky, f.auth_announce, f.auth_pollcreate, f.auth_vote, f.auth_attachments, f.auth_delayedpost, f.auth_ban, f.auth_greencard, f.auth_bluecard, t.topic_reported " . $count_sql . "
 	FROM " . TOPICS_TABLE . " t, " . FORUMS_TABLE . " f" . $join_sql_table . "
 	WHERE $join_sql
 		AND f.forum_id = t.forum_id
@@ -1102,6 +1105,36 @@ if ( $is_auth['auth_mod'] )
 //End Lo-Fi Mod
 
 //
+// Get report topic module and create report link
+//
+include_once($phpbb_root_path . "includes/functions_report.$phpEx");
+$report_topic = report_modules('name', 'report_topic');
+
+if ($report_topic && $report_topic->auth_check('auth_write'))
+{
+	if ($forum_topic_data['topic_reported'])
+	{
+		$report_auth = ($userdata['user_level'] == ADMIN || (!$board_config['report_list_admin'] && (!$board_config['report_subject_auth'] || $is_auth['auth_mod'])));
+		if ($report_topic->auth_check('auth_view') && $user_auth)
+		{
+			$target = ($board_config['report_new_window']) ? ' target="_blank"' : '';
+			$s_report_topic ='<a href="' . append_sid("report.$phpEx?mode=reported&amp;" . POST_CAT_URL . '=' . $report_topic->id . "&amp;id=$topic_id") . '"' . $target . '><img src="' . $images['topic_mod_reported'] . '" alt="' . $report_topic->lang['Duplicate_report'] . '" title="' . $report_topic->lang['Duplicate_report'] . '" border="0" /></a>&nbsp;';
+		}
+		else
+		{
+			$s_report_topic = '<img src="' . $images['topic_mod_reported'] . '" alt="' . $report_topic->lang['Duplicate_report'] . '" title="' . $report_topic->lang['Duplicate_report'] . '" border="0" />&nbsp;';
+		}
+	}
+	else
+	{
+		$s_report_topic = '<a href="' . append_sid("report.$phpEx?mode=" . $report_topic->mode . "&amp;id=$topic_id") . '"><img src="' . $images['topic_mod_report'] . '" alt="' . $report_topic->lang['Write_report'] . '" title="' . $report_topic->lang['Write_report'] . '" border="0" /></a>&nbsp;';
+	}
+	
+	$topic_mod .= $s_report_topic;
+	$template->assign_var('S_REPORT_TOPIC', $s_report_topic);
+}
+
+//
 // Topic watch information
 //
 $s_watching_topic = '';
@@ -1166,16 +1199,16 @@ if ( isset($_POST['submit_topic_info']) && trim($_POST['topic_info']) != '' && (
 		SET topic_info = '" . str_replace("\'", "''", $_POST['topic_info']) . "'
 		WHERE topic_id = $topic_id";
 	if ( !$db->sql_query($sql) )
-            {
+	{
 		message_die(GENERAL_ERROR, 'Could not update topic info.', '', __LINE__, __FILE__, $sql);
-            }
-            $message = $lang['Topic_info_updated'] . "<br /><br />" . sprintf($lang['Click_return_topic'], "<a href=\"" . append_sid("viewtopic.$phpEx?" . POST_TOPIC_URL . "=$topic_id") . "\">", "</a>") . "<br /><br />" . sprintf($lang['Click_return_forum'], "<a href=\"" . append_sid("viewforum.$phpEx?" . POST_FORUM_URL . "=$forum_id") . "\">", "</a>");
-            message_die(GENERAL_MESSAGE, $message);
+	}
+	$message = $lang['Topic_info_updated'] . "<br /><br />" . sprintf($lang['Click_return_topic'], "<a href=\"" . append_sid("viewtopic.$phpEx?" . POST_TOPIC_URL . "=$topic_id") . "\">", "</a>") . "<br /><br />" . sprintf($lang['Click_return_forum'], "<a href=\"" . append_sid("viewforum.$phpEx?" . POST_FORUM_URL . "=$forum_id") . "\">", "</a>");
+	message_die(GENERAL_MESSAGE, $message);
 }
 
 if($pagination != '' && isset($pagination_printertopic))
 {
-$pagination .= " &nbsp;<a href=\"viewtopic.$phpEx?". $pagination_printertopic. POST_TOPIC_URL . "=$topic_id&amp;postdays=$post_days&amp;postorder=$post_order&amp;". $pagination_highlight. "start=0&amp;finish_rel=-10000\" title=\"" . $lang['printertopic_cancel_pagination_desc'] . "\">:|&nbsp;|:</a>";
+	$pagination .= " &nbsp;<a href=\"viewtopic.$phpEx?". $pagination_printertopic. POST_TOPIC_URL . "=$topic_id&amp;postdays=$post_days&amp;postorder=$post_order&amp;". $pagination_highlight. "start=0&amp;finish_rel=-10000\" title=\"" . $lang['printertopic_cancel_pagination_desc'] . "\">:|&nbsp;|:</a>";
 }
 
 // Hide Buttons :: Added :: Start
@@ -1920,6 +1953,11 @@ if (!($postrow[0]['user_id'] == $userdata['user_id']))
 	}
 }
 //
+// Get report post module
+//
+include_once($phpbb_root_path . "includes/functions_report.$phpEx");
+$report_post = report_modules('name', 'report_post');
+//
 // Okay, let's do the loop, yeah come on baby let's do the loop
 // and it goes like this ...
 //
@@ -2060,7 +2098,40 @@ for($i = 0; $i < $total_posts; $i++)
 	}
 
 	if($poster_id != ANONYMOUS && $postrow[$i]['user_level'] != ADMIN) 
-	{ 
+	{
+		//
+		// Create report links (works as the Yellow Card mod's "blue card")
+		//
+		if ($report_post && $report_post->auth_check('auth_write'))
+		{
+			if ($postrow[$i]['post_reported'])
+			{
+				$report_auth = ($userdata['user_level'] == ADMIN || (!$board_config['report_list_admin'] && (!$board_config['report_subject_auth'] || $is_auth['auth_mod'])));
+				if ($report_post->auth_check('auth_view') && $report_auth)
+				{
+					$temp_url = append_sid("report.$phpEx?mode=reported&amp;" . POST_CAT_URL . '=' . $report_post->id . '&amp;id=' . $postrow[$i]['post_id']);
+					$target = ($board_config['report_new_window']) ? ' target="_blank"' : '';
+					$report_img = '<a href="' . $temp_url . '"' . $target . '><img src="' . $images['icon_reported'] . '" alt="' . $report_post->lang['Duplicate_report'] . '" title="' . $report_post->lang['Duplicate_report'] . '" border="0" /></a>';
+					$report = '<a href="' . $temp_url . '"' . $target . '>' . $report_post->lang['Duplicate_report'] . '</a>';
+				}
+				else
+				{
+					$report_img = '<img src="' . $images['icon_reported'] . '" alt="' . $report_post->lang['Duplicate_report'] . '" title="' . $report_post->lang['Duplicate_report'] . '" border="0" />';
+					$report = $report_post->lang['Duplicate_report'];
+				}
+			}
+			else
+			{
+				$temp_url = append_sid("report.$phpEx?mode=" . $report_post->mode . '&amp;id=' . $postrow[$i]['post_id']);
+				$report_img = '<a href="' . $temp_url . '"><img src="' . $images['icon_report'] . '" alt="' . $report_post->lang['Write_report'] . '" title="' . $report_post->lang['Write_report'] . '" border="0" /></a>';
+				$report = '<a href="' . $temp_url . '">' . $report_post->lang['Write_report'] . '</a>';
+			}
+		}
+		else
+		{
+			$report_img = $report = '';
+		}
+
 		$current_user = str_replace("'","\'",$postrow[$i]['username']);
         $user_warnings = $postrow[$i]['user_warnings']; 
         if ($is_auth['auth_greencard'] && $user_warnings) 
@@ -2071,7 +2142,6 @@ for($i = 0; $i < $total_posts; $i++)
 		{
 			$g_card_img = ''; 
 		}
-
 		if ($user_warnings<$board_config['max_user_bancard'] && $is_auth['auth_ban'] )
 		{ 
 			$y_card_img = ' <input type="image" name="warn" value="warn" onClick="return confirm(\''.sprintf($lang['Yellow_card_warning'],$current_user).'\')" src="'. $images['icon_y_card'] . '" class="ycard noi" title="' . sprintf($lang['Give_Y_card'],$user_warnings+1) . '" alt="" >'; 
@@ -2082,29 +2152,18 @@ for($i = 0; $i < $total_posts; $i++)
 			$y_card_img = '';
 			$r_card_img = ''; 
 		} 
-	} else
+	}
+	else
 	{
 		$card_img = '';
 		$g_card_img = '';
 		$y_card_img = '';
 		$r_card_img = '';
 	}
-
-		if ($is_auth['auth_bluecard']) 
-		{ 
-			if ($is_auth['auth_mod']) 
-			{ 
-				$b_card_img = (($postrow[$i]['post_bluecard'])) ? ' <input type="image" name="report_reset" value="report_reset" onClick="return confirm(\''.$lang['Clear_blue_card_warning'].'\')" src="'. $images['icon_bhot_card'] . '"  class="bhotcard noi" title="'. sprintf($lang['Clear_b_card'],$postrow[$i]['post_bluecard']) . '"  alt="">':' <input type="image" name="report" value="report" onClick="return confirm(\''.$lang['Blue_card_warning'].'\')" src="'. $images['icon_b_card'] . '" title="' . $lang['Give_b_card'] . '"alt="" class="bcard noi" >'; 
-			} 
-			else 
-			{ 
-				$b_card_img = ' <input type="image" name="report" value="report" onClick="return confirm(\''.$lang['Blue_card_warning'].'\')" src="'. $images['icon_b_card'] . '" class="bcard noi" title="' . $lang['Give_b_card'] . '" alt="" >';
-				
-			}
-		} else $b_card_img = '';
-
+	$b_card_img = ''; // TODO, $report and/or $report_img ?
 	// parse hidden filds if cards visible
 	$card_hidden = ($g_card_img || $r_card_img || $y_card_img || $b_card_img) ? '<input type="hidden" name="post_id" value="'. $postrow[$i]['post_id'].'">' :'';
+
 
 	$post_subject = ( $postrow[$i]['post_subject'] != '' ) ? $postrow[$i]['post_subject'] : '';
 
@@ -2478,12 +2537,6 @@ if ( $userdata['user_allowsignature'] != 2 && $board_config['sig_allow_font_size
 // 
 // End Approve_Mod Block : 11
 //
-    
-	/* Warning PCP :: Removed
-	if ($card_img)
-	{
-		$template->assign_block_vars('switch_card_image', array());
-	}*/
 	
 	$template->assign_block_vars('postrow', array(
 		'DOWNLOAD_POST' => append_sid("viewtopic.$phpEx?download=".$postrow[$i]['post_id']."&amp;".POST_TOPIC_URL."=".$topic_id),
@@ -2516,6 +2569,8 @@ if ( $userdata['user_allowsignature'] != 2 && $board_config['sig_allow_font_size
 		'IP' => $ip,
 		'DELETE_IMG' => $delpost_img,
 		'DELETE' => $delpost,
+		'REPORT_IMG' => $report_img,
+		'REPORT' => $report,
 		'USER_WARNINGS' => $user_warnings,
 		'CARD_IMG' => $card_img,
 		'CARD_HIDDEN_FIELDS' => $card_hidden,
@@ -2523,12 +2578,12 @@ if ( $userdata['user_allowsignature'] != 2 && $board_config['sig_allow_font_size
 
 		'L_MINI_POST_ALT' => $mini_post_alt,
 
-		'U_MINI_POST' => $mini_post_url,
 		'U_G_CARD' => $g_card_img, 
 		'U_Y_CARD' => $y_card_img, 
 		'U_R_CARD' => $r_card_img, 
 		'U_B_CARD' => $b_card_img,
 		'S_CARD' => append_sid("card.".$phpEx),
+		'U_MINI_POST' => $mini_post_url,
 		'U_POST_ID' => $postrow[$i]['post_id'])
 	);
 

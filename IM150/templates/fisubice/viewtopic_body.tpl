@@ -145,16 +145,16 @@ function addquote(post_id)
 
 					<div class="divTable">
 						<div class="divTableBody">
+							<div class="divTableRow">
 							<!-- Start add - Yellow card admin MOD -->
 							<form method="post" action="{postrow.S_CARD}">
 							<!-- End add - Yellow card admin MOD -->
-							<div class="divTableRow">
 								<div class="divTableCell postdetails"><a href="{postrow.U_MINI_POST}"><img src="{postrow.MINI_POST_IMG}" alt="{postrow.L_MINI_POST_ALT}" title="{postrow.L_MINI_POST_ALT}" /></a>{L_POSTED}: {postrow.POST_DATE}<br />{L_POST_SUBJECT}: {postrow.POST_SUBJECT}</div>
-								<div class="divTableCell" style="white-space:nowrap;">{postrow.QUOTE_IMG}{postrow.EDIT_IMG}{postrow.DELETE_IMG}<a class="icon_return_top" href="#top" title="{L_BACK_TO_TOP}"><img src="{ICON_UP_IMAGE}" alt="{L_BACK_TO_TOP}" title="{L_BACK_TO_TOP}" /></a>{postrow.IP_IMG}{postrow.U_R_CARD}{postrow.U_Y_CARD}{postrow.U_G_CARD}{postrow.U_B_CARD}{postrow.CARD_EXTRA_SPACE}{postrow.CARD_HIDDEN_FIELDS}</div>
-							</div>
+								<div class="divTableCell" style="white-space:nowrap;">{postrow.QUOTE_IMG}{postrow.EDIT_IMG}{postrow.DELETE_IMG} {postrow.U_R_CARD}{postrow.U_Y_CARD}{postrow.U_G_CARD}{postrow.U_B_CARD}{postrow.CARD_EXTRA_SPACE}{postrow.CARD_HIDDEN_FIELDS}{postrow.REPORT_IMG}<a class="icon_return_top" href="#top" title="{L_BACK_TO_TOP}"><img src="{ICON_UP_IMAGE}" alt="{L_BACK_TO_TOP}" title="{L_BACK_TO_TOP}" /></a>{postrow.IP_IMG}</div>
 							<!-- Start add - Yellow card admin MOD -->
 							</form>
 							<!-- End add - Yellow card admin MOD -->
+							</div>
 						</div>
 					</div>
 					<div class="divTable">

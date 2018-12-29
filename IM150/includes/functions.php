@@ -1696,7 +1696,6 @@ function message_die($msg_code, $msg_text = '', $msg_title = '', $err_line = '',
 	global $sub_template_key_image, $sub_templates;
 //-- fin mod : sub-template ------------------------------------------------------------------------
 	global $nav_separator; 
-	
 //+MOD: Fix message_die for multiple errors MOD
 	static $msg_history;
 	if( !isset($msg_history) )

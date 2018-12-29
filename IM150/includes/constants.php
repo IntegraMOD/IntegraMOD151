@@ -155,6 +155,13 @@ define('CTRACKER_FILECHK', $table_prefix . 'ctracker_filechk');
 define('CTRACKER_FILESCANNER', $table_prefix . 'ctracker_filescanner');
 define('CTRACKER_BACKUP', $table_prefix . 'ctracker_backup');
 // END CrackerTracker v5.x
+//-- mod : advanced report hack
+//-- add
+define('REPORTS_TABLE', $table_prefix.'reports');
+define('REPORTS_CHANGES_TABLE', $table_prefix.'reports_changes');
+define('REPORTS_MODULES_TABLE', $table_prefix.'reports_modules');
+define('REPORTS_REASONS_TABLE', $table_prefix.'reports_reasons');
+//-- fin mod : advanced report hack
 
 // ### Database Connection ###
 define('BEGIN_TRANSACTION', 1);
@@ -262,6 +269,13 @@ define('POST_USERS_URL', 'u');
 define('POST_POST_URL', 'p');
 define('POST_GROUPS_URL', 'g');
 
+//-- mod : advanced report hack
+//-- add
+define('POST_REPORT_URL', 'r');
+define('POST_REPORT_REASON_URL', 'r');
+//-- fin mod : advanced report hack
+
+
 // ### User Avatar Settings ###
 define('USER_AVATAR_NONE', 0);
 define('USER_AVATAR_UPLOAD', 1);
@@ -300,4 +314,25 @@ define('CATEGORIES_HIERARCHY_INSTALLED', true);
 
 define('THEMES_SELECT_INFO_TABLE', $table_prefix.'themes_select_info');
 
-?>
+//-- mod : advanced report hack
+//-- add
+// Report status constants
+define('REPORT_NEW', 0);
+define('REPORT_OPEN', 1);
+define('REPORT_IN_PROCESS', 2);
+define('REPORT_CLEARED', 3);
+define('REPORT_DELETE', 4);
+
+
+// Report authorisation constants
+define('REPORT_AUTH_USER', 0);
+define('REPORT_AUTH_MOD', 1);
+define('REPORT_AUTH_CONFIRM', 2);
+define('REPORT_AUTH_ADMIN', 3);
+
+
+// Report notification constants
+define('REPORT_NOTIFY_NEW', 1);
+define('REPORT_NOTIFY_CHANGE', 2);
+
+//-- fin mod : advanced report hack
