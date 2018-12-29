@@ -44,17 +44,17 @@ date_default_timezone_set(@date_default_timezone_get());
 // PHP5 with register_long_arrays off?
 if (@phpversion() >= '5.0.0' && (!@ini_get('register_long_arrays') || @ini_get('register_long_arrays') == '0' || strtolower(@ini_get('register_long_arrays')) == 'off'))
 {
-	$_POST = $_POST;
-	$_GET = $_GET;
-	$_SERVER = $_SERVER;
-	$_COOKIE = $_COOKIE;
-	$_ENV = $_ENV;
-	$_FILES = $_FILES;
+	$HTTP_POST_FILES = $_POST;
+	$HTTP_GET_FILES = $_GET;
+	$HTTP_SERVER_FILES = $_SERVER;
+	$HTTP_COOKIE_FILES = $_COOKIE;
+	$HTTP_ENV_FILES = $_ENV;
+	$HTTP_FILES_FILES = $_FILES;
 
 	// _SESSION is the only superglobal which is conditionally set
 	if (isset($_SESSION))
 	{
-		$_SESSION = $_SESSION;
+		$HTTP_SESSION_VARS = $_SESSION;
 	}
 }
 
