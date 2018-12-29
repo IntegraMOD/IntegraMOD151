@@ -521,6 +521,7 @@ function qbar_write()
 		'auth_admin'	=> 'num',
 		'auth_pm'		=> 'num',
 		'tree_id'		=> 'alpha',
+		'php_function'  => 'alpha',
 	);
 
 	$template->set_filenames(array(

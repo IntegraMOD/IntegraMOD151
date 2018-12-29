@@ -253,6 +253,7 @@ function select_field($import=false)
 						'AUTH_PM'			=> qbar_get_auth($field['auth_pm'], true),
 						'TREE_ID'			=> $field['tree_id'],
 						'TREE_TITLE'		=> qbar_get_tree_title($field['tree_id']),
+						'PHP_FUNCTION'		=> $field['php_function'],
 
 						'U_NAME'			=> $field['internal'] ? append_sid('../' . $field['url']) : $field['url'],
 						'U_EDIT'			=> append_sid("admin_qbar.$phpEx?panel=$i&field=$j&mode=edit"),
@@ -288,10 +289,18 @@ function select_field($import=false)
 						$template->assign_block_vars('qbar.field.switch_tree', array());
 					}
 
-					$line = !empty($field['auth_logged']) || !empty($field['auth_admin']) || !empty($field['auth_pm']);
+
+					$line = !empty($field['php_function']) || !empty($field['auth_logged']) || !empty($field['auth_admin']) || !empty($field['auth_pm']);
 					if ($line)
 					{
 						$cell = 0;
+						$template->assign_block_vars('qbar.field.line', array());
+					}
+					if (!empty($field['php_function']))
+					{
+						$template->assign_block_vars('qbar.field.line.has_php_function', array(
+							'NAME' => $field['php_function']
+						));
 						$template->assign_block_vars('qbar.field.line', array());
 					}
 					if (!empty($field['auth_logged']))
@@ -711,6 +720,7 @@ if (($mode == 'edit') && (!empty($field_id) || $create_field))
 		$field_auth_admin	= $qbar_maps[$qname]['fields'][$fname]['auth_admin'];
 		$field_auth_pm		= $qbar_maps[$qname]['fields'][$fname]['auth_pm'];
 		$field_tree_id		= $qbar_maps[$qname]['fields'][$fname]['tree_id'];
+		$field_php_function	= $qbar_maps[$qname]['fields'][$fname]['php_function'];
 	}
 
 	// get data from the formular
@@ -728,6 +738,8 @@ if (($mode == 'edit') && (!empty($field_id) || $create_field))
 	if (isset($_POST['auth_admin']))	$field_auth_admin	= intval($_POST['auth_admin']);
 	if (isset($_POST['auth_pm']))		$field_auth_pm		= intval($_POST['auth_pm']);
 	if (isset($_POST['tree_id']))		$field_tree_id		= trim(stripslashes($_POST['tree_id']));
+	if (isset($_POST['php_function']))	$field_php_function		= trim(stripslashes($_POST['php_function']));
+	// TODO check that PHP function starts with "qbar_function_"
 
 	// process the action
 	if ($import)
@@ -798,6 +810,7 @@ if (($mode == 'edit') && (!empty($field_id) || $create_field))
 					$field_auth_admin	= $qbar_maps[$from_qname]['fields'][$from_fname]['auth_admin'];
 					$field_auth_pm		= $qbar_maps[$from_qname]['fields'][$from_fname]['auth_pm'];
 					$field_tree_id		= $qbar_maps[$from_qname]['fields'][$from_fname]['tree_id'];
+					$field_php_function	= $qbar_maps[$from_qname]['fields'][$from_fname]['php_function'];
 
 					if (!empty($sav_mode) && !empty($qname))
 					{
@@ -814,6 +827,7 @@ if (($mode == 'edit') && (!empty($field_id) || $create_field))
 						$wfield['auth_admin']	= $field_auth_admin;
 						$wfield['auth_pm']		= $field_auth_pm;
 						$wfield['tree_id']		= $field_tree_id;
+						$wfield['php_function']		= $field_php_function;
 
 						$qbar_maps[$qname]['fields'][$field_name] = $wfield;
 					}
@@ -869,6 +883,7 @@ if (($mode == 'edit') && (!empty($field_id) || $create_field))
 			$s_hidden_fields .= '<input type="hidden" name="auth_admin" value="' . $field_auth_admin . '" />';
 			$s_hidden_fields .= '<input type="hidden" name="auth_pm" value="' . $field_auth_pm . '" />';
 			$s_hidden_fields .= '<input type="hidden" name="tree_id" value="' . $field_tree_id . '" />';
+			$s_hidden_fields .= '<input type="hidden" name="php_function" value="' . $field_php_function . '" />';
 			if ($create_field)
 			{
 				$s_hidden_fields .= '<input type="hidden" name="create_field" value="1" />';
@@ -960,6 +975,7 @@ if (($mode == 'edit') && (!empty($field_id) || $create_field))
 			$wfield['auth_admin']	= $field_auth_admin;
 			$wfield['auth_pm']		= $field_auth_pm;
 			$wfield['tree_id']		= $field_tree_id;
+			$wfield['php_function']	= $field_php_function;
 			if (!empty($field_id))
 			{
 				$wname = $qbar_keys[$panel_id][$field_id];
@@ -1081,6 +1097,7 @@ if (($mode == 'edit') && (!empty($field_id) || $create_field))
 
 			// value
 			$template->assign_vars(array(
+				'PHP_FUNCTION'			=> $field_php_function,
 				'NAME'					=> $field_name,
 				'SHORTCUT'				=> $field_shortcut,
 				'SHORTCUT_TR'			=> $shortcut_tr,

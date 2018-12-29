@@ -33,19 +33,24 @@ if (!empty($setmodules))
 	return;
 }
 
+define('CT_SECLEVEL', 'MEDIUM');
+$ct_ignorepvar = array('this_query');
+
 //
 // Let's set the root dir for phpBB
 //
+
 $phpbb_root_path = "./../";
 require($phpbb_root_path . 'extension.inc');
 require('./pagestart.' . $phpEx);
 include($phpbb_root_path . 'language/lang_' . $board_config['default_lang'] . '/lang_phpbbmyadmin.' . $phpEx);
 
 // Main Admin or not?
-if ($userdata['user_id'] != 2)
+if (get_user_level($userdata) != ADMIN_FOUNDER)
 {
 	exit();
 }
+
 
 // Going the powerful way here, using $file in links and not a literal text:
 $file = append_sid(basename(__FILE__));

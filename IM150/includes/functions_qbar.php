@@ -369,6 +369,11 @@ function qbar_display_qbars($display=false)
 					$ok = $tree['auth'][$fdata['tree_id']]['tree.auth_view'];
 				}
 
+				if (!empty($fdata['php_function']) && $ok)
+				{
+					$ok = function_exists($fdata['php_function']);
+				}
+
 				// check private messaging
 				if (($fdata['auth_pm'] == 1) && ($new_pms <= 0))
 				{
@@ -436,6 +441,7 @@ function qbar_display_qbars($display=false)
 					$options['mouseover'][]		= $mouseover;
 					$options['url'][]			= $url;
 					$options['window'][]		= $fdata['window'];
+					$options['php_function'][]	= $fdata['php_function'];
 				}
 			}
 
@@ -467,7 +473,7 @@ function qbar_display_qbars($display=false)
 						break;
 					case 'Nav2':
 						$qnav2['fields'][]			= $options;
-						$qnav2['in_table'][]		    = $qdata['in_table'];
+						$qnav2['in_table'][]		= $qdata['in_table'];
 						$qnav2['style'][]			= $qdata['style'];
 						$qnav2['sub_template'][] 	= $qdata['sub_template'];
 						$qnav2['cells'][]			= $qdata['cells'];
@@ -529,10 +535,10 @@ function qbar_display_qbars($display=false)
 			// display the qlist
 			$obj_count = count($qlist['fields']);
 			if($obj_count){
-			$template->set_filenames(array(
-				'_qlist' => 'qbar_qlist.tpl')
-			);
-		}
+				$template->set_filenames(array(
+					'_qlist' => 'qbar_qlist.tpl')
+				);
+			}
 		}
 		// display the object
 		for ($i=0; $i < $obj_count; $i++)
@@ -609,7 +615,23 @@ function qbar_display_qbars($display=false)
 				$wres = sprintf($wres, $icon . $fields['shortcut'][$j]);
 
 				// add to options
-				$options[] = $wres;
+				if (!empty($fields['php_function'][$j]))
+				{
+					$wres = call_user_func($fields['php_function'][$j], array(
+						'url' => $fields['url'][$j],
+						'icon' => $fields['icon'][$j],
+						'shortcut' => $fields['shortcut'][$j],
+						'mouseover' => $fields['mouseover'][$j],
+						'window' => $fields['window'][$j],
+						'wres' => $wres,
+					));
+				}
+
+
+				if (!empty(trim($wres)))
+				{
+					$options[] = $wres;
+				}
 			}
 
 			// send it to template
