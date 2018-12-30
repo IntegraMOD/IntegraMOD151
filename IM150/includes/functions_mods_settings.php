@@ -48,16 +48,17 @@ function init_board_config_key($key, $value, $force=false)
 {
 	global $db, $board_config;
 
-	$db->clear_cache('board_config');
 
 	if (!isset($board_config[$key]))
 	{
+		$db->clear_cache('board_config');
 		$board_config[$key] = $value;
 		$sql = "INSERT INTO " . CONFIG_TABLE . " (config_name,config_value) VALUES('$key','$value')";
 		if ( !$db->sql_query($sql) ) message_die(GENERAL_ERROR, 'Could not add key ' . $key . ' in config table', '', __LINE__, __FILE__, $sql);
 	}
 	else if ($force)
 	{
+		$db->clear_cache('board_config');
 		$board_config[$key] = $value;
 		$sql = "UPDATE " . CONFIG_TABLE . " SET config_value='$value' WHERE config_name='$key'";
 		if ( !$db->sql_query($sql) ) message_die(GENERAL_ERROR, 'Could not add key ' . $key . ' in config table', '', __LINE__, __FILE__, $sql);
