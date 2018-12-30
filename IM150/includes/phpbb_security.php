@@ -974,6 +974,12 @@
 		{
 		global $db;
 		
+		// V: limit how often this can happen. Clearing them once every 10 visits is largely more than enough.
+		if (rand(1, 10) != 1)
+		{
+			return;
+		}
+
 		$q = "SELECT COUNT(session_id) as num
 			  FROM ". SESSIONS_TABLE ."
 			  WHERE session_user_id <> '". ANONYMOUS ."'";
