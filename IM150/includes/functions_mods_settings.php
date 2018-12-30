@@ -48,6 +48,8 @@ function init_board_config_key($key, $value, $force=false)
 {
 	global $db, $board_config;
 
+	$db->clear_cache('board_config');
+
 	if (!isset($board_config[$key]))
 	{
 		$board_config[$key] = $value;
