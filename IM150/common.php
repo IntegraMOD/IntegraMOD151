@@ -255,7 +255,7 @@ $sql = "SELECT *
 	FROM " . CONFIG_TABLE;
 if( !($result = $db->sql_query($sql, false, 'board_config')) )
 {
-message_die(CRITICAL_ERROR, "Could not query config information", "", __LINE__, __FILE__, $sql);
+	message_die(CRITICAL_ERROR, "Could not query config information", "", __LINE__, __FILE__, $sql);
 }
 
 while ( $row = $db->sql_fetchrow($result) )

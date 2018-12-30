@@ -91,5 +91,3 @@ if (empty($no_page_header))
 	// needed in the calling script.
 	include('./page_header_admin.'.$phpEx);
 }
-
-?>

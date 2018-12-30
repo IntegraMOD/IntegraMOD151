@@ -13,7 +13,7 @@ $phpbb_root_path = './../';
 require($phpbb_root_path . 'extension.inc');
 $no_page_header = true;
 require("./pagestart.$phpEx");
-include($phpbb_root_path . "includes/functions_report.$phpEx");
+include_once($phpbb_root_path . "includes/functions_report.$phpEx");
 include($phpbb_root_path . "includes/functions_report_admin.$phpEx");
 
 $return_links = array(

@@ -27,6 +27,28 @@ if ( !defined('IN_PHPBB') )
 	exit;
 }
 
+// V: for now, this is merged with "pcp_output_warnings".
+//    it NEEDS TO BE a different field, because only admins can see 
+include_once($phpbb_root_path . "includes/functions_report.$phpEx");
+function pcp_output_advanced_report_hack($field_name, $view_userdata, $map_name='')
+{
+	global $phpbb_root_path, $phpEx, $template, $board_config;
+
+	$report_user = report_modules('name', 'report_user');
+
+	if ($report_user && $report_user->auth_check('auth_write'))
+	{
+		$template->set_filenames(array('report_pcp_template' => 'profilcp/report_body.tpl'));
+		$template->assign_block_vars('switch_report_user', array());
+		$template->assign_vars(array(
+			'U_REPORT_USER' => append_sid("report.$phpEx?mode=" . $report_user->mode . '&amp;id=' . $view_userdata['user_id']),
+			'L_REPORT_USER' => $report_user->lang['Write_report'])
+		);
+		return $template->render_to_string('report_pcp_template');
+	}
+	return '';
+}
+
 function pcp_output_warnings($field_name, $view_userdata, $map_name='')
 {
 	global $board_config, $images, $lang;
@@ -41,6 +63,7 @@ function pcp_output_warnings($field_name, $view_userdata, $map_name='')
 		}
 	}
 	$res = pcp_output_format($field_name, $txt, $img, $map_name);
+	$res .= pcp_output_advanced_report_hack($field_name, $view_userdata, $map_name);
 	return $res;
 }
 ?>
