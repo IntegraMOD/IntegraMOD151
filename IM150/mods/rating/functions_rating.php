@@ -33,7 +33,7 @@ function get_rating_config($idlist='')
 	$sql = 'SELECT config_id, num_value, text_value, input_type FROM '.RATING_CONFIG_TABLE;
 	$sql .= ( !empty($idlist) ) ? ' WHERE config_id IN ('.$idlist.')' : '';
 	$sql .= ' ORDER BY config_id';
-	if( !($result = $db->sql_query($sql)) )
+	if( !($result = $db->sql_query($sql, false, 'rating_config')) )
 	{
 		message_die(CRITICAL_ERROR, "Could not query rating configuration information", "", __LINE__, __FILE__, $sql);
 	}
