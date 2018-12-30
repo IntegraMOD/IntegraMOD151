@@ -499,6 +499,7 @@ if ($submit)
 			{
 				message_die(GENERAL_ERROR, 'Could not set shadow topic', '', __LINE__, __FILE__, $sql);
 			}
+			$db->clear_cache('topic_move_ids');
 		}
 		else
 		{

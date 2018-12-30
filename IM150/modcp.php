@@ -658,6 +658,7 @@ if ( sizeof($user_updated) )
 						{
 							message_die(GENERAL_ERROR, 'Could not insert shadow topic', '', __LINE__, __FILE__, $sql);
 						}
+						$db->clear_cache('topic_move_ids');
 					}
 
 					$sql = "UPDATE " . TOPICS_TABLE . " 

@@ -389,6 +389,12 @@ function pcp_output_panel($map_name, &$view_userdata) {
 //---------------------------------------------------------------------
 function pcp_get_values_list($field_name, $field_data, $map_name='')
 {
+	// V: hardcode which should be cached... This is ugly, it should be in $field_data
+	static $cache_fields = array(
+		'user_style',
+		'user_rank'
+	);
+
 	global $board_config, $phpbb_root_path, $phpEx, $lang, $images, $userdata, $db;
 	global $values_list, $tables_linked, $classes_fields, $user_maps, $user_fields;
 
@@ -506,7 +512,9 @@ function pcp_get_values_list($field_name, $field_data, $map_name='')
 			{
 				$sql .= "\n ORDER BY $sql_order";
 			}
-			if ( !($result = $db->sql_query($sql)) )
+			// V: this should be in $field_data
+			$cache_key = in_array($field_name, $cache_fields) ? "pcp_cache_$field_name" : null;
+			if ( !($result = $db->sql_query($sql, false, $cache_key)) )
 			{
 				message_die(GENERAL_ERROR, 'Could not read list informations', '', __LINE__, __FILE__, '<table><tr><td><span class="genmed"><pre>' . $sql . '</pre></span></td></tr></table>');
 			}
@@ -515,6 +523,7 @@ function pcp_get_values_list($field_name, $field_data, $map_name='')
 			{
 				$values[ $row['_list_key'] ] = array( 'txt' => $row['_list_txt'], 'img' => $row['_list_img'] );
 			}
+			$db->sql_freeresult($result);
 
 			// transfert in values
 			@reset($values);
