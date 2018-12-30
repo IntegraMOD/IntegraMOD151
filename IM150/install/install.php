@@ -242,11 +242,11 @@ set_time_limit(280);
 error_reporting(E_ERROR | E_WARNING | E_PARSE); // This will NOT report uninitialized variables
 if (function_exists('set_magic_quotes_runtime'))
 {
-  set_magic_quotes_runtime(0); // Disable magic_quotes_runtime
+  @set_magic_quotes_runtime(0); // Disable magic_quotes_runtime
 }
 
 // Slash data if it isn't slashed
-if (!get_magic_quotes_gpc())
+if (!function_exists('get_magic_quotes_gpc') || !get_magic_quotes_gpc())
 {
 	if (is_array($_GET))
 	{
@@ -870,6 +870,7 @@ else
 				$sql_query = $remove_remarks($sql_query);
 				$sql_query = split_sql_file($sql_query, $delimiter);
 
+				$db->clear_cache('');
 				for ($i = 0; $i < sizeof($sql_query); $i++)
 				{
 					if (trim($sql_query[$i]) != '')
