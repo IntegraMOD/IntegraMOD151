@@ -897,25 +897,77 @@ $time_now=time();
 $hour_now=create_date('Hi',$time_now,$board_config['board_timezone']);
 $date_now=create_date('Ymd',$time_now,$board_config['board_timezone']);
 $week_now=create_date('w',$time_now,$board_config['board_timezone']);
-$sql_level= ($userdata['user_id']==ANONYMOUS) ? ANONYMOUS : (($userdata['user_level']==ADMIN) ? MOD : (($userdata['user_level']==MOD) ? ADMIN : $userdata['user_level'])); 
-
-$banners=array();
-$sql = "SELECT banner_id, banner_name, banner_spot, banner_description, banner_forum, banner_type, banner_width, banner_height, banner_filter FROM ".BANNERS_TABLE ."
-	WHERE banner_active
-	AND IF(banner_level_type,IF(banner_level_type=1,".intval($sql_level)."<=banner_level,IF(banner_level_type=2,".intval($sql_level).">=banner_level,".intval($sql_level)."<>banner_level)),banner_level=".intval($sql_level).")
-	AND (banner_timetype=0 
-	OR (( $hour_now BETWEEN time_begin AND time_end) AND ((banner_timetype=2
-	OR (( $week_now BETWEEN date_begin AND date_end) AND banner_timetype=4)
-	OR (( $date_now BETWEEN date_begin AND date_end) AND banner_timetype=6)
-	)))) ORDER BY banner_spot,banner_weigth*SUBSTRING(RAND(),6,2) DESC";
-if ( !($result = $db->sql_query($sql)) )
+// V: fetch all banners now so we can cache the SQL, and we'll check which to use afterwards, in PHP
+$sql = "SELECT * FROM " . BANNERS_TABLE;
+if ( !($result = $db->sql_query($sql, false, "banner")) )
 {
 	message_die(GENERAL_ERROR, "Couldn't get banners data", "", __LINE__, __FILE__, $sql);
-} 
+}
+$banners = array();
+while ($possible_banner = $db->sql_fetchrow($result))
+{
+	if (!$possible_banner['banner_active'])
+	{
+		continue;
+	}
+	$hour_within = $hour_now < $possible_banner['time_begin'] || $hour_now > $possible_banner['time_end'];
+	$date_within = $date_now < $possible_banner['date_begin'] || $date_now > $possible_banner['date_end'];
+	$week_within = $week_now < $possible_banner['date_begin'] || $week_now > $possible_banner['date_end'];
+	switch ($possible_banner['banner_timetype'])
+	{
+		case 2:
+			if (!$hour_within)
+				continue;
 
-$banners = $db->sql_fetchrowset($result);
+		case 4:
+			if (!$date_within)
+				continue;
+
+		case 6:
+			if (!$week_within)
+				continue;
+
+		// case: 0: ;
+	}
+
+	// banner mod uses an ascending user_level system (in phpBB, mod = 2, admin = 1)
+	$banner_user_level = ANONYMOUS;
+	switch ($userdata['user_level'])
+	{
+		case USER:
+			$banner_user_level = 0;
+			break;
+		case MOD:
+			$banner_user_level = 1;
+			break;
+		case ADMIN:
+			$banner_user_level = 2;
+			break;
+	}
+
+	$banner_level = $possible_banner['banner_level'];
+	switch ($possible_banner['banner_level_type'])
+	{
+		case 0: // must be equal
+			if ($banner_level != $banner_user_level)
+				continue; // it's not, skip this row
+		case 1: // must be less or equal
+			if ($banner_level > $banner_user_level)
+				continue; // it's not, skip this row
+		case 2: // must be greater or equal
+			if ($banner_level < $banner_user_level)
+				continue; // it's not, skip this row
+		case 1: // must be unequal
+			if ($banner_level == $banner_user_level)
+				continue; // it's not, skip this row
+	}
+
+	// TODO implement banner_weight(?)
+
+	$banners[] = $possible_banner;
+}
 $db->sql_freeresult($result);
-
+shuffle($banners);
 $banner_count = count($banners);
 
 for ($i = 0; $i < $banner_count; $i++)

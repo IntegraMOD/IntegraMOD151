@@ -26,10 +26,13 @@ if ( !defined('IN_PHPBB') )
 }
 
 // Start add - Complete banner MOD
-if ($banner_show_list)
+// V: only update it 1/3 times, and increment it by 3 instead
+if ($banner_show_list && rand(1, 3) == 3)
 {
 	$banner_show_list['0'] = ($banner_show_list) ? ' ':'';
-	$sql = "UPDATE ".BANNERS_TABLE." SET banner_view=banner_view+1 WHERE banner_id IN ($banner_show_list)";
+	$sql = "UPDATE ".BANNERS_TABLE."
+	SET banner_view=banner_view+3
+	WHERE banner_id IN ($banner_show_list)";
 	if ( !($result = $db->sql_query($sql)) )
 	{
 		message_die(GENERAL_ERROR, "Couldn't update banners data", "", __LINE__, __FILE__, $sql);
