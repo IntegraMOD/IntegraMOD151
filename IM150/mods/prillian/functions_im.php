@@ -807,7 +807,7 @@ function get_prillian_config($no_err = false)
 	global $db, $lang;
 
 	$sql = 'SELECT * FROM ' . IM_CONFIG_TABLE;
-	$result = $db->sql_query($sql);
+	$result = $db->sql_query($sql, false, 'prillian_config');
 	if( !$result && !$no_err )
 	{
 		message_die(CRITICAL_ERROR, $lang['No_prill_config'], '', __LINE__, __FILE__, $sql);
@@ -822,6 +822,7 @@ function get_prillian_config($no_err = false)
 	{
 		$temp[$row['config_name']] = $row['config_value'];
 	}
+	$db->sql_freeresult($result);
 
 	return $temp;
 }
