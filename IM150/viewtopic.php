@@ -1319,9 +1319,8 @@ if ( !empty($forum_topic_data['topic_vote']) )
 
 $approve_mod = array();
 $approve_sql = "SELECT * FROM " . APPROVE_FORUMS_TABLE . " 
-	WHERE forum_id = " . intval($forum_id) . " 
-	LIMIT 0,1"; 
-if ( !($approve_result = $db->sql_query($approve_sql)) ) 
+	WHERE forum_id = " . intval($forum_id);
+if ( !($approve_result = $db->sql_query($approve_sql, false, "approve_forums")) ) 
 { 
 	message_die(GENERAL_ERROR, $lang['approve_posts_error_obtain'], '', __LINE__, __FILE__, $approve_sql); 
 } 
@@ -1332,8 +1331,8 @@ if ( $approve_row = $db->sql_fetchrow($approve_result) )
 		$approve_mod = $approve_row;
 		$approve_mod['enabled'] = true;
 	}
-
 }
+$db->sql_freeresult($result);
 $approve_mod['moderators'] = explode('|', get_moderators_user_id_of_forum($forum_id));
 
 if ( $approve_mod['enabled'] )
