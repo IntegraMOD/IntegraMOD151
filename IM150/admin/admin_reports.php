@@ -731,7 +731,7 @@ else
 					'MODULE_EXPLAIN' => $module_info['explain'],
 					'REPORT_COUNT' => '-',
 					
-					'U_INSTALL' => append_sid("admin_reports.$phpEx?mode=install&amp;module=" . $report_module->data['module_name']))
+					'U_INSTALL' => append_sid("admin_reports.$phpEx?mode=install&amp;module_id=" . $report_module->data['module_name']))
 				);
 			}
 			
