@@ -273,7 +273,10 @@ if(!defined("SQL_LAYER"))
 		function sql_fetchrow($query_id = 0)
 		{
 			if ($query_id instanceof sql_cache_fake_key && $this->cached)
+			{
 				return count($this->cache) ? array_shift($this->cache) : false;
+			}
+
 			if ($query_id === false)
 			{
 				$query_id = $this->query_result;
@@ -295,10 +298,15 @@ if(!defined("SQL_LAYER"))
 		}
 
 		function sql_fetchrowset($query_id = 0)
-		{			
+		{
 			if ($query_id === false)
 			{
 				$query_id = $this->query_result;
+			}
+
+			if ($query_id instanceof sql_cache_fake_key && $this->cached)
+			{
+				return $this->cache;
 			}
 
 			if( $query_id )
