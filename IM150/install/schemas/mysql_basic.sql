@@ -1458,3 +1458,12 @@ UPDATE phpbb_config SET config_value = (SELECT group_id FROM phpbb_groups WHERE 
 UPDATE phpbb_users SET user_group_id = (SELECT group_id FROM phpbb_groups WHERE group_name = 'Group_registered');
 UPDATE phpbb_users SET user_group_id = (SELECT group_id FROM phpbb_groups WHERE group_name = 'Group_anonymous')
   WHERE user_id = -1;
+
+# -- Advanced Report Hack
+
+INSERT INTO phpbb_config (config_name, config_value) VALUES ('report_subject_auth', '1');
+INSERT INTO phpbb_config (config_name, config_value) VALUES ('report_modules_cache', '0');
+INSERT INTO phpbb_config (config_name, config_value) VALUES ('report_hack_count', '0');
+INSERT INTO phpbb_config (config_name, config_value) VALUES ('report_notify', '0');
+INSERT INTO phpbb_config (config_name, config_value) VALUES ('report_list_admin', '0');
+INSERT INTO phpbb_config (config_name, config_value) VALUES ('report_new_window', '0');

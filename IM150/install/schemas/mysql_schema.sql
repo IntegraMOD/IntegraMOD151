@@ -327,6 +327,7 @@ CREATE TABLE phpbb_approve_forums (
   approve_notify_topice tinyint(1) NOT NULL default '0',
   forum_hide_unapproved_topics tinyint(1) NOT NULL default '0',
   forum_hide_unapproved_posts tinyint(1) NOT NULL default '0',
+  topic_reported tinyint(1) NOT NULL default '0',
   PRIMARY KEY  (forum_id)
 );
 
@@ -1765,8 +1766,8 @@ CREATE TABLE phpbb_posts (
   post_edit_count smallint(5) unsigned NOT NULL default '0',
   post_attachment TINYINT(1) DEFAULT '0' NOT NULL,
   post_icon tinyint(2) default NULL,
-  post_bluecard tinyint(1) default NULL,
   rating_rank_id smallint(5) unsigned NOT NULL default '0',
+  post_reported tinyint(1) NOT NULL default '0',
   PRIMARY KEY  (post_id),
   KEY forum_id (forum_id),
   KEY topic_id (topic_id),
@@ -1809,6 +1810,7 @@ CREATE TABLE phpbb_privmsgs (
   privmsgs_enable_smilies tinyint(1) NOT NULL default '1',
   privmsgs_attach_sig tinyint(1) NOT NULL default '1',
   privmsgs_attachment TINYINT(1) DEFAULT '0' NOT NULL,
+  privmsgs_reported tinyint(1) NOT NULL default '0',
   PRIMARY KEY  (privmsgs_id),
   KEY privmsgs_from_userid (privmsgs_from_userid),
   KEY privmsgs_to_userid (privmsgs_to_userid)
@@ -2561,3 +2563,63 @@ CREATE TABLE phpbb_color (
 );
 
 # --------------------------------------------------------
+
+CREATE TABLE phpbb_reports (
+  report_id mediumint(8) UNSIGNED NOT NULL AUTO_INCREMENT,
+  user_id mediumint(8) NOT NULL,
+  report_time int(11) NOT NULL,
+  report_last_change mediumint(8) UNSIGNED DEFAULT NULL,
+  report_module_id mediumint(8) UNSIGNED NOT NULL,
+  report_status tinyint(1) NOT NULL,
+  report_reason_id mediumint(8) UNSIGNED NOT NULL,
+  report_subject int(11) NOT NULL,
+  report_subject_data mediumtext DEFAULT NULL,
+  report_title varchar(255) NOT NULL,
+  report_desc text NOT NULL,
+  PRIMARY KEY (report_id),
+  KEY user_id (user_id),
+  KEY report_time (report_time),
+  KEY report_type_id (report_module_id),
+  KEY report_status (report_status),
+  KEY report_reason_id (report_reason_id),
+  KEY report_subject (report_subject)
+);
+
+CREATE TABLE phpbb_reports_changes (
+  report_change_id mediumint(8) UNSIGNED NOT NULL AUTO_INCREMENT,
+  report_id mediumint(8) UNSIGNED NOT NULL,
+  user_id mediumint(8) NOT NULL,
+  report_change_time int(11) NOT NULL,
+  report_status tinyint(1) NOT NULL,
+  report_change_comment text NOT NULL,
+  PRIMARY KEY (report_change_id),
+  KEY report_id (report_id),
+  KEY user_id (user_id),
+  KEY report_change_time (report_change_time)
+);
+
+CREATE TABLE phpbb_reports_modules (
+  report_module_id mediumint(8) UNSIGNED NOT NULL AUTO_INCREMENT,
+  report_module_order mediumint(8) UNSIGNED NOT NULL,
+  report_module_notify tinyint(1) NOT NULL,
+  report_module_prune smallint(6) NOT NULL,
+  report_module_last_prune int(11) DEFAULT NULL,
+  report_module_name varchar(50) NOT NULL,
+  auth_write tinyint(1) NOT NULL,
+  auth_view tinyint(1) NOT NULL,
+  auth_notify tinyint(1) NOT NULL,
+  auth_delete tinyint(1) NOT NULL,
+  PRIMARY KEY (report_module_id),
+  KEY report_module_order (report_module_order),
+  KEY auth_view (auth_view)
+);
+
+CREATE TABLE phpbb_reports_reasons (
+  report_reason_id mediumint(8) UNSIGNED NOT NULL AUTO_INCREMENT,
+  report_module_id mediumint(8) UNSIGNED NOT NULL,
+  report_reason_order mediumint(8) UNSIGNED NOT NULL,
+  report_reason_desc varchar(255) NOT NULL,
+  PRIMARY KEY (report_reason_id),
+  KEY report_type_id (report_module_id),
+  KEY report_reason_order (report_reason_order)
+);
