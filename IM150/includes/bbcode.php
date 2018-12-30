@@ -1485,7 +1485,7 @@ function acronym_pass($message)
 		$orig = $repl = array();
 
 		$sql = 'SELECT * FROM ' . ACRONYMS_TABLE;
-		if( !$result = $db->sql_query($sql) )
+		if( !$result = $db->sql_query($sql, false, 'acronyms') )
 		{
 			message_die(GENERAL_ERROR, "Couldn't obtain acronyms data", "", __LINE__, __FILE__, $sql);
 		}
