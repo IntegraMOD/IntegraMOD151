@@ -47,7 +47,7 @@ if (@phpversion() >= '5.0.0' && (!@ini_get('register_long_arrays') || @ini_get('
 	$HTTP_POST_FILES = $_POST;
 	$HTTP_GET_FILES = $_GET;
 	$HTTP_SERVER_FILES = $_SERVER;
-	$HTTP_COOKIE_FILES = $_COOKIE;
+	$HTTP_COOKIE_VARS = $_COOKIE;
 	$HTTP_ENV_FILES = $_ENV;
 	$HTTP_FILES_FILES = $_FILES;
 
