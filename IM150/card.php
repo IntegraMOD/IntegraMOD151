@@ -91,7 +91,8 @@ if ( !( $post_id + $user_id ) )
 if ( empty($mode) )
 	message_die(GENERAL_ERROR, "No action specified", "", __LINE__, __FILE__,'mode="'.$mode.'"'); 
 
-$sql = 'SELECT DISTINCT forum_id, poster_id, post_bluecard FROM ' . POSTS_TABLE . ' WHERE post_id = "'.$post_id.'"'; 
+// V: bridge Advanced Report Hack here, by using its post_reported
+$sql = 'SELECT DISTINCT forum_id, poster_id, post_reported AS post_bluecard FROM ' . POSTS_TABLE . ' WHERE post_id = "'.$post_id.'"'; 
 if( !$result = $db->sql_query($sql) ) 
       message_die(GENERAL_ERROR, "Couldn't obtain forums information.", "", __LINE__, __FILE__, $sql); 
 $result = $db->sql_fetchrow($result);
@@ -131,7 +132,8 @@ if ($mode=="report_reset" && false)
 	$post_subject=$subject['post_subject'];
 	$forum_name=$subject['forum_name'];
 
- 	$sql = 'UPDATE ' . POSTS_TABLE . ' SET post_bluecard="0" WHERE post_id="'.$post_id.'"'; 
+	// V: Bridge Advanced Report Hack here
+ 	$sql = 'UPDATE ' . POSTS_TABLE . ' SET post_reported="0" WHERE post_id="'.$post_id.'"'; 
 		if( !$result = $db->sql_query($sql) ) 
 	      	message_die(GENERAL_ERROR, "Couldn't update blue card information"); 
 	message_die(GENERAL_MESSAGE, $lang['Post_reset']."<br /><br />". 
@@ -165,7 +167,8 @@ if ($mode=="report" && false)
 	$allready_reported= ($blue_card) ? $post_details['topic_id'] : '';
 
 	$blue_card++;
-	$sql = 'UPDATE ' . POSTS_TABLE . ' SET post_bluecard="'.$blue_card.'" WHERE post_id="'.$post_id.'"'; 
+	// V: Bridge Advanced Report Hack here
+	$sql = 'UPDATE ' . POSTS_TABLE . ' SET post_reported="'.$blue_card.'" WHERE post_id="'.$post_id.'"'; 
 	if( !$result = $db->sql_query($sql) ) 
 	     	message_die(GENERAL_ERROR, "Couldn't update blue card information"); 
 	// 

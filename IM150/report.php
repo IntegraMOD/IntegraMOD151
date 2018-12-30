@@ -67,6 +67,7 @@ if (isset($report_module))
 	//
 	// Check authorisation, check for duplicate reports
 	//
+	// V: TODO auth_bluecard
 	if (!$report_module->auth_check('auth_write'))
 	{
 		message_die(GENERAL_MESSAGE, $report_module->lang['Auth_write_error'] . $report_module->return_link($report_subject_id) . $return_links['index']);

@@ -22,7 +22,7 @@
 
 /*
 	$type's accepted (pre-pend with AUTH_):
-	VIEW, READ, POST, REPLY, EDIT, DELETE, STICKY, ANNOUNCE, VOTE, POLLCREATE,  BAN, GREENCARD, BLUECARD
+	VIEW, READ, POST, REPLY, EDIT, DELETE, STICKY, ANNOUNCE, VOTE, POLLCREATE, BAN, GREENCARD, BLUECARD
 
 	Possible options ($type/forum_id combinations):
 

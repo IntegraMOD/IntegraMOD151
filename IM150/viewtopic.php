@@ -489,7 +489,7 @@ $order_sql = (!$post_id) ? '' : "GROUP BY p.post_id, t.topic_id, t.topic_title, 
 // here we added
 //	, t.topic_first_post_id, t.topic_calendar_time, t.topic_calendar_duration
 //-- modify
-$sql = "SELECT t.topic_id, t.topic_title, t.topic_info, t.topic_status, t.topic_replies, t.topic_time, t.topic_type, t.topic_vote, t.topic_last_post_id, t.topic_first_post_id, t.topic_first_post_id, t.topic_calendar_time, t.topic_calendar_duration, f.forum_name, f.forum_status, f.forum_id, f.auth_view, f.auth_read, f.auth_post, f.auth_reply, f.auth_edit, f.auth_delete, f.auth_sticky, f.auth_announce, f.auth_pollcreate, f.auth_vote, f.auth_attachments, f.auth_delayedpost, f.auth_ban, f.auth_greencard, f.auth_bluecard, t.topic_reported " . $count_sql . "
+$sql = "SELECT t.topic_id, t.topic_title, t.topic_info, t.topic_status, t.topic_replies, t.topic_time, t.topic_type, t.topic_vote, t.topic_last_post_id, t.topic_first_post_id, t.topic_calendar_time, t.topic_calendar_duration, f.forum_name, f.forum_status, f.forum_id, f.auth_view, f.auth_read, f.auth_post, f.auth_reply, f.auth_edit, f.auth_delete, f.auth_sticky, f.auth_announce, f.auth_pollcreate, f.auth_vote, f.auth_attachments, f.auth_delayedpost, f.auth_ban, f.auth_greencard, f.auth_bluecard, t.topic_reported " . $count_sql . "
 	FROM " . TOPICS_TABLE . " t, " . FORUMS_TABLE . " f" . $join_sql_table . "
 	WHERE $join_sql
 		AND f.forum_id = t.forum_id
@@ -2101,8 +2101,8 @@ for($i = 0; $i < $total_posts; $i++)
 	{
 		//
 		// Create report links (works as the Yellow Card mod's "blue card")
-		//
-		if ($report_post && $report_post->auth_check('auth_write'))
+		// V: Integrate auth_bluecard here
+		if ($is_auth['auth_bluecard'] && $report_post && $report_post->auth_check('auth_write'))
 		{
 			if ($postrow[$i]['post_reported'])
 			{
