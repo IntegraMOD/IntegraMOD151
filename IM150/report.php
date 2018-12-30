@@ -29,6 +29,7 @@ else
 }
 
 $report_modules = report_modules();
+$db->clear_cache('advanced_report_hack'); // clear all cache every time we are on this page
 
 //
 // Check for matching report module

@@ -134,7 +134,7 @@ function report_modules_obtain()
 			report_module_name, auth_write, auth_view, auth_notify, auth_delete
 		FROM ' . REPORTS_MODULES_TABLE . '
 		ORDER BY report_module_order';
-	if (!$result = $db->sql_query($sql))
+	if (!$result = $db->sql_query($sql, false, 'advanced_report_hack_modules'))
 	{
 		message_die(GENERAL_ERROR, 'Could not obtain report modules', '', __LINE__, __FILE__, $sql);
 	}
@@ -712,12 +712,13 @@ function report_count_obtain()
 		$sql = 'SELECT COUNT(report_id) AS report_count
 			FROM ' . REPORTS_TABLE . '
 			WHERE report_status IN(' . REPORT_NEW . ', ' . REPORT_OPEN . ')';
-		if (!$result = $db->sql_query($sql))
+		if (!$result = $db->sql_query($sql, false, 'advanced_report_hack'))
 		{
 			message_die(GENERAL_ERROR, 'Could not obtain report count', '', __LINE__, __FILE__, $sql);
 		}
 		
-		$report_count = $db->sql_fetchfield('report_count', 0, $result);
+		$report_count_row = $db->sql_fetchrow($result);
+		$report_count = $report_count_row['report_count'];
 		$db->sql_freeresult($result);
 	}
 	else if ($userdata['user_level'] != MOD)
