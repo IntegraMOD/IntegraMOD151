@@ -226,11 +226,12 @@ $topic_id = $row['topic_id'];
 	
 	$q = "SELECT active, effected, install_date
 		  FROM ". $table_prefix ."force_read"; 
-	$r 			= $db -> sql_query($q); 
-	$row 		= $db -> sql_fetchrow($r); 
+	$r 			= $db->sql_query($q, false, "forcetoread_"); 
+	$row 		= $db->sql_fetchrow($r); 
 	$active		= $row['active'];
 	$effected	= $row['effected'];
 	$ins_date	= $row['install_date'];
+	$db->sql_freeresult($r);
 	
 	if ( ($active) && (strlen($ins_date) != 10) )
 		{
