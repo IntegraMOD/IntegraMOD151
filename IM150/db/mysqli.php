@@ -457,7 +457,10 @@ if(!defined("SQL_LAYER"))
 			global $phpbb_root_path;
 			$f = fopen($phpbb_root_path . 'cache/sql_' . $this->caching . '.php', 'w');
 			$data = var_export($this->cache, true);
-			@fputs($f, '<?php $set = ' . $data . '; ?>');
+			if (flock($f, LOCK_EX)) {
+				@fputs($f, '<?php $set = ' . $data . '; ?>');
+				flock($f, LOCK_UN);
+			}
 			@fclose($f);
 			@chmod($phpbb_root_path . 'cache/sql_' . $this->caching . '.php', 0777);
 			$this->caching = false;

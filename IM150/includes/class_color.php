@@ -171,7 +171,7 @@ class phpbb_color extends agcm_color
 			//
 			// Regenerate the cache if it is older then a day
 			//
-			if ( $gentime >= ( $cache_time - 86400 ) )
+			if ( ($cache_time - $gentime) > 86400 )
 			{
 				$this->data = $this->write_cache($sql, $cache_file, $cache_time);
 			}
@@ -217,7 +217,7 @@ class phpbb_color extends agcm_color
 			//
 			// Regenerate the cache if it is older then a day
 			//
-			if ( $gentime <= ( $cache_time - 86400 ) )
+			if ( ($cache_time - $gentime) > 86400 )
 			{
 				$this->color_data = $this->write_cache($sql, $cache_file, $cache_time);
 			}
@@ -263,9 +263,10 @@ $data = unserialize(\'%s\');
 
 		// output to file
 		$handle = @fopen($cache_file, 'w');
-		@flock($handle, LOCK_EX);
-		@fwrite($handle, sprintf($tpl_data, $cache_time, str_replace('\'', '\\\'', str_replace('\\', '\\\\', serialize($data)))));
-		@flock($handle, LOCK_UN);
+		if (@flock($handle, LOCK_EX)) {
+			@fwrite($handle, sprintf($tpl_data, $cache_time, str_replace('\'', '\\\'', str_replace('\\', '\\\\', serialize($data)))));
+			@flock($handle, LOCK_UN);
+		}
 		@fclose($handle);
 		@umask(0000);
 		@chmod($cache_file, 0644);
