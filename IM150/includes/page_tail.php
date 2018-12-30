@@ -169,7 +169,7 @@ if( $do_gzip_compress && headers_sent() != TRUE )
 	echo "\x1f\x8b\x08\x00\x00\x00\x00\x00";
 	echo $gzip_contents;
 }
-if (defined('DEBUG_SQL') && DEBUG_SQL)
+if (defined('DEBUG_SQL') && DEBUG_SQL && $db->queries)
 {
 	foreach ($db->queries as $query)
 	{
