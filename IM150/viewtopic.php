@@ -1158,12 +1158,13 @@ if ( $can_watch_topic )
 //
 if ( $userdata['session_logged_in'] )
 {
+	$is_bookmark_set = is_bookmark_set($topic_id);
 	$template->assign_block_vars('bookmark_state', array());
 	// Send vars to template
-	$bm_action = (is_bookmark_set($topic_id)) ? ("&amp;removebm=true") : ("&amp;setbm=true");
+	$bm_action = ($is_bookmark_set) ? ("&amp;removebm=true") : ("&amp;setbm=true");
 	$template->assign_vars(array(
-		'L_BOOKMARK_ACTION' => (is_bookmark_set($topic_id)) ? ($lang['Remove_Bookmark']) : ($lang['Set_Bookmark']),
-		'BM_IMG' => (is_bookmark_set($topic_id)) ? $images['bm_remove'] : $images['bm_add'],
+		'L_BOOKMARK_ACTION' => ($is_bookmark_set) ? ($lang['Remove_Bookmark']) : ($lang['Set_Bookmark']),
+		'BM_IMG' => ($is_bookmark_set) ? $images['bm_remove'] : $images['bm_add'],
 		'U_BOOKMARK_ACTION' => append_sid("viewtopic.$phpEx?" . POST_TOPIC_URL . "=$topic_id&amp;start=$start&amp;postdays=$post_days&amp;postorder=$post_order&amp;highlight=" . $_GET['highlight'] . $bm_action))
 	);
 }
