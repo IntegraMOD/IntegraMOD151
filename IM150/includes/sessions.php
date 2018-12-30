@@ -28,6 +28,9 @@ function session_begin($user_id, $user_ip, $page_id, $auto_create = 0, $enable_a
 	global $db, $board_config;
 	global $_COOKIE, $_GET, $SID;
 
+	// V: It's 2018, start using PHP sessions...
+	if(!session_id()) @session_start();
+
 	$cookiename = $board_config['cookie_name'];
 	$cookiepath = $board_config['cookie_path'];
 	$cookiedomain = $board_config['cookie_domain'];
@@ -57,7 +60,7 @@ function session_begin($user_id, $user_ip, $page_id, $auto_create = 0, $enable_a
 	if ( empty($session_id)  && strstr($_SERVER['HTTP_USER_AGENT'] ,'Googlebot') ) 
 	{ 
 		$sessiondata = ''; 
-		$session_id = md5(d8ef2eab); 
+		$session_id = md5('d8ef2eab'); 
 		$sessionmethod = SESSION_METHOD_GET; 
 	}
 
@@ -201,7 +204,7 @@ function session_begin($user_id, $user_ip, $page_id, $auto_create = 0, $enable_a
 		if ( !$db->sql_query($sql) )
 		{
 			$error = TRUE;
-			if (SQL_LAYER == "mysql" || SQL_LAYER == "mysql4")
+			if (SQL_LAYER == "mysql" || SQL_LAYER == "mysql4" || SQL_LAYER == "mysqli")
 			{
 			    $sql_error = $db->sql_error($result);
 			    if ($sql_error["code"] == 1114)
@@ -419,22 +422,29 @@ function session_pagestart($user_ip, $thispage_id)
 					// A little trick to reset session_admin on session re-usage
 					$update_admin = (!defined('IN_ADMIN') && $current_time - $userdata['session_time'] > ($board_config['session_length']+60)) ? ', session_admin = 0' : '';
 
-					$sql = "UPDATE " . SESSIONS_TABLE . " 
-						SET session_time = $current_time, session_page = $thispage_id$update_admin 
-						WHERE session_id = '" . $userdata['session_id'] . "'";
-					if ( !$db->sql_query($sql) )
+					// V: only update session table every 5 minutes
+					$session_update_throttle = 5 * 60;
+					if ($update_admin != '' || empty($_SESSION['session_time']) || ($current_time - $_SESSION['session_time']) > $session_update_throttle)
 					{
-						message_die(CRITICAL_ERROR, 'Error updating sessions table', '', __LINE__, __FILE__, $sql);
-					}
+						$_SESSION['session_time'] = $current_time;
 
-					if ( $userdata['user_id'] != ANONYMOUS )
-					{
-						$sql = "UPDATE " . USERS_TABLE . " 
-							SET user_session_time = $current_time, user_session_page = $thispage_id 
-							WHERE user_id = " . $userdata['user_id'];
+						$sql = "UPDATE " . SESSIONS_TABLE . " 
+							SET session_time = $current_time, session_page = $thispage_id$update_admin 
+							WHERE session_id = '" . $userdata['session_id'] . "'";
 						if ( !$db->sql_query($sql) )
 						{
 							message_die(CRITICAL_ERROR, 'Error updating sessions table', '', __LINE__, __FILE__, $sql);
+						}
+
+						if ( $userdata['user_id'] != ANONYMOUS )
+						{
+							$sql = "UPDATE " . USERS_TABLE . " 
+								SET user_session_time = $current_time, user_session_page = $thispage_id 
+								WHERE user_id = " . $userdata['user_id'];
+							if ( !$db->sql_query($sql) )
+							{
+								message_die(CRITICAL_ERROR, 'Error updating sessions table', '', __LINE__, __FILE__, $sql);
+							}
 						}
 					}
 
