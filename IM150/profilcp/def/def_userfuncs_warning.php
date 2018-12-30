@@ -36,10 +36,11 @@ function pcp_output_advanced_report_hack($field_name, $view_userdata, $map_name=
 
 	$report_user = report_modules('name', 'report_user');
 
-	if ($report_user && $report_user->auth_check('auth_write'))
+	$can_report = $report_user && $report_user->auth_check('auth_write');
+	$template->assign_var('CAN_REPORT', $can_report);
+	if ($can_report)
 	{
 		$template->set_filenames(array('report_pcp_template' => 'profilcp/report_body.tpl'));
-		$template->assign_block_vars('switch_report_user', array());
 		$template->assign_vars(array(
 			'U_REPORT_USER' => append_sid("report.$phpEx?mode=" . $report_user->mode . '&amp;id=' . $view_userdata['user_id']),
 			'L_REPORT_USER' => $report_user->lang['Write_report'])
