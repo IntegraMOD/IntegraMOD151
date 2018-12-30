@@ -818,6 +818,7 @@ function postProcessUserConfig(&$viewdata){
 }
 
 function getBuddyStatus(&$viewdata){
+	static $buddy_cache = array();
 	global $db, $userdata;
 	
 	$id = $userdata['user_id'];
@@ -828,13 +829,22 @@ function getBuddyStatus(&$viewdata){
 		$viewdata['user_ignore'] = 0;
 		$viewdata['user_visible'] = 1;
 	} else {
-		$sql = "SELECT * FROM " . BUDDYS_TABLE . " 
-				WHERE (user_id=$id AND buddy_id=$viewid) OR (user_id=$viewid AND buddy_id=$id)";
-		if ( !$result = $db->sql_query($sql) )
+		$cache_key = $id . "-" . $viewid;
+		if (isset($buddy_cache[$cache_key]))
 		{
-			message_die(GENERAL_ERROR, 'Could not get buddy information', '', __LINE__, __FILE__, $sql);	
+			$buddy_data = $buddy_cache[$cache_key];
 		}
-		while ( $row = $db->sql_fetchrow($result) )
+		else
+		{
+			$sql = "SELECT * FROM " . BUDDYS_TABLE . " 
+					WHERE (user_id=$id AND buddy_id=$viewid) OR (user_id=$viewid AND buddy_id=$id)";
+			if ( !$result = $db->sql_query($sql) )
+			{
+				message_die(GENERAL_ERROR, 'Could not get buddy information', '', __LINE__, __FILE__, $sql);	
+			}
+			$buddy_data = $buddy_cache[$cache_key] = $db->sql_fetchrowset($result);
+		}
+		foreach ($buddy_data as $row)
 		{
 			if ( $row['user_id'] != $viewid )
 			{
