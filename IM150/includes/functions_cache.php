@@ -235,7 +235,7 @@ function board_stats()
 function cache_tree_output()
 {
 	global $tree, $phpbb_root_path, $phpEx, $userdata;
-  # global $agcm_color;
+    global $agcm_color;
 
 	if ( !defined('CACHE_TREE') )
 	{
