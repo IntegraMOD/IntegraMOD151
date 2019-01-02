@@ -38,7 +38,7 @@ if (!empty($mode))
 {
 	foreach (array_keys($report_modules) as $report_module_id)
 	{
-		$report_module =& $report_modules[$report_module_id];
+		$report_module = $report_modules[$report_module_id];
 		
 		if (!empty($report_module->mode) && $mode == $report_module->mode)
 		{
@@ -68,7 +68,7 @@ if (isset($report_module))
 	//
 	// Check authorisation, check for duplicate reports
 	//
-	// V: TODO auth_bluecard
+	// V: TODO auth_bluecard; figure out a way to get forum_id
 	if (!$report_module->auth_check('auth_write'))
 	{
 		message_die(GENERAL_MESSAGE, $report_module->lang['Auth_write_error'] . $report_module->return_link($report_subject_id) . $return_links['index']);
@@ -459,7 +459,8 @@ else
 					
 					'ID' => $report['report_id'],
 					'TITLE' => $report['report_title'],
-					'AUTHOR' => $report['username'],
+					'AUTHOR' => $agcm_color->get_user_color($report['user_group_id'], $report['user_session_time'], $report['username']),
+
 					'TIME' => create_date($board_config['default_dateformat'], $report['report_time'], $board_config['board_timezone']))
 				);
 			}
@@ -555,7 +556,7 @@ else
 						'ROW_CLASS' => $report_status_classes[$report['report_status']],
 						'ID' => $report['report_id'],
 						'TITLE' => (strlen($report['report_title'] > 53)) ? substr($report['report_title'], 0, 50) . '...' : $report['report_title'],
-						'AUTHOR' => $report['username'],
+						'AUTHOR' => $agcm_color->get_user_color($report['user_group_id'], $report['user_session_time'], $report['username']),
 						'TIME' => create_date($board_config['default_dateformat'], $report['report_time'], $board_config['board_timezone']),
 						'STATUS' => $lang['Report_status'][$report['report_status']])
 					);
@@ -690,7 +691,7 @@ else
 					foreach ($report_changes as $report_change)
 					{
 						$u_report_change_user = append_sid("profile.$phpEx?mode=viewprofile&amp;" . POST_USERS_URL . '=' . $report_change['user_id']);
-						$report_change_user = '<a href="' . $u_report_change_user . '">' . $report_change['username'] . '</a>';
+						$report_change_user = '<a href="' . $u_report_change_user . '">' . $agcm_color->get_user_color($report_change['user_group_id'], $report_change['user_session_time'], $report_change['username']) . '</a>';
 						
 						$report_change_status = $lang['Report_status'][$report_change['report_status']];
 						$report_change_time = create_date($board_config['default_dateformat'], $report_change['report_change_time'], $board_config['board_timezone']);
@@ -716,7 +717,7 @@ else
 							
 							'ROW_CLASS' => $report_status_classes[$report_change['report_status']],
 							'STATUS' => $report_change_status,
-							'USER' => $report_change['username'],
+							'USER' => $agcm_color->get_user_color($report_change['user_group_id'], $report_change['user_session_time'], $report_change['username']),
 							'TIME' => $report_change_time,
 							
 							'TEXT' => $report_change_text)
@@ -730,8 +731,8 @@ else
 						'U_REPORT_LAST_CHANGE_USER' => $u_report_change_user,
 						
 						'REPORT_LAST_CHANGE_TIME' => $report_change_time,
-						'REPORT_LAST_CHANGE_USER' => $report_change['username'])
-					);
+						'REPORT_LAST_CHANGE_USER' => $agcm_color->get_user_color($report_change['user_group_id'], $report_change['user_session_time'], $report_change['username']),
+					));
 				}
 				
 				//
@@ -750,7 +751,7 @@ else
 					
 					'REPORT_TYPE' => $report_module->lang['Report_type'],
 					'REPORT_TITLE' => $report['report_title'],
-					'REPORT_AUTHOR' => $report['username'],
+					'REPORT_AUTHOR' => $agcm_color->get_user_color($report['user_group_id'], $report['user_session_time'], $report['username']),
 					'REPORT_TIME' => create_date($board_config['default_dateformat'], $report['report_time'], $board_config['board_timezone']),
 					'REPORT_DESC' => str_replace("\n", '<br />', $report['report_desc']),
 					'REPORT_STATUS' => $lang['Report_status'][$report['report_status']],
@@ -815,7 +816,7 @@ else
 							'ID' => $report['report_id'],
 							'TITLE' => $report['report_title'],
 							'TYPE' => $report_module->lang['Report_type'],
-							'AUTHOR' => $report['username'],
+							'AUTHOR' => $agcm_color->get_user_color($report['user_group_id'], $report['user_session_time'], $report['username']),
 							'TIME' => create_date($board_config['default_dateformat'], $report['report_time'], $board_config['board_timezone']),
 							'STATUS' => $lang['Report_status'][REPORT_DELETE])
 						);

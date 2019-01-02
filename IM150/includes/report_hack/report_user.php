@@ -31,9 +31,9 @@ class report_user extends report_module
 	//
 	function subject_obtain($report_subject)
 	{
-		global $db;
+		global $db, $agcm_color;
 		
-		$sql = 'SELECT username
+		$sql = 'SELECT username, user_group_id, user_session_time
 			FROM ' . USERS_TABLE . '
 			WHERE user_id = ' . (int) $report_subject;
 		if (!$result = $db->sql_query($sql))
@@ -44,7 +44,7 @@ class report_user extends report_module
 		$row = $db->sql_fetchrow($result);
 		$db->sql_freeresult($result);
 		
-		return ($row) ? $row['username'] : false;
+		return ($row) ? $agcm_color->get_user_color($row['user_group_id'], $row['user_session_time'], $row['username']) : false;
 	}
 }
 

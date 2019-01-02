@@ -327,7 +327,6 @@ CREATE TABLE phpbb_approve_forums (
   approve_notify_topice tinyint(1) NOT NULL default '0',
   forum_hide_unapproved_topics tinyint(1) NOT NULL default '0',
   forum_hide_unapproved_posts tinyint(1) NOT NULL default '0',
-  topic_reported tinyint(1) NOT NULL default '0',
   PRIMARY KEY  (forum_id)
 );
 
@@ -2285,6 +2284,7 @@ CREATE TABLE phpbb_topics (
   topic_icon tinyint(2) default NULL,
   topic_calendar_repeat varchar(4) default NULL,
   rating_rank_id smallint(5) unsigned NOT NULL default '0',
+  topic_reported tinyint(1) NOT NULL default '0',
   PRIMARY KEY  (topic_id),
   KEY forum_id (forum_id),
   KEY topic_moved_id (topic_moved_id),
