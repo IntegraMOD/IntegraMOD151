@@ -342,12 +342,12 @@ function cache_tree_output()
 		$s_usernames = '';
 		for ( $j = 0; $j < count($data['username']); $j++ )
 		{
-			$s_usernames .= ( empty($s_usernames) ? '' : ', ' ) . sprintf("'%s'", str_replace("'", "\'", $agcm_color->get_user_color($data['user_group_id'][$j], $data['user_session_time'][$j], $data['username'][$j])));
+			$s_usernames .= ( empty($s_usernames) ? '' : ', ' ) . sprintf("'%s'", str_replace("'", "\'", $data['username'][$j]));
 		}
 		$s_group_names = '';
 		for ( $j = 0; $j < count($data['group_name']); $j++ )
 		{
-			$s_group_names .= ( empty($s_group_names) ? '' : ', ' ) . sprintf("'%s'", str_replace("'", "\'", $agcm_color->get_user_color($data['user_group_id'][$j], $data['group_name'][$j])));
+			$s_group_names .= ( empty($s_group_names) ? '' : ', ' ) . sprintf("'%s'", str_replace("'", "\'", $data['group_name'][$j]));
 		}
 		$template->assign_block_vars('mods', array(
 			'IDX'			=> $idx,
@@ -367,9 +367,11 @@ function cache_tree_output()
 	$cache_path = 'includes/';
 	$cache_file = 'def_tree';
 	$handle = @fopen($phpbb_root_path . $cache_path . $cache_file . '.' . $phpEx, 'w');
-	@flock($fp, LOCK_EX);
-	@fwrite($handle, $res);
-	@flock($fp, LOCK_UN);
+	if (@flock($handle, LOCK_EX))
+	{
+		@fwrite($handle, $res);
+		@flock($handle, LOCK_UN);
+	}
 	@fclose($handle);
 	@umask(0000);
 	@chmod($phpbb_root_path . $cache_path . $cache_file . '.' . $phpEx, 0666);

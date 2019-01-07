@@ -257,14 +257,14 @@ if ( !defined(\'IN_PHPBB\') )
 }
 
 $gentime = %s;
-$data = unserialize(\'%s\');
+$data = %s;
 
 ?' . '>';
 
 		// output to file
 		$handle = @fopen($cache_file, 'w');
 		if (@flock($handle, LOCK_EX)) {
-			@fwrite($handle, sprintf($tpl_data, $cache_time, str_replace('\'', '\\\'', str_replace('\\', '\\\\', serialize($data)))));
+			@fwrite($handle, sprintf($tpl_data, $cache_time, var_export($data, true)));
 			@flock($handle, LOCK_UN);
 		}
 		@fclose($handle);
@@ -850,6 +850,20 @@ class agcm_color
 		}
 
 		return $user_color;
+	}
+
+	function get_group_color($id, $name = '')
+	{
+		if ( !empty($name) )
+		{
+			$group_color = '<span class="username_color_' . $id . '">'. $name .'</span>';
+		}
+		else
+		{
+			$group_color = 'username_color_' . $id;
+		}
+
+		return $group_color;
 	}
 }
 

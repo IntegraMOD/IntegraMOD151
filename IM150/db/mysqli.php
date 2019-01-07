@@ -160,7 +160,7 @@ if(!defined("SQL_LAYER"))
 				$qend = microtime(true);
 				$this->sql_time += $qend - $qstart;
 
-				if (defined('DEBUG_SQL') && DEBUG_SQL)
+				if (defined('DEV_MODE') && DEV_MODE)
 				{
 					ob_start();
 					debug_print_backtrace();
@@ -455,9 +455,10 @@ if(!defined("SQL_LAYER"))
 				return;
 			}
 			global $phpbb_root_path;
-			$f = fopen($phpbb_root_path . 'cache/sql_' . $this->caching . '.php', 'w');
+			$f = @fopen($phpbb_root_path . 'cache/sql_' . $this->caching . '.php', 'w');
 			$data = var_export($this->cache, true);
-			if (flock($f, LOCK_EX)) {
+			if (flock($f, LOCK_EX))
+			{
 				@fputs($f, '<?php $set = ' . $data . '; ?>');
 				flock($f, LOCK_UN);
 			}
@@ -468,8 +469,8 @@ if(!defined("SQL_LAYER"))
 			$this->cache = array();
 		}
 
-		  function clear_cache($prefix = '')
-		  {
+		function clear_cache($prefix = '')
+		{
 			global $phpbb_root_path;
 			$this->caching = false;
 			$this->cached = false;

@@ -1346,8 +1346,7 @@ function display_index($cur='Root')
 			}
 			for ( $i = 0; $i < count($data['group_id']); $i++ )
 			{
-				$forum_moderators[ $tree['id'][$idx] ][] = '<a href="' . append_sid("./groupcp.$phpEx?" . POST_GROUPS_URL . "=" . $data['group_id'][$i]) . '">' . $data['group_name'][$i] . '</a>';
-				$forum_moderators[ $tree['id'][$idx] ][] = '<a href="' . append_sid("./groupcp.$phpEx?" . POST_GROUPS_URL . "=" . $data['group_id'][$i]) . '">' . $data['group_name'][$i] . '</a>';
+				$forum_moderators[ $tree['id'][$idx] ][] = '<a href="' . append_sid("./groupcp.$phpEx?" . POST_GROUPS_URL . "=" . $data['group_id'][$i]) . '">' . $agcm_color->get_group_color($data['group_id'][$i], $data['group_name'][$i]) . '</a>';
 			}
 		}
 	}

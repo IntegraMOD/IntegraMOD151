@@ -355,7 +355,7 @@ include($phpbb_root_path . 'attach_mod/attachment_mod.'.$phpEx);
 include($phpbb_root_path . 'includes/class_color.' . $phpEx);
 //-- fin mod : Advanced Group Color Management ---------------------------------
 
-if(!defined("IN_LOGIN")){
+if(!defined("IN_LOGIN") && !defined('DEV_MODE')){
 	if ((file_exists('install')) && ( !file_exists('prill_install') )) {
 	message_die(GENERAL_MESSAGE, 'Please_remove_install');
 }

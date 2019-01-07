@@ -169,13 +169,13 @@ if( $do_gzip_compress && headers_sent() != TRUE )
 	echo "\x1f\x8b\x08\x00\x00\x00\x00\x00";
 	echo $gzip_contents;
 }
-if (defined('DEBUG_SQL') && DEBUG_SQL && $db->queries)
+if (defined('DEV_MODE') && DEV_MODE && $db->queries)
 {
 	foreach ($db->queries as $query)
 	{
 		list($sql, $bt, $time) = $query;
 		echo "Query: $time <pre>$sql
-			
-	" . str_replace($sql, '*QUERY*', $bt) . "</pre>";
+
+" . str_replace($sql, '*QUERY*', $bt) . "</pre>";
 	}
 }
