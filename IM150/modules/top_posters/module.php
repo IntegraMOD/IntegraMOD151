@@ -48,7 +48,7 @@ $row = $core->sql_fetchrow($result);
 
 $total_posts = $row['total_posts'];
 
-$sql = "SELECT user_id, username, user_posts 
+$sql = "SELECT user_id, username, user_posts, user_group_id, user_session_time
 FROM " . USERS_TABLE . "
 WHERE (user_id <> " . ANONYMOUS . " ) AND (user_posts > 0) 
 ORDER BY user_posts DESC 
@@ -59,9 +59,12 @@ $data = $core->sql_fetchrowset($result);
 $content->init_math('user_posts', $data[0]['user_posts'], $total_posts);
 $core->set_data($data);
 
+$core->make_global(array('$agcm_color'));
 $core->define_view('set_rows', array(
 	'$core->pre_defined()',
-	'$core->generate_link(append_sid($phpbb_root_path . \'profile.php?mode=viewprofile&u=\' . $core->data(\'user_id\')), $core->data(\'username\'), \'target="_blank"\')',
+	'$core->generate_link(append_sid($phpbb_root_path . \'profile.php?mode=viewprofile&u=\' . $core->data(\'user_id\')),
+			$agcm_color->get_user_color($core->data(\'user_group_id\'), $core->data(\'user_session_time\'), $core->data(\'username\')),
+		\'target="_blank"\')',
 	'$core->data(\'user_posts\')',
 	'$core->pre_defined()',
 	'$core->pre_defined()')

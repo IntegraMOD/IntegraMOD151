@@ -177,7 +177,8 @@ while ($iterate_index < $iterate_end)
 
 	// Set Language
 	$keys = array();
-	eval('$current_lang = $' . $core->current_module_name . ';');
+	$current_module_name = $core->current_module_name;
+	$current_lang = $$current_module_name; // V: removed eval here
 		
 	if (is_array($current_lang))
 	{

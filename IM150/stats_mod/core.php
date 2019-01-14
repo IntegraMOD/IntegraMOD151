@@ -142,9 +142,10 @@ class StatisticsCORE
 	}
 
 	// Make data global to the content class
+	// V: merge with previous array
 	function make_global($data)
 	{
-		$this->global_array = $data;
+		$this->global_array = array_merge($this->global_array, $data);
 	}
 
 	// Set and init the content class and define all namespaces

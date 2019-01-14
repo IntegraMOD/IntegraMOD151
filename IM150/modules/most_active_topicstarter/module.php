@@ -48,7 +48,7 @@ $row = $core->sql_fetchrow($result);
 
 $total_topics = $row['total_topics'];
 
-$sql = "SELECT u.user_id, u.username, COUNT(t.topic_poster) num_topics 
+$sql = "SELECT u.user_id, u.username, COUNT(t.topic_poster) num_topics, u.user_group_id, u.user_session_time
 FROM " . USERS_TABLE . " u, " . TOPICS_TABLE . " t 
 WHERE (t.topic_poster <> " . ANONYMOUS . ") AND (u.user_posts > 0) AND (u.user_id = t.topic_poster)
 GROUP BY t.topic_poster ORDER BY num_topics DESC 
@@ -60,9 +60,12 @@ $data = $core->sql_fetchrowset($result);
 $content->init_math('num_topics', $data[0]['num_topics'], $total_topics);
 $core->set_data($data);
 
+$core->make_global(array('$agcm_color'));
 $core->define_view('set_rows', array(
 	'$core->pre_defined()',
-	'$core->generate_link(append_sid($phpbb_root_path . \'profile.php?mode=viewprofile&u=\' . $core->data(\'user_id\')), $core->data(\'username\'), \'target="_blank"\')',
+	'$core->generate_link(append_sid($phpbb_root_path . \'profile.php?mode=viewprofile&u=\' . $core->data(\'user_id\')),
+			$agcm_color->get_user_color($core->data(\'user_group_id\'), $core->data(\'user_session_time\'), $core->data(\'username\')),
+		\'target="_blank"\')',
 	'$core->data(\'num_topics\')',
 	'$core->pre_defined()',
 	'$core->pre_defined()')

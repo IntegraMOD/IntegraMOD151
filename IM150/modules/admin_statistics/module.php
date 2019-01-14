@@ -47,7 +47,7 @@ $row = $core->sql_fetchrow($result);
 $total_posts = $row['post_total'];
 $total_topics = $row['topic_total'];
 
-$sql = "SELECT user_id, username
+$sql = "SELECT user_id, username, user_group_id, user_session_time
 FROM " . USERS_TABLE . "
 WHERE user_id <> " . ANONYMOUS . "
 ORDER BY user_id DESC

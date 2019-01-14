@@ -70,7 +70,7 @@ if ($time_thisweek > $time_today)
 	$time_thisweek -= 604800;
 }
 
-$sql = "SELECT u.user_id, u.username, count(u.user_id) as user_posts
+$sql = "SELECT u.user_id, u.username, count(u.user_id) as user_posts, u.user_group_id, u.user_session_time
 FROM " . USERS_TABLE . " u, " . POSTS_TABLE . " p 
 WHERE (u.user_id = p.poster_id) AND (p.post_time > '" . intval($time_thisweek) . "') AND (u.user_id <> " . ANONYMOUS . ")
 GROUP BY user_id, username
@@ -92,9 +92,12 @@ for ($i = 0; $i < $user_count; $i++)
 $content->init_math('user_posts', $user_data[0]['user_posts'], $total_posts_thisweek);
 $core->set_data($user_data);
 
+$core->make_global(array('$agcm_color'));
 $core->define_view('set_rows', array(
 	'$core->pre_defined()',
-	'$core->generate_link(append_sid($phpbb_root_path . \'profile.php?mode=viewprofile&u=\' . $core->data(\'user_id\')), $core->data(\'username\'), \'target="_blank"\')',
+	'$core->generate_link(append_sid($phpbb_root_path . \'profile.php?mode=viewprofile&u=\' . $core->data(\'user_id\')),
+			$agcm_color->get_user_color($core->data(\'user_group_id\'), $core->data(\'user_session_time\'), $core->data(\'username\')),
+		\'target="_blank"\')',
 	'$core->data(\'user_posts\')',
 	'$core->pre_defined()',
 	'$core->pre_defined()')
