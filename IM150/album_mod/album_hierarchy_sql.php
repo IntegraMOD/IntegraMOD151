@@ -1033,6 +1033,7 @@ function album_get_total_pics($cats)
 function album_build_picture_table($user_id, $cat_ids, $AH_thiscat, $auth_data, $start, $sort_method, $sort_order, $total_pics)
 {
 	global $board_config, $album_data, $album_config, $template, $lang, $phpEx, $userdata, $db;
+	global $agcm_color;
 
 	$viewmode = (strpos($cat_ids, ',') != false) ? '&mode=' . ALBUM_VIEW_ALL : '';
 
@@ -1064,7 +1065,7 @@ function album_build_picture_table($user_id, $cat_ids, $AH_thiscat, $auth_data, 
 		}
 	}
 
-	$sql = "SELECT ct.cat_user_id, ct.cat_id, ct.cat_title, p.pic_id, p.pic_title, p.pic_desc, p.pic_user_id, p.pic_user_ip, p.pic_username, p.pic_time, p.pic_cat_id, p.pic_view_count, p.pic_lock, p.pic_approval, u.user_id, u.username, r.rate_pic_id, AVG(r.rate_point) AS rating, COUNT(DISTINCT c.comment_id) AS comments, MAX(c.comment_id) as new_comment
+	$sql = "SELECT ct.cat_user_id, ct.cat_id, ct.cat_title, p.pic_id, p.pic_title, p.pic_desc, p.pic_user_id, p.pic_user_ip, p.pic_username, p.pic_time, p.pic_cat_id, p.pic_view_count, p.pic_lock, p.pic_approval, u.user_id, u.username, u.user_group_id, u.user_session_time, r.rate_pic_id, AVG(r.rate_point) AS rating, COUNT(DISTINCT c.comment_id) AS comments, MAX(c.comment_id) as new_comment
 			FROM ". ALBUM_TABLE ." AS p
 				LEFT JOIN ". USERS_TABLE ." AS u ON p.pic_user_id = u.user_id
 				LEFT JOIN ". ALBUM_RATE_TABLE ." AS r ON p.pic_id = r.rate_pic_id
@@ -1133,7 +1134,8 @@ function album_build_picture_table($user_id, $cat_ids, $AH_thiscat, $auth_data, 
 			}
 			else
 			{
-				$pic_poster = '<a href="'. append_sid("profile.$phpEx?mode=viewprofile&amp;". POST_USERS_URL .'='. $picrow[$j]['user_id']) .'">'. $picrow[$j]['username'] .'</a>';
+				$username = $agcm_color->get_user_color($picrow[$j]['user_group_id'], $picrow[$j]['user_session_time'], $picrow[$j]['username']);
+				$pic_poster = '<a href="'. append_sid("profile.$phpEx?mode=viewprofile&amp;". POST_USERS_URL .'='. $picrow[$j]['user_id']) .'">'. $username .'</a>';
 			}
 
 			$image_rating = ImageRating($picrow[$j]['rating']);
@@ -1224,7 +1226,7 @@ function album_build_picture_table($user_id, $cat_ids, $AH_thiscat, $auth_data, 
 // ------------------------------------------------------------------------
 function album_build_recent_pics($cats)
 {
-	global $db, $board_config, $album_config, $template, $lang, $phpEx;
+	global $db, $board_config, $album_config, $template, $lang, $phpEx, $agcm_color;
 
 	$album_show_pic_url = 'album_showpage.' . $phpEx;
 	$album_rate_pic_url = $album_show_pic_url;
@@ -1234,7 +1236,7 @@ function album_build_recent_pics($cats)
 
 	if ( !empty($cats) )
 	{
-		$sql = "SELECT p.pic_id, p.pic_title, p.pic_desc, p.pic_user_id, p.pic_user_ip, p.pic_username, p.pic_time, p.pic_cat_id, p.pic_view_count, u.user_id, u.username, r.rate_pic_id, AVG(r.rate_point) AS rating, COUNT(DISTINCT c.comment_id) AS comments
+		$sql = "SELECT p.pic_id, p.pic_title, p.pic_desc, p.pic_user_id, p.pic_user_ip, p.pic_username, p.pic_time, p.pic_cat_id, p.pic_view_count, u.user_id, u.username, u.user_group_id, u.user_session_time, r.rate_pic_id, AVG(r.rate_point) AS rating, COUNT(DISTINCT c.comment_id) AS comments
 				FROM ". ALBUM_TABLE ." AS p
 					LEFT JOIN ". USERS_TABLE ." AS u ON p.pic_user_id = u.user_id
 					LEFT JOIN ". ALBUM_CAT_TABLE ." AS ct ON p.pic_cat_id = ct.cat_id
@@ -1287,7 +1289,8 @@ function album_build_recent_pics($cats)
 					}
 					else
 					{
-						$recent_poster = '<a href="'. append_sid("profile.$phpEx?mode=viewprofile&amp;". POST_USERS_URL .'='. $recentrow[$j]['user_id']) .'">'. $recentrow[$j]['username'] .'</a>';
+						$username = $agcm_color->get_user_color($recentrow[$j]['user_group_id'], $recentrow[$j]['user_session_time'], $recentrow[$j]['username']);
+						$recent_poster = '<a href="'. append_sid("profile.$phpEx?mode=viewprofile&amp;". POST_USERS_URL .'='. $recentrow[$j]['user_id']) .'">'. $username .'</a>';
 					}
 
 					$image_rating = ImageRating($recentrow[$j]['rating']);
@@ -1333,7 +1336,7 @@ function album_build_recent_pics($cats)
 // ------------------------------------------------------------------------
 function album_build_highest_rated_pics($cats)
 {
-	global $db, $board_config, $album_config, $template, $lang, $phpEx;
+	global $db, $board_config, $album_config, $template, $lang, $phpEx, $agcm_color;
 
 	$album_show_pic_url = 'album_showpage.' . $phpEx;
 	$album_rate_pic_url = $album_show_pic_url;
@@ -1343,7 +1346,7 @@ function album_build_highest_rated_pics($cats)
 
 	if ( !empty($cats) )
 	{
-		$sql = "SELECT p.pic_id, p.pic_title, p.pic_desc, p.pic_user_id, p.pic_user_ip, p.pic_username, p.pic_time, p.pic_cat_id, p.pic_view_count, u.user_id, u.username, r.rate_pic_id, AVG(r.rate_point) AS rating, COUNT(DISTINCT c.comment_id) AS comments
+		$sql = "SELECT p.pic_id, p.pic_title, p.pic_desc, p.pic_user_id, p.pic_user_ip, p.pic_username, p.pic_time, p.pic_cat_id, p.pic_view_count, u.user_id, u.username, u.username, u.user_group_id, r.rate_pic_id, AVG(r.rate_point) AS rating, COUNT(DISTINCT c.comment_id) AS comments
 			FROM ". ALBUM_TABLE ." AS p
 				LEFT JOIN ". USERS_TABLE ." AS u ON p.pic_user_id = u.user_id
 				LEFT JOIN ". ALBUM_CAT_TABLE ." AS ct ON p.pic_cat_id = ct.cat_id
@@ -1400,7 +1403,8 @@ function album_build_highest_rated_pics($cats)
 					}
 					else
 					{
-						$highest_poster = '<a href="'. append_sid("profile.$phpEx?mode=viewprofile&". POST_USERS_URL .'='. $highestrow[$j]['user_id']) .'">'. $highestrow[$j]['username'] .'</a>';
+						$username = $agcm_color->get_user_color($highestrow[$j]['user_group_id'], $highestrow[$j]['user_session_time'], $highestrow[$j]['username']);
+						$highest_poster = '<a href="'. append_sid("profile.$phpEx?mode=viewprofile&". POST_USERS_URL .'='. $highestrow[$j]['user_id']) .'">'. $username .'</a>';
 					}
 
 					$image_rating = ImageRating($highestrow[$j]['rating']);
@@ -1456,7 +1460,7 @@ function album_build_highest_rated_pics($cats)
 // ------------------------------------------------------------------------
 function album_build_most_viewed_pics($cats)
 {
-	global $db, $board_config, $album_config, $template, $lang, $phpEx;
+	global $db, $board_config, $album_config, $template, $lang, $phpEx, $agcm_color;
 
 	$album_show_pic_url = 'album_showpage.' . $phpEx;
 	$album_rate_pic_url = $album_show_pic_url;
@@ -1465,7 +1469,7 @@ function album_build_most_viewed_pics($cats)
 
 	if ( !empty($cats) )
 	{
-		$sql = "SELECT p.pic_id, p.pic_title, p.pic_desc, p.pic_user_id, p.pic_user_ip, p.pic_username, p.pic_time, p.pic_cat_id, p.pic_view_count, u.user_id, u.username, r.rate_pic_id, AVG(r.rate_point) AS rating, COUNT(DISTINCT c.comment_id) AS comments
+		$sql = "SELECT p.pic_id, p.pic_title, p.pic_desc, p.pic_user_id, p.pic_user_ip, p.pic_username, p.pic_time, p.pic_cat_id, p.pic_view_count, u.user_id, u.username, u.user_group_id, u.user_session_time, r.rate_pic_id, AVG(r.rate_point) AS rating, COUNT(DISTINCT c.comment_id) AS comments
 			FROM ". ALBUM_TABLE ." AS p
 				LEFT JOIN ". USERS_TABLE ." AS u ON p.pic_user_id = u.user_id
 				LEFT JOIN ". ALBUM_CAT_TABLE ." AS ct ON p.pic_cat_id = ct.cat_id
@@ -1518,7 +1522,8 @@ function album_build_most_viewed_pics($cats)
 					}
 					else
 					{
-						$mostviewed_poster = '<a href="'. append_sid("profile.$phpEx?mode=viewprofile&". POST_USERS_URL .'='. $mostviewed[$j]['user_id']) .'">'. $mostviewed[$j]['username'] .'</a>';
+						$username = $agcm_color->get_user_color($mostviewed[$j]['user_group_id'], $mostviewed[$j]['user_session_time'], $mostviewed[$j]['username']);
+						$mostviewed_poster = '<a href="'. append_sid("profile.$phpEx?mode=viewprofile&". POST_USERS_URL .'='. $mostviewed[$j]['user_id']) .'">'. $username .'</a>';
 					}
 
 					$image_rating = ImageRating($mostviewed[$j]['rating']);
