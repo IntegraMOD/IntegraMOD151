@@ -11,7 +11,7 @@
 
 define('IN_PHPBB', 1);
 define('CT_SECLEVEL', 'MEDIUM');
-$ct_ignorepvar = array('addcategory');
+$ct_ignorepvar = array('addcategory', 'cat_name');
 
 if( !empty($setmodules) )
 {
@@ -37,12 +37,15 @@ $cat_id_other = (isset($_REQUEST['cat_id_other'])) ? intval($_REQUEST['cat_id_ot
 if($mode == 'do_add' && !$cat_id)
 {
 	$cat_id = $pafiledb->update_add_cat();
-	$mode = 'add';
 	if(!sizeof($pafiledb->error))
 	{
 		$pafiledb->_pafiledb();
 		$message = $lang['Catadded'] . '<br /><br />' . sprintf($lang['Click_return'], '<a href="' . append_sid("admin_pa_category.$phpEx") . '">', '</a>') . '<br /><br />' . sprintf($lang['Click_edit_permissions'], '<a href="' . append_sid("admin_pa_catauth.$phpEx?cat_id=$cat_id") . '">', '</a>');
 		message_die(GENERAL_MESSAGE, $message);
+	}
+	else
+	{
+		message_die(GENERAL_ERROR, implode("<br>", $pafiledb->error));
 	}
 }
 elseif($mode == 'do_add' && $cat_id)
@@ -53,6 +56,10 @@ elseif($mode == 'do_add' && $cat_id)
 		$pafiledb->_pafiledb();
 		$message = $lang['Catedited'] . '<br /><br />' . sprintf($lang['Click_return'], '<a href="' . append_sid("admin_pa_category.$phpEx") . '">', '</a>') . '<br /><br />' . sprintf($lang['Click_edit_permissions'], '<a href="' . append_sid("admin_pa_catauth.$phpEx?cat_id=$cat_id") . '">', '</a>');
 		message_die(GENERAL_MESSAGE, $message);
+	}
+	else
+	{
+		message_die(GENERAL_ERROR, implode("<br>", $pafiledb->error));
 	}
 }
 elseif($mode == 'do_delete')
@@ -80,15 +87,6 @@ elseif($mode == 'sync_all')
 
 switch($mode)
 {
-	case '':
-	case 'cat_order':
-	case 'sync':
-	default:
-		$template_file = 'admin/pa_admin_cat.tpl';
-		$l_title = $lang['Cat_manage_title'];
-		$l_explain = $lang['Catexplain'];
-		$s_hidden_fields = '<input type="hidden" name="mode" value="add">';
-		break;
 	case 'add':
 		$template_file = 'admin/pa_admin_cat_edit.tpl';
 		$l_title = $lang['Acattitle'];
@@ -107,6 +105,15 @@ switch($mode)
 		$l_title = $lang['Dcattitle'];
 		$l_explain = $lang['Catexplain'];
 		$s_hidden_fields = '<input type="hidden" name="mode" value="do_delete">';
+		break;
+	case '':
+	case 'cat_order':
+	case 'sync':
+	default:
+		$template_file = 'admin/pa_admin_cat.tpl';
+		$l_title = $lang['Cat_manage_title'];
+		$l_explain = $lang['Catexplain'];
+		$s_hidden_fields = '<input type="hidden" name="mode" value="add">';
 		break;
 }
 
