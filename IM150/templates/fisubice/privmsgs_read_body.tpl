@@ -55,6 +55,7 @@
 </td>
 </tr>
 </table>
+{TOPIC_REVIEW_BOX}
 <table width="100%" cellspacing="2" border="0" cellpadding="2">
 <tr>
 <td>{REPLY_PM_IMG}</td>

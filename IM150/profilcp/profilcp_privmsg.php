@@ -38,7 +38,6 @@ if( !empty($setmodules) )
 	pcp_set_sub_menu('privmsg', 'savebox', 40, __FILE__, 'Savebox', 'Savebox' );
 	return;
 }
-
 define('IN_PRIVMSG', true);
 define('IN_CASHMOD', true); 
 if ( defined('IN_CASHMOD') ) 
@@ -89,6 +88,20 @@ if ( isset($_POST[POST_POST_URL]) || isset($_GET[POST_POST_URL]) )
 {
 	$privmsg_id = ( isset($_POST[POST_POST_URL]) ) ? intval($_POST[POST_POST_URL]) : intval($_GET[POST_POST_URL]);
 }
+
+// View PM while replying MOD, By Manipe
+if ( isset($_POST['id_for_pm_track']) )
+{
+	$id_for_pm_track_post_vars = intval($_POST['id_for_pm_track']);
+}
+else
+{
+	$id_for_pm_track_post_vars = '';
+}
+
+// For a security
+$pm_track_id = TRUE;
+// View PM while replying MOD, By Manipe
 
 $error = FALSE;
 
@@ -175,6 +188,14 @@ if ( $mode == 'read' )
 	}
 
 	$privmsg_id = $privmsg['privmsgs_id'];
+// View PM while replying MOD, By Manipe
+	$id_for_pm_track = ($privmsg_id) ? $privmsg_id : $id_for_pm_track_post_vars;
+
+	if ($id_for_pm_track)
+	{
+		$pm_track_id = pm_track_all_history($id_for_pm_track, $privmsgs_id);
+	}
+// View PM while replying MOD, By Manipe
 
 	//
 	// Is this a new message in the inbox? If it is then save
@@ -221,8 +242,6 @@ if ( $mode == 'read' )
 			message_die(GENERAL_ERROR, 'Could not obtain sent message info for sendee', '', __LINE__, __FILE__, $sql);
 		}
 
-		$sql_priority = ( SQL_LAYER == 'mysql' ) ? 'LOW_PRIORITY' : '';
-
 		if ( $sent_info = $db->sql_fetchrow($result) )
 		{
 			if ($board_config['max_sentbox_privmsgs'] && $sent_info['sent_items'] >= $board_config['max_sentbox_privmsgs'])
@@ -238,14 +257,14 @@ if ( $mode == 'read' )
 				$old_privmsgs_id = $db->sql_fetchrow($result);
 				$old_privmsgs_id = $old_privmsgs_id['privmsgs_id'];
 			
-				$sql = "DELETE $sql_priority FROM " . PRIVMSGS_TABLE . " 
+				$sql = "DELETE FROM " . PRIVMSGS_TABLE . " 
 					WHERE privmsgs_id = $old_privmsgs_id";
 				if ( !$db->sql_query($sql) )
 				{
 					message_die(GENERAL_ERROR, 'Could not delete oldest privmsgs (sent)', '', __LINE__, __FILE__, $sql);
 				}
 
-				$sql = "DELETE $sql_priority FROM " . PRIVMSGS_TEXT_TABLE . " 
+				$sql = "DELETE FROM " . PRIVMSGS_TEXT_TABLE . " 
 					WHERE privmsgs_text_id = $old_privmsgs_id";
 				if ( !$db->sql_query($sql) )
 				{
@@ -253,14 +272,29 @@ if ( $mode == 'read' )
 				}
 			}
 		}
+// View PM while replying MOD, By Manipe
+		$privmsgs_track_id = $privmsg['privmsgs_track_id'];
+
+		if ( $privmsgs_track_id == 0 )
+		{
+			$sql = "UPDATE " . PRIVMSGS_TABLE . "
+				SET privmsgs_track_id = $privmsg_id 
+				WHERE privmsgs_id = $privmsg_id";
+			if ( !$db->sql_query($sql) )
+			{
+				message_die(GENERAL_ERROR, 'Could not update private message', '', __LINE__, __FILE__, $sql);
+			}
+			$privmsgs_track_id = $privmsg_id;
+		}
+// View PM while replying MOD, By Manipe
 
 		//
 		// This makes a copy of the post and stores it as a SENT message from the sendee. Perhaps
 		// not the most DB friendly way but a lot easier to manage, besides the admin will be able to
 		// set limits on numbers of storable posts for users ... hopefully!
 		//
-		$sql = "INSERT $sql_priority INTO " . PRIVMSGS_TABLE . " (privmsgs_type, privmsgs_subject, privmsgs_from_userid, privmsgs_to_userid, privmsgs_date, privmsgs_ip, privmsgs_enable_html, privmsgs_enable_bbcode, privmsgs_enable_smilies, privmsgs_attach_sig)
-			VALUES (" . PRIVMSGS_SENT_MAIL . ", '" . str_replace("\'", "''", addslashes($privmsg['privmsgs_subject'])) . "', " . $privmsg['privmsgs_from_userid'] . ", " . $privmsg['privmsgs_to_userid'] . ", " . $privmsg['privmsgs_date'] . ", '" . $privmsg['privmsgs_ip'] . "', " . $privmsg['privmsgs_enable_html'] . ", " . $privmsg['privmsgs_enable_bbcode'] . ", " . $privmsg['privmsgs_enable_smilies'] . ", " .  $privmsg['privmsgs_attach_sig'] . ")";
+		$sql = "INSERT INTO " . PRIVMSGS_TABLE . " (privmsgs_type, privmsgs_subject, privmsgs_from_userid, privmsgs_to_userid, privmsgs_date, privmsgs_ip, privmsgs_enable_html, privmsgs_enable_bbcode, privmsgs_enable_smilies, privmsgs_attach_sig, privmsgs_track_id)
+			VALUES (" . PRIVMSGS_SENT_MAIL . ", '" . str_replace("\'", "''", addslashes($privmsg['privmsgs_subject'])) . "', " . $privmsg['privmsgs_from_userid'] . ", " . $privmsg['privmsgs_to_userid'] . ", " . $privmsg['privmsgs_date'] . ", '" . $privmsg['privmsgs_ip'] . "', " . $privmsg['privmsgs_enable_html'] . ", " . $privmsg['privmsgs_enable_bbcode'] . ", " . $privmsg['privmsgs_enable_smilies'] . ", " .  $privmsg['privmsgs_attach_sig'] . ", " .  $privmsgs_track_id . ")";
 		if ( !$db->sql_query($sql) )
 		{
 			message_die(GENERAL_ERROR, 'Could not insert private message sent info', '', __LINE__, __FILE__, $sql);
@@ -268,7 +302,7 @@ if ( $mode == 'read' )
 
 		$privmsg_sent_id = $db->sql_nextid();
 
-		$sql = "INSERT $sql_priority INTO " . PRIVMSGS_TEXT_TABLE . " (privmsgs_text_id, privmsgs_bbcode_uid, privmsgs_text)
+		$sql = "INSERT INTO " . PRIVMSGS_TEXT_TABLE . " (privmsgs_text_id, privmsgs_bbcode_uid, privmsgs_text)
 			VALUES ($privmsg_sent_id, '" . $privmsg['privmsgs_bbcode_uid'] . "', '" . str_replace("\'", "''", addslashes($privmsg['privmsgs_text'])) . "')";
 		if ( !$db->sql_query($sql) )
 		{
@@ -886,8 +920,6 @@ else if ( $save && $mark_list && $folder != 'savebox' && $folder != 'outbox' )
 			message_die(GENERAL_ERROR, 'Could not obtain sent message info for sendee', '', __LINE__, __FILE__, $sql);
 		}
 
-		$sql_priority = ( SQL_LAYER == 'mysql' ) ? 'LOW_PRIORITY' : '';
-
 		if ( $saved_info = $db->sql_fetchrow($result) )
 		{
 			if ($board_config['max_savebox_privmsgs'] && $saved_info['savebox_items'] >= $board_config['max_savebox_privmsgs'] )
@@ -905,14 +937,14 @@ else if ( $save && $mark_list && $folder != 'savebox' && $folder != 'outbox' )
 				$old_privmsgs_id = $db->sql_fetchrow($result);
 				$old_privmsgs_id = $old_privmsgs_id['privmsgs_id'];
 			
-				$sql = "DELETE $sql_priority FROM " . PRIVMSGS_TABLE . " 
+				$sql = "DELETE FROM " . PRIVMSGS_TABLE . " 
 					WHERE privmsgs_id = $old_privmsgs_id";
 				if ( !$db->sql_query($sql) )
 				{
 					message_die(GENERAL_ERROR, 'Could not delete oldest privmsgs (save)', '', __LINE__, __FILE__, $sql);
 				}
 
-				$sql = "DELETE $sql_priority FROM " . PRIVMSGS_TEXT_TABLE . " 
+				$sql = "DELETE FROM " . PRIVMSGS_TEXT_TABLE . " 
 					WHERE privmsgs_text_id = $old_privmsgs_id";
 				if ( !$db->sql_query($sql) )
 				{
@@ -1292,8 +1324,6 @@ else if ( $submit || $refresh || $mode != '' )
 				message_die(GENERAL_MESSAGE, $lang['No_such_user']);
 			}
 
-			$sql_priority = ( SQL_LAYER == 'mysql' ) ? 'LOW_PRIORITY' : '';
-
 			if ( $inbox_info = $db->sql_fetchrow($result) )
 			{
 				if ($board_config['max_inbox_privmsgs'] && $inbox_info['inbox_items'] >= $board_config['max_inbox_privmsgs'])
@@ -1311,14 +1341,14 @@ else if ( $submit || $refresh || $mode != '' )
 					$old_privmsgs_id = $db->sql_fetchrow($result);
 					$old_privmsgs_id = $old_privmsgs_id['privmsgs_id'];
 				
-					$sql = "DELETE $sql_priority FROM " . PRIVMSGS_TABLE . " 
+					$sql = "DELETE FROM " . PRIVMSGS_TABLE . " 
 						WHERE privmsgs_id = $old_privmsgs_id";
 					if ( !$db->sql_query($sql) )
 					{
 						message_die(GENERAL_ERROR, 'Could not delete oldest privmsgs (inbox)'.$sql, '', __LINE__, __FILE__, $sql);
 					}
 
-					$sql = "DELETE $sql_priority FROM " . PRIVMSGS_TEXT_TABLE . " 
+					$sql = "DELETE FROM " . PRIVMSGS_TEXT_TABLE . " 
 						WHERE privmsgs_text_id = $old_privmsgs_id";
 					if ( !$db->sql_query($sql) )
 					{
@@ -1327,8 +1357,40 @@ else if ( $submit || $refresh || $mode != '' )
 				}
 			}
 
-			$sql_info = "INSERT INTO " . PRIVMSGS_TABLE . " (privmsgs_type, privmsgs_subject, privmsgs_from_userid, privmsgs_to_userid, privmsgs_date, privmsgs_ip, privmsgs_enable_html, privmsgs_enable_bbcode, privmsgs_enable_smilies, privmsgs_attach_sig)
-				VALUES (" . PRIVMSGS_NEW_MAIL . ", '" . str_replace("\'", "''", $privmsg_subject) . "', " . $userdata['user_id'] . ", " . $to_userdata['user_id'] . ", $msg_time, '$user_ip', $html_on, $bbcode_on, $smilies_on, $attach_sig)";
+// Track PMs MOD, By Manipe (Begin)
+			$id_for_pm_track = ($privmsg_id) ? $privmsg_id : $id_for_pm_track_post_vars;
+
+			if ($id_for_pm_track)
+			{
+				$sql = "SELECT privmsgs_track_id
+					FROM " . PRIVMSGS_TABLE . "
+					WHERE privmsgs_id = " . $id_for_pm_track;
+				if ( !$result = $db->sql_query($sql) )
+				{
+					message_die(GENERAL_ERROR, 'Could not get PM track id', '', __LINE__, __FILE__, $sql);
+				}
+
+				$row = $db->sql_fetchrow($result);
+				$pm_track_id = $row['privmsgs_track_id'];
+			}
+
+			if (!$id_for_pm_track || $pm_track_id == 0)
+			{
+				$sql = "SELECT MAX(privmsgs_id) AS privmsgs_track_id
+					FROM " . PRIVMSGS_TABLE;
+				
+				if ( !$result = $db->sql_query($sql) )
+				{
+					message_die(GENERAL_ERROR, 'Could not get PM track id', '', __LINE__, __FILE__, $sql);
+				}
+
+				$row = $db->sql_fetchrow($result);
+				$pm_track_id = $row['privmsgs_track_id'] + 1;
+			}
+// Track PMs MOD, By Manipe (End)
+
+			$sql_info = "INSERT INTO " . PRIVMSGS_TABLE . " (privmsgs_type, privmsgs_subject, privmsgs_from_userid, privmsgs_to_userid, privmsgs_date, privmsgs_ip, privmsgs_enable_html, privmsgs_enable_bbcode, privmsgs_enable_smilies, privmsgs_attach_sig, privmsgs_track_id)
+				VALUES (" . PRIVMSGS_NEW_MAIL . ", '" . str_replace("\'", "''", $privmsg_subject) . "', " . $userdata['user_id'] . ", " . $to_userdata['user_id'] . ", $msg_time, '$user_ip', $html_on, $bbcode_on, $smilies_on, $attach_sig, $pm_track_id)";
 		}
 		else
 		{
@@ -1603,6 +1665,15 @@ else if ( $submit || $refresh || $mode != '' )
 		}
 	}
 
+// View PM while replying MOD, By Manipe
+	$id_for_pm_track = ($privmsg_id) ? $privmsg_id : $id_for_pm_track_post_vars;
+
+	if ( $id_for_pm_track && ( $mode == 'reply' || $mode == 'edit' || $mode == 'post' ) )
+	{
+		$pm_track_id = pm_track_all_history($id_for_pm_track);
+	}
+// View PM while replying MOD, By Manipe
+
 	//
 	// Has admin prevented user from sending PM's?
 	//
@@ -1812,6 +1883,14 @@ else if ( $submit || $refresh || $mode != '' )
 	{
 		$s_hidden_fields .= '<input type="hidden" name="' . POST_POST_URL . '" value="' . $privmsg_id . '" />';
 	}
+// View PM while replying MOD, By Manipe
+	$id_for_pm_track = ($privmsg_id) ? $privmsg_id : $id_for_pm_track_post_vars;
+
+	if ( $id_for_pm_track )
+	{
+		$s_hidden_fields .= '<input type="hidden" name="id_for_pm_track" value="' . $id_for_pm_track . '" />';
+	}
+// View PM while replying MOD, By Manipe
 
 if(isset($_GET['p']))
 {

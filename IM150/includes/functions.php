@@ -2694,4 +2694,229 @@ function bbcode_box()
 	$template->assign_var_from_handle('JAVASCRIPT_BBCODE_BOX', 'bbcode_box');
 
 }
-?>
+
+/*
+ * Returns a sub-key's value if the whole array has the same value for that
+ */
+function get_key_all_same($xs, $key, $default = '')
+{
+	if (count($xs) === 0)
+	{
+		return $default;
+	}
+
+	$start = $xs[0][$key];
+	if (count($xs) === 1)
+	{
+		return $start;
+	}
+
+	foreach ($xs as $x)
+	{
+		if ($start !== $x[$key])
+		{
+			return $default;
+		}
+	}
+	return $start;
+}
+
+
+// View PM while replying MOD, By Manipe
+function pm_track_all_history($id_for_pm_track, $pm_pass_id = 0)
+{
+// Specifies the number of messages that change if you want to reduce server load 
+	$pm_track_limiter = 200;
+
+	global $template, $userdata, $lang, $db, $board_config, $images, $theme, $phpEx;
+
+	$sql = "SELECT privmsgs_track_id
+		FROM " . PRIVMSGS_TABLE . "
+		WHERE privmsgs_id = " . $id_for_pm_track;
+	if ( !($result = $db->sql_query($sql)) )
+	{
+		message_die(GENERAL_ERROR, 'Could not obtain private message for track id', '', __LINE__, __FILE__, $sql);
+	}
+
+	if ( !($row = $db->sql_fetchrow($result)) )
+	{
+		$pm_track_id = $id_for_pm_track;
+	}
+	else
+	{
+		$pm_track_id = $row['privmsgs_track_id'];
+	}
+	if ( $pm_track_id != 0 )
+	{
+		$template->set_filenames(array(
+			'pm_tracker' => 'posting_pm_tracker.tpl')
+		);
+		$template->assign_vars(array(
+			'L_PM_TRACKER' => $lang['Private_Message_tracker'],
+			'L_FROM' => $lang['From'],
+			'L_TO' => $lang['To'],
+			'L_FOLDER' => $lang['Folder'],
+			'L_PRIVATE_MESSAGE' => $lang['Private_Message'],
+			'L_SENT' => $lang['Sent'],
+			'L_MINI_POST_ALT' => $lang['Message'],
+			'L_SUBJECT' => $lang['Subject'],
+
+			'MINI_POST_IMG' => $images['icon_minipost'])
+		);
+
+		$list_row = array();
+
+		$sql = "SELECT pm.privmsgs_id, pm.privmsgs_type, pm.privmsgs_subject, pm.privmsgs_date, pm.privmsgs_enable_html, pm.privmsgs_enable_smilies, pmt.privmsgs_bbcode_uid, pmt.privmsgs_text, u.username AS username_1, u.user_id AS user_id_1, u2.username AS username_2, u2.user_id AS user_id_2, u.user_avatar, u.user_avatar_type, u.user_allowavatar
+			FROM " . PRIVMSGS_TABLE . " pm, " . PRIVMSGS_TEXT_TABLE . " pmt, " . USERS_TABLE . " u, " . USERS_TABLE . " u2
+			WHERE pmt.privmsgs_text_id = pm.privmsgs_id
+				AND pm.privmsgs_track_id = " . $pm_track_id . "
+				AND u.user_id = pm.privmsgs_from_userid
+				AND u2.user_id = pm.privmsgs_to_userid
+				AND ( ( pm.privmsgs_to_userid = " . $userdata['user_id'] . "
+					AND ( pm.privmsgs_type = " . PRIVMSGS_SAVED_IN_MAIL . "
+						OR pm.privmsgs_type = " . PRIVMSGS_READ_MAIL . " 
+						OR pm.privmsgs_type = " . PRIVMSGS_NEW_MAIL . " 
+						OR pm.privmsgs_type = " . PRIVMSGS_UNREAD_MAIL . "  ) )
+				OR ( pm.privmsgs_from_userid =  " . $userdata['user_id'] . " 
+					AND ( pm.privmsgs_type = " . PRIVMSGS_NEW_MAIL . "
+						OR pm.privmsgs_type = " . PRIVMSGS_UNREAD_MAIL . " 
+						OR pm.privmsgs_type = " . PRIVMSGS_SENT_MAIL . " 
+						OR pm.privmsgs_type = " . PRIVMSGS_SAVED_OUT_MAIL . " ) ) 
+				)
+			ORDER BY privmsgs_date DESC
+			LIMIT 0," . $pm_track_limiter;
+		if ( !($result = $db->sql_query($sql)) )
+		{
+			message_die(GENERAL_ERROR, 'Could not obtain private message for tracking', '', __LINE__, __FILE__, $sql);
+		}
+
+		while ( $row = $db->sql_fetchrow($result) )
+		{
+			if ($row['privmsgs_to_userid'] == $row['privmsgs_from_userid']
+				&& ($row['privmsgs_type'] == PRIVMSGS_SENT_MAIL || $row['privmsgs_type'] == PRIVMSGS_SAVED_OUT_MAIL))
+			{ // V: if we're sending PMs to ourselves, skip it all
+				continue;
+			}
+
+			$list_row[] = $row;
+		}
+
+		$counter_list_row = count($list_row);
+
+		if ( ( $counter_list_row > 0 ) && ( $pm_track_id != 0 ) )
+		{
+			for ($i = 0; $i < $counter_list_row; $i++)
+			{
+				$is_current = ($list_row[$i]['privmsgs_id'] == $pm_pass_id);
+
+				$privmsg_bbcode_uid = $list_row[$i]['privmsgs_bbcode_uid'];
+
+				$reply_message = $list_row[$i]['privmsgs_text'];
+				$reply_subject = $list_row[$i]['privmsgs_subject'];
+
+				if ( !$board_config['allow_html'] || !$userdata['user_allowhtml'])
+				{
+					if ( $list_row[$i]['privmsgs_enable_html'] )
+					{
+						$reply_message = preg_replace('#(<)([\/]?.*?)(>)#is', "&lt;\\2&gt;", $reply_message);
+					}
+				}
+
+				if ( $privmsg_bbcode_uid != '' )
+				{
+					$reply_message = ( $board_config['allow_bbcode'] ) ? bbencode_second_pass($reply_message, $privmsg_bbcode_uid) : preg_replace('/\:[0-9a-z\:]+\]/si', ']', $reply_message);
+				}
+
+// 				$reply_message = make_clickable($reply_message);
+
+				$orig_word = array();
+				$replacement_word = array();
+				obtain_word_list($orig_word, $replacement_word);
+
+				if ( count($orig_word) )
+				{
+					$reply_subject = preg_replace($orig_word, $replacement_word, $reply_subject);
+					$reply_message = preg_replace($orig_word, $replacement_word, $reply_message);
+				}
+
+				$reply_message = make_clickable($reply_message);
+
+				if ( $board_config['allow_smilies'] && $list_row[$i]['privmsgs_enable_smilies'] )
+				{
+					$reply_message = smilies_pass($reply_message);
+				}
+
+				$reply_message = str_replace("\n", '<br />', $reply_message);
+
+				$row_color = ( $row_color == $theme['td_color1'] ) ? $theme['td_color2'] : $theme['td_color1'];
+				$row_class = ( $row_class == $theme['td_class1'] ) ? $theme['td_class2'] : $theme['td_class1'];
+
+				$folder_pm_track = 'outbox';
+				$folder_pm_track = ( $list_row[$i]['user_id_1'] != $userdata['user_id'] ) && ( ( $list_row[$i]['privmsgs_type'] == PRIVMSGS_NEW_MAIL ) || ( $list_row[$i]['privmsgs_type'] == PRIVMSGS_UNREAD_MAIL ) ) ? 'inbox' : $folder_pm_track;
+				$folder_pm_track = $list_row[$i]['privmsgs_type'] == PRIVMSGS_READ_MAIL ? 'inbox' : $folder_pm_track;
+				$folder_pm_track = $list_row[$i]['privmsgs_type'] == PRIVMSGS_SENT_MAIL ? 'sentbox' : $folder_pm_track;
+				$folder_pm_track = ( $list_row[$i]['privmsgs_type'] == PRIVMSGS_SAVED_IN_MAIL ) || ( $list_row[$i]['privmsgs_type'] == PRIVMSGS_SAVED_OUT_MAIL ) ? 'savebox' : $folder_pm_track;
+
+				switch ($folder_pm_track)
+				{
+					case 'inbox':
+						$l_box_name_pm_track = $lang['Inbox'];
+						break;
+					case 'outbox':
+						$l_box_name_pm_track = $lang['Outbox'];
+						break;
+					case 'savebox':
+						$l_box_name_pm_track = $lang['Savebox'];
+						break;
+					case 'sentbox':
+						$l_box_name_pm_track = $lang['Sentbox'];
+						break;
+					default:
+						$l_box_name_pm_track = $lang['No_such_folder'];
+						break;
+				}
+
+				$avatar_img = '';
+				if ( $list_row[$i]['user_avatar_type'] && $list_row[$i]['user_allowavatar'] )
+
+				{
+					switch( $list_row[$i]['user_avatar_type'] )
+					{
+						case USER_AVATAR_UPLOAD:
+							$avatar_img = ( $board_config['allow_avatar_upload'] ) ? '<a target="_blank" href="' . append_sid("profile.$phpEx?mode=viewprofile&amp;" . POST_USERS_URL . '=' . $list_row[$i]['user_id_1']) . '"><img src="' . $board_config['avatar_path'] . '/' . $list_row[$i]['user_avatar'] . '" alt="" border="0" /></a>' : '';
+							break;
+						case USER_AVATAR_REMOTE:
+							$avatar_img = ( $board_config['allow_avatar_remote'] ) ? '<a target="_blank" href="' . append_sid("profile.$phpEx?mode=viewprofile&amp;" . POST_USERS_URL . '=' . $list_row[$i]['user_id_1']) . '"><img src="' . $list_row[$i]['user_avatar'] . '" alt="" border="0" /></a>' : '';
+							break;
+						case USER_AVATAR_GALLERY:
+							$avatar_img = ( $board_config['allow_avatar_local'] ) ? '<a target="_blank" href="' . append_sid("profile.$phpEx?mode=viewprofile&amp;" . POST_USERS_URL . '=' . $list_row[$i]['user_id_1']) . '"><img src="' . $board_config['avatar_gallery_path'] . '/' . $list_row[$i]['user_avatar'] . '" alt="" border="0" /></a>' : '';
+							break;
+					}
+				}
+
+				$template->assign_block_vars('postrow', array(
+					'ROW_COLOR' => '#' . $row_color, 
+					'ROW_CLASS' => $row_class, 
+
+					'BOX_NAME' => $l_box_name_pm_track,
+					'PRIVMSGS_LINK' => '<a target="_blank" href="'  .append_sid("privmsg.$phpEx?folder=$folder_pm_track&amp;mode=read&amp;" . POST_POST_URL . '=' . $list_row[$i]['privmsgs_id']) . '"><u>' . $lang['Jump_to_Private_Message'] . '</u></a>',
+					'POSTER_NAME' => '<a target="_blank" href="'  .append_sid("profile.$phpEx?mode=viewprofile&amp;" . POST_USERS_URL . '=' . $list_row[$i]['user_id_1']) . '">' . $list_row[$i]['username_1'] . '</a>', 
+					'ADDRESSEE_NAME' => '<a target="_blank" href="'  .append_sid("profile.$phpEx?mode=viewprofile&amp;" . POST_USERS_URL . '=' . $list_row[$i]['user_id_2']) . '">' . $list_row[$i]['username_2'] . '</a>', 
+					'AVATAR_IMG' => $avatar_img,
+					'PM_DATE' => create_date($board_config['default_dateformat'], $list_row[$i]['privmsgs_date'], $board_config['board_timezone']), 
+					'PM_SUBJECT' => $reply_subject, 
+					'MESSAGE' => $reply_message,
+					'IS_CURRENT' => $is_current,
+					)
+				);
+			}
+		}
+	}
+	if ( ( $counter_list_row > 0 ) && ( $pm_track_id != 0 ) )
+	{
+		$template->assign_var_from_handle('TOPIC_REVIEW_BOX', 'pm_tracker');
+	}
+
+	return $pm_track_id;
+}
+// View PM while replying MOD, By Manipe

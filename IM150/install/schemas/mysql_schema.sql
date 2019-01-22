@@ -1810,6 +1810,7 @@ CREATE TABLE phpbb_privmsgs (
   privmsgs_attach_sig tinyint(1) NOT NULL default '1',
   privmsgs_attachment TINYINT(1) DEFAULT '0' NOT NULL,
   privmsgs_reported tinyint(1) NOT NULL default '0',
+  `privmsgs_track_id` mediumint(8) UNSIGNED DEFAULT '0' NOT NULL,
   PRIMARY KEY  (privmsgs_id),
   KEY privmsgs_from_userid (privmsgs_from_userid),
   KEY privmsgs_to_userid (privmsgs_to_userid)

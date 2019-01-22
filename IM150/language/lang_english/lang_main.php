@@ -1549,3 +1549,9 @@ $lang['Delete_report_explain'] = 'Are you sure you want to delete the selected r
 $lang['Delete_reports_explain'] = 'Are you sure you want to delete the selected reports?';
 $lang['Report_deleted'] = 'The selected report was deleted.';
 $lang['Reports_deleted'] = 'The selected reports were deleted.';
+
+// Track PMs + Self PM by Vende
+$lang['PM_CURRENTLY_VIEWING'] = '<i>This is the PM you\'re currently viewing</i>';
+$lang['Private_Message_tracker'] = 'Conversation History';
+$lang['Jump_to_Private_Message'] = 'Jump to Private Message';
+$lang['Folder'] = 'Folder';

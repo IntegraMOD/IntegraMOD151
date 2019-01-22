@@ -1402,6 +1402,7 @@ INSERT INTO phpbb_hacks_list VALUES (129, 'Cash Mod', 'Cash Mod for users to gai
 INSERT INTO phpbb_hacks_list VALUES (130, 'Advanced BBCode Box MOD', 'This MOD adds lots of useful BBCode features and makes the bbcode buttons look just like Microsoft Office 2003. It also improves the functions of phpBB\\''s BBCode function. It adds the bbcode exactly where the cursor is, inserts smilies where the cursor is', 'Disturbed One/AL Tnen', 'anthony@anthonycoy.com', 'http://www.hvmdesign.com', '6', 'No', 'http://www.hvmdesign.com', '', 0);
 INSERT INTO phpbb_hacks_list VALUES (131, 'Lo-Fi Mod', 'This Mod will add a Textual/Low Graphic Layout to your Board. It\\''s Ideal for Google Bot and for all Search Engine that spider your site, and also for printing in an easy way.', 'Bicet/CyberAlien/Justas', 'bicets@gmail.com', 'http://www.phpbbstyles.com', '1.0.0', 'No', 'http://www.phpbbstyles.com', '', 0);
 INSERT INTO phpbb_hacks_list VALUES (132, 'Advanced Group Color Management', 'This mod adds colored username, configurable per group, everywhere', 'Teelk', '', '', '1.2.5', 'No', '', '', 0);
+INSERT INTO phpbb_hacks_list VALUES (133, 'Track PMs for phpBB2', 'Mod like phpBB3 - in personal messages displays the correspondence history. Further development of fashion by Manipe. Functionality brought to the level of phpBB3', 'Manipe/vlad77', '', '', '2.0.5', 'No', '', '', 0);
 
 # -- IP Tracker
 INSERT INTO phpbb_ip_tracking_config (max) VALUES ('25000');
