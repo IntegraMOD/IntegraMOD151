@@ -1128,7 +1128,7 @@ function setup_style($style)
 //-- add
 	global $phpEx, $themes_style;
 
-	if ( defined('CACHE_THEMES') )
+	if ( defined('CACHE_THEMES') && CACHE_THEMES )
 	{
 		@include( $phpbb_root_path . './includes/def_themes.' . $phpEx );
 		if ( empty($themes_style) )
@@ -1179,30 +1179,21 @@ function setup_style($style)
 					{
 						message_die(CRITICAL_ERROR, 'Could not update user theme info');
 					}
-          return false;
-				}
-				else
-				{
-					message_die(CRITICAL_ERROR, "Could not get theme data for themes_id [$style]");
+          			return false;
 				}
 			}
 			else
 			{	
-				message_die(CRITICAL_ERROR, "Could not get theme data for themes_id [$style]");
+				message_die(CRITICAL_ERROR, "Could not get default theme data for themes_id [$style]");
 			}
-		}
-
-		else
-		{
-			message_die(CRITICAL_ERROR, "Could not get theme data for themes_id [$style]");
 		}
 //-- mod : cache -----------------------------------------------------------------------------------
 //-- add
 	}
 //-- fin mod : cache -------------------------------------------------------------------------------
 
-	$template_path = 'templates/' ;
-	$template_name = $row['template_name'] ;
+	$template_path = 'templates/';
+	$template_name = $row['template_name'];
 
 	$template = new Template($phpbb_root_path . $template_path . $template_name);
 

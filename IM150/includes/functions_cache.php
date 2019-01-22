@@ -680,13 +680,13 @@ function cache_generic($cache_tpl, $cache_file, $table, $key_field, $sql_where='
 
 	// output to file
 	$cache_path = 'includes/';
-	$handle = @fopen($phpbb_root_path . $cache_path . $cache_file . '.' . $phpEx, 'w');
-	if (@flock($fp, LOCK_EX))
+	$handle = fopen($phpbb_root_path . $cache_path . $cache_file . '.' . $phpEx, 'w');
+	if (flock($handle, LOCK_EX))
 	{
-		@fwrite($handle, $res);
-		@flock($fp, LOCK_UN);
+		fwrite($handle, $res);
+		flock($handle, LOCK_UN);
 	}
-	@fclose($handle);
+	fclose($handle);
 	@umask(0000);
 	@chmod($phpbb_root_path . $cache_path . $cache_file . '.' . $phpEx, 0666);
 }
