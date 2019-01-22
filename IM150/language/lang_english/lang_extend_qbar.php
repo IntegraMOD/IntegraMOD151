@@ -140,6 +140,10 @@ if ( $lang_extend_admin )
 	$lang['Import']								= 'Import';
 	$lang['Refresh']							= 'Refresh';
 	$lang['Qbar_all']							= '---------- All -----------';
+
+	// V: PHP function for QBar
+	$lang['QBAR_PHP_FUNCTION'] = 'PHP function';
+	$lang['QBAR_PHP_FUNCTION_EXPLAIN'] = 'Call a PHP function to render this field';
 }
 
 $lang['FAQ_explain']				= 'Frequently Asked Questions.';
