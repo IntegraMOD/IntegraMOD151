@@ -79,7 +79,7 @@ else
 die('debug: ' . strval($temp_debug) . ' | ' . strval($portal_config['portal_tail']) . ' | ' . strval(defined('HAS_DIED')) . ' | ' . strval(defined('IN_LOGIN')));*/
 // debug forum wide Portal
 
-if(!$layout_forum_wide_flag&&$portal_config['portal_tail']&&(!defined('HAS_DIED'))&&(!defined('IN_LOGIN')))
+if(!$layout_forum_wide_flag&&!empty($portal_config)&&$portal_config['portal_tail']&&(!defined('HAS_DIED'))&&(!defined('IN_LOGIN')))
 {
 	$template->set_filenames(array(
 		'portal_tail'         => 'portal_page_tail.tpl')
@@ -135,8 +135,8 @@ $template->assign_vars(array(
 	'PROTECTED'	=> ($userdata['user_level'] == ADMIN && $userdata['user_id'] != ANONYMOUS) ? ' ' . $lang['PS_blocked_line2'].' :: ' : 'Protected by phpBB Security &copy; <a href="http://phpbb-amod.com" class="copyright" target="_blank">phpBB-Amod</a> ::',
 	'TRANSLATION_INFO' => (isset($lang['TRANSLATION_INFO'])) ? $lang['TRANSLATION_INFO'] : ((isset($lang['TRANSLATION'])) ? $lang['TRANSLATION'] : ''),
 	'COOKIES_LINK' => $cookies_link,
-	'CRACKER_TRACKER_FOOTER' => create_footer_layout($ctracker_config->settings['footer_layout']),
-	'L_STATUS_LOGIN' => ($ctracker_config->settings['login_ip_check'])? sprintf($lang['ctracker_ipwarn_info'], $output_login_status) : '',
+	'CRACKER_TRACKER_FOOTER' => !empty($ctracker_config) ? create_footer_layout($ctracker_config->settings['footer_layout']) : '',
+	'L_STATUS_LOGIN' => (!empty($ctracker_config) && $ctracker_config->settings['login_ip_check'])? sprintf($lang['ctracker_ipwarn_info'], $output_login_status) : '',
 	'ADMIN_LINK' => $admin_link,
 	'COPYRIGHT' => "Powered by <a href=\"http://www.integramod.com\" target=\"_phpbb\">IntegraMOD</a> &copy; 2004, 2011 The Integramod Group",
 	'STYLECWI2' => "Style <a href=\"http://www.integramod.com\" target=\"_phpbb\">Integra2 </a> &copy; IntegraMod Team 2011<br />",
@@ -149,6 +149,18 @@ $template->assign_vars(array(
 $template->pparse('overall_footer');
 
 echo $debug_out;
+
+if (defined('DEV_MODE') && DEV_MODE && $db && $db->queries)
+{
+	foreach ($db->queries as $query)
+	{
+		list($sql, $bt, $time) = $query;
+		echo "Query: $time <pre style='max-width: 300px;'>$sql
+
+" . str_replace($sql, '*QUERY*', strip_tags($bt)) . "</pre>";
+/*implode("\n", array_slice(explode("\n", $bt), 0, 10))*/
+	}
+}
 
 //
 // Compress buffered output if required and send to browser
@@ -168,14 +180,4 @@ if( $do_gzip_compress && headers_sent() != TRUE )
 	header('X-Content-Encoded-By: Integramod '.$board_config['integramod_version']);
 	echo "\x1f\x8b\x08\x00\x00\x00\x00\x00";
 	echo $gzip_contents;
-}
-if (defined('DEV_MODE') && DEV_MODE && $db->queries)
-{
-	foreach ($db->queries as $query)
-	{
-		list($sql, $bt, $time) = $query;
-		echo "Query: $time <pre>$sql
-
-" . str_replace($sql, '*QUERY*', $bt) . "</pre>";
-	}
-}
+}else echo ob_get_clean();

@@ -28,7 +28,7 @@ if( !defined('IN_PHPBB') )
  * if you want to activate the debug mode of CrackerTracker
  * but don't forget to deactivate it again as soon as possible
  */
-define('CT_DEBUG_MODE', false);
+define('CT_DEBUG_MODE', defined('DEV_MODE') ? DEV_MODE : false);
 
 /*
  * DO NOT CHANGE ANYTHING BELOW!
