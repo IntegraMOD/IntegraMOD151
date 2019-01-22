@@ -279,7 +279,7 @@ function admin_cat_main($cat_parent = 0, $depth = 0)
 {
 	global $pafiledb, $phpbb_root_path, $pafiledb_template, $phpEx;
 
-	$pre = str_repeat('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;', $depth);
+	$pre = str_repeat('&nbsp;|&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;', $depth);
 	if(isset($pafiledb->subcat_rowset[$cat_parent]))
 	{
 		foreach($pafiledb->subcat_rowset[$cat_parent] as $subcat_id => $cat_data)

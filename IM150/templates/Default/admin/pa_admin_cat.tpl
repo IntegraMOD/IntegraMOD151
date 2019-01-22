@@ -9,7 +9,7 @@
 <!-- BEGIN cat_row -->
 	<!-- IF cat_row.IS_HIGHER_CAT -->
 <tr>
-	<td class="cat" valign="middle" nowrap="nowrap">{cat_row.PRE}&nbsp;&raquo;&nbsp;<a href="{cat_row.U_CAT}" class="cattitle">{cat_row.CAT_NAME}</a></td>
+	<td class="cat" style="letter-spacing: 0px; text-indent: 0px;" valign="middle" nowrap="nowrap">{cat_row.PRE}&nbsp;&raquo;&nbsp;<a href="{cat_row.U_CAT}" class="cattitle">{cat_row.CAT_NAME}</a></td>
 	<td class="cat" align="center" valign="middle"><span class="gen"><a href="{cat_row.U_CAT_EDIT}">{L_EDIT}</a></span></td>
 	<td class="cat" align="center" valign="middle"><span class="gen"><a href="{cat_row.U_CAT_DELETE}">{L_DELETE}</a></span></td>
 	<td class="cat" align="center" valign="middle" nowrap="nowrap"><span class="gen"><a href="{cat_row.U_CAT_MOVE_UP}">{L_MOVE_UP}</a> <a href="{cat_row.U_CAT_MOVE_DOWN}">{L_MOVE_DOWN}</a></span></td>

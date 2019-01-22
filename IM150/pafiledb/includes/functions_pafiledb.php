@@ -232,31 +232,43 @@ class pafiledb
 
 	function get_sub_cat($cat_id)
 	{
-		$cat_sub .= '';
+		$cat_sub = array();
 		if(!empty($this->subcat_rowset[$cat_id]))
 		{
 			foreach($this->subcat_rowset[$cat_id] as $cat_id => $cat_row)
 			{
+				$link = '<a href="' . append_sid('dload.php?action=category&cat_id=' . $cat_row['cat_id']) . '"><b>' . $cat_row['cat_name'] . '</b></a>';
 				if($cat_row['cat_allow_file'])
 				{
-					$cat_sub .= '<a href="' . append_sid('dload.php?action=category&cat_id=' . $cat_row['cat_id']) . '">' . $cat_row['cat_name'] . '</a>, ';
+					$cat_sub[] = $link;
 				}
 				else
 				{
+					$cat_sub_sub = array();
 					if(!empty($this->subcat_rowset[$cat_row['cat_id']]))
 					{
 						foreach($this->subcat_rowset[$cat_row['cat_id']] as $sub_cat_id => $sub_cat_row)
 						{
-							if($sub_cat_row['cat_allow_file'])
-							{
-								$cat_sub .= '<a href="' . append_sid('dload.php?action=category&cat_id=' . $sub_cat_row['cat_id']) . '">' . $sub_cat_row['cat_name'] . '</a>, ';
-							}
+							// V: this is a weird check. We know the current category doesn't allow files
+							//    so we're *sure* sub ones must allow files.
+							//    I commented this in the meantime (because I think that rule is bad to begin with).
+							//if($sub_cat_row['cat_allow_file'])
+							//{
+								$cat_sub_sub[] = '<a href="' . append_sid('dload.php?action=category&cat_id=' . $sub_cat_row['cat_id']) . '">' . $sub_cat_row['cat_name'] . '</a>';
+							//}
 						}
+					}
+
+					// V: Hide "higher cats" (no files allowed) if they don't have subcats.
+					//    without subcats, it means they definitely don't have files inside.
+					if ($cat_sub_sub)
+					{
+						$cat_sub[] = $link . ' (' . implode(', ', $cat_sub_sub) . ')';
 					}
 				}
 			}
 		}
-		return $cat_sub;
+		return implode(', ', $cat_sub);
 	}
 
 	function last_file_in_cat($cat_id, $file_info)
@@ -346,14 +358,13 @@ class pafiledb
 		return;
 	}
 
-	function category_nav($parent_id, $cat_nav)
+	function category_nav($parent_id, &$cat_nav)
 	{
 		if(!empty($this->cat_rowset[$parent_id]))
 		{
 			$this->category_nav($this->cat_rowset[$parent_id]['cat_parent'], $cat_nav);
 			$cat_nav[$parent_id] = $this->cat_rowset[$parent_id]['cat_name'];
 		}
-		return;
 	}
 
 /*	function init_depth($cat_id = 0, $depth = 0)
