@@ -25,7 +25,7 @@ if (@phpversion() >= '5.0.0' && (!@ini_get('register_long_arrays') || @ini_get('
 	$HTTP_POST_VARS = $_POST;
 	$HTTP_GET_VARS = $_GET;
 	$HTTP_SERVER_VARS = $_SERVER;
-	$HTTP_COOKIE_VARS = $_COOKIE;
+	$HTTP_COOKIE = $_COOKIE;
 	$HTTP_ENV_VARS = $_ENV;
 	$HTTP_POST_FILES = $_FILES;
 
@@ -288,24 +288,24 @@ if (!function_exists('get_magic_quotes_gpc') || !get_magic_quotes_gpc())
 		@reset($_POST);
 	}
 
-	if (is_array($HTTP_COOKIE_VARS))
+	if (is_array($_COOKIE))
 	{
-		while (list($k, $v) = each($HTTP_COOKIE_VARS))
+		while (list($k, $v) = each($_COOKIE))
 		{
-			if (is_array($HTTP_COOKIE_VARS[$k]))
+			if (is_array($_COOKIE[$k]))
 			{
-				while (list($k2, $v2) = each($HTTP_COOKIE_VARS[$k]))
+				while (list($k2, $v2) = each($_COOKIE[$k]))
 				{
-					$HTTP_COOKIE_VARS[$k][$k2] = addslashes($v2);
+					$_COOKIE[$k][$k2] = addslashes($v2);
 				}
-				@reset($HTTP_COOKIE_VARS[$k]);
+				@reset($_COOKIE[$k]);
 			}
 			else
 			{
-				$HTTP_COOKIE_VARS[$k] = addslashes($v);
+				$_COOKIE[$k] = addslashes($v);
 			}
 		}
-		@reset($HTTP_COOKIE_VARS);
+		@reset($_COOKIE);
 	}
 }
 
