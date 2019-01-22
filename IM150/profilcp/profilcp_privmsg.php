@@ -2320,5 +2320,3 @@ else
 
 $privmsg_mode = $mode;
 $mode = 'privmsg';
-
-?>

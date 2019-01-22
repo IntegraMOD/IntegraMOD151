@@ -21,7 +21,7 @@
 
 define('IN_PHPBB', true);
 define('CT_SECLEVEL', 'MEDIUM');
-$ct_ignorepvar = array('addcategory','submit');
+$ct_ignorepvar = array('addcategory','submit', 'name', 'cat_desc', 'cat_title');
 //
 // Let's set the root dir for phpBB
 //

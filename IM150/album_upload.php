@@ -20,6 +20,9 @@
  ***************************************************************************/
 
 define('IN_PHPBB', true);
+define('CT_SECLEVEL', 'MEDIUM');
+$ct_ignorepvar = array('pic_title', 'pic_desc');
+
 $phpbb_root_path = './';
 $album_root_path = $phpbb_root_path . 'album_mod/';
 include($phpbb_root_path . 'extension.inc');

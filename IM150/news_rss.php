@@ -54,4 +54,3 @@ $content->renderSyndication( );
 
 $content->display( );
 $content->clear( );
-?>
