@@ -128,7 +128,7 @@ $pic_id = $row['comment_pic_id'];
 // ------------------------------------
 // NOTE: we don't do a left join here against the category table
 // since ALL pictures belong to some category, if not then it's database error
-$sql = "SELECT p.*, cat.*, u.user_id, u.username, COUNT(c.comment_id) as comments_count
+$sql = "SELECT p.*, cat.*, u.user_id, u.username, u.user_group_id, u.user_session_time, COUNT(c.comment_id) as comments_count
 		FROM ". ALBUM_CAT_TABLE ."  AS cat, ". ALBUM_TABLE ." AS p
 			LEFT JOIN ". USERS_TABLE ." AS u ON p.pic_user_id = u.user_id
 			LEFT JOIN ". ALBUM_COMMENT_TABLE ." AS c ON p.pic_id = c.comment_pic_id
@@ -206,7 +206,8 @@ if( !isset($_POST['comment']) )
 	}
 	else
 	{
-		$poster = '<a href="'. append_sid("profile.$phpEx?mode=viewprofile&amp;". POST_USERS_URL .'='. $thispic['user_id']) .'">'. $thispic['username'] .'</a>';
+		$username = $agcm_color->get_user_color($thispic['user_group_id'], $thispic['user_session_time'], $thispic['username']);
+		$poster = '<a href="'. append_sid("profile.$phpEx?mode=viewprofile&amp;". POST_USERS_URL .'='. $thispic['user_id']) .'">'. $username .'</a>';
 	}
 
 	//

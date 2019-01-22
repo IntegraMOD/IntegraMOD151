@@ -253,7 +253,7 @@ function get_calendar_title($calendar_start, $calendar_duration)
 function get_event_topics(&$events, &$number, $start_date, $end_date, $limit=false, $start=0, $max_limit=-1, $fid='')
 {
 	global $template, $lang, $images, $userdata, $board_config, $db, $phpbb_root_path, $phpEx;
-	global $tree;
+	global $tree, $agcm_color;
 
 	// Define censored word matches
 	$orig_word = array();
@@ -371,7 +371,7 @@ function get_event_topics(&$events, &$number, $start_date, $end_date, $limit=fal
 	$sql = "SELECT 
 					t.*,
 					p.poster_id, p.post_username, p.enable_bbcode, p.enable_html, p.enable_smilies,
-					u.username,
+					u.username, u.user_group_id, u.user_session_time,
 					pt.post_text, pt.bbcode_uid,
 					lp.poster_id AS lp_poster_id,
 					lu.username AS lp_username,
@@ -416,7 +416,7 @@ function get_event_topics(&$events, &$number, $start_date, $end_date, $limit=fal
 	{
 		// prepare the message
 		$topic_author_id			= $row['poster_id'];
-		$topic_author 				= ($row['poster_id'] == ANONYMOUS) ? $row['post_username'] : $row['username'];
+		$topic_author 				= ($row['poster_id'] == ANONYMOUS) ? $row['post_username'] : $agcm_color->get_user_color($row['user_group_id'], $row['user_session_time'], $row['username']);
 		$topic_time					= $row['topic_time'];
 
 		$topic_last_author_id		= $row['lp_poster_id'];

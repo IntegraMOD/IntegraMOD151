@@ -226,10 +226,10 @@ else
 //
 // Newest user data
 //
-$newest_user = $newest_userdata['username'];
+$newest_user = $agcm_color->get_user_color($newest_userdata['user_group_id'], $newest_userdata['user_session_time'], $newest_userdata['username']);
 $newest_uid = $newest_userdata['user_id'];
 
-$sql = 'SELECT user_regdate 
+$sql = 'SELECT user_regdate
 FROM ' . USERS_TABLE . ' 
 WHERE user_id = ' . $newest_uid . '
 LIMIT 1';

@@ -136,7 +136,7 @@ switch( $mode )
 		break;
 }
 
-$sql = "SELECT u.username, u.user_id, u.user_regdate, COUNT(p.pic_id) AS pics, MAX(p.pic_id) AS last_pic, COUNT(c.cat_user_id) AS cats
+$sql = "SELECT u.username, u.user_id, u.user_regdate, u.user_group_id, u.user_session_time, COUNT(p.pic_id) AS pics, MAX(p.pic_id) AS last_pic, COUNT(c.cat_user_id) AS cats
 		FROM ". USERS_TABLE ." AS u, " . ALBUM_TABLE . " AS p, " . ALBUM_CAT_TABLE . " AS c
 		WHERE u.user_id <> ". ANONYMOUS ."
 			AND c.cat_user_id = u.user_id
@@ -160,7 +160,7 @@ for ($i = 0; $i < count($memberrow); $i++)
 {
 	$template->assign_block_vars('memberrow', array(
 		'ROW_CLASS' => ( !($i % 2) ) ? $theme['td_class1'] : $theme['td_class2'],
-		'USERNAME' => $memberrow[$i]['username'],
+		'USERNAME' => $agcm_color->get_user_color($memberrow[$i]['user_group_id'], $memberrow[$i]['user_session_time'], $memberrow[$i]['username']),
 		'U_VIEWGALLERY' => append_sid(album_append_uid("album.$phpEx?user_id=". $memberrow[$i]['user_id'])),
 		'JOINED' => create_date($lang['DATE_FORMAT'], $memberrow[$i]['user_regdate'], $board_config['board_timezone']),
 		'PICS' => $memberrow[$i]['pics'])

@@ -424,7 +424,7 @@ if( isset($comment_id) && $album_config['comment'] == 1 )
 // Get this pic info and current category info
 // ------------------------------------
 
-$sql = "SELECT p.*, ac.*, u.user_id, u.username, u.user_rank, r.rate_pic_id, AVG(r.rate_point) AS rating, COUNT( DISTINCT c.comment_id) AS comments_count
+$sql = "SELECT p.*, ac.*, u.user_id, u.username, u.user_session_time, u.user_group_id, u.user_rank, r.rate_pic_id, AVG(r.rate_point) AS rating, COUNT( DISTINCT c.comment_id) AS comments_count
 		FROM ". ALBUM_CAT_TABLE ." AS ac, ". ALBUM_TABLE ." AS p
 			LEFT JOIN ". USERS_TABLE ." AS u ON p.pic_user_id = u.user_id
 			LEFT JOIN ". ALBUM_COMMENT_TABLE ." AS c ON p.pic_id = c.comment_pic_id
@@ -723,7 +723,8 @@ if( !isset($_POST['comment']) && !isset($_POST['rating']) )
 	}
 	else
 	{
-		$poster = '<a href="'. append_sid("profile.$phpEx?mode=viewprofile&amp;". POST_USERS_URL .'='. $thispic['user_id']) .'">'. $thispic['username'] .'</a>';
+		$username = $agcm_color->get_user_color($thispic['user_group_id'], $thispic['user_session_time'], $thispic['username']);
+		$poster = '<a href="'. append_sid("profile.$phpEx?mode=viewprofile&amp;". POST_USERS_URL .'='. $thispic['user_id']) .'">' . $username . '</a>';
 	}
 
 	//---------------------------------

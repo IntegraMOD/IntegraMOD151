@@ -719,7 +719,7 @@ function album_get_user_name($user_id)
 // ------------------------------------------------------------------------
 function album_get_last_pic_info($cats, &$last_pic_id)
 {
-	global $phpEx, $board_config, $lang, $db, $album_data , $album_config;
+	global $phpEx, $board_config, $lang, $db, $album_data , $album_config, $agcm_color;
 
 	// check whter we are running an album with CLowN's SP mod..
 	// and correct album picture url
@@ -742,7 +742,7 @@ function album_get_last_pic_info($cats, &$last_pic_id)
 	}
 
 	// OK, we may do a query now... get last picture information
-	$sql = "SELECT p.pic_id, p.pic_title, p.pic_user_id, p.pic_username, p.pic_time, p.pic_cat_id, u.user_id, u.username
+	$sql = "SELECT p.pic_id, p.pic_title, p.pic_user_id, p.pic_username, p.pic_time, p.pic_cat_id, u.user_id, u.username, u.user_group_id, u.user_session_time
 			FROM " . ALBUM_TABLE . " AS p
 			LEFT JOIN " . USERS_TABLE . " AS u  ON p.pic_user_id = u.user_id
 			WHERE $where_sql $pic_approval_sql
@@ -774,7 +774,8 @@ function album_get_last_pic_info($cats, &$last_pic_id)
 	}
 	else
 	{
-		$info .= $lang['Pic_Poster'] . ': <a href="' . append_sid("profile.$phpEx?mode=viewprofile&amp;" . POST_USERS_URL . '=' . $row['user_id']) . '">' . $row['username'] . '</a>';
+		$username = $agcm_color->get_user_color($row['user_group_id'], $row['user_session_time'], $row['username']);
+		$info .= $lang['Pic_Poster'] . ': <a href="' . append_sid("profile.$phpEx?mode=viewprofile&amp;" . POST_USERS_URL . '=' . $row['user_id']) . '">' . $username . '</a>';
 	}
 
 	// Write the last pic's title. Truncate it if it's too long
@@ -873,7 +874,7 @@ function album_get_total_pic_cat($ss_cat_id)
 // ------------------------------------------------------------------------
 function album_get_last_comment_info($cats)
 {
-	global $phpEx, $board_config, $lang, $db, $album_data;
+	global $phpEx, $board_config, $lang, $db, $album_data, $agcm_color;
 
 	$album_pic_url = 'album_showpage.'.$phpEx;
 
@@ -885,7 +886,7 @@ function album_get_last_comment_info($cats)
 	}
 
 	// get last comment information, and user, comment and pic informations
-	$sql = "SELECT c.comment_pic_id, c.comment_user_id, c.comment_username, c.comment_time, u.user_id, u.username, a.pic_id, a.pic_cat_id, a.pic_title
+	$sql = "SELECT c.comment_pic_id, c.comment_user_id, c.comment_username, c.comment_time, u.user_id, u.username, u.user_group_id, u.user_session_time, a.pic_id, a.pic_cat_id, a.pic_title
 		FROM " . ALBUM_COMMENT_TABLE . " AS c
 		LEFT JOIN " . USERS_TABLE . " AS u ON c.comment_user_id = u.user_id
 		LEFT JOIN " . ALBUM_TABLE . " AS a ON c.comment_pic_id = a.pic_id
@@ -917,7 +918,8 @@ function album_get_last_comment_info($cats)
 	}
 	else
 	{
-		$info .= '<a href="' . append_sid("profile.$phpEx?mode=viewprofile&amp;" . POST_USERS_URL . '=' . $row['user_id']) . '">' . $row['username'] . '</a>';
+		$username = $agcm_color->get_user_color($row['user_group_id'], $row['user_session_time'], $row['username']);
+		$info .= '<a href="' . append_sid("profile.$phpEx?mode=viewprofile&amp;" . POST_USERS_URL . '=' . $row['user_id']) . '">' . $username . '</a>';
 	}
 
 	$info .= '<br />' . $lang['Pic_Image'] . ': <a href="' . append_sid(album_append_uid($album_pic_url . '?pic_id=' . $row['pic_id'])) . '">' . $row['pic_title'] . '</a>';
@@ -929,7 +931,7 @@ function album_get_last_comment_info($cats)
 // Get moderator information for the the category
 // ------------------------------------------------------------------------
 function album_get_moderator_info($cat) {
-	global $phpEx, $lang, $db;
+	global $phpEx, $lang, $db, $agcm_color;
 
 	// Most of this code is copyrighted by Smartor
 	// Modifications are done by IdleVoid
@@ -960,7 +962,7 @@ function album_get_moderator_info($cat) {
 	{
 		for ($j = 0; $j < count($grouprows); $j++)
 		{
-			$group_link = '<a href="' . append_sid("groupcp.$phpEx?" . POST_GROUPS_URL . '=' . $grouprows[$j]['group_id']) . '">' . $grouprows[$j]['group_name'] . '</a>';
+			$group_link = '<a href="' . append_sid("groupcp.$phpEx?" . POST_GROUPS_URL . '=' . $grouprows[$j]['group_id']) . '">' . $agcm_color->get_group_color($grouprows[$j]['group_id'], $grouprows[$j]['group_name']) . 'DEBUG HERE</a>';
 			$moderators .= ($moderators == '') ? $group_link : ', ' . $group_link;
 		}
 	}
