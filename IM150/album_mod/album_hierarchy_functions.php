@@ -306,10 +306,10 @@ function album_build_index($user_id, &$keys, $cur_cat_id = ALBUM_ROOT_CATEGORY, 
 			for ($i = 0; $i < count($sub_cats); $i++)
 			{
 				$total_new = $total_new + $newestpic[$sub_cats[$i]];
-				if ( ($new_images_flag == false) && ($total_new > 0) )
-				{
-					$new_images_flag = true;
-				}
+			}
+			if ( $total_new > 0 )
+			{
+				$new_images_flag = true;
 			}
 
 			// are they any pictures in the current category ?
