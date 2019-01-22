@@ -186,8 +186,8 @@ if ($refresh || $preview)
 				'L_PREVIEW' => $lang['Preview'])
 			);
 			$template->assign_var_from_handle('POST_PREVIEW_BOX', 'preview');
-		} 
-		$template->assign_vars(array('MESSAGE' => $message));
+		}
+		$template->assign_vars(array('SHOUTBOX_MESSAGE' => $message));
 	}
 } else
 if ($submit || isset($_POST['message']))
@@ -453,7 +453,7 @@ if (isset($_GET['highlight']))
 $sql = "SELECT *
 	FROM " . RANKS_TABLE . "
 	ORDER BY rank_special, rank_min";
-if ( !($result = $db->sql_query($sql)) )
+if ( !($result = $db->sql_query($sql, false, "ranks")) )
 {
 	message_die(GENERAL_ERROR, "Could not obtain ranks information.", '', __LINE__, __FILE__, $sql);
 }
@@ -796,7 +796,7 @@ if( $error_msg != '' )
 	);
 	$template->assign_var_from_handle('ERROR_BOX', 'reg_header');
 	$message = ( !empty($_POST['message']) ) ? htmlspecialchars(trim(stripslashes($_POST['message']))) : '';
-	$template->assign_vars(array('MESSAGE' => $message));
+	$template->assign_vars(array('SHOUTBOX_MESSAGE' => $message));
 }
 
  $template->pparse('body'); 
