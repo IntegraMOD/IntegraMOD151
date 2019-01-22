@@ -215,7 +215,7 @@ if(!defined("SQL_LAYER"))
 		//
 		function sql_numrows($query_id = 0)
 		{
-			if ($query_id instanceof sql_cache_fake_key)
+			if ($query_id instanceof sql_cache_fake_key && $this->cached)
 			{
 				return count($this->cache);
 			}
@@ -223,12 +223,12 @@ if(!defined("SQL_LAYER"))
 			{
 				$query_id = $this->query_result;
 			}
-			
 
 			$qstart = microtime(true);
 			$result = ( $query_id ) ? mysqli_num_rows($query_id) : false;
 			$qend = microtime(true);
 			$this->sql_time += $qend - $qstart;
+			return $result;
 		}
 
 		function sql_affectedrows()
@@ -238,6 +238,10 @@ if(!defined("SQL_LAYER"))
 
 		function sql_numfields($query_id)
 		{
+			if ($query_id instanceof sql_cache_fake_key && $this->cached)
+			{
+				return count($this->cache) > 0 ? count($this->cache[0]) : 0;
+			}
 			if ($query_id === false)
 			{
 				$query_id = $this->query_result;
