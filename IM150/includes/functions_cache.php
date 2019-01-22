@@ -676,15 +676,16 @@ function cache_generic($cache_tpl, $cache_file, $table, $key_field, $sql_where='
 	}
 
 	// transfert to a var
-	$template->assign_var_from_handle('cache', 'cache');
-	$res = "<?php\n" . $template->_tpldata['.'][0]['cache'] . "\n?>";
+	$res = "<?php\n" . $template->render_to_string('cache') . "\n?>";
 
 	// output to file
 	$cache_path = 'includes/';
 	$handle = @fopen($phpbb_root_path . $cache_path . $cache_file . '.' . $phpEx, 'w');
-	@flock($fp, LOCK_EX);
-	@fwrite($handle, $res);
-	@flock($fp, LOCK_UN);
+	if (@flock($fp, LOCK_EX))
+	{
+		@fwrite($handle, $res);
+		@flock($fp, LOCK_UN);
+	}
 	@fclose($handle);
 	@umask(0000);
 	@chmod($phpbb_root_path . $cache_path . $cache_file . '.' . $phpEx, 0666);
