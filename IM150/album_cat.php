@@ -418,7 +418,7 @@ $download_img = $images['download_pic'];
 $download_link = append_sid(album_append_uid('album_download.' . $phpEx . '?cat_id=' . $cat_id . ( ($sort_method != '') ? '&sort_method=' . $sort_method : '' ) . ( ($sort_order != '') ? '&sort_order=' . $sort_order : '' ) . ( ($start != '') ? '&start=' . $start : '' )));
 $download_full_link = '<a href="' . $download_link . '"><img src="' . $download_img . '" border="0" alt="' . $lang['Download_page'] . '" title="' . $lang['Download_page'] . '" align="absmiddle" /></a>';
 
-if( $auth_data['upload'] == true )
+if( $auth_data['upload'] == true && empty($enable_picture_upload_switch) )
 {
 	$enable_picture_upload_switch = true;
 	$template->assign_block_vars('enable_picture_upload', array());
