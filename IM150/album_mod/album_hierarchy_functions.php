@@ -729,7 +729,7 @@ function album_get_max_depth(&$keys, $cur_cat_id = ALBUM_ROOT_CATEGORY, $auth_ke
 // Returns all the category id for current
 // catgory and it subs
 //-----------------------------------------------
-function album_get_sub_cat_ids($cur_cat_id = ALBUM_ROOT_CATEGORY, $cats, $auth_key = ALBUM_AUTH_VIEW, $include_cur_cat_id = false)
+function album_get_sub_cat_ids($cur_cat_id = ALBUM_ROOT_CATEGORY, &$cats, $auth_key = ALBUM_AUTH_VIEW, $include_cur_cat_id = false)
 {
 	global $album_data;
 
@@ -1262,10 +1262,10 @@ function album_display_index($user_id, $cur_cat_id = ALBUM_ROOT_CATEGORY, $show_
 				);
 			}
 		}
-				$template->assign_var_from_handle('ALBUM_BOARD_INDEX', 'album');
+		$template->assign_var_from_handle('ALBUM_BOARD_INDEX', 'album');
 	}
 
-		return $display;
+	return $display;
 }
 
 //-----------------------------------------------
