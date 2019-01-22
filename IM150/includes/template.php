@@ -1068,7 +1068,7 @@ class Template {
 	function assign_var_from_handle($varname, $handle)
 	{
 		$this->vars[$varname] = $this->render_to_string($handle);
-		return $res;
+		return $this->vars[$varname];
 	}
 
 	function render_to_string($handle)
