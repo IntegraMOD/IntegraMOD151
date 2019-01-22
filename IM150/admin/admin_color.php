@@ -107,8 +107,53 @@ if ( ( isset($_POST['edit']) || isset($_GET['edit']) ) && !empty($style_id ) )
 	}
 
 	$groups = $db->sql_fetchrowset($result);
-
 	$db->sql_freeresult($result);
+
+	// V: try to find out if every style uses shared values for COLOR_TABLE, and use them as base
+	if ($style_id == -1)
+	{
+		$sql = 'SELECT * FROM ' . COLOR_TABLE;
+		if ( !($result = $db->sql_query($sql)) )
+		{
+			message_die(GENERAL_ERROR, 'Couldn\'t obtain all color data', '', __LINE__, __FILE__, $sql);
+		}
+		$color_data = $db->sql_fetchrowset($result);
+		$db->sql_freeresult($result);
+		$color_fields = array(
+			'color_code',
+			'bold',
+			'italic',
+			'underline',
+			'hover_bold',
+			'hover_italic',
+			'hover_underline',
+		);
+
+		// find which index into $groups corresponds to which group_id
+		$group_j_data = array();
+		foreach ($groups as $j => $group)
+		{
+			$group_j_data[$group['group_id']] = $j;
+		}
+
+		// organize all rows per group_id, so we can find common data per theme for that group
+		$color_per_group = array();
+		foreach ($color_data as $color_row)
+		{
+			$color_per_group[$color_row['group_id']][] = $color_row;
+		}
+
+		foreach ($color_per_group as $group_id => $color_rows)
+		{
+			foreach ($color_fields as $color_field)
+			{
+				// We pretend $style_id == -1 has pre-filled values, if all themes have same color data
+				$shared_key = get_key_all_same($color_rows, $color_field);
+				$groups[$group_j_data[$group_id]][$color_field] = $shared_key;
+			}
+		}
+	}
+
 
 	$s_hidden_fields = '<input type="hidden" name="' . POST_STYLES_URL . '" value="' . $style_id . '" />';
 
@@ -162,13 +207,13 @@ if ( ( isset($_POST['edit']) || isset($_GET['edit']) ) && !empty($style_id ) )
 			$template->assign_block_vars('group_color_edit', array(
 				'ID' => $groups[$j]['group_id'],
 				'GROUP_NAME' => _lang_check($groups[$j]['group_name']),
-				'GROUP_COLOR' => $style_id == -1 ? '' : $groups[$j]['color_code'],
-				'BOLD' => $style_id == -1 ? '' : ( intval($groups[$j]['bold']) ? ' checked="checked"' : '' ),
-				'ITALIC' => $style_id == -1 ? '' : ( intval($groups[$j]['italic']) ? ' checked="checked"' : '' ),
-				'UNDERLINE' => $style_id == -1 ? '' : ( intval($groups[$j]['underline']) ? ' checked="checked"' : '' ),
-				'HOVER_BOLD' => $style_id == -1 ? '' : ( intval($groups[$j]['hover_bold']) ? ' checked="checked"' : '' ),
-				'HOVER_ITALIC' => $style_id == -1 ? '' : ( intval($groups[$j]['hover_italic']) ? ' checked="checked"' : '' ),
-				'HOVER_UNDERLINE' => $style_id == -1 ? '' : ( intval($groups[$j]['hover_underline']) ? ' checked="checked"' : '' ),
+				'GROUP_COLOR' => $groups[$j]['color_code'],
+				'BOLD' => ( intval($groups[$j]['bold']) ? ' checked="checked"' : '' ),
+				'ITALIC' => ( intval($groups[$j]['italic']) ? ' checked="checked"' : '' ),
+				'UNDERLINE' => ( intval($groups[$j]['underline']) ? ' checked="checked"' : '' ),
+				'HOVER_BOLD' => ( intval($groups[$j]['hover_bold']) ? ' checked="checked"' : '' ),
+				'HOVER_ITALIC' => ( intval($groups[$j]['hover_italic']) ? ' checked="checked"' : '' ),
+				'HOVER_UNDERLINE' => ( intval($groups[$j]['hover_underline']) ? ' checked="checked"' : '' ),
 
 				'U_WEIGHT_UP' => append_sid("admin_color." . $phpEx . "?" . POST_GROUPS_URL . "=" . $groups[$j]['group_id'] . "&amp;edit=" . ($groups[$j]['group_weight'] - 15) . "&amp;" . POST_STYLES_URL . "=" . $style_id),
 				'U_WEIGHT_DOWN' => append_sid("admin_color." . $phpEx . "?" . POST_GROUPS_URL . "=" . $groups[$j]['group_id'] . "&amp;edit=" . ($groups[$j]['group_weight'] + 15) . "&amp;" . POST_STYLES_URL . "=" . $style_id),
