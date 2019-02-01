@@ -11,10 +11,13 @@ if ( !empty($setmodules) )
 	
 	$file = basename(__FILE__);
 	$module['approve_admin_approval']['approve_admin_approve_index'] = $file . "";
-	$module['approve_admin_approval']['approve_admin_forum_moderation'] = $file . "?mode=f";
+  //V: disabled, useless
+	//$module['approve_admin_approval']['approve_admin_forum_moderation'] = $file . "?mode=f";
 	$module['approve_admin_approval']['approve_admin_post_moderation'] = $file . "?mode=p";
 	$module['approve_admin_approval']['approve_admin_topic_moderation'] = $file . "?mode=t";
 	$module['approve_admin_approval']['approve_admin_user_moderation'] = $file . "?mode=u";
+
+	$module['approve_admin_approval']['approve_admin_forum_moderation'] = "admin_forums.$phpEx";
 	return;
 }
 
@@ -242,7 +245,9 @@ $template->assign_vars(array(
 		"S_POST_MODERATION" => append_sid('admin_approve.'.$phpEx.'?mode=p'),
 		"S_TOPIC_MODERATION" => append_sid('admin_approve.'.$phpEx.'?mode=t'),
 		"S_USER_MODERATION" => append_sid('admin_approve.'.$phpEx.'?mode=u'),
-		"S_FORUM_MODERATION" => append_sid('admin_approve.'.$phpEx.'?mode=f')
+    // V: changed
+		//"S_FORUM_MODERATION" => append_sid('admin_approve.'.$phpEx.'?mode=f')
+    "S_FORUM_MODERATION" => append_sid('admin_forums.'.$phpEx),
 	)
 );
 $template->pparse("approval_header");
@@ -2520,6 +2525,10 @@ if ( $modevar['p'] == true )
 
 if ( $modevar['f'] == true )
 {
+    // V: ok, so, Approve Mod doesn't deal with forums_extend correctly.
+  // Replace this page with the actual admin_forums page, which has the simpler "Edit" button, and which deals with CH.
+    exit;
+  
 		//forum list page w/ all info & links
 		$template->set_filenames(array(
 			"approve_forums" => "admin/approve_forums.tpl")
@@ -2543,6 +2552,18 @@ if ( $modevar['f'] == true )
 			)
 		);
 		
+    $approve_sql2 = "SELECT * 
+      FROM " . FORUMS_TABLE;
+    if ( !($approve_result2 = $db->sql_query($approve_sql2)) ) 
+    { 
+      message_die(GENERAL_ERROR, $lang['approve_posts_error_obtain'], '', __LINE__, __FILE__, $approve_sql2); 
+    }
+    $forum_rows = array();
+    while ($forum_row = $db->sql_fetchrow($approve_result2))
+    {
+      $forum_rows[$forum_row['forum_id']] = $forum_row;
+    }
+
 		$approve_sql = "SELECT * 
 			FROM " . APPROVE_FORUMS_TABLE . " 
 			ORDER BY forum_id";
@@ -2550,22 +2571,43 @@ if ( $modevar['f'] == true )
 		{ 
 			message_die(GENERAL_ERROR, $lang['approve_posts_error_obtain'], '', __LINE__, __FILE__, $approve_sql); 
 		}
-		$approve_row_class = '';
+    $approve_rows = array();
 		while( $approve_row = $db->sql_fetchrow($approve_result) )
+    {
+      $forum_id = $approve_row['forum_id'];
+      // set the forum name
+      $approve_row['forum_name'] = $forum_rows[$forum_id]['forum_name'];
+      $approve_rows[] = $approve_row;
+
+      // mark the forum as treated
+      unset($forum_rows[$forum_id]);
+    }
+
+    // add missing forums
+    foreach ($forum_rows as $forum_id => $forum_row)
+    {
+			$sql = "INSERT INTO " . APPROVE_FORUMS_TABLE . " (forum_id) 
+        VALUES ($forum_id)";
+      if (!($result = $db->sql_query($sql)))
+      {
+        message_die(GENERAL_ERROR, 'Couldnt add missing approve forums', '', __LINE__, __FILE__, $sql);
+      }
+
+      $approve_rows[] = array(
+        'forum_id' => $forum_id,
+        'forum_name' => $forum_row['forum_name'],
+        'enabled' => false,
+      );
+    }
+
+		$approve_row_class = '';
+    foreach ($approve_rows as $approve_row)
 		{
-			$approve_sql2 = "SELECT * 
-				FROM " . FORUMS_TABLE . " 
-				WHERE forum_id = " . intval($approve_row['forum_id']);
-			if ( !($approve_result2 = $db->sql_query($approve_sql2)) ) 
-			{ 
-				message_die(GENERAL_ERROR, $lang['approve_posts_error_obtain'], '', __LINE__, __FILE__, $approve_sql2); 
-			}
-			$approve_row2 = $db->sql_fetchrow($approve_result2);
 			$approve_row_class = ($approve_row_class == 'row1') ? 'row2' : 'row1';
 			$template->assign_block_vars("approve_forums", array(
 					"S_ID" => $approve_row['forum_id'],
-					"S_NAME" => (!empty($approve_row2['forum_name'])) ? $approve_row2['forum_name'] : $lang['approve_admin_empty'],
-					"S_EDIT" => append_sid("admin_forums.$phpEx" . "?mode=editforum&f=" . $approve_row2['forum_id']),
+					"S_NAME" => (!empty($approve_row['forum_name'])) ? $approve_row['forum_name'] : $lang['approve_admin_empty'],
+					"S_EDIT" => append_sid("admin_forums.$phpEx" . "?mode=editforum&f=" . $approve_row['forum_id']),
 					"S_LINK" => append_sid("../viewforum.$phpEx" . "?f=" . $approve_row['forum_id']),
 					"S_ENABLED" => ($approve_row['enabled']) ? $lang['Yes'] : $lang['No'],
 					"S_ROW" => $approve_row_class

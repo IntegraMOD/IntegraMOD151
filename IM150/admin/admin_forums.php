@@ -35,6 +35,27 @@ require($phpbb_root_path . 'extension.inc');
 require('./pagestart.' . $phpEx);
 include($phpbb_root_path . 'includes/functions_admin.'.$phpEx);
 
+// V: added approve header here, seems like it's the only useful thing this page does...
+$template->set_filenames(array(
+	"approval_header" => "admin/approve_header.tpl")
+);
+$template->assign_vars(array(
+		"L_APPROVE_INDEX" => $lang['approve_admin_approve_index'],
+		"L_POST_MODERATION" => $lang['approve_admin_post_moderation'],
+		"L_TOPIC_MODERATION" => $lang['approve_admin_topic_moderation'],
+		"L_USER_MODERATION" => $lang['approve_admin_user_moderation'],
+		"L_FORUM_MODERATION" => $lang['approve_admin_forum_moderation'],
+		"S_APPROVE_INDEX" => append_sid('admin_approve.'.$phpEx),
+		"S_POST_MODERATION" => append_sid('admin_approve.'.$phpEx.'?mode=p'),
+		"S_TOPIC_MODERATION" => append_sid('admin_approve.'.$phpEx.'?mode=t'),
+		"S_USER_MODERATION" => append_sid('admin_approve.'.$phpEx.'?mode=u'),
+    // V: changed
+		//"S_FORUM_MODERATION" => append_sid('admin_approve.'.$phpEx.'?mode=f')
+    "S_FORUM_MODERATION" => append_sid('admin_forums.'.$phpEx),
+	)
+);
+$template->pparse("approval_header");
+
 //
 // Mode setting
 //
@@ -86,11 +107,6 @@ if( !empty($mode) )
 	switch($mode)
 	{
 		case 'editforum':
-			//
-			// Show form to create/modify a forum
-			//
-			if ($mode == 'editforum')
-			{
 				// $newmode determines if we are going to INSERT or UPDATE after posting?
 
 				$l_title = $lang['Edit_forum'];
@@ -180,8 +196,6 @@ if( !empty($mode) )
 // End Approve_Mod Block : 14
 //
 
-			}
-
 			$template->set_filenames(array(
 				"body" => "admin/forum_edit_body.tpl")
 			);
@@ -191,8 +205,6 @@ if( !empty($mode) )
 //	
 // Begin Approve_Mod Block : 15
 //
-			if ( $mode == 'editforum' )
-			{
 				$template->assign_block_vars("approve_mod_switch", array() );
 				$template->assign_vars(array(
 					'L_APPROVE_POSTS' => $lang['approve_admin_posts'],
@@ -251,7 +263,7 @@ if( !empty($mode) )
 					'S_APPROVE_HIDE_TOPICS_DISABLED' => $approve_mod['hide_topics_disabled'],
 					'S_APPROVE_HIDE_POSTS_DISABLED' => $approve_mod['hide_posts_disabled'] )
 				);
-			}
+			
 // 
 // End Approve_Mod Block : 15
 //
@@ -404,7 +416,8 @@ for ($i=0; $i < count($keys['id']); $i++) {
                  $res = str_replace("[*$k*]", $spacer, $res); 
             } 
         } elseif ($level == 0 && $last_level == -1) { 
-            $res .='|'; 
+          //V: this adds || to Root... seems unnecessary..?
+            //$res .='|'; 
         } 
         $last_level = $level; 
         // name 
