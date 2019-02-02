@@ -82,6 +82,14 @@ function fix_weight_blocks($l_id)
 	}
 }
 
+function format_blockfile_name($file)
+{
+	$temp = str_replace(".".$phpEx,"",$file);
+	$temp1 = str_replace('blocks_imp_','',$temp);
+	$temp1 = str_replace('_',' ',$temp1);
+	return $temp1;
+}
+
 function generate_smilies2($mode, $page_id)
 {
 	global $db, $board_config, $template, $lang, $images, $theme, $phpEx, $phpbb_root_path;
@@ -307,14 +315,12 @@ if( $mode != "" && $mode != "blocks" )
 						if ($pos!==false)
 						{
 							$temp = str_replace(".".$phpEx,"",$file);
-							$temp1 = str_replace('blocks_imp_','',$temp);
-							$temp1 = str_replace('_',' ',$temp1);
 							$blockfile .= '<option value="' . $temp .'" ';
 							if($b_info['blockfile']==$temp)
 							{
 								$blockfile .= 'selected';
 							}
-							$blockfile .= '>' . $temp1;
+							$blockfile .= '>' . format_blockfile_name($file);
 						}
 					}
 				}
@@ -395,9 +401,7 @@ if( $mode != "" && $mode != "blocks" )
 					if ($pos!==false)
 					{
 						$temp = str_replace(".".$phpEx,"",$file);
-						$temp1 = str_replace('blocks_imp_','',$temp);
-						$temp1 = str_replace('_',' ',$temp1);
-						$blockfile .= '<option value="' . $temp .'">' . $temp1;
+						$blockfile .= '<option value="' . $temp .'">' . format_blockfile_name($temp);
 					}
 				}
 			}
