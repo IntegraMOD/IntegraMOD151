@@ -1,6 +1,7 @@
 IM150/var_cache/cache_*
 IM150/cache/*.php
 IM150/modules/cache/**/*.php
+IM150/modules/cache/**/*.php.html
 IM150/backups/*.sql
 
 ## Windows
