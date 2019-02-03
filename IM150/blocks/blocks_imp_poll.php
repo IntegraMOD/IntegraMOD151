@@ -32,8 +32,8 @@ if(!function_exists('imp_poll_block_func'))
 		global $template, $portal_config, $db, $userdata, $images, $lang, $phpEx;
 
 		$template->assign_block_vars('PORTAL_POLL', array());
-    // pre-assign PORTAL_POLL, it'll get overloaded later if we have polls
-    $template->assign_var('PORTAL_POLL', $lang['No_poll']);
+	    // pre-assign PORTAL_POLL, it'll get overloaded later if we have polls
+	    $template->assign_var('PORTAL_POLL', $lang['No_poll']);
 
 		$sql = 'SELECT
 			  t.*, vd.*
@@ -64,10 +64,10 @@ if(!function_exists('imp_poll_block_func'))
 
 		if($total_posts = $db->sql_numrows($result))
 		{
-		$pollrow = $db->sql_fetchrowset($result);
-		$db->sql_freeresult($result);
+			$pollrow = $db->sql_fetchrowset($result);
+			$db->sql_freeresult($result);
 
-		$topic_id = $pollrow[0]['topic_id'] ;
+			$topic_id = $pollrow[0]['topic_id'] ;
 
 			$sql = "SELECT vd.vote_id, vd.vote_text, vd.vote_start, vd.vote_length, vr.vote_option_id, vr.vote_option_text, vr.vote_result
 				FROM " . VOTE_DESC_TABLE . " vd, " . VOTE_RESULTS_TABLE . " vr

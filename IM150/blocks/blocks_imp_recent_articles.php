@@ -24,7 +24,7 @@ if ( !defined('IN_PHPBB') )
 }
 define('MXBB_MODULE', 0);
 
-if(!function_exists(imp_recent_articles_func))
+if(!function_exists('imp_recent_articles_func'))
 {
 	function imp_recent_articles_func()
 	{
@@ -44,39 +44,29 @@ if(!function_exists(imp_recent_articles_func))
 		
 		
 		
-				$sql = "SELECT * FROM " 
-				. KB_ARTICLES_TABLE . "
-				ORDER BY article_id DESC LIMIT ". $portal_config['cm_total_articles'];
+		$sql = "SELECT * FROM " 
+		. KB_ARTICLES_TABLE . "
+		ORDER BY article_id DESC LIMIT ". $portal_config['cm_total_articles'];
 					/*$sql = 'SELECT *
 		FROM ' . KB_ARTICLES_TABLE . '
 		WHERE article_id';*/
 		
 		if( !($result = $db->sql_query($sql)) )
 		{
-				message_die(GENERAL_ERROR, 'Could not query users', '', __LINE__, __FILE__, $sql);
+			message_die(GENERAL_ERROR, 'Could not query users', '', __LINE__, __FILE__, $sql);
 		}
 
 		//now lets get our info
-		if ( $row = $db->sql_fetchrow($result) )
+		while ( $row = $db->sql_fetchrow($result) )
 		{
-	   		$i = 0;
-			do
-			{
-			
-					$title = $row['article_title'];
-	   				$article_category_id = $row['article_id'];	
-					$url = append_sid($phpbb_root_path . "kb.$phpEx?mode=article&amp;k=$article_category_id");
-		
-					$template->assign_block_vars('recent_articles', array(
-								'TITLE' => $title,
-								'U_ARTICLE' => $url
-							)
-						);
-					
-					$i++;
-			}
-			while ( $row = $db->sql_fetchrow($result) );
-		
+			$title = $row['article_title'];
+			$article_category_id = $row['article_id'];	
+			$url = append_sid($phpbb_root_path . "kb.$phpEx?mode=article&amp;k=$article_category_id");
+
+			$template->assign_block_vars('recent_articles', array(
+				'TITLE' => $title,
+				'U_ARTICLE' => $url
+			));
 		}
 	}
 }

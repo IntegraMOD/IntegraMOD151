@@ -25,7 +25,7 @@ if ( !defined('IN_PHPBB') )
    die("Hacking attempt"); 
 } 
 
-if(!function_exists(imp_chat_block_func)) 
+if(!function_exists('imp_chat_block_func')) 
 { 
    function imp_chat_block_func() 
    { 
@@ -46,7 +46,8 @@ if(!function_exists(imp_chat_block_func))
          // ChatBox Mod 
          'TOTAL_CHATTERS_ONLINE' => sprintf( $lang[ 'How_Many_Chatters' ], $num_users_in_chat ), 
          'CHATTERS_LIST' => '<b>' . $users_in_chat . '</b>', 
-         'L_CHAT_LINK' => $chat_link)); 
+         'L_CHAT_LINK' => $chat_link
+      ));
    } 
 } 
 

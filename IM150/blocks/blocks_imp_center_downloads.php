@@ -23,13 +23,16 @@ if ( !defined('IN_PHPBB') )
 	die("Hacking attempt");
 }
 
-if(!function_exists(imp_center_downloads_block_func))
+if(!function_exists('imp_center_downloads_block_func'))
 {
 	function imp_center_downloads_block_func()
 	{
 		global $template, $portal_config, $table_prefix, $phpEx, $db, $lang, $board_config, $theme;
 
-		$sql = "SELECT * FROM " . $table_prefix."pa_files ORDER BY file_dls DESC LIMIT 0," . $portal_config['md_num_top_downloads'];
+		$sql = "SELECT *
+			FROM " . $table_prefix."pa_files
+			ORDER BY file_dls DESC
+			LIMIT 0," . $portal_config['md_num_top_downloads'];
 		if ( !($result = $db->sql_query($sql)) )
 		{
 			message_die(GENERAL_ERROR, 'Could not query database for the most downloads');
@@ -51,7 +54,10 @@ if(!function_exists(imp_center_downloads_block_func))
 			$i++;
 		}
 
-		$sql = "SELECT * FROM " . $table_prefix."pa_files ORDER BY file_time DESC LIMIT 0," . $portal_config['md_num_new_downloads'];
+		$sql = "SELECT *
+			FROM " . $table_prefix."pa_files
+			ORDER BY file_time DESC
+			LIMIT 0," . $portal_config['md_num_new_downloads'];
 		if ( !($result = $db->sql_query($sql)) )
 		{
 			message_die(GENERAL_ERROR, 'Could not query database for the most downloads');
@@ -76,8 +82,7 @@ if(!function_exists(imp_center_downloads_block_func))
 		$template->assign_vars(array(
 			'TOP_DOWNLOADS' => $lang['Top_downloads'],
 			'NEW_DOWNLOADS' => $lang['New_downloads']
-			)
-		);
+		));
 	}
 }
 

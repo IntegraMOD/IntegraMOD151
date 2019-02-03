@@ -25,7 +25,7 @@ if ( !defined('IN_PHPBB') )
 	die("Hacking attempt");
 }
 
-if(!function_exists(imp_forum_block_func))
+if(!function_exists('imp_forum_block_func'))
 {
 	function imp_forum_block_func()
 	{

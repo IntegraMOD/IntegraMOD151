@@ -25,7 +25,7 @@ if ( !defined('IN_PHPBB') )
 	die("Hacking attempt");
 }
 
-if(!function_exists(imp_links_block_func))
+if(!function_exists('imp_links_block_func'))
 {
 	function imp_links_block_func()
 	{
@@ -42,7 +42,7 @@ if(!function_exists(imp_links_block_func))
 		{
 			$sql = "SELECT *
 					FROM ". LINK_CONFIG_TABLE;
-			if(!$result = $db->sql_query($sql))
+			if(!$result = $db->sql_query($sql, false, 'link_config'))
 			{
 				message_die(GENERAL_ERROR, "Could not query Link config information", "", __LINE__, __FILE__, $sql);
 			}
@@ -121,4 +121,3 @@ if(!function_exists(imp_links_block_func))
 }
 
 imp_links_block_func();
-?>

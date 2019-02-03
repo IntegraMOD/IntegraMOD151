@@ -25,7 +25,7 @@ if ( !defined('IN_PHPBB') )
 	die("Hacking attempt");
 }
 
-if(!function_exists(imp_random_attach_block_func))
+if(!function_exists('imp_random_attach_block_func'))
 {
 	function imp_random_attach_block_func()
 	{
@@ -57,22 +57,22 @@ if(!function_exists(imp_random_attach_block_func))
 			$fsql = "AND p.forum_id in (-1)";
 		}
 		$sql = "SELECT 
-							ad.physical_filename,
-							p.post_id
-						FROM 
-							".ATTACHMENTS_TABLE." a, 
-							".ATTACHMENTS_DESC_TABLE." ad,
-							".POSTS_TABLE." p
-						WHERE 
-									a.attach_id = ad.attach_id 
-							AND a.post_id = p.post_id
-							AND ad.thumbnail =1
-							$fsql
-							$sqlexcl
-						ORDER BY 
-							rand()
-						LIMIT
-			  			0,$maxfiles";
+					ad.physical_filename,
+					p.post_id
+				FROM 
+					".ATTACHMENTS_TABLE." a, 
+					".ATTACHMENTS_DESC_TABLE." ad,
+					".POSTS_TABLE." p
+				WHERE 
+							a.attach_id = ad.attach_id 
+					AND a.post_id = p.post_id
+					AND ad.thumbnail =1
+					$fsql
+					$sqlexcl
+				ORDER BY 
+					rand()
+				LIMIT
+	  			0,$maxfiles";
 		if(!$result = $db->sql_query($sql))
 		{
 			message_die(GENERAL_ERROR, 'Could not obtain attachments', '', __LINE__, __FILE__, $sql);

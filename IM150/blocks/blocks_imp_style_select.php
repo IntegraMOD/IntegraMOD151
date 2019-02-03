@@ -33,20 +33,20 @@ if(!function_exists('imp_style_select_block_func'))
 		global $_GET, $_POST, $_COOKIE;
 		// BEGIN Style Select MOD
 		// Security update 02 September 2006 B starts// 
-		if(isset($_POST['STYLE_URL']) || (int)isset($_GET['STYLE_URL']))
+		if(isset($_POST['STYLE_URL']) || isset($_GET['STYLE_URL']))
 		{
-			$style = (int)urldecode((isset($_POST['STYLE_URL'])) ? $_POST['STYLE_URL'] : (int)$_GET['STYLE_URL']);
+			$style = isset($_POST['STYLE_URL']) ? (int)$_POST['STYLE_URL'] : (int)$_GET['STYLE_URL'];
 			if($style == 0) { die('Hacking attempt'); }
 			$sql = "SELECT themes_id
 					FROM " . THEMES_TABLE . "
-					WHERE style_name = '$style'";
+					WHERE themes_id = '$style'";
 			if( ($result = $db->sql_query($sql)) && ($row = $db->sql_fetchrow($result)) )
 			{
 				$style = $row['themes_id'];
 			}
 			else
 			{
-				message_die(GENERAL_ERROR, "Hacking attempt... Could not find style name $style.");
+				message_die(GENERAL_ERROR, "Hacking attempt... Could not find style id $style.");
 			}
 		}
 		elseif (isset($_COOKIE[$board_config['cookie_name'] . '_style']) )
