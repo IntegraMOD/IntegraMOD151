@@ -335,9 +335,47 @@ function display_pm_attachments($privmsgs_id, $switch_attachment)
 //
 // Initializes some templating variables for displaying Attachments in Private Messages
 //
-function init_display_pm_attachments($switch_attachment)
+function init_display_pm_attachments($switch_attachment) 
+{ 
+   global $attach_config, $template, $userdata, $lang, $attachments, $privmsg; 
+   if ($userdata['user_level'] == ADMIN) 
+   { 
+      $auth_download = 1; 
+   } 
+   else 
+   { 
+      $auth_download = intval($attach_config['allow_pm_attach']); 
+   } 
+   if (intval($switch_attachment) == 0 || intval($attach_config['disable_mod']) || !$auth_download) 
+   { 
+      return; 
+   } 
+   $privmsgs_id = $privmsg['privmsgs_id']; 
+    
+   @reset($attachments); 
+   $attachments['_' . $privmsgs_id] = get_attachments_from_pm($privmsgs_id); 
+   if (count($attachments['_' . $privmsgs_id]) == 0) 
+   { 
+      return; 
+   } 
+   $template->assign_block_vars('postrow', array()); 
+       
+   init_display_template('body', '{ATTACHMENTS}'); 
+   init_complete_extensions_data(); 
+    
+   $template->assign_vars(array( 
+      'L_POSTED_ATTACHMENTS' => $lang['Posted_attachments'], 
+      'L_KILOBYTE' => $lang['KB']) 
+   ); 
+   display_pm_attachments($privmsgs_id, $switch_attachment); 
+} 
+
+//
+// Initializes some templating variables for displaying Attachments in Private Messages - Track PMs
+// V: for Track PMs compat with attach_mod
+function init_display_track_pms_attachments($switch_attachment, $privmsg_ids)
 {
-	global $attach_config, $template, $userdata, $lang, $attachments, $privmsg;
+	global $attach_config, $template, $userdata, $lang, $attachments;
 
 	if ($userdata['user_level'] == ADMIN)
 	{
@@ -353,28 +391,24 @@ function init_display_pm_attachments($switch_attachment)
 		return;
 	}
 
-	$privmsgs_id = $privmsg['privmsgs_id'];
-	
 	@reset($attachments);
-	$attachments['_' . $privmsgs_id] = get_attachments_from_pm($privmsgs_id);
-
-	if (count($attachments['_' . $privmsgs_id]) == 0)
+	$fetched_attachments = get_attachments_from_pm($privmsg_ids);
+	if (count($fetched_attachments) == 0)
 	{
 		return;
 	}
 
-	$template->assign_block_vars('postrow', array());
-		
-	init_display_template('body', '{ATTACHMENTS}');
+	// V: first, reset, just in case we fetched the same privmsg attach twice
+	// (this always happens with the Track PMs Mod)
+	foreach ($fetched_attachments as $row)
+	{
+		$attachments['_' . $row['privmsgs_id']] = array();
+	}
 
-	init_complete_extensions_data();
-	
-	$template->assign_vars(array(
-		'L_POSTED_ATTACHMENTS' => $lang['Posted_attachments'],
-		'L_KILOBYTE' => $lang['KB'])
-	);
-
-	display_pm_attachments($privmsgs_id, $switch_attachment);
+	foreach ($fetched_attachments as $row)
+	{
+		$attachments['_' . $row['privmsgs_id']][] = $row;
+	}
 }
 
 //

@@ -188,12 +188,17 @@ if ( $mode == 'read' )
 	}
 
 	$privmsg_id = $privmsg['privmsgs_id'];
+
+	// list of all IDs, current + reviewing
+	$privmsg_ids = array($privmsg['privmsgs_id']);
+
 // View PM while replying MOD, By Manipe
 	$id_for_pm_track = ($privmsg_id) ? $privmsg_id : $id_for_pm_track_post_vars;
 
 	if ($id_for_pm_track)
 	{
-		$pm_track_id = pm_track_all_history($id_for_pm_track, $privmsgs_id);
+		// $pass to 1, so that we don't display review if there's only one
+		$pm_track_id = pm_track_all_history($id_for_pm_track, $privmsgs_id, 1);
 	}
 // View PM while replying MOD, By Manipe
 
@@ -286,7 +291,7 @@ if ( $mode == 'read' )
 			}
 			$privmsgs_track_id = $privmsg_id;
 		}
-// View PM while replying MOD, By Manipe
+	// END View PM while replying MOD, By Manipe
 
 		//
 		// This makes a copy of the post and stores it as a SENT message from the sendee. Perhaps
@@ -308,9 +313,11 @@ if ( $mode == 'read' )
 		{
 			message_die(GENERAL_ERROR, 'Could not insert private message sent text', '', __LINE__, __FILE__, $sql);
 		}
+
+		// V: moved this duplication code into the if
+		$attachment_mod['pm']->duplicate_attachment_pm($privmsg['privmsgs_attachment'], $privmsg['privmsgs_id'], $privmsg_sent_id);
 	}
 
-	$attachment_mod['pm']->duplicate_attachment_pm($privmsg['privmsgs_attachment'], $privmsg['privmsgs_id'], $privmsg_sent_id);
 	//
 	// Pick a folder, any folder, so long as it's one below ...
 	//
@@ -449,7 +456,7 @@ if ( $mode == 'read' )
 	$username_to = $agcm_color->get_user_color($privmsg['user_group_id_2'], $privmsg['user_session_time_2'], $privmsg['username_2']);
 //-- fin mod : Advanced Group Color Management ---------------------------------
 	$user_id_to = $privmsg['user_id_2'];
-	init_display_pm_attachments($privmsg['privmsgs_attachment']);
+	init_display_pm_attachments($privmsg['privmsgs_attachment'], $privmsg['privmsgs_id']);
 
 	$post_date = create_date($board_config['default_dateformat'], $privmsg['privmsgs_date'], $board_config['board_timezone']);
 
@@ -1892,6 +1899,10 @@ else if ( $submit || $refresh || $mode != '' )
 	}
 // View PM while replying MOD, By Manipe
 
+
+// V: this if below is from masterdavid's "View PMs while replying".
+//    it is disabled because we use the more advanced "Track PMs" mod.
+/*
 if(isset($_GET['p']))
 {
 	$post_to_review = intval($_GET['p']);
@@ -1923,6 +1934,7 @@ if(isset($_GET['p']))
 		)
 	);
 }
+*/
 
 	//
 	// Send smilies to template

@@ -2728,7 +2728,7 @@ function get_key_all_same($xs, $key, $default = '', $ignore_empty = false)
 
 
 // View PM while replying MOD, By Manipe
-function pm_track_all_history($id_for_pm_track, $pm_pass_id = 0)
+function pm_track_all_history($id_for_pm_track, $pm_pass_id = 0, $pass = 0)
 {
 // Specifies the number of messages that change if you want to reduce server load 
 	$pm_track_limiter = 200;
@@ -2771,7 +2771,7 @@ function pm_track_all_history($id_for_pm_track, $pm_pass_id = 0)
 
 		$list_row = array();
 
-		$sql = "SELECT pm.privmsgs_id, pm.privmsgs_type, pm.privmsgs_subject, pm.privmsgs_date, pm.privmsgs_enable_html, pm.privmsgs_enable_smilies, pmt.privmsgs_bbcode_uid, pmt.privmsgs_text, u.username AS username_1, u.user_id AS user_id_1, u2.username AS username_2, u2.user_id AS user_id_2, u.user_avatar, u.user_avatar_type, u.user_allowavatar
+		$sql = "SELECT pm.privmsgs_id, pm.privmsgs_type, pm.privmsgs_subject, pm.privmsgs_date, pm.privmsgs_enable_html, pm.privmsgs_enable_smilies, pm.privmsgs_attachment, pmt.privmsgs_bbcode_uid, pmt.privmsgs_text, u.username AS username_1, u.user_id AS user_id_1, u2.username AS username_2, u2.user_id AS user_id_2, u.user_avatar, u.user_avatar_type, u.user_allowavatar
 			FROM " . PRIVMSGS_TABLE . " pm, " . PRIVMSGS_TEXT_TABLE . " pmt, " . USERS_TABLE . " u, " . USERS_TABLE . " u2
 			WHERE pmt.privmsgs_text_id = pm.privmsgs_id
 				AND pm.privmsgs_track_id = " . $pm_track_id . "
@@ -2795,20 +2795,26 @@ function pm_track_all_history($id_for_pm_track, $pm_pass_id = 0)
 			message_die(GENERAL_ERROR, 'Could not obtain private message for tracking', '', __LINE__, __FILE__, $sql);
 		}
 
+		$privmsg_ids = array();
+		$switch_attachment = false;
 		while ( $row = $db->sql_fetchrow($result) )
 		{
-			if ($row['privmsgs_to_userid'] == $row['privmsgs_from_userid']
-				&& ($row['privmsgs_type'] == PRIVMSGS_SENT_MAIL || $row['privmsgs_type'] == PRIVMSGS_SAVED_OUT_MAIL))
-			{ // V: if we're sending PMs to ourselves, skip it all
-				continue;
+			$privmsg_ids[] = $row['privmsgs_id'];
+			if ($row['privmsgs_attachment'])
+			{
+				$switch_attachment = true;
 			}
-
 			$list_row[] = $row;
+		}
+		if ($switch_attachment)
+		{
+			init_display_track_pms_attachments($switch_attachment, $privmsg_ids);
+			init_display_template('pm_tracker', '{ATTACHMENTS}');
 		}
 
 		$counter_list_row = count($list_row);
 
-		if ( ( $counter_list_row > 0 ) && ( $pm_track_id != 0 ) )
+		if ( ( $counter_list_row > $pass ) && ( $pm_track_id != 0 ) )
 		{
 			for ($i = 0; $i < $counter_list_row; $i++)
 			{
@@ -2883,7 +2889,6 @@ function pm_track_all_history($id_for_pm_track, $pm_pass_id = 0)
 
 				$avatar_img = '';
 				if ( $list_row[$i]['user_avatar_type'] && $list_row[$i]['user_allowavatar'] )
-
 				{
 					switch( $list_row[$i]['user_avatar_type'] )
 					{
@@ -2914,14 +2919,26 @@ function pm_track_all_history($id_for_pm_track, $pm_pass_id = 0)
 					'IS_CURRENT' => $is_current,
 					)
 				);
+
+				display_pm_attachments($list_row[$i]['privmsgs_id'], $list_row[$i]['privmsgs_attachment']);
 			}
 		}
 	}
-	if ( ( $counter_list_row > 0 ) && ( $pm_track_id != 0 ) )
+	if ( ( $counter_list_row > $pass ) && ( $pm_track_id != 0 ) )
 	{
 		$template->assign_var_from_handle('TOPIC_REVIEW_BOX', 'pm_tracker');
 	}
 
+	$template->_tpldata['postrow.'] = array();
+	$template->_tpldata['switch_attachments.'] = array();
+
 	return $pm_track_id;
 }
 // View PM while replying MOD, By Manipe
+
+// V: Returns a lang key OR a default value
+function lang_key($key, $default = '')
+{
+	global $lang;
+	return isset($lang[$key]) ? $lang[$key] : $default;
+}

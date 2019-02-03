@@ -29,7 +29,9 @@
 			<tr>
 				<td colspan="2"><span class="postbody">{postrow.MESSAGE}</span></td>
 			</tr>
-
+			<tr>
+				<td colspan="2">{ATTACHMENTS}</td>
+			</tr>
 			<tr> 
 				<td colspan="2"><br /><span class="genmed">&nbsp;{postrow.PRIVMSGS_LINK}</span></td>
 			</tr>
