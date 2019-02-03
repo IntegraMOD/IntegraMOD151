@@ -176,6 +176,8 @@ class report_privmsg extends report_module
 		return append_sid("privmsg.$phpEx?mode=read$sep" . POST_POST_URL . '=' . (int) $report_subject, $non_html_amp);
 	}
 	
+	// V: TODO reportee_obtain
+
 	//
 	// Returns report subject title
 	//

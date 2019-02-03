@@ -993,7 +993,6 @@ CREATE TABLE phpbb_themes_select_info (
 	themes_id mediumint(8) unsigned NOT NULL auto_increment,
 	style_author varchar(50) NOT NULL default '',
 	style_version varchar(10) NOT NULL default '',
-	style_date date NOT NULL default '0000-00-00',
 	style_website varchar(100) NOT NULL default '',
 	style_views mediumint(8) unsigned NOT NULL default '0',
 	style_dlurl varchar(100) NOT NULL default '',

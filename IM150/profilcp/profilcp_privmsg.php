@@ -277,7 +277,8 @@ if ( $mode == 'read' )
 				}
 			}
 		}
-// View PM while replying MOD, By Manipe
+
+		// View PM while replying MOD, By Manipe
 		$privmsgs_track_id = $privmsg['privmsgs_track_id'];
 
 		if ( $privmsgs_track_id == 0 )

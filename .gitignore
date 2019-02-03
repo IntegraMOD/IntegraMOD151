@@ -2,7 +2,9 @@ IM150/var_cache/cache_*
 IM150/cache/*.php
 IM150/modules/cache/**/*.php
 IM150/modules/cache/**/*.php.html
+IM150/modules/cache/explain/*.html
 IM150/backups/*.sql
+IM150/ctracker/logfiles/*.txt
 
 ## Windows
 
