@@ -1016,7 +1016,8 @@ else if ( $search_keywords != '' || $search_author != '' || $search_id )
 	{
 		if ( $show_results == 'posts' )
 		{
-			$sql = "SELECT pt.post_text, pt.bbcode_uid, pt.post_subject, p.*, f.forum_id, f.forum_name, t.*, u.username, u.user_id, u.user_sig, u.user_sig_bbcode_uid  
+//-- mod : Advanced Group Color Management -------------------------------------
+			$sql = "SELECT pt.post_text, pt.bbcode_uid, pt.post_subject, p.*, f.forum_id, f.forum_name, t.*, u.username, u.user_id, u.user_sig, u.user_sig_bbcode_uid, u.user_group_id, u.user_session_time
 				FROM " . FORUMS_TABLE . " f, " . TOPICS_TABLE . " t, " . USERS_TABLE . " u, " . POSTS_TABLE . " p, " . POSTS_TEXT_TABLE . " pt 
 				WHERE p.post_id IN ($search_results)
 					AND pt.post_id = p.post_id
@@ -1026,7 +1027,10 @@ else if ( $search_keywords != '' || $search_author != '' || $search_id )
 		}
 		else
 		{
-			$sql = "SELECT u.user_group_id, u.user_session_time, t.*, f.forum_id, f.forum_name, u.username, u.user_id, u2.username as user2, u2.user_id as id2, p.post_username, p2.post_username AS post_username2, p2.post_time 
+//-- mod : Advanced Group Color Management -------------------------------------
+      $sql = "SELECT u.user_group_id, u.user_session_time, t.*, f.forum_id, f.forum_name, u.username, u.user_id, u2.username as user2, u2.user_id as id2, p.post_username, p2.post_username AS post_username2, p2.post_time,
+        u.user_group_id as user_group_id_1, u.user_session_time as user_session_time_1,
+        u2.user_group_id as user_group_id_2, u2.user_session_time as user_session_time_2
 				FROM " . TOPICS_TABLE . " t, " . FORUMS_TABLE . " f, " . USERS_TABLE . " u, " . POSTS_TABLE . " p, " . POSTS_TABLE . " p2, " . USERS_TABLE . " u2
 				WHERE t.topic_id IN ($search_results) 
 					AND t.topic_poster = u.user_id
@@ -1036,10 +1040,6 @@ else if ( $search_keywords != '' || $search_author != '' || $search_id )
 					AND u2.user_id = p2.poster_id";
 		}
 
-//-- mod : Advanced Group Color Management -------------------------------------
-//-- add
-    $sql = str_replace('SELECT ', 'SELECT u.user_group_id as user_group_id_1, u2.user_group_id as user_group_id_2, u.user_session_time as user_session_time_1, u2.user_session_time as user_session_time_2, ', $sql);
-//-- fin mod : Advanced Group Color Management ---------------------------------
 		$per_page = ( $show_results == 'posts' ) ? $board_config['posts_per_page'] : $board_config['topics_per_page'];
 
 		$sql .= " ORDER BY ";
