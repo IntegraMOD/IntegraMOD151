@@ -148,7 +148,8 @@ if ( ( isset($_POST['edit']) || isset($_GET['edit']) ) && !empty($style_id ) )
 			foreach ($color_fields as $color_field)
 			{
 				// We pretend $style_id == -1 has pre-filled values, if all themes have same color data
-				$shared_key = get_key_all_same($color_rows, $color_field);
+				// pass true to ignore empty values (i.e. new styles)
+				$shared_key = get_key_all_same($color_rows, $color_field, '', true);
 				$groups[$group_j_data[$group_id]][$color_field] = $shared_key;
 			}
 		}

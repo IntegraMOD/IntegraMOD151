@@ -2687,9 +2687,10 @@ function bbcode_box()
 }
 
 /*
- * Returns a sub-key's value if the whole array has the same value for that
+ * Returns a sub-key's value if the whole array has the same value for that.
+ * If $ignore_empty is true, we discard empty values as irrelevant instead of breaking the loop.
  */
-function get_key_all_same($xs, $key, $default = '')
+function get_key_all_same($xs, $key, $default = '', $ignore_empty = false)
 {
 	if (count($xs) === 0)
 	{
@@ -2702,11 +2703,24 @@ function get_key_all_same($xs, $key, $default = '')
 		return $start;
 	}
 
-	foreach ($xs as $x)
+	if ($ignore_empty)
 	{
-		if ($start !== $x[$key])
+		foreach ($xs as $x)
 		{
-			return $default;
+			if (!empty($x[$key]) && $start !== $x[$key])
+			{
+				return $default;
+			}
+		}
+	}
+	else
+	{
+		foreach ($xs as $x)
+		{
+			if ($start !== $x[$key])
+			{
+				return $default;
+			}
 		}
 	}
 	return $start;
