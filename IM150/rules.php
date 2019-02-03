@@ -57,7 +57,7 @@ $template->set_filenames(array(
 //
 // Get message of the rules.
 //
-$sql = "SELECT * FROM " . RULES_TABLE . "";
+$sql = "SELECT * FROM " . RULES_TABLE;
 
 if( !($result = $db->sql_query($sql)) )
 {

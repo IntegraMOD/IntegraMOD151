@@ -54,7 +54,9 @@ switch ($_GET['mode']) {
 			//
 			// Save data rules.
 			//
-			$sql = "UPDATE " . RULES_TABLE . " SET rules='$_POST[rules_data]', date=$date";
+			$sql = "UPDATE " . RULES_TABLE . "
+			SET rules='" . str_replace("\'", "''", $_POST['rules_data']) . "',
+			date=$date";
 
 			if ( !$db->sql_query($sql) )
 			{
@@ -89,7 +91,8 @@ switch ($_GET['mode']) {
 	//
 	// Get message of the rules from database.
 	//
-	$sql = "SELECT rules, date FROM " . RULES_TABLE ;
+	$sql = "SELECT rules, date
+	FROM " . RULES_TABLE;
 
 	if( !($result = $db->sql_query($sql)) )
 	{
@@ -127,7 +130,9 @@ switch ($_GET['mode']) {
 		//
 		// Users that don't have read the rules.
 		//
-		$sql = "SELECT user_id, username, user_rules FROM " . USERS_TABLE . " WHERE user_rules < $_GET[trd] AND user_id <> " . ANONYMOUS . " ORDER BY username ASC";
+		$sql = "SELECT user_id, username, user_rules
+		FROM " . USERS_TABLE . "
+		WHERE user_rules < " . intval($_GET['trd']) . " AND user_id <> " . ANONYMOUS . " ORDER BY username ASC";
 
 		if( !($result = $db->sql_query($sql)) )
 		{
@@ -143,7 +148,8 @@ switch ($_GET['mode']) {
 		//
 		// Get last PM
 		//
-		$sql = "SELECT pm_subject, pm_message FROM " . RULES_TABLE;
+		$sql = "SELECT pm_subject, pm_message
+		FROM " . RULES_TABLE;
 
 		if( !($result = $db->sql_query($sql)) )
 		{
@@ -194,7 +200,9 @@ switch ($_GET['mode']) {
 		//
 		//Save the last PM
 		//
-		$sql = "UPDATE " . RULES_TABLE . " SET pm_subject='$privmsg_subject' , pm_message='" . $_POST['message'] . "'";
+		$sql = "UPDATE " . RULES_TABLE . "
+		SET pm_subject='" . str_replace("\'", "''", $privmsg_subject) . "',
+		pm_message='" . str_replace("\'", "''", $_POST['message']) . "'";
 
 		if ( !$db->sql_query($sql) )
 		{
@@ -220,7 +228,10 @@ switch ($_GET['mode']) {
 		//
 		foreach ($user_to_send as $to_userdata) {
 
-		$sql = "SELECT user_id, user_notify_pm, user_email, user_lang, user_active FROM " . USERS_TABLE . " WHERE user_id = '" . $to_userdata . "' AND user_id <> " . ANONYMOUS;
+		$sql = "SELECT user_id, user_notify_pm, user_email, user_lang, user_active
+		FROM " . USERS_TABLE . "
+		WHERE user_id = " . intval($to_userdata) . "
+			AND user_id <> " . ANONYMOUS;
 
 				if( !($result = $db->sql_query($sql)) )
 				{
@@ -229,7 +240,9 @@ switch ($_GET['mode']) {
 
 		$to_userdata = $db->sql_fetchrow($result);
 
-		$sql_info = "INSERT INTO " . PRIVMSGS_TABLE . " (privmsgs_type, privmsgs_subject, privmsgs_from_userid, privmsgs_to_userid, privmsgs_date, privmsgs_ip, privmsgs_enable_html, privmsgs_enable_bbcode, privmsgs_enable_smilies, privmsgs_attach_sig) VALUES (" . PRIVMSGS_UNREAD_MAIL . ", '" . str_replace("\'", "''", $privmsg_subject) . "',	" . $userdata['user_id'] . ", " . $to_userdata['user_id'] . ", $msg_time, '$user_ip',	 $html_on, $bbcode_on, $smilies_on, $attach_sig)";
+		// V: WTF is $user_ip supposed to be?
+		$sql_info = "INSERT INTO " . PRIVMSGS_TABLE . " (privmsgs_type, privmsgs_subject, privmsgs_from_userid, privmsgs_to_userid, privmsgs_date, privmsgs_ip, privmsgs_enable_html, privmsgs_enable_bbcode, privmsgs_enable_smilies, privmsgs_attach_sig)
+		VALUES (" . PRIVMSGS_UNREAD_MAIL . ", '" . str_replace("\'", "''", $privmsg_subject) . "',	" . $userdata['user_id'] . ", " . $to_userdata['user_id'] . ", $msg_time, '$user_ip',	 $html_on, $bbcode_on, $smilies_on, $attach_sig)";
 			
 				if ( !($result = $db->sql_query($sql_info, BEGIN_TRANSACTION)) )
 				{
@@ -239,7 +252,8 @@ switch ($_GET['mode']) {
 		$privmsg_sent_id = $db->sql_nextid();
 		$privmsg_message = prepare_message($_POST['message'], $html_on, $bbcode_on, $smilies_on, $bbcode_uid);
 
-		$sql = "INSERT INTO " . PRIVMSGS_TEXT_TABLE . " (privmsgs_text_id, privmsgs_bbcode_uid, privmsgs_text) VALUES ($privmsg_sent_id, 	'" . $bbcode_uid . "', '" . str_replace("\'", "''", $privmsg_message) . "')";		
+		$sql = "INSERT INTO " . PRIVMSGS_TEXT_TABLE . " (privmsgs_text_id, privmsgs_bbcode_uid, privmsgs_text)
+		VALUES ($privmsg_sent_id, '" . $bbcode_uid . "', '" . str_replace("\'", "''", $privmsg_message) . "')";		
 
 				if ( !$db->sql_query($sql, END_TRANSACTION) )
 				{
@@ -249,8 +263,10 @@ switch ($_GET['mode']) {
 		//
 		// Add to the users new pm counter
 		//
-		$sql = "UPDATE " . USERS_TABLE . "	SET user_new_privmsg = user_new_privmsg + 1, user_last_privmsg = " . time() . "	WHERE user_id = " . $to_userdata['user_id'] ; 
-					
+		$sql = "UPDATE " . USERS_TABLE . "
+		SET user_new_privmsg = user_new_privmsg + 1,
+		user_last_privmsg = " . time() . "
+		WHERE user_id = " . $to_userdata['user_id'];
 				if ( !$status = $db->sql_query($sql) )
 				{
 					message_die(GENERAL_ERROR, 'Could not update private message new/read status for user', '', __LINE__, __FILE__, $sql);
