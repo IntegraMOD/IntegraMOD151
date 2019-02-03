@@ -759,17 +759,18 @@ if( ($userdata['user_id'] != ANONYMOUS) && (defined('PRILLIAN_INSTALLED') && !fi
 		$l_prillian_msg = ( $im_userdata['unread_ims'] > 1 ) ? $lang['Unread_ims']: $lang['Unread_im'];
 		$l_prillian_text = sprintf($l_prillian_msg, $im_userdata['unread_ims']);
 	}
+
+	$template->assign_vars(array(
+		'IM_AUTO_POPUP' => $im_auto_popup,
+		'IM_HEIGHT' => $im_userdata['mode_height'],
+		'IM_WIDTH' => $im_userdata['mode_width'],
+		'U_IM_LAUNCH' => append_sid(PRILL_URL . $im_userdata['mode_string']),
+		'L_IM_LAUNCH' => $l_prillian_text,
+		'L_CONTACT_MAN' => $lang['Contact_Management'],
+		'U_CONTACT_MAN' => append_sid(CONTACT_URL)
+	));
 }
 
-$template->assign_vars(array(
-	'IM_AUTO_POPUP' => $im_auto_popup,
-	'IM_HEIGHT' => $im_userdata['mode_height'],
-	'IM_WIDTH' => $im_userdata['mode_width'],
-	'U_IM_LAUNCH' => append_sid(PRILL_URL . $im_userdata['mode_string']),
-	'L_IM_LAUNCH' => $l_prillian_text,
-	'L_CONTACT_MAN' => $lang['Contact_Management'],
-	'U_CONTACT_MAN' => append_sid(CONTACT_URL)
-));
 
 //
 // Prillian - End Code Addition
