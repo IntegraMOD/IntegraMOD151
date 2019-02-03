@@ -375,17 +375,20 @@ if( $mode != "" && $mode != "blocks" )
 			{
 				message_die(GENERAL_MESSAGE, $lang['No_blocks_selected']);
 			}
-		}else
-		{
+		}
+		else
+		{ // $mode == "add"
 			$sql = "SELECT pkey, bposition FROM " . BLOCK_POSITION_TABLE . " WHERE layout IN (". $temp_layout .") ORDER BY layout, bpid"; 
 			if( !($result = $db->sql_query($sql)) )
 			{
 				message_die(CRITICAL_ERROR, "Could not query blocks position information", "", __LINE__, __FILE__, $sql);
 			}
 			$position='';
+			$selected_pkey = isset($_GET['pkey']) ? $_GET['pkey'] : '';
 			while ($row = $db->sql_fetchrow($result))
 			{
-				$position .= '<option value="' . $row['bposition'] . '">' . $row['pkey'];
+				$selected = $row['pkey'] == $selected_pkey ? ' selected="selected"' : '';
+				$position .= '<option value="' . $row['bposition'] . '"' . $selected . '>' . $row['pkey'];
 			}
 
 			$block_dir = $phpbb_root_path .'blocks';
@@ -852,13 +855,14 @@ else if ($mode == "blocks")
 		}
 	}
 	
-	$sql = "SELECT name, forum_wide FROM " . LAYOUT_TABLE . " WHERE lid ='" . $l_id . "'";
+	$sql = "SELECT * FROM " . LAYOUT_TABLE . " WHERE lid ='" . $l_id . "'";
 	if( !$result = $db->sql_query($sql) )
 	{
 		message_die(GENERAL_ERROR, "Could not query layout table", $lang['Error'], __LINE__, __FILE__, $sql);
 	}
 	$l_row = $db->sql_fetchrow($result);
 	$l_name = $l_row['name'];
+	$l_template = $l_row['template'];
 
 	$temp_layout = ($l_row['forum_wide']) ? "'" . $l_id . "','0'" : $temp_layout = "'" . $l_id . "'";
 
@@ -888,6 +892,7 @@ else if ($mode == "blocks")
 		"L_B_PAGE" => $lang['B_Page'],
 		"LAYOUT_NAME" => $l_name,
 		"PAGE" => strval($l_id),
+		"TEMPLATE_FILE" => $l_template,
 		"L_B_VIEW_BY" => $lang['B_View'],
 		"L_B_BORDER" => $lang['B_Border'],
 		"L_B_TITLEBAR" => $lang['B_Titlebar'],
@@ -914,14 +919,19 @@ else if ($mode == "blocks")
 	while ($row = $db->sql_fetchrow($result))
 	{
 		$position[$row['bposition']] = $row['pkey'];
+		$position_lang[$row['bposition']] = lang_key('IMPORTAL_BLOCKS_POSITION_'.strtoupper($row['pkey']), ucfirst($row['pkey']));
 	}
-
+	$blocks_by_pos = array();
 	for($i = 0; $i < $b_count; $i++)
 	{
-		
 		$b_id = $b_rows[$i]['bid'];
 		$b_weight = $b_rows[$i]['weight'];
 		$b_position = $b_rows[$i]['bposition'];
+		$blockfile = $b_rows[$i]['blockfile'];
+		$position_key = $position_lang[$b_position];
+
+		// store a reference, so that we can add ['template_vars'] later
+		$blocks_by_pos[$b_position][] = &$b_rows[$i];
 
 		$row_color = ( !($i % 2) ) ? $theme['td_color1'] : $theme['td_color2'];
 		$row_class = ( !($i % 2) ) ? $theme['td_class1'] : $theme['td_class2'];
@@ -952,33 +962,26 @@ else if ($mode == "blocks")
 			{
 				message_die(CRITICAL_ERROR, "Could not query user groups information", "", __LINE__, __FILE__, $sql);
 			}
-			$groups = '';
-			$not_first = FALSE;
+			$groups = array();
 			while ($row = $db->sql_fetchrow($result))
 			{
-				if($not_first)
-				{
-					$groups .= '&nbsp;&nbsp;' . '[ ' . $row['group_name'] . ' ]';
-				}else
-				{
-					$not_first = TRUE;
-					$groups .= '[ ' . $row['group_name'] . ' ]';
-				}
+				$groups[] = '[ ' . $row['group_name'] . ' ]';
 			}
-		}else
+			$groups = implode('&nbsp;&nbsp;', $groups);
+		}
+		else
 		{
 			$groups = $lang['B_All'];
 		}
 
-
-		$template->assign_block_vars("blocks", array(
+		$template_vars = array(
 			"ROW_COLOR" => "#" . $row_color,
 			"ROW_CLASS" => $row_class,
 			"TITLE" => $b_rows[$i]['title'],
 			"TITLE_IMAGE" => $b_rows[$i]['title_image'],
-			"POSITION" => $position[$b_position],
+			"POSITION" => $position_key,
 			"ACTIVE" => ($b_rows[$i]['active']) ? $lang['Yes'] : $lang['No'],
-			"TYPE" => (empty($b_rows[$i]['blockfile'])) ? (($b_rows[$i]['type']) ? $lang['B_BBCode'] : $lang['B_HTML']) : '',
+			"TYPE" => (empty($b_rows[$i]['blockfile'])) ? (($b_rows[$i]['type']) ? $lang['B_BBCode'] : $lang['B_HTML']) : format_blockfile_name($blockfile),
 			"CACHE" => ($b_rows[$i]['cache']) ? $lang['Yes'] : $lang['No'],
 			"BORDER" => ($b_rows[$i]['border']) ? $lang['Yes'] : $lang['No'],
 			"TITLEBAR" => ($b_rows[$i]['titlebar']) ? $lang['Yes'] : $lang['No'],
@@ -993,9 +996,48 @@ else if ($mode == "blocks")
 			"U_DELETE" => append_sid("admin_blocks.$phpEx?mode=delete&amp;bid=$b_id&amp;id=$l_id"),
 			"U_MOVE_UP" => append_sid("admin_blocks.$phpEx?mode=blocks&amp;id=$l_id&amp;move=1&amp;bid=$b_id&amp;weight=$b_weight&amp;pos=$b_position"),
 			"U_MOVE_DOWN" => append_sid("admin_blocks.$phpEx?mode=blocks&amp;id=$l_id&amp;move=0&amp;bid=$b_id&amp;weight=$b_weight&amp;pos=$b_position")
-			)
 		);
+		$b_rows[$i]['template_vars'] = $template_vars;
+		$template->assign_block_vars("blocks", $template_vars);
 	}
+
+	// V: Template layout for IM Portal
+	$template->set_filename('blocks_layout_display', 'admin/blocks_layout_display.tpl');
+	// make sure we have a template to render
+	$preview_layout = 'admin/blocks_layout_page_'.$l_template;
+	$did_load = $template->set_filename('template_layout', $preview_layout, false /* include */, true /* quiet */);
+	if ($did_load)
+	{
+		// render each position individually
+		foreach ($position as $letter => $key)
+		{
+			$template->_tpldata['blocks.'] = array();
+			if (!empty($blocks_by_pos[$letter]))
+			{
+				foreach ($blocks_by_pos[$letter] as $b)
+				{
+					$template->assign_block_vars('blocks', $b['template_vars']);
+				}
+			}
+			else
+			{
+				$template->assign_block_vars('blocks', array('NONE' => true));
+			}
+			$contents = $template->render_to_string('blocks_layout_display');
+
+			$header = sprintf('%s [ <a href="%s">%s</a> ]',
+				$position_lang[$letter],
+				append_sid("admin_blocks.$phpEx?pkey=$key&amp;mode=add&amp;lid=$l_id"),
+				$lang['B_Add']
+			);
+			$template->assign_vars(array(
+				'BLOCKS_' . strtoupper($key) . '_KEY' => $header,
+				'BLOCKS_' . strtoupper($key) => $contents,
+			));
+		}
+		$template->assign_var_from_handle('BLOCKS_PREVIEW', 'template_layout');
+	}
+
 }
 else
 {

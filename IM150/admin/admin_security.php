@@ -13,8 +13,8 @@ define('IN_PHPBB', TRUE);
 define('CT_SECLEVEL', 'MEDIUM');
 $ct_ignoregvar = array('');
 
-	if (!empty($setmodules))
-		{
+if (!empty($setmodules))
+{
 	$file = basename(__FILE__);
 	$module['.: Security :.']['Configuration'] 	= $file;
 	$module['.: Security :.']['Special'] 		= append_sid("admin_security.$phpEx?mode=special");
@@ -23,7 +23,7 @@ $ct_ignoregvar = array('');
 	$module['.: Security :.']['Info: gdlib']	= append_sid("admin_security.$phpEx?mode=gd_info");	
 	$module['.: Security :.']['Quick Search']	= append_sid("admin_security.$phpEx?mode=search");		
 	return;
-		}
+}
 
 $phpbb_root_path = '../';
 include_once($phpbb_root_path .'extension.inc');

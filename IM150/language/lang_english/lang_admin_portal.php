@@ -86,7 +86,7 @@ $lang['B_Admin'] = 'Administrators';
 $lang['B_None'] = 'None';
 $lang['B_Layout'] = 'Portal Page';
 $lang['B_Page'] = 'Page ID';
-$lang['B_Add'] = 'Add Blocks';
+$lang['B_Add'] = 'Add Block';
 $lang['Yes'] = 'Yes';
 $lang['No'] = 'No';
 $lang['B_Text'] = 'Text';
@@ -184,4 +184,15 @@ $lang['font_huge'] = 'Huge';
 
 $lang['Close_Tags'] = 'Close Tags';
 $lang['Styles_tip'] = 'Tip: Styles can be applied quickly to selected text.';
-?>
+
+// V: IMportal layout display
+$lang['IMPORTAL_LAYOUT_NO_BLOCKS'] = 'No blocks';
+$lang['IMPORTAL_PAGE_TEMPLATE'] = 'Page template';
+$lang['IMPORTAL_BLOCKS_PREVIEW'] = 'Blocks layout preview';
+$lang['IMPORTAL_BLOCKS_LIST'] = 'List of Blocks';
+$lang['IMPORTAL_BLOCKS_POSITION_COL_1'] = 'Column #1';
+$lang['IMPORTAL_BLOCKS_POSITION_COL_2'] = 'Column #2';
+$lang['IMPORTAL_BLOCKS_POSITION_COL_3'] = 'Column #3';
+$lang['IMPORTAL_BLOCKS_POSITION_COL_4'] = 'Column #4';
+$lang['IMPORTAL_BLOCKS_POSITION_COL_5'] = 'Column #5';
+$lang['IMPORTAL_BLOCKS_POSITION_COL_6'] = 'Column #6';
