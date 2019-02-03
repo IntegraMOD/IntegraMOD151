@@ -178,6 +178,27 @@ class report_post extends report_module
 	}
 	
 	//
+	// Returns the reportee user id
+	//
+	function reportee_obtain($report_subject)
+	{
+		global $db;
+
+		$sql = 'SELECT u.*
+		FROM ' . USERS_TABLE . ' u
+			LEFT JOIN ' . POSTS_TABLE . ' p
+				ON p.poster_id = u.user_id
+		WHERE p.post_id = ' . intval($report_subject);
+		if (!($result = $db->sql_query($sql)))
+		{
+			message_die(GENERAL_ERROR, 'Could not obtain reportee', '', __LINE__, __FILE__, $sql);
+		}
+		$row = $db->sql_fetchrow($result);
+		$db->sql_freeresult($result);
+		return $row;
+	}
+
+	//
 	// Returns report subject title
 	//
 	function subject_obtain($report_subject)

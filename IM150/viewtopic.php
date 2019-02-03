@@ -1078,28 +1078,18 @@ if ( $is_auth['auth_mod'] )
 	$s_auth_can .= sprintf($lang['Rules_moderate'], '<a href="' . append_sid("modcp.$phpEx?" . POST_FORUM_URL . "=$forum_id&amp;p_sid=" . $userdata['priv_session_id']) . '">', '</a>');
 	if ($lofi)
 	{
-
-
 		$topic_mod .= '<a href="' . append_sid("modcp.$phpEx?" . POST_TOPIC_URL . "=$topic_id&amp;mode=delete&amp;p_sid=" . $userdata['priv_session_id']) . '"title="' . $lang['Delete_topic'] . '">' . $lang['Delete_topic'] . '</a>&nbsp;';
-
 		$topic_mod .= '<a href="' . append_sid("modcp.$phpEx?" . POST_TOPIC_URL . "=$topic_id&amp;mode=move&amp;p_sid=" . $userdata['priv_session_id']) . '" title="' . $lang['Move_topic'] . '">' . $lang['Move_topic'] . '</a>&nbsp;';
-
 		$topic_mod .= ( $forum_topic_data['topic_status'] == TOPIC_UNLOCKED ) ? '<a href="' . append_sid("modcp.$phpEx?" . POST_TOPIC_URL . "=$topic_id&amp;mode=lock&amp;p_sid=" . $userdata['priv_session_id']) . '" title="' . $lang['Lock_topic'] . '">' . $lang['Lock_topic'] . '</a>&nbsp;' : '<a href="' . append_sid("modcp.$phpEx?" . POST_TOPIC_URL . "=$topic_id&amp;mode=unlock&amp;p_sid=" . $userdata['priv_session_id']) . '" title="' . $lang['Unlock_topic'] . '">' . $lang['Unlock_topic'] . '</a>&nbsp;::&nbsp;';
-
 		$topic_mod .= '<a href="' . append_sid("modcp.$phpEx?" . POST_TOPIC_URL . "=$topic_id&amp;mode=split&amp;p_sid=" . $userdata['priv_session_id']) . '" title="' . $lang['Split_topic'] . '">' . $lang['Split_topic'] . '</a>&nbsp;';
-
 		$topic_mod .= '<a href="' . append_sid("merge.$phpEx?" . POST_TOPIC_URL . '=' . $topic_id) . '" title="' . $lang['Merge_topics'] . '" border="0" />' . $lang['Merge_topics'] . '</a>&nbsp;';
 	}
 	else
 	{
 		$topic_mod .= '<a class="noi fa fa-times fa-2x" href="' . append_sid("modcp.$phpEx?" . POST_TOPIC_URL . "=$topic_id&amp;mode=delete&amp;p_sid=" . $userdata['priv_session_id']) . '" title="' . $lang['Delete_topic'] . '"><img src="' . $images['topic_mod_delete'] . '" alt="' . $lang['Delete_topic'] . '" border="0" /></a>&nbsp;';
-
 		$topic_mod .= '<a class="noi fa fa-share fa-2x" href="' . append_sid("modcp.$phpEx?" . POST_TOPIC_URL . "=$topic_id&amp;mode=move&amp;p_sid=" . $userdata['priv_session_id']) . '" title="' . $lang['Move_topic'] . '"><img src="' . $images['topic_mod_move'] . '" alt="' . $lang['Move_topic'] . '" border="0" /></a>&nbsp;';
-
 		$topic_mod .= ( $forum_topic_data['topic_status'] == TOPIC_UNLOCKED ) ? '<a class="noi fa fa-lock fa-2x" href="' . append_sid("modcp.$phpEx?" . POST_TOPIC_URL . "=$topic_id&amp;mode=lock&amp;p_sid=" . $userdata['priv_session_id']) . '" title="' . $lang['Lock_topic'] . '"><img src="' . $images['topic_mod_lock'] . '" alt="' . $lang['Lock_topic'] . '" border="0" /></a>&nbsp;' : '<a class="noi fa fa-unlock fa-2x" href="' . append_sid("modcp.$phpEx?" . POST_TOPIC_URL . "=$topic_id&amp;mode=unlock&amp;p_sid=" . $userdata['priv_session_id']) . '" title="' . $lang['Unlock_topic'] . '"><img src="' . $images['topic_mod_unlock'] . '" alt="' . $lang['Unlock_topic'] . '" border="0" /></a>&nbsp;';
-
 		$topic_mod .= '&nbsp;<a class="noi fa fa-sort fa-rotate-90 fa-2x" href="' . append_sid("modcp.$phpEx?" . POST_TOPIC_URL . "=$topic_id&amp;mode=split&amp;p_sid=" . $userdata['priv_session_id']) . '" title="' . $lang['Split_topic'] . '"><img src="' . $images['topic_mod_split'] . '" alt="' . $lang['Split_topic'] . '" border="0" /></a>&nbsp;';
-
 		$topic_mod .= '<a class="noi fa fa-clone fa-2x" href="' . append_sid("merge.$phpEx?" . POST_TOPIC_URL . '=' . $topic_id) . '" title="' . $lang['Merge_topics'] . '"><img src="' . $images['topic_mod_merge'] . '" alt="' . $lang['Merge_topics'] . '" border="0" /></a>&nbsp;';
 	}
 }
@@ -1131,7 +1121,7 @@ if ($report_topic && $report_topic->auth_check('auth_write'))
 		$s_report_topic = '<a href="' . append_sid("report.$phpEx?mode=" . $report_topic->mode . "&amp;id=$topic_id") . '"><img src="' . $images['topic_mod_report'] . '" alt="' . $report_topic->lang['Write_report'] . '" title="' . $report_topic->lang['Write_report'] . '" border="0" /></a>&nbsp;';
 	}
 	
-	$topic_mod .= $s_report_topic;
+	//$topic_mod .= $s_report_topic;
 	$template->assign_var('S_REPORT_TOPIC', $s_report_topic);
 }
 

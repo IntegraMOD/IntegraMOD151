@@ -1992,7 +1992,7 @@ CREATE TABLE phpbb_referers (
 #
 
 CREATE TABLE phpbb_rules (
-  date int(11) NOT NULL default '0',
+  date int(11) NOT NULL,
   rules text NOT NULL,
   pm_subject varchar(255) NOT NULL default '',
   pm_message text
@@ -2577,13 +2577,16 @@ CREATE TABLE phpbb_reports (
   report_subject_data mediumtext DEFAULT NULL,
   report_title varchar(255) NOT NULL,
   report_desc text NOT NULL,
+  reportee_user_id mediumint(8) NULL,
+  reportee_username varchar(25) NULL,
   PRIMARY KEY (report_id),
   KEY user_id (user_id),
   KEY report_time (report_time),
   KEY report_type_id (report_module_id),
   KEY report_status (report_status),
   KEY report_reason_id (report_reason_id),
-  KEY report_subject (report_subject)
+  KEY report_subject (report_subject),
+  KEY report_reportee_user_id (reportee_user_id)
 );
 
 CREATE TABLE phpbb_reports_changes (

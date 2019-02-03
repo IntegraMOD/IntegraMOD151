@@ -275,6 +275,9 @@ function addquote(post_id)
 		<td width="70%" class="gensmall" align="right" valign="top" nowrap="nowrap">
 			<ul class="genbtn uct">
 			<a href="{U_VIEW_OLDER_TOPIC}"><li class="fa fa-arrow-left fa-2x"title="{L_VIEW_PREVIOUS_TOPIC}"></li></a>
+		<!-- IF S_REPORT_TOPIC -->
+			<li class="fa fa-2x">{S_REPORT_TOPIC}</li>
+		<!-- ENDIF -->
 			<a href="{U_PRINTER_TOPIC}"><li class="fa fa-print fa-2x" title="{L_PRINTER_TOPIC}"></li></a>
 		<!-- BEGIN switch_logged_in -->
 			<a href="tellafriend.php?topic={TOPIC_TITLE2}&link={TELL_LINK}"><li class="fa fa-envelope-o fa-2x" title="{L_TELL_FRIEND}"></li></a>

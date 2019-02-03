@@ -1555,3 +1555,8 @@ $lang['PM_CURRENTLY_VIEWING'] = '<i>This is the PM you\'re currently viewing</i>
 $lang['Private_Message_tracker'] = 'Conversation History';
 $lang['Jump_to_Private_Message'] = 'Jump to Private Message';
 $lang['Folder'] = 'Folder';
+
+// Reportee extension for Advanced Report Hack by Vende
+$lang['REPORTEE'] = 'Reportee';
+$lang['SEE_REPORTS'] = 'See reports about this user';
+$lang['FILTER_BY_USER'] = 'Filtered by user:';

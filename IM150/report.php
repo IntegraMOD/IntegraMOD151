@@ -475,11 +475,28 @@ else
 			$template->set_filenames(array(
 				'body' => 'report_list_body.tpl')
 			);
+
+			$cat = (isset($_GET[POST_CAT_URL])) ? (int) $_GET[POST_CAT_URL] : null;
+			$cat_url = (!empty($cat)) ? '&amp;' . POST_CAT_URL . "=$cat" : '';
+
+			// V: TODO use something like ?reportee_filter instead of POST_USERS_URL??
+			// TODO filter by username
+			$reportee_filter_id = isset($_GET[POST_USERS_URL]) ? (int) $_GET[POST_USERS_URL] : null;
+			$reportee_filter = '';
+			if ($reportee_filter_data = get_userdata($reportee_filter_id))
+			{
+				$reportee_filter = "&amp;" . POST_USERS_URL . "=" . $reportee_filter_id;
+				$template->assign_block_vars('reportee', array(
+					'NAME' => $agcm_color->get_user_color($reportee_filter_data['user_group_id'], $reportee_filter_data['user_session_time'], $reportee_filter_data['username']),
+					'U_REPORTEE_URL' => append_sid("profile.$phpEx?mode=viewprofile&amp;" . POST_USERS_URL . '=' . $reportee_filter_data['user_id']),
+				));						
+			}
 			
 			$template->assign_vars(array(
 				'S_REPORT_ACTION' => append_sid("report.$phpEx"),
 				
 				'U_REPORT_INDEX' => append_sid("report.$phpEx"),
+				'U_REPORT_FILTERED_INDEX' => append_sid("report.$phpEx?$reportee_filter"),
 				
 				'L_REPORTS' => $lang['Reports'],
 				'L_REPORT_INDEX' => $lang['Report_index'],
@@ -495,20 +512,15 @@ else
 				'L_SELECT_ALL' => $lang['Mark_all'],
 				'L_INVERT_SELECT' => $lang['Invert_select'])
 			);
-			
-			$cat = (isset($_GET[POST_CAT_URL])) ? (int) $_GET[POST_CAT_URL] : null;
-			$cat_url = (!empty($cat)) ? '&amp;' . POST_CAT_URL . "=$cat" : '';
-			
+
 			$show_delete_option = false;
-			
+
 			//
 			// Show report list
 			//
-			$reports = reports_obtain($cat);
-			foreach (array_keys($report_modules) as $report_module_id)
+			$reports = reports_obtain($cat, true, $reportee_filter_id);
+			foreach ($report_modules as $report_module)
 			{
-				$report_module =& $report_modules[$report_module_id];
-				
 				//
 				// Check module authorisation
 				//
@@ -516,9 +528,17 @@ else
 				{
 					continue;
 				}
+
+				//
+				// V: make sure we can filter this one by user
+				//
+				if ($reportee_filter && !method_exists($report_module, 'reportee_obtain'))
+				{
+					continue;
+				}
 				
 				$template->assign_block_vars('report_modules', array(
-					'U_SHOW' => append_sid("report.$phpEx?" . POST_CAT_URL . '=' . $report_module->id),
+					'U_SHOW' => append_sid("report.$phpEx?" . POST_CAT_URL . '=' . $report_module->id . $reportee_filter),
 					
 					'TITLE' => $report_module->lang['Report_list_title'])
 				);
@@ -550,7 +570,7 @@ else
 				foreach ($reports[$report_module->id] as $report)
 				{		
 					$template->assign_block_vars('report_modules.reports', array(
-						'U_SHOW' => append_sid("report.$phpEx?" . POST_REPORT_URL . '=' . $report['report_id'] . $cat_url),
+						'U_SHOW' => append_sid("report.$phpEx?" . POST_REPORT_URL . '=' . $report['report_id'] . $cat_url . $reportee_filter),
 						'U_AUTHOR' => append_sid("profile.$phpEx?mode=viewprofile&amp;" . POST_USERS_URL . '=' . $report['user_id']),
 						
 						'ROW_CLASS' => $report_status_classes[$report['report_status']],
@@ -596,14 +616,16 @@ else
 				//
 				// Show report subject (with or without details, depending on the report module)
 				//
-				$report_module =& $report_modules[$report['report_module_id']];
+				$report_module = $report_modules[$report['report_module_id']];
+				$has_subject = false;
 				if (method_exists($report_module, 'subject_details_obtain'))
 				{
 					if ($report_subject = $report_module->subject_details_obtain($report['report_subject']))
 					{
-						if (isset($report_subject['subject']) || isset($report_subject['details']))
+						if (!$has_subject && isset($report_subject['subject']) || isset($report_subject['details']))
 						{
 							$template->assign_block_vars('report_subject', array());
+							$has_subject = true;
 						}
 						
 						//
@@ -640,7 +662,7 @@ else
 					}
 					else
 					{
-						$template->assign_block_vars('switch_report_subject_deleted', array());
+						$template->assign_var('SWITCH_REPORT_SUBJECT_DELETED', true);
 						$template->assign_var('L_REPORT_SUBJECT_DELETED', $report_module->lang['Deleted_error']);
 					}
 				}
@@ -651,7 +673,11 @@ else
 						//
 						// Assign report subject
 						//
-						$template->assign_block_vars('report_subject', array());
+						if (!$has_subject)
+						{
+							$template->assign_block_vars('report_subject', array());
+							$has_subject = true;
+						}
 						$template->assign_block_vars('report_subject.switch_subject', array());
 						$template->assign_var('REPORT_SUBJECT', $report_subject);
 						
@@ -666,11 +692,61 @@ else
 					}
 					else
 					{
-						$template->assign_block_vars('switch_report_subject_deleted', array());
+						$template->assign_var('SWITCH_REPORT_SUBJECT_DELETED', true);
 						$template->assign_var('L_REPORT_SUBJECT_DELETED', $report_module->lang['Deleted_error']);
 					}
 				}
 				
+				// V: manage reportees here
+				$reportee_user_id = null;
+				if (!empty($report['reportee_user_id']))
+				{
+					$reportee_user_id = $report['reportee_user_id'];
+					$reportee = get_userdata($reportee_user_id);
+				}
+				else if (method_exists($report_module, 'reportee_obtain'))
+				{
+					if ($reportee = $report_module->reportee_obtain($report['report_subject']))
+					{
+						// update the reportee_user_id, actual display is below
+						report_update_reportee($report['report_id'], $reportee);
+					}
+				}
+
+				if (!empty($reportee))
+				{
+					if (!$has_subject)
+					{
+						$template->assign_block_vars('report_subject', array());
+						$has_subject = true;
+					}
+
+					$template->assign_block_vars('report_subject.reportee', array(
+						'NAME' => $agcm_color->get_user_color($reportee['user_group_id'], $reportee['user_session_time'], $reportee['username']),
+					));
+					$template->assign_block_vars('report_subject.reportee.reportee_url', array(
+						'L_SEND_PM' => $lang['Send_private_message'],
+						'L_SEE_REPORTS' => $lang['SEE_REPORTS'],
+
+						'U_SEND_PM' => append_sid("privmsg.$phpEx?mode=post&amp;" . POST_USERS_URL . '=' . $reportee['user_id']),
+						'U_REPORTEE_URL' => append_sid("profile.$phpEx?mode=viewprofile&amp;" . POST_USERS_URL . '=' . $reportee['user_id']),
+						'SHOW_SEE_REPORTS' => empty($reportee_filter_data),
+						'U_SEE_REPORTS' => append_sid("report.$phpEx?" . POST_REPORT_URL . "=" . $report['report_id'] . "&amp;" . POST_USERS_URL . '=' . $reportee['user_id']),
+					));
+				}
+				else if (!empty($report['reportee_username']))
+				{ // user was probably deleted
+					if (!$has_subject)
+					{
+						$template->assign_block_vars('report_subject', array());
+						$has_subject = true;
+					}
+					$template->assign_block_vars('report_subject.reportee', array(
+						// TODO says " (deleted)" somewhere?
+						'NAME' => $report['reportee_username'],
+					));
+				}
+
 				//
 				// Assign report reason
 				//
@@ -788,7 +864,8 @@ else
 				$statistics = array(
 					'Report_count' => 'report_count',
 					'Report_modules_count' => 'modules_count',
-					'Report_hack_count' => 'report_hack_count');
+					'Report_hack_count' => 'report_hack_count'
+				);
 				foreach ($statistics as $stat_lang => $stat_mode)
 				{
 					$template->assign_block_vars('report_statistics', array(
@@ -807,7 +884,7 @@ else
 					$template->assign_block_vars('switch_deleted_reports', array());
 					foreach ($deleted_reports as $report)
 					{
-						$report_module =& $report_modules[$report['report_module_id']];
+						$report_module = $report_modules[$report['report_module_id']];
 						
 						$template->assign_block_vars('switch_deleted_reports.deleted_reports', array(
 							'U_SHOW' => append_sid("report.$phpEx?" . POST_REPORT_URL . '=' . $report['report_id'] . $cat_url),

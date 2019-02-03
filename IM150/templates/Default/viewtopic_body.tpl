@@ -272,7 +272,11 @@ function addquote(post_id)
 								<tr>
 									<td width="100%">&nbsp;</td>
 									<td><a href="{U_VIEW_OLDER_TOPIC}"><img src="{TOPIC_PREVIOUS_IMAGE}" alt="{L_VIEW_PREVIOUS_TOPIC}" title="{L_VIEW_PREVIOUS_TOPIC}" border="0" /></a></td>
-									<td><a href="{U_PRINTER_TOPIC}"><img src="{TOPIC_PRINT_IMAGE}" border="0" alt="{L_PRINTER_TOPIC}" title="{L_PRINTER_TOPIC}" /></a></td>
+									<td>
+									<!-- IF S_REPORT_TOPIC -->
+										<td>{S_REPORT_TOPIC}</td>
+									<!-- ENDIF -->
+									<a href="{U_PRINTER_TOPIC}"><img src="{TOPIC_PRINT_IMAGE}" border="0" alt="{L_PRINTER_TOPIC}" title="{L_PRINTER_TOPIC}" /></a></td>
 									<!-- BEGIN switch_logged_in -->
 									<td><a href="tellafriend.php?topic={TOPIC_TITLE2}&link={TELL_LINK}"><img src="{TOPIC_EMAIL_IMAGE}" border="0" alt="{L_TELL_FRIEND}" title="{L_TELL_FRIEND}" /></a></td>
 									<!-- END switch_logged_in -->

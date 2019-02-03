@@ -196,6 +196,29 @@ class report_topic extends report_module
 		
 		return ($row) ? $row['topic_title'] : false;
 	}
+
+	//
+	// Obtains the reportee data
+	//
+	function reportee_obtain($report_subject)
+	{
+		global $db;
+		
+		$sql = 'SELECT u.*
+			FROM ' . TOPICS_TABLE . ' t
+				LEFT JOIN ' . USERS_TABLE . ' u
+					ON u.user_id = t.topic_poster
+			WHERE topic_id = ' . (int) $report_subject;
+		if (!$result = $db->sql_query($sql))
+		{
+			message_die(GENERAL_ERROR, 'Could not obtain report subject data', '', __LINE__, __FILE__, $sql);
+		}
+		
+		$row = $db->sql_fetchrow($result);
+		$db->sql_freeresult($result);
+		
+		return $row;
+	}
 	
 	//
 	// Obtains additional subject data

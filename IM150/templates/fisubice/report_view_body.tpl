@@ -6,14 +6,14 @@
 		<td class="row1" style="padding: 10px">
 			<span class="maintitle">{REPORT_TITLE}</span><br /><br />
 			
-			<!-- BEGIN switch_report_subject_deleted -->
+			<!-- IF SWITCH_REPORT_SUBJECT_DELETED -->
 			<table cellspacing="1" cellpadding="4" border="0" width="90%" align="center" class="bodyline">
 				<tr>
 					<td class="row2" align="center"><span class="gen">{L_REPORT_SUBJECT_DELETED}</span></td>
 				</tr>
 			</table>
 			<br />
-			<!-- END switch_report_subject_deleted -->
+			<!-- ENDIF -->
 			
 			<!-- BEGIN report_subject -->
 			<table cellspacing="1" cellpadding="4" border="0" width="90%" align="center" class="bodyline">
@@ -37,6 +37,28 @@
 					<td class="row2"><span class="gen">{report_subject.details.VALUE}</span></td>
 				</tr>
 				<!-- END details -->
+				<!-- BEGIN reportee -->
+				<tr>
+					<td class="row2" valign="top" width="25%"><span class="gen">{L_REPORTEE}:</span></td>
+					<td class="row2"><span class="gen">
+						<!-- BEGIN reportee_url -->
+						<a href="{report_subject.reportee.reportee_url.U_REPORTEE_URL}">
+						<!-- END reportee_url -->
+						{report_subject.reportee.NAME}
+						<!-- BEGIN reportee_url -->
+						</a> [
+						<a href="{report_subject.reportee.reportee_url.U_SEND_PM}">
+						{report_subject.reportee.reportee_url.L_SEND_PM}</a>
+						<!-- IF report_subject.reportee.reportee_url.SHOW_SEE_REPORTS -->
+						&bull;
+						<a href="{report_subject.reportee.reportee_url.U_SEE_REPORTS}">
+						{report_subject.reportee.reportee_url.L_SEE_REPORTS}</a>
+						<!-- ENDIF -->
+						]
+						<!-- END reportee_url -->
+					</span></td>
+				</tr>
+				<!-- END reportee -->
 			</table>
 			<br />
 			<!-- END report_subject -->

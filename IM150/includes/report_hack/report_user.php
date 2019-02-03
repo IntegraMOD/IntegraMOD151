@@ -25,9 +25,19 @@ class report_user extends report_module
 		$sep = ($non_html_amp) ? '&' : '&amp;';
 		return append_sid("profile.$phpEx?mode=viewprofile$sep" . POST_USERS_URL . '=' . (int) $id, $non_html_amp);
 	}
-	
+
+	//
+	// Returns the reportee user id
+	//
+	function reportee_obtain($report_subject)
+	{
+		return get_userdata($report_subject);
+	}
+
+	/*
 	//
 	// Returns report subject title
+	// V: removed this, the new reportee feature does this just fine...
 	//
 	function subject_obtain($report_subject)
 	{
@@ -46,6 +56,7 @@ class report_user extends report_module
 		
 		return ($row) ? $agcm_color->get_user_color($row['user_group_id'], $row['user_session_time'], $row['username']) : false;
 	}
+	*/
 }
 
 ?>

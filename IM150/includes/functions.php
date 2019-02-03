@@ -599,7 +599,7 @@ function get_userdata($user, $force_str = false)
 	$sql .= ( ( is_integer($user) ) ? "user_id = $user" : "username = '" .  str_replace("\'", "''", $user) . "'" ) . " AND user_id <> " . ANONYMOUS;
 	if ( !($result = $db->sql_query($sql)) )
 	{
-		message_die(GENERAL_ERROR, 'Tried obtaining data for a non-existent user', '', __LINE__, __FILE__, $sql);
+		message_die(GENERAL_ERROR, 'Failed get_userdata', '', __LINE__, __FILE__, $sql);
 	}
 
 	return ( $row = $db->sql_fetchrow($result) ) ? $row : false;

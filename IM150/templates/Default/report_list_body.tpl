@@ -50,10 +50,21 @@ function checked_toggle(form, status)
 			<form action="{S_REPORT_ACTION}" method="post" id="report_list" style="margin-bottom: 2px">
 				<table cellspacing="1" cellpadding="4" border="0" width="100%" class="forumline">
 					<tr>
-						<th class="thHead" colspan="2">{L_REPORTS}</th>
+						<th class="thHead" colspan="2">
+							{L_REPORTS}
+						</th>
 					</tr>
+					<!-- BEGIN reportee -->
 					<tr>
-						<td class="row3" colspan="2"><a href="{U_REPORT_INDEX}" class="cattitle">{L_REPORT_INDEX}</a></td>
+						<th class="thHead" colspan="2">
+							<a href="{U_REPORT_INDEX}">{L_FILTER_BY_USER}</a>
+
+							<a href="{reportee.U_REPORTEE_URL}">{reportee.NAME}</a>
+						</th>
+					</tr>
+					<!-- END reportee -->
+					<tr>
+						<td class="row3" colspan="2"><a href="{U_REPORT_FILTERED_INDEX}" class="cattitle">{L_REPORT_INDEX}</a></td>
 					</tr>
 					<!-- BEGIN report_modules -->
 					<tr>

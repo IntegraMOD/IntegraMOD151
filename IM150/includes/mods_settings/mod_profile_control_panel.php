@@ -1084,7 +1084,7 @@ if (!function_exists('mods_get_user_rules'))
     { 
         global $db, $lang, $is_guest; 
          
-        $sql = "SELECT * FROM " . RULES_TABLE . ""; 
+        $sql = "SELECT * FROM " . RULES_TABLE; 
     if( !($result = $db->sql_query($sql)) ) { 
         message_die(GENERAL_ERROR, 'Could not obtain the rules', '', __LINE__, __FILE__, $sql); 
         } 

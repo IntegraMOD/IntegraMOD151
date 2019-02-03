@@ -345,7 +345,7 @@ function reports_module_action($reports, $action_name, $action_params = array())
 // Handles email notifications, note that this function has variable parameters
 // Includes authorisation check
 //
-function report_notify($mode)
+function report_notify($mode/*, ...*/)
 {
 	global $phpbb_root_path, $phpEx, $db, $userdata, $board_config;
 	
@@ -781,11 +781,15 @@ function report_count_obtain()
 // Obtains reports (for a specific report module if $module_id is defined)
 // Includes authorisation check if $auth_check is set to true.
 //
-function reports_obtain($module_id = null, $auth_check = true)
+function reports_obtain($module_id = null, $auth_check = true, $reportee = null)
 {
 	global $db;
 
-	$where_sql = (isset($module_id)) ? 'AND r.report_module_id = ' . (int) $module_id : '';
+	$where_sql = (isset($module_id)) ? ' AND r.report_module_id = ' . (int) $module_id : '';
+	if ($reportee)
+	{
+		$where_sql .= ' AND r.reportee_user_id = ' . (int) $reportee;
+	}
 	$sql = 'SELECT r.report_id, r.user_id, r.report_time, r.report_module_id, r.report_status, r.report_subject,
 			r.report_subject_data, r.report_title, u.username, u.user_group_id, u.user_session_time
 		FROM ' . REPORTS_TABLE . ' r
@@ -848,7 +852,7 @@ function reports_open_obtain($module_id, $report_subject, $auth_check = true)
 {
 	global $db;
 	
-	$sql = 'SELECT r.report_id, r.user_id, r.report_time, r.report_module_id, r.report_status, r.report_subject,
+	$sql = 'SELECT r.report_id, r.user_id, r.report_time, r.report_module_id, r.report_status, r.report_subject, r.reportee_user_id, r.reportee_username,
 			r.report_subject_data, r.report_title, u.username, u.user_group_id, u.user_session_time
 		FROM ' . REPORTS_TABLE . ' r
 		LEFT JOIN ' . USERS_TABLE . ' u
@@ -897,7 +901,7 @@ function reports_deleted_obtain($auth_check = true)
 {
 	global $db;
 	
-	$sql = 'SELECT r.report_id, r.user_id, r.report_time, r.report_module_id, r.report_subject,
+	$sql = 'SELECT r.report_id, r.user_id, r.report_time, r.report_module_id, r.report_subject, r.reportee_user_id, r.reportee_username,
 			r.report_subject_data, r.report_title, u.username, u.user_group_id, u.user_session_time
 		FROM ' . REPORTS_TABLE . ' r
 		LEFT JOIN ' . USERS_TABLE . ' u
@@ -944,7 +948,7 @@ function report_obtain($report_id, $auth_check = true)
 {
 	global $db, $board_config, $lang;
 	
-	$sql = 'SELECT r.report_id, r.user_id, r.report_time, r.report_module_id, r.report_status, r.report_subject,
+	$sql = 'SELECT r.report_id, r.user_id, r.report_time, r.report_module_id, r.report_status, r.report_subject, r.reportee_user_id, r.reportee_username,
 			r.report_subject_data, r.report_title, r.report_desc, rr.report_reason_desc, u.username, u.user_group_id, u.user_session_time
 		FROM ' . REPORTS_TABLE . ' r
 		LEFT JOIN ' . REPORTS_REASONS_TABLE . ' rr
@@ -1096,6 +1100,29 @@ function report_prune($module_id, $prune_time)
 }
 
 //
+// Updates a report's reportee
+// Does check if the reportee_ is NULL, and does nothing then (can't unset a reportee)
+// Does not check whether it's overriding a report with a reportee already
+//
+function report_update_reportee($report_id, $reportee)
+{
+	global $db;
+	if (empty($reportee))
+	{
+		return;
+	}
+
+	$sql = 'UPDATE ' . REPORTS_TABLE . '
+		SET reportee_user_id = ' . intval($reportee['user_id']) . ",
+			reportee_username = '" . str_replace("'", "''", $reportee['username']) . "'
+		WHERE report_id = " . intval($report_id);
+	if (!$db->sql_query($sql))
+	{
+		message_die(GENERAL_ERROR, 'Could not insert report', '', __LINE__, __FILE__, $sql);
+	}
+}
+
+//
 // Inserts a new report
 // Includes authorisation check if $auth_check is set to true.
 //
@@ -1131,15 +1158,27 @@ function report_insert($module_id, $report_subject, $report_reason, $report_titl
 		$report_subject_data = null;
 		$report_subject_data_sql = 'NULL';
 	}
+
+	if (method_exists($report_module, 'reportee_obtain'))
+	{
+		$reportee_data = $report_module->reportee_obtain($report_subject);
+		$reportee_id_sql = $reportee_data ? $reportee_data['user_id'] : 'NULL';
+		$reportee_username_sql = $reportee_data ? str_replace("'", "''", $reportee_data['username']) : 'NULL';
+	}
+	else
+	{
+		$reportee_id_sql = 'NULL';
+		$reportee_username_sql = 'NULL';
+	}
 	
 	//
 	// Insert report
 	//
 	$sql = 'INSERT INTO ' . REPORTS_TABLE . ' (user_id, report_time, report_module_id, report_status, report_reason_id, 
-		report_subject, report_subject_data, report_title, report_desc)
+		report_subject, report_subject_data, report_title, report_desc, reportee_user_id, reportee_username)
 		VALUES (' . $userdata['user_id'] . ', ' . time() . ', ' . (int) $module_id . ', ' . REPORT_NEW . ', ' . (int) $report_reason . ',
 			' . (int) $report_subject . ", $report_subject_data_sql, '" . str_replace("'", "''", $report_title) . "',
-			'" . str_replace("'", "''", $report_desc) . "')";
+			'" . str_replace("'", "''", $report_desc) . "', $reportee_id_sql, $reportee_username_sql)";
 	if (!$db->sql_query($sql, BEGIN_TRANSACTION))
 	{
 		message_die(GENERAL_ERROR, 'Could not insert report', '', __LINE__, __FILE__, $sql);
@@ -1244,9 +1283,8 @@ function reports_update_status($report_ids, $report_status, $comment = '', $auth
 		return;
 	}
 
-	// Sorry, but we can't use transactions here because the DBAL doesn't allow BEGIN_TRANSACTION with an
-	// empty query
-	// $db->sql_query('', BEGIN_TRANSACTION);
+	// V: fixed transactions
+	$db->sql_query('SELECT 1', BEGIN_TRANSACTION);
 
 	//
 	// Insert report status changes and update reports
@@ -1285,7 +1323,7 @@ function reports_update_status($report_ids, $report_status, $comment = '', $auth
 		reports_module_action($reports, 'update_status', $report_status);
 	}
 	
-	//$db->sql_query('', END_TRANSACTION);
+	$db->sql_query('SELECT 1', END_TRANSACTION);
 	
 	//
 	// Send report notifications
@@ -1299,6 +1337,7 @@ function reports_update_status($report_ids, $report_status, $comment = '', $auth
 //
 // Deletes the specified reports, also deletes report status changes
 // Includes authorisation check if $auth_check is set to true.
+// V: TODO add an option to never *actually* delete
 //
 function reports_delete($report_ids, $auth_check = true, $module_action = true)
 {
