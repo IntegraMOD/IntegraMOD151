@@ -179,7 +179,7 @@ if(!function_exists('imp_poll_block_func'))
 						);
 					}
 					$template->assign_vars(array(
-						"LOGIN_TO_VOTE" => '<b><a href="' . append_sid("login.$phpEx?redirect=portal.$phpEx") . '">' . $lang['Login_to_vote'] . '</a><b>')
+						"LOGIN_TO_VOTE" => '<b><a href="' . append_sid("login.$phpEx?redirect=portal.$phpEx") . '">' . $lang['Login_to_vote'] . '</a></b>')
 					);
 
 					$s_hidden_fields = '<input type="hidden" name="topic_id" value="' . $topic_id . '"><input type="hidden" name="mode" value="vote">';
