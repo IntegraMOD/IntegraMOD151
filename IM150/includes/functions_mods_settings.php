@@ -26,7 +26,6 @@ if ( !defined('IN_PHPBB') )
 
 // some standard lists
 $list_yes_no = array('Yes' => 1, 'No' => 0);
-define('BOARD_ADMIN', 98);
 
 //---------------------------------------------------------------
 //
@@ -43,25 +42,32 @@ function mods_settings_get_lang($key)
 //
 //	init_board_config_key() : add a key and its value to the board config table
 //
+// V: added sanitization
+//
 //---------------------------------------------------------------
 function init_board_config_key($key, $value, $force=false)
 {
 	global $db, $board_config;
 
-
+	$sql_values = array(
+		'config_name' => $key,
+		'config_value' => $value,
+	);
 	if (!isset($board_config[$key]))
 	{
-		$db->clear_cache('board_config');
 		$board_config[$key] = $value;
-		$sql = "INSERT INTO " . CONFIG_TABLE . " (config_name,config_value) VALUES('$key','$value')";
-		if ( !$db->sql_query($sql) ) message_die(GENERAL_ERROR, 'Could not add key ' . $key . ' in config table', '', __LINE__, __FILE__, $sql);
+		$sql = $db->sql_build_insert(CONFIG_TABLE, $sql_values);
+		$db->sql_query($sql, false, false, 'Could not add key ' . $key . ' in config table', __LINE__, __FILE__);
+
+		$db->clear_cache('board_config');
 	}
 	else if ($force)
 	{
-		$db->clear_cache('board_config');
 		$board_config[$key] = $value;
-		$sql = "UPDATE " . CONFIG_TABLE . " SET config_value='$value' WHERE config_name='$key'";
-		if ( !$db->sql_query($sql) ) message_die(GENERAL_ERROR, 'Could not add key ' . $key . ' in config table', '', __LINE__, __FILE__, $sql);
+		$sql = $db->sql_build_update(CONFIG_TABLE, $sql_values) . " WHERE config_name='$key'";
+		$db->sql_query($sql, false, false, 'Could not update key ' . $key . ' in config table', __LINE__, __FILE__);
+
+		$db->clear_cache('board_config');
 	}
 }
 
@@ -122,10 +128,15 @@ function init_board_config($mod_name, $config_fields, $sub_name='', $sub_sort=0,
 	@reset($config_fields);
 	while ( list($config_key, $config_data) = each($config_fields) )
 	{
+		if (!isset($config_data['default']))
+		{ // V: some keys (...like "username") have no default. Prevent warnings here.
+		  // Really, they ought *not* to be created as board config keys...
+			$config_data['default'] = 0;
+		}
 		if (!isset($config_data['user_only']) || !$config_data['user_only'])
 		{
 			// create the key value
-			init_board_config_key($config_key, ( !empty($config_data['values']) ? $config_data['values'][ $config_data['default'] ] : $config_data['default']) );
+			init_board_config_key($config_key, ( isset($config_data['values'][ $config_data['default'] ]) ? $config_data['values'][ $config_data['default'] ] : $config_data['default']) );
 			if (!empty($config_data['user']))
 			{
 				// create the "overwrite user choice" value
@@ -137,7 +148,7 @@ function init_board_config($mod_name, $config_fields, $sub_name='', $sub_sort=0,
 		}
 
 		// deliever it for input only if not hidden
-		if (!$config_data['hide'])
+		if (empty($config_data['hide']))
 		{
 			$mods[$menu_name]['data'][$mod_name]['data'][$sub_name]['data'][$config_key] = $config_data;
 

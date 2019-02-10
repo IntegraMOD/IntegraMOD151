@@ -247,7 +247,7 @@ function read_cookies($userdata)
 		{
 			// we don't use serialized data to gain some digits
 			$w_unreads = empty($userdata['user_unread_topics']) ? array() : explode(';', $userdata['user_unread_topics']);
-			$tracking_floor = intval($w_unreads[0]);
+			$tracking_floor = count($w_unreads) > 0 ? intval($w_unreads[0]) : 0;
 			for ( $i = 1; $i < count($w_unreads); $i++ )
 			{
 				$topic_data = explode(':', $w_unreads[$i]);
@@ -424,12 +424,12 @@ function get_db_stat($mode)
 			return intval($board_config['max_users']);
 			break;
 		case 'newestuser':
-      $row = array(
-        'user_id' => intval($board_config['record_last_user_id']),
-        'username' => $board_config['record_last_username'],
-        'user_group_id' => $board_config['record_last_user_group_id'],
-        'user_session_time' => $board_config['record_user_session_time'],
-      );
+			$row = array(
+				'user_id' => intval($board_config['record_last_user_id']),
+				'username' => $board_config['record_last_username'],
+				'user_group_id' => $board_config['record_last_user_group_id'],
+				'user_session_time' => $board_config['record_last_user_session_time'],
+			);
 			return $row;
 			break;
 		case 'postcount':
@@ -523,30 +523,22 @@ function phpbb_ltrim($str, $charlist = false)
 * The board wide setting is updated once per page if this code is called
 * With thanks to Anthrax101 for the inspiration on this one
 * Added in phpBB 2.0.20
+*
+* V: actually, I totally removed the function from phpBB 2.0.20
+*  because it was using SQL for no reason, so now we are just using
+*  okay-entropy crap (md5 of microtime + random data, here online record date as salt)
+* so ... Stolen from ezArena 1.0.0.
 */
 function dss_rand()
 {
-	global $db, $board_config, $dss_seeded;
-
-	$val = $board_config['rand_seed'] . microtime();
-	$val = md5($val);
-	$board_config['rand_seed'] = md5($board_config['rand_seed'] . $val . 'a');
-   
-	if($dss_seeded !== true)
+	global $db, $board_config;
+	$seed = isset($board_config['rand_seed']) ? $board_config['rand_seed'] : null;
+	if ($seed === null)
 	{
-		$sql = "UPDATE " . CONFIG_TABLE . " SET
-			config_value = '" . $board_config['rand_seed'] . "'
-			WHERE config_name = 'rand_seed'";
-		
-		if( !$db->sql_query($sql) )
-		{
-			message_die(GENERAL_ERROR, "Unable to reseed PRNG", "", __LINE__, __FILE__, $sql);
-		}
-
-		$dss_seeded = true;
+		$seed = md5(microtime() . '@random data:' . $board_config['record_online_date']);
 	}
-
-	return substr($val, 4, 16);
+	$board_config['rand_seed'] = md5(uniqid($seed, true));
+	return substr($board_config['rand_seed'], 4, 16);
 }
 
 
@@ -814,6 +806,8 @@ function init_userprefs($userdata)
 		{
 			message_die(CRITICAL_ERROR, 'Could not update user language info');
 		}
+		$db->clear_cache('board_config');
+		$db->sql_freeresult($result);
 	}
 
 	$board_config['default_lang'] = $default_lang;
@@ -845,28 +839,15 @@ function init_userprefs($userdata)
                 $board_config['time_yesterday'] = $board_config['time_today'] - 86400;
       //unset($today_ary);
       //-- end mod : today at   yesterday at updates by evolver				
-		
-		
-		
-		
-		
-		
-
-		//	get all the mods settings
-		$dir = @opendir($phpbb_root_path . 'includes/mods_settings');
-		while( $file = @readdir($dir) )
-		{
-			if( preg_match("/^mod_.*?\." . $phpEx . "$/", $file) )
-			{
-				include_once($phpbb_root_path . 'includes/mods_settings/' . $file);
-			}
-		}
-		@closedir($dir);
-	//-- fin mod : mods settings -----------------------------------------------------------------------
 
 		include($phpbb_root_path . 'language/lang_' . $board_config['default_lang'] . '/lang_main.' . $phpEx);
 		include($phpbb_root_path . 'language/lang_' . $board_config['default_lang'] . '/lang_cback_ctracker.' . $phpEx);
-		if ( defined('IN_CASHMOD') )
+	//-- mod : language settings -----------------------------------------------------------------------
+	//-- add
+		include($phpbb_root_path . './includes/lang_extend_mac.' . $phpEx);
+	//-- fin mod : language settings -------------------------------------------------------------------
+
+		if ( defined('IN_CASHMOD') || defined('IN_ADMIN') )
 		{
 			if ( !file_exists(@phpbb_realpath($phpbb_root_path . 'language/lang_' . $board_config['default_lang'] . '/lang_cash.'.$phpEx)) )
 			{
@@ -890,6 +871,19 @@ function init_userprefs($userdata)
 			include($phpbb_root_path . 'language/lang_' . $board_config['default_lang'] . '/lang_admin_captcha.' . $phpEx);
 		}
 
+		// get all the mods settings
+		// V: load them *AFTER* lang
+		$dir = @opendir($phpbb_root_path . 'includes/mods_settings');
+		while( $file = @readdir($dir) )
+		{
+			if( preg_match("/^mod_.*?\." . $phpEx . "$/", $file) )
+			{
+				include_once($phpbb_root_path . 'includes/mods_settings/' . $file);
+			}
+		}
+		@closedir($dir);
+	//-- fin mod : mods settings -----------------------------------------------------------------------
+
 	//-- mod : keep unread -----------------------------------------------------------------------------
 	//-- add
 		read_cookies($userdata);
@@ -900,10 +894,6 @@ function init_userprefs($userdata)
 		global $tree;
 		if (empty($tree['auth'])) get_user_tree($userdata);
 	//-- fin mod : categories hierarchy ----------------------------------------------------------------
-	//-- mod : language settings -----------------------------------------------------------------------
-	//-- add
-		include($phpbb_root_path . './includes/lang_extend_mac.' . $phpEx);
-	//-- fin mod : language settings -------------------------------------------------------------------
 
 		include_attach_lang();
 
@@ -1227,13 +1217,23 @@ function setup_style($style)
 
 function encode_ip($dotquad_ip)
 {
-	$ip_sep = explode('.', $dotquad_ip);
-	return sprintf('%02x%02x%02x%02x', $ip_sep[0], $ip_sep[1], $ip_sep[2], $ip_sep[3]);
+	if (strstr($dotquad_ip, "."))
+	{
+		$ip_sep = explode('.', $dotquad_ip);
+		return sprintf('%02x%02x%02x%02x', $ip_sep[0], $ip_sep[1], $ip_sep[2], $ip_sep[3]);
+	}
+	else
+	{
+		return 0 /* V: TODO ipv6 */;
+	}
 }
 
 function decode_ip($int_ip)
 {
-	$hexipbang = explode('.', chunk_split($int_ip, 2, '.'));
+	if ($int_ip == "0")
+	{ /* V: TODO ipv6 */
+		return "";
+	}
 	return hexdec($hexipbang[0]). '.' . hexdec($hexipbang[1]) . '.' . hexdec($hexipbang[2]) . '.' . hexdec($hexipbang[3]);
 }
 
@@ -1282,6 +1282,7 @@ function cal_date($gmepoch, $tz)
 		$sql = "INSERT INTO " . CONFIG_TABLE . " (config_name,config_value) VALUES('summer_time','0')";
 		if ( !($result = $db->sql_query($sql)) ) message_die(GENERAL_ERROR, 'Could not add key summer_time in config table', '', __LINE__, __FILE__, $sql);
 	}
+	if ever uncommented, clear cache here
 	$switch_summer_time = ( $userdata['user_summer_time'] && $board_config['summer_time'] ) ? true : false;
 	if ($switch_summer_time) $tz++;
 //-- fin mod : profile cp --------------------------------------------------------------------------

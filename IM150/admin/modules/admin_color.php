@@ -19,11 +19,13 @@
 *
 ***************************************************************************/
 
-define('IN_PHPBB', true);
-
-$file = basename(__FILE__);
+if (!defined('IN_PHPBB'))
+{
+	die("Hacking attempt");
+}
 if( !empty($setmodules) )
 {
+	$file = basename(__FILE__);
 	$module['Groups']['AGCM_colors'] = $file;
 	return;
 }

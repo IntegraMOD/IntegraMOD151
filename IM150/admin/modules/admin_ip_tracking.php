@@ -9,8 +9,11 @@
  *
  ***************************************************************************/
  
-define('IN_PHPBB', 1);
-	
+if (!defined('IN_PHPBB'))
+{
+	die("Hacking attempt");
+}
+
 if( !empty($setmodules) )
 {
 	$module['Ip Tracking']['Configuration']		= append_sid("admin_ip_tracking.$phpEx?mode=config");

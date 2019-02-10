@@ -89,11 +89,11 @@ if ( ( isset($_POST['edit']) || isset($_GET['edit']) ) && !empty($style_id ) )
 		$style_name = $lang['AGCM_editing_all'];
 	}
 
-		$sql = 'SELECT g.group_id, g.group_name, g.group_weight, g.group_legend, g.group_color
-				FROM ' . GROUPS_TABLE . ' g
-				WHERE g.group_single_user <> ' . true . '
-					OR g.group_id IN (' . implode(', ', array_keys($agcm_color->group_ids)) . ')
-				ORDER BY g.group_weight ASC';
+	$sql = 'SELECT g.group_id, g.group_name, g.group_weight, g.group_legend, g.group_color
+			FROM ' . GROUPS_TABLE . ' g
+			WHERE g.group_single_user <> true
+				OR g.group_id IN (' . implode(', ', array_keys($agcm_color->group_ids)) . ')
+			ORDER BY g.group_weight ASC';
 
 	if ( $style_id != -1 )
 	{
@@ -130,10 +130,10 @@ if ( ( isset($_POST['edit']) || isset($_GET['edit']) ) && !empty($style_id ) )
 		);
 
 		// find which index into $groups corresponds to which group_id
-		$group_j_data = array();
+		$group_idx_data = array();
 		foreach ($groups as $j => $group)
 		{
-			$group_j_data[$group['group_id']] = $j;
+			$group_idx_data[$group['group_id']] = $j;
 		}
 
 		// organize all rows per group_id, so we can find common data per theme for that group
@@ -150,7 +150,7 @@ if ( ( isset($_POST['edit']) || isset($_GET['edit']) ) && !empty($style_id ) )
 				// We pretend $style_id == -1 has pre-filled values, if all themes have same color data
 				// pass true to ignore empty values (i.e. new styles)
 				$shared_key = get_key_all_same($color_rows, $color_field, '', true);
-				$groups[$group_j_data[$group_id]][$color_field] = $shared_key;
+				$groups[$group_idx_data[$group_id]][$color_field] = $shared_key;
 			}
 		}
 	}
@@ -201,9 +201,10 @@ if ( ( isset($_POST['edit']) || isset($_GET['edit']) ) && !empty($style_id ) )
 		'S_ACTION' => append_sid("admin_color.$phpEx"),
 	));
 
-	if ( !empty($groups) )
+	// use variable in case we added $groups[-1]
+	if ( $count_groups )
 	{
-		for ($j = 0; $j < count($groups); $j++)
+		for ($j = 0; $j < $count_groups; $j++)
 		{
 			$template->assign_block_vars('group_color_edit', array(
 				'ID' => $groups[$j]['group_id'],

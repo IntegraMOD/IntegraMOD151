@@ -11,11 +11,15 @@
  *
  ***************************************************************************/
 
-	if ( !empty( $setmodules ) )
-	{
-		$file = basename( __FILE__ );
-		$module['KB_title']['Optimize tables'] = $file;
-		return;
-	}	
+if (!defined('IN_PHPBB'))
+{
+	die("Hacking attempt");
+}
+if ( !empty( $setmodules ) )
+{
+	$file = basename( __FILE__ );
+	$module['KB_title']['Optimize tables'] = $file;
+	return;
+}
 
 ?>

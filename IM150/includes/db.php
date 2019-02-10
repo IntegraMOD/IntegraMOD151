@@ -27,40 +27,31 @@ if ( !defined('IN_PHPBB') )
 switch($dbms)
 {
 	case 'mysql':
-		include($phpbb_root_path . 'db/mysql.'.$phpEx);
-		break;
-
 	case 'mysql4':
-		include($phpbb_root_path . 'db/mysql4.'.$phpEx);
-		break;
-
 	case 'mysqli':
-		include($phpbb_root_path . 'db/mysqli.'.$phpEx);
+		include($phpbb_root_path . 'includes/db/mysqli.'.$phpEx);
 		break;
 
-	case 'postgres':
-		include($phpbb_root_path . 'db/postgres7.'.$phpEx);
-		break;
+	//case 'mssql-odbc':
+	//	include($phpbb_root_path . 'includes/db/odbc.'.$phpEx);
+	//	break;
 
-	case 'mssql':
-		include($phpbb_root_path . 'db/mssql.'.$phpEx);
-		break;
+	//case 'mssql':
+	//	include($phpbb_root_path . 'db/mssql.'.$phpEx);
+	//	break;
 
-	case 'oracle':
-		include($phpbb_root_path . 'db/oracle.'.$phpEx);
-		break;
+	//case 'oracle':
+	//	include($phpbb_root_path . 'db/oracle.'.$phpEx);
+	//	break;
 
-	case 'msaccess':
-		include($phpbb_root_path . 'db/msaccess.'.$phpEx);
-		break;
-
-	case 'mssql-odbc':
-		include($phpbb_root_path . 'db/mssql-odbc.'.$phpEx);
-		break;
+	//case 'msaccess':
+	//	include($phpbb_root_path . 'db/msaccess.'.$phpEx);
+	//	break;
 }
+include($phpbb_root_path . 'includes/class_db.'.$phpEx);
 
 // Make the database connection.
-$db = new sql_db($dbhost, $dbuser, $dbpasswd, $dbname, false);
+$db = new class_db($dbhost, $dbuser, $dbpasswd, $dbname, false);
 if(!$db->db_connect_id)
 {
 	message_die(CRITICAL_ERROR, "Could not connect to the database");

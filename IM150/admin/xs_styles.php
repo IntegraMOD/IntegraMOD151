@@ -52,14 +52,6 @@ if(!empty($_GET['setdefault']) && !defined('DEMO_MODE'))
 		$sql = str_replace(' WHERE config_name', ', theme_public=\'1\' WHERE config_name', $sql);
 	}
 	$db->sql_query($sql);
-	if(defined('XS_MODS_CATEGORY_HIERARCHY210'))
-	{
-		// recache config table
-		if ( !empty($config) )
-		{
-			$config->read(true);
-		}
-	}
 }
 
 //
@@ -70,11 +62,6 @@ if(isset($_GET['setoverride']) && !defined('DEMO_MODE'))
 	$board_config['override_user_style'] = intval($_GET['setoverride']);
 	$sql = "UPDATE " . CONFIG_TABLE . " SET config_value='" . $board_config['override_user_style'] . "' WHERE config_name='override_user_style'";
 	$db->sql_query($sql);
-	// recache config table
-	if(defined('XS_MODS_CATEGORY_HIERARCHY210') && !empty($config))
-	{
-		$config->read(true);
-	}
 }
 
 //

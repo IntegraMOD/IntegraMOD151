@@ -75,6 +75,7 @@ if (!function_exists('config_update_nivisec'))
 				return false;
 			}
 			$board_config[$item] = $value;
+			$db->clear_cache('board_config');
 			$status_message .= sprintf($lang['Updated_Config'], $lang[$item]);
 		}
 		return true;
@@ -372,7 +373,7 @@ function jr_admin_make_left_pane()
 			
 			$template->assign_block_vars("catrow.modulerow", array(
 				//+MOD: DHTML Menu for ACP
-				'ROW_COUNT' => $row_count,
+				'ROW_COUNT' => 0 /* V: seems like passing $i here makes admin panels "sluggish"... weird... */,
 				//-MOD: DHTML Menu for ACP
 				'ROW_CLASS' => (++$i % 2) ? 'row1' : 'row2',
 				'ADMIN_MODULE' => (isset($lang[$module_name])) ? $lang[$module_name] : preg_replace("/_/", ' ', $module_name),
@@ -435,7 +436,7 @@ function jr_admin_get_user_info($user_id)
 		sql_query_nivisec(
 			'SELECT * FROM ' . JR_ADMIN_TABLE . "
 			WHERE user_id = $user_id",
-			sprintf($lang['Error_Table'], JR_ADMIN_TABLE),
+			sprintf('Error reading table: %s', JR_ADMIN_TABLE),
 			false,
 			1
 		)

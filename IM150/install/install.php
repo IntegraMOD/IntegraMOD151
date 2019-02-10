@@ -328,7 +328,7 @@ include($phpbb_root_path.'includes/sessions.'.$phpEx);
 
 // Define schema info
 $available_dbms = array(
-  /*
+	/*
 	'mysql'=> array(
 		'LABEL'			=> 'MySQL 3.x',
 		'SCHEMA'		=> 'mysql',
@@ -336,7 +336,6 @@ $available_dbms = array(
 		'DELIM_BASIC'	=> ';',
 		'COMMENTS'		=> 'remove_remarks'
 	),
-   */
 	'mysql4' => array(
 		'LABEL'			=> 'MySQL',
 		'SCHEMA'		=> 'mysql',
@@ -344,6 +343,7 @@ $available_dbms = array(
 		'DELIM_BASIC'	=> ';',
 		'COMMENTS'		=> 'remove_remarks'
 	),
+	*/
 	'mysqli' => array(
 		'LABEL'			=> 'MySQLi',
 		'SCHEMA'		=> 'mysql',
@@ -827,9 +827,9 @@ else
 				$check_other = 'mysql';
 				break;
 			case 'mysqli':
-        $check_exts = 'mysqli';
-        $check_other = 'mysqli';
-        break;
+				$check_exts = 'mysqli';
+				$check_other = 'mysqli';
+				break;
 		}
 
 		if (!extension_loaded($check_exts) && !extension_loaded($check_other))
@@ -843,7 +843,7 @@ else
 		include($phpbb_root_path.'includes/db.'.$phpEx);
 	}
 
-  $schema = $available_dbms[$dbms]['SCHEMA'];
+	$schema = $available_dbms[$dbms]['SCHEMA'];
 	$dbms_schema = 'schemas/' . $schema . '_schema.sql';
 	$dbms_basic = 'schemas/' . $schema . '_basic.sql';
 

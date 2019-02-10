@@ -205,7 +205,7 @@ function qbar_init_tree_list($cur='Root', $level = 0)
 	$row = array();
 	$row['shortcut']		= $name;
 	$row['explain']			= $title;
-	$row['icon']			= $icon;
+	$row['icon']			= isset($icon) ? $icon : '';
 	$row['use_value']		= true;
 	$row['use_icon']		= true;
 	$row['url']				= $url;
@@ -221,8 +221,8 @@ function qbar_init_tree_list($cur='Root', $level = 0)
 	$qbar_maps['default_tree']['fields'][$cur] = $row;
 
 	// get the sub-levels
-  $tree_count = $tree['sub'][$cur] ? count($tree['sub'][$cur]) : 0;
-  for ($i=0; $i < $tree_count; $i++)
+	$tree_count = isset($tree['sub'][$cur]) ? count($tree['sub'][$cur]) : 0;
+	for ($i=0; $i < $tree_count; $i++)
 	{
 		qbar_init_tree_list( $tree['sub'][$cur][$i], ($level+1) );
 	}
@@ -340,21 +340,21 @@ function qbar_display_qbars($display=false)
 				$ok = true;
 
 				// check if logged
-				if (($fdata['auth_logged'] == 1) && ($userdata['user_id'] == ANONYMOUS)) 
+				if (isset($fdata['auth_logged']) && ($fdata['auth_logged'] == 1) && ($userdata['user_id'] == ANONYMOUS)) 
 				{
 					$ok = false;
 				}
-				if (($fdata['auth_logged'] == 2) && ($userdata['user_id'] != ANONYMOUS)) 
+				if (isset($fdata['auth_logged']) && ($fdata['auth_logged'] == 2) && ($userdata['user_id'] != ANONYMOUS)) 
 				{
 					$ok = false;
 				}
 
 				// check if admin
-				if (($fdata['auth_admin'] == 1) && ($userdata['user_level'] != ADMIN))
+				if (isset($fdata['auth_admin']) && ($fdata['auth_admin'] == 1) && ($userdata['user_level'] != ADMIN))
 				{
 					$ok = false;
 				}
-				if (($fdata['auth_admin'] == 2) && ($userdata['user_level'] == ADMIN))
+				if (isset($fdata['auth_admin']) && ($fdata['auth_admin'] == 2) && ($userdata['user_level'] == ADMIN))
 				{
 					$ok = false;
 				}
@@ -375,19 +375,19 @@ function qbar_display_qbars($display=false)
 				}
 
 				// check private messaging
-				if (($fdata['auth_pm'] == 1) && ($new_pms <= 0))
+				if (isset($fdata['auth_pm']) && ($fdata['auth_pm'] == 1) && ($new_pms <= 0))
 				{
 					$ok = false;
 				}
-				if (($fdata['auth_pm'] == 2) && ($unread_pms <= 0))
+				if (isset($fdata['auth_pm']) && ($fdata['auth_pm'] == 2) && ($unread_pms <= 0))
 				{
 					$ok = false;
 				}
-				if (($fdata['auth_pm'] == 2) && ($unread_pms > 0) && ($new_pms > 0))
+				if (isset($fdata['auth_pm']) && ($fdata['auth_pm'] == 2) && ($unread_pms > 0) && ($new_pms > 0))
 				{
 					$ok = false;
 				}
-				if (($fdata['auth_pm'] == 3) && (($new_pms > 0) || ($unread_pms > 0)))
+				if (isset($fdata['auth_pm']) && ($fdata['auth_pm'] == 3) && (($new_pms > 0) || ($unread_pms > 0)))
 				{
 					$ok = false;
 				}
@@ -403,7 +403,7 @@ function qbar_display_qbars($display=false)
 					}
 
 					// alternate
-					if ($fdata['auth_pm'] == 1)
+					if (isset($fdata['auth_pm']) && $fdata['auth_pm'] == 1)
 					{
 						if ($new_pms > 1)
 						{
@@ -411,7 +411,7 @@ function qbar_display_qbars($display=false)
 						}
 						$shortcut = sprintf($shortcut, $new_pms);
 					}
-					if ($fdata['auth_pm'] == 2)
+					if (isset($fdata['auth_pm']) && $fdata['auth_pm'] == 2)
 					{
 						if ($unread_pms > 1)
 						{
@@ -421,11 +421,12 @@ function qbar_display_qbars($display=false)
 					}
 
 					// mouseover
-					$mouseover = isset($lang[ $fdata['explain'] ]) ? $lang[ $fdata['explain'] ] : $fdata['explain'];
+					$explain = !empty($fdata['explain']) ? $fdata['explain'] : '';
+					$mouseover = isset($lang[ $explain ]) ? $lang[ $explain ] : $explain;
 
 					// link
 					$url = $fdata['url'];
-					if ($fdata['internal'])
+					if (!empty($fdata['internal']))
 					{
 						$part = explode( '?', $url);
 						$url .= ((count($part) > 1) ? '&' : '?') . 'sid=' . $userdata['session_id'];
@@ -433,15 +434,16 @@ function qbar_display_qbars($display=false)
 					}
 
 					// icon
-					$icon = (isset($images[ $fdata['icon'] ])) ? $images[ $fdata['icon'] ] : $fdata['icon'];
+					$icon = !empty($fdata['icon']) ? $fdata['icon'] : null;
+					$icon = (isset($images[ $icon ])) ? $images[ $icon ] : $icon;
 
 					// store the option
-					$options['icon'][]			= ($fdata['use_icon']) ? $icon : '';
-					$options['shortcut'][]		= ($fdata['use_value']) ? $shortcut : '';
+					$options['icon'][]			= !empty($fdata['use_icon']) ? $icon : '';
+					$options['shortcut'][]		= !empty($fdata['use_value']) ? $shortcut : '';
 					$options['mouseover'][]		= $mouseover;
 					$options['url'][]			= $url;
-					$options['window'][]		= $fdata['window'];
-					$options['php_function'][]	= $fdata['php_function'];
+					$options['window'][]		= !empty($fdata['window']);
+					$options['php_function'][]	= !empty($fdata['php_function']) ? $fdata['php_function'] : '';
 				}
 			}
 
@@ -495,7 +497,7 @@ function qbar_display_qbars($display=false)
 	{
 		if ($obj == 0)
 		{
-			$obj_count = $qbars['fields'] ? count($qbars['fields']) : 0;
+			$obj_count = !empty($qbars['fields']) ? count($qbars['fields']) : 0;
 			if($obj_count){
 				$template->set_filenames(array(
 					'_qbars' => 'qbar_qbars.tpl')
@@ -635,6 +637,7 @@ function qbar_display_qbars($display=false)
 			}
 
 			// send it to template
+			$align = '';
 			if (count($options) > 0)
 			{
 				if ($obj == 0)
@@ -718,7 +721,7 @@ function qbar_display_qbars($display=false)
 		// send it to main template
 		if ($obj == 0)
 		{
-			if ($qbars['fields'] && count($qbars['fields']) > 0)
+			if (!empty($qbars['fields']) && count($qbars['fields']) > 0)
 			{
 				$template->assign_var_from_handle('QBARS', '_qbars');
 			}

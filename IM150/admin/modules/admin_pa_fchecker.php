@@ -10,6 +10,10 @@
   This script was programmed by Andrew Langland <andy@razza.org>
 */
 
+if (!defined('IN_PHPBB'))
+{
+  die("Hacking attempt");
+}
 if( !empty($setmodules) )
 {
 	$file = basename(__FILE__);

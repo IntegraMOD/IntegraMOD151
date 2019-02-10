@@ -431,8 +431,12 @@ if(!defined("SQL_LAYER"))
 			{
 				if ($this->caching)
 					$this->write_cache();
-				unset($this->row[$query_id]);
-				unset($this->rowset[$query_id]);
+				if ($this->query_result && $this->query_result !== true)
+				{
+					// if the query wasn't a SELECT, mysqli_query returns simply true
+					unset($this->row[$this->query_result]);
+					unset($this->rowset[$this->query_result]);
+				}
 
 				@mysqli_free_result($query_id);
 
@@ -492,6 +496,11 @@ if(!defined("SQL_LAYER"))
 				}
 			}
 			@closedir($res);
+		}
+
+		function sql_escape($value)
+		{
+			return mysqli_real_escape_string($this->db_connect_id, $value);
 		}
 	} // class sql_db
 

@@ -34,7 +34,6 @@ if ( $is_called == FALSE )
 	//	users administrators
 	//
 	//-------------------------------------------
-	define( 'BOARD_ADMIN', 98 );
 	$admin_level = array(ADMIN_FOUNDER, ADMIN, JADMIN);
 	$level_prior = array(ADMIN_FOUNDER => 99, ADMIN => 9, JADMIN => 7, MOD => 5, USER => 0);
 	$level_desc = array(ADMIN_FOUNDER => 'Admin_founder_online_color', ADMIN => 'Admin_online_color', JADMIN => 'Jadmin_online_color', MOD => 'Mod_online_color', USER => 'User_online_color');
@@ -188,7 +187,7 @@ if ( $is_called == FALSE )
 		$db->sql_freeresult($result);
 
 		$rank_maxi = 99999999;
-		for ($i=count($ranks)-1; $i >= 0; $i--)
+		foreach ($ranks as $row)
 		{
 			if ( $row['rank_special'] ) $row['rank_mini'] = 0;
 			$row['rank_maxi'] = $rank_maxi;

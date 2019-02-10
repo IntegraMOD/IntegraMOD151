@@ -81,84 +81,13 @@ function users_stats()
 	if ( ($last_user['user_id'] != $board_config['record_last_user_id']) || ($last_user['username'] != $board_config['record_last_username']) )
 	{
 		// last user id
-		if ( isset($board_config['record_last_user_id']) )
-		{
-			$board_config['record_last_user_id'] = $last_user['user_id'];
-			$sql = "UPDATE " . CONFIG_TABLE . " 
-						SET config_value = " . intval($board_config['record_last_user_id']) . " 
-						WHERE config_name = 'record_last_user_id'";
-		}
-		else
-		{
-			$board_config['record_last_user_id'] = $last_user['user_id'];
-			$sql = "INSERT INTO " . CONFIG_TABLE . " 
-						(config_name, config_value)
-						VALUES( 'record_last_user_id', " . intval($board_config['record_last_user_id']) . ")";
-		}
-		if ( !$db->sql_query($sql) )
-		{
-			message_die(GENERAL_ERROR, 'Couldn\'t update/create config table', '', __LINE__, __FILE__, $sql);
-		}
-
+		init_board_config_key('record_last_user_id', $last_user['user_id']);
 		// last username
-		if ( isset($board_config['record_last_username']) )
-		{
-			$board_config['record_last_username'] = $last_user['username'];
-			$sql = "UPDATE " . CONFIG_TABLE . " 
-						SET config_value = '" . str_replace("\'", "''", $board_config['record_last_username']) . "'
-						WHERE config_name = 'record_last_username'";
-		}
-		else
-		{
-			$board_config['record_last_username'] = $last_user['username'];
-			$sql = "INSERT INTO " . CONFIG_TABLE . " 
-						(config_name, config_value)
-						VALUES( 'record_last_username', '" . str_replace("\'", "''", $board_config['record_last_username']) . "')";
-		}
-		if ( !$db->sql_query($sql) )
-		{
-			message_die(GENERAL_ERROR, 'Couldn\'t update/create config table', '', __LINE__, __FILE__, $sql);
-		}
-
+		init_board_config_key('record_last_username', $last_user['username']);
 		// last user group id
-		if ( isset($board_config['record_last_user_group_id']) )
-		{
-			$board_config['record_last_user_group_id'] = $last_user['user_group_id'];
-			$sql = "UPDATE " . CONFIG_TABLE . " 
-						SET config_value = '" . str_replace("\'", "''", $board_config['record_last_user_group_id']) . "'
-						WHERE config_name = 'record_last_user_group_id'";
-		}
-		else
-		{
-			$board_config['record_last_user_group_id'] = $last_user['user_group_id'];
-			$sql = "INSERT INTO " . CONFIG_TABLE . " 
-						(config_name, config_value)
-						VALUES( 'record_last_user_group_id', '" . str_replace("\'", "''", $board_config['record_last_user_group_id']) . "')";
-		}
-		if ( !$db->sql_query($sql) )
-		{
-			message_die(GENERAL_ERROR, 'Couldn\'t update/create config table', '', __LINE__, __FILE__, $sql);
-		}
-
+		init_board_config_key('record_last_user_group_id', $last_user['user_group_id']);
 		// last user session time
-		if ( isset($board_config['record_last_user_session_time']) )
-		{
-			$board_config['record_last_user_session_time'] = $last_user['user_session_time'];
-			$sql = "UPDATE " . CONFIG_TABLE . " 
-						SET config_value = '" . str_replace("\'", "''", $board_config['record_last_user_session_time']) . "'
-						WHERE config_name = 'record_last_user_session_time'";
-		}
-		else
-		{
-			$board_config['record_last_user_session_time'] = $last_user['user_session_time'];
-			$sql = "INSERT INTO " . CONFIG_TABLE . " 
-						(config_name, config_value)
-						VALUES( 'record_last_user_session_time', '" . str_replace("\'", "''", $board_config['record_last_user_session_time']) . "')";
-		}
-		if ( !$db->sql_query($sql) )
-		{
-			message_die(GENERAL_ERROR, 'Couldn\'t update/create config table', '', __LINE__, __FILE__, $sql);
-		}
+		init_board_config_key('record_last_user_session_time', $last_user['user_session_time']);
 	}
 }
 
@@ -181,49 +110,16 @@ function board_stats()
 	$row = $db->sql_fetchrow($result);
 	$max_topics = intval( $row['topic_total'] );
 	$max_posts = intval( $row['post_total'] );
+	$db->sql_freeresult($result);
 
 	// update
 	if ( $board_config['max_topics'] != $max_topics )
 	{
-		if ( isset($board_config['max_topics']) )
-		{
-			$board_config['max_topics'] = $max_topics;
-			$sql = "UPDATE " . CONFIG_TABLE . " 
-						SET config_value = " . intval($board_config['max_topics']) . " 
-						WHERE config_name = 'max_topics'";
-		}
-		else
-		{
-			$board_config['max_topics'] = $max_topics;
-			$sql = "INSERT INTO " . CONFIG_TABLE . " 
-						(config_name, config_value)
-						VALUES('max_topics', " . intval($board_config['max_topics']) . ")";
-		}
-		if ( !$db->sql_query($sql) )
-		{
-			message_die(GENERAL_ERROR, 'Couldn\'t update config table', '', __LINE__, __FILE__, $sql);
-		}
+		init_board_config_key('max_topics', intval($max_topics));
 	}
 	if ( $board_config['max_posts'] != $max_posts )
 	{
-		if ( isset($board_config['max_posts']) )
-		{
-			$board_config['max_posts'] = $max_posts;
-			$sql = "UPDATE " . CONFIG_TABLE . " 
-						SET config_value = " . intval($board_config['max_posts']) . " 
-						WHERE config_name = 'max_posts'";
-		}
-		else
-		{
-			$board_config['max_posts'] = $max_posts;
-			$sql = "INSERT INTO " . CONFIG_TABLE . " 
-						(config_name, config_value)
-						VALUES('max_posts', " . intval($board_config['max_posts']) . ")";
-		}
-		if ( !$db->sql_query($sql) )
-		{
-			message_die(GENERAL_ERROR, 'Couldn\'t update config table', '', __LINE__, __FILE__, $sql);
-		}
+		init_board_config_key('max_posts', intval($max_posts));
 	}
 }
 

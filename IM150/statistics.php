@@ -78,14 +78,7 @@ else
 	$core->do_not_use_cache = TRUE;
 }
 
-$sql = "SELECT config_value FROM " . CONFIG_TABLE . " WHERE config_name = 'default_lang'";
-if (!($result = $db->sql_query($sql)))
-{
-	message_die(GENERAL_ERROR, 'Unable to query config table', '', __LINE__, __FILE__, $sql);
-}
-
-$row = $db->sql_fetchrow($result);
-$default_board_lang = trim($row['config_value']);
+$default_board_lang = trim($board_config['default_lang']);
 
 //
 // Include Language

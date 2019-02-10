@@ -31,10 +31,10 @@ $mtime = explode(" ",$mtime);
 $mtime = $mtime[1] + $mtime[0];
 $starttime = $mtime;
 
-error_reporting  (E_ERROR | E_WARNING | E_PARSE); // This will NOT report uninitialized variables
+error_reporting (E_ERROR | E_WARNING | E_PARSE); // This will NOT report uninitialized variables
 if (function_exists('set_magic_quotes_runtime'))
 {
-  set_magic_quotes_runtime(0); // Disable magic_quotes_runtime
+  @set_magic_quotes_runtime(0); // Disable magic_quotes_runtime
 }
 date_default_timezone_set(@date_default_timezone_get());
 
@@ -431,7 +431,10 @@ phpBBSecurity_Guests();
 #======================================================================= |
 
 //Begin Lo-Fi Mod
-if ($_GET['lofi'] || $_COOKIE['lofi']) $lofi = 1;
-//Begin Lo-Fi Mod
+if (!empty($_GET['lofi']) || !empty($_COOKIE['lofi']))
+{
+	$lofi = 1;
+}
+//End Lo-Fi Mod
 
 ?>

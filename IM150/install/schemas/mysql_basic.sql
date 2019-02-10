@@ -1444,7 +1444,8 @@ INSERT INTO phpbb_groups (group_type, group_name, group_description, group_moder
 -- Insert the values for these groups (or any other groups created before in this SQL file)
 INSERT INTO phpbb_color (group_id, themes_id, color_code)
 SELECT g.group_id, t.themes_id, ''
-FROM phpbb_groups g, phpbb_themes t;
+FROM phpbb_groups g, phpbb_themes t
+	WHERE g.group_single_user <> true OR group_name IN ('Group_registered', 'Group_anonymous', 'Group_session');
 
 -- Create the config keys associated, values are wrong here but will be updated below
 INSERT INTO phpbb_config (config_name , config_value) VALUES ('mod_advanced_group_color_management', '1.2.5');

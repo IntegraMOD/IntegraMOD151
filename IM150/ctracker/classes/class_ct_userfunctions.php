@@ -152,9 +152,13 @@ class ct_userfunctions
 
 		$first_ip_range  = explode('.', $userdata['ct_last_used_ip']);
 		$second_ip_range = explode('.', $userdata['ct_last_ip']);
+		$is_ipv4 = count($first_ip_range) > 1;
+		if (!$is_ipv4)
+		{ // V: no support for IP v6 as of yet...
+			return 'allclear';
+		}
 
-
-		if ( $first_ip_range[0] == $second_ip_range[0] && $first_ip_range[1] == $second_ip_range[1])
+		if ($first_ip_range[0] == $second_ip_range[0] && $first_ip_range[1] == $second_ip_range[1])
 		{
 			return 'allclear';
 		}

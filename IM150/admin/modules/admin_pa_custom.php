@@ -9,6 +9,10 @@
   Please read the license included with this script for more information.
 */
 
+if (!defined('IN_PHPBB'))
+{
+  die("Hacking attempt");
+}
 if( !empty($setmodules) )
 {
 	$file = basename(__FILE__);

@@ -165,7 +165,7 @@ if(!function_exists('imp_style_select_block_func'))
 			$template->assign_block_vars('switch_style_version', array());
 			$template->assign_vars(array('L_STYLE_VERSION' => $lang['Style_select_version'] . $style_version));
 		}
-		if ( $style_views )
+		if ( !empty($style_views) )
 		{
 			$template->assign_block_vars('switch_style_views', array());
 			$template->assign_vars(array('L_STYLE_VIEWINGS' => $lang['Style_select_viewings'] . $style_views));

@@ -257,12 +257,12 @@ function auth($type, $forum_id, $userdata, $f_access = '')
 			}
 			while( $row = $db->sql_fetchrow($result) );
 		}
+		$db->sql_freeresult($result);
 //-- mod : categories hierarchy --------------------------------------------------------------------
 //-- add
 		}
 //-- fin mod : categories hierarchy ----------------------------------------------------------------
 
-		$db->sql_freeresult($result);
 	}
 
 	$is_admin = ( $userdata['user_level'] == ADMIN && $userdata['session_logged_in'] ) ? TRUE : 0;
@@ -433,6 +433,13 @@ function auth($type, $forum_id, $userdata, $f_access = '')
 function auth_check_user($type, $key, $u_access, $is_admin)
 {
 	$auth_user = 0;
+
+	// V: this is when we pass in a single access record
+	//    instead of an array thereof
+	if (count($u_access) && !isset($u_access[0]))
+	{
+		$u_access = array($u_access);
+	}
 
 	if ( count($u_access) )
 	{

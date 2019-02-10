@@ -531,7 +531,8 @@ $lang['New_password'] = 'Nouveau mot de passe';
 $lang['Confirm_password'] = 'Confirmer le mot de passe';
 $lang['Confirm_password_explain'] = 'Vous devez confirmer votre mot de passe si vous souhaitez modifier votre adresse email';
 
-if($userdata['session_logged_in']){
+if(!empty($userdata['session_logged_in']))
+{
 	$lang['password_if_changed'] = 'Vous avez seulement besoin de fournir un mot de passe si vous voulez le changer';
 	$lang['password_confirm_if_changed'] = 'Vous avez seulement besoin de confirmer votre mot de passe si vous l\'avez changé ci-dessus';
 }else{
@@ -549,8 +550,8 @@ $lang['PS_security_error']          = 'Erreur';
 $lang['PS_security_info']           = 'Information';
 $lang['PS_security_one']            = 'La question de sécurité et la réponse sont obligatoires.';
 $lang['PS_security_a_exp']          = '<br>Ceci est le \'hash\' de votre réponse de sécurité. Il est sauvegardé de cette manière dans la base de données de cette façon la réponse ne peut être décryptée. Notez votre réponse en clair de façon à ne pas la perdre.';
-$lang['PS_security_locked']         = 'Désolé, ce compte a excédé la limite d\'essais infructueux. Votre compte est maintenant barré. Si vous êtes le propriétaire de ce compte, cliquez ici pour débarrer votre compte.<br><br>cliquer <a href="login_security.'. $phpEx .'?phpBBSecurity=retreive&sid='. $userdata['session_id'] .'">sur ce lien</a> pour débarrer ce compte.';
-$lang['PS_security_force']          = 'Désolé, ceci semble être votre première visite depuis que nous avons changé les champs obligatoires des profils utilisateurs. Vous devez compléter votre profil pour continuer votre visite, Merci!<br><br><b><a href="profile.'. $phpEx .'?mode=register&sub=registering&sid='. $userdata['session_id'] .'">Cliquez ici pour modifier votre profil.</a></b>';
+$lang['PS_security_locked']         = 'Désolé, ce compte a excédé la limite d\'essais infructueux. Votre compte est maintenant barré. Si vous êtes le propriétaire de ce compte, cliquez ici pour débarrer votre compte.<br><br>cliquer <a href="' . append_sid('login_security.'. $phpEx .'?phpBBSecurity=retreive') .'">sur ce lien</a> pour débarrer ce compte.';
+$lang['PS_security_force']          = 'Désolé, ceci semble être votre première visite depuis que nous avons changé les champs obligatoires des profils utilisateurs. Vous devez compléter votre profil pour continuer votre visite, Merci!<br><br><b><a href="' . append_sid('profile.'. $phpEx .'?mode=register&sub=registering') .'">Cliquez ici pour modifier votre profil.</a></b>';
 $lang['PS_admin_one']               = 'Tentative d\'accès';
 $lang['PS_admin_one_exp']           = '<br>Ceci est le nombre de tentatives permises pour se connecter: passé ce nombre, le compte est bloqué.';
 $lang['PS_admin_two']               = 'Avertir l\'Admin';
@@ -574,7 +575,7 @@ $lang['PS_login_step_failed']       = 'Désolé, l\'information fournie est incorr
 $lang['PS_login_button']            = 'Valider';
 $lang['PS_login_validated']         = 'Merci d\'avoir débloqué votre compte. Vous pouvez vous connectez à nouveau.';
 $lang['PS_profile_explain']         = 'Il est important de bien réfléchir avant de compléter ceci. Vous ne serez pas capable de modifier cette réponse sans avoir recours $ l\'administrateur du site.';
-$lang['PS_forgot_sq']               = '<a href="login_security.'. $phpEx .'?phpBBSecurity=forgot&sid='. $userdata['session_id'] .'">Vous avez oublié votre question de sécurité??</a>';
+$lang['PS_forgot_sq']               = '<a href="' . append_sid('login_security.'. $phpEx .'?phpBBSecurity=forgot') . '">Vous avez oublié votre question de sécurité??</a>';
 $lang['PS_forgot_exp']              = 'Si vous avez oublié votre réponse de sécurité, vous allez devoir contacter l\'administrateur du site. l\'adresse pour le contacter est '. $board_config['board_email'] ;
 $lang['PS_user_lock']               = 'Statut barré';
 $lang['PS_user_lock_exp']           = 'Si le compte est barré, à chaque fois que l\'utilisateur essaye de se connecter, il devra répondre à la question de sécurité.';

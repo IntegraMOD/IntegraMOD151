@@ -25,7 +25,6 @@ define("SQL_LAYER","db2");
 
 class sql_db
 {
-
 	var $db_connect_id;
 	var $query_result;
 	var $query_resultset;

@@ -9,8 +9,10 @@
  *
  ***************************************************************************/ 
 
-define('IN_PHPBB', 1);
-
+if (!defined('IN_PHPBB'))
+{
+	die("Hacking attempt");
+}
 // First we do the setmodules stuff for the admin cp.
 if( !empty($setmodules) )
 {

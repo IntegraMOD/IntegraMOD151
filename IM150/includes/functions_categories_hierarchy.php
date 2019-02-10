@@ -61,8 +61,6 @@ function get_object_lang($cur, $field, $all=false)
 {
 	global $board_config, $lang, $tree;
 	$res	= '';
-	$this_key	= $tree['keys'][$cur];
-	$type	= $tree['type'][$this_key];
 	if ($cur == 'Root')
 	{
 		switch($field)
@@ -91,6 +89,8 @@ function get_object_lang($cur, $field, $all=false)
 	}
 	else
 	{
+		$this_key	= $tree['keys'][$cur];
+		$type	= $tree['type'][$this_key];
 		switch($field)
 		{
 			case 'name':
@@ -308,7 +308,7 @@ if (!defined('IN_INSTALL'))
 		}
 
 		// have we got a last visit time for this topic
-		$topic_last_read = intval($board_config['tracking_unreads'][$topic_id]);
+		$topic_last_read = isset($board_config['tracking_unreads'][$topic_id]) ? intval($board_config['tracking_unreads'][$topic_id]) : 0;
 		if ( !empty($board_config['tracking_all']) && ($board_config['tracking_all'] > $topic_last_read) )
 		{
 			$topic_last_read = $board_config['tracking_all'];
@@ -467,7 +467,9 @@ function set_tree_user_auth()
 		// grant the main level
 		if ($main != 'Root')
 		{
-			$tree['auth'][$main]['tree.auth_view'] = ($tree['auth'][$main]['tree.auth_view'] || $tree['auth'][$cur]['tree.auth_view']);
+			// V: if no auth (i.e. for category), just pretend it's false
+			$main_auth = isset($tree['auth'][$main]['tree.auth_view']) ? $tree['auth'][$main]['tree.auth_view'] : false;
+			$tree['auth'][$main]['tree.auth_view'] = $main_auth || ($tree['auth'][$cur]['tree.auth_view']);
 		}
 
 		//---------------------
@@ -513,8 +515,8 @@ function set_tree_user_auth()
 		}
 		if ($auth_view)
 		{
-			$tree['data'][$i]['tree.forum_posts'] += $tree['data'][$i]['forum_posts'];
-			$tree['data'][$i]['tree.forum_topics'] += $tree['data'][$i]['forum_topics'];
+			$tree['data'][$i]['tree.forum_posts'] += isset($tree['data'][$i]['forum_posts']) ? $tree['data'][$i]['forum_posts'] : 0;
+			$tree['data'][$i]['tree.forum_topics'] += isset($tree['data'][$i]['forum_topics']) ? $tree['data'][$i]['forum_topics'] : 0;
 		}
 
 		// grant the main level
@@ -545,7 +547,7 @@ function set_tree_user_auth()
 		if ($auth_read)
 		{
 			// fill the sub
-			if ( empty($tree['data'][$i]['tree.topic_last_post_id']) || ($tree['data'][$i]['post_time'] > $tree['data'][$i]['tree.post_time']) )
+			if ( (empty($tree['data'][$i]['tree.topic_last_post_id']) && !empty($tree['data'][$i]['topic_last_post_id'])) || (isset($tree['data'][$i]['post_time']) && $tree['data'][$i]['post_time'] > $tree['data'][$i]['tree.post_time']) )
 			{
 				$tree['data'][$i]['tree.topic_last_post_id']	= $tree['data'][$i]['topic_last_post_id'];
 				$tree['data'][$i]['tree.post_time']				= $tree['data'][$i]['post_time'];
@@ -561,7 +563,7 @@ function set_tree_user_auth()
 		// grant the main level
 		if ($main != 'Root')
 		{
-			if ( empty($tree['data'][$main_idx]['tree.topic_last_post_id']) || ($tree['data'][$i]['tree.post_time'] > $tree['data'][$main_idx]['tree.post_time']) )
+			if ( (empty($tree['data'][$i]['tree.topic_last_post_id']) && !empty($tree['data'][$i]['topic_last_post_id'])) || (isset($tree['data'][$i]['post_time']) && $tree['data'][$i]['post_time'] > $tree['data'][$i]['tree.post_time']) )
 			{
 				$tree['data'][$main_idx]['tree.topic_last_post_id']	= $tree['data'][$i]['tree.topic_last_post_id'];
 				$tree['data'][$main_idx]['tree.post_time']			= $tree['data'][$i]['tree.post_time'];
@@ -652,7 +654,7 @@ function get_auth_keys($cur='Root', $all=false, $level=-1, $max=-1, $auth_key='a
 			$keys['idx'][$last_i]			= (isset($tree['keys'][$cur]) ? $tree['keys'][$cur] : -1);
 
 			// get sub-levels
-      $tree_count = $tree['sub'][$cur] ? count($tree['sub'][$cur]) : 0;
+			$tree_count = isset($tree['sub'][$cur]) ? count_safe($tree['sub'][$cur]) : 0;
 			for ($i=0; $i < $tree_count; $i++)
 			{
 				$tkeys = array();
@@ -755,10 +757,12 @@ function get_tree_option($cur='', $all=false, $disable_non_forum = false)
 
 	// if we only want the user to select a forum (i.e. for KB), disable the rest
 	$disabled = $disable_non_forum ? ' disabled="disabled"' : '';
+	$res = '';
 	for ($i=0; $i < count($keys['id']); $i++)
 	{
 		// only get object that are not forum links type
-		if ( ($tree['type'][ $keys['idx'][$i] ] != POST_FORUM_URL) || empty($tree['data'][ $keys['idx'][$i] ]['forum_link']) )
+		// V: skip -1, that's Root
+		if ( $keys['idx'][$i] != -1 && ($tree['type'][ $keys['idx'][$i] ] != POST_FORUM_URL) || empty($tree['data'][ $keys['idx'][$i] ]['forum_link']) )
 		{
 			$level = $keys['real_level'][$i];
 

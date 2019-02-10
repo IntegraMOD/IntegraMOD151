@@ -289,6 +289,7 @@ define('USER', 0);
 define('ADMIN', 1);
 define('MOD', 2);
 define('JADMIN', 7);
+define('BOARD_ADMIN', 98);
 define('ADMIN_FOUNDER', 99);
 define('GUEST_ONLY', 1000);
 
@@ -336,3 +337,66 @@ define('REPORT_NOTIFY_NEW', 1);
 define('REPORT_NOTIFY_CHANGE', 2);
 
 //-- fin mod : advanced report hack
+
+//
+//=============[ BEGIN Cash mod Defines ]=========================
+// V: moved here so that ACP can access them
+
+// Cash Mod Constants
+define('PERCHAR_DEC_BONUS',3);
+define('CASH_LOG_ACTION_DELIMETER','@-@');
+
+define('CASH_EVENT_DELIM1','#');
+define('CASH_EVENT_DELIM2','@');
+
+// Log Settings - the order here matters. don't change it. only add to the end of the list.
+$i = 0;
+define('CASH_LOG_DONATE', $i++);
+define('CASH_LOG_ADMIN_MODEDIT', $i++);
+define('CASH_LOG_ADMIN_CREATE_CURRENCY', $i++);
+define('CASH_LOG_ADMIN_DELETE_CURRENCY', $i++);
+define('CASH_LOG_ADMIN_RENAME_CURRENCY', $i++);
+define('CASH_LOG_ADMIN_COPY_CURRENCY',$i++);
+// insert new log types before this line
+
+// Allowance Time
+define('CASH_ALLOW_DAY', 1);
+define('CASH_ALLOW_WEEK', 2);
+define('CASH_ALLOW_MONTH', 3);
+define('CASH_ALLOW_YEAR', 4);
+
+// Cash groups
+define('CASH_GROUPS_LEVEL', 1);
+define('CASH_GROUPS_RANK', 2);
+define('CASH_GROUPS_USERGROUP', 3);
+// Cash groups status
+define('CASH_GROUPS_DEFAULT', 1);
+define('CASH_GROUPS_CUSTOM', 2);
+define('CASH_GROUPS_OFF', 3);
+
+// Bitmask filters - the order here matters. don't change it. only add to the end of the list.
+$i = 0;
+define('CURRENCY_ENABLED', 1 << $i++);
+define('CURRENCY_IMAGE', 1 << $i++);
+define('CURRENCY_PREFIX', 1 << $i++);
+define('CURRENCY_INCLUDEQUOTES', 1 << $i++);
+define('CURRENCY_VIEWPROFILE', 1 << $i++);
+define('CURRENCY_VIEWTOPIC', 1 << $i++);
+define('CURRENCY_VIEWMEMBERLIST', 1 << $i++);
+define('CURRENCY_DONATE', 1 << $i++);
+define('CURRENCY_MODEDIT', 1 << $i++);
+define('CURRENCY_ALLOWNEG', 1 << $i++);
+define('CURRENCY_FORUMLISTTYPE', 1 << $i++);
+define('CURRENCY_EXCHANGEABLE', 1 << $i++);
+// insert new bitmasks before this line
+
+// Cash tables
+define('CASH_TABLE', $table_prefix.'cash');
+define('CASH_EVENTS_TABLE', $table_prefix.'cash_events');
+define('CASH_EXCHANGE_TABLE', $table_prefix.'cash_exchange');
+define('CASH_GROUPS_TABLE', $table_prefix.'cash_groups');
+define('CASH_LOGS_TABLE', $table_prefix.'cash_log');
+
+//
+//=============[ END Cash mod Defines ]=========================
+//

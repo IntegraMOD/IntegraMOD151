@@ -46,7 +46,7 @@ $w_maps = array();
 while ( list($map_name, $map_data) = @each($user_maps) )
 {
 	$map_tree = explode('.', $map_name);
-	if ( ($map_tree[0] == 'PCP') && ($map_data['custom'] == 1) )
+	if ( ($map_tree[0] == 'PCP') && !empty($map_data['custom']) && ($map_data['custom'] == 1) )
 	{
 		// get this map
 		$map_tree = explode('.', $map_name);

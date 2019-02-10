@@ -86,26 +86,8 @@ if(isset($_GET['remove']) && !defined('DEMO_MODE'))
 		$sql = "DELETE FROM " . CONFIG_TABLE . " WHERE config_name='" . addslashes("xs_style_{$row['template_name']}") . "'";
 		$db->sql_query($sql);
 		$template->assign_block_vars('left_refresh', array(
-				'ACTION'	=> append_sid('index.' . $phpEx . '?pane=left')
-			));
-		// recache config table for cat_hierarchy 2.1.0
-		if(isset($GLOBALS['config']) && is_object($GLOBALS['config']))
-		{
-			global $config;
-			$config->read(true);
-		}
-	}
-	// recache themes table
-	if(defined('XS_MODS_CATEGORY_HIERARCHY210'))
-	{
-		if ( empty($themes) )
-		{
-			$themes = new themes();
-		}
-		if ( !empty($themes) )
-		{
-			$themes->read(true);
-		}
+			'ACTION'	=> append_sid('index.' . $phpEx . '?pane=left')
+		));
 	}
 }
 

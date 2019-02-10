@@ -521,7 +521,8 @@ function pcp_get_values_list($field_name, $field_data, $map_name='')
 			$values = array();
 			while ( $row = $db->sql_fetchrow($result) )
 			{
-				$values[ $row['_list_key'] ] = array( 'txt' => $row['_list_txt'], 'img' => $row['_list_img'] );
+				$img = isset($row['_list_img']) ? $row['_list_img'] : null;
+				$values[ $row['_list_key'] ] = array( 'txt' => $row['_list_txt'], 'img' => $img );
 			}
 			$db->sql_freeresult($result);
 
@@ -537,7 +538,7 @@ function pcp_get_values_list($field_name, $field_data, $map_name='')
 	}
 
 	// force txt if nothing ask for display
-	if ( !$field_data['txt'] && !$field_data['img'] )
+	if ( empty($field_data['txt']) && empty($field_data['img']) )
 	{
 		$field_data['txt'] = true;
 	}
@@ -547,11 +548,11 @@ function pcp_get_values_list($field_name, $field_data, $map_name='')
 	{
 		$txt = '';
 		$img = '';
-		if ( $field_data['txt'] )
+		if ( !empty($field_data['txt']) )
 		{
 			$txt = isset($lang[ $value_data['txt'] ]) ? $lang[ $value_data['txt'] ] : $value_data['txt'];
 		}
-		if ( $field_data['img'] )
+		if ( !empty($field_data['img']) )
 		{
 			$img = isset($images[ $value_data['img'] ]) ? $images[ $value_data['img'] ] : $value_data['img'];
 		}
@@ -606,7 +607,7 @@ function pcp_get_field( $field_cfg, $map_name='', $field_name='' )
 	}
 
 	// parse the default value
-	if ( !empty($field_data['default']) || ($field_data['default'] == "0") )
+	if ( array_key_exists('default', $field_data) )
 	{
 		$tables_used = array();
 		$field_data['default'] = pcp_parse_def($field_data['default'], $userdata, $tables_used);
@@ -616,7 +617,7 @@ function pcp_get_field( $field_cfg, $map_name='', $field_name='' )
 	if ( !empty($field_data['values']) && is_string($field_data['values']) )
 	{
 		// if list drop force the img/txt set
-		if ( ($field_data['get_mode'] == 'LIST_DROP') && $field_data['img'] )
+		if ( ($field_data['get_mode'] == 'LIST_DROP') && !empty($field_data['img']) )
 		{
 			$field_data['img'] = false;
 			$field_data['txt'] = true;
@@ -633,7 +634,7 @@ function pcp_get_field( $field_cfg, $map_name='', $field_name='' )
 			$found = false;
 			while ( list($value, $key) = @each($field_data['values']) )
 			{
-				$found = ( $field_data['default'] == $key );
+				$found = ( isset($field_data['default']) && $field_data['default'] == $key );
 				if ( $found )
 				{
 					break;
@@ -675,7 +676,7 @@ function pcp_get_mods_setting_menu( $menu_id, $map_name='' )
 	global $values_list, $tables_linked, $classes_fields, $user_maps, $user_fields;
 
 	$res = array();
-	if ( !empty($map_name) && isset($user_maps[$map_name]) )
+	if ( !empty($map_name) && isset($user_maps[$map_name])  && isset($user_maps[$map_name][$menu_id]))
 	{
 		$res = $user_maps[$map_name][$menu_id];
 	}
@@ -698,10 +699,13 @@ function pcp_get_mods_setting_config_fields( $map_name='' )
 		@reset($user_maps[$map_name]['fields']);
 		while ( list($field_name, $field_data) = @each($user_maps[$map_name]['fields']) )
 		{
-			$field_cfg = $field_data['input_id'];
-			if ( empty($field_cfg) )
+			if ( empty($field_data['input_id']) )
 			{
 				$field_cfg = $field_name;
+			}
+			else
+			{
+				$field_cfg = $field_data['input_id'];
 			}
 			$res[$field_cfg] = pcp_get_field($field_cfg, $map_name, $field_name);
 		}

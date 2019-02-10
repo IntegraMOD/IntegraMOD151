@@ -7,6 +7,10 @@
  *   date                 : 2003/08/27 19:23
  ***************************************************************************/
 
+if (!defined('IN_PHPBB'))
+{
+	die("Hacking attempt");
+}
 if( !empty($setmodules) )
 {
 	$filename = basename(__FILE__);

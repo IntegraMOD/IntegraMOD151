@@ -231,15 +231,15 @@ class log_manager
 
 		$path     = $this->create_ct_path($file_id);
 		if ($file_id != 6)
-    {
-		  $logsize  = count(file($path)) - 1;
+		{
+			$logsize  = count_safe(@file($path)) - 1;
 		}
 		else
 		{
-      $debug_array = file($path);
-      $debug_delimiter = $debug_array[0];
-      $logsize  = count($debug_array) - count(array_diff($debug_array, (array) $debug_delimiter));
-    }
+			$debug_array = file($path);
+			$debug_delimiter = $debug_array[0];
+			$logsize  = count($debug_array) - count(array_diff($debug_array, (array) $debug_delimiter));
+		}
 
 		return $logsize;
 	}
@@ -271,8 +271,7 @@ class log_manager
     	    						<font face="Tahoma, Arial, Helvetica" size="2" color="#000000">
         	  						  CBACK CrackerTracker could not perform file operations.<br><br>
  									  Please ensure, that you have setted CHMOD777 to all required files
-          					          as shown in the install file of this MOD and ensure you really
-        	  						  have a PHP Interpreter Version >= 4.3.9 installed!
+          					          as shown in the install file of this MOD.
         	  						</font>
           					    </td>
         					   </tr>

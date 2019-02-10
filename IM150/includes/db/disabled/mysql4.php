@@ -26,7 +26,6 @@ define("SQL_LAYER","mysql4");
 
 class sql_db
 {
-
 	var $db_connect_id;
 	var $query_result;
 	var $row = array();

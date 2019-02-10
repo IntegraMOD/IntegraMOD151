@@ -22,6 +22,10 @@
 *	This file will be used for modifying the smiley settings for a board.
 **************************************************************************/
 
+if (!defined('IN_PHPBB'))
+{
+	die("Hacking attempt");
+}
 if( !empty($setmodules) )
 {
 	$filename = basename(__FILE__);

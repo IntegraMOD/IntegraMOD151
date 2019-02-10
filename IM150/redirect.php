@@ -76,9 +76,9 @@ if ( !($result = $db->sql_query($sql)) )
 require_once($phpbb_root_path . 'language/lang_' . $board_config['default_lang'] . '/lang_banner.' . $phpEx);
 
 $template->set_filenames(array( 
-      'body' => 'redirect.tpl')); 
+	'body' => 'redirect.tpl')); 
 $template->assign_vars(array( 
-      'REDIRECT_URL' => $redirect_url,
+	'REDIRECT_URL' => $redirect_url,
 	'MESSAGE' => sprintf($lang['No_redirect_error'],$redirect_url) 
 ));
 

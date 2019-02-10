@@ -418,6 +418,8 @@ function session_pagestart($user_ip, $thispage_id)
 					{
 						message_die(GENERAL_ERROR, 'Could not update counter information', '', __LINE__, __FILE__, $sql);
 					}
+					$db->clear_cache('board_config'); // V: I don't want to :(
+					$db->sql_freeresult($result);
 
 					// A little trick to reset session_admin on session re-usage
 					$update_admin = (!defined('IN_ADMIN') && $current_time - $userdata['session_time'] > ($board_config['session_length']+60)) ? ', session_admin = 0' : '';

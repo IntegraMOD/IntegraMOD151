@@ -308,7 +308,7 @@ function get_event_topics(&$events, &$number, $start_date, $end_date, $limit=fal
 		{
 			if ( $forum_auth['auth_read'] && (empty($fid) || isset($is_ask[$forum_id])) )
 			{
-				$s_forum_ids .= (empty($s_forum_ids) ? '' : ', ') . $forum_id;
+				$s_forum_ids[] = $forum_id;
 			}
 		}
 	}
@@ -321,9 +321,11 @@ function get_event_topics(&$events, &$number, $start_date, $end_date, $limit=fal
 		$keys = get_auth_keys($fid, true, -1, -1, 'auth_read');
 		for ($i=0; $i < count($keys['id']); $i++)
 		{
-			if ( ($tree['type'][$keys['idx'][$i]] == POST_FORUM_URL) && $tree['auth'][ $keys['id'][$i] ]['auth_read'] )
+			$idx = $keys['idx'][$i];
+			// V: skip -1, that's Root
+			if ( $idx != -1 && ($tree['type'][$idx] == POST_FORUM_URL) && $tree['auth'][ $keys['id'][$i] ]['auth_read'] )
 			{
-				$s_forum_ids .= (empty($s_forum_ids) ? '' : ', ') . $tree['id'][$keys['idx'][$i]];
+				$s_forum_ids[] = $tree['id'][$idx];
 			}
 		}
 	}
@@ -352,8 +354,8 @@ function get_event_topics(&$events, &$number, $start_date, $end_date, $limit=fal
 //					lp.post_time AS lp_post_time
 //					$sql_forums_field
 //			FROM " . TOPICS_TABLE . " AS t, " . POSTS_TABLE . " AS p, " . POSTS_TEXT_TABLE . " AS pt, " . USERS_TABLE . " AS u, " . POSTS_TABLE . " AS lp, " . USERS_TABLE . " lu $sql_forums_file
-//			WHERE 
-//					t.forum_id IN ($s_forum_ids)
+//			WHERE
+//				" . $db->sql_in_set('t.forum_id', $s_forum_ids) . "
 //				AND p.post_id	= t.topic_first_post_id
 //				AND pt.post_id	= t.topic_first_post_id
 //				AND u.user_id	= p.poster_id
@@ -379,8 +381,8 @@ function get_event_topics(&$events, &$number, $start_date, $end_date, $limit=fal
 					lp.post_time AS lp_post_time
 					$sql_forums_field
 			FROM " . TOPICS_TABLE . " AS t, " . POSTS_TABLE . " AS p, " . POSTS_TEXT_TABLE . " AS pt, " . USERS_TABLE . " AS u, " . POSTS_TABLE . " AS lp, " . USERS_TABLE . " lu $sql_forums_file
-			WHERE 
-					t.forum_id IN ($s_forum_ids)
+			WHERE
+				" . $db->sql_in_set('t.forum_id', $s_forum_ids) . "
 				AND p.post_id	= t.topic_first_post_id
 				AND pt.post_id	= t.topic_first_post_id
 				AND u.user_id	= p.poster_id
@@ -824,7 +826,7 @@ function get_recurring_events(&$events, &$number, $start_date, $end_date, $limit
 		{
 			if ( $forum_auth['auth_read'] && (empty($fid) || isset($is_ask[$forum_id])) )
 			{
-				$s_forum_ids .= (empty($s_forum_ids) ? '' : ', ') . $forum_id;
+				$s_forum_ids[] = $forum_id;
 			}
 		}
 	}
@@ -837,9 +839,11 @@ function get_recurring_events(&$events, &$number, $start_date, $end_date, $limit
 		$keys = get_auth_keys($fid, true, -1, -1, 'auth_read');
 		for ($i=0; $i < count($keys['id']); $i++)
 		{
-			if ( ($tree['type'][$keys['idx'][$i]] == POST_FORUM_URL) && $tree['auth'][ $keys['id'][$i] ]['auth_read'] )
+			$idx = $keys['idx'][$i];
+			// V: skip -1, that's Root
+			if ( $idx != -1 && ($tree['type'][$idx] == POST_FORUM_URL) && $tree['auth'][ $keys['id'][$i] ]['auth_read'] )
 			{
-				$s_forum_ids .= (empty($s_forum_ids) ? '' : ', ') . $tree['id'][$keys['idx'][$i]];
+				$s_forum_ids[] = $tree['id'][$idx];
 			}
 		}
 	}
@@ -870,7 +874,7 @@ function get_recurring_events(&$events, &$number, $start_date, $end_date, $limit
 					$sql_forums_field
 			FROM " . TOPICS_TABLE . " AS t, " . POSTS_TABLE . " AS p, " . POSTS_TEXT_TABLE . " AS pt, " . USERS_TABLE . " AS u, " . POSTS_TABLE . " AS lp, " . USERS_TABLE . " lu $sql_forums_file
 			WHERE 
-					t.forum_id IN ($s_forum_ids)
+				" . $db->sql_in_set('t.forum_id', $s_forum_ids) . "
 				AND p.post_id	= t.topic_first_post_id
 				AND pt.post_id	= t.topic_first_post_id
 				AND u.user_id	= p.poster_id
@@ -1557,7 +1561,7 @@ function display_calendar($main_template, $nb_days=0, $start=0, $fid='')
 
 				// send events
 				$more = false;
-        $map_offset_date = ( $map[$offset_date] ? count($map[$offset_date]) : 0 );
+		        $map_offset_date = isset($map[$offset_date]) ? count($map[$offset_date]) : 0;
 				$over = $map_offset_date > $nb_row_per_cell;
 				for ($k=0; $k < $map_offset_date; $k++)
 				{

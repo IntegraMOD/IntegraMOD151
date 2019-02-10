@@ -1550,6 +1550,33 @@ $lang['Delete_reports_explain'] = 'Are you sure you want to delete the selected 
 $lang['Report_deleted'] = 'The selected report was deleted.';
 $lang['Reports_deleted'] = 'The selected reports were deleted.';
 
+// def_auth
+$lang['View'] = 'View';
+$lang['Read'] = 'Read';
+$lang['Post'] = 'Post';
+$lang['News'] = 'News';
+$lang['Reply'] = 'Reply';
+$lang['Edit'] = 'Edit';
+$lang['Delete'] = 'Delete';
+//-- mod : calendar --------------------------------------------------------------------------------
+//-- add
+$lang['Calendar'] = 'Calendar';
+//-- fin mod : calendar ----------------------------------------------------------------------------
+$lang['Sticky'] = 'Sticky';
+$lang['Announce'] = 'Announce';
+//-- mod : announces -------------------------------------------------------------------------------
+//-- add
+$lang['Global_announce'] = 'Global announce';
+//-- fin mod : announces ---------------------------------------------------------------------------
+$lang['Vote'] = 'Vote';
+$lang['Pollcreate'] = 'Poll';
+$lang['PostDelayed'] = 'Delayed post';
+$lang['Ban'] = 'Ban'; 
+$lang['Greencard'] = 'Greencard'; 
+$lang['Bluecard'] = 'Bluecard';
+$lang['Auth_attach'] = 'Attach';
+$lang['Auth_download'] = 'Download';
+
 // Track PMs + Self PM by Vende
 $lang['PM_CURRENTLY_VIEWING'] = '<i>This is the PM you\'re currently viewing</i>';
 $lang['Private_Message_tracker'] = 'Conversation History';

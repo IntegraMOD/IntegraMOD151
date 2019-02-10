@@ -53,17 +53,7 @@ function announces_prune($force_prune=false)
 	if (!isset($board_config['announcement_last_prune']) || (intval($board_config['announcement_last_prune']) < $today) || $force_prune)
 	{
 		$do_prune = true;
-		if (!isset($board_config['announcement_last_prune']))
-		{
-			$sql = "INSERT INTO " . CONFIG_TABLE . " (config_name, config_value) VALUES('announcement_last_prune', '$today')";
-			if( !$db->sql_query($sql) ) message_die(GENERAL_ERROR, 'Could not insert key announcement_last_prune into the config table', '', __LINE__, __FILE__, $sql);
-		}
-		else
-		{
-			$sql = "UPDATE " . CONFIG_TABLE . " SET config_value = '$today' WHERE config_name= 'announcement_last_prune'";
-			if( !$db->sql_query($sql) ) message_die(GENERAL_ERROR, 'Could not update key announcement_last_prune in the config table', '', __LINE__, __FILE__, $sql);
-		}
-		$board_config['announcement_last_prune'] = $today;
+		init_board_config_key('announcement_last_prune', $today);
 	}
 
 	// is the prune function activated ?

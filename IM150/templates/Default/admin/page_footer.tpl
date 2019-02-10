@@ -18,7 +18,7 @@
 //-->
 
 <div align="center" class="gensmall">
-	Powered by <a href="http://www.phpbb.com/" target="_phpbb" class="copyright">phpBB</a>{PHPBB_VERSION} © 2001, 2005 phpBB Group + <a href="http://www.integramod2.com/forum/portal.php?page=3" target="_phpbb" class="copyright">IntegraMOD</a>{INTEGRAMOD_VERSION} © 2004, 2007 The Integramod Group
+	Powered by <a href="http://www.phpbb.com/" target="_phpbb" class="copyright">phpBB</a>{PHPBB_VERSION} © 2001, 2005 phpBB Group + <a href="http://www.integramod2.com/forum/portal.php?page=3" target="_phpbb" class="copyright">IntegraMOD</a>{INTEGRAMOD_VERSION} © 2004, 2019 The Integramod Group
 </div>
 </body>
 </html>

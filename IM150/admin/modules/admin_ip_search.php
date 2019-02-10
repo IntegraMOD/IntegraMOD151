@@ -8,6 +8,10 @@
  ***************************************************************************/
 // Most of this is copied from modcp.php and tweaked to work from a form.
 
+if (!defined('IN_PHPBB'))
+{
+	die("Hacking attempt");
+}
 if( !empty($setmodules) )
 {
 	$filename = basename(__FILE__);

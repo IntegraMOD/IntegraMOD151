@@ -18,7 +18,7 @@
 //-->
 
 <div align="center" class="gensmall">
-	{SITENAME} is powered by <a href="http://www.phpbb.com/" target="_phpbb" class="copyright">phpBB</a>{PHPBB_VERSION} &copy; 2001, 2005 phpBB Group & <a href="http://www.integramod.com" target="_phpbb" class="copyright">IntegraMOD</a>{INTEGRAMOD_VERSION} &copy; 2004, 2017 The IntegraTeam
+	{SITENAME} is powered by <a href="http://www.phpbb.com/" target="_phpbb" class="copyright">phpBB</a>{PHPBB_VERSION} &copy; 2001, 2005 phpBB Group & <a href="http://www.integramod.com" target="_phpbb" class="copyright">IntegraMOD</a>{INTEGRAMOD_VERSION} &copy; 2004, 2019 The IntegraTeam
 </div>
 </body>
 </html>

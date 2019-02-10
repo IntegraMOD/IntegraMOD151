@@ -222,7 +222,7 @@ class emailer
 				{
 					message_die(GENERAL_ERROR, 'Unable to update config table', '', __LINE__, __FILE__, $sql);
 				}
-
+				$db->clear_cache('board_config');
 				$board_config['sendmail_fix'] = 1;
 				$result = @mail($to, $this->subject, preg_replace("#(?<!\r)\n#s", "\n", $this->msg), $this->extra_headers);
 			}

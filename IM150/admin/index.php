@@ -59,6 +59,7 @@ function inarray($needle, $haystack)
 include($phpbb_root_path . 'language/lang_' . $board_config['default_lang'] . '/lang_admin_pafiledb.' . $phpEx);
 include($phpbb_root_path . 'language/lang_' . $board_config['default_lang'] . '/lang_dbmtnc.' . $phpEx);
 
+$page_title = $lang['Admin_panel'];
 //
 // Generate relevant output
 //
@@ -97,7 +98,6 @@ if( isset($_GET['pane']) && $_GET['pane'] == 'left' )
 }
 elseif( isset($_GET['pane']) && $_GET['pane'] == 'right' )
 {
-
 	include('./page_header_admin.'.$phpEx);
 
 	$template->set_filenames(array(
@@ -258,39 +258,29 @@ elseif( isset($_GET['pane']) && $_GET['pane'] == 'right' )
 			$row = $db->sql_fetchrow($result);
 			$mysql_version = $row['mysql_version'];
 
-			if( preg_match("/^(3\.23|4\.|5\.)/", $version) )
+			$db_name = "`$dbname`";
+
+			$sql = "SHOW TABLE STATUS 
+				FROM " . $db_name;
+			if($result = $db->sql_query($sql))
 			{
-				$db_name = ( preg_match("/^(3\.23\.[6-9])|(3\.23\.[1-9][1-9])|(4\.)|(5\.)/", $version) ) ? "`$dbname`" : $dbname;
+				$tabledata_ary = $db->sql_fetchrowset($result);
 
-				$sql = "SHOW TABLE STATUS 
-					FROM " . $db_name;
-				if($result = $db->sql_query($sql))
+				$dbsize = 0;
+				for($i = 0; $i < count($tabledata_ary); $i++)
 				{
-					$tabledata_ary = $db->sql_fetchrowset($result);
-
-					$dbsize = 0;
-					for($i = 0; $i < count($tabledata_ary); $i++)
+					if( $table_prefix != "" )
 					{
-						if( $tabledata_ary[$i]['Type'] != "MRG_MyISAM" )
+						if( strstr($tabledata_ary[$i]['Name'], $table_prefix) )
 						{
-							if( $table_prefix != "" )
-							{
-								if( strstr($tabledata_ary[$i]['Name'], $table_prefix) )
-								{
-									$dbsize += $tabledata_ary[$i]['Data_length'] + $tabledata_ary[$i]['Index_length'];
-								}
-							}
-							else
-							{
-								$dbsize += $tabledata_ary[$i]['Data_length'] + $tabledata_ary[$i]['Index_length'];
-							}
+							$dbsize += $tabledata_ary[$i]['Data_length'] + $tabledata_ary[$i]['Index_length'];
 						}
 					}
-				} // Else we couldn't get the table status.
-			}
-			else
-			{
-				$dbsize = $lang['Not_available'];
+					else
+					{
+						$dbsize += $tabledata_ary[$i]['Data_length'] + $tabledata_ary[$i]['Index_length'];
+					}
+				}
 			}
 		}
 		else
@@ -355,7 +345,7 @@ elseif( isset($_GET['pane']) && $_GET['pane'] == 'right' )
 	//
 	// Get users online information.
 	//
-	$sql = "SELECT u.user_group_id, u.user_id, u.username, u.user_session_time, u.user_session_page, s.session_logged_in, s.session_ip, s.session_start, u.user_level
+	$sql = "SELECT u.user_group_id, u.user_id, u.username, u.user_session_time, u.user_session_page, u.user_allow_viewonline, s.session_logged_in, s.session_ip, s.session_start, u.user_level
 		FROM " . USERS_TABLE . " u, " . SESSIONS_TABLE . " s
 		WHERE s.session_logged_in = " . TRUE . " 
 			AND u.user_id = s.session_user_id 

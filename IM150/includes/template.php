@@ -285,12 +285,7 @@ class Template {
 					$sql = "UPDATE " . CONFIG_TABLE . " SET config_value='" . str_replace('\\\'', '\'\'', addslashes($board_config[$up[$i]])) . "' WHERE config_name='" . $up[$i] . "'";
 					$db->sql_query($sql);
 				}
-				// recache config table for cat_hierarchy 2.1.0
-				global $config;
-				if(isset($config->data) && $config->data === $board_config && isset($config->data['mod_cat_hierarchy']))
-				{
-					$config->read(true);
-				}
+				$db->clear_cache('board_config');
 			}
 		}
 		$this->php = $board_config['xs_php'];
@@ -2268,12 +2263,7 @@ class Template {
 				$board_config[$config_name] = $str;
 				$sql = "INSERT INTO " . CONFIG_TABLE . " (config_name, config_value) VALUES ('" . str_replace('\\\'', '\'\'', addslashes($config_name)) . "', '" . str_replace('\\\'', '\'\'', addslashes($str)) . "')";
 				$db->sql_query($sql);
-				// recache config table for cat_hierarchy 2.1.0
-				global $config;
-				if(isset($config->data) && $config->data === $board_config && isset($config->data['mod_cat_hierarchy']))
-				{
-					$config->read(true);
-				}
+				$db->clear_cache('board_config');
 				return true;
 			}
 		}
@@ -2320,22 +2310,7 @@ class Template {
 				}
 				$str = $this->_serialize($this->style_config);
 				$config_name = 'xs_style_' . $tpl;
-				if(isset($board_config[$config_name]))
-				{
-					$sql = "UPDATE " . CONFIG_TABLE . " SET config_value='" . str_replace('\\\'', '\'\'', addslashes($str)) . "' WHERE config_name='" . str_replace('\\\'', '\'\'', addslashes($config_name)) . "'";
-				}
-				else
-				{
-					$sql = "INSERT INTO " . CONFIG_TABLE . " (config_name, config_value) VALUES ('" . str_replace('\\\'', '\'\'', addslashes($config_name)) . "', '" . str_replace('\\\'', '\'\'', addslashes($str)) . "')";
-				}
-				$db->sql_query($sql);
-				$board_config[$config_name] = $str;
-				// recache config table for cat_hierarchy 2.1.0
-				global $config;
-				if(isset($config->data) && $config->data === $board_config && isset($config->data['mod_cat_hierarchy']))
-				{
-					$config->read(true);
-				}
+				init_board_config_key($config_name, $str);
 				return true;
 			}
 		}

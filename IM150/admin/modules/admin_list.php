@@ -16,6 +16,10 @@
  *
  ***************************************************************************/
 
+if (!defined('IN_PHPBB'))
+{
+	die("Hacking attempt");
+}
 if( !empty($setmodules) )
 {
 	$file = basename(__FILE__);

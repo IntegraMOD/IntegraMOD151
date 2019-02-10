@@ -76,6 +76,9 @@ if(!function_exists('imp_online_users_block_func'))
 		$prev_user_id = 0;
 		$prev_user_ip = '';
 
+		$logged_visible_online = $logged_hidden_online = $guests_online = 0;
+		$online_userlist = '';
+		$prev_session_ip = null;
 		while( $row = $db->sql_fetchrow($result) )
 		{
 			// User is logged in and therefor not a guest

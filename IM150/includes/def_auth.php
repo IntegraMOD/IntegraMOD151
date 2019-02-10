@@ -25,6 +25,7 @@ if ( !defined('IN_PHPBB') )
 	die("Hacking attempt");
 }
 
+global $lang; /* TODO move that in including function */
 // presets
 if ( defined('IN_ADMIN') )
 {

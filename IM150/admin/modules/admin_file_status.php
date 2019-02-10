@@ -17,8 +17,10 @@ style permissions, numerical permissions, errors.
 That is all, I hope you enjoy it and thanks for using it.
 */
 
-define('IN_PHPBB', TRUE);
-
+if (!defined('IN_PHPBB'))
+{
+	die("Hacking attempt");
+}
 if (!empty($setmodules))
 {
 	$file = basename(__FILE__);

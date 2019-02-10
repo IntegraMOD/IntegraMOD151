@@ -36,6 +36,7 @@
 			  SET config_value = config_value + 1
 			  WHERE config_name = 'phpBBSecurity_total_attempts'";
 		$db->sql_query($q);
+		$db->clear_cache('board_config');
 			}
 				
 	die($message);
@@ -280,7 +281,8 @@
 			  SET config_value = '". $config_value_array[$i] ."'
 			  WHERE config_name = '". $config_name_array[$i] ."'";
 		$db->sql_query($q);
-			}													
+			}
+			$db->clear_cache('board_config');
 		}
 		
 	function phpBBSecurity_GetName($id)
@@ -1158,7 +1160,9 @@
 		$q = "UPDATE ". CONFIG_TABLE ."
 			  SET config_value = '". $mods ."'
 			  WHERE config_name = '". phpBBSecurity_ModConfigName() ."'";
-		$db->sql_query($q);		
+		$db->sql_query($q);
+
+		$db->clear_cache('board_config');
 		}
 	
 	function phpBBSecurity_FinalSet()

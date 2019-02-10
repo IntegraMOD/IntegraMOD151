@@ -9,7 +9,6 @@
 define('IN_PHPBB', true);
 define('IN_NETWORK', true);
 
-error_reporting  (E_ERROR | E_WARNING | E_PARSE);
 $phpbb_root_path = './';
 include_once($phpbb_root_path . 'extension.inc');
 include_once($phpbb_root_path . 'config.'.$phpEx);
@@ -18,7 +17,7 @@ include_once($phpbb_root_path . 'includes/db.'.$phpEx);
 $die_string = 'Disabled';
 
 $sql = 'SELECT * FROM ' . CONFIG_TABLE;
-if( !$result = $db->sql_query($sql) )
+if( !$result = $db->sql_query($sql, false, 'board_config') )
 {
 	$db->sql_close();
 	die($die_string . "\nCould not get phpBB config data");

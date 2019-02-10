@@ -23,6 +23,10 @@
  *
  ***************************************************************************/
  
+if (!defined('IN_PHPBB'))
+{
+	die("Hacking attempt");
+}
 if( !empty($setmodules) )
 {
 	$module['FTR Admin']['FTR: Config']	= append_sid("admin_force_read.$phpEx?mode=config");

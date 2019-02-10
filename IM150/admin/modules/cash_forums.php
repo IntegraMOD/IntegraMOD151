@@ -19,7 +19,10 @@
 *
 ***************************************************************************/
 
-define('IN_PHPBB', 1);
+if (!defined('IN_PHPBB'))
+{
+	die("Hacking attempt");
+}
 define('IN_CASHMOD', 1);
 
 //

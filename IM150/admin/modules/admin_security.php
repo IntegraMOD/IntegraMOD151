@@ -9,10 +9,13 @@
  *
  ***************************************************************************/
 
-define('IN_PHPBB', TRUE);
+if (!defined('IN_PHPBB'))
+{
+	die("Hacking attempt");
+}
 
-	if (!empty($setmodules))
-		{
+if (!empty($setmodules))
+{
 	$file = basename(__FILE__);
 	$module['.: Security :.']['Configuration'] 	= $file;
 	$module['.: Security :.']['Special'] 		= append_sid("admin_security.$phpEx?mode=special");
@@ -21,6 +24,6 @@ define('IN_PHPBB', TRUE);
 	$module['.: Security :.']['Info: gdlib']	= append_sid("admin_security.$phpEx?mode=gd_info");	
 	$module['.: Security :.']['Quick Search']	= append_sid("admin_security.$phpEx?mode=search");		
 	return;
-		}
+}
 
 ?>

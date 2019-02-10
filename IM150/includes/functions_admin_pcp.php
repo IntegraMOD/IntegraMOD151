@@ -25,7 +25,6 @@ $sql_type_list = array( 'TINYINT', 'SMALLINT', 'MEDIUMINT', 'INT', 'DECIMAL', 'V
 $get_mode_list = array('LIST_RADIO', 'LIST_DROP', 'TINYINT', 'SMALLINT', 'MEDIUMINT', 'INT', 'VARCHAR', 'TEXT', 'HTMLVARCHAR', 'HTMLTEXT' );
 
 // list of auth
-define('BOARD_ADMIN', 98);
 /* PCP Extra :: Altered
 $auth_list = array( USER => 'USER', ADMIN => 'ADMIN', BOARD_ADMIN => 'BOARD_ADMIN');*/
 $auth_list = array( USER => 'USER', ADMIN => 'ADMIN', BOARD_ADMIN => 'BOARD_ADMIN', GUEST_ONLY => 'GUEST_ONLY');

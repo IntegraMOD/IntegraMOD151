@@ -76,7 +76,7 @@ if(!defined('PORTAL_INIT'))
 	$var_cache = new Cache_Lite($options);
 	define('PORTAL_INIT', TRUE);
 }
-if($portal_config['collapse_layout'] == 1)
+if(!empty($portal_config['collapse_layout']))
 {
 	$template->assign_block_vars('layout_collapse',array(
 		'LAYOUT_IMAGER' => $images['layout_imager'],
@@ -339,7 +339,7 @@ if (defined('SHOW_ONLINE'))
 		$view_online_set = $connected[$i]['user_allow_viewonline'];
 
 		$view_ignore	= ($is_admin || $view_is_admin || ($view_user_id == $user_id)) ? false : $buddys[$view_user_id]['buddy_ignore'];
-		$view_friend	= $buddys[$view_user_id]['buddy_friend'];
+		$view_friend	= isset($buddys[$view_user_id]) ? $buddys[$view_user_id]['buddy_friend'] : false;
 		$view_visible	= ($is_admin || ($view_user_id == $user_id)) ? YES : $buddys[$view_user_id]['buddy_visible'];
 
 		// online/offline/hidden icon
@@ -428,6 +428,7 @@ if (defined('SHOW_ONLINE'))
 		{
 			message_die(GENERAL_ERROR, 'Could not update online user record (date)', '', __LINE__, __FILE__, $sql);
 		}
+		$db->clear_cache('board_config');
 	}
 
 	if ( $total_online_users == 0 )
@@ -488,6 +489,7 @@ if (defined('SHOW_ONLINE'))
 	$l_online_users .= sprintf($l_g_user_s, $guests_online);
 }
 
+$day_userlist = ''; // prevent undef variable
 if (defined('SHOW_ONLINE'))
 {
   // ############ Edit below ############
@@ -507,7 +509,6 @@ if (defined('SHOW_ONLINE'))
   message_die(GENERAL_ERROR, 'Could not obtain user/day information', '', __LINE__, __FILE__, $sql);
   }
 
-  $day_userlist = '';
   $day_users = 0;
   $not_day_userlist = '';
   $not_day_users = 0;
@@ -684,7 +685,7 @@ while( list($nav_item, $nav_array) = @each($nav_links) )
 //--------------------------------------------------------------------------------
 // HTTP Referers 
 //
-if ($_SERVER['HTTP_REFERER'] && false === stripos($_SERVER['HTTP_REFERER'], $_SERVER['HTTP_HOST'] . $board_config['script_path'])) 
+if (!empty($_SERVER['HTTP_REFERER']) && false === stripos($_SERVER['HTTP_REFERER'], $_SERVER['HTTP_HOST'] . $board_config['script_path'])) 
 {
 	$referer_url = $_SERVER['HTTP_REFERER'];
 	$referer_host = substr($referer_url, strpos($referer_url, "//") + 2);
@@ -783,7 +784,7 @@ $l_timezone = (count($l_timezone) > 1 && $l_timezone[count($l_timezone)-1] != 0)
 /*
  * CrackerTracker IP Range Scanner
  */
-if ( $_GET['marknow'] == 'ipfeature' && $userdata['session_logged_in'] )
+if (isset($_GET['marknow']) && $_GET['marknow'] == 'ipfeature' && $userdata['session_logged_in'])
 {
 	// Mark IP Feature Read
 	$userdata['ct_last_ip'] = $userdata['ct_last_used_ip'];
@@ -820,8 +821,7 @@ if ( $ctracker_config->settings['login_ip_check'] == 1 && $userdata['ct_enable_i
 /*
  * CrackerTracker Global Message Function
  */
-
-if ( $_GET['marknow'] == 'globmsg' && $userdata['session_logged_in'] )
+if (isset($_GET['marknow']) && $_GET['marknow'] == 'globmsg' && $userdata['session_logged_in'])
 {
 	// Mark Global Message as read
 	$userdata['ct_global_msg_read'] = 0;
@@ -894,11 +894,11 @@ if ( CT_DEBUG_MODE === true && $userdata['user_level'] == ADMIN )
 }
 
 // Start add - Complete banner MOD
+// V: rewritten the code to do it via PHP not via SQL
 $time_now=time();
 $hour_now=create_date('Hi',$time_now,$board_config['board_timezone']);
 $date_now=create_date('Ymd',$time_now,$board_config['board_timezone']);
 $week_now=create_date('w',$time_now,$board_config['board_timezone']);
-// V: fetch all banners now so we can cache the SQL, and we'll check which to use afterwards, in PHP
 $sql = "SELECT * FROM " . BANNERS_TABLE;
 if ( !($result = $db->sql_query($sql, false, "banner")) )
 {
@@ -970,39 +970,55 @@ while ($possible_banner = $db->sql_fetchrow($result))
 $db->sql_freeresult($result);
 shuffle($banners);
 $banner_count = count($banners);
-
+$last_spot = null;
 for ($i = 0; $i < $banner_count; $i++)
 {
 	$cookie_name = $board_config['cookie_name'] . '_b_' . $banners[$i]['banner_id'];
-	if ( !($_COOKIE[$cookie_name] && $banners[$i]['banner_filter']) )
-	{
-		$banner_spot=$banners[$i]['banner_spot'];
-		if ($banner_spot<>$last_spot  AND ($banners[$i]['banner_forum']==$forum_id || empty($banners[$i]['banner_forum'])))
-		{
-			$banner_size = ($banners[$i]['banner_width'] && $banners[$i]['banner_height']) ? '"width="'.$banners[$i]['banner_width'].'" height="'.$banners[$i]['banner_height'].'"' : '';
-                        $template->assign_block_vars('switch_banner_'.$banner_spot, array() );
-			switch ($banners[$i]['banner_type'])
-			{
-				case 6 :
-					// swf file
-					$template->assign_vars(array('BANNER_'.$banner_spot.'_IMG' => '<object classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" codebase="http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=6,0,23,0" id=macromedia '.$banner_size.' align="abscenter"><param name=movie value="'.$banners[$i]['banner_name'].'"><param name=quality value=high><embed src="'.$banners[$i]['banner_name'].'" quality=high pluginspage="http://www.macromedia.com/shockwave/download/index.cgi?P1_Prod_Version=ShockwaveFlash" type="application/x-shockwave-flash" autostart="true" /><noembed><a href="'.append_sid('redirect.'.$phpEx.'?banner_id='.$banners[$i]['banner_id']).'" target="_blank">'.$banners[$i]['banner_description'].'</a></noembed></object>'));
-					break;
-				case 4 :
-					// custom code
-					$template->assign_vars(array('BANNER_'.$banner_spot.'_IMG' => $banners[$i]['banner_name']));
-					break;
-				case 2 :
-					// Text link
-					$template->assign_vars(array('BANNER_'.$banner_spot.'_IMG' => '<a href="'.append_sid('redirect.'.$phpEx.'?banner_id='.$banners[$i]['banner_id']).'" target="_blank">'.$banners[$i]['banner_name'].'</a>'));
-					break;
-				case 0 :
-				default: 
-					$template->assign_vars(array('BANNER_'.$banner_spot.'_IMG' => '<a href="'.append_sid('redirect.'.$phpEx.'?banner_id='.$banners[$i]['banner_id']).'" target="_blank"><img src="'.$banners[$i]['banner_name'].'" '.$banner_size.' border="0" alt="'.$banners[$i]['banner_description'].'" title="'.$banners[$i]['banner_description'].'" /></a>'));
-			}
-			$banner_show_list.= ', '.$banners[$i]['banner_id'];
-		}
-		$last_spot = ($banners[$i]['banner_forum']==$forum_id || empty($banners[$i]['banner_forum'])) ? $banner_spot : $last_spot;
+	if ($banners[$i]['banner_filter'] && !empty($_COOKIE[$cookie_name]))
+	{ // V: skip over filtered+clicked banners
+		continue;
 	}
+	if ($banners[$i]['banner_forum'])
+	{
+		if (!isset($forum_id))
+		{ // we're not in a forum but the banner requires one
+			continue;
+		}
+		if ($forum != $banners[$i]['banner_forum'])
+		{ // wrong forum
+			continue;
+		}
+	}
+
+	$banner_spot = $banners[$i]['banner_spot'];
+	if ($banner_spot == $last_spot)
+	{
+		continue;
+	}
+	$last_spot = $banner_spot;
+
+	$banner_size = ($banners[$i]['banner_width'] && $banners[$i]['banner_height']) ? '"width="'.$banners[$i]['banner_width'].'" height="'.$banners[$i]['banner_height'].'"' : '';
+                $template->assign_block_vars('switch_banner_'.$banner_spot, array() );
+	switch ($banners[$i]['banner_type'])
+	{
+		case 6:
+			// swf file
+			$banner_html = '<object classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" codebase="http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=6,0,23,0" id=macromedia '.$banner_size.' align="abscenter"><param name=movie value="'.$banners[$i]['banner_name'].'"><param name=quality value=high><embed src="'.$banners[$i]['banner_name'].'" quality=high pluginspage="http://www.macromedia.com/shockwave/download/index.cgi?P1_Prod_Version=ShockwaveFlash" type="application/x-shockwave-flash" autostart="true" /><noembed><a href="'.append_sid('redirect.'.$phpEx.'?banner_id='.$banners[$i]['banner_id']).'" target="_blank">'.$banners[$i]['banner_description'].'</a></noembed></object>';
+			break;
+		case 4:
+			// custom code
+			$banner_html = $banners[$i]['banner_name'];
+			break;
+		case 2:
+			// Text link
+			$banner_html = '<a href="'.append_sid('redirect.'.$phpEx.'?banner_id='.$banners[$i]['banner_id']).'" target="_blank">'.$banners[$i]['banner_name'].'</a>';
+			break;
+		case 0:
+		default:
+			$banner_html = '<a href="'.append_sid('redirect.'.$phpEx.'?banner_id='.$banners[$i]['banner_id']).'" target="_blank"><img src="'.$banners[$i]['banner_name'].'" '.$banner_size.' border="0" alt="'.$banners[$i]['banner_description'].'" title="'.$banners[$i]['banner_description'].'" /></a>';
+	}
+	$template->assign_vars(array('BANNER_'.$banner_spot.'_IMG' => $banner_html));
+	$banner_show_list[] = $banners[$i]['banner_id'];
 }
 // End add - Complete banner MOD
 
@@ -1089,7 +1105,7 @@ $template->assign_vars(array(
 
 	'L_TOPIC_UP_IMAGE' => $lang['Go_to_Top'],
 	'L_TOPIC_DOWN_IMAGE' => $lang['Go_to_Bottom'],
-	'L_DIGESTS' => $lang['digest_page_title'], 
+//	'L_DIGESTS' => $lang['digest_page_title'], 
 
 
 	'L_WHO_IS_ONLINE' => $lang['Who_is_Online'],
@@ -1233,11 +1249,8 @@ else
 		require($phpbb_root_path . 'includes/lw_ipn_grp_functions.'.$phpEx);
 		$lwuserreminder = lw_write_header_reminder();
 		$template->assign_block_vars('switch_lw_user_logged_in', array());
+		$template->assign_var('L_LW_EXPIRE_REMINDER', $lwuserreminder); 
 	}
-	$template->assign_vars(array(
-		'L_LW_EXPIRE_REMINDER' => $lwuserreminder,
-		)
-	); 
 }
 
 // Add no-cache control for cookies if they are set
@@ -1398,7 +1411,7 @@ if ( empty($nav_key) )
 {
 	$nav_key = 'Root';
 }
-$nav_cat_desc = make_cat_nav_tree($nav_key, $nav_pgm, 'nav', $topic_topic_title, $topic_forum_id);
+$nav_cat_desc = make_cat_nav_tree($nav_key, isset($nav_pgm) ? $nav_pgm : '', 'nav', isset($topic_topic_title) ? $topic_topic_title : '', isset($topic_forum_id) ? $topic_forum_id : 0);
 if ( !empty($nav_cat_desc) )
 {
 	$nav_cat_desc = $nav_separator . $nav_cat_desc;
@@ -1436,7 +1449,7 @@ qbar_display_qbars(empty($gen_simple_header));
 //
 if(empty($gen_simple_header))
 {
-	if(!$layout_forum_wide_flag&&$portal_config['portal_header'])
+	if(empty($layout_forum_wide_flag) && $portal_config['portal_header'])
 	{
 		if(defined('HAS_DIED') || defined('IN_LOGIN')){
 			$template->assign_vars(array('FOOTER_WIDTH' => 0));

@@ -5,9 +5,10 @@
  redistributing it over the Internet or in any other medium. In all cases copyright must remain intact.
 *********************************************************************************************************/
 
-
-define('IN_PHPBB', TRUE);
-
+if (!defined('IN_PHPBB'))
+{
+	die("Hacking attempt");
+}
 if (!empty($setmodules))
 {
 	$file = basename(__FILE__);

@@ -27,7 +27,7 @@ $lang['Banner_spot']['9'] = "Bottom center 1"; // used for {BANNER_9_IMG} tag in
 $lang['Banner_spot']['10'] = "Bottom center 2"; // used for {BANNER_10_IMG} tag in the template files
 $lang['Banner_spot']['11'] = "Bottom right 1"; // used for {BANNER_11_IMG} tag in the template files
 $lang['Banner_spot']['12'] = "Bottom right 2"; // used for {BANNER_12_IMG} tag in the template files
-$lang['Banner_spot']['13'] = "Forum_view top"; // used for {BANNER_13_IMG} tag in the template files
+$lang['Banner_spot']['13'] = "Forum view top"; // used for {BANNER_13_IMG} tag in the template files
 $lang['Banner_spot']['14'] = "Topic view top"; // used for {BANNER_14_IMG} tag in the template files
 $lang['Banner_spot']['15'] = "Topic view botton"; // used for {BANNER_15_IMG} tag in the template files
 
@@ -119,6 +119,6 @@ $lang['Left_via_banner'] = 'Left via banner';
 $lang['Banner_filter'] = 'Banner filter';
 $lang['Banner_filter_explain'] = 'Hide this banner after the user have clicked on it';
 $lang['Banner_filter_time'] = 'Inactive click time';
-$lang['Banner_filter_time_explain'] = 'Number of sec the banner becomes inactive after a user click on it, if banner filter is enabled, the banner will nor show in this time';
+$lang['Banner_filter_time_explain'] = 'Number of sec the banner becomes inactive after a user click on it, if banner filter is enabled, the banner will not show during this time';
 
 ?>

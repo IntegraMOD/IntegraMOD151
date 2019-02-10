@@ -7,6 +7,10 @@
  *   date                 : 2003/12/23 23:20
  ***************************************************************************/
 
+if (!defined('IN_PHPBB'))
+{
+	die("Hacking attempt");
+}
 if( !empty($setmodules) )
 {
 	if (defined('PRILLIAN_INSTALLED')){

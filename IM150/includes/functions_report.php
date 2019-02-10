@@ -1464,6 +1464,7 @@ function report_statistics($mode)
 					SET config_value = '" . $report_count . "'
 					WHERE config_name = 'report_hack_count'";
 				$db->sql_query($sql);
+				$db->clear_cache('board_config');
 			}
 			
 			return $report_count;

@@ -30,10 +30,12 @@ function cron_test()
    $sql = "UPDATE " . CONFIG_TABLE . " 
          SET config_value = config_value + 1 
          WHERE config_name = 'crontest'"; 
-   if ( !($db->sql_query($sql)) ) 
+   if ( !($result = $db->sql_query($sql)) ) 
    { 
 //      message_die(GENERAL_ERROR, 'Error updating cron test', '', __LINE__, __FILE__, $sql);
-   } 
+   }
+   $db->sql_freeresult($result);
+   $db->clear_cache('board_config');
    return true; 
 }
 
@@ -52,8 +54,9 @@ if ( ($board_config['nextcron'] < $current_time) && $board_config['pseudocron'] 
 		WHERE config_name = 'nextcron'"; 
 	if ( !($db->sql_query($sql)) ) 
 	{ 
-	//		message_die(GENERAL_ERROR, 'Error updating cron status', '', __LINE__, __FILE__, $sql); 
-	} 
+	//	message_die(GENERAL_ERROR, 'Error updating cron status', '', __LINE__, __FILE__, $sql); 
+	}
+	$db->sql_freeresult($result);
 	$db->clear_cache('board_config');
 	include('./mail_digests.' . $phpEx);
 } 

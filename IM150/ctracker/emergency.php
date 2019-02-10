@@ -185,7 +185,7 @@ if( !get_magic_quotes_gpc() )
  * Include some files we need for the Emergency Console
  */
 include($phpbb_root_path . 'config.' . $phpEx);
-include($phpbb_root_path . 'db/' . $dbms . '.' . $phpEx);
+include($phpbb_root_path . 'includes/db/' . $dbms . '.' . $phpEx);
 include($phpbb_root_path . 'includes/template.' . $phpEx);
 define('PREFIX', $table_prefix);
 

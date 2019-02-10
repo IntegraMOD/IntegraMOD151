@@ -41,6 +41,7 @@ function update_config($name, $value)
 		throw_error("Couldn't update forum configuration!", __LINE__, __FILE__, $sql);
 	}
 	$board_config[$name] = $value;
+	$db->clear_cache('board_config');
 }
 
 //
