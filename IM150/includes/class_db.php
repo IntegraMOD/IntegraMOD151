@@ -79,7 +79,9 @@ class class_db extends sql_db
 		}
 		if ( !$query_res && $reason )
 		{
-			message_die(GENERAL_ERROR, 'SQL requests not achieved: '.$reason, '', $line, $file, htmlspecialchars($query));
+			$sql_err = $this->sql_error();
+			$sql_err_msg = $sql_err ? '<pre>' . $sql_err['message'] . '</pre>' : '';
+			message_die(GENERAL_ERROR, 'SQL error: '.$reason . '<br>' . $sql_err_msg, '', $line, $file, htmlspecialchars($query));
 		}
 		return $query_res;
 	}
