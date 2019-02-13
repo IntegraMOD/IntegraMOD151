@@ -836,39 +836,62 @@ $afterreport = "";
 $predifference = [];
 $afterdifference = [];
 
-  foreach($preinstall_list as $path => $mod)
-  {
-      $prepath[] = $path;
-      $premod[] = $mod;
-      $premodmeaning[] = chmodmeaning($mod);
-      $fileicon[] = fileicon($path);
+foreach($preinstall_list as $path => $mod)
+{
+    $prepath[] = $path;
+    $premod[] = $mod;
+    $premodmeaning[] = chmodmeaning($mod);
+    $fileicon[] = fileicon($path);
 
-    if (file_exists($path) !== false) {
-  	  $relpath = './';
-      // controleren van de werkelijke permissies
-      $now = substr(sprintf("%o",fileperms($relpath.$path)),-3);
-      //clearstatcache($relpath.$path);
-      $modnow[] = $now;
-      $nowmodmeaning[] = chmodmeaning($now);
-    }
-    else {
-      $modnow[] = $nofilechmod;
-      $nowmodmeaning[] = "";
-    }
+  if (file_exists($path) !== false) {
+	  $relpath = './';
+    // controleren van de werkelijke permissies
+    $now = substr(sprintf("%o",fileperms($relpath.$path)),-3);
+    //clearstatcache($relpath.$path);
+    $modnow[] = $now;
+    $nowmodmeaning[] = chmodmeaning($now);
+  }
+  else {
+    $modnow[] = $nofilechmod;
+    $nowmodmeaning[] = "";
+  }
 }
 
-  foreach($afterinstall_list as $path => $mod)
-  {
-        $afterpath[] = $path;
-        $aftermod[] = $mod;
-        $aftermodmeaning[] = chmodmeaning($mod);
-  }
+foreach($afterinstall_list as $path => $mod) {
+  $afterpath[] = $path;
+  $aftermod[] = $mod;
+  $aftermodmeaning[] = chmodmeaning($mod);
+}
 
+if (!function_exists('display_chmod_wants')) {
+  function display_chmod_wants($wants) {
+    if (!$wants) {
+      return '';
+    }
+    $txt = "<strong><u>Here's the UNIX command to can fix them. These must be launched from outside of the install directory.</u></strong><br>";
+    foreach ($wants as $perm => $files) {
+      $filestr = [];
+      foreach ($files as $file) {
+        if (substr($file, 0, 3) == '../') {
+          $filestr[] = substr($file, 3);
+        } else {
+           // V: we apparently have some file to chmod inside of install/... display normal
+           $txt = "<strong><u>Here's the UNIX command to can fix them. These must be launched from <b>INSIDE</b> of the install directory.</u></strong><br>";
+           $filestr = $files;
+           break;
+        }
+      }
+      $txt .= "<i>chmod 0$perm " . implode(' ', $filestr) . "</i><br>";
+    }
+    return $txt;
+  }
+}
 
 if ($prepath == $afterpath) {
+  $chmod_wants = array();
 
-     // chmod status check
-   $chmodcheck = "";
+  // chmod status check
+  $chmodcheck = "";
    for($e = 0; $e < $filenumber; $e++){
      if ( $modnow[$e] == $premod[$e] ) {
        $premodcheck--;
@@ -878,21 +901,22 @@ if ($prepath == $afterpath) {
        $aftermodcheck--;
      }
      else $afterdifference[] = $e;
-   }
+  }
 
   if ($predifference) {
     $prereport .= "<div align='center' class='maintitle'>Not ready for installation !</div>";
     $prereport .= "<strong><u>These file-permissions are different:</u></strong><br>";
-  foreach($predifference as $number)
+    foreach($predifference as $number)
     {
       if ( $modnow[$number] !== $nofilechmod ) {
         $prereport .= "$fileicon[$number]<font color='#6666CC'>$prepath[$number]</font> -- has permission <font color='#FF0000'><strong>$modnow[$number]</strong></font> while it should be <font color='#009900'><strong>$premod[$number]</strong></font><br>";
+        $chmod_wants[$premod[$number]][] = $prepath[$number];
       }
       else {
         $prereport .= "$fileicon[$number]<font color='#6666CC'>$prepath[$number]</font> -- <font color='#FF0000'><strong>not found on server</strong></font><br>";
       }
-      unset($number);
     }
+    $prereport .= display_chmod_wants($chmod_wants);
   }
   else {
     $ready = 1;
@@ -903,16 +927,17 @@ if ($prepath == $afterpath) {
   if ($afterdifference) {
     $afterreport .= "<div align='center' class='maintitle'>Not ready for use !</div>";
     $afterreport .= "<strong><u>These file-permissions are different:</u></strong><br>";
-  foreach($afterdifference as $number)
+    foreach($afterdifference as $number)
     {
       if ( $modnow[$number] !== $nofilechmod ) {
         $afterreport .= "$fileicon[$number]<font color='#6666CC'>$afterpath[$number]</font> -- has permission <font color='#FF0000'><strong>$modnow[$number]</strong></font> while it should be <font color='#009900'><strong>$aftermod[$number]</strong></font><br>";
+        $chmod_wants[$aftermod[$number]][] = $afterpath[$number];
       }
       else {
         $afterreport .= "$fileicon[$number]<font color='#6666CC'>$prepath[$number]</font> -- <font color='#FF0000'><strong>not found on server</strong></font><br>";
       }
-      unset($number);
     }
+    $afterreport .= display_chmod_wants($chmod_wants);
   }
   else {
     $ready = 2;
