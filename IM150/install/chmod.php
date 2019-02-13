@@ -204,7 +204,7 @@ function chmodtest($chmodmethod)
           ini_set ( 'error_reporting', E_ALL ^ E_NOTICE );
 
           $testcontents = "<div class='foundercolor' align='center'><strong>PHP CHMOD <br><u>not</u><br> permitted by server</strong></div><hr>";
-          $testcontents .= "<div class='postdetails' align='center' ><strong><u>The alternative FTP procedure will be used</u></strong><br>will be used instead</div>";
+          $testcontents .= "<div class='postdetails' align='center' ><strong><u>The alternative FTP procedure will be used</u></strong><br></div>";
                                                     
 
 
