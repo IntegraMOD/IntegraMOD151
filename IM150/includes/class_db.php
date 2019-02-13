@@ -100,7 +100,7 @@ class class_db extends sql_db
 		{
 			return "";
 		}
-		return "INSERT INTO $table $sql_fields ($sql_values) ";
+		return "INSERT INTO $table ($sql_fields) VALUES ($sql_values) ";
 	}
 
 	function sql_build_update($table, $fields, $fields_inc = '')
