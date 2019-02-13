@@ -880,7 +880,7 @@ else
 							$error = $db->sql_error();
 
 							page_header($lang['Install'], '');
-							page_error($lang['Installer_Error'], $lang['Install_db_error'] . '<br />' . $error['message']);
+							page_error($lang['Installer_Error'], $lang['Install_db_error'] . '<br />' . $error['message'] . '<br /><pre>' . $sql_query[$i] . '</pre>');
 							page_footer();
 							exit;
 						}
