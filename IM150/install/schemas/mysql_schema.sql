@@ -183,9 +183,7 @@ CREATE TABLE phpbb_easymod (
 
 CREATE TABLE phpbb_easymod_processed_files (
   mod_processed_file varchar(255) NOT NULL default '',
-  mod_id mediumint(8) NOT NULL default '0',
-  KEY mod_processed_file (mod_processed_file),
-  KEY mod_id (mod_id)
+  mod_id mediumint(8) NOT NULL default '0'
 );
 
 # --------------------------------------------------------
@@ -278,7 +276,7 @@ CREATE TABLE phpbb_album_comment (
 #
 
 CREATE TABLE phpbb_album_config (
-  config_name varchar(255) NOT NULL default '',
+  config_name varchar(190) NOT NULL default '',
   config_value varchar(255) NOT NULL default '',
   PRIMARY KEY  (config_name)
 );
@@ -378,9 +376,9 @@ CREATE TABLE phpbb_approve_users (
 # Table structure for table 'phpbb_attachments_config'
 #
 CREATE TABLE phpbb_attachments_config (
-  config_name varchar(255) NOT NULL,
+  config_name varchar(190) NOT NULL,
   config_value varchar(255) NOT NULL,
-  PRIMARY KEY (config_name)
+  PRIMARY KEY  (config_name)
 );
 
 # --------------------------------------------------------
@@ -701,9 +699,9 @@ CREATE TABLE phpbb_buddy (
 #
 
 CREATE TABLE phpbb_captcha_config (
-  `config_name` varchar(255) NOT NULL default '',
+  `config_name` varchar(190) NOT NULL default '',
   `config_value` varchar(100) NOT NULL default '',
-  PRIMARY KEY  (`config_name`)
+  PRIMARY KEY  (config_name)
 );
 
 # --------------------------------------------------------
@@ -779,7 +777,7 @@ CREATE TABLE phpbb_chatspot_sessions (
 #
 
 CREATE TABLE phpbb_config (
-  config_name varchar(255) NOT NULL default '',
+  config_name varchar(190) NOT NULL default '',
   config_value varchar(255) NOT NULL default '',
   PRIMARY KEY  (config_name)
 );
@@ -804,7 +802,7 @@ CREATE TABLE phpbb_confirm (
 #
 
 CREATE TABLE phpbb_ctracker_config (
-			ct_config_name varchar(255) NOT NULL,
+			ct_config_name varchar(190) NOT NULL,
 			ct_config_value varchar(255) NOT NULL,
 			PRIMARY KEY  (ct_config_name)
 );
@@ -1095,7 +1093,7 @@ CREATE TABLE phpbb_groups (
 
 CREATE TABLE phpbb_hacks_list (
   hack_id mediumint(8) unsigned NOT NULL auto_increment,
-  hack_name varchar(255) NOT NULL default '',
+  hack_name varchar(190) NOT NULL default '',
   hack_desc varchar(255) NOT NULL default '',
   hack_author varchar(255) NOT NULL default '',
   hack_author_email varchar(255) NOT NULL default '',
@@ -1217,7 +1215,7 @@ CREATE TABLE phpbb_kb_categories (
 #
 
 CREATE TABLE phpbb_kb_config (
-  config_name varchar(255) NOT NULL default '',
+  config_name varchar(190) NOT NULL default '',
   config_value varchar(255) default NULL,
   PRIMARY KEY  (config_name)
 );
@@ -1355,7 +1353,7 @@ CREATE TABLE phpbb_link_categories (
 #
 
 CREATE TABLE phpbb_link_config (
-  config_name varchar(255) NOT NULL default '',
+  config_name varchar(190) NOT NULL default '',
   config_value varchar(255) NOT NULL default ''
 );
 
@@ -1389,7 +1387,7 @@ CREATE TABLE phpbb_links (
 
 CREATE TABLE phpbb_module_admin_panel (
   module_id mediumint(8) unsigned NOT NULL default '0',
-  config_name varchar(255) NOT NULL default '',
+  config_name varchar(190) NOT NULL default '',
   config_value varchar(255) NOT NULL default '',
   config_type varchar(20) NOT NULL default '',
   config_title varchar(100) NOT NULL default '',
@@ -1581,7 +1579,7 @@ CREATE TABLE phpbb_pa_comments (
 #
 
 CREATE TABLE phpbb_pa_config (
-  config_name varchar(255) NOT NULL default '',
+  config_name varchar(190) NOT NULL default '',
   config_value varchar(255) NOT NULL default '',
   PRIMARY KEY  (config_name)
 );
@@ -1737,7 +1735,7 @@ CREATE TABLE phpbb_phpBBSecurity(
 
 CREATE TABLE phpbb_portal_config (
   id int(10) unsigned NOT NULL auto_increment,
-  config_name varchar(255) NOT NULL default '',
+  config_name varchar(190) NOT NULL default '',
   config_value varchar(255) NOT NULL default '',
   PRIMARY KEY  (id)
 );
