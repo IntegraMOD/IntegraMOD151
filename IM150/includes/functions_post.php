@@ -750,8 +750,9 @@ function update_post_stats(&$mode, &$post_data, &$forum_id, &$topic_id, &$post_i
 	            SET forum_posts = ".$posts.", 
 	                    forum_topics = ".$topics    .", 
 	                    forum_last_post_id = ".$lastpost    ." 
-	            WHERE forum_id = ".$forum_id; 
-	    if (!$db->sql_query($sql)) { 
+	            WHERE forum_id = ".$forum_id;
+        $db->clear_cache("forum");
+	    if (!$db->sql_query($sql)) {
 	        message_die(GENERAL_ERROR, 'Error in updating forums', '', __LINE__, __FILE__, $sql); 
 	    } 
 	}

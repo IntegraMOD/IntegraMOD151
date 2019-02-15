@@ -172,6 +172,7 @@ function auto_prune($forum_id = 0)
 			{
 				message_die(GENERAL_ERROR, 'Could not update forum table', '', __LINE__, __FILE__, $sql);
 			}
+            $db->clear_cache("forum_sql");
 		}
 	}
 

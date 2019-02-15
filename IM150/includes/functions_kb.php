@@ -1424,7 +1424,8 @@ function kb_insert_post(
 		if ( !$db->sql_query( $sql, BEGIN_TRANSACTION ) )
 		{
 			$error_die_function( GENERAL_ERROR, 'Error in posting', '', __LINE__, __FILE__, $sql );
-		} 
+		}
+        $db->clear_cache("forum_sql");
 		// update the first / last post ids for the topic
 		$first_post_sql = ( $mode == 'newtopic' ) ? ", topic_first_post_id = $post_id  " : ' , topic_replies=topic_replies+1';
 		$sql = "UPDATE " . TOPICS_TABLE . " SET 

@@ -88,7 +88,7 @@ if( isset($_POST['login']) || isset($_GET['login']) || isset($_POST['logout']) |
 
 		$sql = "SELECT user_id, username, user_password, user_active, user_level, user_rank, user_actviate_date, user_expire_date, user_regdate, user_login_tries, user_last_login_try, ct_login_count
 			FROM " . USERS_TABLE . "
-			WHERE username = '" . str_replace("\\'", "''", $username) . "'";
+			WHERE username = '" . $db->sql_escape($username) . "'";
 		if ( !($result = $db->sql_query($sql)) )
 		{
 			message_die(GENERAL_ERROR, 'Error in obtaining userdata', '', __LINE__, __FILE__, $sql);

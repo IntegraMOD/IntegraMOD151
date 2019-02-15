@@ -250,6 +250,7 @@ if ( ($this_key > -1) && !empty($tree['data'][$this_key]['forum_link']))
 					SET forum_link_hit = forum_link_hit + 1 
 					WHERE forum_id=$forum_id";
 		if (!$db->sql_query($sql)) message_die(GENERAL_ERROR, 'Could not increment forum hits information', '', __LINE__, __FILE__, $sql);
+        $db->clear_cache("forum_sql");
 		cache_tree(true);
 	}
 
