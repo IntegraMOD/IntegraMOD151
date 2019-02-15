@@ -499,12 +499,18 @@ function write_msg( $msg_type, $room_id, $username, $msg, $to_user_id = 0 )
 		$from_user_id = 0;
 	else
 		$from_user_id = $user_id;
-	
-	$sql = "INSERT INTO " . $table_chatspot_messages_name . " VALUES ( '', '$room_id', '" . mysql_escape_string( $username ) . "', 
-		'" . mysql_escape_string( $msg ) . "', '$msg_type', '" . time() . "', '$to_user_id', '$from_user_id' )";
 
-	if( !$result = $db->sql_query( $sql ) )
-		die( "SQL Error in function write_msg()" );
+    $sql_values = [
+        'room_id' => $room_id,
+        'username' => $username,
+        'msg' => $msg,
+        'msg_type' => $msg_type,
+        'timestamp' => time(),
+        'to_user_id' => $to_user_id,
+        'from_user_id' => $from_user_id,
+    ];
+    $sql = $db->sql_build_insert($table_chatspot_messages_name, $sql_values);
+    $db->sql_query($sql, false, false, 'Could not write_msg() in chatspot', __LINE__, __FILE__);
 }
 
 function is_room_name_okay( $room_name )
@@ -653,14 +659,9 @@ function change_room_password( $room_id, $new_password )
 
 	if( $creator_id == $user_id || $userdata[ 'user_level' ] == MOD || $userdata[ 'user_level' ] == ADMIN )
 	{
-		$sql = "UPDATE " . $table_chatspot_rooms_name . "
-			SET 
-				room_password = '" . mysql_escape_string( $new_password ) . "' 
-			WHERE 
-				room_id = '$room_id'";
-				
-		if( !$result = $db->sql_query( $sql ) )
-			die( "SQL Error in function change_room_password(): UPDATE" );
+        $sql_values = ['room_password' => $new_password];
+        $sql = $db->sql_build_update($table_chatspot_rooms_name, $sql_values) . "WHERE room_id = " . intval($room_id);
+        $db->sql_query($sql, false, false, "Cannot change password change_room_password in chatspot", __LINE__, __FILE__);
 
 		if( $new_password == '' )
 			display_message_immediately( $lang['Password_cleared'] );
@@ -940,22 +941,24 @@ function update_session( $status = ACTIVE, $room_id = -1 )
 
 	if( $room_id != -1 ) // this is the case when the session is missing
 	{
-		$sql = "INSERT INTO " . $table_chatspot_sessions_name . " ( user_id, username, room_id, last_active, last_status ) 
-			VALUES ('" . $user_id . "', '" . mysql_escape_string( $username ) . "', '" . $room_id . "', '" . 
-			time() . "', '" . ACTIVE . "')";
+        $sql_values = [
+            'user_id' => $user_id,
+            'username' => $username,
+            'room_id' => $room_id,
+            'last_active' => time(),
+            'last_status' => ACTIVE,
+        ];
+        $sql = $db->sql_build_insert($table_chatspot_sessions_name, $sql_values);
 	}
 	else
 	{
-		$sql = "UPDATE " . $table_chatspot_sessions_name . " 
-			SET
-				last_active = '" . time() . "', 
-				last_status = '" . $status . "' 
-			WHERE
-				user_id = '" . $user_id . "'";
+        $sql_values = [
+            'last_active' => time(),
+            'last_status' => $status,
+        ];
+        $sql = $db->sql_build_update($table_chatspot_sessions_name, $sql_values) . " WHERE user_id = " . intval($user_id);
 	}
-
-	if( !$result = $db->sql_query( $sql ) )
-		die( "SQL Error in function update_session()" );
+    $db->sql_query($sql, false, false, 'Cannot update_session() in chatspot', __LINE__, __FILE__);
 }
 
 function remove_session( $user_id )
