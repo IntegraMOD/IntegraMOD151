@@ -36,6 +36,12 @@
 // $progname as it is used in the defaults
 //
 //
+
+if (!defined('IN_PHPBB'))
+{
+	die('Hacking attempt');
+}
+
 include_once($phpbb_root_path . 'language/lang_' . $board_config['default_lang'] . '/lang_prillian.' . $phpEx);
 
 
