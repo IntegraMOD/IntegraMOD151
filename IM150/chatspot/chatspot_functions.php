@@ -888,35 +888,35 @@ function display_message_immediately( $msg, $msg_type = 2, $username = '', $to_u
 	switch( $msg_type )
 	{
 		case 0 : // reg message
-			echo "writeln( '<tr><td class=\"chatspot\"><b>" . mysql_escape_string( stripslashes( $username ) ) . "</b>$message_time: " . mysql_escape_string( stripslashes( $msg ) ) . "</td></tr>' );";
+			echo "writeln( '<tr><td class=\"chatspot\"><b>" . htmlspecialchars( stripslashes( $username ) ) . "</b>$message_time: " . htmlspecialchars( stripslashes( $msg ) ) . "</td></tr>' );";
 			break;
 			
 		case 1 : // private message
 			if( $to_user_id == $user_id ) // private message to this user
-				echo "writeln( '<tr><td class=\"chatspot\"><b>" . mysql_escape_string( stripslashes( $username ) ) . "</b>$message_time <span style=\'color: red\'>[<b>PRIVATE</b>]</span>: <i>" . mysql_escape_string( stripslashes( $msg ) ) . "</i></td></tr>' );";
+				echo "writeln( '<tr><td class=\"chatspot\"><b>" . htmlspecialchars( stripslashes( $username ) ) . "</b>$message_time <span style=\'color: red\'>[<b>PRIVATE</b>]</span>: <i>" . htmlspecialchars( stripslashes( $msg ) ) . "</i></td></tr>' );";
 			else // private message from this user
-				echo "writeln( '<tr><td class=\"chatspot\"><b>" . mysql_escape_string( stripslashes( $username ) ) . "</b>$message_time <span style=\'color: red\'>[<b>TO:  " . mysql_escape_string( stripslashes( get_username( $to_user_id ) ) ) . "</b>]</span>: <i>" . mysql_escape_string( stripslashes( $msg ) ) . "</i></td></tr>' );";
+				echo "writeln( '<tr><td class=\"chatspot\"><b>" . htmlspecialchars( stripslashes( $username ) ) . "</b>$message_time <span style=\'color: red\'>[<b>TO:  " . htmlspecialchars( stripslashes( get_username( $to_user_id ) ) ) . "</b>]</span>: <i>" . htmlspecialchars( stripslashes( $msg ) ) . "</i></td></tr>' );";
 			break;
 			
 		case 2 : // system message
 		case 7 : // new room created
-		echo "writeln( '<tr><td class=\"chatspot\"><b>" . _CHATSPOT_SYSTEM_MSG . "</b>: <i><span style=\'color: red\'>" . mysql_escape_string( stripslashes( $msg ) ) . "</span></i></td></tr>' );";
+		echo "writeln( '<tr><td class=\"chatspot\"><b>" . _CHATSPOT_SYSTEM_MSG . "</b>: <i><span style=\'color: red\'>" . htmlspecialchars( stripslashes( $msg ) ) . "</span></i></td></tr>' );";
 			break;
 
 		case 3 : // broadcasted message
-			echo "writeln( '<tr><td class=\"chatspot\"><b>" . mysql_escape_string( stripslashes( $username ) ) . "</b>$message_time <span style=\'color: red\'>[<b>BROADCASTED MESSAGE</b>]</span>: <i>" . mysql_escape_string( stripslashes( $msg ) ) . "</i></td></tr>' );";
+			echo "writeln( '<tr><td class=\"chatspot\"><b>" . htmlspecialchars( stripslashes( $username ) ) . "</b>$message_time <span style=\'color: red\'>[<b>BROADCASTED MESSAGE</b>]</span>: <i>" . htmlspecialchars( stripslashes( $msg ) ) . "</i></td></tr>' );";
 			break;
 		
 		case 4 : // action
-			echo "writeln( '<tr><td class=\"chatspot\"><span style=\'color: purple\'><i><b>" . mysql_escape_string( stripslashes( $username ) ) . "</b> " . mysql_escape_string( stripslashes( $msg ) ) . "</i></span></td></tr>' );";
+			echo "writeln( '<tr><td class=\"chatspot\"><span style=\'color: purple\'><i><b>" . htmlspecialchars( stripslashes( $username ) ) . "</b> " . htmlspecialchars( stripslashes( $msg ) ) . "</i></span></td></tr>' );";
 			break;
 
 		case 5 : // arrival/departure
-			echo "writeln( '<tr><td class=\"chatspot\"><b>" . _CHATSPOT_SYSTEM_MSG . "</b>: <i><span style=\'color: blue\'>" . mysql_escape_string( stripslashes( $msg ) ) . ' ' . create_date( $board_config[ 'default_dateformat' ], $time, $userdata[ 'user_timezone' ] ) . "</span></i></td></tr>' );";
+			echo "writeln( '<tr><td class=\"chatspot\"><b>" . _CHATSPOT_SYSTEM_MSG . "</b>: <i><span style=\'color: blue\'>" . htmlspecialchars( stripslashes( $msg ) ) . ' ' . create_date( $board_config[ 'default_dateformat' ], $time, $userdata[ 'user_timezone' ] ) . "</span></i></td></tr>' );";
 			break;
 
 		case 6 : // kick
-			echo "writeln( '<tr><td class=\"chatspot\"><b>" . _CHATSPOT_SYSTEM_MSG . "</b>: <i><span style=\'color: red\'>" . mysql_escape_string( stripslashes( $msg ) ) . ' ' . create_date( $board_config[ 'default_dateformat' ], $time, $userdata[ 'user_timezone' ] ) . "</span></i></td></tr>' );";
+			echo "writeln( '<tr><td class=\"chatspot\"><b>" . _CHATSPOT_SYSTEM_MSG . "</b>: <i><span style=\'color: red\'>" . htmlspecialchars( stripslashes( $msg ) ) . ' ' . create_date( $board_config[ 'default_dateformat' ], $time, $userdata[ 'user_timezone' ] ) . "</span></i></td></tr>' );";
 			break;
 	}
 		

@@ -295,8 +295,8 @@ function update_online( $room_id, $update_online_flag )
 	echo "write('</head>');";
 	echo "write('<body leftmargin=\"2\" topmargin=\"2\" marginwidth=\"0\" marginheight=\"0\" link=\"#006699\">');";
 	echo "write('<div align=\"left\"><span class=\"chatspot\">' );\n";
-	echo "write('" . mysql_escape_string( display_online_users( $room_id, $user_list ) ) . "');\n";
-	echo "write('" . mysql_escape_string( display_available_rooms( $room_id, $user_list ) ) . "');\n";
+	echo "write('" . htmlspecialchars( display_online_users( $room_id, $user_list ) ) . "');\n";
+	echo "write('" . htmlspecialchars( display_available_rooms( $room_id, $user_list ) ) . "');\n";
 	echo "write('</span></div>');\n";
 	echo "write('</body>');\n";
 	echo "write('</html>');\n";
