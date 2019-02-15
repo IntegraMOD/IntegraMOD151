@@ -118,7 +118,7 @@ CREATE TABLE phpbb_im_sessions (
 # Table structure for table 'phpbb_im_config'
 #
 CREATE TABLE phpbb_im_config (
-  config_name varchar(255) NOT NULL default '',
+  config_name varchar(190) NOT NULL default '',
   config_value varchar(255) NOT NULL default '',
   PRIMARY KEY  (config_name)
 );
