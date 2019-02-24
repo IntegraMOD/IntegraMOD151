@@ -1015,7 +1015,7 @@ for ($i = 0; $i < $banner_count; $i++)
 			break;
 		case 0:
 		default:
-			$banner_html = '<a href="'.append_sid('redirect.'.$phpEx.'?banner_id='.$banners[$i]['banner_id']).'" target="_blank"><img src="'.$banners[$i]['banner_name'].'" '.$banner_size.' border="0" alt="'.$banners[$i]['banner_description'].'" title="'.$banners[$i]['banner_description'].'" /></a>';
+			$banner_html = '<a href="'.append_sid('redirect.'.$phpEx.'?banner_id='.$banners[$i]['banner_id']).'" target="_blank"><img src="'.$banners[$i]['banner_name'].'" '.$banner_size.' class="img-fluid" alt="'.$banners[$i]['banner_description'].'" title="'.$banners[$i]['banner_description'].'" /></a>';
 	}
 	$template->assign_vars(array('BANNER_'.$banner_spot.'_IMG' => $banner_html));
 	$banner_show_list[] = $banners[$i]['banner_id'];
