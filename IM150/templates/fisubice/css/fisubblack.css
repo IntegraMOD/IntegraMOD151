@@ -63,14 +63,14 @@ a.icon_return_top:hover:before, a.icon_delete:hover:before, a.icon_ip:hover:befo
 }
 
 /* Category gradients*/
-td.cat, td.catHead, td.catSides, td.catLeft, td.catRight, td.catBottom {
+.cat, .catHead, .catSides, .catLeft, .catRight, .catBottom {
 	overflow:auto;
 	color:#516a88;
 	background: #272727; /* Old browsers */
-	background: -moz-linear-gradient(top, #272727 0%, #57595A 100%); /* FF3.6-15 */
-	background: -webkit-linear-gradient(top, #272727 0%,#57595A 100%); /* Chrome10-25,Safari5.1-6 */
-	background: linear-gradient(to bottom, #272727 0%,#57595A 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
-	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#272727', endColorstr='#57595A',GradientType=0 ); /* IE6-9 */
+	background: -moz-linear-gradient(top, #57595A 0%, #272727 100%); /* FF3.6-15 */
+	background: -webkit-linear-gradient(top, #57595A 0%,#272727 100%); /* Chrome10-25,Safari5.1-6 */
+	background: linear-gradient(to bottom, #57595A 0%,#272727 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#57595A', endColorstr='#272727',GradientType=0 ); /* IE6-9 */
 }
 
 /* This is the gradient background at the top of the page */
@@ -104,10 +104,10 @@ td.cat, td.catHead, td.catSides, td.catLeft, td.catRight, td.catBottom {
 .row2,.helpline{background:#222325}
 .row3{background:#222325}
 
-td.spacerow{background:#1A1A1A}
+.spacerow{background:#1A1A1A}
 
 /* This is for the table cell above the Topics,Post & Last posts on the index.php */
-td.rowpic{
+.rowpic{
 	color:#516a88;
 	background: #272727; /* Old browsers */
 	background: -moz-linear-gradient(top, #272727 0%, #57595A 100%); /* FF3.6-15 */
@@ -117,7 +117,7 @@ td.rowpic{
 }
 
 /* Table Header cells */
-th{
+th, .th {
 	color:#FFA34F;
 	background: #272727; /* Old browsers */
 	background: -moz-linear-gradient(top, #272727 0%, #57595A 100%); /* FF3.6-15 */
@@ -243,3 +243,119 @@ div#mobile-bar {background-color:#000000;}
 }
 a.postbtn, .genbtn li, .genbtn a {color:#D36400;}
 a.postbtn:hover, .genbtn li:hover, .genbtn a:hover {color:#F8C600;}
+
+/* Clock css*/
+#clock {
+  width: 30em;
+  height: 30em;
+  border-radius: 50%;
+  border: solid 2px #D77700;
+  margin: auto auto;
+  position: relative;
+  background-color:#313131;
+}
+#clock div,
+.faceBox {
+  border: 0;
+  position: absolute;
+  transform-origin: center bottom;
+  -webkit-transform-origin: center bottom;
+  -moz-transform-origin: center bottom;
+  -o-transform-origin: center bottom;
+  transform: rotate(0deg);
+}
+#clock #hour {
+  border-radius: 0.75em 0.75em 0 0;
+  width: 1.5em;
+  height: 6em;
+  top: 9em;
+  left: 14.25em;
+  background-color: #FFCC00;
+  border: solid 1px black;
+}
+#clock #minute {
+  border-radius: 0.5em;
+  width: 1em;
+  height: 11em;
+  top: 4em;
+  left: 14.5em;
+  background-color: #FFCC00;
+  border: solid 1px black;
+}
+#clock #second {
+  border-radius: 0.25em;
+  width: 0.5em;
+  height: 14em;
+  top: 1em;
+  left: 14.75em;
+  background-color: #FFCC00;
+}
+#clock #center {
+  height: 2em;
+  width: 2em;
+  border-radius: 50%;
+  top: 14em;
+  left: 14em;
+  transform: rotate(0deg);
+  background-color: #FFCC00;
+  border: solid 1px black;
+}
+.smallTick {
+  width: 0.1em;
+  height: 0.5em;
+  background-color: #FFCC00;
+  margin: 0 1.45em;
+}
+.mediumTick {
+  width: 0.25em;
+  height: 0.8em;
+  background-color: #FFCC00;
+  margin: 0 1.375em;
+}
+.largeTick {
+  width: 0.4em;
+  height: 0.8em;
+  background-color: #FFCC00;
+  position: relative;
+  margin: 0 1.3em;
+}
+.tickNum {
+  font-family: Arial, sans-serif;
+  font-size: 2em;
+  line-height: 0;
+  color: #FFCC00;
+  position: relative;
+  top: 1em;
+  left: 0;
+  padding: 0 0.5em;
+}
+div.faceBox {
+  border: 0;
+  width: 3em;
+  height: 15em;
+  top: 0;
+  left: 13.5em;
+  position: absolute;
+  text-align: center;
+  overflow: visible;
+}
+div#cssclock {
+  width: 150px !important;
+}
+
+div.bd {
+  border: 1px solid #3A3B3B;
+}
+
+div.table1 {
+  background-color: #222325;
+  border: 2px solid #FFCC00;
+}
+
+.bdrr {
+  border-right: 2px solid #303030 !important;
+}
+
+.bdrl {
+  border-left: 2px solid #303030 !important;
+}

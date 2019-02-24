@@ -61,7 +61,7 @@ a.icon_return_top:hover:before, a.icon_delete:hover:before, a.icon_ip:hover:befo
 }
 
 /* Category gradients*/
-td.cat,td.catHead,td.catSides,td.catLeft,td.catRight,td.catBottom{
+.cat,.catHead,.catSides,.catLeft,.catRight,.catBottom{
 	color:#000;
 	background: #ba3604; /* Old browsers */
 	background: -moz-linear-gradient(top, #ba3604 13%, #fc8704 99%); /* FF3.6-15 */
@@ -103,10 +103,10 @@ td.cat,td.catHead,td.catSides,td.catLeft,td.catRight,td.catBottom{
 .row2,.helpline{background:#F68C1F;}
 .row3{background:#F9BD7E;}
 
-td.spacerow{background:#FFF;}
+.spacerow{background:#FFF;}
 
 /* This is for the table cell above the Topics,Post & Last posts on the index.php */
-td.rowpic{	
+.rowpic{	
 	color:#000;
 	background: #fc8704; /* Old browsers */
 	background: -moz-linear-gradient(top, #fc8704 20%, #ba3604 100%); /* FF3.6-15 */
@@ -117,7 +117,7 @@ td.rowpic{
 }
 
 /* Table Header cells */
-th{
+th, .th {
 	color:#16191D;
 	background: #fc8704; /* Old browsers */
 	background: -moz-linear-gradient(top, #fc8704 20%, #ba3604 100%); /* FF3.6-15 */
@@ -242,3 +242,121 @@ div#mobile-bar {background-color:#000000;}
 
 a.postbtn, a.postbtn:hover, .genbtn li, .genbtn a {color:#16191D;}
 .genbtn li:hover, .genbtn a:hover {color:#FC8704;}
+
+/* Clock css*/
+#clock {
+  width: 30em;
+  height: 30em;
+  border-radius: 50%;
+  border: solid 2px #D85B04;
+  margin: auto auto;
+  position: relative;
+  background-color:#FCDEBF;
+}
+#clock div,
+.faceBox {
+  border: 0;
+  position: absolute;
+  transform-origin: center bottom;
+  -webkit-transform-origin: center bottom;
+  -moz-transform-origin: center bottom;
+  -o-transform-origin: center bottom;
+  transform: rotate(0deg);
+}
+#clock #hour {
+  border-radius: 0.75em 0.75em 0 0;
+  width: 1.5em;
+  height: 6em;
+  top: 9em;
+  left: 14.25em;
+  background-color: #F57E04;
+  border: solid 1px #161919;
+}
+#clock #minute {
+  border-radius: 0.5em;
+  width: 1em;
+  height: 11em;
+  top: 4em;
+  left: 14.5em;
+  background-color: #F57E04;
+  border: solid 1px #161919;
+}
+#clock #second {
+  border-radius: 0.25em;
+  width: 0.5em;
+  height: 14em;
+  top: 1em;
+  left: 14.75em;
+  background-color: #D85B04;
+}
+#clock #center {
+  height: 2em;
+  width: 2em;
+  border-radius: 50%;
+  top: 14em;
+  left: 14em;
+  transform: rotate(0deg);
+  background-color: #F57E04;
+  border: solid 1px #161919;
+}
+.smallTick {
+  width: 0.1em;
+  height: 0.5em;
+  background-color: #D85B04;
+  margin: 0 1.45em;
+}
+.mediumTick {
+  width: 0.25em;
+  height: 0.8em;
+  background-color: #D85B04;
+  margin: 0 1.375em;
+}
+.largeTick {
+  width: 0.4em;
+  height: 0.8em;
+  background-color: #D85B04;
+  position: relative;
+  margin: 0 1.3em;
+}
+.tickNum {
+  font-family: Arial, sans-serif;
+  font-size: 2em;
+  line-height: 0;
+  color: black;
+  position: relative;
+  top: 1em;
+  left: 0;
+  padding: 0 0.5em;
+}
+div.faceBox {
+  border: 0;
+  width: 3em;
+  height: 15em;
+  top: 0;
+  left: 13.5em;
+  position: absolute;
+  text-align: center;
+  overflow: visible;
+}
+div#cssclock {
+  width: 150px !important;
+}
+
+div.bd {
+  border-left: 1px solid #FEF4E8;
+  border-bottom: 1px solid #FEF4E8;
+  border-top: 1px solid #FEF4E8;
+}
+
+div.table1 {
+  background-color: #FEF4E8;
+  border: 2px solid #006699;
+}
+
+.bdrr {
+  border-right: 2px solid #F98304 !important;
+}
+
+.bdrl {
+  border-left: 2px solid #F98304 !important;
+}

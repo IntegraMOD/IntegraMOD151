@@ -4,8 +4,7 @@
 @import url("main.css");
 
 /* The content of the posts (body of text) */
-body{background:#F1F1F1;color:#000000;font:12px Verdana,Arial,Helvetica,sans-serif;margin:6px;padding:0;
-}
+body{background:#F1F1F1;color:#000000;font:12px Verdana,Arial,Helvetica,sans-serif;margin:6px;padding:0;}
 
 /* This is the border line & background color round the entire page Binnekantpaginablock */
 .bodyline{background:#F9F9F9;border:1px solid #98aab1}
@@ -27,7 +26,7 @@ a:hover{color:#939393;}
 a.topictitle:visited {color:#496687;}
 a.topictitle:hover {color:#939393;}
 
-hr{border-style:solid;border-color:#999999;}
+hr {border-style:solid;border-color:#999999;}
 
 .icon_quote:before {
 	color:#818181;
@@ -66,7 +65,7 @@ a.icon_return_top:hover:before, a.icon_delete:hover:before, a.icon_ip:hover:befo
 }
 
 /* Category gradients*/
-td.cat, td.catHead, td.catSides, td.catLeft, td.catRight, td.catBottom {
+.cat, .catHead, .catSides, .catLeft, .catRight, .catBottom {
 	color:#516a88;
 	background: #C0C0C0; /* Old browsers */
 	background: -moz-linear-gradient(top, #C0C0C0 0%, #E1E8EF 100%); /* FF3.6-15 */
@@ -104,10 +103,10 @@ td.cat, td.catHead, td.catSides, td.catLeft, td.catRight, td.catBottom {
 .row2,.helpline{background:#E2E2E2}
 .row3{background:#E9E9E9}
 
-td.spacerow{background:#DBDBDB}
+.spacerow{background:#DBDBDB}
 
 /* This is for the table cell above the Topics,Post & Last posts on the index.php */
-td.rowpic{
+.rowpic{
 	color:#516a88;
 	background: #E1E8EF; /* Old browsers */
 	background: -moz-linear-gradient(top, #E1E8EF 0%, #C0C0C0 75%); /* FF3.6-15 */
@@ -118,7 +117,7 @@ td.rowpic{
 }
 
 /* Table Header cells */
-th{
+th, .th {
 	color:#516a88;
 	background: #E1E8EF; /* Old browsers */
 	background: -moz-linear-gradient(top, #E1E8EF 0%, #C0C0C0 75%); /* FF3.6-15 */
@@ -244,3 +243,121 @@ div#mobile-bar {background-color:#000000;}
 }
 a.postbtn, a.postbtn:hover, .genbtn li, .genbtn a {color:#818181;}
 .genbtn li:hover, .genbtn a:hover {color:#383838;}
+
+/* Clock css*/
+#clock {
+  width: 30em;
+  height: 30em;
+  border-radius: 50%;
+  border: solid 2px #C0C0C0;
+  margin: auto auto;
+  position: relative;
+  background-color:#DFE5EB;
+}
+#clock div,
+.faceBox {
+  border: 0;
+  position: absolute;
+  transform-origin: center bottom;
+  -webkit-transform-origin: center bottom;
+  -moz-transform-origin: center bottom;
+  -o-transform-origin: center bottom;
+  transform: rotate(0deg);
+}
+#clock #hour {
+  border-radius: 0.75em 0.75em 0 0;
+  width: 1.5em;
+  height: 6em;
+  top: 9em;
+  left: 14.25em;
+  background-color: #BDBDBD;
+  border: solid 1px black;
+}
+#clock #minute {
+  border-radius: 0.5em;
+  width: 1em;
+  height: 11em;
+  top: 4em;
+  left: 14.5em;
+  background-color: #BDBDBD;
+  border: solid 1px black;
+}
+#clock #second {
+  border-radius: 0.25em;
+  width: 0.5em;
+  height: 14em;
+  top: 1em;
+  left: 14.75em;
+  background-color: #BDBDBD;
+}
+#clock #center {
+  height: 2em;
+  width: 2em;
+  border-radius: 50%;
+  top: 14em;
+  left: 14em;
+  transform: rotate(0deg);
+  background-color: #BDBDBD;
+  border: solid 1px black;
+}
+.smallTick {
+  width: 0.1em;
+  height: 0.5em;
+  background-color: #C0C0C0;
+  margin: 0 1.45em;
+}
+.mediumTick {
+  width: 0.25em;
+  height: 0.8em;
+  background-color: #C0C0C0;
+  margin: 0 1.375em;
+}
+.largeTick {
+  width: 0.4em;
+  height: 0.8em;
+  background-color: #C0C0C0;
+  position: relative;
+  margin: 0 1.3em;
+}
+.tickNum {
+  font-family: Arial, sans-serif;
+  font-size: 2em;
+  line-height: 0;
+  color: black;
+  position: relative;
+  top: 1em;
+  left: 0;
+  padding: 0 0.5em;
+}
+div.faceBox {
+  border: 0;
+  width: 3em;
+  height: 15em;
+  top: 0;
+  left: 13.5em;
+  position: absolute;
+  text-align: center;
+  overflow: visible;
+}
+div#cssclock {
+  width: 150px !important;
+}
+
+div.bd {
+  border-left: 1px solid #FFF;
+  border-bottom: 1px solid #FFF;
+  border-top: 1px solid #FFF;
+}
+
+div.table1 {
+  background-color: #FFF;
+  border: 2px solid #006699;
+}
+
+.bdrr {
+  border-right: 2px solid #FFF !important;
+}
+
+.bdrl {
+  border-left: 2px solid #FFF !important;
+}
