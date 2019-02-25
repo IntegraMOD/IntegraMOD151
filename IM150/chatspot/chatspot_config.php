@@ -83,7 +83,7 @@ $chatspot_config = array(
 	
 	'max_rooms' => '5', // the max number of rooms a user can be in simultaneously
 
-	'charset' => $lang['ENCODING'], //'iso-8859-1', // board variable initialization is not present on some pages to reduce database queries, so this cannot be
+	'charset' => $lang['ENCODING'], //'utf-8', // board variable initialization is not present on some pages to reduce database queries, so this cannot be
 										// retrieved from the board on those pages (like chatspot_title, _help, _about, etc.)
 	
 	'stylesheet' => 'chatspot.css'

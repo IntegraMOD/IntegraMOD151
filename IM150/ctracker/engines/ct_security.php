@@ -148,7 +148,7 @@ $ct_rules = array('http_', '_server', 'delete%20', 'delete ', 'delete-', 'delete
 				  'http_', '_php', 'php_', 'phpinfo()', '<?php', '?>', '%3C%3Fphp',
 				  '%3F>', 'sql=', '_global', 'global_', 'global[', '_server',
 				  'server_', 'server[', '/modules', 'modules/', 'phpadmin',
-				  'root_path', '_globals', 'globals_', 'globals[', 'iso-8859-1',
+				  'root_path', '_globals', 'globals_', 'globals[', 'utf-8',
 				  '?hl=', '%3fhl=', '.exe', '.sh', '%00', rawurldecode('%00'), '_env', '/*', '\\*');
 
 // Some fields in $_POST don't get checked to prevent wrong detection

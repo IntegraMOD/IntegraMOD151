@@ -1,8 +1,9 @@
 <table cellpadding="0" cellspacing="10" border="0" width="100%">
 <form action="{S_PROFILCP_ACTION}" method="post" name="post" onsubmit="return checkForm(this)">
 <script language="JavaScript" type="text/javascript" src="templates/post_message.js"></script>
-<script language='javascript' src='spelling/spellmessage.js'></script>
 {JAVASCRIPT_BBCODE_BOX}
+<script language='javascript' src='spelling/spellmessage.js'></script>
+
 <tr>
 	<td valign="top" align="center">
 		<table cellpadding="4" cellspacing="1" border="0" class="forumline">

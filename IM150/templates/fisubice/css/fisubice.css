@@ -1,6 +1,4 @@
 /* fiSubIce  */
-@import url("font-awesome.css");
-@import url("fontello.css");
 @import url("main.css");
 
 /* The content of the posts (body of text) */
@@ -210,19 +208,10 @@ a.kb span {color:#516A88;}
 .date-today, .last-post b { color: #E61A1A;}
 .date-yesterday, .last-post em { color: #18C935;}
 
-/* Responsive qbar qmenu */
-
-a.mob-tab-menu-toggle {background:transparent url('../images/button.gif') no-repeat left top;}
-nav.mobile-menu a{color:#B4C5D5;}
-nav.mobile-menu a:hover{color:#D8D8D8;}
-nav.mobile-menu {background-color: #111111;border-right:1px solid #000000;}
-nav.mobile-menu a {border-bottom:1px solid #000000;}
-div#mobile-bar {background-color:#000000;}
-
 .shadow {box-shadow: 2px 2px 2px #888888;}
 .blockshadow {border:1px solid #486386;box-shadow: 2px 2px 2px #888888;}
 
-.postbtn, .genbtn {
+.postbtn, .genbtn, .folder {
 	  background: #FFFFFF;
 	  background-image: -webkit-linear-gradient(top, #FFFFFF, #BDCBD6);
 	  background-image: -moz-linear-gradient(top, #FFFFFF, #BDCBD6);
@@ -231,7 +220,7 @@ div#mobile-bar {background-color:#000000;}
 	  background-image: linear-gradient(to bottom, #FFFFFF, #BDCBD6);
 	  border: solid #A8B9C8 1px;
 }
-.postbtn:hover, .genbtn:hover {
+.postbtn:hover, .genbtn:hover, .folder:hover {
 	  background: #E1E8EF;
 	  background-image: -webkit-linear-gradient(top, #E1E8EF, #BDCBD6);
 	  background-image: -moz-linear-gradient(top, #E1E8EF, #BDCBD6);
@@ -239,8 +228,47 @@ div#mobile-bar {background-color:#000000;}
 	  background-image: -o-linear-gradient(top, #E1E8EF, #BDCBD6);
 	  background-image: linear-gradient(to bottom, #E1E8EF, #BDCBD6);
 }
-a.postbtn, a.postbtn:hover, .genbtn li, .genbtn a {color:#587DA3;}
-.genbtn li:hover, .genbtn a:hover {color:#6E9BD5;}
+a.postbtn, a.postbtn:hover, .genbtn li, .genbtn a, .folder a {color:#587DA3;}
+.genbtn li:hover, .genbtn a:hover, .folder a:hover {color:#6E9BD5;}
+
+span.folder {
+	-webkit-border-radius: 20;
+	-moz-border-radius: 20;
+	border-radius: 20px;
+	font-size: 1.1em;
+	font-weight:800;
+	padding: 4px 5px 4px 3px;
+	text-decoration: none;
+	margin:1px;
+    width: 2.1em;
+    height: 2.1em;
+}
+
+.fa-hot {color:#F19635;}
+
+.fa {
+  font-size:1.5em !important;
+  text-decoration: none !important;
+}
+
+.fa1 {
+  font-size:1em !important;
+  text-decoration: none !important;
+}
+
+.fa2 {
+  font-size:1.3em !important;
+  text-decoration: none !important;
+  padding: 3px 0px 3px 0px;
+}
+
+.fa-3x {
+  font-size:3em !important;
+  text-decoration: none !important;
+}
+
+span.folder {color:#006699;}
+span.folder:hover {color:#DD6900; text-decoration: none !important;}
 
 /* Clock css*/
 #clock {

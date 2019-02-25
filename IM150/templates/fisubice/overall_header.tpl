@@ -15,16 +15,18 @@
 <title>{SITENAME} - {PAGE_TITLE}</title>{META_TAGS}
 {META}
 {NAV_LINKS}
-<!--[if gte IE 5]><![if lt IE 7]><script src="templates/pngfix.js"></script><![endif]><![endif]--> 
+<!--[if gte IE 5]><![if lt IE 7]><script src="templates/_js/pngfix.js"></script><![endif]><![endif]--> 
 <link rel="shortcut icon" href="./favicon.ico">
-<link rel="stylesheet" href="{TEMPLATE}{T_HEAD_STYLESHEET}" type="text/css">
+<link rel="stylesheet" href="{TEMPLATE}{T_HEAD_STYLESHEET}" type="text/css" />
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.2.0/js/tether.min.js" integrity="sha384-Plbmg8JY28KFelvJVai01l8WyZzrYWG825m+cZ0eDDS1f7d/js6ikvy1+X+guPIB" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.3/js/bootstrap.min.js" integrity="sha384-ux8v3A6CPtOTqOzMKiuo3d/DomGaaClxFYdCu2HPMBEkf6x2xiDyJ7gkXU0MWwaD" crossorigin="anonymous"></script><link rel="stylesheet" href="css/font-awesome.css" type="text/css">
-<link rel="stylesheet" type="text/css" href="{TEMPLATE}/css/font-awesome-min.css">
-<script src="templates/toggle_display.js"></script>
-<script src="templates/importal.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.3/js/bootstrap.min.js" integrity="sha384-ux8v3A6CPtOTqOzMKiuo3d/DomGaaClxFYdCu2HPMBEkf6x2xiDyJ7gkXU0MWwaD" crossorigin="anonymous"></script>
+<link rel="stylesheet" type="text/css" href="{TEMPLATE}/css/font-awesome.css" />
+<link rel="stylesheet" type="text/css" href="{TEMPLATE}/css/font-awesome-min.css" />
+<link rel="stylesheet" type="text/css" href="{TEMPLATE}/css/report_hack.css" />
+<script src="templates/_js/toggle_display.js"></script>
+<script src="templates/_js/importal.js"></script>
 <!-- BEGIN switch_enable_pm_popup -->
 <script>
 // <![CDATA[
@@ -122,7 +124,8 @@ window.open("tour.php", "_tour", "width=800,height=600,scrollbars,resizable=yes"
 } 
 // ]]> 
 </script>
-<script src="templates/mouseover.js"></script>
+<script src="templates/_js/mouseover.js"></script>
+
 <!-- Prillian - Begin Code Additions -->
 <!-- BEGIN switch_user_logged_in -->
 <script>
@@ -139,6 +142,7 @@ prill_launch('{U_IM_LAUNCH}', '{IM_WIDTH}', '{IM_HEIGHT}');
 // ]]>
 </script>
 <!-- END switch_user_logged_in -->
+
 <!-- BEGIN buddy_alert -->
 <script>
 // <![CDATA[
@@ -150,9 +154,8 @@ window.open('{buddy_alert.U_BUDDY_ALERT}', '_buddyalert', 'HEIGHT=225,resizable=
 </script>
 <!-- END buddy_alert -->
 <!-- Prillian - End Code Additions -->
-<script src="templates/jquery.toggle.js"></script>
-<script src="templates/immenu.js"></script>
-<link rel="stylesheet" type="text/css" href="templates/fisubice/report_hack.css" />
+<script src="templates/_js/jquery.toggle.js"></script>
+<script src="templates/_js/immenu.js"></script>
 {COLOR_CSS}
 </head>
 <body>
@@ -225,10 +228,10 @@ window.open('{buddy_alert.U_BUDDY_ALERT}', '_buddyalert', 'HEIGHT=225,resizable=
 	</div>
 
 	<div class="container-fluid px-0 resp">
-      <div class="row qb">
-		<div class="col-.5"><a class="icon_go_bottom" href="#bot" title="{L_GO_TO_BOTTOM}">&nbsp;</a></div>
-		<div class="col pt-2 text-center gen rnav" style="white-space:wrap !important">{QMENUS}</div>
-		<div class="col-.5 align-right"><a class="icon_go_bottom" href="#bot" title="{L_GO_TO_BOTTOM}">&nbsp;</a></div>
+      <div class="row qb pt-1">
+		<div class="col-1"><a class="fa fa-arrow-down fa-2x" href="#bot" title="{L_TOPIC_DOWN_IMAGE}">&nbsp;</a></div>
+		<div class="col ctr gen">{QMENUS}</div>
+		<div class="col-1 text-right"><a class="fa fa-arrow-down fa-2x" href="#bot" title="{L_TOPIC_DOWN_IMAGE}">&nbsp;</a></div>
 	  </div>
 	</div>
 
@@ -304,9 +307,7 @@ window.open('{buddy_alert.U_BUDDY_ALERT}', '_buddyalert', 'HEIGHT=225,resizable=
 	  <!-- END switch_portal_both -->
 	  </div>
 	  
-
-	  <table width="100%" border="0" cellspacing="0" cellpadding="0">
-	    <tr> 
-		{PORTAL_HEADER}
-		  <td width="10"><img src="images/spacer.gif" alt="" width="10" /></td>
-		  <td valign="top">
+  <div class="row align-items-start">
+    {PORTAL_HEADER}
+    <div class="col-sm pl-0">
+      <div class="">

@@ -2,7 +2,7 @@
 <html>
 <head>
 <title> New Document </title>
-<script language="Javascript" type="text/javascript">
+<script>
 <!--
 	window.close();
 //-->

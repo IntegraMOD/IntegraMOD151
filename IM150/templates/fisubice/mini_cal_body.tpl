@@ -1,7 +1,7 @@
 <!-- BEGIN switch_mini_cal_add_events -->
 <form name="mini_cal" id ="mini_cal" action="{U_MINI_CAL_ADD_EVENT}" method="post">
 <!-- END switch_mini_cal_add_events -->
-<table width="30%" cellpadding="0" cellspacing="1" border="0" class="forumline shadow">
+<table width="30%" cellpadding="3" cellspacing="1" border="0" class="forumline">
   <tr><td align="center" class="cat" height="28">
         <span class="cattitle">
             <!-- BEGIN switch_mini_cal_events -->
@@ -59,6 +59,7 @@
   </tr>
   <!-- END switch_mini_cal_add_events -->
 </table>
+<table border="0" cellpadding="0" cellspacing="0" class="tbl"><tr><td class="tbll"><img src="images/spacer.gif" alt="" width="8" height="4" /></td><td class="tblbot"><img src="images/spacer.gif" alt="" width="8" height="4" /></td><td class="tblr"><img src="images/spacer.gif" alt="" width="8" height="4" /></td></tr></table>
 <!-- BEGIN switch_mini_cal_add_events -->
 </form>
 <!-- END switch_mini_cal_add_events -->

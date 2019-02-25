@@ -22,7 +22,7 @@
 <td colspan="2" class="row1"><span class="postbody">{MESSAGE}</span>
 <!-- BEGIN postrow -->
 	{ATTACHMENTS}
-<!-- END postrow -->
+	<!-- END postrow -->
 <br />&nbsp;
 </td>
 </tr>

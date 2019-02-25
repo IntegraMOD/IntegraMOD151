@@ -1,5 +1,5 @@
 <!-- INCLUDE pa_header.tpl -->
-<script language="JavaScript" type="text/javascript">
+<script>
 <!--
 function checkRateForm() {
 	if (document.rateform.rating.value == -1)

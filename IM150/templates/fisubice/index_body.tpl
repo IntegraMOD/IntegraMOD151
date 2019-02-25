@@ -2,13 +2,13 @@
 	  <div class="container">
 	    <div class="row"> 
 	      <div class="col mx-auto">
-		    <div>{BANNER_18_IMG}</div>
+		  {BANNER_18_IMG}
 	      </div>
 	    </div>
 	  </div>
 	  <!-- END switch_banner_18 -->
 
-	  <div class="container-fluid">
+	  <div class="container-fluid mb-2">
 		<div class="row">
 		  <div class="maintitle ml-0">{L_INDEX}</div>
 		</div>
@@ -33,19 +33,17 @@
 		  <div class="p-0 flex-fill text-right"><a href="{U_MARK_READ}"><strong>{L_MARK_FORUMS_READ}</strong></a></div>
 		</div>
 	  </div>
-	  <div class="row m-1"></div>
 
 {BOARD_ANNOUNCES}
 {BOARD_INDEX}
 
-	  <div class="container-fluid">
+	  <div class="container-fluid mb-2">
 		<div class="d-flex ctr">
 		  <div class="p-0 flex-fill"><img src="{FORUM_NEW_IMG}" alt="{L_NEW_POSTS}" title="{L_NEW_POSTS}"/>{L_NEW_POSTS}</div>
 		  <div class="p-0 flex-fill"><img src="{FORUM_IMG}" alt="{L_NO_NEW_POSTS}" title="{L_NO_NEW_POSTS}"/>{L_NO_NEW_POSTS}</div>
 		  <div class="p-0 flex-fill"><img src="{FORUM_LOCKED_IMG}" alt="{L_FORUM_LOCKED}" title="{L_FORUM_LOCKED}"/>{L_NO_NEW_POSTS}</div>
 		</div>
 	  </div>
-	  <div class="row m-1"></div>
 
 	  <div class="container-fluid">
 	    <div class="row">
@@ -71,15 +69,13 @@
 
   		    <!-- BEGIN disable_viewonline -->
 	        <div class="row pl-3">
-		      <div class="container forumline">
+		      <div class="container forumline mb-2">
 			    <div class="row th">
 			      <div class="col cattitle pt-2"><a href="{U_VIEWONLINE}">{L_WHO_IS_ONLINE}</a></div>
 			    </div>
 			    <div class="row row1">
-				  <div class="col-2 pt-4 pr-0 bdrr resp">
-				    <h3><i class="fa fa-users fa-3x hov" title="{L_WHO_IS_ONLINE}"></i></h3>
-			 	  </div>
-				  <div class="col row1 pl-1">
+				  <div class="col-2 pt-4 pr-0 ctr bdrr resp"><i class="fa fa-users fa-3x hov" title="{L_WHO_IS_ONLINE}"></i></div>
+				  <div class="col row1 pl-1 mb-2">
 				    <div class="row row1 ml-1">
 				      <div class="col pl-1"><span class="gensmall">{TOTAL_POSTS}<br />{TOTAL_USERS}<br />{NEWEST_USER}</span></div>
 				    </div>
@@ -107,20 +103,21 @@
 			          <div class="col pl-1 gensmall font-weight-bold"><i class="far fa-birthday-cake"></i>{HAPPY_BIRTHDAY_FELLOWS}</div>
 				    </div>
 					<!-- END switch_happy_birthday -->
-					<div class="row m-1"></div>
 				  </div>
 			    </div>
 			  </div>
-		      <div class="row m-1"></div>
 	        </div>
   		    <!-- END disable_viewonline -->
 	      </div>
 	    </div>
 	  </div>
+
+
+
+
 	  <!-- BEGIN switch_user_logged_out -->
-	  <div class="row m-1"></div>
 	  <form method="post" action="{S_LOGIN_ACTION}">
-	  <div class="container-fluid forumline">
+	  <div class="container-fluid forumline mt-2">
 		<div class="row th">
 		  <div class="col cattitle pt-2"><a id="login"></a>{L_LOGIN_LOGOUT}</div>
 		</div>
@@ -142,17 +139,15 @@
 		    </div>
 		  </div>
 		</div>
-
 	  </div>
 	  </form>
 	  <!-- END switch_user_logged_out -->
-
 
 	  <!-- BEGIN switch_banner_19 -->
 	  <div class="container">
 	    <div class="row"> 
 	      <div class="col mx-auto">
-		    <div>{BANNER_19_IMG}</div>
+		  {BANNER_19_IMG}
 	      </div>
 	    </div>
 	  </div>

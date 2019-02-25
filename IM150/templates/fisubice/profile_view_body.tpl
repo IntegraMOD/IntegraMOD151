@@ -81,11 +81,6 @@
 </table>
 </td>
 </tr>
-	<!-- BEGIN switch_report_user -->
-	<tr>
-		<td class="catBottom" align="center" colspan="2"><a href="{U_REPORT_USER}" class="gen">{L_REPORT_USER}</a></td>
-	</tr>
-	<!-- END switch_report_user -->
 <tr>
 <td class="cat" colspan="2">&nbsp;</td>
 </tr>

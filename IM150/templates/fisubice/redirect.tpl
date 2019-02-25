@@ -1,5 +1,5 @@
-<BODY><CENTER>{MESSAGE}</CENTER> 
-<SCRIPT LANGUAGE="javascript"> 
+<body><center>{MESSAGE}</center> 
+<script> 
 setTimeout("document.all['jumplink'].click();",100); 
-</SCRIPT> 
-</BODY>
+</script> 
+</body>

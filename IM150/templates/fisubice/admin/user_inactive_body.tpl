@@ -40,7 +40,7 @@
 <tr>
 	<td class="{Table_InactiveUsers.ROW_CLASS}">{Table_InactiveUsers.NUMBER}</td>
 	<td class="{Table_InactiveUsers.ROW_CLASS}"><a href="{Table_InactiveUsers.U_USERNAME}">{Table_InactiveUsers.USERNAME}</a></td>
-	<td class="{Table_InactiveUsers.ROW_CLASS}"><a class="icon_contact_email" href="{Table_InactiveUsers.EMAIL}"><span>{L_EMAIL}</span></a></td>
+	<td class="{Table_InactiveUsers.ROW_CLASS}">{Table_InactiveUsers.EMAIL_IMG}</td>
 	<td class="{Table_InactiveUsers.ROW_CLASS}" align="center">{Table_InactiveUsers.USER_REGDATE}</td>
 	<td class="{Table_InactiveUsers.ROW_CLASS}" align="center">{Table_InactiveUsers.USER_LASTVISIT}</td>
 	<td class="{Table_InactiveUsers.ROW_CLASS}" align="center">{Table_InactiveUsers.USER_ACTIVE}</td>

@@ -32,7 +32,7 @@
 // varies ... give it your best guess!
 //
 
-$lang['ENCODING'] = 'iso-8859-8-I';
+$lang['ENCODING'] = 'utf-8';
 $lang['DIRECTION'] = 'Rtl';
 $lang['LEFT'] = 'right';
 $lang['RIGHT'] = 'left';

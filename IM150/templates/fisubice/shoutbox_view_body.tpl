@@ -1,5 +1,4 @@
 <HEAD><META http-equiv="refresh" content="120;url={U_SHOUTBOX_VIEW}?auto_refresh=1">
-{COLOR_CSS}
 <meta http-equiv="Content-Type" content="text/html; charset={S_CONTENT_ENCODING}" />
 <link rel="stylesheet" href="{T_URL}/{T_HEAD_STYLESHEET}" type="text/css">
 </HEAD>

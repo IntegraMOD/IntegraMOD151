@@ -17,7 +17,7 @@
 	}
 </style>
 
-<script language="JavaScript" type="text/javascript">
+<script>
 // (C) 2000 www.CodeLifter.com - http://www.codelifter.com
 // Free for all users, but leave in this  header
 

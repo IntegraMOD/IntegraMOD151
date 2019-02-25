@@ -83,9 +83,6 @@
 		<!-- END switch_tree -->
 		<!-- BEGIN line -->
 		<tr>
-			<!-- BEGIN has_php_function -->
-			<td width="50%" nowrap="nowrap"><span class="gensmall"><b>{L_QBAR_PHP_FUNCTION}:</b>&nbsp;{qbar.field.has_php_function.NAME}</span></td>
-			<!-- END has_php_function -->
 			<!-- BEGIN switch_auth_logged -->
 			<td width="50%" nowrap="nowrap"><span class="gensmall"><b>{L_AUTH_LOGGED}:</b>&nbsp;{qbar.field.AUTH_LOGGED}</span></td>
 			<!-- END switch_auth_logged -->

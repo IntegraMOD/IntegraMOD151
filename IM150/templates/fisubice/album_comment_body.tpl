@@ -117,7 +117,7 @@
 <!-- END switch_comment -->
 </form>
 
-<script language="JavaScript" type="text/javascript">
+<script>
 <!--
 function checkForm()
 {

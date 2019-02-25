@@ -1,5 +1,5 @@
-<script language="JavaScript" type="text/javascript" src="templates/no_thread_stretch.js"></script>
-<script language="JavaScript" type="text/javascript">
+<script src="templates/_js/no_thread_stretch.js"></script>
+<script>
 no_thread_stretch({BLOCK_WIDTH}+240);
 </script>
 <table class="forumline" width="100%" cellspacing="1" cellpadding="3" border="0">

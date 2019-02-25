@@ -77,7 +77,7 @@
 		{picrow.pic_detail.RATING}
 		{picrow.pic_detail.COMMENTS}
 		{picrow.pic_detail.IP}
-		{picrow.pic_detail.EDIT}XXX&nbsp;&nbsp;{picrow.pic_detail.DELETE}YYY&nbsp;&nbsp;{picrow.pic_detail.LOCK}</span>
+		{picrow.pic_detail.EDIT}&nbsp;&nbsp;{picrow.pic_detail.DELETE}&nbsp;&nbsp;{picrow.pic_detail.LOCK}</span>
 	</td>
 	<!-- END pic_detail -->
 	</tr>

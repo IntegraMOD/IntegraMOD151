@@ -199,11 +199,6 @@
 <td class="row1">{L_BOARD_STYLE}</td>
 <td class="row2">{STYLE_SELECT}</td>
 </tr>
-<tr>
-<td class="row1">{L_GROUP_COLOR_SELECT}<br />
-<span class="gensmall">{L_GROUP_COLOR_SELECT_EXPLAIN}</span></td>
-<td class="row2">{GROUP_COLOR_SELECT}</td>
-</tr>
 <tr> 
 <td class="row1">{L_TIMEZONE}</td>
 <td class="row2">{TIMEZONE_SELECT}</td>

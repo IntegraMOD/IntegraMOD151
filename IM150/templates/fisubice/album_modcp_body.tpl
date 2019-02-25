@@ -1,4 +1,4 @@
-<script language="JavaScript" type="text/javascript">
+<script>
 <!--
 //--- Album Category Hierarchy : begin
 //--- version : 1.2.0

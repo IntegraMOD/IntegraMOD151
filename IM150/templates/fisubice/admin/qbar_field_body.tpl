@@ -20,11 +20,6 @@
 	</td>
 </tr>
 <tr>
-	<td class="row2" width="50%"><span class="gen">{L_QBAR_PHP_FUNCTION}</span><span class="gensmall"><br />{L_QBAR_PHP_FUNCTION_EXPLAIN}</span></td>
-	<td class="row1"><span class="gen"><input type="text" name="php_function" value="{PHP_FUNCTION}" /></span></td>
-	</td>
-</tr>
-<tr>
 	<td class="cat" align="center" colspan="2"><span class="cattitle">{L_SHORTCUT}</span></td>
 </tr>
 <tr>

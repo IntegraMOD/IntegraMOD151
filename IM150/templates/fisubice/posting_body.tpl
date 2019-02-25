@@ -1,7 +1,8 @@
-<script language="JavaScript" type="text/javascript" src="templates/post_message.js"></script>
-{JAVASCRIPT_BBCODE_BOX}
+<script src="templates/_js/post_message.js"></script>
+<script src="mods/bbcode_box/bbcode_box.js"></script>
+
 <script language='javascript' src='spelling/spellmessage.js'></script>
-<script language="JavaScript" type="text/javascript">
+<script>
   var is_event_allowed = 0;
   var is_delayed_allowed = 0;
 
@@ -170,7 +171,7 @@ if (formErrors) {
 								<td width="6"><img border="0" height="25" width="6" src="mods/bbcode_box/images/bar-div.gif" alt="" /></td>
 								<td width="23"><input border="0" height="22" width="23" src="mods/bbcode_box/images/spell.gif" class="postimage" value="SpellCheck" name="button" type="image" onclick="openspell();return false;" onMouseOver="helpline('spell')" /></td>
 								<td width="6"><img border="0" height="25" width="6" src="mods/bbcode_box/images/bar-div.gif" alt="" /></td>
-								<td align="right"><a href="http://hvmdesign.com/" class="gensmall" title="BBCode Box MOD - by Disturbed One - www.HVMDesign.com" target="blank">Advanced BBCode Box v5.0.0</a>&nbsp;</td>
+								<td align="right"><a href="http://www.tactic.be" class="gensmall" title="BBCode Box MOD" target="blank">Advanced BBCode Box v5.1.1</a>&nbsp;</td>
 							</tr>
 						</table>
 					</td>
@@ -283,15 +284,16 @@ if (formErrors) {
 								<td><img border="0" height="22" width="23" src="mods/bbcode_box/images/sound.gif" class="postimage" name="stream" onClick="BBCstream()" onMouseOver="helpline('stream')" alt="Stream" /></td>
 								<td><img border="0" height="22" width="23" src="mods/bbcode_box/images/ram.gif" class="postimage" name="ram" onClick="BBCram()" onMouseOver="helpline('ram')" alt="Real Media" /></td>
 								<td><img border="0" height="22" width="23" src="mods/bbcode_box/images/video.gif" class="postimage" name="video" onClick="BBCvideo()" onMouseOver="helpline('video')" alt="Video" /></td>
-								<td><img border="0" height="22" width="23" src="mods/bbcode_box/images/web.gif" class="postimage" name="web" onClick="BBCweb()" onMouseOver="helpline('web')" alt="Web Page" /></td>
+						        <td><img border="0" height="22" width="23" src="mods/bbcode_box/images/gvideo.gif" class="postimage" name="GVideo" onClick="BBCGVideo()" onMouseOver="helpline('googlevid')" alt="GoogleVid"></td>
+						        <td><img border="0" height="22" width="23" src="mods/bbcode_box/images/youtube.gif" class="postimage" name="youtube" onClick="BBCyoutube()" onMouseOver="helpline('youtube')" alt="YouTube" /></td>
 								<td><img border="0" height="25" width="6" src="mods/bbcode_box/images/bar-div.gif" alt="" /></td>
 								<td><img border="0" height="22" width="23" src="mods/bbcode_box/images/tab.gif" class="postimage" name="tab" onClick="BBCtab()" onMouseOver="helpline('tab')" alt="Tab" /></td>
 								<td><img border="0" height="22" width="23" src="mods/bbcode_box/images/nbsp.gif" class="postimage" name="nbsp" onClick="BBCnbsp()" onMouseOver="helpline('nbsp')" alt="NBSP" /></td>
 								<td><img border="0" height="22" width="23" src="mods/bbcode_box/images/hr.gif" class="postimage" name="hr" onClick="BBChr()" onMouseOver="helpline('hr')" alt="H-Line" /></td>
 								<td><img border="0" height="22" width="23" src="mods/bbcode_box/images/you.gif" class="postimage" name="you" onClick="BBCyou()" onMouseOver="helpline('you')" alt="You" /></td>
 								<td><img border="0" height="25" width="6" src="mods/bbcode_box/images/bar-div.gif" alt="" /></td>
+								<td><img border="0" height="22" width="23" src="mods/bbcode_box/images/web.gif" class="postimage" name="web" onClick="BBCweb()" onMouseOver="helpline('web')" alt="Web Page" /></td>
 								<td><img border="0" height="22" width="23" src="mods/bbcode_box/images/table.gif" class="postimage" name="table" onClick="BBCtable()" onMouseOver="helpline('table')" alt="Table" /></td>
-						        <td><img border="0" height="22" width="23" src="mods/bbcode_box/images/youtube.gif" class="postimage" name="youtube" onClick="BBCyoutube()" onMouseOver="helpline('youtube')" alt="YouTube" /></td>
 							</tr>
 						</table>
 					</td>
@@ -415,10 +417,10 @@ if (formErrors) {
 <!-- END switch_unlock_topic -->
 <!-- BEGIN switch_type_cal -->
 <style type="text/css">@import url({TEMPLATE_PATH}calendar.css);</style>
-<script type="text/javascript" src="templates/calendar.js"></script>
-<script type="text/javascript" src="language/{LANG}/calendar.js"></script>
-<script type="text/javascript" src="templates/calendar-setup.js"></script>
-<script language="JavaScript" type="text/javascript">
+<script src="templates/_js/calendar.js"></script>
+<script src="language/{LANG}/calendar.js"></script>
+<script src="templates/_js/calendar-setup.js"></script>
+<script>
   is_event_allowed = 1;
 </script>
 <tr><td colspan="2"><hr /></td></tr>
@@ -430,7 +432,7 @@ if (formErrors) {
 <td align="right" nowrap="nowrap"><span class="gen"><b>{L_CALENDAR_TITLE}&nbsp;:</b></span></td>
 <td align="left" width="100%">
 <span class="genmed"><input type="text" name="calendar_event" id="calendarevent" size="50" maxlength="255" class="post" value="{CALENDAR_EVENT}" readonly="1" />&nbsp;<img src="{DATE_PICKER_IMAGE}" id="trigger2" style="cursor: pointer;" onmouseover="this.style.background='red';" onmouseout="this.style.background=''" />&nbsp;<img src="{CLEAR_DATE_IMAGE}" style="cursor: pointer;" onmouseover="this.style.background='red';" onmouseout="this.style.background=''" onclick="document.post.calendar_event.value='';" /></span></td>
-<script language="JavaScript" type="text/javascript">
+<script>
 Calendar.setup(
 {
 inputField  : "calendarevent",         // ID of the input field
@@ -444,7 +446,7 @@ align       : "T1"
 <td align="right" nowrap="nowrap"><span class="gen"><b>{L_CALENDAR_UNTIL}&nbsp;:</b></span></td>
 <td align="left" width="100%">
 <span class="genmed"><input type="text" name="calendar_duration" id="calendarduration" size="50" maxlength="255" class="post" value="{CALENDAR_DURATION}" readonly="1" />&nbsp;<img src="{DATE_PICKER_IMAGE}" id="trigger3" style="cursor: pointer;" onmouseover="this.style.background='red';" onmouseout="this.style.background=''" />&nbsp;<img src="{CLEAR_DATE_IMAGE}" style="cursor: pointer;" onmouseover="this.style.background='red';" onmouseout="this.style.background=''" onclick="document.post.calendar_duration.value='';" /></span></td>
-<script language="JavaScript" type="text/javascript">
+<script>
 Calendar.setup(
 {
 inputField  : "calendarduration",         // ID of the input field

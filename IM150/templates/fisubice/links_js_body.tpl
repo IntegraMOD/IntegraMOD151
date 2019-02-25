@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset={S_CONTENT_ENCODING}">
 </head>
 <body style="margin-top:0px;margin-left:0px;background-color:{T_BODY_BGCOLOR}">
-<script language="JavaScript">
+<script>
 <!-- 
 var linkrow = new Array({LINKS_LOGO});
 var interval = {DISPLAY_INTERVAL};

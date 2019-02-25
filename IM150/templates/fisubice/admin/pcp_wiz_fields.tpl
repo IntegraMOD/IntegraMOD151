@@ -41,8 +41,7 @@
 <tr>
 	<td class="row1" align="left" colspan="4" nowrap>
 		{L_SELECT_FIELD} <select name="{FIELDSELECT_NAME}" id="{FIELDSELECT_NAME}" class="post">{FIELDOPTIONS}</select> <input type="submit" name="{SELECT_NAME}" value="{L_SELECT}" class="mainoption" onclick="return selectMap();"/>  <input type="submit" name="{GOTO_NAME}" value="{L_GOTO}" class="mainoption" onclick="return selectMap();"/><br /><br />
-		{L_SELECT_NEW_FIELD} <select name="{NEWSELECT_NAME}" id="{NEWSELECT_NAME}" class="post">{NEWOPTIONS}</select> <input type="submit" name="{NEW_NAME}" value="{L_SELECT}" class="mainoption" onclick="return selectMap();"/>
-	</td>
+		{L_SELECT_NEW_FIELD} <select name="{NEWSELECT_NAME}" id="{NEWSELECT_NAME}" class="post">{NEWOPTIONS}</select> <input type="submit" name="{NEW_NAME}" value="{L_SELECT}" class="mainoption" onclick="return selectMap();"/></td>
 </tr>
 <!-- BEGIN message -->
 <tr>

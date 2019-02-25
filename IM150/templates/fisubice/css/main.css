@@ -1,4 +1,4 @@
-/* Based on the original Style Sheet for the fisubsilver v2 Theme for phpBB version 2+
+html{font-size:100%;margin-bottom:1px;}
 
 /* The content of the posts (body of text) */
 body{font:12px Verdana,Arial,Helvetica,sans-serif;margin:6px;padding:0;}
@@ -7,12 +7,12 @@ body{font:12px Verdana,Arial,Helvetica,sans-serif;margin:6px;padding:0;}
 font,th,td,p {font: 12px Verdana,Arial,Helvetica,sans-serif;}
 
 /* General text */
-.gensmall{font-size:.95em;}
-.gen { font-size : 1em; text-decoration: none;}
-.copyright{font-size:.95em;}
+.gen { font-size : 1em !important; }
+.genmed { font-size : 0.923em !important; }
+.gensmall { font-size : 0.846em !important; }
+.qb a, .qb a:hover, .qb a:focus {text-decoration: none !important; margin: 0 2px;}
+.explaintitle{font-size:0.9em;font-weight:bold;}
 
-.genmed,.genmed{font-size:1em;}
-.explaintitle{font-size:1em;font-weight:bold;}
 
 /* General page style */
 a:link,a:active,a:visited,a.postlink{text-decoration:none;}
@@ -22,11 +22,12 @@ a:hover{text-decoration:none;}
 .topictitle{font-size:1em;font-weight:bold;}
 
 /* Name of poster in viewmsg.php and viewtopic.php and other places */
-.name{font-size:11px;font-weight: bold;}
+.name{font-size:0.917em;font-weight: bold;}
 
 /* This is the gradient background at the top of the page */
+.topnav, .btmnav{font-size:0.833em;height:22px; padding: 2px 0 1px 0;border-style:solid;border-width: 1px 0px 1px 0px;}
 .qnav{white-space:nowrap;width:100%;text-decoration:none;}
-.qb  {font-size:10px;white-space:nowrap;border-style:solid;border-width: 1px 0px 1px 0px;}
+.qb  {font-size:0.833em;white-space:nowrap;border-style:solid;border-width: 1px 0px 1px 0px;}
 .cv {position: relative;top: 4%;transform: translateY(-4%);height:3em;}
 .bcv {position: relative;top: 4%;transform: translateY(-4%);height:3em;}
 .fr {position:relative;float:right;}
@@ -40,44 +41,42 @@ hr{border-top-width:1px;height:0px;}
 .cat,.catHead,.catSides,.catLeft,.catRight,.catBottom {font-weight:bold;letter-spacing:1px;height:29px;text-indent:4px;}
 
 /* Table Header cells */
-th{font-size:11px;font-weight:bold;height:27px;white-space:nowrap;text-align:center;padding-left:8px;padding-right:8px;}
+th, .th{font-size:0.917em;font-weight:bold;height:27px;white-space:nowrap;text-align:center;padding-left:8px;padding-right:8px;}
 
 /* The largest text used in the index page title and toptic title etc. */
 .maintitle,h1{font:bold 20px/120% "Trebuchet MS",Verdana,Arial,Helvetica,sans-serif;text-decoration:none;color:#839fbc;margin:0 0 0 20px;}
 .subtitle,h2{font:bold 18px/180% "Trebuchet MS",Verdana,Arial,Helvetica,sans-serif;text-decoration:none;}
 
 /* Used for the navigation text,(Page 1,2,3 etc) and the navigation bar when in a forum */
-.nav{font-size:1em;font-weight:bold;}
-.rnav {font-size:1.2em;font-weight:bold;}
-.nav ul, .rnav ul {list-style-type: none;}
+.nav{font-size:1.1em;font-weight:700;}
 .postbody{font-size:1.2em;line-height:125%;}
 
 /* Location,number of posts,post date etc */
 .postdetails{font-size:.95em;}
 
 /* Quote blocks */
-.quotetitle,.quote {font-size:11px;padding:2px 2px 3px 3px}
+.quotetitle,.quote {font-size:0.917em;padding:2px 2px 3px 3px}
 .quotetitle {text-indent:2px;font-weight:bold;margin:10px 10px 0 10px}
-.quote {border-top-width:0px;font-size:11px;margin:0 10px 10px 10px}
+.quote {border-top-width:0px;font-size:0.917em;margin:0 10px 10px 10px}
 .quote {overflow:auto;height:40px}
 
 /* Code blocks */
 .codetitle,.code {padding:2px 2px 3px 3px}
-.codetitle {font-size:11px;text-indent:2px;font-weight:bold;margin:10px 10px 0 10px}
-.code {border-top-width:0;font:13px Courier,'Courier New',sans-serif;margin:0 10px 0 10px;line-height:110%}
+.codetitle {font-size:0.917em;text-indent:2px;font-weight:bold;margin:10px 10px 0 10px}
+.code {border-top-width:0;font:1.083em Courier,'Courier New',sans-serif;margin:0 10px 0 10px;line-height:110%}
 .code {overflow:auto;height:40px}
 
 /* PHP blocks */
 .phptitle,.php {padding:2px 2px 3px 3px}
-.phptitle {font-size:11px;text-indent:2px;font-weight:bold;margin:10px 10px 0 10px}
-.php {border-top-width:0px;font:13px Courier,'Courier New',sans-serif;margin:0 10px 0 10px;line-height:110%}
+.phptitle {font-size:0.917em;text-indent:2px;font-weight:bold;margin:10px 10px 0 10px}
+.php {border-top-width:0px;font:1.083em Courier,'Courier New',sans-serif;margin:0 10px 0 10px;line-height:110%}
 .php {overflow:auto;height:40px}
 
 /* Form elements */
 form{display:inline}
 input, select{font:1em Verdana,Arial,Helvetica,sans-serif}
 input.post,textarea.post{font:1em Verdana,Arial,Helvetica,sans-serif;padding-bottom:2px;padding-left:2px}
-input.button,input.liteoption,.fakebut{font-size:11px}
+input.button,input.liteoption,.fakebut{font-size:0.917em}
 input.catbutton{font-size:.95em}
 input.mainoption{font-size:1em;font-weight:bold}
 a.but,a.but:hover,a.but:visited{text-decoration:none}
@@ -106,11 +105,11 @@ img{border:0 solid}
 
 /* Mighty Gorgon - Full Album Pack - BEGIN */
 .forumline_left {border-top:0px;border-bottom:2px;border-right:0px;border-left:2px;border-style:solid;}
-.tab_links, a.tab_links:hover, a.tab_links:link, a.tab_links:active, a.tab_links:visited {font-size: 11px;text-decoration: none;}
-.tab_links_unsel, a.tab_links_unsel:hover, a.tab_links_unsel:link, a.tab_links_unsel:active, a.tab_links_unsel:visited {font-size: 11px;text-decoration: none;}
+.tab_links, a.tab_links:hover, a.tab_links:link, a.tab_links:active, a.tab_links:visited {font-size: 0.917em;text-decoration: none;}
+.tab_links_unsel, a.tab_links_unsel:hover, a.tab_links_unsel:link, a.tab_links_unsel:active, a.tab_links_unsel:visited {font-size: 0.917em;text-decoration: none;}
 a.tab_links:hover, a.tab_links_unsel:hover {text-decoration: underline;}
-.tab_headers, th.tab_headers {font-size:11px;font-weight:bold;padding-left:4px;padding-right:8px;border-style:solid;border-width:1px 1px 0px 1px;}
-.tab_headers_unsel, th.tab_headers_unsel {font-size:11px;font-weight:bold;padding-left:4px;padding-right:8px;border-style:solid;border-width:1px 1px 0px 1px;}
+.tab_headers, th.tab_headers {font-size:0.917em;font-weight:bold;padding-left:4px;padding-right:8px;border-style:solid;border-width:1px 1px 0px 1px;}
+.tab_headers_unsel, th.tab_headers_unsel {font-size:0.917em;font-weight:bold;padding-left:4px;padding-right:8px;border-style:solid;border-width:1px 1px 0px 1px;}
 .tab_border {border:1px;}
 .filler, th.filler {background-image:none;}
 .picframe{display:block;padding:2px 6px 2px 6px;position:relative;bottom:2px;right:2px;}
@@ -134,25 +133,16 @@ a.kb:hover {background-position: bottom right;outline: none;text-decoration: non
 a.kb span {display:block;line-height: 65px;padding: 6px 20px 4px 30px;appearance:button;-moz-appearance:button;-webkit-appearance:button;}
 a.kb:hover span {background-position:bottom left;padding:6px 20px 4px 30px;}
 
-/* Tables to Divs */
-.divTable{display:table;width: 100%;}
-.divTableRow {display:table-row;}
-.divTableHeading {display:table-header-group;}
-.divTableCell, .divTableHead {border:0px;display:table-cell;padding:3px 10px;}
-.divQTableCell {border:0px;display:table-cell;padding:0px;}
-.divTableHeading {display:table-header-group;font-weight:bold;}
-.divTableFoot {display:table-footer-group;font-weight:bold;}
-.divTableBody {display:table-row-group;}
-
 .bx {display:table-cell;padding:3px 10px;}
 
 ul.uct {
-    list-style-type: none;
-	height:2.1em;
-	display:inline-block;
+  list-style-type: none;
+  line-height:2em;
+  display:inline-block;
+    
 }
 .tbx ul {display: inline}
-.uct li {position:relative;float:left;margin:0 .11em;}
+.uct li {position:relative;float:left;margin:0 .11em;vertical-align: middle;}
 .lft {position:relative; float:left !important;}
 .rt {position:relative; float:right !important;}
 .pcpvt {vertical-align:bottom !important;}
@@ -162,38 +152,38 @@ ul.uct {
 
 /* css buttons */
 .genbtn {
-	-webkit-border-radius: 25;
-	-moz-border-radius: 25;
-	border-radius: 25px;
-	font-size: 11px;
-	font-weight:600;
-	padding: 3px 5px 5px 8px;
-	text-decoration: none;
-	text-transform: lowercase;
-	margin-left:2px;
+  -webkit-border-radius: 25;
+  -moz-border-radius: 25;
+  border-radius: 25px;
+  font-size: 0.917em;
+  font-weight:600;
+  padding: 3px 5px 5px 8px;
+  text-decoration: none;
+  text-transform: lowercase;
+  margin-left:2px;
 }
 .postbtn {
-	-webkit-border-radius: 25;
-	-moz-border-radius: 25;
-	border-radius: 25px;
-	font-size: 11px;
-	font-weight:600;
-	padding: 3px 16px 5px 16px;
-	text-decoration: none;
-	text-transform: lowercase;
-	letter-spacing: -.9px;
-	margin:2px;
+  -webkit-border-radius: 25;
+  -moz-border-radius: 25;
+  border-radius: 25px;
+  font-size: 0.917em;
+  font-weight:600;
+  padding: 3px 16px 5px 16px;
+  text-decoration: none;
+  text-transform: lowercase;
+  letter-spacing: -.9px;
+  margin:2px;
 }
 .postbtnsml {
-	-webkit-border-radius: 20;
-	-moz-border-radius: 20;
-	border-radius: 20px;
-	font-size: .9em;
-	font-weight:600;
-	padding: 2px 12px 4px 12px;
-	text-decoration: none;
-	text-transform: lowercase;
-	letter-spacing: -.9px;
+  -webkit-border-radius: 20;
+  -moz-border-radius: 20;
+  border-radius: 20px;
+  font-size: .9em;
+  font-weight:600;
+  padding: 2px 12px 4px 12px;
+  text-decoration: none;
+  text-transform: lowercase;
+  letter-spacing: -.9px;
 }
 .postbtn:hover, .postbtnsml:hover .genbtn:hover{text-decoration: none;}
 
@@ -206,7 +196,7 @@ a.noi img {display:none}
 .fa-tprev:before {content: "\f060";}
 
 .fa-tno {display:none}
-
+.fa-1-5x {font-size: 1.5em}
 .fa-21 {font-size: 2.1em;}
 .up1 {font-size: 1.5em !important;}
 .up2 {font-size: 2em !important;}
@@ -223,218 +213,123 @@ a.noi img {display:none}
 
 .icon_delete img, .icon_return_top img, .icon_go_top img, .icon_go_bottom img, .icon_ip img {display:none}
 
-/* Banner Mod */
-.BannerDivTable{display:table;width:100%;}
-.BannerDivTableRow {display:table-row;}
-.BannerDivTableHeading {display:table-header-group;}
-.BannerDivTableCell, .BannerDivTableHead {border:0px;display:table-cell;padding:3px 10px;}
-.BannerDivTableHeading {display:table-header-group;font-weight:bold;}
-.BannerDivTableFoot {display:table-footer-group;font-weight:bold;}
-.BannerDivTableBody {display:table-row-group;}
-
 .icon_quote, .icon_edit, .icon_delete, .icon_return_top, .icon_go_top, .icon_go_bottom, .icon_ip, .bcard, .bhotcard, .gcard, .rcard, .rycard, .ycard {
-  	display: inline-block;
-  	font: normal normal normal 14px/1 FontAwesome;
-  	font-size: inherit;
-  	text-rendering: auto;
-  	-webkit-font-smoothing: antialiased;
-  	-moz-osx-font-smoothing: grayscale;
-  	font-size: 1.6em;
-  	margin: .15em;
+  display: inline-block;
+  font: normal normal normal 1.167em/1 FontAwesome;
+  font-size: inherit;
+  text-rendering: auto;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-size: 1.6em;
+  margin: .15em;
 }
 
 .icon_quote:before {
-  	content: "\f0e5";
+  content: "\f0e5";
 }
 
 .icon_edit:before {
-	content: "\f044";
+  content: "\f044";
 }
 
 .icon_delete:before {
-	content: "\f014";
+  content: "\f014";
 }
 .icon_return_top:before {
-	content: "\f139";
+  content: "\f139";
 }
 .icon_ip:before {
   content: "\f276";
 }
 .icon_go_top:before {
-	content: "\f01b";
-  	font-size: 1.7em;
+  content: "\f01b";
+  font-size: 1.7em;
 }
 .icon_go_bottom:before {
-	content: "\f01a";
-  	font-size: 1.7em;
+  content: "\f01a";
+  font-size: 1.7em;
 }
 .bcard:before {
-	content: "\f096";
-	color:#2656BE;
+  content: "\f096";
+  color:#2656BE;
 }
 .bhotcard:before {
-	content: "\f071";
-	color:#E4B016;
+  content: "\f071";
+  color:#E4B016;
 }
 .gcard:before {
-	content: "\f071";
-	color:#56B95B;
+  content: "\f071";
+  color:#56B95B;
 }
 .rcard:before {
-	content: "\f071";
-	color:#D7282D;
+  content: "\f071";
+  color:#D7282D;
 }
 .rycard:before {
-	content: "\f017";
-	color:#D7282D;
+  content: "\f017";
+  color:#D7282D;
 }
 .ycard:before {
-	content: "\f071";
-	color:#DBE850;
+  content: "\f071";
+  color:#DBE850;
 }
 
-.ctr {width: 100%; text-align: center;}
+.bdr {border: 1px solid black !important;}
 
-.th {
-  font-size: 1em;
-  font-weight : bold;
-  height: 28px;
+.ctr {width: 100%; text-align: center!important;}
+
+div.nw, span.nw {
+  white-space: nowrap !important;
 } 
-
-div.nb {
- border: 0px;
-}
-
-div.nsb {
- border-left: 0px;
- border-right: 0px;
-}
- 
-div.nw {
-  white-space: nowrap
-}
-
-div.mw1 {
-  width: 100%;
-  min-width: 60px;
-}
-
-div.mw2 {
-  width: 100%;
-  min-width: 50px;
-}
-
-div.table1 {
-  display: table;
-  width: 100%;
-  min-width: 200px;
-  padding: 2px;
-}
 
 div.resp-add {
   display: hidden;
 }
 
-.fa {
-  font-size:1.5em;
+   	@media only screen and (max-width: 736px) {
+	div.iresp { display:none;}
+
 }
-
    	@media only screen and (max-width: 475px) {
-	div.resp, span.resp { display:none;}
-
+	div.resp { display:none;}
+	div.respnav { display:block !important;}
 }
    	@media only screen and (min-device-width: 375px) and (max-device-height: 667px) and (-webkit-device-pixel-ratio: 2) and (orientation : portrait) {
-	div.resp, span.resp { display:none;}
-
+	div.resp { display:none;}
+	div.respnav { display:block !important;}
 }
 
    	@media only screen and (min-device-width: 414px) and (max-device-height: 736px) and (-webkit-device-pixel-ratio: 3) and (orientation : portrait) {
-	div.resp, span.resp {display:none;}
-
+	div.resp {display:none;}
+	div.respnav { display:block !important;}
 }
 
 	@media only screen and (min-device-width: 320px) and (max-device-height: 640px) and (orientation : landscape) and (-webkit-device-pixel-ratio: 2) and (orientation : portrait) {
-	div.resp, span.resp {display:none;}
-
+	div.resp {display:none;}
+	div.respnav { display:block !important;}
 }
 
 	@media only screen and (min-device-width: 320px) and (max-device-height: 640px) and (orientation : portrait) and (-webkit-device-pixel-ratio: 2) and (orientation : portrait) {
-	div.resp, span.resp {display:none;}
-
+	div.resp {display:none;}
+	div.respnav { display:block !important;}
 }
 
 	@media only screen and (min-device-width: 320px) and (max-device-height: 640px) and (orientation : landscape) and (-webkit-device-pixel-ratio: 3) and (orientation : portrait) {
-	div.resp, span.resp {display:none;}
-
+	div.resp {display:none;}
+	div.respnav { display:block !important;}
 }
 
 	@media only screen and (min-device-width: 320px) and (max-device-height: 640px) and (orientation : portrait) and (-webkit-device-pixel-ratio: 3) and (orientation : portrait) {
-	div.resp, span.resp {display:none;}
-
+	div.resp {display:none;}
+	div.respnav { display:block !important;}
 }
 
 	@media only screen and (min-device-width: 360px) and (max-device-height: 640px) and (orientation : landscape) and (-webkit-device-pixel-ratio: 3) and (orientation : portrait) {
-	div.resp, span.resp {display:none;}
-
+	div.resp {display:none;}
+	div.respnav { display:block !important;}
 }
 
 	@media only screen and (min-device-width: 360px) and (max-device-height: 640px) and (orientation : portrait) and (-webkit-device-pixel-ratio: 3) and (orientation : portrait) {
-	div.resp, span.resp {display:none;}
-
+	div.resp {display:none;}
+	div.respnav { display:block !important;}
 }
-
-ct-ratio: 40/71) {
-	body.resp nav.desktop-menu { display: none; }
-	body.resp div#mobile-bar { display: block; }
-	body.resp p.custom-links { display: block; }
-	td.desktopMc { display: none !important; }
-	td.mobileMc { display: block !important; }
-}
-
-
-
-div.col, div.col-1, div.col-2, div.col-3, div.col-4, div.col-5, div.col-6, div.col-7, div.col-8, div.col-9, div.col-10, div.col-11, div.col-12 {
-  border: 0px solid green;
-}
-
-
-
-
- /* Add a black background color to the top navigation */
-
-
-
-/* Add an active class to highlight the current page */
-.active {
-  background-color: #4CAF50;
-  color: white;
-}
-
-/* Hide the link that should open and close the topnav on small screens */
-.rqbar .icon {
-  display: none;
-} 
-
- /* When the screen is less than 600 pixels wide, hide all links, except for the first one ("Home"). Show the link that contains should open and close the topnav (.icon) */
-@media screen and (max-width: 600px) {
-  .rqbar a:not(:first-child) {display: none;}
-  .rqbar a.icon {
-    float: right;
-    display: block;
-  }
-}
-
-/* The "responsive" class is added to the topnav with JavaScript when the user clicks on the icon. This class makes the topnav look good on small screens (display the links vertically instead of horizontally) */
-@media screen and (max-width: 600px) {
-  .rqbar.responsive {position: relative;}
-  .rqbar.responsive a.icon {
-    position: absolute;
-    right: 0;
-    top: 0;
-  }
-  .rqbar.responsive a {
-    float: none;
-    display: block;
-    text-align: left;
-  }
-} 

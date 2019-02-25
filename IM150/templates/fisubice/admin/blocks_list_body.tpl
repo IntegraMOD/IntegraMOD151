@@ -5,20 +5,8 @@
 {L_B_LAYOUT}: [ <b>{LAYOUT_NAME}</b> ]
 &nbsp;&nbsp;
 {L_B_PAGE}: [ <b>{PAGE}</b> ]
-&nbsp;&nbsp;
-{L_IMPORTAL_PAGE_TEMPLATE}: [ <b>{TEMPLATE_FILE}</b> ]
 <br />
 <br />
-
-<!-- IF BLOCKS_PREVIEW -->
-<h1>{L_IMPORTAL_BLOCKS_PREVIEW}</h1>
-{BLOCKS_PREVIEW}
-
-<br />
-<br />
-<!-- ENDIF -->
-
-<h1>{L_IMPORTAL_BLOCKS_LIST}</h1>
 <form method="post" action="{S_BLOCKS_ACTION}">
 <table cellspacing="1" cellpadding="3" border="0" align="center" class="forumline">
 <tr> 

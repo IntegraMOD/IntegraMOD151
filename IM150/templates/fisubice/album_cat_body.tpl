@@ -34,10 +34,10 @@
 	<tr>
 		<td class="nav" align="left">
 			<!-- BEGIN manage_personal_gal_folders -->
-			<a class="fa fa-wrench genbtn" style="padding-top:6px" href="{U_MANAGE_PIC}">&nbsp;{L_MANAGE_PIC}</a>
+			<a href="{U_MANAGE_PIC}"><img src="{MANAGE_PIC_IMG}" border="0" alt="{L_MANAGE_PIC}" title="{L_MANAGE_PIC}" align="middle" /></a>
 			<!-- END manage_personal_gal_folders -->
 			<!-- BEGIN enable_view_toggle -->
-			<a class="fa fa-th genbtn" style="padding-top:6px" href="{U_TOGGLE_VIEW_ALL}">&nbsp;{L_TOGGLE_VIEW_ALL}</a>
+			<a href="{U_TOGGLE_VIEW_ALL}"><img src="{TOGGLE_VIEW_ALL_IMG}" border="0" alt="{L_TOGGLE_VIEW_ALL}" title="{L_TOGGLE_VIEW_ALL}" align="middle" /></a>
 			<!-- END enable_view_toggle -->
 			<!-- BEGIN enable_picture_upload -->
 			{UPLOAD_FULL_LINK}
@@ -231,10 +231,10 @@
 		<td class="nav" width="100%">
 			<span class="nav">
 				<!-- BEGIN manage_personal_gal_folders -->
-				<a class="fa fa-wrench genbtn" style="padding-top:6px" href="{U_MANAGE_PIC}">&nbsp;{L_MANAGE_PIC}</a>
+				<a href="{U_MANAGE_PIC}"><img src="{MANAGE_PIC_IMG}" border="0" alt="{L_MANAGE_PIC}" title="{L_MANAGE_PIC}" align="middle" /></a>
 				<!-- END manage_personal_gal_folders -->
 				<!-- BEGIN enable_view_toggle -->
-				<a class="fa fa-th genbtn" style="padding-top:6px" href="{U_TOGGLE_VIEW_ALL}">&nbsp;{L_TOGGLE_VIEW_ALL}</a>
+				<a href="{U_TOGGLE_VIEW_ALL}"><img src="{TOGGLE_VIEW_ALL_IMG}" border="0" alt="{L_TOGGLE_VIEW_ALL}" title="{L_TOGGLE_VIEW_ALL}" align="middle" /></a>
 				<!-- END enable_view_toggle -->
 				<!-- BEGIN enable_picture_upload -->
 				{UPLOAD_FULL_LINK}

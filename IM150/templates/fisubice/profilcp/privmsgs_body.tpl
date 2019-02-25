@@ -88,7 +88,7 @@
 	<tr> 
 	  <td class="{listrow.ROW_CLASS}" width="5%" align="center" valign="middle"><img src="{listrow.PRIVMSG_FOLDER_IMG}" alt="{listrow.L_PRIVMSG_FOLDER_ALT}" title="{listrow.L_PRIVMSG_FOLDER_ALT}" /></td>
 	  <td width="55%" valign="middle" class="{listrow.ROW_CLASS}">{listrow.PRIVMSG_ATTACHMENTS_IMG}<span class="topictitle">&nbsp;<a href="{listrow.U_READ}" class="topictitle">{listrow.SUBJECT}</a></span></td>
-	  <td width="20%" valign="middle" align="center" class="{listrow.ROW_CLASS}"><span class="name">&nbsp;<a href="{listrow.U_FROM_USER_PROFILE}" class="{listrow.S_FROM}">{listrow.FROM}</a></span></td>
+	  <td width="20%" valign="middle" align="center" class="{listrow.ROW_CLASS}"><span class="name">&nbsp;<a href="{listrow.U_FROM_USER_PROFILE}" class="{listrow.CLASS_NAME}">{listrow.FROM}</a></span></td>
 	  <td width="15%" align="center" valign="middle" class="{listrow.ROW_CLASS}"><span class="postdetails">{listrow.DATE}</span></td>
 	  <td width="5%" align="center" valign="middle" class="{listrow.ROW_CLASS}"><span class="postdetails"> 
 		<input type="checkbox" name="mark[]2" value="{listrow.S_MARK_ID}" onClick="javascript:check_uncheck_main();" />

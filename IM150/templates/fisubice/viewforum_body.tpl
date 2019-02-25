@@ -1,99 +1,98 @@
-<table width="100%" border="0" cellspacing="2" cellpadding="2">
-<tr>
-<td class="nav" width="100%">&nbsp;<a href="{U_INDEX}">{L_INDEX}</a> {NAV_CAT_DESC}</a></td>
-</tr>
-<tr>
-<td class="maintitle"><a href="{U_VIEW_FORUM}">{FORUM_NAME}</a></td>
-<td class="gensmall" align="right" valign="bottom" nowrap="nowrap">{L_MODERATOR}: {MODERATORS}<br />
-{LOGGED_IN_USER_LIST}<br />
-<strong><a href="{U_MARK_READ}">{L_MARK_TOPICS_READ}</a></strong></td>
-</tr>
-</table>
+  <div class="container-fluid px-0">
+    <div class="row"> 
+      <div class="col">
+        <span class="nav"><a href="{U_INDEX}">{L_INDEX}</a>{NAV_CAT_DESC}</span>
+      </div>
+    </div>
+     <div class="row"> 
+      <div class="col pl-0 text-left maintitle"><a href="{U_VIEW_FORUM}">{FORUM_NAME}</a></div>
+      <div class="col text-right gensmall nw">{L_MODERATOR}: {MODERATORS}<br />{LOGGED_IN_USER_LIST}<br /><strong><a href="{U_MARK_READ}">{L_MARK_TOPICS_READ}</a></strong></div>
+    </div>
+  </div>
+
 {BOARD_ANNOUNCES}
-<table width="100%" cellspacing="2" cellpadding="2" border="0">
-<tr> 
-<!-- BEGIN is_auth_post --> 
-<td><a class="postbtn" href="{U_POST_NEW_TOPIC}"><span>{L_POST_NEW_TOPIC}</span></a></td>
-<!-- END is_auth_post -->
-<td nowrap="nowrap" class="nav" align="right">
-<!-- BEGIN switch_banner_13 -->
-{BANNER_13_IMG}<br/>
-<!-- END switch_banner_13 -->
-{PAGINATION}</td>
-</tr>
-</table>
+
+  <div class="container-fluid px-0">
+    <div class="row"> 
+      <div class="col">
+        <!-- BEGIN is_auth_post --> 
+	    <a class="postbtn" href="{U_POST_NEW_TOPIC}"><i class="fa fa-file-o fa1 mr-1" aria-hidden="true"></i>{L_POST_NEW_TOPIC}</a>
+	    <!-- END is_auth_post -->
+      </div>
+      <div class="col nav text-right">
+	    <!-- BEGIN switch_banner_13 -->
+	    {BANNER_13_IMG}<br />
+	    <!-- END switch_banner_13 -->
+	    {PAGINATION}
+      </div>
+    </div>
+  </div>
+
 {BOARD_INDEX}
+
 <form method="post" name="seesince" action="{U_VIEW_FORUM}">
 {TOPICS_LIST_BOX}
 </form> 
-<table width="100%" cellspacing="2" cellpadding="2" border="0">
-<tr>
-<!-- BEGIN is_auth_post -->
-<td align="left" nowrap="nowrap"><a class="postbtn" href="{U_POST_NEW_TOPIC}"><span>{L_POST_NEW_TOPIC}</span></a></td>
-<!-- END is_auth_post -->
-<td align="right" class="nav">&nbsp;<a href="{U_INDEX}">{L_INDEX}</a> {NAV_CAT_DESC}</td>
-<td nowrap="nowrap" class="nav">{PAGINATION}</td>
-</tr>
-</table>
-<table width="100%" border="0" cellspacing="0" cellpadding="2">
-<tr>
-<td><br />{JUMPBOX}</td>
-<!-- BEGIN ratingsbox -->
-<td><br />
-<form method="get" name="ratingsbox" action="{ratingsbox.U_RATINGS}">
-<input type="hidden" name="forum_id" value="{FORUM_ID}">
-<select name="type">
-<option value="">{ratingsbox.L_LATEST_RATINGS}</option>
-<option value="p">{ratingsbox.L_HIGHEST_RANKED_POSTS}</option>
-<option value="t">{ratingsbox.L_HIGHEST_RANKED_TOPICS}</option>
-<option value="u">{ratingsbox.L_HIGHEST_RANKED_POSTERS}</option>
-</select>&nbsp;<input type="submit" value="Go" class="liteoption" />
-</form><br />
-</td>
-<!-- END ratingsbox -->
-<td class="gensmall" align="right" valign="top"><strong><a href="{U_MARK_READ}">{L_MARK_TOPICS_READ}</a></strong><br />
-{L_MODERATOR}: {MODERATORS}<br />
-{LOGGED_IN_USER_LIST}
-</td>
-</tr>
-</table>
-<br />
-<table width="100%" cellspacing="0" border="0" align="center" cellpadding="0">
-<tr>
-<td valign="top">
-<table border="0" cellspacing="1" cellpadding="0">
-<tr>
-<td><img src="{FOLDER_NEW_IMG}" alt="{L_NEW_POSTS}" title="{L_NEW_POSTS}" /></td>
-<td class="gensmall">{L_NEW_POSTS}</td>
-<td>&nbsp;</td>
-<td><img src="{FOLDER_IMG}" alt="{L_NO_NEW_POSTS}" title="{L_NO_NEW_POSTS}" /></td>
-<td class="gensmall">{L_NO_NEW_POSTS}</td>
-<td>&nbsp;</td>
-<td><img src="{FOLDER_ANNOUNCE_IMG}" alt="{L_ANNOUNCEMENT}" title="{L_ANNOUNCEMENT}" /></td>
-<td class="gensmall">{L_ANNOUNCEMENT}</td>
-</tr>
-<tr>
-<td><img src="{FOLDER_HOT_NEW_IMG}" alt="{L_NEW_POSTS_HOT}" title="{L_NEW_POSTS_HOT}" /></td>
-<td class="gensmall">{L_NEW_POSTS_HOT}</td>
-<td>&nbsp;</td>
-<td><img src="{FOLDER_HOT_IMG}" alt="{L_NO_NEW_POSTS_HOT}" vspace="4" title="{L_NO_NEW_POSTS_HOT}" /></td>
-<td class="gensmall">{L_NO_NEW_POSTS_HOT}</td>
-<td>&nbsp;</td>
-<td><img src="{FOLDER_STICKY_IMG}" alt="{L_STICKY}" title="{L_STICKY}" /></td>
-<td class="gensmall">{L_STICKY}</td>
-</tr>
-<tr>
-<td><img src="{FOLDER_LOCKED_NEW_IMG}" alt="{L_NEW_POSTS_LOCKED}" title="{L_NEW_POSTS_LOCKED}" /></td>
-<td class="gensmall">{L_NEW_POSTS_LOCKED}</td>
-<td>&nbsp;</td>
-<td><img src="{FOLDER_LOCKED_IMG}" alt="{L_NO_NEW_POSTS_LOCKED}" title="{L_NO_NEW_POSTS_LOCKED}" /></td>
-<td class="gensmall">{L_NO_NEW_POSTS_LOCKED}</td>
-<td>&nbsp;</td>
-<td><img src="{FOLDER_POSTED_IMG}" alt="{L_POSTED}" title="{L_POSTED}" /></td>
-<td class="gensmall">{L_POSTED}</td>
-</tr>
-</table>
-</td>
-<td align="right" valign="top"><span class="gensmall">{S_AUTH_LIST}</span></td>
-</tr>
-</table>
+
+  <div class="container-fluid pl-0">
+    <div class="row"> 
+      <div class="col-2"><div class="nw text-left"><a class="postbtn" href="{U_POST_NEW_TOPIC}"><i class="fa fa-file-o fa1 mr-1" aria-hidden="true"></i>{L_POST_NEW_TOPIC}</a></div></div>
+ 	  <div class=""></div>
+      <div class="col mb-0 pr-0 text-right gensmall"><b>{PAGINATION}</b><br />{PAGE_NUMBER}</div>
+    </div>
+    <div class="row"> 
+      <div class="col pl-3 my-auto nav"><a href="{U_INDEX}">{L_INDEX}</a>{NAV_CAT_DESC}</div>
+      <div class="col gensmall text-right pr-0">{S_TIMEZONE}</div>
+    </div>
+  </div>
+
+  <div class="container-fluid pl-0 my-2">
+    <div class="row"> 
+      <div class="col text-right">{JUMPBOX}</div>
+	</div>
+  </div>
+
+  <!-- BEGIN ratingsbox -->
+  <div class="container-fluid pr-0">
+    <div class="row"> 
+      <div class="col pr-0 gen text-right">
+		<form method="get" name="ratingsbox" action="{ratingsbox.U_RATINGS}">
+		<input type="hidden" name="forum_id" value="{FORUM_ID}">
+		<select name="type">
+		<option value="">{ratingsbox.L_LATEST_RATINGS}</option>
+		<option value="p">{ratingsbox.L_HIGHEST_RANKED_POSTS}</option>
+		<option value="t">{ratingsbox.L_HIGHEST_RANKED_TOPICS}</option>
+		<option value="u">{ratingsbox.L_HIGHEST_RANKED_POSTERS}</option>
+		</select>&nbsp;<input type="submit" value="Go" class="liteoption" />
+		</form>
+	  </div>
+	</div>
+  </div>
+  <!-- END ratingsbox -->
+
+
+ <div class="container-fluid m-0 p-0">
+    <div class="row">
+
+	  <div class="col-7">
+	    <div class="row nw"> 
+	      <div class="col"><img src="{FOLDER_ANNOUNCE_IMG}" alt="{L_ANNOUNCEMENT}" width="19" height="18" />&nbsp;{L_ANNOUNCEMENT}</div>
+	      <div class="col"><img src="{FOLDER_STICKY_IMG}" alt="{L_STICKY}" width="19" height="18" />&nbsp;{L_STICKY}</div>
+		</div>
+	
+	    <div class="row nw"> 
+	      <div class="col"><img src="{FOLDER_NEW_IMG}" alt="{L_NEW_POSTS}" width="19" height="18" />&nbsp;{L_NEW_POSTS}</div>
+	      <div class="col"><img src="{FOLDER_IMG}" alt="{L_NO_NEW_POSTS}" width="19" height="18" />&nbsp;{L_NO_NEW_POSTS}</div>
+		</div>
+	    <div class="row nw"> 
+	      <div class="col"><img src="{FOLDER_HOT_NEW_IMG}" alt="{L_NEW_POSTS_HOT}" width="19" height="18" />&nbsp;{L_NEW_POSTS_HOT}</div>
+	      <div class="col"><img src="{FOLDER_HOT_IMG}" alt="{L_NO_NEW_POSTS_HOT}" width="19" height="18" />&nbsp;{L_NO_NEW_POSTS_HOT}</div>
+		</div>
+	    <div class="row nw"> 
+	      <div class="col"><img src="{FOLDER_LOCKED_NEW_IMG}" alt="{L_NEW_POSTS_LOCKED}" width="19" height="18" />&nbsp;{L_NEW_POSTS_LOCKED}</div>
+	      <div class="col"><img src="{FOLDER_LOCKED_IMG}" alt="{L_NO_NEW_POSTS_LOCKED}" width="19" height="18" />&nbsp;{L_NO_NEW_POSTS_LOCKED}</div>
+		</div>
+  	  </div>
+      <div class="col-5 gensmall text-right">{S_AUTH_LIST}</div>
+    </div>
+  </div>
