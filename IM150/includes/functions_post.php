@@ -657,164 +657,164 @@ if ($delayed && $mode == 'editpost' && $post_data['first_post'] && $old_forcetim
 // Update post stats and details
 //
 function update_post_stats(&$mode, &$post_data, &$forum_id, &$topic_id, &$post_id, &$user_id) 
-{ 
-    global $db; 
+{
+    global $db;
 
-    // prepare update of topics table 
-    // get first poster and first posttime 
-    $sql = "SELECT poster_id, post_time 
-                        FROM ".POSTS_TABLE." 
-                     WHERE topic_id = ".$topic_id." 
-              ORDER BY post_time ASC 
-                     LIMIT 1 "; 
-    if (!($result = $db->sql_query($sql))) { 
-        message_die(GENERAL_ERROR, 'Error in fetching first post data', '', __LINE__, __FILE__, $sql); 
-    } 
-    if ($row = $db->sql_fetchrow($result)) { 
-        $topicposter = $row['poster_id']; 
-        $topictime = $row['post_time']; 
-    } 
-    //get replies, firts post and last post 
-    $sql = "SELECT count( post_id )-1 AS replies, 
-                                 min( post_id )  AS firstpost, 
-                                 max( post_id )  AS lastpost 
-                        FROM ".POSTS_TABLE." 
-                     WHERE topic_id = ".$topic_id; 
-    if (!($result = $db->sql_query($sql))) { 
-        message_die(GENERAL_ERROR, 'Error in fetching topic posts data', '', __LINE__, __FILE__, $sql); 
-    } 
-    if ($row = $db->sql_fetchrow($result)) { 
-        $replies = $row['replies']; 
-        $firstpost = $row['firstpost']; 
-        $lastpost = $row['lastpost']; 
-    } 
-    // extra's only for poll delete 
-    if ($mode == 'poll_delete'){ 
-        $extra = ', topic_vote = 0'; 
-    } 
-    if(isset($topicposter) && isset($topictime)){ 
-        // update the topics table 
-        $sql = "UPDATE " . TOPICS_TABLE . " 
-                SET topic_poster = ".$topicposter.", 
-                        topic_time = ".$topictime    .", 
-                        topic_replies = ".$replies    .", 
-                        topic_first_post_id = ".$firstpost    .", 
-                        topic_last_post_id  = ".$lastpost ." 
-                        ".$extra." 
-                WHERE topic_id = ".$topic_id; 
-        if (!$db->sql_query($sql)) { 
-            message_die(GENERAL_ERROR, 'Error in updating topics', '', __LINE__, __FILE__, $sql); 
-        } 
-    } 
-    // prepare update of forums table 
-    // get forum posts and last post 
-    $sql = "SELECT count( p.post_id ) AS posts, 
-                                 max( p.post_id ) last_post 
-                        FROM ".POSTS_TABLE." p 
-                                     LEFT OUTER JOIN 
-                                 ".APPROVE_POSTS_TABLE." ap 
-                                    ON ( p.post_id = ap.post_id ) 
-                     WHERE forum_id = ".$forum_id." 
-                          AND post_time <= ".time()." 
-                         AND ap.post_id is null"; 
-    if (!($result = $db->sql_query($sql))) { 
-        message_die(GENERAL_ERROR, 'Error in fetching posts data', '', __LINE__, __FILE__, $sql); 
-    } 
+    // prepare update of topics table
+    // get first poster and first posttime
+    $sql = "SELECT poster_id, post_time
+                        FROM ".POSTS_TABLE."
+                     WHERE topic_id = ".$topic_id."
+              ORDER BY post_time ASC
+                     LIMIT 1 ";
+    if (!($result = $db->sql_query($sql))) {
+        message_die(GENERAL_ERROR, 'Error in fetching first post data', '', __LINE__, __FILE__, $sql);
+    }
+    if ($row = $db->sql_fetchrow($result)) {
+        $topicposter = $row['poster_id'];
+        $topictime = $row['post_time'];
+    }
+    //get replies, firts post and last post
+    $sql = "SELECT count( post_id )-1 AS replies,
+                                 min( post_id )  AS firstpost,
+                                 max( post_id )  AS lastpost
+                        FROM ".POSTS_TABLE."
+                     WHERE topic_id = ".$topic_id;
+    if (!($result = $db->sql_query($sql))) {
+        message_die(GENERAL_ERROR, 'Error in fetching topic posts data', '', __LINE__, __FILE__, $sql);
+    }
+    if ($row = $db->sql_fetchrow($result)) {
+        $replies = $row['replies'];
+        $firstpost = $row['firstpost'];
+        $lastpost = $row['lastpost'];
+    }
+    // extra's only for poll delete
+    if ($mode == 'poll_delete'){
+        $extra = ', topic_vote = 0';
+    }
+    if(isset($topicposter) && isset($topictime)){
+        // update the topics table
+        $sql = "UPDATE " . TOPICS_TABLE . "
+                SET topic_poster = ".$topicposter.",
+                        topic_time = ".$topictime    .",
+                        topic_replies = ".$replies    .",
+                        topic_first_post_id = ".$firstpost    .",
+                        topic_last_post_id  = ".$lastpost ."
+                        ".$extra."
+                WHERE topic_id = ".$topic_id;
+        if (!$db->sql_query($sql)) {
+            message_die(GENERAL_ERROR, 'Error in updating topics', '', __LINE__, __FILE__, $sql);
+        }
+    }
+    // prepare update of forums table
+    // get forum posts and last post
+    $sql = "SELECT count( p.post_id ) AS posts,
+                                 max( p.post_id ) last_post
+                        FROM ".POSTS_TABLE." p
+                                     LEFT OUTER JOIN
+                                 ".APPROVE_POSTS_TABLE." ap
+                                    ON ( p.post_id = ap.post_id )
+                     WHERE forum_id = ".$forum_id."
+                          AND post_time <= ".time()."
+                         AND ap.post_id is null";
+    if (!($result = $db->sql_query($sql))) {
+        message_die(GENERAL_ERROR, 'Error in fetching posts data', '', __LINE__, __FILE__, $sql);
+    }
     $row = $db->sql_fetchrow($result);
-    $posts = $row['posts']; 
-    $lastpost = $row['last_post']; 
-    // get forum topics 
-    $sql = "SELECT count( t.topic_id ) AS topics 
-                        FROM ".TOPICS_TABLE." t 
-                        LEFT OUTER JOIN 
-                                 ".APPROVE_POSTS_TABLE." ap 
-                                    ON (t.topic_id = ap.topic_id) 
-                     WHERE forum_id = ".$forum_id." 
-                          AND topic_time < ".time()." 
-                         AND ap.post_id is null"; 
-    if (!($result = $db->sql_query($sql))) { 
-        message_die(GENERAL_ERROR, 'Error in fetching topics data', '', __LINE__, __FILE__, $sql); 
-    } 
-    if ($row = $db->sql_fetchrow($result)) { 
-        $topics = $row['topics']; 
-    } else { 
-        $topics = 0; 
-    } 
-    if($lastpost < 1){ 
-        $lastpost = 0; 
-    } 
-    // update the forums table 
+    $posts = $row['posts'];
+    $lastpost = $row['last_post'];
+    // get forum topics
+    $sql = "SELECT t.topic_id AS topics
+                        FROM ".TOPICS_TABLE." t
+                        LEFT OUTER JOIN
+                                 ".APPROVE_POSTS_TABLE." ap
+                                    ON (t.topic_id = ap.topic_id)
+                     WHERE forum_id = ".$forum_id."
+                          AND topic_time < ".time()."
+                         AND ap.post_id is null";
+    if (!($result = $db->sql_query($sql))) {
+        message_die(GENERAL_ERROR, 'Error in fetching topics data', '', __LINE__, __FILE__, $sql);
+    }
+    if ($row = $db->sql_fetchrow($result)) {
+        $topics = $row['topics'];
+    } else {
+        $topics = 0;
+    }
+    if($lastpost < 1){
+        $lastpost = 0;
+    }
+    // update the forums table
 	if ($mode != 'poll_delete')
 	{
-	    $sql = "UPDATE " . FORUMS_TABLE . " 
-	            SET forum_posts = ".$posts.", 
-	                    forum_topics = ".$topics    .", 
-	                    forum_last_post_id = ".$lastpost    ." 
+	    $sql = "UPDATE " . FORUMS_TABLE . "
+	            SET forum_posts = ".$posts.",
+	                    forum_topics = ".$topics    .",
+	                    forum_last_post_id = ".$lastpost    ."
 	            WHERE forum_id = ".$forum_id;
-        $db->clear_cache("forum");
 	    if (!$db->sql_query($sql)) {
-	        message_die(GENERAL_ERROR, 'Error in updating forums', '', __LINE__, __FILE__, $sql); 
-	    } 
+	        message_die(GENERAL_ERROR, 'Error in updating forums', '', __LINE__, __FILE__, $sql);
+	    }
+        $db->clear_cache("forum");
 	}
-    // only continue the old code if not edit mode 
-    $sign = ($mode == 'delete') ? '- 1' : '+ 1'; 
-    if ($mode != 'poll_delete' && $mode != 'editpost') 
-    { 
-        $sql = "UPDATE " . USERS_TABLE . " 
-            SET user_posts = user_posts $sign 
-            WHERE user_id = $user_id"; 
-        if (!$db->sql_query($sql, END_TRANSACTION)) 
-        { 
-            message_die(GENERAL_ERROR, 'Error in posting', '', __LINE__, __FILE__, $sql); 
-        } 
-    } 
+    // only continue the old code if not edit mode
+    $sign = ($mode == 'delete') ? '- 1' : '+ 1';
+    if ($mode != 'poll_delete' && $mode != 'editpost')
+    {
+        $sql = "UPDATE " . USERS_TABLE . "
+            SET user_posts = user_posts $sign
+            WHERE user_id = $user_id";
+        if (!$db->sql_query($sql, END_TRANSACTION))
+        {
+            message_die(GENERAL_ERROR, 'Error in posting', '', __LINE__, __FILE__, $sql);
+        }
+    }
 //-- mod : cache -----------------------------------------------------------------------------------
 //-- add
 	board_stats();
 	cache_tree(true);
 //-- fin mod : cache -------------------------------------------------------------------------------
 
-    // only continue the old code if not edit mode 
-    if ($mode != 'editpost'){ 
-        $sql = "SELECT ug.user_id, g.group_id as g_id, u.user_posts, g.group_count, g.group_count_max FROM (" . GROUPS_TABLE . " g, ".USERS_TABLE." u) 
-            LEFT JOIN ". USER_GROUP_TABLE." ug ON g.group_id=ug.group_id AND ug.user_id=$user_id 
-            WHERE u.user_id=$user_id 
-            AND g.group_single_user=0 
-            AND g.group_count_enable=1 
-            AND g.group_moderator<>$user_id"; 
-        if ( !($result = $db->sql_query($sql)) ) 
-        { 
-            message_die(GENERAL_ERROR, 'Error geting users post stat', '', __LINE__, __FILE__, $sql); 
-        } 
-        while ($group_data = $db->sql_fetchrow($result)) 
-        { 
-    $user_already_added = (empty($group_data['user_id'])) ? FALSE : TRUE; 
-    $user_add = ($group_data['group_count'] == $group_data['user_posts'] && $user_id!=ANONYMOUS) ? TRUE : FALSE; 
-    $user_remove = ($group_data['group_count'] > $group_data['user_posts'] || $group_data['group_count_max'] < $group_data['user_posts']) ? TRUE : FALSE; 
-            if ($user_add && !$user_already_added) 
-            { 
-                //user join a autogroup 
-                $sql = "INSERT INTO " . USER_GROUP_TABLE . " (group_id, user_id, user_pending) 
-                    VALUES (".$group_data['g_id'].", $user_id, '0')"; 
-                if ( !($db->sql_query($sql)) ) 
-                { 
-                    message_die(GENERAL_ERROR, 'Error insert users, group count', '', __LINE__, __FILE__, $sql); 
-                } 
-            } else 
-            if ( $user_already_added && $user_remove) 
-            { 
-                //remove user from auto group 
-                $sql = "DELETE FROM " . USER_GROUP_TABLE . " 
-                    WHERE group_id=".$group_data['g_id']." 
-                    AND user_id=$user_id"; 
-                if ( !($db->sql_query($sql)) ) 
-                { 
-                    message_die(GENERAL_ERROR, 'Could not remove users, group count', '', __LINE__, __FILE__, $sql); 
-                } 
-            } 
-        } 
-    } 
-    return; 
+    // only continue the old code if not edit mode
+    if ($mode != 'editpost'){
+        $sql = "SELECT ug.user_id, g.group_id as g_id, u.user_posts, g.group_count, g.group_count_max FROM (" . GROUPS_TABLE . " g, ".USERS_TABLE." u)
+            LEFT JOIN ". USER_GROUP_TABLE." ug ON g.group_id=ug.group_id AND ug.user_id=$user_id
+            WHERE u.user_id=$user_id
+            AND g.group_single_user=0
+            AND g.group_count_enable=1
+            AND g.group_moderator<>$user_id";
+        if ( !($result = $db->sql_query($sql)) )
+        {
+            message_die(GENERAL_ERROR, 'Error geting users post stat', '', __LINE__, __FILE__, $sql);
+        }
+        while ($group_data = $db->sql_fetchrow($result))
+        {
+            $user_already_added = (empty($group_data['user_id'])) ? FALSE : TRUE;
+            $user_add = ($group_data['group_count'] == $group_data['user_posts'] && $user_id!=ANONYMOUS) ? TRUE : FALSE;
+            $user_remove = ($group_data['group_count'] > $group_data['user_posts'] || $group_data['group_count_max'] < $group_data['user_posts']) ? TRUE : FALSE;
+            if ($user_add && !$user_already_added)
+            {
+                //user join a autogroup
+                $sql = "INSERT INTO " . USER_GROUP_TABLE . " (group_id, user_id, user_pending)
+                    VALUES (".$group_data['g_id'].", $user_id, '0')";
+                if ( !($db->sql_query($sql)) )
+                {
+                    message_die(GENERAL_ERROR, 'Error insert users, group count', '', __LINE__, __FILE__, $sql);
+                }
+            }
+            else if ( $user_already_added && $user_remove)
+            {
+                //remove user from auto group
+                $sql = "DELETE FROM " . USER_GROUP_TABLE . "
+                    WHERE group_id=".$group_data['g_id']."
+                    AND user_id=$user_id";
+                if ( !($db->sql_query($sql)) )
+                {
+                    message_die(GENERAL_ERROR, 'Could not remove users, group count', '', __LINE__, __FILE__, $sql);
+                }
+            }
+        }
+    }
+    return;
 }
 //
 // Delete a post/poll
@@ -855,6 +855,7 @@ function delete_post($mode, &$post_data, &$message, &$meta, &$forum_id, &$topic_
 				{
 					message_die(GENERAL_ERROR, 'Error in deleting post', '', __LINE__, __FILE__, $sql);
 				}
+                $db->clear_cache("forum");
 
 				$sql = "DELETE FROM " . TOPICS_WATCH_TABLE . "
 					WHERE topic_id = $topic_id";

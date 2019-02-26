@@ -263,7 +263,7 @@ function cache_tree_output()
 	$cache_path = 'includes/';
 	$cache_file = 'def_tree';
 	$handle = @fopen($phpbb_root_path . $cache_path . $cache_file . '.' . $phpEx, 'w');
-	if (@flock($handle, LOCK_EX))
+	if ($handle && @flock($handle, LOCK_EX))
 	{
 		@fwrite($handle, $res);
 		@flock($handle, LOCK_UN);
