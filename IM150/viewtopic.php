@@ -1082,15 +1082,15 @@ if ( $is_auth['auth_mod'] )
 		$topic_mod .= '<a href="' . append_sid("modcp.$phpEx?" . POST_TOPIC_URL . "=$topic_id&amp;mode=move&amp;p_sid=" . $userdata['priv_session_id']) . '" title="' . $lang['Move_topic'] . '">' . $lang['Move_topic'] . '</a>&nbsp;';
 		$topic_mod .= ( $forum_topic_data['topic_status'] == TOPIC_UNLOCKED ) ? '<a href="' . append_sid("modcp.$phpEx?" . POST_TOPIC_URL . "=$topic_id&amp;mode=lock&amp;p_sid=" . $userdata['priv_session_id']) . '" title="' . $lang['Lock_topic'] . '">' . $lang['Lock_topic'] . '</a>&nbsp;' : '<a href="' . append_sid("modcp.$phpEx?" . POST_TOPIC_URL . "=$topic_id&amp;mode=unlock&amp;p_sid=" . $userdata['priv_session_id']) . '" title="' . $lang['Unlock_topic'] . '">' . $lang['Unlock_topic'] . '</a>&nbsp;::&nbsp;';
 		$topic_mod .= '<a href="' . append_sid("modcp.$phpEx?" . POST_TOPIC_URL . "=$topic_id&amp;mode=split&amp;p_sid=" . $userdata['priv_session_id']) . '" title="' . $lang['Split_topic'] . '">' . $lang['Split_topic'] . '</a>&nbsp;';
-		$topic_mod .= '<a href="' . append_sid("merge.$phpEx?" . POST_TOPIC_URL . '=' . $topic_id) . '" title="' . $lang['Merge_topics'] . '" border="0" />' . $lang['Merge_topics'] . '</a>&nbsp;';
+		$topic_mod .= '<a href="' . append_sid("merge.$phpEx?" . POST_TOPIC_URL . '=' . $topic_id) . '" title="' . $lang['Merge_topics'] . '" />' . $lang['Merge_topics'] . '</a>&nbsp;';
 	}
 	else
 	{
-		$topic_mod .= '<a class="noi fa fa-times fa-2x" href="' . append_sid("modcp.$phpEx?" . POST_TOPIC_URL . "=$topic_id&amp;mode=delete&amp;p_sid=" . $userdata['priv_session_id']) . '" title="' . $lang['Delete_topic'] . '"><img src="' . $images['topic_mod_delete'] . '" alt="' . $lang['Delete_topic'] . '" border="0" /></a>&nbsp;';
-		$topic_mod .= '<a class="noi fa fa-share fa-2x" href="' . append_sid("modcp.$phpEx?" . POST_TOPIC_URL . "=$topic_id&amp;mode=move&amp;p_sid=" . $userdata['priv_session_id']) . '" title="' . $lang['Move_topic'] . '"><img src="' . $images['topic_mod_move'] . '" alt="' . $lang['Move_topic'] . '" border="0" /></a>&nbsp;';
-		$topic_mod .= ( $forum_topic_data['topic_status'] == TOPIC_UNLOCKED ) ? '<a class="noi fa fa-lock fa-2x" href="' . append_sid("modcp.$phpEx?" . POST_TOPIC_URL . "=$topic_id&amp;mode=lock&amp;p_sid=" . $userdata['priv_session_id']) . '" title="' . $lang['Lock_topic'] . '"><img src="' . $images['topic_mod_lock'] . '" alt="' . $lang['Lock_topic'] . '" border="0" /></a>&nbsp;' : '<a class="noi fa fa-unlock fa-2x" href="' . append_sid("modcp.$phpEx?" . POST_TOPIC_URL . "=$topic_id&amp;mode=unlock&amp;p_sid=" . $userdata['priv_session_id']) . '" title="' . $lang['Unlock_topic'] . '"><img src="' . $images['topic_mod_unlock'] . '" alt="' . $lang['Unlock_topic'] . '" border="0" /></a>&nbsp;';
-		$topic_mod .= '&nbsp;<a class="noi fa fa-sort fa-rotate-90 fa-2x" href="' . append_sid("modcp.$phpEx?" . POST_TOPIC_URL . "=$topic_id&amp;mode=split&amp;p_sid=" . $userdata['priv_session_id']) . '" title="' . $lang['Split_topic'] . '"><img src="' . $images['topic_mod_split'] . '" alt="' . $lang['Split_topic'] . '" border="0" /></a>&nbsp;';
-		$topic_mod .= '<a class="noi fa fa-clone fa-2x" href="' . append_sid("merge.$phpEx?" . POST_TOPIC_URL . '=' . $topic_id) . '" title="' . $lang['Merge_topics'] . '"><img src="' . $images['topic_mod_merge'] . '" alt="' . $lang['Merge_topics'] . '" border="0" /></a>&nbsp;';
+		$topic_mod .= '<a href="' . append_sid("modcp.$phpEx?" . POST_TOPIC_URL . "=$topic_id&amp;mode=delete&amp;p_sid=" . $userdata['priv_session_id']) . '" title="' . $lang['Delete_topic'] . '"><img src="' . $images['topic_mod_delete'] . '" alt="' . $lang['Delete_topic'] . '" /></a>&nbsp;';
+		$topic_mod .= '<a href="' . append_sid("modcp.$phpEx?" . POST_TOPIC_URL . "=$topic_id&amp;mode=move&amp;p_sid=" . $userdata['priv_session_id']) . '" title="' . $lang['Move_topic'] . '"><img src="' . $images['topic_mod_move'] . '" alt="' . $lang['Move_topic'] . '" /></a>&nbsp;';
+		$topic_mod .= ( $forum_topic_data['topic_status'] == TOPIC_UNLOCKED ) ? '<a href="' . append_sid("modcp.$phpEx?" . POST_TOPIC_URL . "=$topic_id&amp;mode=lock&amp;p_sid=" . $userdata['priv_session_id']) . '" title="' . $lang['Lock_topic'] . '"><img src="' . $images['topic_mod_lock'] . '" alt="' . $lang['Lock_topic'] . '" /></a>&nbsp;' : '<a href="' . append_sid("modcp.$phpEx?" . POST_TOPIC_URL . "=$topic_id&amp;mode=unlock&amp;p_sid=" . $userdata['priv_session_id']) . '"><img src="' . $images['topic_mod_unlock'] . '" alt="' . $lang['Unlock_topic'] . '" title="' . $lang['Unlock_topic'] . '" /></a>&nbsp;';
+		$topic_mod .= '<a href="' . append_sid("modcp.$phpEx?" . POST_TOPIC_URL . "=$topic_id&amp;mode=split&amp;p_sid=" . $userdata['priv_session_id']) . '" title="' . $lang['Split_topic'] . '"><img src="' . $images['topic_mod_split'] . '" alt="' . $lang['Split_topic'] . '" /></a>&nbsp;';
+		$topic_mod .= '<a href="' . append_sid("merge.$phpEx?" . POST_TOPIC_URL . '=' . $topic_id) . '" title="' . $lang['Merge_topics'] . '"><img src="' . $images['topic_mod_merge'] . '" alt="' . $lang['Merge_topics'] . '" /></a>&nbsp;';
 	}
 }
 //End Lo-Fi Mod
@@ -1109,16 +1109,16 @@ if ($report_topic && $report_topic->auth_check('auth_write'))
 		if ($report_topic->auth_check('auth_view') && $user_auth)
 		{
 			$target = ($board_config['report_new_window']) ? ' target="_blank"' : '';
-			$s_report_topic ='<a href="' . append_sid("report.$phpEx?mode=reported&amp;" . POST_CAT_URL . '=' . $report_topic->id . "&amp;id=$topic_id") . '"' . $target . '><img src="' . $images['topic_mod_reported'] . '" alt="' . $report_topic->lang['Duplicate_report'] . '" title="' . $report_topic->lang['Duplicate_report'] . '" border="0" /></a>&nbsp;';
+			$s_report_topic ='<a href="' . append_sid("report.$phpEx?mode=reported&amp;" . POST_CAT_URL . '=' . $report_topic->id . "&amp;id=$topic_id") . '"' . $target . ' title="' . $report_topic->lang['Duplicate_report'] . '"><img src="' . $images['topic_mod_reported'] . '" alt="' . $report_topic->lang['Duplicate_report'] . '" /></a>&nbsp;';
 		}
 		else
 		{
-			$s_report_topic = '<img src="' . $images['topic_mod_reported'] . '" alt="' . $report_topic->lang['Duplicate_report'] . '" title="' . $report_topic->lang['Duplicate_report'] . '" border="0" />&nbsp;';
+			$s_report_topic = '<img src="' . $images['topic_mod_reported'] . '" alt="' . $report_topic->lang['Duplicate_report'] . '" title="' . $report_topic->lang['Duplicate_report'] . '" />&nbsp;';
 		}
 	}
 	else
 	{
-		$s_report_topic = '<a href="' . append_sid("report.$phpEx?mode=" . $report_topic->mode . "&amp;id=$topic_id") . '"><img src="' . $images['topic_mod_report'] . '" alt="' . $report_topic->lang['Write_report'] . '" title="' . $report_topic->lang['Write_report'] . '" border="0" /></a>&nbsp;';
+		$s_report_topic = '<a href="' . append_sid("report.$phpEx?mode=" . $report_topic->mode . "&amp;id=$topic_id") . '" title="' . $report_topic->lang['Write_report'] . '"><img src="' . $images['topic_mod_report'] . '" alt="' . $report_topic->lang['Write_report'] . '" /></a>&nbsp;';
 	}
 	
 	//$topic_mod .= $s_report_topic;
@@ -1134,12 +1134,12 @@ if ( $can_watch_topic )
 	if ( $is_watching_topic )
 	{
 		$s_watching_topic = "<a href=\"viewtopic.$phpEx?" . POST_TOPIC_URL . "=$topic_id&amp;unwatch=topic&amp;start=$start&amp;sid=" . $userdata['session_id'] . '">' . $lang['Stop_watching_topic'] . '</a>';
-		$s_watching_topic_img = ( isset($images['topic_un_watch']) ) ? "<a class=\"noi fa-twatch\" href=\"viewtopic.$phpEx?" . POST_TOPIC_URL . "=$topic_id&amp;unwatch=topic&amp;start=$start&amp;sid=" . $userdata['session_id'] . '" title="' . $lang['Stop_watching_topic'] . '"><img src="' . $images['topic_un_watch'] . '" alt="' . $lang['Stop_watching_topic'] . '" border="0"></a>' : '';
+		$s_watching_topic_img = ( isset($images['topic_un_watch']) ) ? "<a href=\"viewtopic.$phpEx?" . POST_TOPIC_URL . "=$topic_id&amp;unwatch=topic&amp;start=$start&amp;sid=" . $userdata['session_id'] . '" title="' . $lang['Stop_watching_topic'] . '"><img src="' . $images['topic_un_watch'] . '" alt="' . $lang['Stop_watching_topic'] . '"></a>' : '';
 	}
 	else
 	{
 		$s_watching_topic = "<a href=\"viewtopic.$phpEx?" . POST_TOPIC_URL . "=$topic_id&amp;watch=topic&amp;start=$start&amp;sid=" . $userdata['session_id'] . '">' . $lang['Start_watching_topic'] . '</a>';
-		$s_watching_topic_img = ( isset($images['topic_watch']) ) ? "<a class=\"noi fa-twatch\" href=\"viewtopic.$phpEx?" . POST_TOPIC_URL . "=$topic_id&amp;watch=topic&amp;start=$start&amp;sid=" . $userdata['session_id'] . '" title="' . $lang['Start_watching_topic'] . '"><img src="' . $images['topic_watch'] . '" alt="' . $lang['Start_watching_topic'] . '" border="0"></a>' : '';
+		$s_watching_topic_img = ( isset($images['topic_watch']) ) ? "<a href=\"viewtopic.$phpEx?" . POST_TOPIC_URL . "=$topic_id&amp;watch=topic&amp;start=$start&amp;sid=" . $userdata['session_id'] . '" title="' . $lang['Start_watching_topic'] . '"><img src="' . $images['topic_watch'] . '" alt="' . $lang['Start_watching_topic'] . '"></a>' : '';
 	}
 }
 
@@ -2038,20 +2038,20 @@ for($i = 0; $i < $total_posts; $i++)
 
 	$temp_url = append_sid("posting.$phpEx?mode=quote&amp;" . POST_POST_URL . "=" . $postrow[$i]['post_id']);
 	/* Hide Buttons :: Altered
-	$quote_img = '<a class="icon_quote noi" href="' . $temp_url . '"title="' . $lang['Reply_with_quote'] . '"><span>' . $lang['Quote'] . '</span></a>';*/
+	$quote_img = '<a href="' . $temp_url . '" title="' . $lang['Reply_with_quote'] . '"><img src="' . $images['icon_quote'] . '" alt="' . $lang['Reply_with_quote'] . '" /></a>';*/
 	if($is_auth['auth_reply']){ 
-        $quote_img = '<a class="icon_quote noi" href="' . $temp_url . '"title="' . $lang['Reply_with_quote'] . '"><span>' . $lang['Quote'] . '</span></a>'; 
+        $quote_img = '<a href="' . $temp_url . '" title="' . $lang['Reply_with_quote'] . '"><img src="' . $images['icon_quote'] . '" alt="' . $lang['Reply_with_quote'] . '" /></a>'; 
     }
 	$quote = '<a href="' . $temp_url . '">' . $lang['Reply_with_quote'] . '</a>';
 
 	$temp_url = append_sid("search.$phpEx?search_author=" . urlencode($postrow[$i]['username']) . "&amp;showresults=posts");
-	$search_img = '<a class="icon_search noi" href="' . $temp_url . '" title="' . sprintf($lang['Search_user_posts'], $postrow[$i]['username'])  . '"><span>' . $lang['Search'] . '</span></a>';
+	$search_img = '<a href="' . $temp_url . '" title="' . sprintf($lang['Search_user_posts'], $postrow[$i]['username'])  . '"><img src="' . $images['icon_search'] . '" alt="' . sprintf($lang['Search_user_posts'], $postrow[$i]['username'])  . '" /></a>';
 	$search = '<a href="' . $temp_url . '">' . sprintf($lang['Search_user_posts'], $postrow[$i]['username'])  . '</a>';
 
 	if ( ( $userdata['user_id'] == $poster_id && $is_auth['auth_edit'] ) || $is_auth['auth_mod'] )
 	{
 		$temp_url = append_sid("posting.$phpEx?mode=editpost&amp;" . POST_POST_URL . "=" . $postrow[$i]['post_id']);
-		$edit_img = '<a class="icon_edit noi" href="' . $temp_url . '" title="' . $lang['Edit_delete_post'] . '"><span>' . $lang['edit_lofi'] . '</span></a>';
+		$edit_img = '<a href="' . $temp_url . '" title="' . $lang['Edit_delete_post'] . '"><img src="' . $images['icon_edit'] . '" alt="' . $lang['Edit_delete_post'] . '" /></a>';
 		$edit = '<a href="' . $temp_url . '">' . $lang['Edit_delete_post'] . '</a>';
 	}
 	else
@@ -2063,11 +2063,11 @@ for($i = 0; $i < $total_posts; $i++)
 	if ( $is_auth['auth_mod'] )
 	{
 		$temp_url = "modcp.$phpEx?mode=ip&amp;" . POST_POST_URL . "=" . $postrow[$i]['post_id'] . "&amp;" . POST_TOPIC_URL . "=" . $topic_id . "&amp;p_sid=" . $userdata['priv_session_id'];
-		$ip_img = '<a class="icon_ip noi" href="' . $temp_url . '" title="' . $lang['View_IP'] . '"><img src="' . $images['icon_ip'] . '" alt="' . $lang['View_IP'] . '" title="' . $lang['View_IP'] . '" border="0" /></a>';
+		$ip_img = '<a href="' . $temp_url . '" title="' . $lang['View_IP'] . '"><img src="' . $images['icon_ip'] . '" alt="' . $lang['View_IP'] . '" /></a>';
 		$ip = '<a href="' . $temp_url . '">' . $lang['View_IP'] . '</a>';
 
 		$temp_url = "posting.$phpEx?mode=delete&amp;" . POST_POST_URL . "=" . $postrow[$i]['post_id'] . "&amp;p_sid=" . $userdata['priv_session_id'];
-		$delpost_img = '<a class="icon_delete noi" href="' . $temp_url . '" title="' . $lang['Delete_post'] . '"><img src="' . $images['icon_delpost'] . '" alt="' . $lang['Delete_post'] . '" title="' . $lang['Delete_post'] . '" border="0" /></a>';
+		$delpost_img = '<a href="' . $temp_url . '" title="' . $lang['Delete_post'] . '"><img src="' . $images['icon_delpost'] . '" alt="' . $lang['Delete_post'] . '" /></a>';
 		$delpost = '<a href="' . append_sid($temp_url) . '">' . $lang['Delete_post'] . '</a>';
 	}
 	else
@@ -2078,7 +2078,7 @@ for($i = 0; $i < $total_posts; $i++)
 		if ( $userdata['user_id'] == $poster_id && $is_auth['auth_delete'] && $forum_topic_data['topic_last_post_id'] == $postrow[$i]['post_id'] )
 		{
 			$temp_url = "posting.$phpEx?mode=delete&amp;" . POST_POST_URL . "=" . $postrow[$i]['post_id'] . "&amp;p_sid=" . $userdata['priv_session_id'];
-			$delpost_img = '<a class="icon_delete noi" href="' . $temp_url . '"><img src="' . $images['icon_delpost'] . '" alt="' . $lang['Delete_post'] . '" title="' . $lang['Delete_post'] . '" border="0" /></a>';
+			$delpost_img = '<a href="' . $temp_url . '" title="' . $lang['Delete_post'] . '"><img src="' . $images['icon_delpost'] . '" alt="' . $lang['Delete_post'] . '" /></a>';
 			$delpost = '<a href="' . append_sid($temp_url) . '">' . $lang['Delete_post'] . '</a>';
 		}
 		else
@@ -2102,19 +2102,19 @@ for($i = 0; $i < $total_posts; $i++)
 				{
 					$temp_url = append_sid("report.$phpEx?mode=reported&amp;" . POST_CAT_URL . '=' . $report_post->id . '&amp;id=' . $postrow[$i]['post_id']);
 					$target = ($board_config['report_new_window']) ? ' target="_blank"' : '';
-					$report_img = '<a href="' . $temp_url . '"' . $target . '><img src="' . $images['icon_reported'] . '" alt="' . $report_post->lang['Duplicate_report'] . '" title="' . $report_post->lang['Duplicate_report'] . '" border="0" /></a>';
+					$report_img = '<a href="' . $temp_url . '"' . $target . '><img src="' . $images['icon_reported'] . '" alt="' . $report_post->lang['Duplicate_report'] . '" title="' . $report_post->lang['Duplicate_report'] . '" /></a>';
 					$report = '<a href="' . $temp_url . '"' . $target . '>' . $report_post->lang['Duplicate_report'] . '</a>';
 				}
 				else
 				{
-					$report_img = '<img src="' . $images['icon_reported'] . '" alt="' . $report_post->lang['Duplicate_report'] . '" title="' . $report_post->lang['Duplicate_report'] . '" border="0" />';
+					$report_img = '<img src="' . $images['icon_reported'] . '" alt="' . $report_post->lang['Duplicate_report'] . '" title="' . $report_post->lang['Duplicate_report'] . '" />';
 					$report = $report_post->lang['Duplicate_report'];
 				}
 			}
 			else
 			{
 				$temp_url = append_sid("report.$phpEx?mode=" . $report_post->mode . '&amp;id=' . $postrow[$i]['post_id']);
-				$report_img = '<a href="' . $temp_url . '"><img src="' . $images['icon_report'] . '" alt="' . $report_post->lang['Write_report'] . '" title="' . $report_post->lang['Write_report'] . '" border="0" /></a>';
+				$report_img = '<a href="' . $temp_url . '" title="' . $report_post->lang['Write_report'] . '"><img src="' . $images['icon_report'] . '" alt="' . $report_post->lang['Write_report'] . '" /></a>';
 				$report = '<a href="' . $temp_url . '">' . $report_post->lang['Write_report'] . '</a>';
 			}
 		}
@@ -2127,16 +2127,17 @@ for($i = 0; $i < $total_posts; $i++)
         $user_warnings = $postrow[$i]['user_warnings']; 
         if ($is_auth['auth_greencard'] && $user_warnings) 
 		{ 
-			  $g_card_img = ' <input type="image" name="unban" value="unban" onClick="return confirm(\''.sprintf($lang['Green_card_warning'],$current_user).'\')" src="'. $images['icon_g_card'] . '" class="gcard noi"  title="' . $lang['Give_G_card'] . '" alt="' . $lang['Give_G_card'] . '" >'; 
+			  $g_card_img = ' <input type="image" name="unban" value="unban" onClick="return confirm(\''.sprintf($lang['Green_card_warning'],$current_user).'\')" src="'. $images['icon_g_card'] . '" alt="' . $lang['Give_G_card'] . '" >'; 
 		} 
 		else 
 		{
 			$g_card_img = ''; 
 		}
+
 		if ($user_warnings<$board_config['max_user_bancard'] && $is_auth['auth_ban'] )
 		{ 
-			$y_card_img = ' <input type="image" name="warn" value="warn" onClick="return confirm(\''.sprintf($lang['Yellow_card_warning'],$current_user).'\')" src="'. $images['icon_y_card'] . '" class="ycard noi" title="' . sprintf($lang['Give_Y_card'],$user_warnings+1) . '" alt="" >'; 
-				$r_card_img = ' <input type="image" name="ban" value="ban"  onClick="return confirm(\''.sprintf($lang['Red_card_warning'],$current_user).'\')" src="'. $images['icon_r_card'] . '" class="rcard noi" title="' . $lang['Give_R_card'] . '" alt="" >'; 
+			$y_card_img = ' <input type="image" name="warn" value="warn" onClick="return confirm(\''.sprintf($lang['Yellow_card_warning'],$current_user).'\')" src="'. $images['icon_y_card'] . '" alt="' . sprintf($lang['Give_Y_card'],$user_warnings+1) . '" >'; 
+			$r_card_img = ' <input type="image" name="ban" value="ban"  onClick="return confirm(\''.sprintf($lang['Red_card_warning'],$current_user).'\')" src="'. $images['icon_r_card'] . '" alt="' . $lang['Give_R_card'] . '" >'; 
 		}
 		else
 		{
@@ -2663,7 +2664,7 @@ else
 		$quick_reply_form .= $lang['Username'] . ":&nbsp;<input class='post' type='text' name='username' size='25' maxlength='25' value='' /><br />";
 	}
 
-	$quick_reply_form .= "<textarea name='input' rows='10' cols='80' wrap='virtual' class='post forumline''></textarea><br />
+	$quick_reply_form .= "<textarea name='input' rows='10' cols='60' wrap='virtual' class='post forumline''></textarea><br />
 	<input type='checkbox' name='quick_quote' />".$lang['Quote_last']."<br />
 	<input type='checkbox' name='attach_sig' checked='checked' />".$lang["Attach_signature"]."<br />
 	<input type='hidden' name='mode' value='reply' />
