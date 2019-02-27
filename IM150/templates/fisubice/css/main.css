@@ -155,9 +155,9 @@ ul.uct {
   -webkit-border-radius: 25;
   -moz-border-radius: 25;
   border-radius: 25px;
-  font-size: 0.917em;
+  font-size: 1em !important;
   font-weight:600;
-  padding: 3px 5px 5px 8px;
+  padding: 5px 5px 0px 8px;
   text-decoration: none;
   text-transform: lowercase;
   margin-left:2px;
@@ -187,20 +187,20 @@ ul.uct {
 }
 .postbtn:hover, .postbtnsml:hover .genbtn:hover{text-decoration: none;}
 
-a.noi img {display:none}
-.noi img {display:none !important}
-
-
 .fa-twatch:before {content: "\f06e";}
 .fa-tnext:before {content: "\f061";}
 .fa-tprev:before {content: "\f060";}
-
 .fa-tno {display:none}
-.fa-1-5x {font-size: 1.5em}
-.fa-21 {font-size: 2.1em;}
+i.fa-ann { margin: -4px 0px 4px 0px !important;}
+i.faa {font-size: 0.5em !important; margin: -10px 6px 5px -6px !important;}
+a i.fab {font-size: 0.75em !important; margin: 4px 0px 0px 2px !important;}
+i.stack { margin: -8px -1px 8px 1px;}
+li.move { margin: -3px 0px 0px 0px !important;}
+.fa1x {font-size: 1.0em !important;}
+.fa-1-5x {font-size: 1.5em !important;}
+.fa-21 {font-size: 2.1em !important;}
 .up1 {font-size: 1.5em !important;}
 .up2 {font-size: 2em !important;}
-
 .fa-rotate-45 {
     -webkit-transform: rotate(45deg);
     -moz-transform: rotate(45deg);
@@ -209,45 +209,6 @@ a.noi img {display:none}
     transform: rotate(45deg);
 }
 
-.icon_quote span, .icon_edit span {display:none}
-
-.icon_delete img, .icon_return_top img, .icon_go_top img, .icon_go_bottom img, .icon_ip img {display:none}
-
-.icon_quote, .icon_edit, .icon_delete, .icon_return_top, .icon_go_top, .icon_go_bottom, .icon_ip, .bcard, .bhotcard, .gcard, .rcard, .rycard, .ycard {
-  display: inline-block;
-  font: normal normal normal 1.167em/1 FontAwesome;
-  font-size: inherit;
-  text-rendering: auto;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  font-size: 1.6em;
-  margin: .15em;
-}
-
-.icon_quote:before {
-  content: "\f0e5";
-}
-
-.icon_edit:before {
-  content: "\f044";
-}
-
-.icon_delete:before {
-  content: "\f014";
-}
-.icon_return_top:before {
-  content: "\f139";
-}
-.icon_ip:before {
-  content: "\f276";
-}
-.icon_go_top:before {
-  content: "\f01b";
-  font-size: 1.7em;
-}
-.icon_go_bottom:before {
-  content: "\f01a";
-  font-size: 1.7em;
 }
 .bcard:before {
   content: "\f096";

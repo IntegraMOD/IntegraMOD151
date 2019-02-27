@@ -22,9 +22,6 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.2.0/js/tether.min.js" integrity="sha384-Plbmg8JY28KFelvJVai01l8WyZzrYWG825m+cZ0eDDS1f7d/js6ikvy1+X+guPIB" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.3/js/bootstrap.min.js" integrity="sha384-ux8v3A6CPtOTqOzMKiuo3d/DomGaaClxFYdCu2HPMBEkf6x2xiDyJ7gkXU0MWwaD" crossorigin="anonymous"></script>
-<link rel="stylesheet" type="text/css" href="{TEMPLATE}/css/font-awesome.css" />
-<link rel="stylesheet" type="text/css" href="{TEMPLATE}/css/font-awesome-min.css" />
-<link rel="stylesheet" type="text/css" href="{TEMPLATE}/css/report_hack.css" />
 <script src="templates/_js/toggle_display.js"></script>
 <script src="templates/_js/importal.js"></script>
 <!-- BEGIN switch_enable_pm_popup -->

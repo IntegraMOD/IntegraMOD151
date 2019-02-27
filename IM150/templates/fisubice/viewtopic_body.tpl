@@ -102,22 +102,22 @@ jQuery(document).ready(function(){
       <div class="col maintitle">{TOPIC_TITLE}</div>
     </div>
     <div class="row"> 
-      <div class="col gensmall text-right nw">
-	    <ul class="genbtn uct">
+      <div class="col text-right nw">
+	    <ul class="genbtn uct gen">
 		  <a href="{U_VIEW_OLDER_TOPIC}"><li class="fa fa-arrow-left fa-2x" title="{L_VIEW_PREVIOUS_TOPIC}"></li></a>
 		  <a href="{U_PRINTER_TOPIC}"><li class="fa fa-print fa-2x" title="{L_PRINTER_TOPIC}"></li></a>
 		  <!-- BEGIN switch_logged_in -->
 		  <a href="tellafriend.php?topic={TOPIC_TITLE2}&link={TELL_LINK}"><li class="fa fa-envelope-o fa-2x" title="{L_TELL_FRIEND}"></li></a>
 		  <!-- END switch_logged_in -->
 		  <a href="{U_SEARCH}"><li class="fa fa-search fa-2x" title="{L_SEARCH}"></li></a>
-		  <li class="fa fa-21">{S_WATCH_TOPIC_IMG}</li>
+		  <li>{S_WATCH_TOPIC_IMG}</li>
 		  <!-- BEGIN bookmark_state -->
 		  <a href="{U_BOOKMARK_ACTION}"><li class="fa fa-bookmark-o fa-2x" title="{L_BOOKMARK_ACTION}"></li></a>
 		  <!-- END bookmark_state -->
 		  <!-- BEGIN switch_logged_in -->
 		  <a href="{U_PRIVATEMSGS}"><li class="fa fa-comments-o fa-2x" title="{L_PRIVATEMSGS}"></li></a>
 		  <!-- END switch_logged_in -->
-		  <a href="{U_POSTINGS_POPUP}" onClick="NewWindow(this.href,'PopupWin');return false" onFocus="this.blur()";><li class="fa fa-user-times fa-2x" title="{L_POPUP_MESSAGE}"></li></a>
+		  <a href="{U_POSTINGS_POPUP}" onClick="NewWindow(this.href,'PopupWin');return false" onFocus="this.blur()";><li class="fa-stack fa-lg fa1x move" title="{L_POPUP_MESSAGE}"><i class="fa fa-user-o fa-stack-1x fa1x"></i><i class="fa fa-hashtag fa-stack-1x fab"></i></li></a>
 		  <a href="{U_EXPORT}"><li class="fa fa-external-link fa-2x" title="{L_EXPORT}"></li></a>
 		  <a href="#bot"><li class="fa fa-arrow-down fa-2x" title="{L_TOPIC_DOWN_IMAGE}"></li></a>
 		  <a href="{U_VIEW_NEWER_TOPIC}"><li class="fa fa-arrow-right fa-2x" title="{L_VIEW_NEXT_TOPIC}"></li></a>
@@ -146,7 +146,8 @@ jQuery(document).ready(function(){
     </div>
   </div>
 
-{POLL_DISPLAY}
+  {POLL_DISPLAY}
+
 
 <table class="forumline" width="100%" cellspacing="1" cellpadding="3" border="0">
 	<tr>
@@ -296,7 +297,7 @@ jQuery(document).ready(function(){
     <div class="row">
       <div class="col-7">
 	    <div class="row"> 
-	      <div class="col gensmall text-left nw my-2">{S_TOPIC_ADMIN}</div>
+	      <div class="col text-left nw my-2">{S_TOPIC_ADMIN}</div>
 	    </div>
 	    <div class="row"> 
 	      <div class="col" id="fastreply">{QUICK_REPLY_FORM}</div>
@@ -304,23 +305,23 @@ jQuery(document).ready(function(){
       </div>
       <div class="col-5">
 
-	    <div class="row">
-	      <div class="col gensmall text-right nw">
-		    <ul class="genbtn uct">
+        <div class="row"> 
+          <div class="col text-right nw">
+	        <ul class="genbtn uct gen">
 			  <a href="{U_VIEW_OLDER_TOPIC}"><li class="fa fa-arrow-left fa-2x" title="{L_VIEW_PREVIOUS_TOPIC}"></li></a>
 			  <a href="{U_PRINTER_TOPIC}"><li class="fa fa-print fa-2x" title="{L_PRINTER_TOPIC}"></li></a>
 			  <!-- BEGIN switch_logged_in -->
 			  <a href="tellafriend.php?topic={TOPIC_TITLE2}&link={TELL_LINK}"><li class="fa fa-envelope-o fa-2x" title="{L_TELL_FRIEND}"></li></a>
 			  <!-- END switch_logged_in -->
 			  <a href="{U_SEARCH}"><li class="fa fa-search fa-2x" title="{L_SEARCH}"></li></a>
-			  <li class="fa fa-21">{S_WATCH_TOPIC_IMG}</li>
+		      <li>{S_WATCH_TOPIC_IMG}</li>
 			  <!-- BEGIN bookmark_state -->
 			  <a href="{U_BOOKMARK_ACTION}"><li class="fa fa-bookmark-o fa-2x" title="{L_BOOKMARK_ACTION}"></li></a>
 			  <!-- END bookmark_state -->
 			  <!-- BEGIN switch_logged_in -->
 			  <a href="{U_PRIVATEMSGS}"><li class="fa fa-comments-o fa-2x" title="{L_PRIVATEMSGS}"></li></a>
 			  <!-- END switch_logged_in -->
-			  <a href="{U_POSTINGS_POPUP}" onClick="NewWindow(this.href,'PopupWin');return false" onFocus="this.blur()";><li class="fa fa-user-times fa-2x" title="{L_POPUP_MESSAGE}"></li></a>
+			  <a href="{U_POSTINGS_POPUP}" onClick="NewWindow(this.href,'PopupWin');return false" onFocus="this.blur()";><li class="fa-stack fa-lg fa1x move" title="{L_POPUP_MESSAGE}"><i class="fa fa-user-o fa-stack-1x fa1x"></i><i class="fa fa-hashtag fa-stack-1x fab"></i></li></a>
 			  <a href="{U_EXPORT}"><li class="fa fa-external-link fa-2x" title="{L_EXPORT}"></li></a>
 			  <a href="#top"><li class="fa fa-arrow-up fa-2x" title="{L_TOPIC_UP_IMAGE}"></li></a>
 			  <a href="{U_VIEW_NEWER_TOPIC}"><li class="fa fa-arrow-right fa-2x" title="{L_VIEW_NEXT_TOPIC}"></li></a>

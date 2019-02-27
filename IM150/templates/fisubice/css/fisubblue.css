@@ -1,7 +1,6 @@
 /* fiSubBlue  */
-@import url("font-awesome.css");
-@import url("fontello.css");
 @import url("main.css");
+@import url("report_hack.css");
 
 /* The content of the posts (body of text) */
 body{background:#ecf0f6;color:#000000;}

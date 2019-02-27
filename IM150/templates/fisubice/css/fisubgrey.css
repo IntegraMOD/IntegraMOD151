@@ -1,7 +1,6 @@
 /* fiSubGrey  */
-@import url("font-awesome.css");
-@import url("fontello.css");
 @import url("main.css");
+@import url("report_hack.css");
 
 /* The content of the posts (body of text) */
 body{background:#F1F1F1;color:#000000;font:12px Verdana,Arial,Helvetica,sans-serif;margin:6px;padding:0;}

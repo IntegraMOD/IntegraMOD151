@@ -73,24 +73,22 @@
 
  <div class="container-fluid m-0 p-0">
     <div class="row">
-
 	  <div class="col-7">
-	    <div class="row nw"> 
-	      <div class="col"><img src="{FOLDER_ANNOUNCE_IMG}" alt="{L_ANNOUNCEMENT}" width="19" height="18" />&nbsp;{L_ANNOUNCEMENT}</div>
-	      <div class="col"><img src="{FOLDER_STICKY_IMG}" alt="{L_STICKY}" width="19" height="18" />&nbsp;{L_STICKY}</div>
+	    <div class="row mb-1"> 
+	      <div class="col nw"><img src="{FOLDER_ANNOUNCE_IMG}" alt="{L_ANNOUNCEMENT}" />&nbsp;{L_ANNOUNCEMENT}</div>
+	      <div class="col nw"><img src="{FOLDER_STICKY_IMG}" alt="{L_STICKY}" />&nbsp;{L_STICKY}</div>
 		</div>
-	
-	    <div class="row nw"> 
-	      <div class="col"><img src="{FOLDER_NEW_IMG}" alt="{L_NEW_POSTS}" width="19" height="18" />&nbsp;{L_NEW_POSTS}</div>
-	      <div class="col"><img src="{FOLDER_IMG}" alt="{L_NO_NEW_POSTS}" width="19" height="18" />&nbsp;{L_NO_NEW_POSTS}</div>
+	    <div class="row my-1"> 
+	      <div class="col nw"><img src="{FOLDER_NEW_IMG}" alt="{L_NEW_POSTS}" />&nbsp;{L_NEW_POSTS}</div>
+	      <div class="col nw"><img src="{FOLDER_IMG}" alt="{L_NO_NEW_POSTS}" />&nbsp;{L_NO_NEW_POSTS}</div>
 		</div>
-	    <div class="row nw"> 
-	      <div class="col"><img src="{FOLDER_HOT_NEW_IMG}" alt="{L_NEW_POSTS_HOT}" width="19" height="18" />&nbsp;{L_NEW_POSTS_HOT}</div>
-	      <div class="col"><img src="{FOLDER_HOT_IMG}" alt="{L_NO_NEW_POSTS_HOT}" width="19" height="18" />&nbsp;{L_NO_NEW_POSTS_HOT}</div>
+	    <div class="row my-1"> 
+	      <div class="col nw"><img src="{FOLDER_HOT_NEW_IMG}" alt="{L_NEW_POSTS_HOT}" />&nbsp;{L_NEW_POSTS_HOT}</div>
+	      <div class="col nw"><img src="{FOLDER_HOT_IMG}" alt="{L_NO_NEW_POSTS_HOT}" />&nbsp;{L_NO_NEW_POSTS_HOT}</div>
 		</div>
-	    <div class="row nw"> 
-	      <div class="col"><img src="{FOLDER_LOCKED_NEW_IMG}" alt="{L_NEW_POSTS_LOCKED}" width="19" height="18" />&nbsp;{L_NEW_POSTS_LOCKED}</div>
-	      <div class="col"><img src="{FOLDER_LOCKED_IMG}" alt="{L_NO_NEW_POSTS_LOCKED}" width="19" height="18" />&nbsp;{L_NO_NEW_POSTS_LOCKED}</div>
+	    <div class="row mt-1"> 
+	      <div class="col nw"><img src="{FOLDER_LOCKED_NEW_IMG}" alt="{L_NEW_POSTS_LOCKED}" />&nbsp;{L_NEW_POSTS_LOCKED}</div>
+	      <div class="col nw"><img src="{FOLDER_LOCKED_IMG}" alt="{L_NO_NEW_POSTS_LOCKED}" />&nbsp;{L_NO_NEW_POSTS_LOCKED}</div>
 		</div>
   	  </div>
       <div class="col-5 gensmall text-right">{S_AUTH_LIST}</div>

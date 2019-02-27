@@ -1,5 +1,6 @@
 /* fiSubIce  */
 @import url("main.css");
+@import url("report_hack.css");
 
 /* The content of the posts (body of text) */
 body{background:#ecf0f6;color:#000000;}
@@ -26,39 +27,18 @@ a.topictitle:hover {color:#839fbc;}
 
 hr {border-style:solid;border-color:#587DA3;}
 
-.icon_quote:before {
+.fa:before {
 	color:#587DA3;
 }
 
-.icon_edit:before {
-	color:#587DA3;
-}
 
-.icon_delete:before {
-	color:#587DA3;
-}
-.icon_return_top:before {
-	color:#587DA3;
-}
-.icon_ip:before {
-	color:#587DA3;
-}
-.icon_go_top:before {
-	color:#587DA3;
-}
-.icon_go_bottom:before {
-	color:#587DA3;
-}
-
-.hov, a.fa-times, a.fa-share, a.fa-lock, a .fa-unlock, a.fa-sort, a.fa-clone, .fa-download, .fa-plus, .fa-search, .fa-user, .fa-envelope-o, .fa-envelope-square, .fa-picture-o, .icon-yahoo, .icon-aim, .icon-windows, .icon-skype, .icon-icq {
+.hov, .fa {
 	color:#587DA3 !important;
 }
 
-a.icon_return_top:hover:before, a.icon_delete:hover:before, a.icon_ip:hover:before, .icon_edit:hover:before, .icon_quote:hover:before, .fa-times:hover, a.fa-share:hover, a.fa-lock:hover, a .fa-unlock:hover, a.fa-sort:hover, a.fa-clone:hover, a.fa-download:hover, .fa-plus:hover, a.fa-user:hover, a.fa-envelope-square:hover, a.fa-picture-o:hover, .icon-yahoo:hover, .icon-aim:hover, .icon-windows:hover, .icon-skype:hover, .icon-icq:hover {
+a .fa:hover:before {
 	color:#32475F !important;
 }
-
-.fa-search:hover, .fa-envelope-o:hover {color:#6E9BD5 !important;}
 
 /* Category gradients*/
 .cat, .catHead, .catSides, .catLeft, .catRight, .catBottom {
