@@ -184,6 +184,98 @@ function sync($type, $id = false)
 			attachment_sync_topic($id);
 			break;
 	}
+
+function bbcode_box()
+{
+	global $template, $board_config, $phpbb_root_path, $phpEx;
+	include_once($phpbb_root_path . 'language/lang_' . $board_config['default_lang'] . '/lang_bbcode_box.' . $phpEx);
+
+	$template->set_filenames(array(
+		'bbcode_box' => $current_template_path . 'bbcode_box.tpl')
+	);
+
+	$template->assign_vars(array(
+		'L_ROOT' => $phpbb_root_path,
+		'L_BBCODE_RTL_HELP' => $lang['bbcode_rtl_help'],
+		'L_BBCODE_LTR_HELP' => $lang['bbcode_ltr_help'],
+		'L_BBCODE_PLAIN_HELP' => $lang['bbcode_plain_help'],
+		'L_BBCODE_FC_HELP' => $lang['bbcode_fc_help'],
+		'L_BBCODE_FS_HELP' => $lang['bbcode_fs_help'],
+		'L_BBCODE_FT_HELP' => $lang['bbcode_ft_help'],
+		'L_BBCODE_RIGHT_HELP' => $lang['bbcode_right_help'],
+		'L_BBCODE_LEFT_HELP' => $lang['bbcode_left_help'],
+		'L_BBCODE_CENTER_HELP' => $lang['bbcode_center_help'],
+		'L_BBCODE_JUSTIFY_HELP' => $lang['bbcode_justify_help'],
+		'L_BBCODE_B_HELP' => $lang['bbcode_b_help'],
+		'L_BBCODE_I_HELP' => $lang['bbcode_i_help'],
+		'L_BBCODE_U_HELP' => $lang['bbcode_u_help'],
+		'L_BBCODE_STRIKE_HELP' => $lang['bbcode_strike_help'],
+		'L_BBCODE_SUP_HELP' => $lang['bbcode_sup_help'],
+		'L_BBCODE_SUB_HELP' => $lang['bbcode_sub_help'],
+		'L_BBCODE_GRAD_HELP' => $lang['bbcode_grad_help'],
+		'L_BBCODE_FADE_HELP' => $lang['bbcode_fade_help'],
+		'L_BBCODE_LIST_HELP' => $lang['bbcode_list_help'],
+		'L_BBCODE_MARQR_HELP' => $lang['bbcode_marqr_help'],
+		'L_BBCODE_MARQL_HELP' => $lang['bbcode_marql_help'],
+		'L_BBCODE_MARQU_HELP' => $lang['bbcode_marqu_help'],
+		'L_BBCODE_MARQD_HELP' => $lang['bbcode_marqd_help'],
+		'L_BBCODE_QUOTE_HELP' => $lang['bbcode_quote_help'],
+		'L_BBCODE_CODE_HELP' => $lang['bbcode_code_help'],
+		'L_BBCODE_PHP_HELP' => $lang['bbcode_php_help'],
+		'L_BBCODE_SPOIL_HELP' => $lang['bbcode_spoil_help'],
+		'L_BBCODE_ANCHOR_HELP' => $lang['bbcode_anchor_help'],
+		'L_BBCODE_URL_HELP' => $lang['bbcode_url_help'],
+		'L_BBCODE_YOUTUBE_HELP' => $lang['bbcode_youtube_help'],
+		'L_BBCODE_MAIL_HELP' => $lang['bbcode_mail_help'],
+		'L_BBCODE_GOTOPOST_HELP' => $lang['bbcode_goto_help'],
+		'L_BBCODE_IMG_HELP' => $lang['bbcode_img_help'],
+		'L_BBCODE_STREAM_HELP' => $lang['bbcode_stream_help'],
+		'L_BBCODE_RAM_HELP' => $lang['bbcode_ram_help'],
+		'L_BBCODE_WEB_HELP' => $lang['bbcode_web_help'],
+		'L_BBCODE_VIDEO_HELP' => $lang['bbcode_video_help'],
+		'L_BBCODE_FLASH_HELP' => $lang['bbcode_flash_help'],
+		'L_BBCODE_SPELL_HELP' => $lang['bbcode_spell_help'],
+		'L_BBCODE_HR_HELP' => $lang['bbcode_hr_help'],
+		'L_BBCODE_YOU_HELP' => $lang['bbcode_you_help'],
+		'L_BBCODE_TAB_HELP' => $lang['bbcode_tab_help'],
+		'L_BBCODE_NBSP_HELP' => $lang['bbcode_nbsp_help'],
+		'L_BBCODE_SEARCH_HELP' => $lang['bbcode_search_help'],
+		'L_BBCODE_GOOGLE_HELP' => $lang['bbcode_google_help'],
+		'L_BBCODE_TABLE_HELP' => $lang['bbcode_table_help'],
+		'L_BBCODE_TIP_HELP' => $lang['bbcode_tip_help'],
+
+		'L_BBCODE_TYPE_MESSAGE' => $lang['bbcode_type_message'],
+		'L_BBCODE_CONFIRM' => $lang['bbcode_confirm'],
+		'L_BBCODE_SELECT' => $lang['bbcode_select_text'],
+		'L_BBCODE_LESS_120' => $lang['bbcode_less_120'],
+		'L_BBCODE_NOT_AVAILABLE' => $lang['bbcode_not_available'],
+		'L_BBCODE_LIST_BOX' => $lang['bbcode_list_box'],
+		'L_BBCODE_LISTBOX_OPTIONS' => $lang['bbcode_listbox_options'],
+		'L_BBCODE_LISTBOX_ITEM' => $lang['bbcode_listbox_item'],
+		'L_BBCODE_NO_LISTBOX_ITEM' => $lang['bbcode_no_listbox_item'],
+		'L_BBCODE_ANCHORNAME' => $lang['bbcode_anchorname'],
+		'L_BBCODE_NO_ANCHORNAME' => $lang['bbcode_no_anchorname'],
+		'L_BBCODE_BAD_ANCHORNAME' => $lang['bbcode_bad_anchorname'],
+		'L_BBCODE_NO_URL' => $lang['bbcode_enter_url'],
+		'L_BBCODE_ENTER_URL' => $lang['bbcode_no_url'],
+		'L_BBCODE_ENTER_PAGENAME' => $lang['bbcode_enter_pagename'],
+		'L_BBCODE_NO_PAGENAME' => $lang['bbcode_no_pagename'],
+		'L_BBCODE_ENTER_YOUTUBE' => $lang['bbcode_enter_youtube'],
+		'L_BBCODE_NO_YOUTUBE' => $lang['bbcode_no_youtube'],
+		'L_BBCODE_ENTER_EMAIL' => $lang['bbcode_enter_email'],
+		'L_BBCODE_NO_EMAIL' => $lang['bbcode_no_email'],
+		'L_BBCODE_POSTNUMBER' => $lang['bbcode_postnumber'],
+		'L_BBCODE_NO_POSTNUMBER' => $lang['bbcode_no_postnumber'],
+		'L_BBCODE_ANCHORNAME2' => $lang['bbcode_anchorname2'],
+		'L_BBCODE_ENTER_SEARCHTEXT' => $lang['bbcode_enter_searchtext'],
+		'L_BBCODE_NO_SEARCHTEXT' => $lang['bbcode_no_searchtext'],
+
+		)
+	);
+
+	$template->assign_var_from_handle('JAVASCRIPT_BBCODE_BOX', 'bbcode_box');
+
+}
 //-- mod : cache -----------------------------------------------------------------------------------
 //-- add
 	global $board_config;
