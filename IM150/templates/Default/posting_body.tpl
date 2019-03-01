@@ -1,7 +1,7 @@
-<script language="JavaScript" type="text/javascript" src="templates/post_message.js"></script>
+<script src="templates/_js/post_message.js"></script>
 {JAVASCRIPT_BBCODE_BOX}
 <script language='javascript' src='spelling/spellmessage.js'></script>
-<script language="JavaScript" type="text/javascript">
+<script>
   var is_event_allowed = 0;
   var is_delayed_allowed = 0;
 
@@ -415,10 +415,10 @@ if (formErrors) {
 <!-- END switch_unlock_topic -->
 <!-- BEGIN switch_type_cal -->
 <style type="text/css">@import url({TEMPLATE_PATH}calendar.css);</style>
-<script type="text/javascript" src="templates/calendar.js"></script>
-<script type="text/javascript" src="language/{LANG}/calendar.js"></script>
-<script type="text/javascript" src="templates/calendar-setup.js"></script>
-<script language="JavaScript" type="text/javascript">
+<script src="templates/_js/calendar.js"></script>
+<script src="language/{LANG}/calendar.js"></script>
+<script src="templates/_js/calendar-setup.js"></script>
+<script>
   is_event_allowed = 1;
 </script>
 <tr><td colspan="2"><hr /></td></tr>
@@ -430,7 +430,7 @@ if (formErrors) {
 <td align="right" nowrap="nowrap"><span class="gen"><b>{L_CALENDAR_TITLE}&nbsp;:</b></span></td>
 <td align="left" width="100%">
 <span class="genmed"><input type="text" name="calendar_event" id="calendarevent" size="50" maxlength="255" class="post" value="{CALENDAR_EVENT}" readonly="1" />&nbsp;<img src="{DATE_PICKER_IMAGE}" id="trigger2" style="cursor: pointer;" onmouseover="this.style.background='red';" onmouseout="this.style.background=''" />&nbsp;<img src="{CLEAR_DATE_IMAGE}" style="cursor: pointer;" onmouseover="this.style.background='red';" onmouseout="this.style.background=''" onclick="document.post.calendar_event.value='';" /></span></td>
-<script language="JavaScript" type="text/javascript">
+<script>
 Calendar.setup(
 {
 inputField  : "calendarevent",         // ID of the input field
@@ -444,7 +444,7 @@ align       : "T1"
 <td align="right" nowrap="nowrap"><span class="gen"><b>{L_CALENDAR_UNTIL}&nbsp;:</b></span></td>
 <td align="left" width="100%">
 <span class="genmed"><input type="text" name="calendar_duration" id="calendarduration" size="50" maxlength="255" class="post" value="{CALENDAR_DURATION}" readonly="1" />&nbsp;<img src="{DATE_PICKER_IMAGE}" id="trigger3" style="cursor: pointer;" onmouseover="this.style.background='red';" onmouseout="this.style.background=''" />&nbsp;<img src="{CLEAR_DATE_IMAGE}" style="cursor: pointer;" onmouseover="this.style.background='red';" onmouseout="this.style.background=''" onclick="document.post.calendar_duration.value='';" /></span></td>
-<script language="JavaScript" type="text/javascript">
+<script>
 Calendar.setup(
 {
 inputField  : "calendarduration",         // ID of the input field

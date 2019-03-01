@@ -1,4 +1,5 @@
-<script src="templates/_js/post_message.js"></script>
+{COLOR_CSS}
+<script language="JavaScript" type="text/javascript" src="templates/post_message.js"></script>
 {JAVASCRIPT_BBCODE_BOX}
 <script language='javascript' src='spelling/spellmessage.js'></script>
 <style type="text/css">
@@ -216,7 +217,7 @@
 					<td width="13"><img src="mods/bbcode_box/images/bar-right.gif" width="13" height="25" border="0" alt="" /></td>
 				</tr>
 				<tr>
-					<td colspan="3"><textarea name="message" rows="15" cols="35" style="width:450px" tabindex="3" class="post" onselect="storeCaret(this);" onclick="storeCaret(this);" onkeyup="storeCaret(this); typeQuietly(this, event);">{MESSAGE}</textarea></td>
+					<td colspan="3"><textarea name="message" rows="15" cols="35" style="width:450px" tabindex="3" class="post" onselect="storeCaret(this);" onclick="storeCaret(this);" onkeyup="storeCaret(this); typeQuietly(this, event);">{SHOUTBOX_MESSAGE}</textarea></td>
 				</tr>
 			</table>
 		</td>

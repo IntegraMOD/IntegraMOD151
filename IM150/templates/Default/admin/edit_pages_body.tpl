@@ -1,7 +1,7 @@
-<script language="JavaScript" type="text/javascript" src="../templates/post_message.js"></script>
-<script language="javascript" type="text/javascript" src="../mods/bbcode_box/bbcode_box_a.js"></script>
-<script language='javascript' src='../spelling/spelladmin.js'></script>
-<script language="JavaScript" type="text/javascript">
+<script src="../templates/_js/post_message.js"></script>
+<script src="../mods/bbcode_box/bbcode_box_a.js"></script>
+<script src="../spelling/spelladmin.js"></script>
+<script>
 <!--
 function forum_links() {
  window.open("./forum_tour_links.php?sid={SID}", "_forums", "width=400,height=500,scrollbars,resizable=yes");

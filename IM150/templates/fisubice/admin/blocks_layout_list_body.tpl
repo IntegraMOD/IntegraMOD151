@@ -1,17 +1,22 @@
-<div class="maintitle">{L_BLOCKS_TITLE}</div>
-<br />
-<div class="genmed">{L_BLOCKS_TEXT}</div>
-<br />
-<form method="post" action="{S_LAYOUT_ACTION}">
-<table cellspacing="1" cellpadding="3" border="0" align="center" class="forumline">
-<tr> 
-<th>&nbsp;{L_CHOOSE_LAYOUT}&nbsp;</th>
-</tr>
-<!-- BEGIN layout -->
-<tr> 
-<td class="{layout.ROW_CLASS}" align="center">&nbsp;<a href="{layout.U_LAYOUT}">{layout.NAME}</a>&nbsp;</td>
-</tr>
-<!-- END layout -->
-</table>
-</form>
-<br />
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col forumline row2 m-2">
+	    <div class="row">
+	      <div class="col th">{L_BLOCKS_TITLE}</div>
+	    </div>
+	    <div class="row">
+	      <div class="col genmed">{L_BLOCKS_TEXT}</div>
+	    </div>
+	    <form method="post" action="{S_LAYOUT_ACTION}">
+	    <div class="row">
+	      <div class="col">{L_CHOOSE_LAYOUT}</div>
+	    </div>
+	    <!-- BEGIN layout -->
+	    <div class="row">
+	      <div class="col {layout.ROW_CLASS} ctr"><a href="{layout.U_LAYOUT}">{layout.NAME}</a></div>
+	    </div>
+	    <!-- END layout -->
+        </form>
+      </div>
+    </div>
+  </div>

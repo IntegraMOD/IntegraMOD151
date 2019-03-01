@@ -7,14 +7,14 @@
 <title>{SITENAME} - {PAGE_TITLE}</title>{META_TAGS}
 {META}
 {NAV_LINKS}
-<!--[if gte IE 5]><![if lt IE 7]><script type="text/javascript" src="templates/pngfix.js"></script><![endif]><![endif]--> 
+<!--[if gte IE 5]><![if lt IE 7]><script src="templates/_js/pngfix.js"></script><![endif]><![endif]--> 
 <link rel="shortcut icon" href="./favicon.ico">
-<link rel="stylesheet" href="{TEMPLATE}{T_HEAD_STYLESHEET}" type="text/css">
-<script type="text/javascript" src="templates/toggle_display.js"></script>
-<script type="text/javascript" src="templates/importal.js"></script>
+<link rel="stylesheet" href="{TEMPLATE}{T_HEAD_STYLESHEET}" type="text/css" />
+<script src="templates/_js/toggle_display.js"></script>
+<script src="templates/_js/importal.js"></script>
 
 <!-- BEGIN switch_enable_pm_popup -->
-<script type="text/javascript">
+<script>
 <!--
 if ( {PRIVATE_MESSAGE_NEW_FLAG} )
 {
@@ -24,7 +24,7 @@ window.open('{U_PRIVATEMSGS_POPUP}', '_phpbbprivmsg', 'HEIGHT=225,resizable=yes,
 </script>
 <!-- END switch_enable_pm_popup -->
 <!-- Start add - No copy MOD -->
-<script language="javascript">
+<script>
 <!-- 
 var previous_key ;
 
@@ -97,23 +97,23 @@ document.onkeydown = handleKeyDown;
 </script>
 <!-- End add - No copy MOD -->
 <!-- BEGIN birthday_popup -->
-<script type="text/javascript">
+<script>
 <!--
 window.open('{birthday_popup.U_BIRTHDAY_POPUP}', '_phpbbbirthday', 'HEIGHT=225,resizable=yes,WIDTH=400');
 //-->
 </script>
 <!-- END birthday_popup -->
-<script type="text/javascript"> 
+<script> 
 <!-- 
 function tour() { 
 window.open("tour.php", "_tour", "width=800,height=600,scrollbars,resizable=yes");
 } 
 //--> 
 </script>
-<script type="text/javascript" src="templates/mouseover.js"></script>
+<script src="templates/_js/mouseover.js"></script>
 <!-- Prillian - Begin Code Additions -->
 <!-- BEGIN switch_user_logged_in -->
-<script type="text/javascript">
+<script>
 <!--
 function prill_launch(url, w, h)
 {
@@ -128,7 +128,7 @@ prill_launch('{U_IM_LAUNCH}', '{IM_WIDTH}', '{IM_HEIGHT}');
 </script>
 <!-- END switch_user_logged_in -->
 <!-- BEGIN buddy_alert -->
-<script type="text/javascript">
+<script>
 if ( {buddy_alert.BUDDY_ALERT} )
 {
 window.open('{buddy_alert.U_BUDDY_ALERT}', '_buddyalert', 'HEIGHT=225,resizable=yes,WIDTH=400');
@@ -136,12 +136,12 @@ window.open('{buddy_alert.U_BUDDY_ALERT}', '_buddyalert', 'HEIGHT=225,resizable=
 </script>
 <!-- END buddy_alert -->
 <!-- Prillian - End Code Additions -->
-<script type="text/javascript" src="templates/jquery-1.12.0.min.js"></script>
-<script type="text/javascript" src="templates/jquery.easing.min.js"></script>
-<script type="text/javascript" src="templates/jquery.toggle.js"></script>
-<script type="text/javascript" src="templates/jQuery.mobTabMenu.js"></script>
-<script type="text/javascript" src="templates/immenu.js"></script>
-<link rel="stylesheet" type="text/css" href="templates/Default/report_hack.css" />
+<script src="templates/_js/jquery-1.12.0.min.js"></script>
+<script src="templates/_js/jquery.easing.min.js"></script>
+<script src="templates/_js/jquery.toggle.js"></script>
+<script src="templates/_js/jQuery.mobTabMenu.js"></script>
+<script src="templates/_js/immenu.js"></script>
+<link rel="stylesheet" type="text/css" href="{TEMPLATE}/report_hack.css" />
 {COLOR_CSS}
 </head>
 <body class="resp">
@@ -221,7 +221,7 @@ window.open('{buddy_alert.U_BUDDY_ALERT}', '_buddyalert', 'HEIGHT=225,resizable=
 		  </table>
 </nav>
 <!-- BEGIN switch_user_logged_out -->
-		  <div class="finews" id="finewsdisplay"><script type="text/javascript" src="templates/fi_newsfader.js"></script></div>
+		  <div class="finews" id="finewsdisplay"><script src="templates/_js/fi_newsfader.js"></script></div>
 <!-- END switch_user_logged_out -->
 		</td>
 	  </tr>

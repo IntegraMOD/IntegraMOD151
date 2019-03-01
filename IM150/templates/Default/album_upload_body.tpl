@@ -1,5 +1,5 @@
 <!-- BEGIN switch_nuffload_enabled -->
-<script language="JavaScript" type="text/javascript">
+<script>
 <!--
 var inpIndex = 0;
 
@@ -101,7 +101,7 @@ function postIt()
 <!-- END switch_nuffload_enabled -->
 
 <!-- BEGIN switch_nuffload_disabled -->
-<script language="JavaScript" type="text/javascript">
+<script>
 <!--
 var gFileuploadCounter = 1;
 var fileBrowseHTML = '<input class="post" type="file" name="pic_file[]" size="49" \/><br \/>';
@@ -346,7 +346,7 @@ function InitForm()
 		</td>
 	</tr>
 </table>
-<script language="JavaScript" type="text/javascript">InitForm();</script>
+<script>InitForm();</script>
 </form>
 <br />
 <!-- You must keep my copyright notice visible with its original content -->

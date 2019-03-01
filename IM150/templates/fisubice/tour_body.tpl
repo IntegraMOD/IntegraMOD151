@@ -1,4 +1,4 @@
-<script>
+<script language="JavaScript" type="text/javascript">
 <!--
 function tour(link) {
  window.open(link, "_self", "width=250,height=800,scrollbars,resizable=no");

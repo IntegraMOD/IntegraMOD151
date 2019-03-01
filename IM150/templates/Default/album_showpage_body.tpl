@@ -1,4 +1,4 @@
-<script language="JavaScript" type="text/javascript">
+<script>
 <!--
 function checkForm()
 {
@@ -312,7 +312,7 @@ function openAllSmiles()
 	</table></td>
 </tr>
 <tr> 
-	<td class="spaceRow" colspan="2" height="1"><img src="templates/subSilver/images/spacer.gif" alt="" width="1" height="1" /></td>
+	<td class="spaceRow" colspan="2" height="1"><img src="{TEMPLATE}/images/spacer.gif" alt="" width="1" height="1" /></td>
 </tr>
 <!-- END commentrow -->
 <!-- BEGIN switch_comment -->

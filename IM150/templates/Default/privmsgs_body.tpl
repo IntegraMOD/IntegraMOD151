@@ -1,4 +1,4 @@
-<script language="javascript" type="text/javascript">
+<script>
 	//
 	// Should really check the browser to stop this whining ...
 	//

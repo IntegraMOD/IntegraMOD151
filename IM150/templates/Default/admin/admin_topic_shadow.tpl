@@ -1,4 +1,4 @@
-<script language="JavaScript">
+<script>
 <!--
 function toggle_check_all()
 {

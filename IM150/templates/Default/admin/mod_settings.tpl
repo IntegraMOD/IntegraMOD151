@@ -1,4 +1,4 @@
-<script language="javaScript" type="text/javascript"><!--
+<script><!--
 function helpwin(mylink)
 {
 	if (! window.focus)return true;

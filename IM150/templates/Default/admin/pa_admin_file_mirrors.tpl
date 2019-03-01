@@ -1,4 +1,4 @@
-<script language="JavaScript" type="text/javascript">
+<script>
 <!--
 	var error_msg = "";
 	var check_for_delete = false;

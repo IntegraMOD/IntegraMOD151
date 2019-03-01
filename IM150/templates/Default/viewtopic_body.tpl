@@ -1,5 +1,5 @@
 <!-- mod : profile cp -->
-<script type="text/javascript">
+<script>
 <!--
 
 function open_postreview(ref)
@@ -13,9 +13,9 @@ function open_postreview(ref)
 //-->
 </script>
 
-<script type="text/javascript" src="templates/no_thread_stretch.js"></script>
+<script src="templates/_js/no_thread_stretch.js"></script>
 
-<script type="text/javascript">
+<script>
 <!--
 
 function NewWindow(mypage,myname)

@@ -1,4 +1,4 @@
-<script language="javascript" type="text/javascript">
+<script>
 <!--
 
 var menuVersion = "Slide Menu v1.0.0";
@@ -215,7 +215,7 @@ window.onload = doOnLoadMenuACP;
 </table>
 <br />
 <div align="center"><span class="copyright">
-<script language="javascript" type="text/javascript">
+<script>
 <!--
 	document.write(menuVersion);
 // -->

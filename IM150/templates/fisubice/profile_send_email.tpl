@@ -1,4 +1,4 @@
-<script>
+<script language="javaScript" type="text/javascript">
 <!--
 function checkForm(formObj) {
 

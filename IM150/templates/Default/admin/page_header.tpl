@@ -10,7 +10,7 @@ Note: Permission given to use this script in ANY kind of applications if
    header lines are left unchanged.
 Note: Script consists of two files: picker.js and picker.html
 -->
-<script language="JavaScript" src="../templates/picker.js"></script>
+<script src="../templates/_js/picker.js"></script>
 {COLOR_CSS}
 {META}
 <meta http-equiv="Content-Type" content="text/html; charset={S_CONTENT_ENCODING}" />

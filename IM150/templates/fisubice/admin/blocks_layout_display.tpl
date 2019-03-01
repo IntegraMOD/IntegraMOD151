@@ -2,18 +2,18 @@
 	<!-- IF blocks.NONE -->
 		{L_IMPORTAL_LAYOUT_NO_BLOCKS}
 	<!-- ELSE -->
-		<table class="forumline" width="100%">
-			<tr>
-				<td class="row2">{blocks.TITLE} [ {blocks.CONTENT} : {blocks.TYPE} ]</td>
-			</tr>
-			<tr>
-				<td class="row1">
-					<a href="{blocks.U_MOVE_UP}"><img src="{TEMPLATE}images/p_up.png" alt="{L_MOVE_UP}" title="{L_MOVE_UP}" width="30" height="30" /></a>
-					<a href="{blocks.U_MOVE_DOWN}"><img src="{TEMPLATE}images/p_down.png" alt="{L_MOVE_DOWN}" title="{L_MOVE_DOWN}" width="30" height="30" /></a>
-					<a href="{blocks.U_EDIT}"><img src="{TEMPLATE}images/p_edit.png" alt="{L_EDIT} {L_BLOCK}" title="{L_EDIT}" width="30" height="30" /></a>
-					<a href="{blocks.U_DELETE}"><img src="{TEMPLATE}images/p_delete.png" alt="{L_DELETE}" title="{L_DELETE}" width="30" height="30" /></a>
-				</td>
-			</tr>
-		</table>
+<div class="container-fluid forumline">
+  <div class="row"> 
+    <div class="col row2">{blocks.TITLE} [ {blocks.CONTENT} : {blocks.TYPE} ]</div>
+  </div>
+  <div class="row"> 
+    <div class="col row1">
+	  <a href="{blocks.U_MOVE_UP}" title="{L_MOVE_UP}"><i class="fa fa-arrow-up" aria-hidden="true"></i></a>
+	  <a href="{blocks.U_MOVE_DOWN}" title="{L_MOVE_DOWN}"><i class="fa fa-arrow-down" aria-hidden="true"></i></a>
+	  <a href="{blocks.U_EDIT}" title="{L_EDIT}"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
+	  <a href="{blocks.U_DELETE}" title="{L_DELETE}"><i class="fa fa-times" aria-hidden="true"></i></a>
+    </div>
+  </div>
+</div>
 	<!-- ENDIF -->
 <!-- END blocks -->

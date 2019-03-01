@@ -2,7 +2,7 @@
 <br />
 <div class="genmed">{L_SMILEY_EXPLAIN}</div>
 <br />
-<script language="javascript" type="text/javascript">
+<script>
 <!--
 function update_smiley(newimage)
 {

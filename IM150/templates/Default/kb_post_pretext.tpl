@@ -13,7 +13,7 @@
 		</table></td>
 	</tr>
 	<tr> 
-		<td class="spaceRow" height="1"><img src="templates/subSilver/images/spacer.gif" width="1" height="1" /></td>
+		<td class="spaceRow" height="1"><img src="{TEMPLATE}/images/spacer.gif" width="1" height="1" /></td>
 	</tr>
 </table>
 

@@ -1,4 +1,4 @@
-<script language="JavaScript" type="text/javascript">
+<script>
 <!--
 window.onunload = doUnload;
 
@@ -81,7 +81,7 @@ function checkForm(tab,subtab)
 
 // -->
 </script>
-<script language="JavaScript" type="text/javascript">unsetChange();</script>
+<script>unsetChange();</script>
 <h1>{L_ALBUM_CONFIG}</h1>
 <p>{L_ALBUM_CONFIG_EXPLAIN}</p>
 <p>{L_ALBUM_CONFIG_NOTICE}</p>

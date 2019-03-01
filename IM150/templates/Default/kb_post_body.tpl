@@ -1,8 +1,8 @@
-<script language="JavaScript" type="text/javascript" src="templates/post_message.js"></script>
-<script language="javascript" type="text/javascript" src="mods/bbcode_box/bbcode_box.js"></script>
+<script src="templates/_js/post_message.js"></script>
+<script src="mods/bbcode_box/bbcode_box.js"></script>
 <script language='javascript' src='spelling/spellmessage.js'></script>
 
-<script language="JavaScript" type="text/javascript">
+<script>
 <!--
 function checkForm() { 
 
@@ -33,8 +33,8 @@ function checkForm() {
 </script>
 
 <!-- BEGIN tinyMCE -->
-<script language="javascript" type="text/javascript" src="modules/tinymce/jscripts/tiny_mce/tiny_mce.js"></script>
-<script language="javascript" type="text/javascript">
+<script src="modules/tinymce/jscripts/tiny_mce/tiny_mce.js"></script>
+<script>
    tinyMCE.init({
       mode : "textareas",
       theme : "advanced",

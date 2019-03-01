@@ -127,7 +127,7 @@ table.attachtable	{ font: normal 12px Verdana, Arial, Helvetica, sans-serif; col
 		<td width="75%" class="attachrow"><span class="genmed">&nbsp;{postrow.attach.cat_images.L_DOWNLOAD_COUNT}</span></td>
 	</tr>
 	<tr>
-		<td colspan="2" align="center"><br /><img src="{postrow.attach.cat_images.IMG_SRC}" alt="{postrow.attach.cat_images.DOWNLOAD_NAME}"  /><br /><br /></td>
+		<td colspan="2" align="center"><br /><img src="{postrow.attach.cat_images.IMG_SRC}" alt="{postrow.attach.cat_images.DOWNLOAD_NAME}" border="0" /><br /><br /></td>
 	</tr>
 	</table>
 	<div align="center"><hr width="95%" /></div>
@@ -157,7 +157,7 @@ table.attachtable	{ font: normal 12px Verdana, Arial, Helvetica, sans-serif; col
 		<td width="75%" class="attachrow"><span class="genmed">&nbsp;{postrow.attach.cat_thumb_images.L_DOWNLOAD_COUNT}</span></td>
 	</tr>
 	<tr>
-		<td colspan="2" align="center"><br /><a href="{postrow.attach.cat_thumb_images.IMG_SRC}" target="_blank"><img src="{postrow.attach.cat_thumb_images.IMG_THUMB_SRC}" alt="{postrow.attach.cat_thumb_images.DOWNLOAD_NAME}"  /></a><br /><br /></td>
+		<td colspan="2" align="center"><br /><a href="{postrow.attach.cat_thumb_images.IMG_SRC}" target="_blank"><img src="{postrow.attach.cat_thumb_images.IMG_THUMB_SRC}" alt="{postrow.attach.cat_thumb_images.DOWNLOAD_NAME}" border="0" /></a><br /><br /></td>
 	</tr>
 	</table>
 	<div align="center"><hr width="95%" /></div>

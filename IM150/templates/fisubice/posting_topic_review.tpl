@@ -1,5 +1,5 @@
-<script src="templates/_js/no_thread_stretch.js"></script>
-<script>
+<script language="JavaScript" type="text/javascript" src="templates/no_thread_stretch.js"></script>
+<script language="JavaScript" type="text/javascript">
 <!--
 no_thread_stretch({BLOCK_WIDTH}+240);
 

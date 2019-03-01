@@ -1,4 +1,4 @@
-<script language="JavaScript"><!--
+<script><!--
  function SetDays()	{ document.DaysFrm.submit() }
  // --></script>
 

@@ -1,4 +1,4 @@
-<script language="Javascript" type="text/javascript">
+<script>
 	// Lifted from privmsg page
 	function select_switch()
 	{

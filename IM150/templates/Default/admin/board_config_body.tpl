@@ -1,7 +1,7 @@
 <div class="maintitle">{L_CONFIGURATION_TITLE}</div>
 <br />
 <div class="genmed">{L_CONFIGURATION_EXPLAIN}</div>
-<script language="javascript" type="text/javascript">
+<script>
 <!--
 function update_logo(newlogo)
 {

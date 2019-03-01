@@ -1,5 +1,5 @@
 
-<script language="JavaScript">
+<script>
 <!--
 function check() {
 var correct = true; 

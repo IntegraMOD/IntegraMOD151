@@ -4,7 +4,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html dir="{S_CONTENT_DIRECTION}">
 <head>
-    <script language="JavaScript" type="text/javascript">
+    <script>
     <!--
         function codeDivStart()
         {

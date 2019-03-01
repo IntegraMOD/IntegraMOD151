@@ -1,4 +1,4 @@
-<script>
+<script language="javascript" type="text/javascript">
 <!--
 function NewWindow(mypage,myname)
 {

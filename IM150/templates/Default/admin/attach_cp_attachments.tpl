@@ -7,7 +7,7 @@
 <b>{L_STATISTICS_FOR_USER}</b>
 <!-- END switch_user_based -->
 
-<script language="Javascript" type="text/javascript">
+<script>
 	//
 	// Should really check the browser to stop this whining ...
 	//

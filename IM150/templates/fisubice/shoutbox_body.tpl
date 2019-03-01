@@ -1,9 +1,9 @@
-<head>
+<HEAD>
 <meta http-equiv="Content-Type" content="text/html; charset={S_CONTENT_ENCODING}" />
 <link rel="stylesheet" href="{T_URL}/{T_HEAD_STYLESHEET}" type="text/css">
-</head>
+</HEAD>
 <body bgcolor="{T_TR_COLOR3}" text="{T_BODY_TEXT}" link="{T_BODY_LINK}" vlink="{T_BODY_VLINK}"> 
-<script src="{T_URL}/bbcode.js" ></script>
+<script language="JavaScript" src="{T_URL}/bbcode.js" type="text/javascript" ></script>
 <form method="post" name="post" action="{U_SHOUTBOX}" onsubmit="return checkForm(this)">
 {ERROR_BOX}
 <table width="100%" height="26" cellpadding="0" cellspacing="0" border="0" class="row1">

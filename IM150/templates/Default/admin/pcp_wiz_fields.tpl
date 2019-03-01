@@ -1,4 +1,4 @@
-<script language="javascript">
+<script>
 	formupdated = false;
 	function selectMap(){
 		if (validateform()){
@@ -62,6 +62,6 @@
 </form>
 <p>{HELP}</p>
 <br />
-<script language="javascript">
+<script>
 	setSelectedPage();
 </script>

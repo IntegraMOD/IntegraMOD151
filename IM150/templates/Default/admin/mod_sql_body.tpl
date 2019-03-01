@@ -215,7 +215,7 @@
 <!-- END sql_rows -->
 </form>
 <br />
-<script language="javascript" type="text/javascript"><!--
+<script><!--
 function marklist(formname, status)
 {
 	for( i = 0; i < document.forms[formname].length; i++ )

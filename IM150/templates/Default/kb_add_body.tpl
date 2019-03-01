@@ -1,5 +1,5 @@
-<script language="JavaScript" type="text/javascript" src="templates/post_message.js"></script>
-<script language="JavaScript" type="text/javascript">
+<script src="templates/_js/post_message.js"></script>
+<script>
 <!--
 function checkForm1() { 
 

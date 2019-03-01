@@ -1,59 +1,61 @@
-<div class="maintitle">{L_BLOCKS_TITLE}</div>
+<div class="gen">{L_BLOCKS_TITLE}</div>
 <br />
 <div class="genmed">{L_BLOCKS_TEXT}</div>
 <br />
 {L_B_LAYOUT}: [ <b>{LAYOUT_NAME}</b> ]
 &nbsp;&nbsp;
 {L_B_PAGE}: [ <b>{PAGE}</b> ]
+&nbsp;&nbsp;
+{L_IMPORTAL_PAGE_TEMPLATE}: [ <b>{TEMPLATE_FILE}</b> ]
 <br />
 <br />
-<form method="post" action="{S_BLOCKS_ACTION}">
-<table cellspacing="1" cellpadding="3" border="0" align="center" class="forumline">
-<tr> 
-<th nowrap="nowrap" colspan="4">{L_ACTION}</th>
-<th nowrap="nowrap">{L_B_TITLE}</th>
-<th nowrap="nowrap">{L_B_POSITION}</th>
-<th nowrap="nowrap">{L_B_ACTIVE}</th>
-<th nowrap="nowrap">{L_B_DISPLAY}</th>
-<th nowrap="nowrap">{L_B_TYPE}</th>
-<th nowrap="nowrap">{L_B_CACHE}</th>
-<th nowrap="nowrap">{L_B_CACHETIME}</th>
-<th nowrap="nowrap">{L_B_VIEW_BY}</th>
-<th nowrap="nowrap">{L_B_BORDER}</th>
-<th nowrap="nowrap">{L_B_TITLEBAR}</th>
-<th nowrap="nowrap">{L_B_OPENCLOSE}</th>
-<th nowrap="nowrap">{L_B_LOCAL}</th>
-<th nowrap="nowrap">{L_B_BACKGROUND}</th>
-<th nowrap="nowrap">{L_B_GROUPS}</th>
-</tr>
-<!-- BEGIN blocks -->
 
-<tr> 
-<td nowrap="nowrap" class="{blocks.ROW_CLASS}" align="center"><a href="{blocks.U_MOVE_UP}"><img src="{TEMPLATE}images/p_up.png" alt="{L_MOVE_UP}" title="{L_MOVE_UP}" width="30" height="30" /></a></td>
-<td nowrap="nowrap" class="{blocks.ROW_CLASS}" align="center"><a href="{blocks.U_MOVE_DOWN}"><img src="{TEMPLATE}images/p_down.png" alt="{L_MOVE_DOWN}" title="{L_MOVE_DOWN}" width="30" height="30" /></a></td>
-<td nowrap="nowrap" class="{blocks.ROW_CLASS}" align="center"><a href="{blocks.U_EDIT}"><img src="{TEMPLATE}images/p_edit.png" alt="{L_EDIT} {L_BLOCK}" title="{L_EDIT}" width="30" height="30" /></a></td>
-<td nowrap="nowrap" class="{blocks.ROW_CLASS}" align="center"><a href="{blocks.U_DELETE}"><img src="{TEMPLATE}images/p_delete.png" alt="{L_DELETE}" title="{L_DELETE}" width="30" height="30" /></a></td>
-<td nowrap="nowrap" class="{blocks.ROW_CLASS}" align="center">{blocks.TITLE}</td>
-<td nowrap="nowrap" class="{blocks.ROW_CLASS}" align="center">{blocks.POSITION}</td>
-<td nowrap="nowrap" class="{blocks.ROW_CLASS}" align="center">{blocks.ACTIVE}</td>
-<td nowrap="nowrap" class="{blocks.ROW_CLASS}" align="center">{blocks.CONTENT}</td>
-<td nowrap="nowrap" class="{blocks.ROW_CLASS}" align="center">{blocks.TYPE}</td>
-<td nowrap="nowrap" class="{blocks.ROW_CLASS}" align="center">{blocks.CACHE}</td>
-<td nowrap="nowrap" class="{blocks.ROW_CLASS}" align="center">{blocks.CACHETIME}</td>
-<td nowrap="nowrap" class="{blocks.ROW_CLASS}" align="center">{blocks.VIEW}</td>
-<td nowrap="nowrap" class="{blocks.ROW_CLASS}" align="center">{blocks.BORDER}</td>
-<td nowrap="nowrap" class="{blocks.ROW_CLASS}" align="center">{blocks.TITLEBAR}</td>
-<td nowrap="nowrap" class="{blocks.ROW_CLASS}" align="center">{blocks.OPENCLOSE}</td>
-<td nowrap="nowrap" class="{blocks.ROW_CLASS}" align="center">{blocks.LOCAL}</td>
-<td nowrap="nowrap" class="{blocks.ROW_CLASS}" align="center">{blocks.BACKGROUND}</td>
-<td nowrap="nowrap" class="{blocks.ROW_CLASS}" align="center">{blocks.GROUPS}</td>
-</tr>
-<!-- END blocks -->
-<tr> 
-<td colspan="18" align="center" class="cat">{S_HIDDEN_FIELDS} 
-<input type="submit" name="add" value="{L_BLOCKS_ADD}" class="mainoption" />
-</td>
-</tr>
-</table>
-</form>
+<!-- IF BLOCKS_PREVIEW -->
+<h1>{L_IMPORTAL_BLOCKS_PREVIEW}</h1>
+{BLOCKS_PREVIEW}
+
 <br />
+<br />
+<!-- ENDIF -->
+
+
+<h1>{L_IMPORTAL_BLOCKS_LIST}</h1>
+<div class="container-fluid forumline">
+<form method="post" action="{S_BLOCKS_ACTION}">
+  <div class="row th genmed">
+	<div class="col-2 pt-1 ctr">{L_ACTION}</div>
+	<div class="col-3 pt-1 ctr">{L_B_TITLE}</div>
+	<div class="col-1 pt-1 ctr">{L_B_POSITION}</div>
+	<div class="col-1 pt-1 ctr">{L_B_ACTIVE}</div>
+	<div class="col-1 pt-1 ctr">{L_B_DISPLAY}</div>
+	<div class="col-1 pt-1 ctr">{L_B_TYPE}</div>
+	<div class="col-1 pt-1 ctr">{L_B_VIEW_BY}</div>
+	<div class="col-1 pt-1 ctr">{L_B_GROUPS}</div>
+	<div class="col-1 pt-1 ctr resp">{L_B_CACHE}</div>
+  </div>
+
+  <!-- BEGIN blocks -->
+  <div class="row genmed">
+	<div class="col-2 {blocks.ROW_CLASS} ctr nowrap">
+	<a href="{blocks.U_MOVE_UP}" title="{L_MOVE_UP}"><i class="fa fa-arrow-up" aria-hidden="true"></i></a>
+	<a href="{blocks.U_MOVE_DOWN}" title="{L_MOVE_DOWN}"><i class="fa fa-arrow-down" aria-hidden="true"></i></a>
+	<a href="{blocks.U_EDIT}" title="{L_EDIT}"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
+	<a href="{blocks.U_DELETE}" title="{L_DELETE}"><i class="fa fa-times" aria-hidden="true"></i></a>
+    </div>
+	<div class="col-3 {blocks.ROW_CLASS} ctr">{blocks.TITLE}</div>
+	<div class="col-1 {blocks.ROW_CLASS} ctr">{blocks.POSITION}</div>
+	<div class="col-1 {blocks.ROW_CLASS} ctr">{blocks.ACTIVE}</div>
+	<div class="col-1 {blocks.ROW_CLASS} ctr">{blocks.CONTENT}</div>
+	<div class="col-1 {blocks.ROW_CLASS} ctr">{blocks.TYPE}</div>
+	<div class="col-1 {blocks.ROW_CLASS} ctr">{blocks.VIEW}</div>
+	<div class="col-1 {blocks.ROW_CLASS} ctr">{blocks.GROUPS}</div>
+	<div class="col-1 {blocks.ROW_CLASS} ctr resp">{blocks.CACHE}</div>
+  </div>
+  <!-- END blocks -->
+  <div class="row">
+ 	<div class="col catBottom genmed pt-1 ctr">{S_HIDDEN_FIELDS}<input type="submit" name="add" value="{L_BLOCKS_ADD}" class="mainoption" /></div>
+  </div>
+
+
+</form> 
+</div>

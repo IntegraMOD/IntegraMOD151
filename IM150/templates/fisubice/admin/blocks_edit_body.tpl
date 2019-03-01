@@ -1,65 +1,97 @@
-<script language="javascript" type="text/javascript" src="../mods/bbcode_box/admin_bbcode_box.js"></script>
-<div class="maintitle">{L_BLOCKS_TITLE}</div>
-<br />
-<div class="genmed">{L_BLOCKS_TEXT}</div>
-<br />
+<script src="templates/post_message.js"></script>
+{JAVASCRIPT_BBCODE_BOX}
+<script src='spelling/spellmessage.js'></script>
+<script>
+  var is_event_allowed = 0;
+  var is_delayed_allowed = 0;
+
+  function checkForm2() {
+	formErrors = false;  
+        if (document.post.message.value.length < 2) {
+		formErrors = "You must enter a message when posting";
+	}
+	if (is_event_allowed && is_delayed_allowed){
+		if (document.post.calendar_event.value && document.post.forcetime.value)
+		{
+			alert("A calendar event can't be posted as a delayed topic");
+			return false;
+		}
+	}
+	if (is_event_allowed) {
+		if (!document.post.calendar_event.value && document.post.topic_calendar_repeats_value.value != 0)
+		{
+			alert("A repeating event must have a calendar event specified");
+			return false;
+		}
+	}
+if (formErrors) { 
+        alert(formErrors); 
+        return false; 
+    } else if (is_submit) { 
+        alert('Your post is already submitted'); 
+      return false; 
+    } else { 
+        is_submit = true; 
+    } 
+    return true;
+}
+</script>
+<div class="container-fluid">
+  <div class="row">
+    <div class="col nav">{L_BLOCKS_TITLE}</div>
+  </div>
+  <div class="row">
+    <div class="col genmed">{L_BLOCKS_TEXT}</div>
+  </div>
+
 <form method="post" action="{S_BLOCKS_ACTION}" name="post">
-<table cellspacing="1" cellpadding="3" border="0" align="center" class="forumline">
-<tr> 
-<th colspan="2">{L_EDIT_BLOCK}</th>
-</tr>
+<div class="container-fluid forumline">
+  <div class="row th">
+    <div class="col">{L_EDIT_BLOCK}</div>
+  </div>
+  <div class="row">
+    <div class="col-3 row1 genmed text-right py-1">{L_B_TITLE}:</div>
+    <div class="col row2 genmed text-left py-1"><input type="text" maxlength="60" size="30" name="title" value="{TITLE}" class="post" /></div>
+  </div>
+  <div class="row">
+    <div class="col-3 row1 genmed text-right py-1">{L_B_TITLE_IMAGE}:</div>
+    <div class="col row2 genmed text-left py-1"><input type="text" maxlength="100" size="30" name="title_image" value="{TITLE_IMAGE}" class="post" /></div>
+  </div>
+  <div class="row">
+    <div class="col-3 row1 genmed text-right py-1">{L_B_POSITION}:</div>
+    <div class="col row2 genmed text-left py-1"><select name="bposition" class="post">{POSITION}</select></div>
+  </div>
+  <div class="row">
+    <div class="col-3 row1 genmed text-right py-1">{L_B_ACTIVE}:</div>
+    <div class="col row2 genmed text-left py-1"><input type="radio" name="active" value="1" {ACTIVE} /> {L_YES}&nbsp;&nbsp;<input type="radio" name="active" value="0" {NOT_ACTIVE} /> {L_NO}</div>
+  </div>
 
-<tr> 
-<td align="right" class="row1">{L_B_TITLE}:</td>
-<td class="row2"> 
-<input type="text" maxlength="60" size="30" name="title" value="{TITLE}" class="post" />
-</td>
-</tr>
-
-<tr> 
-<td align="right" class="row1">{L_B_POSITION}:</td>
-<td class="row2"> 
-<select name="bposition" class="post">{POSITION}</select>
-</td>
-</tr>
-
-<tr> 
-<td align="right" class="row1">{L_B_ACTIVE}:</td>
-<td class="row2"> 
-<input type="radio" name="active" value="1" {ACTIVE} /> {L_YES}&nbsp;&nbsp;
-<input type="radio" name="active" value="0" {NOT_ACTIVE} /> {L_NO}</td>
-</tr>
-
-<tr> 
-<td align="right" class="row1">
-		<table width="100%" border="0" cellspacing="0" cellpadding="1">
-		  <tr> 
-			<td align="right">{L_B_CONTENT}:<br /><br /><br /></td>
-		  </tr>
-		  <tr> 
-			<td valign="middle" align="center"> <br />
-			  <table width="100" border="0" cellspacing="0" cellpadding="5">
-				<tr align="center"> 
-				  <td colspan="{S_SMILIES_COLSPAN}" class="gensmall"><b>{L_EMOTICONS}</b></td>
-				</tr>
-				<!-- BEGIN smilies_row -->
-				<tr align="center" valign="middle"> 
-				  <!-- BEGIN smilies_col -->
-				  <td><a href="javascript:emoticon('{smilies_row.smilies_col.SMILEY_CODE}')"><img src="{smilies_row.smilies_col.SMILEY_IMG}" border="0" alt="{smilies_row.smilies_col.SMILEY_DESC}" title="{smilies_row.smilies_col.SMILEY_DESC}" /></a></td>
-				  <!-- END smilies_col -->
-				</tr>
-				<!-- END smilies_row -->
-				<!-- BEGIN switch_smilies_extra -->
-				<tr align="center"> 
-				  <td colspan="{S_SMILIES_COLSPAN}"><span  class="nav"><a href="{U_MORE_SMILIES}" onclick="window.open('{U_MORE_SMILIES}', '_phpbbsmilies', 'HEIGHT=300,resizable=yes,scrollbars=yes,WIDTH=250');return false;" target="_phpbbsmilies" class="nav">{L_MORE_SMILIES}</a></span></td>
-				</tr>
-				<!-- END switch_smilies_extra -->
-			  </table>
-			</td>
-		  </tr>
-		</table>
-</td>
-<td class="row2">
+  <div class="row">
+    <div class="col-3 row1 genmed text-right py-1">
+      <div class="row">
+        <div class="col">{L_B_CONTENT}:</div>
+      </div>
+      <div class="row">
+        <div class="col">
+	      <div class="row">
+	        <div class="col ctr gensmall"><b>{L_EMOTICONS}</b></div>
+	      </div>
+	      <!-- BEGIN smilies_row -->
+	      <div class="row">
+	        <!-- BEGIN smilies_col -->
+	        <div class="col"><a href="javascript:emoticon('{smilies_row.smilies_col.SMILEY_CODE}')"><img src="{smilies_row.smilies_col.SMILEY_IMG}" alt="{smilies_row.smilies_col.SMILEY_DESC}" title="{smilies_row.smilies_col.SMILEY_DESC}" /></a></div>
+	        <!-- END smilies_col -->
+	      </div>
+	      <!-- END smilies_row -->
+	      <!-- BEGIN switch_smilies_extra -->
+	      <div class="row">
+	        <div class="col gensmall ctr"><a href="{U_MORE_SMILIES}" onclick="window.open('{U_MORE_SMILIES}', '_phpbbsmilies', 'HEIGHT=300,resizable=yes,scrollbars=yes,WIDTH=250');return false;" target="_phpbbsmilies"><b>{L_MORE_SMILIES}</b></a></div>
+	      </div>
+	      <!-- END switch_smilies_extra -->
+        </div>
+      </div>
+    </div>
+    <div class="col row2 genmed text-left py-1">
 			<table cellspacing="0" cellpadding="0" border="0" width="100%" style="border-collapse: collapse;">
 				<tr>
 					<td width="7"><img src="../mods/bbcode_box/images/bar-left.gif" width="7" height="25" border="0" alt="" /></td>
@@ -73,7 +105,7 @@
 								<td width="6"><img border="0" height="25" width="6" src="../mods/bbcode_box/images/bar-div.gif" alt="" /></td>
 								<td width="23"><input border="0" height="22" width="23" src="../mods/bbcode_box/images/spell.gif" class="postimage" value="SpellCheck" name="button" type="image" onclick="openspell();return false;" onMouseOver="helpline('spell')" /></td>
 								<td width="6"><img border="0" height="25" width="6" src="../mods/bbcode_box/images/bar-div.gif" alt="" /></td>
-								<td align="right"><a href="http://www.tactic.be" class="gensmall" title="BBCode Box MOD" target="blank">Advanced BBCode Box v5.1.1</a>&nbsp;</td>
+								<td align="right"><a href="http://#/" class="gensmall" title="BBCode Box MOD - by Disturbed One - www.HVMDesign.com" target="blank">Advanced BBCode Box v6.0.0</a>&nbsp;</td>
 							</tr>
 						</table>
 					</td>
@@ -186,16 +218,15 @@
 								<td><img border="0" height="22" width="23" src="../mods/bbcode_box/images/sound.gif" class="postimage" name="stream" onClick="BBCstream()" onMouseOver="helpline('stream')" alt="Stream" /></td>
 								<td><img border="0" height="22" width="23" src="../mods/bbcode_box/images/ram.gif" class="postimage" name="ram" onClick="BBCram()" onMouseOver="helpline('ram')" alt="Real Media" /></td>
 								<td><img border="0" height="22" width="23" src="../mods/bbcode_box/images/video.gif" class="postimage" name="video" onClick="BBCvideo()" onMouseOver="helpline('video')" alt="Video" /></td>
-						        <td><img border="0" height="22" width="23" src="../mods/bbcode_box/images/gvideo.gif" class="postimage" name="GVideo" onClick="BBCGVideo()" onMouseOver="helpline('googlevid')" alt="GoogleVid"></td>
-						        <td><img border="0" height="22" width="23" src="../mods/bbcode_box/images/youtube.gif" class="postimage" name="youtube" onClick="BBCyoutube()" onMouseOver="helpline('youtube')" alt="YouTube" /></td>
+								<td><img border="0" height="22" width="23" src="../mods/bbcode_box/images/web.gif" class="postimage" name="web" onClick="BBCweb()" onMouseOver="helpline('web')" alt="Web Page" /></td>
 								<td><img border="0" height="25" width="6" src="../mods/bbcode_box/images/bar-div.gif" alt="" /></td>
 								<td><img border="0" height="22" width="23" src="../mods/bbcode_box/images/tab.gif" class="postimage" name="tab" onClick="BBCtab()" onMouseOver="helpline('tab')" alt="Tab" /></td>
 								<td><img border="0" height="22" width="23" src="../mods/bbcode_box/images/nbsp.gif" class="postimage" name="nbsp" onClick="BBCnbsp()" onMouseOver="helpline('nbsp')" alt="NBSP" /></td>
 								<td><img border="0" height="22" width="23" src="../mods/bbcode_box/images/hr.gif" class="postimage" name="hr" onClick="BBChr()" onMouseOver="helpline('hr')" alt="H-Line" /></td>
 								<td><img border="0" height="22" width="23" src="../mods/bbcode_box/images/you.gif" class="postimage" name="you" onClick="BBCyou()" onMouseOver="helpline('you')" alt="You" /></td>
 								<td><img border="0" height="25" width="6" src="../mods/bbcode_box/images/bar-div.gif" alt="" /></td>
-								<td><img border="0" height="22" width="23" src="../mods/bbcode_box/images/web.gif" class="postimage" name="web" onClick="BBCweb()" onMouseOver="helpline('web')" alt="Web Page" /></td>
 								<td><img border="0" height="22" width="23" src="../mods/bbcode_box/images/table.gif" class="postimage" name="table" onClick="BBCtable()" onMouseOver="helpline('table')" alt="Table" /></td>
+						        <td><img border="0" height="22" width="23" src="../mods/bbcode_box/images/youtube.gif" class="postimage" name="youtube" onClick="BBCyoutube()" onMouseOver="helpline('youtube')" alt="YouTube" /></td>
 							</tr>
 						</table>
 					</td>
@@ -214,16 +245,16 @@
 					<td width="13"><img src="../mods/bbcode_box/images/bar-right.gif" width="13" height="25" border="0" alt="" /></td>
 				</tr>
 				<tr>
-					<td colspan="3"><textarea name="message" rows="15" cols="35" style="width:100%" tabindex="3" class="post" onselect="storeCaret(this);" onclick="storeCaret(this);" onkeyup="storeCaret(this); typeQuietly(this, event);">{MESSAGE}</textarea></td>
+					<td colspan="3"><textarea name="message" rows="15" cols="35" style="width:100%" tabindex="3" class="post" onselect="storeCaret(this);" onclick="storeCaret(this);" onkeyup="storeCaret(this); typeQuietly(this, event);">{CONTENT}</textarea></td>
 				</tr>
-<!-- BEGIN switch_confirm -->
-	<tr>
-		<td class="row3" colspan="2" align="center"><br /><br />{CONFIRM_IMAGE}<br /><br /></td>
-	</tr>
-	<tr> 
-	  <td class="row2" colspan="2" align="center"><span class="gen"><b>{L_CT_CONFIRM}</b></span><br /><span class="gensmall">{L_CT_CONFIRM_E}</span><br /><br /><input type="text" class="post" style="width: 200px" name="confirm_code" size="6" value="" />{S_HIDDEN_FIELDS}</td>
-	</tr>
-<!-- END switch_confirm -->
+			    <!-- BEGIN switch_confirm -->
+				<tr>
+					<td class="row3" colspan="2" align="center"><br /><br />{CONFIRM_IMAGE}<br /><br /></td>
+				</tr>
+				<tr> 
+				  <td class="row2" colspan="2" align="center"><span class="gen"><b>{L_CT_CONFIRM}</b></span><br /><span class="gensmall">{L_CT_CONFIRM_E}</span><br /><br /><input type="text" class="post" style="width: 200px" name="confirm_code" size="6" value="" />{S_HIDDEN_FIELDS}</td>
+				</tr>
+			    <!-- END switch_confirm -->
 				<tr>
 					<td colspan="3" align="center" height="20">{S_HIDDEN_FORM_FIELDS}
 						<input type="submit" tabindex="5" name="preview" class="mainoption" value="{L_PREVIEW}" />
@@ -231,83 +262,69 @@
 					</td>
 				</tr>				
 			</table>
-</td>
-</tr>
+      </div>
+    </div>
 
-<tr> 
-<td align="right" class="row1">{L_B_TYPE}:</td>
-<td class="row2"> 
-<input type="radio" name="type" value="1" {BBCODE} /> {L_B_BBCODE}&nbsp;&nbsp;
-<input type="radio" name="type" value="0" {HTML} /> {L_B_HTML}</td>
-</tr>
 
-<tr> 
-<td align="right" class="row1">{L_B_CACHE}:</td>
-<td class="row2"> 
-<input type="radio" name="cache" value="1" {CACHE} /> {L_YES}&nbsp;&nbsp;
-<input type="radio" name="cache" value="0" {NO_CACHE} /> {L_NO}</td>
-</tr>
+    <div class="row">
+      <div class="col-3 row1 genmed text-right py-1">{L_B_TYPE}:</div>
+      <div class="col row2 genmed text-left py-1"><input type="radio" name="type" value="1" {BBCODE} /> {L_B_BBCODE}&nbsp;&nbsp;<input type="radio" name="type" value="0" {HTML} /> {L_B_HTML}</div>
+    </div>
 
-<tr> 
-<td align="right" class="row1">{L_B_CACHETIME}:</td>
-<td class="row2"> 
-<input type="text" maxlength="10" size="10" name="cachetime" value="{CACHETIME}" class="post" />
-</td>
-</tr>
+    <div class="row">
+      <div class="col-3 row1 genmed text-right py-1">{L_B_CACHE}:</div>
+      <div class="col row2 genmed text-left py-1"><input type="radio" name="cache" value="1" {CACHE} /> {L_YES}&nbsp;&nbsp;<input type="radio" name="cache" value="0" {NO_CACHE} /> {L_NO}</div>
+    </div>
 
-<tr> 
-<td align="right" class="row1">{L_B_BLOCK_FILE}:</td>
-<td class="row2"> 
-<select name="blockfile" class="post">{BLOCKFILE}</select>
-</td>
-</tr>
+    <div class="row">
+      <div class="col-3 row1 genmed text-right py-1">{L_B_CACHETIME}:</div>
+      <div class="col row2 genmed text-left py-1"><input type="text" maxlength="10" size="10" name="cachetime" value="{CACHETIME}" class="post" /></div>
+    </div>
 
-<tr> 
-<td align="right" class="row1">{L_B_VIEW_BY}:</td>
-<td class="row2"> 
-<select name="view" class="post">{VIEWBY}</select>
-</td>
-</tr>
+    <div class="row">
+      <div class="col-3 row1 genmed text-right py-1">{L_B_BLOCK_FILE}:</div>
+      <div class="col row2 genmed text-left py-1"><select name="blockfile" class="post">{BLOCKFILE}</select></div>
+    </div>
+ 
+    <div class="row">
+      <div class="col-3 row1 genmed text-right py-1">{L_B_VIEW_BY}:</div>
+      <div class="col row2 genmed text-left py-1"><select name="view" class="post">{VIEWBY}</select></div>
+    </div>
 
-<tr> 
-<td align="right" class="row1">{L_B_BORDER}:</td>
-<td class="row2"> 
-<input type="radio" name="border" value="1" {BORDER} /> {L_YES}&nbsp;&nbsp;
-<input type="radio" name="border" value="0" {NO_BORDER} /> {L_NO}</td>
-</tr>
+    <div class="row">
+      <div class="col-3 row1 genmed text-right py-1">{L_B_BORDER}:</div>
+      <div class="col row2 genmed text-left py-1"><input type="radio" name="border" value="1" {BORDER} /> {L_YES}&nbsp;&nbsp;<input type="radio" name="border" value="0" {NO_BORDER} /> {L_NO}</div>
+    </div>
 
-<tr> 
-<td align="right" class="row1">{L_B_TITLEBAR}:</td>
-<td class="row2"> 
-<input type="radio" name="titlebar" value="1" {TITLEBAR} /> {L_YES}&nbsp;&nbsp;
-<input type="radio" name="titlebar" value="0" {NO_TITLEBAR} /> {L_NO}</td>
-</tr>
-
-<tr> 
-<td align="right" class="row1">{L_B_LOCAL}:</td>
-<td class="row2"> 
-<input type="radio" name="local" value="1" {LOCAL} /> {L_YES}&nbsp;&nbsp;
-<input type="radio" name="local" value="0" {NOT_LOCAL} /> {L_NO}</td>
-</tr>
-
-<tr> 
-<td align="right" class="row1">{L_B_BACKGROUND}:</td>
-<td class="row2"> 
-<input type="radio" name="background" value="1" {BACKGROUND} /> {L_YES}&nbsp;&nbsp;
-<input type="radio" name="background" value="0" {NO_BACKGROUND} /> {L_NO}</td>
-</tr>
-
-<tr> 
-<td align="right" class="row1">{L_B_GROUP}:</td>
-<td class="row2"> 
-{GROUP}
-</tr>
-
-<tr> 
-<td class="cat" colspan="2" align="center">{S_HIDDEN_FIELDS} 
-<input type="submit" name="save" value="{L_SUBMIT}" class="mainoption" />
-</td>
-</tr>
-</table>
+    <div class="row">
+      <div class="col-3 row1 genmed text-right py-1">{L_B_TITLEBAR}:</div>
+      <div class="col row2 genmed text-left py-1"><input type="radio" name="titlebar" value="1" {TITLEBAR} /> {L_YES}&nbsp;&nbsp;<input type="radio" name="titlebar" value="0" {NO_TITLEBAR} /> {L_NO}</div>
+    </div>
+ 
+    <div class="row">
+      <div class="col-3 row1 genmed text-right py-1">{L_B_OPENCLOSE}:</div>
+      <div class="col row2 genmed text-left py-1"><input type="radio" name="openclose" value="1" {OPENCLOSE} /> {L_YES}&nbsp;&nbsp;<input type="radio" name="openclose" value="0" {NO_OPENCLOSE} /> {L_NO}</div>
+    </div>
+ 
+    <div class="row">
+      <div class="col-3 row1 genmed text-right py-1">{L_B_LOCAL}:</div>
+      <div class="col row2 genmed text-left py-1"><input type="radio" name="local" value="1" {LOCAL} /> {L_YES}&nbsp;&nbsp;<input type="radio" name="local" value="0" {NOT_LOCAL} /> {L_NO}</div>
+    </div>	
+ 
+    <div class="row">
+      <div class="col-3 row1 genmed text-right py-1">{L_B_BACKGROUND}:</div>
+      <div class="col row2 genmed text-left py-1"><input type="radio" name="background" value="1" {BACKGROUND} /> {L_YES}&nbsp;&nbsp;<input type="radio" name="background" value="0" {NO_BACKGROUND} /> {L_NO}</div>
+    </div>	
+ 
+    <div class="row">
+      <div class="col-3 row1 genmed text-right py-1">{L_B_GROUP}:</div>
+      <div class="col row2 genmed text-left py-1">{GROUP}</div>
+    </div>	
+ 
+    <div class="row">
+      <div class="col-3 row1 genmed text-right py-1">{S_HIDDEN_FIELDS}</div>
+      <div class="col row2 genmed text-left py-1"><input type="submit" name="save" value="{L_SUBMIT}" class="mainoption" /></div>
+    </div>
+</div>
+</div>
 </form>
-<br />

@@ -17,7 +17,7 @@
 	</tr>
 	<tr>
 		<td align="center">
-			<script language="JavaScript">
+			<script>
 			var P = opener.TCP;
 			onload = "P.show(P.initPalette)";
 			document.forms[0].elements[0].selectedIndex = P.initPalette;

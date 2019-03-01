@@ -57,7 +57,7 @@
 				</table>
 				<br />
 
-<script language="javascript" type="text/javascript">
+<script>
 <!--
 tmp = 'block1_{tail_blocks_row.BLOCKID}';
 if(GetCookie(tmp) == '2')
@@ -86,7 +86,7 @@ if(GetCookie(tmp) == '2')
 	</tr>
 </table>
 
-<script language="javascript" type="text/javascript">
+<script>
 <!--
 tmp = 'tail_block';
 if(GetCookie(tmp) == '2')

@@ -60,7 +60,7 @@
         <tr> 
           <td valign="middle" nowrap="nowrap">{PROFILE_IMG} {PM_IMG} {EMAIL_IMG} 
             {WWW_IMG} {AIM_IMG} {YIM_IMG} {MSN_IMG} 
-            <script language="JavaScript" type="text/javascript"><!-- 
+            <script><!-- 
 
 	if ( navigator.userAgent.toLowerCase().indexOf('mozilla') != -1 && navigator.userAgent.indexOf('5.') == -1 && navigator.userAgent.indexOf('6.') == -1 )
 		document.write(' {ICQ_IMG}');

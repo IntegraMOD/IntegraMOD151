@@ -1,4 +1,4 @@
-<script language="javascript" type="text/javascript" src="{U_CFAQ_JSLIB}"></script>
+<script src="{U_CFAQ_JSLIB}"></script>
 <noscript>
 <table class="forumline" width="100%" cellspacing="1" cellpadding="3" border="0" align="center">
 	<tr>

@@ -1,5 +1,5 @@
-<script language="JavaScript" src="{U_IM_PATH}main.js"></script>
-<script language="JavaScript" type="text/javascript">
+<script src="{U_IM_PATH}main.js"></script>
+<script>
 <!--
 // Used to check or uncheck a list of check boxes
 function select_switch(status)

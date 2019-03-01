@@ -72,7 +72,7 @@
 
 <!-- The cookie related javascript to remember what blocks are open/closed on page load -->
 <!-- BEGIN openclose -->
-<script language="javascript" type="text/javascript">
+<script>
 <!--
 tmp = 'block1_{header_blocks_row.BLOCKID}';
 if(GetCookie(tmp) == '2')
@@ -109,7 +109,7 @@ collapsible cell and therefore disappears when the column closes -->
 -->
 
 <!-- The cookie related javascript to remember what columns are open/closed on page load -->
-<script language="javascript" type="text/javascript">
+<script>
 <!--
 tmp = 'header_block';
 if(GetCookie(tmp) == '2')

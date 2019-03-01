@@ -1,4 +1,4 @@
-<SCRIPT LANGUAGE="JavaScript"> 
+<script> 
 <!-- 
 	function mpFoto(img)
 	{

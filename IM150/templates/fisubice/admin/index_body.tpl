@@ -1,44 +1,50 @@
-<div class="maintitle">{L_WELCOME}</div>
+<div class="maintitle">{L_WELCOME_IM}</div>
 <br />
 <div class="genmed">{L_ADMIN_INTRO}</div>
 <br />
 <div class="subtitle">{L_FORUM_STATS}</div>
 <table width="100%" cellpadding="3" cellspacing="1" border="0" class="forumline">
 <tr> 
-<th width="25%">{L_STATISTIC}</th>
-<th width="25%">{L_VALUE}</th>
-<th width="25%">{L_STATISTIC}</th>
-<th width="25%">{L_VALUE}</th>
+	<th width="25%">{L_STATISTIC}</th>
+	<th width="25%">{L_VALUE}</th>
+	<th width="25%">{L_STATISTIC}</th>
+	<th width="25%">{L_VALUE}</th>
 </tr>
 <tr> 
-<td class="row1" nowrap="nowrap" align="right">{L_NUMBER_POSTS}:</td>
-<td class="row2">{NUMBER_OF_POSTS}</td>
-<td class="row1" align="right">{L_POSTS_PER_DAY}:</td>
-<td class="row2">{POSTS_PER_DAY}</td>
+	<td class="row1" nowrap="nowrap" align="right">{L_NUMBER_POSTS}:</td>
+	<td class="row2">{NUMBER_OF_POSTS}</td>
+	<td class="row1" align="right">{L_POSTS_PER_DAY}:</td>
+	<td class="row2">{POSTS_PER_DAY}</td>
 </tr>
 <tr> 
-<td class="row1" nowrap="nowrap" align="right">{L_NUMBER_TOPICS}:</td>
-<td class="row2">{NUMBER_OF_TOPICS}</td>
-<td class="row1" nowrap="nowrap" align="right">{L_TOPICS_PER_DAY}:</td>
-<td class="row2">{TOPICS_PER_DAY}</td>
+	<td class="row1" nowrap="nowrap" align="right">{L_NUMBER_TOPICS}:</td>
+	<td class="row2">{NUMBER_OF_TOPICS}</td>
+	<td class="row1" nowrap="nowrap" align="right">{L_TOPICS_PER_DAY}:</td>
+	<td class="row2">{TOPICS_PER_DAY}</td>
 </tr>
 <tr> 
-<td class="row1" nowrap="nowrap" align="right">{L_NUMBER_USERS}:</td>
-<td class="row2">{NUMBER_OF_USERS}</td>
-<td class="row1" nowrap="nowrap" align="right">{L_USERS_PER_DAY}:</td>
-<td class="row2">{USERS_PER_DAY}</td>
+	<td class="row1" nowrap="nowrap" align="right">{L_NUMBER_USERS}:</td>
+	<td class="row2">{NUMBER_OF_USERS}</td>
+	<td class="row1" nowrap="nowrap" align="right">{L_USERS_PER_DAY}:</td>
+	<td class="row2">{USERS_PER_DAY}</td>
 </tr>
 <tr> 
-<td class="row1" nowrap="nowrap" align="right">{L_BOARD_STARTED}:</td>
-<td class="row2"><span class="genmed">{START_DATE}</span></td>
-<td class="row1" nowrap="nowrap" align="right">{L_AVATAR_DIR_SIZE}:</td>
-<td class="row2">{AVATAR_DIR_SIZE}</td>
+	<td class="row1" nowrap="nowrap" align="right">{L_BOARD_STARTED}:</td>
+	<td class="row2"><span class="genmed">{START_DATE}</span></td>
+	<td class="row1" nowrap="nowrap" align="right">{L_AVATAR_DIR_SIZE}:</td>
+	<td class="row2">{AVATAR_DIR_SIZE}</td>
 </tr>
 <tr> 
-<td class="row1" nowrap="nowrap" align="right">{L_DB_SIZE}:</td>
-<td class="row2">{DB_SIZE}</td>
-<td class="row1" align="right">{L_GZIP_COMPRESSION}:</td>
-<td class="row2">{GZIP_COMPRESSION}</td>
+	<td class="row1" nowrap="nowrap" align="right">{L_DB_SIZE}:</td>
+	<td class="row2">{DB_SIZE}</td>
+	<td class="row1" align="right">{L_GZIP_COMPRESSION}:</td>
+	<td class="row2">{GZIP_COMPRESSION}</td>
+</tr>
+<tr> 
+	<td class="row1" nowrap="nowrap" align="right">{L_PHP_VERSION}:</td>
+	<td class="row2">{PHP_VERSION}</td>
+	<td class="row1" align="right">{L_MYSQL_VERSION}:</td>
+	<td class="row2">{MYSQL_VERSION}</td>
 </tr>
 </table>
 <br />

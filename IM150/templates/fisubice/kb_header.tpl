@@ -1,14 +1,15 @@
 <table width="100%" cellspacing="0" cellpadding="2" border="0">
-  <tr> 
-	   <td align="center"><p class="clearfix"><a class="kb" href="{U_KB}"><span>{L_KB}</span></a></p></td>
-  </tr>
-  <tr>
-	   <td align="center" class="nav">
-	   <!-- BEGIN switch_add_article -->
-	   <span class="nav">{L_ADD_ARTICLE}</span> &nbsp;
-	   <!-- END switch_add_article -->
-	   <span class="nav">{L_SEARCH}</span></td>
-  </tr>
+	<tr> 
+		<td align="center"><p class="clearfix"><a class="kb" href="{U_KB}"><span>{L_KB}</span></a></p></td>
+	</tr>
+	<tr>
+	   	<td align="center" class="up1">
+	   	<!-- BEGIN switch_add_article -->
+	   	<i class="genbtn fa fa-plus">&nbsp;{L_ADD_ARTICLE}&nbsp;</i> &nbsp;
+	   	<!-- END switch_add_article -->
+	   	<i class="genbtn fa fa-search">&nbsp;{L_SEARCH}&nbsp;</i>
+		</td>
+  	</tr>
 </table>
 
 <table width="100%" cellspacing="0" cellpadding="0" border="0">

@@ -1,4 +1,4 @@
-<script language="javascript" type="text/javascript">
+<script>
 <!--
 function NewWindow(mypage,myname)
 {
@@ -12,7 +12,7 @@ function NewWindow(mypage,myname)
 <!-- BEGIN row -->
 <!-- BEGIN header_table -->
 <!-- BEGIN multi_selection -->
-<script type="text/javascript">
+<script>
 <!--
 //
 // checkbox selection management

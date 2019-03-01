@@ -7,47 +7,47 @@
 <!-- BEGIN listitem --><li><!-- END listitem -->
 
 <!-- BEGIN quote_username_post_open -->
-<script type="text/javascript" src="templates/fi_divexpand.js"></script><table width="95%" cellspacing="1" cellpadding="3" border="0" align="center">
+<script src="templates/_js/fi_divexpand.js"></script><table width="95%" cellspacing="1" cellpadding="3" border="0" align="center">
 <tr>
 <td><div class="quotetitle">{USERNAME} {L_WROTE} ({U_VIEW_POST}): &#8250; 
-<script type="text/javascript">docWrite("quote")</script>
+<script>docWrite("quote")</script>
 <!-- END quote_username_post_open -->
 <!-- BEGIN quote_post_open -->
-<script type="text/javascript" src="templates/fi_divexpand.js"></script><table width="95%" cellspacing="1" cellpadding="3" border="0" align="center">
+<script src="templates/_js/fi_divexpand.js"></script><table width="95%" cellspacing="1" cellpadding="3" border="0" align="center">
 <tr>
 <td><div class="quotetitle">{L_QUOTE} ({U_VIEW_POST}): &#8250; 
-<script type="text/javascript">docWrite("quote")</script>
+<script>docWrite("quote")</script>
 <!-- END quote_post_open -->
 <!-- BEGIN quote_username_open -->
-<script type="text/javascript" src="templates/fi_divexpand.js"></script><table width="95%" cellspacing="1" cellpadding="3" border="0" align="center">
+<script src="templates/_js/fi_divexpand.js"></script><table width="95%" cellspacing="1" cellpadding="3" border="0" align="center">
 <tr>
 <td><div class="quotetitle">{USERNAME} {L_WROTE}: &#8250; 
-<script type="text/javascript">docWrite("quote")</script>
+<script>docWrite("quote")</script>
 <!-- END quote_username_open -->
 <!-- BEGIN quote_open -->
-<script type="text/javascript" src="templates/fi_divexpand.js"></script><table width="95%" cellspacing="1" cellpadding="3" border="0" align="center">
+<script src="templates/_js/fi_divexpand.js"></script><table width="95%" cellspacing="1" cellpadding="3" border="0" align="center">
 <tr>
 <td><div class="quotetitle">{L_QUOTE}: &#8250; 
-<script type="text/javascript">docWrite("quote")</script>
+<script>docWrite("quote")</script>
 <!-- END quote_open -->
 <!-- BEGIN quote_close -->
 </div></td></tr></table>
 <!-- END quote_close -->
 
-<!-- BEGIN php_open --><script type="text/javascript" src="templates/fi_divexpand.js"></script><table width="95%" cellspacing="1" cellpadding="3" border="0" align="center">
+<!-- BEGIN php_open --><script src="templates/_js/fi_divexpand.js"></script><table width="95%" cellspacing="1" cellpadding="3" border="0" align="center">
 <tr>
 <td><div class="phptitle">{L_PHP}: &#8250; 
-<script type="text/javascript">docWrite("php")</script>
+<script>docWrite("php")</script>
 <!-- END php_open -->
 <!-- BEGIN php_close -->
 </div></td></tr></table>
 <!-- END php_close -->
 
 
-<!-- BEGIN code_open --><script type="text/javascript" src="templates/fi_divexpand.js"></script><table width="95%" cellspacing="1" cellpadding="3" border="0" align="center">
+<!-- BEGIN code_open --><script src="templates/_js/fi_divexpand.js"></script><table width="95%" cellspacing="1" cellpadding="3" border="0" align="center">
 <tr>
 <td><div class="codetitle">{L_CODE}: &#8250; 
-<script type="text/javascript">docWrite("code")</script>
+<script>docWrite("code")</script>
 <!-- END code_open -->
 <!-- BEGIN code_close -->
 </div></td></tr></table>

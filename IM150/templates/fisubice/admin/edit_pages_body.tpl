@@ -31,14 +31,14 @@ function forum_links() {
 		<td class="row1" width="20%" valign="top"><span class="gen"><b>BBCode</b><br /><br /><br /><span align="center"><a href="{FORUM_LIST}" class="nav">{L_INDEX}</a></span>&nbsp;&nbsp;&nbsp;<br /><br /><span align="center"><a href="{U_SMILIES}" onclick="window.open('{U_SMILIES}', '_phpbbsmilies', 'HEIGHT=400,resizable=yes,scrollbars=yes,WIDTH=600');return false;" target="_phpbbsmilies" class="nav">{L_SMILIES}</a></span></td>
 		<td class="row2" width="80%">
 	
-<table id="posttable" cellspacing="0" cellpadding="0" border="0" width="450" style="border-collapse: collapse;">
+<table id="posttable" cellspacing="0" cellpadding="0" border="0" width="80%" style="border-collapse: collapse;">
 	<tr>
 		<td>
-			<table cellspacing="0" cellpadding="0" border="0" width="450" style="border-collapse: collapse;">
+			<table cellspacing="0" cellpadding="0" border="0" width="100%" style="border-collapse: collapse;">
 				<tr>
 					<td width="7"><img src="../mods/bbcode_box/images/bar-left.gif" width="7" height="25" border="0" alt="" /></td>
 					<td background="../mods/bbcode_box/images/bar-bg.gif">
-						<table cellspacing="0" cellpadding="0" border="0" width="430" style="border-collapse: collapse;">
+						<table cellspacing="0" cellpadding="0" border="0" width="100%" style="border-collapse: collapse;">
 							<tr>
 								<td width="23"><img border="0" height="22" width="23" src="../mods/bbcode_box/images/ltr.gif" class="postimage" name="dirltr" onClick="BBCdir('ltr')" onMouseOver="helpline('ltr')" alt="Left to Right" /></td>
 								<td width="23"><img border="0" height="22" width="23" src="../mods/bbcode_box/images/rtl.gif" class="postimage" name="dirrtl" onClick="BBCdir('rtl')" onMouseOver="helpline('rtl')" alt="Right to Left" /></td>
@@ -47,7 +47,7 @@ function forum_links() {
 								<td width="6"><img border="0" height="25" width="6" src="../mods/bbcode_box/images/bar-div.gif" alt="" /></td>
 								<td width="23"><input border="0" height="22" width="23" src="../mods/bbcode_box/images/spell.gif" class="postimage" value="SpellCheck" name="button" type="image" onclick="openspell();return false;" onMouseOver="helpline('spell')" /></td>
 								<td width="6"><img border="0" height="25" width="6" src="../mods/bbcode_box/images/bar-div.gif" alt="" /></td>
-								<td align="right"><a href="http://hvmdesign.com/" class="gensmall" title="BBCode Box MOD - by Disturbed One - www.HVMDesign.com" target="blank">Advanced BBCode Box v5.0.0</a>&nbsp;</td>
+								<td align="right"><a href="http://www.tactic.be" class="gensmall" title="BBCode Box MOD" target="blank">Advanced BBCode Box v5.1.1</a>&nbsp;</td>
 							</tr>
 						</table>
 					</td>
@@ -160,13 +160,15 @@ function forum_links() {
 								<td><img border="0" height="22" width="23" src="../mods/bbcode_box/images/sound.gif" class="postimage" name="stream" onClick="BBCstream()" onMouseOver="helpline('stream')" alt="Stream" /></td>
 								<td><img border="0" height="22" width="23" src="../mods/bbcode_box/images/ram.gif" class="postimage" name="ram" onClick="BBCram()" onMouseOver="helpline('ram')" alt="Real Media" /></td>
 								<td><img border="0" height="22" width="23" src="../mods/bbcode_box/images/video.gif" class="postimage" name="video" onClick="BBCvideo()" onMouseOver="helpline('video')" alt="Video" /></td>
-								<td><img border="0" height="22" width="23" src="../mods/bbcode_box/images/web.gif" class="postimage" name="web" onClick="BBCweb()" onMouseOver="helpline('web')" alt="Web Page" /></td>
+						        <td><img border="0" height="22" width="23" src="../mods/bbcode_box/images/gvideo.gif" class="postimage" name="GVideo" onClick="BBCGVideo()" onMouseOver="helpline('googlevid')" alt="GoogleVid"></td>
+						        <td><img border="0" height="22" width="23" src="../mods/bbcode_box/images/youtube.gif" class="postimage" name="youtube" onClick="BBCyoutube()" onMouseOver="helpline('youtube')" alt="YouTube" /></td>
 								<td><img border="0" height="25" width="6" src="../mods/bbcode_box/images/bar-div.gif" alt="" /></td>
 								<td><img border="0" height="22" width="23" src="../mods/bbcode_box/images/tab.gif" class="postimage" name="tab" onClick="BBCtab()" onMouseOver="helpline('tab')" alt="Tab" /></td>
 								<td><img border="0" height="22" width="23" src="../mods/bbcode_box/images/nbsp.gif" class="postimage" name="nbsp" onClick="BBCnbsp()" onMouseOver="helpline('nbsp')" alt="NBSP" /></td>
 								<td><img border="0" height="22" width="23" src="../mods/bbcode_box/images/hr.gif" class="postimage" name="hr" onClick="BBChr()" onMouseOver="helpline('hr')" alt="H-Line" /></td>
 								<td><img border="0" height="22" width="23" src="../mods/bbcode_box/images/you.gif" class="postimage" name="you" onClick="BBCyou()" onMouseOver="helpline('you')" alt="You" /></td>
 								<td><img border="0" height="25" width="6" src="../mods/bbcode_box/images/bar-div.gif" alt="" /></td>
+								<td><img border="0" height="22" width="23" src="../mods/bbcode_box/images/web.gif" class="postimage" name="web" onClick="BBCweb()" onMouseOver="helpline('web')" alt="Web Page" /></td>
 								<td><img border="0" height="22" width="23" src="../mods/bbcode_box/images/table.gif" class="postimage" name="table" onClick="BBCtable()" onMouseOver="helpline('table')" alt="Table" /></td>
 							</tr>
 						</table>
@@ -186,7 +188,7 @@ function forum_links() {
 					<td width="13"><img src="../mods/bbcode_box/images/bar-right.gif" width="13" height="25" border="0" alt="" /></td>
 				</tr>
 				<tr>
-					<td colspan="3"><textarea name="message" rows="15" cols="35" style="width:450px" tabindex="3" class="post" onselect="storeCaret(this);" onclick="storeCaret(this);" onkeyup="storeCaret(this); typeQuietly(this, event);">{CONTENT}</textarea></td>
+					<td colspan="3"><textarea name="message" rows="15" cols="35" style="width:100%" tabindex="3" class="post" onselect="storeCaret(this);" onclick="storeCaret(this);" onkeyup="storeCaret(this); typeQuietly(this, event);">{MESSAGE}</textarea></td>
 				</tr>
 			</table>
 		</td>

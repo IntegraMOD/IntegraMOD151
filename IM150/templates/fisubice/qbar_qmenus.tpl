@@ -1,21 +1,27 @@
 <!-- BEGIN _qmenu -->
-<div class="container-fluid">
+<div align="center">
+<table cellspacing="0" cellpadding="0" border="0">
 <!-- BEGIN line -->
-<div class="row w-100 mx-auto">
+<tr>
 	<!-- BEGIN cell -->
-	<div class="col nav">
+
+	<td align="left" nowrap="nowrap">
 		<!-- BEGIN field -->
 		<!-- BEGIN in_table -->
-		<a class="icon_nav qb">
+		<a class="icon_nav"><span>
+		<table cellspacing="0" cellpadding="0" border="0" width="100%"><tr><td align="center" nowrap="nowrap" class="qnav">
 		<!-- END in_table -->
 		{_qmenu.line.cell.field.OPTION}
 		<!-- BEGIN in_table -->
-		</a>
+		</td></tr></table>
+		</span></a>
 		<!-- END in_table -->
 		<!-- END field -->
-	</div>
+	</td>
+
 	<!-- END cell -->
-</div>
+</tr>
 <!-- END line -->
+</table>
 </div>
 <!-- END _qmenu --> 

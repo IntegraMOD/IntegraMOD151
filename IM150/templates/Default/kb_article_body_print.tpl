@@ -6,7 +6,7 @@
 {META}
 {NAV_LINKS}
 <title>{SITENAME} :: {PAGE_TITLE}</title>
-<link rel="stylesheet" href="templates/print_version.css" type="text/css" >
+<link rel="stylesheet" href="{TEMPLATE}/print_version.css" type="text/css" >
 </head>
 
 <body bgcolor="{T_BODY_BGCOLOR}" text="{T_BODY_TEXT}" link="{T_BODY_LINK}" vlink="{T_BODY_VLINK}" />
@@ -83,7 +83,7 @@
 		</table></td>
 	</tr>
 	<tr> 
-		<td class="spaceRow" colspan="2" height="1"><img src="templates/subSilver/images/spacer.gif" alt="" width="1" height="1" /></td>
+		<td class="spaceRow" colspan="2" height="1"><img src="{TEMPLATE}/images/spacer.gif" alt="" width="1" height="1" /></td>
 	</tr>
 	<!-- END postrow -->
   <!-- BEGIN switch_comments_show -->

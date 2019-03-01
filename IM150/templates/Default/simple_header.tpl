@@ -12,7 +12,7 @@
 {PREFS_TABS}
 <link rel="stylesheet" href="{TEMPLATE}/prillian/layout.css" type="text/css">
 <!-- BEGIN buddy_alert -->
-<script language="Javascript" type="text/javascript">
+<script>
 	if ( {buddy_alert.BUDDY_ALERT} )
 	{
 		window.open('{buddy_alert.U_BUDDY_ALERT}', '_buddyalert', 'HEIGHT=225,resizable=yes,WIDTH=400');

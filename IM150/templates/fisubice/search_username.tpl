@@ -1,4 +1,4 @@
-<script>
+<script language="javascript" type="text/javascript">
 <!--
 function refresh_username(selected_username)
 {

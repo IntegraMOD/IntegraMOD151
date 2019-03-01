@@ -1,4 +1,4 @@
-<script language="JavaScript">
+<script>
 function toggle_check_all(main, sub_num)
 {
 	for (var i=0; i < document.module_form.elements.length; i++)

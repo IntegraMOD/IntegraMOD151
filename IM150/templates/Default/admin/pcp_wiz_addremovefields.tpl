@@ -1,4 +1,4 @@
-<script language="javascript">
+<script>
 	var selectedList;
 	var availableList;
 	function createListObjects(){
@@ -158,7 +158,7 @@
 </form>
 <p>{HELP}</p>
 <br />
-<script language="javascript">
+<script>
 	createListObjects();
 	setSelectedPage();
 </script>

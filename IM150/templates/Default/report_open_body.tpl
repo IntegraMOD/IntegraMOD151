@@ -1,4 +1,4 @@
-<script type="text/javascript">
+<script>
 <!--
 function checked_switch(form)
 {

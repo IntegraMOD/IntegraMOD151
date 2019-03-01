@@ -7,9 +7,9 @@ body{font:12px Verdana,Arial,Helvetica,sans-serif;margin:6px;padding:0;}
 font,th,td,p {font: 12px Verdana,Arial,Helvetica,sans-serif;}
 
 /* General text */
-.gen { font-size : 1em !important; }
-.genmed { font-size : 0.923em !important; }
-.gensmall { font-size : 0.846em !important; }
+div.gen, .gen { font-size : 1em !important; }
+div.genmed, .genmed { font-size : 0.923em !important; }
+div.gensmall, .gensmall { font-size : 0.846em !important; }
 .qb a, .qb a:hover, .qb a:focus {text-decoration: none !important; margin: 0 2px;}
 .explaintitle{font-size:0.9em;font-weight:bold;}
 

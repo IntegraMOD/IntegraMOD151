@@ -1,4 +1,4 @@
-<script language="javascript">
+<script>
 	formupdated = false;
 	function selectMap(){
 		if (validateform()){
@@ -116,7 +116,7 @@
 		</div>
 	</td>
 </tr>
-<script language="javascript">
+<script>
 	function settxt_{fields.name}(){
 		hide('{fields.valuesname}');
 		hide('{fields.getfuncname}');
@@ -162,6 +162,6 @@
 </form>
 <p>{HELP}</p>
 <br />
-<script language="javascript">
+<script>
 	setSelectedPage();
 </script>

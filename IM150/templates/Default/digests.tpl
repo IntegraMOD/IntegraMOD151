@@ -1,4 +1,4 @@
-<script type="text/javascript"> 
+<script> 
     <!-- Hide Javascript from validators
     function toggleAllForums () {
       // If any particular forum is selected, this will unselect or select the all forums checkbox
