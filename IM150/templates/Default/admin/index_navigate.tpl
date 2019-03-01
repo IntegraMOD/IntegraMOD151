@@ -217,6 +217,3 @@ window.onload = doOnLoadMenuACP;
 </tr>
 </table>
 <br />
-<div align="center"><span class="copyright">
-Slide Menu v1.0.0
-</span></div>
