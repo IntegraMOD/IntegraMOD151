@@ -11,6 +11,11 @@ function NewWindow(mypage,myname)
 <!-- BEGIN topics_list_box -->
 <!-- BEGIN row -->
 <!-- BEGIN header_table -->
+<div class="container-fluid">
+  <div class="row my-auto"> 
+    <div class="col nav pl-0 gen"><a href="{catrow.U_VIEWCAT}" class="cattitle">{catrow.CAT_DESC}</a></div>
+  </div>
+</div>
 <!-- BEGIN multi_selection -->
 <script>
 <!--
@@ -42,68 +47,70 @@ function check_uncheck_all_{topics_list_box.row.header_table.BOX_ID}()
 // -->
 </script>
 <!-- END multi_selection -->
-<table border="0" cellpadding="0" cellspacing="0" class="tbt"><tr><td class="tbtl"><img src="images/spacer.gif" alt="" width="22" height="22" /></td><td class="tbtbot"><b></b><span class="gen"><a href="{catrow.U_VIEWCAT}" class="cattitle">{catrow.CAT_DESC}</a></span></td><td class="tbtr"><img src="images/spacer.gif" alt="" width="124" height="22" /></td></tr></table>
-<table border="0" cellpadding="4" cellspacing="1" width="100%" class="forumline">
-<tr> 
-	<th colspan="{topics_list_box.row.header_table.COLSPAN}" align="center" nowrap="nowrap">&nbsp;{topics_list_box.row.L_TITLE}&nbsp;</th>
-	<th width="50" align="center" nowrap="nowrap">&nbsp;{topics_list_box.row.L_REPLIES}&nbsp;</th>
-	<th width="100" align="center" nowrap="nowrap">&nbsp;{topics_list_box.row.L_AUTHOR}&nbsp;</th>
-	<th width="50" align="center" nowrap="nowrap">&nbsp;{topics_list_box.row.L_VIEWS}&nbsp;</th>
-	<th width="150" align="center" nowrap="nowrap">&nbsp;{topics_list_box.row.L_LASTPOST}&nbsp;</th>
-	<!-- BEGIN multi_selection -->
-	<th width="20" align="center" nowrap="nowrap"><input type="checkbox" name="all_mark_{topics_list_box.row.header_table.BOX_ID}" value="0" onClick="check_uncheck_all_{topics_list_box.row.header_table.BOX_ID}();" /></th>
-	<!-- END multi_selection -->
-</tr>
+
+<div class="container-fluid forumline">
+  <div class="row d-flex justify-content-end th px-0">
+	<div class="col pt-2">{topics_list_box.row.L_TITLE}</div>
+	<div class="col-1 pt-2 px-0">{topics_list_box.row.L_REPLIES}</div>
+	<div class="col-2 pt-2 ctr">{topics_list_box.row.L_AUTHOR}</div>
+	<div class="col-1 pt-2 px-0">{topics_list_box.row.L_VIEWS}</div>
+ 
+	<div class="col-2 pt-2 ctr">{topics_list_box.row.L_LASTPOST}</div>
+    <!-- BEGIN multi_selection -->
+	<div class="col-1 pt-2 ctr"><input type="checkbox" name="all_mark_{topics_list_box.row.header_table.BOX_ID}" value="0" onClick="check_uncheck_all_{topics_list_box.row.header_table.BOX_ID}();" /></div>
+    <!-- END multi_selection -->
+
+  </div>
 <!-- END header_table -->
 <!-- BEGIN header_row -->
-<tr>
-	<td class="row2" colspan="{topics_list_box.row.COLSPAN}"><span class="gensmall">&nbsp;&nbsp;<b>{topics_list_box.row.L_TITLE}</b></span></td>
-</tr>
+  <div class="row"> 
+    <div class="col row2 gensmall mx-0 py-2"><b>{topics_list_box.row.L_TITLE}</b></div>
+  </div>
 <!-- END header_row -->
 <!-- BEGIN topic -->
-<!-- <tr onclick="window.location.href='{topics_list_box.row.U_VIEW_TOPIC}'" style="cursor: pointer; cursor: hand"> -->
-<!-- temp fix for firefox ctrl click -->
-<tr>
-	<!-- BEGIN single_selection -->
-	<td class="{topics_list_box.row.ROW_CLASS}" onMouseOver="this.className='row2'" onMouseOut="this.className='{topics_list_box.row.ROW_CLASS}'" align="center" valign="middle" width="20"><input type="radio" name="{topics_list_box.FIELDNAME}" value="{topics_list_box.row.FID}" {topics_list_box.row.L_SELECT} /></td>
-	<!-- END single_selection -->
-	<td class="{topics_list_box.row.ROW_FOLDER_CLASS}" onMouseOver="this.className='row2'" onMouseOut="this.className='{topics_list_box.row.ROW_FOLDER_CLASS}'" align="center" valign="middle" ><img src="{topics_list_box.row.TOPIC_FOLDER_IMG}" alt="{topics_list_box.row.L_TOPIC_FOLDER_ALT}" title="{topics_list_box.row.L_TOPIC_FOLDER_ALT}" /></td>
-	<!-- BEGIN icon -->
-	<td class="{topics_list_box.row.ROW_CLASS}" onMouseOver="this.className='row2'" onMouseOut="this.className='{topics_list_box.row.ROW_CLASS}'" align="center" valign="middle" width="20">{topics_list_box.row.ICON}</td>
-	<!-- END icon -->
-	<td class="{topics_list_box.row.ROW_CLASS}" onMouseOver="this.className='row2'" onMouseOut="this.className='{topics_list_box.row.ROW_CLASS}'" width="100%"  onMouseOver="this.className='row2'" onMouseOut="this.className='{topics_list_box.row.ROW_CLASS}'">
-		<span class="topictitle">{topics_list_box.row.MINICLOCK}{topics_list_box.row.NEWEST_POST_IMG}{topics_list_box.row.TOPIC_ATTACHMENT_IMG}{topics_list_box.row.L_NEWS}{topics_list_box.row.TOPIC_TYPE}</span><span class="gensmall">{topics_list_box.row.TOPIC_INFO}</span><span class="topictitle"><a href="{topics_list_box.row.U_VIEW_TOPIC}" class="topictitle">{topics_list_box.row.TOPIC_TITLE}</a></span>&nbsp;<span>{topics_list_box.row.RATING}</span><span class="gensmall">&nbsp;&nbsp;{topics_list_box.row.TOPIC_ANNOUNCES_DATES}
-		{topics_list_box.row.TOPIC_DESCRIPTION}<br />
-	      {topics_list_box.row.TOPIC_CALENDAR_DATES}</span>
-		<span class="gensmall">
-			{topics_list_box.row.GOTO_PAGE}
-			<!-- BEGIN nav_tree -->
-			{topics_list_box.row.TOPIC_NAV_TREE}
-			<!-- END nav_tree -->
-		</span>
-	</td>
-	<td class="row1" onMouseOver="this.className='row2'" onMouseOut="this.className='row1'"  align="center" valign="middle"><span class="postdetails"><a href="{topics_list_box.row.U_POSTINGS_POPUP}" onclick="NewWindow(this.href,'PopupWin');return false" onfocus="this.blur()"; title="{L_POPUP_MESSAGE}">{topics_list_box.row.REPLIES}</a></span></td>
-	<td class="row1" onMouseOver="this.className='row2'" onMouseOut="this.className='row1'"  align="center" valign="middle"><span class="name">{topics_list_box.row.TOPIC_AUTHOR}</span></td>
-	<td class="row1" onMouseOver="this.className='row2'" onMouseOut="this.className='row1'"  align="center" valign="middle"><span class="postdetails">{topics_list_box.row.VIEWS}</span></td>
-	<td class="row1" onMouseOver="this.className='row2'" onMouseOut="this.className='row1'"  align="center" valign="middle" nowrap="nowrap" onclick="window.location.href='{topics_list_box.row.U_VIEW_TOPIC}'"><span class="postdetails">{topics_list_box.row.LAST_POST_TIME}<br />{topics_list_box.row.LAST_POST_AUTHOR} {topics_list_box.row.LAST_POST_IMG}</span></td>
+  <div class="row d-flex justify-content-end px-0 py-2">
+	<div class="col nav nowrap">
+	  <!-- BEGIN single_selection -->
+	  <div class="px-1 {topics_list_box.row.ROW_CLASS}"><input type="radio" name="{topics_list_box.FIELDNAME}" value="{topics_list_box.row.FID}" {topics_list_box.row.L_SELECT} /></div>
+	  <!-- END single_selection -->
+	  <div class="px-1 {topics_list_box.row.ROW_FOLDER_CLASS}"><img src="{topics_list_box.row.TOPIC_FOLDER_IMG}" alt="{topics_list_box.row.L_TOPIC_FOLDER_ALT}" title="{topics_list_box.row.L_TOPIC_FOLDER_ALT}" /></div>
+      <!-- BEGIN icon -->
+	  <div class="{topics_list_box.row.ROW_CLASS} pt-1">{topics_list_box.row.ICON}</div>
+      <!-- END icon -->
+	  <div class="pl-2 {topics_list_box.row.ROW_CLASS}">
+      <span class="topictitle">{topics_list_box.row.MINICLOCK}{topics_list_box.row.NEWEST_POST_IMG}{topics_list_box.row.TOPIC_ATTACHMENT_IMG}{topics_list_box.row.L_NEWS}{topics_list_box.row.TOPIC_TYPE}</span><span class="gensmall">{topics_list_box.row.TOPIC_INFO}</span><span class="topictitle"><a href="{topics_list_box.row.U_VIEW_TOPIC}" class="topictitle">{topics_list_box.row.TOPIC_TITLE}</a></span>&nbsp;<span>{topics_list_box.row.RATING}</span><span class="gensmall">&nbsp;&nbsp;{topics_list_box.row.TOPIC_ANNOUNCES_DATES}
+	  {topics_list_box.row.TOPIC_DESCRIPTION}<br />
+	  {topics_list_box.row.TOPIC_CALENDAR_DATES}
+      </span>
+	  <span class="gensmall">
+	  {topics_list_box.row.GOTO_PAGE}
+	  <!-- BEGIN nav_tree -->
+	  {topics_list_box.row.TOPIC_NAV_TREE}
+	  <!-- END nav_tree -->
+	  </span>
+      </div>
+	</div>
+	<div class="col-1 row1 ctr postdetails"><a href="{topics_list_box.row.U_POSTINGS_POPUP}" onclick="NewWindow(this.href,'PopupWin');return false" onfocus="this.blur()"; title="{L_POPUP_MESSAGE}">{topics_list_box.row.REPLIES}</a></div>
+	<div class="col-2 row1 ctr name">{topics_list_box.row.TOPIC_AUTHOR}</div>
+	<div class="col-1 row1 ctr postdetails">{topics_list_box.row.VIEWS}</div>
+	<div class="col-2 row1 postdetails" onclick="window.location.href='{topics_list_box.row.U_VIEW_TOPIC}'">{topics_list_box.row.LAST_POST_TIME}<br />{topics_list_box.row.LAST_POST_AUTHOR} {topics_list_box.row.LAST_POST_IMG}</div>
 	<!-- BEGIN multi_selection -->
-	<td class="row2" align="center" valign="middle"><span class="postdetails"><input type="checkbox" name="{topics_list_box.FIELDNAME}[]{topics_list_box.row.BOX_ID}" value="{topics_list_box.row.FID}" onClick="javascript:check_uncheck_main_{topics_list_box.row.BOX_ID}();" {topics_list_box.row.L_SELECT} /></span></td>
+	<div class="col-1 row2 postdetails"><input type="checkbox" name="{topics_list_box.FIELDNAME}[]{topics_list_box.row.BOX_ID}" value="{topics_list_box.row.FID}" onClick="javascript:check_uncheck_main_{topics_list_box.row.BOX_ID}();" {topics_list_box.row.L_SELECT} />XXX</div>
 	<!-- END multi_selection -->
-</tr>
+  </div>
 <!-- END topic -->
 <!-- BEGIN no_topics -->
-<tr> 
-	<td class="row1" colspan="{topics_list_box.row.COLSPAN}" height="30" align="center" valign="middle"><span class="gen">{topics_list_box.row.L_NO_TOPICS}</span></td>
-</tr>
+  <div class="row"> 
+    <div class="col row2 gensmall gen mx-3">{topics_list_box.row.L_NO_TOPICS}</div>
+  </div>
 <!-- END no_topics -->
 <!-- BEGIN bottom -->
-<tr> 
-	<td class="cat" colspan="{topics_list_box.row.COLSPAN}" align="center" valign="middle"><span class="genmed">{topics_list_box.row.FOOTER}</span></td>
-</tr>
+  <div class="row"> 
+    <div class="col catBottom genmed gen mx-3">{topics_list_box.row.FOOTER}</div>
+  </div>
 <!-- END bottom -->
 <!-- BEGIN footer_table -->
-</table>
-<table border="0" cellpadding="0" cellspacing="0" class="tbl"><tr><td class="tbll"><img src="images/spacer.gif" alt="" width="8" height="4" /></td><td class="tblbot"><img src="images/spacer.gif" alt="" width="8" height="4" /></td><td class="tblr"><img src="images/spacer.gif" alt="" width="8" height="4" /></td></tr></table>
+</div>
 <!-- END footer_table -->
 <!-- END row -->
 <!-- END topics_list_box -->
