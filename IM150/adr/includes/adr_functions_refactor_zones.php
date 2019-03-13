@@ -83,13 +83,11 @@ function zone_goto($goto_id, $cost_goto)
 
 		@header('Location:'.append_sid("adr_zones.$phpEx"));
 		adr_previous( Adr_zone_change_success , adr_zones , '' );
-		break;
 	}
 	else
 	{
 		$message = $lang['Adr_zone_item_lack'] . ' : ' . $required_item . '<br /><br />' . $lang['Adr_zone_event_return'] . '<br /><br />';
 		message_die(GENERAL_ERROR, $message , Zones , '' );
-		break;
 	}
 }
 
@@ -255,7 +253,7 @@ function zone_npc_actions()
 				$message = "<img src=\"adr/images/zones/npc/" . $npc_row['npc_img'] . "\"><br /><br /><b>" . $npc_row['npc_name'] . ":</b><br /><div class=\"npc_dialog\">\"" . $npc_row['npc_message3'] . "\"</div><br /><br />" . $lang['Adr_zone_event_return'];
 				$adr_zone_npc_title = sprintf( $lang['Adr_Npc_speaking_with'], $npc_row['npc_name'] );
 				message_die(GENERAL_ERROR, $message , $adr_zone_npc_title , '' );
-				break;
+				return;
 			}
 		}
 	}
@@ -427,14 +425,14 @@ function zone_npc_actions()
 			$message = "<img src=\"adr/images/zones/npc/" . $npc_give_row['npc_img'] . "\"><br /><br /><b>" . $npc_give_row['npc_name'] . ":</b> <i>\"" . $npc_give_row['npc_message2'] . "\"</i><br /><br />".$item_prize_lang."".$points_prize_lang."".$exp_prize_lang."".$sp_prize_lang."<br />" . $lang['Adr_zone_event_return'];
 			$adr_zone_npc_title = sprintf( $lang['Adr_Npc_speaking_with'], $npc_give_row['npc_name'] );
 			message_die(GENERAL_ERROR, $message , $adr_zone_npc_title , '' );
-			break;
+			return;
 		}
 		else
 		{
 			$message = "<img src=\"adr/images/zones/npc/" . $npc_give_row['npc_img'] . "\"><br /><br /><b>" . $npc_give_row['npc_name'] . ":</b> <i>\"" . $npc_give_row['npc_message2'] . "\"</i><br /><br />" . $lang['Adr_zone_event_return'];
 			$adr_zone_npc_title = sprintf( $lang['Adr_Npc_speaking_with'], $npc_give_row['npc_name'] );
 			message_die(GENERAL_ERROR, $message , $adr_zone_npc_title , '' );
-			break;
+			return;
 		}
 	}
 }
