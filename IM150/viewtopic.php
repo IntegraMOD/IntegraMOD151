@@ -437,7 +437,7 @@ if ( isset($_GET['view']) && empty($_GET[POST_POST_URL]) )
 		redirect(append_sid("./viewtopic.$phpEx?" . POST_POST_URL . "=$post_id#$post_id", true));
 //-- fin mod : keep unread -------------------------------------------------------------------------
 	}
-	else if ( $_GET['view'] == 'next' || $_GET['view'] == 'previous' )
+	else if ( $_GET['view'] == 'next' || $_GET['view'] == 'previous' || $_GET['view'] == 'prev' )
 	{
 		$sql_condition = ( $_GET['view'] == 'next' ) ? '>' : '<';
 		$sql_ordering = ( $_GET['view'] == 'next' ) ? 'ASC' : 'DESC';
@@ -902,6 +902,20 @@ $view_forum_url = append_sid("viewforum.$phpEx?" . POST_FORUM_URL . "=$forum_id"
 $view_prev_topic_url = append_sid("viewtopic.$phpEx?" . POST_TOPIC_URL . "=$topic_id&amp;view=previous");
 $view_next_topic_url = append_sid("viewtopic.$phpEx?" . POST_TOPIC_URL . "=$topic_id&amp;view=next");*/
 // Hide Buttons :: Added :: Start
+$view_prev_topic_url = append_sid("viewtopic.$phpEx?" . POST_TOPIC_URL . "=".$topic_id."&amp;view=prev"); 
+$view_next_topic_url = append_sid("viewtopic.$phpEx?" . POST_TOPIC_URL . "=".$topic_id."&amp;view=next"); 
+$previmg = 'topic_previous'; 
+$nextimg = 'topic_next'; 
+// Mozilla navigation bar
+$nav_links['prev'] = array(
+  'url' => $view_prev_topic_url,
+  'title' => $lang['View_previous_topic']
+);
+$nav_links['next'] = array(
+  'url' => $view_next_topic_url,
+  'title' => $lang['View_next_topic']
+);
+/** V: always show the prev/next button, saves this huge SQL query
 $sql = "SELECT this.topic_id AS thistopic 
                          , next.topic_id AS nexttopic 
                          , prev.topic_id AS prevtopic 
@@ -952,6 +966,7 @@ if ( $row = $db->sql_fetchrow($result) ){
         $nextimg = 'topic_next_no'; 
 }
 // Hide Buttons :: Added :: End
+*/
 
 //
 // Mozilla navigation bar
