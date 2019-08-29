@@ -724,13 +724,13 @@ function update_post_stats(&$mode, &$post_data, &$forum_id, &$topic_id, &$post_i
     $posts = $row['posts'];
     $lastpost = $row['last_post'];
     // get forum topics
-    $sql = "SELECT t.topic_id AS topics
+    $sql = "SELECT COUNT(t.topic_id) AS topics
                         FROM ".TOPICS_TABLE." t
                         LEFT OUTER JOIN
                                  ".APPROVE_POSTS_TABLE." ap
                                     ON (t.topic_id = ap.topic_id)
                      WHERE forum_id = ".$forum_id."
-                          AND topic_time < ".time()."
+                         AND topic_time < ".time()."
                          AND ap.post_id is null";
     if (!($result = $db->sql_query($sql))) {
         message_die(GENERAL_ERROR, 'Error in fetching topics data', '', __LINE__, __FILE__, $sql);
