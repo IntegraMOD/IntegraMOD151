@@ -269,7 +269,7 @@ if ($mode == $lang['Adr_admin_maps_zone_townmap_edit'] )
 			if ( !($result = $db->sql_query($sql)) ) {
 				message_die(GENERAL_MESSAGE, $lang['Adr_admin_maps_error_7']);
 			}
-			$zrow = mysql_fetch_array($result);
+			$zrow = $db->sql_fetchrow($result);
 
 			$townmap = $zrow['zonemap_bg'];
 			$zwidth = $zrow['zonemap_width'];
@@ -449,15 +449,15 @@ if ($action == $lang['Adr_admin_maps_remove'])
 
 	$sql = "select * from ".ADR_ZONE_MAPS_TABLE." where zone_id='$id'";
 	if ( !($result = $db->sql_query($sql)) ) { message_die(GENERAL_MESSAGE, $lang['Adr_admin_maps_error_5']); }
-	$uhrow = mysql_fetch_array($result);
+	$uhrow = $db->sql_fetchrow($result);
 
 	$sql = "select zone_name from ".ADR_ZONES_TABLE." where zone_id='$id'";
 	if ( !($result = $db->sql_query($sql)) ) { message_die(GENERAL_MESSAGE, $lang['Adr_admin_maps_error_3']); }
-	$prow = mysql_fetch_array($result);
+	$prow = $db->sql_fetchrow($result);
 
 	$sql = "select zonemap_name from ".ADR_ZONE_TOWNMAP_TABLE." where zonemap_type=$uhrow[zonemap_type]";
 	if ( !($result = $db->sql_query($sql)) ) { message_die(GENERAL_MESSAGE, $lang['Adr_admin_maps_error_7']); }
-	$hrow = mysql_fetch_array($result);
+	$hrow = $db->sql_fetchrow($result);
 
 	$buildingarray = explode('~',$uhrow['zonemap_buildings']);
 	$buildingamount = count ($buildingarray);
@@ -510,15 +510,15 @@ if ($action == $lang['Adr_admin_maps_place building'])
 	{message_die(GENERAL_MESSAGE, $lang['Adr_admin_maps_need_info']);}
 	$sql = "select * from ".ADR_ZONE_MAPS_TABLE." where zone_id='$id'";
 	if ( !($result = $db->sql_query($sql)) ) { message_die(GENERAL_MESSAGE, $lang['Adr_admin_maps_error_9']); }
-	$uhrow = mysql_fetch_array($result);
+	$uhrow = $db->sql_fetchrow($result);
 
 	$sql = "select zone_name from ".ADR_ZONES_TABLE." where zone_id='$id'";
 	if ( !($result = $db->sql_query($sql)) ) { message_die(GENERAL_MESSAGE, $lang['Adr_admin_maps_error_7']); }
-	$prow = mysql_fetch_array($result);
+	$prow = $db->sql_fetchrow($result);
 
 	$sql = "select zonemap_name from ".ADR_ZONE_TOWNMAP_TABLE." where zonemap_type=$uhrow[zonemap_type]";
 	if ( !($result = $db->sql_query($sql)) ) { message_die(GENERAL_MESSAGE, $lang['Adr_admin_maps_error_4']); }
-	$hrow = mysql_fetch_array($result);
+	$hrow = $db->sql_fetchrow($result);
 
 	$buildingarray = explode('~',$uhrow['zonemap_buildings']);
 	$buildingamount = count ($buildingarray);
@@ -585,7 +585,7 @@ if ($mode == $lang['Adr_admin_maps_building_types'])
 		$landscapes = '<br><b>'.$lang['Adr_admin_maps_defined_landscape_images'].'</b><br><br>';
 		for ($x = 0; $x < mysql_num_rows($iresult); $x++)
 		{
-			$irow = mysql_fetch_array($iresult);
+			$irow = $db->sql_fetchrow($iresult);
 			$items .= "<option value=\"".$irow['name']."\">".ucfirst($irow['sdesc'])."</option>";
 			if ($irow['zone_building_type'] == 0) {$cities .= ''.$irow['sdesc'].'<br>';}
 			if ($irow['zone_building_type'] == 1) {$buildings .= ''.$irow['sdesc'].'<br>';}
@@ -695,7 +695,7 @@ if ($mode == $lang['Adr_admin_maps_building_types'])
 		{
 			message_die(GENERAL_MESSAGE, $lang['Adr_admin_maps_error_4']);
 		}
-		$buildingrow = mysql_fetch_array($result);
+		$buildingrow = $db->sql_fetchrow($result);
 	
 		if ($buildingrow['zone_building_type'] == 0) {$typecity = ' CHECKED';}
 		if ($buildingrow['zone_building_type'] == 1) {$typebuilding = ' CHECKED';}
@@ -811,7 +811,7 @@ if ($mode == $lang['Adr_admin_maps_building_cells'])
 		$zones = "<span class=\"genmed\"><select name=\"editzone\">";
 		for ($x = 0; $x < mysql_num_rows($result); $x++)
 		{
-			$zoneinfo = mysql_fetch_array($result);
+			$zoneinfo = $db->sql_fetchrow($result);
 			$zones .= "<option value=\"".$zoneinfo['zonemap_type']."\">".$zoneinfo['zonemap_type']." - ".$zoneinfo['zonemap_name']."</option>";
 		}
 		$zones .= "</select>";
@@ -841,7 +841,7 @@ if ($mode == $lang['Adr_admin_maps_building_cells'])
 	{
 		$sql = "select * from ".ADR_ZONE_TOWNMAP_TABLE." where zonemap_type=$editzone";
 		if ( !($result = $db->sql_query($sql)) ) { message_die(GENERAL_MESSAGE, $lang['Adr_admin_maps_error_5']); }
-		$hrow = mysql_fetch_array($result);
+		$hrow = $db->sql_fetchrow($result);
 
 		$zonemap = $hrow['zonemap_bg'];
 		$zwidth = $hrow['zonemap_width'];
@@ -955,7 +955,7 @@ if ($mode == $lang['Adr_admin_maps_townmap_types'])
 		$townmap = "<span class=\"genmed\"><select name=\"editmap\">";
 		for ($x = 0; $x < mysql_num_rows($result); $x++)
 		{
-			$townmapinfo = mysql_fetch_array($result);
+			$townmapinfo = $db->sql_fetchrow($result);
 			$townmap .= "<option value=\"".$townmapinfo['zonemap_type']."\">".$townmapinfo['zonemap_type']." - ".$townmapinfo['zonemap_name']."</option>";
 		}
 		$townmap .= "</select>";
@@ -1042,7 +1042,7 @@ if ($mode == $lang['Adr_admin_maps_townmap_types'])
 		$sql = "select zonemap_type from ".ADR_ZONE_TOWNMAP_TABLE." where zonemap_type='$townmaptype'";
 		if ( !($result = $db->sql_query($sql)) )
 		{ message_die(GENERAL_MESSAGE, $lang['Adr_admin_maps_error_12'] ); }
-		$existingtownmaptype = mysql_fetch_array($result);
+		$existingtownmaptype = $db->sql_fetchrow($result);
 
 		if ($townmaptype == $existingtownmaptype['zonemap_type'])
 		{ message_die(GENERAL_MESSAGE,$lang['Adr_admin_maps_need_exists']); }
@@ -1062,7 +1062,7 @@ if ($action == $lang['Adr_admin_maps_zonemap_edit_map'])
 	$sql = "select * from ".ADR_ZONE_TOWNMAP_TABLE." where zonemap_type=$editmap";
 	if ( !($result = $db->sql_query($sql)) )
 	{ message_die(GENERAL_MESSAGE, $lang['Adr_admin_maps_error_8'] ); }
-	$row = mysql_fetch_array($result);
+	$row = $db->sql_fetchrow($result);
 
 	$statinfo = '
 	<tr>
@@ -1142,7 +1142,7 @@ if ($action == $lang['Adr_admin_maps_zonemap_map_update'])
 		$sql = "select zonemap_type from ".ADR_ZONE_TOWNMAP_TABLE." where zonemap_type=$townmaptype";
 		if ( !($result = $db->sql_query($sql)) )
 		{ message_die(GENERAL_MESSAGE, $lang['Adr_admin_maps_error_12'] ); }
-		$existingtownmaptype = mysql_fetch_array($result);
+		$existingtownmaptype = $db->sql_fetchrow($result);
 
 		if ($townmaptype == $existingtownmaptype[0])
 		{ message_die(GENERAL_MESSAGE,$lang['Adr_admin_maps_need_exists']); }

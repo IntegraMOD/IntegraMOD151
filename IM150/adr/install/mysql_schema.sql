@@ -453,7 +453,7 @@ CREATE TABLE phpbb_adr_elements (
 ) ;
 
 CREATE TABLE phpbb_adr_general (
-  config_name varchar(255) NOT NULL default '0',
+  config_name varchar(180) NOT NULL default '0',
   config_value int(15) NOT NULL default '0',
   PRIMARY KEY  (config_name)
 ) ;
@@ -479,7 +479,7 @@ CREATE TABLE phpbb_adr_jail_votes (
 
 CREATE TABLE phpbb_adr_jobs (
   job_id smallint(5) NOT NULL auto_increment,
-  job_name varchar(255) NOT NULL default '',
+  job_name varchar(180) NOT NULL default '',
   job_desc text NOT NULL,
   job_class_id smallint(3) NOT NULL default '0',
   job_race_id smallint(3) NOT NULL default '0',
@@ -669,7 +669,7 @@ CREATE TABLE phpbb_adr_shops_items_type (
 ) ;
 
 CREATE TABLE phpbb_adr_skills (
-  skill_id tinyint(1) NOT NULL default '0',
+  skill_id tinyint(8) NOT NULL default '0',
   skill_name varchar(255) NOT NULL default '',
   skill_desc text NOT NULL,
   skill_img varchar(255) NOT NULL default '',
@@ -867,13 +867,13 @@ CREATE TABLE phpbb_rabbitoshi_config (
 ) ;
 
 CREATE TABLE phpbb_rabbitoshi_general (
-  config_name varchar(255) NOT NULL default '0',
+  config_name varchar(180) NOT NULL default '0',
   config_value int(15) NOT NULL default '0',
   PRIMARY KEY  (config_name)
 ) ;
 
 CREATE TABLE phpbb_rabbitoshi_shop (
-  item_id smallint(1) NOT NULL default '0',
+  item_id smallint(9) NOT NULL default '0',
   item_name varchar(255) NOT NULL default '',
   item_prize int(8) NOT NULL default '0',
   item_desc varchar(255) NOT NULL default '',
@@ -974,7 +974,7 @@ CREATE TABLE phpbb_adr_stores_stats(
 
 # ADR 0.4.3
 CREATE TABLE phpbb_adr_bug_fix(
-  fix_id varchar(255) NOT NULL default '',
+  fix_id varchar(180) NOT NULL default '',
   fix_install_date int(12) NOT NULL default '0',
   fix_installed_by varchar(255) NOT NULL default '',
   PRIMARY KEY(fix_id)

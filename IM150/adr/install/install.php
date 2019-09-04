@@ -45,6 +45,8 @@ $dbms_basic = $adr_install_root.$schema . '_basic.sql';
 $remove_remarks = $available_dbms[$dbms]['COMMENTS'];;
 $delimiter = $available_dbms[$dbms]['DELIM'];
 $delimiter_basic = $available_dbms[$dbms]['DELIM_BASIC'];
+// Load in the DB
+include($phpbb_root_path.'includes/db.'.$phpEx);
 // Load in the sql parser
 include($phpbb_root_path.'includes/sql_parse.'.$phpEx);
 
@@ -80,8 +82,7 @@ for ($i = 0; $i < sizeof($sql_query); $i++)
 			echo '<li><b style="color: RED;">ERROR:</b> <pre>'.$sql_query[$i].'
 				
 				
-'.$error.'</pre></li>';
-			break;
+'.print_r($error, true).'</pre></li>';
 		}
 		else
 		{
@@ -119,8 +120,7 @@ for ($i = 0; $i < sizeof($sql_query); $i++)
 			echo '<li><b style="color: RED;">ERROR:</b> <pre>'.$sql_query[$i].'
 				
 				
-'.$error.'</pre></li>';
-			break;
+'.print_r($error, true).'</pre></li>';
 		}
 		else
 		{

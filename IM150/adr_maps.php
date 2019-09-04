@@ -60,7 +60,7 @@ $zone_id = $board_config['Adr_zone_worldmap_zone'];
 // Dynamic Zone Maps
 $sql = "select * from ".ADR_ZONE_MAPS_TABLE." where zone_id='$zone_id'";
 if ( !($result = $db->sql_query($sql)) ) { message_die(GENERAL_MESSAGE, $lang['Adr_zone_maps_error_message_1'] ); }
-$uhrow = mysql_fetch_array($result);
+$uhrow = $db->sql_fetchrow($result);
 if ( $uhrow['zonemap_type'] == '' )
 {
 	$template->assign_block_vars('switch_Adr_zone_townmap_disable',array());
@@ -73,7 +73,7 @@ if ( $uhrow['zonemap_type'] > 0 )
 {
 $sql = "select * from ".ADR_ZONE_TOWNMAP_TABLE." where zonemap_type=$uhrow[zonemap_type]";
 if ( !($result = $db->sql_query($sql)) ) { message_die(GENERAL_MESSAGE, $lang['Adr_zone_maps_error_message_2'] ); }
-$zrow = mysql_fetch_array($result);
+$zrow = $db->sql_fetchrow($result);
 
 $townmap = $zrow['zonemap_bg'];
 $zwidth = $zrow['zonemap_width'];
@@ -96,7 +96,7 @@ for ($iv = 1; $iv <= $zcellsvn; $iv++)
 		{
 			$sql = "select * from ".ADR_ZONE_BUILDINGS_TABLE." where sdesc='".$buildingarray[$ia]."'";
 			if ( !($result = $db->sql_query($sql)) ) { message_die(GENERAL_MESSAGE, $lang['Adr_zone_maps_error_message_3'] ); }
-			$brow = mysql_fetch_array($result);
+			$brow = $db->sql_fetchrow($result);
 			$buildinglist2[$iv][$ih] = $brow['name'];
 
 			if ( $brow['zone_name_tag'] =='' )

@@ -627,6 +627,7 @@ function pcp_output_avatar($field_name, $view_userdata, $map_name='')
    { 
       switch ($view_userdata[$field_name . '_type'] ) 
       { 
+        /* V: replaced with AD&R+PCP
          case USER_AVATAR_UPLOAD: 
             $img = ( $board_config['allow_avatar_upload'] ) ? '<img src="' . $board_config['avatar_path'] . '/' . $view_userdata[$field_name] . '" alt="' . $lang['Avatar'] . '" border="0" />' : ''; 
             break; 
@@ -636,6 +637,19 @@ function pcp_output_avatar($field_name, $view_userdata, $map_name='')
          case USER_AVATAR_GALLERY: 
             $img = ( $board_config['allow_avatar_local'] ) ? '<img src="' . $board_config['avatar_gallery_path'] . '/' . $view_userdata[$field_name] . '" alt="' . $lang['Avatar'] . '" border="0" />' : ''; 
             break; 
+         */
+         case USER_AVATAR_UPLOAD: 
+            $img = ( $board_config['allow_avatar_upload'] ) ? '<img src="' . $board_config['avatar_path'] . '/' . $view_userdata[$field_name] . '" alt="' . $lang['Avatar'] . '" border="0" />' : ''; 
+            $img = ( ($view_userdata['user_cell_time'] > 0) && $board_config['cell_allow_display_bars'] ) ? '<div style="position:absolute;padding:0px;width:'.$board_config['avatar_max_width'].'px;height:'.$board_config['avatar_max_height'].'px;z-index:1;"><IMG src="' . $board_config['avatar_path'] . '/' . $view_userdata[$field_name] . '" border=0 width="'.$board_config['avatar_max_width'].'" height="'.$board_config['avatar_max_height'].'"></div><div style="position:relative;padding:0px;width:'.$board_config['avatar_max_width'].'px;height:'.$board_config['avatar_max_height'].'px;z-index:2;"><IMG src="images/cell.gif" border=0 STYLE="filter:alpha(opacity=65)" width="'.$board_config['avatar_max_width'].'" height="'.$board_config['avatar_max_height'].'"></div>' : $img ; 
+            break; 
+         case USER_AVATAR_REMOTE: 
+            $img = ( $board_config['allow_avatar_remote'] ) ? '<img src="' . $view_userdata[$field_name] . '" alt="' . $lang['Avatar'] . '" border="0" />' : ''; 
+            $img = ( ($view_userdata['user_cell_time'] > 0) && $board_config['cell_allow_display_bars']) ? '<div style="position:absolute;padding:0px;width:'.$board_config['avatar_max_width'].'px;height:'.$board_config['avatar_max_height'].'px;z-index:1;"><IMG src="' . $view_userdata['user_avatar'] . '" border=0 width="'.$board_config['avatar_max_width'].'" height="'.$board_config['avatar_max_height'].'"></div><div style="position:relative;padding:0px;width:'.$board_config['avatar_max_width'].'px;height:'.$board_config['avatar_max_height'].'px;z-index:2;"><IMG src="images/cell.gif" border=0 STYLE="filter:alpha(opacity=65)" width="'.$board_config['avatar_max_width'].'" height="'.$board_config['avatar_max_height'].'"></div>' : $img ;              
+            break; 
+         case USER_AVATAR_GALLERY: 
+            $img = ( $board_config['allow_avatar_local'] ) ? '<img src="' . $board_config['avatar_gallery_path'] . '/' . $view_userdata[$field_name] . '" alt="' . $lang['Avatar'] . '" border="0" />' : ''; 
+            $img = ( ($view_userdata['user_cell_time'] > 0) && $board_config['cell_allow_display_bars']) ? '<div style="position:absolute;padding:0px;width:'.$board_config['avatar_max_width'].'px;height:'.$board_config['avatar_max_height'].'px;z-index:1;"><IMG src="' . $board_config['avatar_gallery_path'] . '/' . $view_userdata['user_avatar'] . '" border=0 width="'.$board_config['avatar_max_width'].'" height="'.$board_config['avatar_max_height'].'"></div><div style="position:relative;padding:0px;width:'.$board_config['avatar_max_width'].'px;height:'.$board_config['avatar_max_height'].'px;z-index:2;"><IMG src="images/cell.gif" border=0 STYLE="filter:alpha(opacity=65)" width="'.$board_config['avatar_max_width'].'" height="'.$board_config['avatar_max_height'].'"></div>' : $img ; 
+            break;
       } 
                 if ( ($img) && ($map_name == 'PHPBB.viewtopic.left') ) 
                 { 

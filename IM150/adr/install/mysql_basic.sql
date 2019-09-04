@@ -346,6 +346,8 @@ INSERT INTO phpbb_config (config_name, config_value) VALUES ('rabbitoshi_name', 
 INSERT INTO phpbb_config (config_name, config_value) VALUES ('rabbitoshi_enable_cron', '1');
 INSERT INTO phpbb_config (config_name, config_value) VALUES ('rabbitoshi_cron_time', '86400');
 INSERT INTO phpbb_config (config_name, config_value) VALUES ('rabbitoshi_cron_last_time', '0');
+-- AD&R + PCP
+INSERT INTO phpbb_config (config_name, config_value) VALUES ('cell_allow_display_bars', '1');
 
 # ADR 0.4
 UPDATE phpbb_adr_characters SET character_limit_update = 0; 

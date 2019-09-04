@@ -349,6 +349,11 @@ function adr_display_poster_infos($poster_id, $character_info, $race_info, $elem
 		return $adr_topic_box;
 	}
 
+  // V: I.. really wonder why this isn't here by default
+  if (!$character_info) {
+    $character_info = array( adr_get_user_infos($poster_id) );
+  }
+
 	for ($adr = 0; $adr < count($character_info); $adr++)
 	{
 		$adr_topic_box = '';
@@ -373,8 +378,11 @@ function adr_display_poster_infos($poster_id, $character_info, $race_info, $elem
 			}
 
 			#==== Show character_name
-			if (!empty($topic_config[5]))
-				$adr_topic_box .= '&nbsp;<a href="'. append_sid('adr_character.'. $phpEx .'?u='. $character_info[$adr]['character_id']) .'">'. $character_info[$adr]['character_name'] .'</a><br>';
+			if (!empty($topic_config[5])) {
+        //V: removed this one to add the AD&R+PCP mod one, need to make sure it's OK
+				//$adr_topic_box .= '&nbsp;<a href="'. append_sid('adr_character.'. $phpEx .'?u='. $character_info[$adr]['character_id']) .'">'. $character_info[$adr]['character_name'] .'</a><br>';
+        $adr_topic_box .= '&nbsp;<a href="'. append_sid('adr_character.'. $phpEx .'?profile.php?mode=viewprofile&sub=profilcp_public_adr_shortcut&'.POST_USERS_URL.'='. $character_info[$adr]['character_id']) .'">'. $character_info[$adr]['character_name'] .'</a><br>';
+      }
 
 			#==== Show current rank
 			if (!empty($topic_config[7]))

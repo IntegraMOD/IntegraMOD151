@@ -60,6 +60,15 @@ $user_maps = array(
 						'split'		=> true,
 								'title'		=> 'Avatar',
 						'fields'	=> array(
+						'user_cell_punishment' => array(
+								'lang_key'     => 'Judge',
+								'class'        => 'generic',
+								'type'         => 'VARCHAR',
+								'dsp_func'     => 'pcp_output_user_cell_punishment',
+                                                                'img'          => true,
+								'style'        => '<div align="center" class="gensmall">%s</div>',
+								'user_only'    => true,
+							),
 						'user_avatar' => array(
 								'img'          => true,
 							),
@@ -936,6 +945,15 @@ $user_maps = array(
 								'crlf'         => true,
 								'style'        => '<div align="center" class="gensmall"><center>%s</center></div>',
 							),
+						'user_cell_punishment' => array(
+								'lang_key'     => 'Judge',
+								'class'        => 'generic',
+								'type'         => 'VARCHAR',
+								'dsp_func'     => 'pcp_output_user_cell_punishment',
+                                                                'img'          => true,
+								'style'        => '<div align="center" class="gensmall">%s</div>',
+								'user_only'    => true,
+							),
 						'user_avatar' => array(
 								'img'          => true,
 								'style'        => '<div align="center">%s</div>',
@@ -1132,6 +1150,21 @@ $user_maps = array(
 								'crlf'         => true,
 								'style'        => '<div align="center" class="gensmall">%s</div>',
 							),
+						'user_adr' => array(
+								'class'        => 'generic',
+								'type'         => 'VARCHAR',
+								'dsp_func'     => 'pcp_output_adr',
+								'img'          => true,
+								'style'        => '<div align="center" class="gensmall">%s</div>',
+							),
+						'user_vault' => array(
+								'class'        => 'generic',
+								'type'         => 'VARCHAR',
+								'dsp_func'     => 'pcp_output_vault',
+								'txt'          => true,
+								'style'        => '<div align="center" class="gensmall">%s</div>',
+							),
+
 					),
 			),
 	

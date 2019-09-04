@@ -56,4 +56,11 @@ $lang['SKYPE'] = 'Skype';
 // skype :: added :: end
 
 $lang['FDOW']	= 'First day of the week'; // calendar fix
-?>
+
+// ADR+PCP
+$lang['profilcp_public_adr_shortcut'] = 'Character Sheet';
+$lang['profilcp_character_pagetitle'] = 'ADR';
+$lang['Judge'] = 'Judge Me';
+$lang['vault_account_amount']='Capital';
+$lang['vault_loan_amount']='Loan';
+$lang['vault_confidential']='Hidden';

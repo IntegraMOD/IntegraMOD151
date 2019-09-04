@@ -300,7 +300,7 @@ function getalignmentid(alignment)
 
 		</span></td>
 		<td width="70%" height="100%" valign="top">
-			<table class="subcells" height="100%" cellspacing="4px">
+			<table class="subcells" width="100%" height="100%" cellspacing="4px">
 			<tr>
 				<th align="center" width="100%" colspan="6" >Stats</th>
 			</tr>

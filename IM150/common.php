@@ -31,7 +31,7 @@ $mtime = explode(" ",$mtime);
 $mtime = $mtime[1] + $mtime[0];
 $starttime = $mtime;
 
-error_reporting (E_ERROR | E_WARNING | E_PARSE); // This will NOT report uninitialized variables
+error_reporting(E_ERROR | E_WARNING | E_PARSE); // This will NOT report uninitialized variables
 if (function_exists('set_magic_quotes_runtime'))
 {
   @set_magic_quotes_runtime(0); // Disable magic_quotes_runtime
@@ -44,12 +44,12 @@ date_default_timezone_set(@date_default_timezone_get());
 // PHP5 with register_long_arrays off?
 if (@phpversion() >= '5.0.0' && (!@ini_get('register_long_arrays') || @ini_get('register_long_arrays') == '0' || strtolower(@ini_get('register_long_arrays')) == 'off'))
 {
-	$HTTP_POST_FILES = $_POST;
-	$HTTP_GET_FILES = $_GET;
-	$HTTP_SERVER_FILES = $_SERVER;
+	$HTTP_POST_VARS = $_POST;
+	$HTTP_GET_VARS = $_GET;
+	$HTTP_SERVER_VARS = $_SERVER;
 	$HTTP_COOKIE_VARS = $_COOKIE;
-	$HTTP_ENV_FILES = $_ENV;
-	$HTTP_FILES_FILES = $_FILES;
+	$HTTP_ENV_VARS = $_ENV;
+	$HTTP_FILES_VARS = $_FILES;
 
 	// _SESSION is the only superglobal which is conditionally set
 	if (isset($_SESSION))

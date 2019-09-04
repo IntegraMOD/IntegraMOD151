@@ -1191,7 +1191,7 @@ else
 				{ 
 					message_die(GENERAL_ERROR, 'Could not obtain loottables information', "", __LINE__, __FILE__, $sql); 
 				} 
-				$loottables = mysql_fetch_array($result);
+				$loottables = $db->sql_fetchrow($result);
 				$listing_loottables_print .= "(".$loottables['loottable_name'].") <br>";
 			}
 		}

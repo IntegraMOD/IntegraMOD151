@@ -922,7 +922,7 @@ function drop_gather_loot($zone_id, $user_id, $type, $skill_number)
 	{ 
 		message_die(GENERAL_ERROR, 'Could not obtain skill information', "", __LINE__, __FILE__, $sql); 
 	} 
-	$skill_data = mysql_fetch_array($result);
+	$skill_data = $db->sql_fetchrow($result);
 
 	//build character check from table	
 	$skill_to_use = "character_skill_" . $type;
