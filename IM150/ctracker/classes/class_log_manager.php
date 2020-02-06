@@ -232,7 +232,8 @@ class log_manager
 		$path     = $this->create_ct_path($file_id);
 		if ($file_id != 6)
 		{
-			$logsize  = count_safe(@file($path)) - 1;
+      $data = @file($path);
+			$logsize  = $data == null ? 0 : count($data) - 1;
 		}
 		else
 		{

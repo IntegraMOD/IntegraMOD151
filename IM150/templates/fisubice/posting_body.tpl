@@ -43,7 +43,7 @@ if (formErrors) {
 }
 </style>
 <form action="{S_POST_ACTION}" method="post" name="post" onsubmit="return checkForm2(this)" {S_FORM_ENCTYPE}>
-<table width="100%" cellspacing="2" cellpadding="2" border="0">
+<table width="100%" cellspacing="2" cellpadding="2" border="0" id="posting-form">
 <tr>
 <td class="maintitle">{L_POST_A}</td>
 </tr>
@@ -413,6 +413,13 @@ if (formErrors) {
 <td><span class="gensmall">{L_UNLOCK_TOPIC}</span></td>
 </tr>
 <!-- END switch_unlock_topic -->
+<!-- BEGIN switch_type_toggle -->
+<tr>
+<td></td>
+<td><strong>{S_TYPE_TOGGLE}</strong></td>
+</tr>
+<!-- END switch_type_toggle -->
+</table>
 <!-- BEGIN switch_type_cal -->
 <style type="text/css">@import url({TEMPLATE_PATH}calendar.css);</style>
 <script type="text/javascript" src="templates/calendar.js"></script>
@@ -421,14 +428,12 @@ if (formErrors) {
 <script language="JavaScript" type="text/javascript">
   is_event_allowed = 1;
 </script>
-<tr><td colspan="2"><hr /></td></tr>
 <tr>
-<td></td>
-<td valign="top">
-<table cellpadding="2" cellspacing="0" width="100%" border="0">
+<th class="thHead" colspan="2">{L_CALENDAR_TITLE}</th>
+</tr>
 <tr>
-<td align="right" nowrap="nowrap"><span class="gen"><b>{L_CALENDAR_TITLE}&nbsp;:</b></span></td>
-<td align="left" width="100%">
+<td class="row1"><span class="gen"><b>{L_CALENDAR_TITLE}&nbsp;:</b></span></td>
+<td class="row2">
 <span class="genmed"><input type="text" name="calendar_event" id="calendarevent" size="50" maxlength="255" class="post" value="{CALENDAR_EVENT}" readonly="1" />&nbsp;<img src="{DATE_PICKER_IMAGE}" id="trigger2" style="cursor: pointer;" onmouseover="this.style.background='red';" onmouseout="this.style.background=''" />&nbsp;<img src="{CLEAR_DATE_IMAGE}" style="cursor: pointer;" onmouseover="this.style.background='red';" onmouseout="this.style.background=''" onclick="document.post.calendar_event.value='';" /></span></td>
 <script language="JavaScript" type="text/javascript">
 Calendar.setup(
@@ -441,8 +446,8 @@ align       : "T1"
 );
 </script>
 <tr>
-<td align="right" nowrap="nowrap"><span class="gen"><b>{L_CALENDAR_UNTIL}&nbsp;:</b></span></td>
-<td align="left" width="100%">
+<td class="row1"><span class="gen"><b>{L_CALENDAR_UNTIL}&nbsp;:</b></span></td>
+<td class="row2">
 <span class="genmed"><input type="text" name="calendar_duration" id="calendarduration" size="50" maxlength="255" class="post" value="{CALENDAR_DURATION}" readonly="1" />&nbsp;<img src="{DATE_PICKER_IMAGE}" id="trigger3" style="cursor: pointer;" onmouseover="this.style.background='red';" onmouseout="this.style.background=''" />&nbsp;<img src="{CLEAR_DATE_IMAGE}" style="cursor: pointer;" onmouseover="this.style.background='red';" onmouseout="this.style.background=''" onclick="document.post.calendar_duration.value='';" /></span></td>
 <script language="JavaScript" type="text/javascript">
 Calendar.setup(
@@ -456,23 +461,14 @@ align       : "T1"
 </script>
 </tr>
 <tr>
-<td align="right" nowrap="nowrap"><span class="gen"><b>{L_REPEAT_MODE}&nbsp;:</b></span></td>
-<td align="left" width="100%">
+<td class="row1"><span class="gen"><b>{L_REPEAT_MODE}&nbsp;:</b></span></td>
+<td class="row2">
 <span class="genmed">
 {S_REPEATS_VALUE}{S_REPEATS}
 </span>
 </td>
 </tr>
-</table>
-<tr><td colspan="2"><hr /></td></tr>
 <!-- END switch_type_cal -->
-<!-- BEGIN switch_type_toggle -->
-<tr>
-<td></td>
-<td><strong>{S_TYPE_TOGGLE}</strong></td>
-</tr>
-<!-- END switch_type_toggle -->
-</table>
 {ATTACHBOX}{POLLBOX}{DELAYEDPOST}
 <tr>
 <td class="cat" colspan="2" align="center" height="28">{S_HIDDEN_FORM_FIELDS}
@@ -505,3 +501,74 @@ align       : "T1"
 <td><br />{JUMPBOX}</td>
 </tr>
 </table>
+<script>
+var slice = Array.prototype.slice; // reify DOM nodes
+// form title is not a .rowHead so we don't worry about it
+var postingForm = document.getElementById('posting-form');
+var heads = slice.call(document.getElementsByClassName('thHead'));
+var container;
+map(heads, function (head) {
+  var tr = head.parentNode;
+  container || (container = tr.parentNode);
+  var children = takeWhile(tr, isNotHeader);
+  console.log(head);
+
+  // hide everything
+  map(children, hide);
+
+  // click to reveal
+  var th = tr.children[0];
+  var text = th.innerHTML;
+  var hidden = true;
+  updateText();
+  function updateText() {
+    th.innerHTML = text + " " + (hidden ? "[+]" : "[-]");
+  }
+
+  tr.onclick = function () {
+    map(children, toggle);
+
+    hidden = !hidden;
+    updateText();
+  }; 
+});
+//container.insertBefore(row, container.children[container.length - 1]);
+
+function L(tag, opts) {
+  var el = document.createElement(tag);
+  if (opts.children) {
+    for (var i = 0; i < opts.children; ++i) {
+      el.appendChild(opts.children[i]);
+    }
+  }
+  if (opts.parent) {
+    opts.parent.appendChild(el);
+  }
+  return el;
+}
+function isNotHeader(el) {
+  var child = el.children[0];
+  if (!child) {
+    return true;
+  }
+  return !child.classList.contains('thHead') && !child.classList.contains('cat');
+}
+function hide(el) {
+  el.style.display = 'none';
+}
+function toggle(el) {
+  el.style.display = el.style.display == 'none' ? '' : 'none';
+}
+function takeWhile(el, fn) {
+  var xs = [];
+  while ((el = el.nextElementSibling) && fn(el)) {
+    xs.push(el);
+  }
+  return xs;
+}
+function map(xs, f) {
+  for (var j = 0; j < xs.length; ++j) {
+    f(xs[j]);
+  }
+}
+</script>

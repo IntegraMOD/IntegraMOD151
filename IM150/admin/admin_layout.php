@@ -34,6 +34,8 @@ if( !empty($setmodules) )
 //
 $phpbb_root_path = "./../";
 require($phpbb_root_path . 'extension.inc');
+define('CT_SECLEVEL', 'MEDIUM');
+$ct_ignorepvar = array('name');
 require('./pagestart.' . $phpEx);
 include($phpbb_root_path.'language/lang_' . $board_config['default_lang'] . '/lang_admin_portal.'.$phpEx);
 
@@ -316,7 +318,7 @@ if( $mode != "" )
 			}
 			$row = $db->sql_fetchrow($result);
 			
-			if(file_exists($phpbb_root_path .'/templates/' . $row['template_name']. '/layout/' . ereg_replace('.tpl', '.cfg', $l_template)))
+			if(file_exists($phpbb_root_path .'/templates/' . $row['template_name']. '/layout/' . str_replace('.tpl', '.cfg', $l_template)))
 			{
 				$sql = "DELETE FROM " . BLOCK_POSITION_TABLE . " 
 					WHERE layout = $l_id";
@@ -326,7 +328,7 @@ if( $mode != "" )
 					message_die(GENERAL_ERROR, "Could not remove data from blocks position table", $lang['Error'], __LINE__, __FILE__, $sql);
 				}
 
-				include($phpbb_root_path . '/templates/' . $row['template_name']. '/layout/' . ereg_replace('.tpl', '.cfg', $l_template));
+				include($phpbb_root_path . '/templates/' . $row['template_name']. '/layout/' . str_replace('.tpl', '.cfg', $l_template));
 
 				$message .= '<br /><br />' . $lang['Layout_BP_added'];
 
@@ -358,9 +360,9 @@ if( $mode != "" )
 			}
 			$row = $db->sql_fetchrow($result);
 
-			if(file_exists($phpbb_root_path .'/templates/' . $row['template_name']. '/layout/' . ereg_replace('.tpl', '.cfg', $l_template)))
+			if(file_exists($phpbb_root_path .'/templates/' . $row['template_name']. '/layout/' . str_replace('.tpl', '.cfg', $l_template)))
 			{
-				include($phpbb_root_path . '/templates/' . $row['template_name']. '/layout/' . ereg_replace('.tpl', '.cfg', $l_template));
+				include($phpbb_root_path . '/templates/' . $row['template_name']. '/layout/' . str_replace('.tpl', '.cfg', $l_template));
 
 				$message .= '<br /><br />' . $lang['Layout_BP_added'];
 
