@@ -256,7 +256,8 @@ $select_pm_size_mode = size_select('pm_size', $pm_size);
 //
 // Search Imagick
 //
-if ($search_imagick)
+// V: disabled for now, don't see the point
+if (false && $search_imagick)
 {
 	$imagick = '';
 	

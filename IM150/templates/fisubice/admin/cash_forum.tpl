@@ -25,9 +25,6 @@
 		<!-- END cashrow -->
 	</tr>
 	<!-- END forumrow -->
-	<tr>
-		<td colspan="{NUM_ROWS}" height="1" class="spaceRow"><img src="../templates/subSilver/images/spacer.gif" alt="" width="1" height="1" /></td>
-	</tr>
 	<!-- END catrow -->
 	<tr>
 		<td class="catBottom" colspan="{NUM_ROWS}" align="center"><input type="submit" name="submit" value="{L_SUBMIT}" class="mainoption" />&nbsp;&nbsp;<input type="reset" value="{L_RESET}" class="liteoption" />
