@@ -83,28 +83,30 @@ $sub_keys = array();
 $sub_sort = array();
 
 // process
-@reset($mods);
-while ( list($menu_name, $menu) = each($mods) )
+foreach ($mods as $menu_name => $menu)
 {
 	// check if there is some config fields in the mods under this menu
 	$found = false;
 
 	// menu
-	@reset($menu['data']);
-	while ( ( list($mod_name, $mod) = @each($menu['data']) ) && !$found )
+  foreach ($menu['data'] as $mod_name => $mod)
 	{
+    if ($found)
+      break;
 		// sub menu
-		@reset($mod['data']);
-		while ( ( list($sub_name, $sub) = @each($mod['data']) ) && !$found )
-		{
+    foreach ($mod['data'] as $sub_name => $sub)
+    {
+      if ($found)
+        break;
 			// fields
-			@reset($sub['data']);
-			while ( ( list($field_name, $field) = @each($sub['data']) ) && !$found )
+      foreach ($sub['data'] as $field_name => $field)
 			{
+        if ($found)
+          break;
 				if ( !isset($field['user_only']) || !$field['user_only'] )
 				{
 					$found=true;
-					break;
+					break 3; // V: break out of menu/mod/sub
 				}
 			}
 		}
@@ -121,16 +123,13 @@ while ( list($menu_name, $menu) = each($mods) )
 		$mod_keys[$i] = array();
 		$mod_sort[$i] = array();
 
-		@reset($menu['data']);
-		while ( list($mod_name, $mod) = @each($menu['data']) )
+    foreach ($menu['data'] as $mod_name => $mod)
 		{
 			// check if there is some config fields
 			$found = false;
-			@reset($mod['data']);
-			while ( list($sub_name, $sub) = @each($mod['data']) )
+      foreach ($mod['data'] as $sub_name => $sub)
 			{
-				@reset($sub['data']);
-				while ( list($field_name, $field) = @each($sub['data']) )
+        foreach ($sub['data'] as $field_name => $field)
 				{
 					if ( !isset($field['user_only']) || !$field['user_only'] )
 					{

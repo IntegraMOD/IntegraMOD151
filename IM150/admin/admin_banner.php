@@ -34,7 +34,7 @@ function selection($default='0', $select_name = 'banner_type')
 		$default == 0;
 	}
 	$type_select = '<select name="' . strtolower($select_name) . '">';
-	while( list($offset, $type) = @each( $lang[$select_name] ) )
+  foreach ($lang[$select_name] as $offset => $type)
 	{
 		$selected = ( $offset == $default ) ? ' selected="selected"' : '';
 		$type_select .= '<option value="' . $offset . '"' . $selected . '>' . $type . '</option>';

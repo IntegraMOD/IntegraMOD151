@@ -85,7 +85,7 @@ $language_codes = array();
 reset ($board_config);
 $needle = 'auto_lang_';
 $needle_length = strlen($needle);
-while (list ($key, $value) = each ($board_config))
+foreach ($board_config as $key => $value)
 {
 	if ((strstr($key, $needle)))
 	{

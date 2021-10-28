@@ -141,7 +141,7 @@ function generate_smilies2($mode, $page_id)
 			$row = 0;
 			$col = 0;
 
-			while ( list($smile_url, $data) = @each($rowset) )
+      foreach ($rowset as $smile_url => $data)
 			{
 				if ( !$col )
 				{

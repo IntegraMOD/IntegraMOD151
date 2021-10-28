@@ -481,8 +481,7 @@ if ($view == 'search')
 		// Category to search
 		//
 		$s_categories = '<option value="0">' . $lang['All_available'] . '</option>';
-		@reset($list_cat);
-		while( list($cat_id, $cat_title) = @each($list_cat))
+    foreach ($list_cat as $cat_id => $cat_title)
 		{
 			$s_categories .= '<option value="' . $cat_id . '">' . $cat_title . '</option>';
 		}
