@@ -90,7 +90,7 @@ INSERT INTO phpbb_config (config_name, config_value) VALUES ('news_rss_show_abst
 INSERT INTO phpbb_config (config_name, config_value) VALUES ('news_base_url', '');
 INSERT INTO phpbb_config (config_name, config_value) VALUES ('news_index_file', 'portal.php');
 INSERT INTO phpbb_config (config_name, config_value) VALUES ('prune_shouts', '0');
-INSERT INTO phpbb_config (config_name, config_value) VALUES ('integramod_version', '1.5.0' );
+INSERT INTO phpbb_config (config_name, config_value) VALUES ('integramod_version', '1.5.1' );
 INSERT INTO phpbb_config (config_name, config_value) VALUES ('visit_counter', '0');
 INSERT INTO phpbb_config (config_name, config_value) VALUES ('nextcron', '0');
 INSERT INTO phpbb_config (config_name, config_value) VALUES ('pseudocron', '1');
