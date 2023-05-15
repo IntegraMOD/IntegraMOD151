@@ -1,4 +1,4 @@
-IntegraMOD150
+IntegraMOD151
 =============
 
 This is Integramod. It stands for Integrated Modifications. This system is built using many phpBB modifications. It's main mod is IM Portal which is a Flexible and full-featured portal management addon for phpBB (forum-wide integration) Multiple-page version with cache system. IM Portal was developed by masterdavid (Ronald John David).
