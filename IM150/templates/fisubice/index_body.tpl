@@ -65,8 +65,6 @@
 	        </div>
 			<!-- End add - Fully integrated shoutbox MOD -->
 			<!-- END switch_user_logged_in -->
-
-
   		    <!-- BEGIN disable_viewonline -->
 	        <div class="row pl-3">
 		      <div class="container forumline mb-2">

@@ -13,7 +13,7 @@
 {BOARD_ANNOUNCES}
 
   <div class="container-fluid px-0">
-    <div class="row"> 
+    <div class="row pb-3"> 
       <div class="col">
         <!-- BEGIN is_auth_post --> 
 	    <a class="postbtn" href="{U_POST_NEW_TOPIC}"><i class="fa fa-file-o fa1 mr-1" aria-hidden="true"></i>{L_POST_NEW_TOPIC}</a>
