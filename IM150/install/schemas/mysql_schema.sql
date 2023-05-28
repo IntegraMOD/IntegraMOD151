@@ -222,7 +222,7 @@ CREATE TABLE phpbb_album (
 CREATE TABLE phpbb_album_cat (
   cat_id mediumint(8) unsigned NOT NULL auto_increment,
   cat_title varchar(255) NOT NULL default '',
-  cat_desc text,
+  cat_desc mediumtext NOT NULL default '',
   cat_order mediumint(8) NOT NULL default '0',
   cat_view_level tinyint(3) NOT NULL default '-1',
   cat_upload_level tinyint(3) NOT NULL default '0',
@@ -716,7 +716,7 @@ CREATE TABLE phpbb_categories (
   cat_order mediumint(8) unsigned NOT NULL default '0',
   cat_main_type char(1) default NULL,
   cat_main mediumint(8) unsigned NOT NULL default '0',
-  cat_desc text NOT NULL,
+  cat_desc mediumtext NOT NULL default '',
   icon varchar(255) default NULL,
   PRIMARY KEY  (cat_id),
   KEY cat_order (cat_order)
@@ -1229,7 +1229,7 @@ CREATE TABLE phpbb_kb_config (
 CREATE TABLE phpbb_kb_results (
   search_id int(11) unsigned NOT NULL default '0',
   session_id varchar(32) NOT NULL default '',
-  search_array MEDIUMTEXT NOT NULL,
+  search_array mediumtext NOT NULL,
   PRIMARY KEY  (search_id),
   KEY session_id (session_id)
 );
@@ -1495,8 +1495,8 @@ CREATE TABLE phpbb_optimize_db (
 
 CREATE TABLE phpbb_pa_cat (
   cat_id int(10) NOT NULL auto_increment,
-  cat_name text,
-  cat_desc text,
+  cat_name mediumtext NOT NULL,
+  cat_desc mediumtext NOT NULL default '',
   cat_parent int(50) default NULL,
   parents_data text NOT NULL,
   cat_order int(50) default NULL,
@@ -2457,8 +2457,8 @@ CREATE TABLE phpbb_users (
   user_inactive_last_eml int( 11 ) NOT NULL default '0',
   user_state varchar(3) NOT NULL default '0',
   user_country varchar(3) NOT NULL default '0',
-  phpBBSecurity_answer TEXT NOT NULL,
-  phpBBSecurity_question TEXT NOT NULL,
+  phpBBSecurity_answer mediumtext NOT NULL default '',
+  phpBBSecurity_question mediumtext NOT NULL default '',
   phpBBSecurity_login_tries smallint(5) NOT NULL default '0',
   phpBBSecurity_pm_sent smallint(1) NOT NULL default '0',
   user_group_id MEDIUMINT(8) DEFAULT 0 NOT NULL,
@@ -2475,7 +2475,7 @@ CREATE TABLE phpbb_users (
 CREATE TABLE phpbb_vote_desc (
   vote_id mediumint(8) unsigned NOT NULL auto_increment,
   topic_id mediumint(8) unsigned NOT NULL default '0',
-  vote_text text NOT NULL,
+  vote_text mediumtext NOT NULL default '',
   vote_start int(11) NOT NULL default '0',
   vote_length int(11) NOT NULL default '0',
   vote_max int(3) NOT NULL default '1',
@@ -2537,13 +2537,13 @@ CREATE TABLE phpbb_words (
 
 CREATE TABLE phpbb_wpm (
 	name varchar(255) NOT NULL default '',
-	value text NOT NULL
+	value mediumtext NOT NULL default ''
 );
 
 # --------------------------------------------------------
 
 #
-# Table structure for table `phpbb_wpm`
+# Table structure for table `phpbb_color`
 #
 
 CREATE TABLE phpbb_color (
@@ -2562,6 +2562,10 @@ CREATE TABLE phpbb_color (
 
 # --------------------------------------------------------
 
+#
+# Table structure for table `phpbb_reports`
+#
+
 CREATE TABLE phpbb_reports (
   report_id mediumint(8) UNSIGNED NOT NULL AUTO_INCREMENT,
   user_id mediumint(8) NOT NULL,
@@ -2573,7 +2577,7 @@ CREATE TABLE phpbb_reports (
   report_subject int(11) NOT NULL,
   report_subject_data mediumtext DEFAULT NULL,
   report_title varchar(255) NOT NULL,
-  report_desc text NOT NULL,
+  report_desc mediumtext NOT NULL default '',
   reportee_user_id mediumint(8) NULL,
   reportee_username varchar(25) NULL,
   PRIMARY KEY (report_id),
@@ -2586,18 +2590,30 @@ CREATE TABLE phpbb_reports (
   KEY report_reportee_user_id (reportee_user_id)
 );
 
+# --------------------------------------------------------
+
+#
+# Table structure for table `phpbb_reports_changes`
+#
+
 CREATE TABLE phpbb_reports_changes (
   report_change_id mediumint(8) UNSIGNED NOT NULL AUTO_INCREMENT,
   report_id mediumint(8) UNSIGNED NOT NULL,
   user_id mediumint(8) NOT NULL,
   report_change_time int(11) NOT NULL,
   report_status tinyint(1) NOT NULL,
-  report_change_comment text NOT NULL,
+  report_change_comment mediumtext NOT NULL default '',
   PRIMARY KEY (report_change_id),
   KEY report_id (report_id),
   KEY user_id (user_id),
   KEY report_change_time (report_change_time)
 );
+
+# --------------------------------------------------------
+
+#
+# Table structure for table `phpbb_reports_modules`
+#
 
 CREATE TABLE phpbb_reports_modules (
   report_module_id mediumint(8) UNSIGNED NOT NULL AUTO_INCREMENT,
@@ -2614,6 +2630,12 @@ CREATE TABLE phpbb_reports_modules (
   KEY report_module_order (report_module_order),
   KEY auth_view (auth_view)
 );
+
+# --------------------------------------------------------
+
+#
+# Table structure for table `phpbb_reports_reasons`
+#
 
 CREATE TABLE phpbb_reports_reasons (
   report_reason_id mediumint(8) UNSIGNED NOT NULL AUTO_INCREMENT,
