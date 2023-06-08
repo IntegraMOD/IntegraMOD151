@@ -1,0 +1,24 @@
+:: Template Version Information ::
+
+This file will let you know what version of the template you are using. If the version number here doesn't match the newest version available you need to go download the newer template.
+
+All templates can be downloaded from www.e-tegra.com
+
+If you find a problem, bug, or something missing with this theme you can report it and we will fix it for you. Letting us know ensures that everyone will have quality templates that are up to date.
+
+To report a problem, bug, or something missing make a post here: http://www.e-tegra.com/forum/viewforum.php?f=28
+
+-----------------------------------------------------------------------------------------------------
+
+Template: subSilver
+Version: a
+Compatible With: IntegraMOD 1.4.1
+
+-----------------------------------------------------------------------------------------------------
+
+-----------------------------------------------------------------------------------------------------
+Version: a
+
+Updated template to IntegraMOD 1.4.1
+
+-----------------------------------------------------------------------------------------------------

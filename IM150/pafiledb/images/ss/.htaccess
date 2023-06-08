@@ -1,3 +1,0 @@
-# no reasion any code should be able to run in this folder!
-AddHandler cgi-script .php .js .pl .py .jsp .asp .htm .shtml .sh .cgi
-Options -ExecCGI

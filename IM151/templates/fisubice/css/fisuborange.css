@@ -1,0 +1,361 @@
+/* fiSubOrange  */
+@import url("main.css");
+@import url("report_hack.css");
+
+/* The content of the posts (body of text) */
+body{background:#F9ECE4;color:#2C2C2C;}
+
+/* This is the border line & background color round the entire page */
+.bodyline{background:#f7f8fc;border:1px solid #98aab1;}
+
+/* This is the outline round the main forum tables */
+.forumline{background:#BB3804;border:1px solid #000;}
+
+/* The largest text used in the index page title and toptic title etc. */
+.maintitle,h1{color:#000;}
+
+.explaintitle{color:#5c81b1;}
+
+/* General page style */
+a:link,a:active,a:visited,a.postlink{color:#000;}
+a:hover{color:#CF4F04;}
+
+/* titles for the topics:could specify viewed link color too */
+.topictitle{color:#000;}
+a.topictitle:visited{color:#414A5C;}
+a.topictitle:hover{color:#CF4F04;}
+
+hr {border-style:solid;border-color:#BA3604;}
+
+.icon_quote:before {
+	color:#16191D;
+}
+
+.icon_edit:before {
+	color:#16191D;
+}
+
+.icon_delete:before {
+	color:#16191D;
+}
+.icon_return_top:before {
+	color:#16191D;
+}
+.icon_ip:before {
+	color:#16191D;
+}
+.icon_go_top:before !important {
+	color:#16191D;
+}
+.icon_go_bottom:before !important {
+	color:#16191D;
+}
+
+a.fa-times, a.fa-share, a.fa-lock, a .fa-unlock, a.fa-sort, a.fa-clone, .fa-download, .fa-plus, .fa-search, .fa-user, .fa-envelope-o, .fa-envelope-square, .fa-picture-o, .icon-yahoo, .icon-aim, .icon-windows, .icon-skype, .icon-icq {
+	color:#16191D !important;
+}
+
+a.icon_return_top:hover:before, a.icon_delete:hover:before, a.icon_ip:hover:before, .icon_edit:hover:before, .icon_quote:hover:before, .fa-times:hover, a.fa-share:hover, a.fa-lock:hover, a .fa-unlock:hover, a.fa-sort:hover, a.fa-clone:hover, a.fa-download:hover, .fa-plus:hover, a.fa-user:hover, a.fa-envelope-square:hover, a.fa-picture-o:hover, .icon-yahoo:hover, .icon-aim:hover, .icon-windows:hover, .icon-skype:hover, .icon-icq:hover {
+	color:#BB3704 !important;
+}
+
+/* Category gradients*/
+.cat,.catHead,.catSides,.catLeft,.catRight,.catBottom{
+	color:#000;
+	background: #ba3604; /* Old browsers */
+	background: -moz-linear-gradient(top, #ba3604 13%, #fc8704 99%); /* FF3.6-15 */
+	background: -webkit-linear-gradient(top, #ba3604 13%,#fc8704 99%); /* Chrome10-25,Safari5.1-6 */
+	background: linear-gradient(to bottom, #ba3604 13%,#fc8704 99%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ba3604', endColorstr='#fc8704',GradientType=0 ); /* IE6-9 */
+}
+
+/* This is the gradient background at the top of the page */
+.topbkg{
+	background: #ba3604; /* Old browsers */
+	background: -moz-linear-gradient(top, #ba3604 22%, #fc8704 100%); /* FF3.6-15 */
+	background: -webkit-linear-gradient(top, #ba3604 22%,#fc8704 100%); /* Chrome10-25,Safari5.1-6 */
+	background: linear-gradient(to bottom, #ba3604 22%,#fc8704 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ba3604', endColorstr='#fc8704',GradientType=0 ); /* IE6-9 */
+}
+.topnav, .btmnav{
+	background: #fc8704; /* Old browsers */
+	background: -moz-linear-gradient(top, #fc8704 2%, #ba3604 60%); /* FF3.6-15 */
+	background: -webkit-linear-gradient(top, #fc8704 2%,#ba3604 60%); /* Chrome10-25,Safari5.1-6 */
+	background: linear-gradient(to bottom, #fc8704 2%,#ba3604 60%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#fc8704', endColorstr='#ba3604',GradientType=0 ); /* IE6-9 */
+	border-color:#BA3604;
+}
+.topnav a:link,.topnav a:active,.topnav a:visited,.topnav a.postlink{color:#F9ECE4;}
+.topnav a:hover {color:#EB7E04;}
+.qb  {
+	background: #fc8704; /* Old browsers */
+	background: -moz-linear-gradient(top, #fc8704 2%, #ba3604 60%); /* FF3.6-15 */
+	background: -webkit-linear-gradient(top, #fc8704 2%,#ba3604 60%); /* Chrome10-25,Safari5.1-6 */
+	background: linear-gradient(to bottom, #fc8704 2%,#ba3604 60%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#fc8704', endColorstr='#ba3604',GradientType=0 ); /* IE6-9 */
+	border-color:#BA3604;
+}
+.openclose {background:transparent url('../images/orange/icon_openclose.png') no-repeat;}
+
+/* Main table cell colors and backgrounds */
+.row1{background:#F57E04;}
+.row2,.helpline{background:#F68C1F;}
+.row3{background:#F9BD7E;}
+
+.spacerow{background:#FFF;}
+
+/* This is for the table cell above the Topics,Post & Last posts on the index.php */
+.rowpic{	
+	color:#000;
+	background: #fc8704; /* Old browsers */
+	background: -moz-linear-gradient(top, #fc8704 20%, #ba3604 100%); /* FF3.6-15 */
+	background: -webkit-linear-gradient(top, #fc8704 20%,#ba3604 100%); /* Chrome10-25,Safari5.1-6 */
+	background: linear-gradient(to bottom, #fc8704 20%,#ba3604 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#fc8704', endColorstr='#ba3604',GradientType=0 ); /* IE6-9 */
+	border-color:#BA3604;
+}
+
+/* Table Header cells */
+th, .th {
+	color:#16191D;
+	background: #fc8704; /* Old browsers */
+	background: -moz-linear-gradient(top, #fc8704 20%, #ba3604 100%); /* FF3.6-15 */
+	background: -webkit-linear-gradient(top, #fc8704 20%,#ba3604 100%); /* Chrome10-25,Safari5.1-6 */
+	background: linear-gradient(to bottom, #fc8704 20%,#ba3604 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#fc8704', endColorstr='#ba3604',GradientType=0 ); /* IE6-9 */
+}
+
+/* Used for the navigation text,(Page 1,2,3 etc) and the navigation bar when in a forum */
+.nav{}
+.postbody{color:#FAF1EE;}
+
+/* Location,number of posts,post date etc */
+.postdetails{color:#000;}
+
+/* Quote blocks */
+.quotetitle,.quote {color:#475e61;border:1px solid #a4bad2}
+.quotetitle {background:#e1e7ec;}
+.quote {background:#fafafa;color:#cc6633;}
+
+
+/* Code blocks */
+.codetitle,.code {border:1px solid #a4bad2;}
+.codetitle {background: #d8dfe4;}
+.code {background:#fafafa;color:#555;}
+.code {color:#060}
+
+/* PHP blocks */
+.phptitle,.php {border:1px solid #a4bad2;}
+.phptitle {background: #d8dfe4;}
+.php {background:#fafafa;color:#555;}
+.php {color:#060}
+
+/* This is for the error messages that pop up */
+.errorline{background:#add8e6;border:1px solid #000000}
+
+/* Form elements */
+select{background:#ffffff;}
+input.post,textarea.post{background:#ffffff;border:1px solid #000000;}
+input.button,input.liteoption,.fakebut{border:1px solid #000000;background:#fafafa;}
+input.catbutton{border:1px solid #000000;background:#fafafa;}
+input.mainoption{border:1px solid #000000;background:#fafafa;}
+a.but,a.but:hover,a.but:visited{color:#000000;}
+
+/* This is the line in the posting page which shows the rollover
+help line. Color value in row2 */
+.helpline{}
+
+/*-- mod : profile cp --*/
+.foundercolor, a.foundercolor, a.foundercolor:link, a.foundercolor:active, a.foundercolor:visited {color: #FF0000;}
+a.foundercolor:hover {color:#FF0000;}
+
+.jadmincolor, a.jadmincolor, a.jadmincolor:link, a.jadmincolor:active, a.jadmincolor:visited {color: #129DED;}
+a.jadmincolor:hover {color:#129DED;}
+
+.admincolor, a.admincolor, a.admincolor:link, a.admincolor:active, a.admincolor:visited {color:#FFA34F;}
+a.admincolor:hover {color:#FF0000;}
+
+.modcolor, a.modcolor, a.modcolor:link, a.modcolor:active, a.modcolor:visited {color:#006600;}
+a.modcolor:hover {color:#008000;}
+
+.usercolor, a.usercolor, a.usercolor:link, a.usercolor:active, a.usercolor:visited {color:#000000;}
+a.usercolor:hover {color:#DD6900;}
+/*-- fin mod : profile cp --*/
+
+/* Admin & Moderator Colors MODification */
+.admin,a.admin,a.admin:visited{color:#ff0000}
+.mod,a.mod,a.mod:visited{color:#006600}
+a.admin:hover,a.mod:hover{color:#839fbc}
+
+.acronym{background:#FFFFCC}
+
+.alert{color:#FF3300}
+
+/* Mighty Gorgon - Full Album Pack - BEGIN */
+.forumline_left {background-color: #7A7A7A;border-color:#808080;}
+.tab_links, a.tab_links:hover, a.tab_links:link, a.tab_links:active, a.tab_links:visited {color:#FF8866;}
+.tab_links_unsel, a.tab_links_unsel:hover, a.tab_links_unsel:link, a.tab_links_unsel:active, a.tab_links_unsel:visited {color:#FFFFAA;}
+.tab_headers, th.tab_headers {color:#FF8866;border-color:#003366;background-color:#006699;}
+.tab_headers_unsel, th.tab_headers_unsel {color: #FFFFAA;border-color:#336699;background-color:#6699AA;}
+.tab_border {background-color: #888888;}
+.filler, th.filler {background-color:#6699AA;background-image:none;}
+.picframe{background-color:#FFFFFF;border:1px solid #555555;}
+.picshadow{background-color: #888888;}
+/* Mighty Gorgon - Full Album Pack - END */
+
+a.kb {background: transparent;text-shadow: 2px 2px 2px #323232;}
+a.kb span {color:#516A88;}
+
+.bx {border:1px solid #000;background-color:#FFF;}
+
+
+/* Responsive qbar qmenu */
+
+a.mob-tab-menu-toggle {background:transparent url('images/button.gif') no-repeat left top;}
+nav.mobile-menu a{color:#B4C5D5;}
+nav.mobile-menu a:hover{color:#D8D8D8;}
+nav.mobile-menu {background-color: #111111;border-right:1px solid #000000;}
+nav.mobile-menu a {border-bottom:1px solid #000000;}
+div#mobile-bar {background-color:#000000;}
+
+.shadow {box-shadow: 2px 2px 2px #CDCDCD;}
+.blockshadow {border:1px solid #BA3604;box-shadow: 2px 2px 2px #CDCDCD;}
+
+.postbtn, .genbtn {
+	  background: #FB8604;
+	  background-image: -webkit-linear-gradient(top, #FB8604, #BA3604);
+	  background-image: -moz-linear-gradient(top, #FB8604, #BA3604);
+	  background-image: -ms-linear-gradient(top, #FB8604, #BA3604);
+	  background-image: -o-linear-gradient(top, #FB8604, #BA3604);
+	  background-image: linear-gradient(to bottom, #FB8604, #BA3604);
+	  border: solid #444649 1px;
+}
+.postbtn:hover, .genbtn:hover {
+	  background: #E1E8EF;
+	  background-image: -webkit-linear-gradient(top, #E36804, #BA3604);
+	  background-image: -moz-linear-gradient(top, #E36804, #BA3604);
+	  background-image: -ms-linear-gradient(top, #E36804, #BA3604);
+	  background-image: -o-linear-gradient(top, #E36804, #BA3604);
+	  background-image: linear-gradient(to bottom, #E36804, #BA3604);
+}
+
+a.postbtn, a.postbtn:hover, .genbtn li, .genbtn a {color:#16191D;}
+.genbtn li:hover, .genbtn a:hover {color:#FC8704;}
+
+/* Clock css*/
+#clock {
+  width: 30em;
+  height: 30em;
+  border-radius: 50%;
+  border: solid 2px #D85B04;
+  margin: auto auto;
+  position: relative;
+  background-color:#FCDEBF;
+}
+#clock div,
+.faceBox {
+  border: 0;
+  position: absolute;
+  transform-origin: center bottom;
+  -webkit-transform-origin: center bottom;
+  -moz-transform-origin: center bottom;
+  -o-transform-origin: center bottom;
+  transform: rotate(0deg);
+}
+#clock #hour {
+  border-radius: 0.75em 0.75em 0 0;
+  width: 1.5em;
+  height: 6em;
+  top: 9em;
+  left: 14.25em;
+  background-color: #F57E04;
+  border: solid 1px #161919;
+}
+#clock #minute {
+  border-radius: 0.5em;
+  width: 1em;
+  height: 11em;
+  top: 4em;
+  left: 14.5em;
+  background-color: #F57E04;
+  border: solid 1px #161919;
+}
+#clock #second {
+  border-radius: 0.25em;
+  width: 0.5em;
+  height: 14em;
+  top: 1em;
+  left: 14.75em;
+  background-color: #D85B04;
+}
+#clock #center {
+  height: 2em;
+  width: 2em;
+  border-radius: 50%;
+  top: 14em;
+  left: 14em;
+  transform: rotate(0deg);
+  background-color: #F57E04;
+  border: solid 1px #161919;
+}
+.smallTick {
+  width: 0.1em;
+  height: 0.5em;
+  background-color: #D85B04;
+  margin: 0 1.45em;
+}
+.mediumTick {
+  width: 0.25em;
+  height: 0.8em;
+  background-color: #D85B04;
+  margin: 0 1.375em;
+}
+.largeTick {
+  width: 0.4em;
+  height: 0.8em;
+  background-color: #D85B04;
+  position: relative;
+  margin: 0 1.3em;
+}
+.tickNum {
+  font-family: Arial, sans-serif;
+  font-size: 2em;
+  line-height: 0;
+  color: black;
+  position: relative;
+  top: 1em;
+  left: 0;
+  padding: 0 0.5em;
+}
+div.faceBox {
+  border: 0;
+  width: 3em;
+  height: 15em;
+  top: 0;
+  left: 13.5em;
+  position: absolute;
+  text-align: center;
+  overflow: visible;
+}
+div#cssclock {
+  width: 150px !important;
+}
+
+div.bd {
+  border-left: 1px solid #FEF4E8;
+  border-bottom: 1px solid #FEF4E8;
+  border-top: 1px solid #FEF4E8;
+}
+
+div.table1 {
+  background-color: #FEF4E8;
+  border: 2px solid #006699;
+}
+
+.bdrr {
+  border-right: 2px solid #F98304 !important;
+}
+
+.bdrl {
+  border-left: 2px solid #F98304 !important;
+}

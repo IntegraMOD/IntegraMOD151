@@ -1,0 +1,1093 @@
+/*  fisubice Language Buttons
+    --------------------------------------------------------------
+	Style name:			fisubice
+	Based on style:		subSilver 		( the default phpBB 2 style )
+	Original author:	subBlue 		( http://www.subBlue.com/ )
+	Modified by:		HelterSkelter 	( http://www.forumimages.us/ )
+	
+	This is an alternative button style for subsilver2 eliminating the need for different button images for every installed language
+	
+	Copyright 2010 fiteam ( http://www.forumimages.us/ )
+    --------------------------------------------------------------
+*/
+a.button_new {
+    background: transparent url('../images/red/buttons/button_rt.png') no-repeat scroll top right;
+    display: block;
+    float: left;
+    font: bold 12px arial, sans-serif;    height: 25px;  /* this is 1/2 of the full button image height */
+    margin-right: 6px;
+    padding-right: 12px;
+	text-transform:uppercase;
+}
+
+a.button_new:hover {
+    background-position: center right;
+    outline: none; /* hide dotted outline in Firefox */
+    text-decoration: none;
+}
+
+a.button_new span {
+    background: transparent url('../images/red/buttons/button_post.png') no-repeat;
+    display: block;
+    line-height: 15px;  /* line height + top padding + bottom padding should equal 1/2 of the full button image height */
+    padding: 5px 3px 5px 26px;
+    color: #FFFFFF;
+}
+
+a.button_new:hover span {
+    background-position: center left;
+    padding: 5px 3px 5px 26px;
+    color: #FFFFFF;
+}
+
+a.button_reply {
+    background: transparent url('../images/red/buttons/button_rt.png') no-repeat scroll top right;
+    display: block;
+    float: left;
+    font: bold 12px arial, sans-serif;
+    height: 25px;  /* this is 1/2 of the full button image height */
+    margin-right: 6px;
+    padding-right: 12px;
+	text-transform:uppercase;
+}
+
+a.button_reply:hover {
+    background-position: center right;
+    outline: none; /* hide dotted outline in Firefox */
+    text-decoration: none;
+}
+
+a.button_reply span {
+    background: transparent url('../images/red/buttons/button_reply.png') no-repeat;
+    display: block;
+    line-height: 15px;  /* line height + top padding + bottom padding should equal 1/2 of the full button image height */
+    padding: 5px 3px 5px 26px;
+    color: #FFFFFF;
+}
+
+a.button_reply:hover span {
+    background-position: center left;
+    padding: 5px 3px 5px 26px;
+    color: #FFFFFF;
+}
+
+
+
+a.button_qreply {
+    background: transparent url('../images/red/buttons/button_rt.png') no-repeat scroll top right;
+    display: block;
+    float: left;
+    font: bold 12px arial, sans-serif;
+    height: 25px;  /* this is 1/2 of the full button image height */
+    margin-right: 6px;
+    padding-right: 12px;
+	text-transform:uppercase;
+}
+
+a.button_qreply:hover {
+    background-position: center right;
+    outline: none; /* hide dotted outline in Firefox */
+    text-decoration: none;
+}
+
+a.button_qreply span {
+    background: transparent url('../images/red/buttons/button_reply.png') no-repeat;
+    display: block;
+    line-height: 15px;  /* line height + top padding + bottom padding should equal 1/2 of the full button image height */
+    padding: 5px 3px 5px 26px;
+    color: #FFFFFF;
+}
+
+a.button_qreply:hover span {
+    background-position: center left;
+    padding: 5px 3px 5px 26px;
+    color: #FFFFFF;
+}
+
+a.button_qreply:active span {
+    background-position: bottom left;
+    padding: 5px 3px 5px 26px;
+    color: #FFFFFF;
+}
+
+
+a.button_lock {
+    background: transparent url('../images/red/buttons/button_rt.png') no-repeat scroll top right;
+    display: block;
+    float: left;
+    font: bold 12px arial, sans-serif;
+    height: 25px;  /* this is 1/2 of the full button image height */
+    margin-right: 6px;
+    padding-right: 12px;
+	text-transform:uppercase;
+}
+
+a.button_lock:hover {
+    background-position: center right;
+    outline: none; /* hide dotted outline in Firefox */
+    text-decoration: none;
+}
+
+a.button_lock span {
+    background: transparent url('../images/red/buttons/button_lock.png') no-repeat;
+    display: block;
+    line-height: 15px;  /* line height + top padding + bottom padding should equal 1/2 of the full button image height */
+    padding: 5px 3px 5px 26px;
+    color: #FB8919;
+}
+
+a.button_lock:hover span {
+    background-position: center left;
+    padding: 5px 3px 5px 26px;
+    color: #FFFFFF;
+}
+
+
+
+
+
+a.button_main {
+    background: transparent url('../images/red/buttons/button_rt.png') no-repeat scroll top right;
+    display: block;
+    float: left;
+    font: bold 12px arial, sans-serif;
+    height: 25px;  /* this is 1/2 of the full button image height */
+    margin-right: 6px;
+    padding-right: 12px;
+	text-transform:uppercase;
+}
+
+a.button_main:hover {
+    background-position: center right;
+    outline: none; /* hide dotted outline in Firefox */
+    text-decoration: none;
+}
+
+a.button_main span {
+    background: transparent url('../images/red/buttons/button_main.png') no-repeat;
+    display: block;
+    line-height: 15px;  /* line height + top padding + bottom padding should equal 1/2 of the full button image height */
+    padding: 5px 3px 5px 16px;
+    color: #FFFFFF;
+}
+
+a.button_main:hover span {
+    background-position: center left;
+    padding: 5px 3px 5px 16px;
+    color: #FFFFFF;
+}
+
+
+
+
+
+a.active {
+    background-position: bottom right;
+    outline: none; /* hide dotted outline in Firefox */
+    text-decoration: none;
+}
+
+a.active span {
+    background-position: bottom left;
+    padding: 5px 3px 5px 26px;
+    color: #BC2A4D;
+}
+
+
+
+a.icon_nav {
+    background: transparent url('../images/red/buttons/icon_nav_right.png') no-repeat scroll top right;
+    display: block;
+    float: left;
+    font: bold 12px arial, sans-serif;
+    height: 24px;  /* this is 1/2 of the full button image height */
+    margin-right: 6px;
+    padding-right: 8px;
+}
+
+a.icon_nav:hover {
+    background-position: bottom right;
+    outline: none; /* hide dotted outline in Firefox */
+    text-decoration: none;
+}
+
+a.icon_nav span {
+    background: transparent url('../images/red/buttons/icon_nav_main.png') no-repeat;
+    display: block;
+    line-height: 13px;  /* line height + top padding + bottom padding should equal 1/2 of the full button image height */
+    padding: 6px 3px 5px 14px;
+    color: #FFFFFF;
+}
+
+a.icon_nav:hover span {
+    background-position: bottom left;
+    padding: 6px 3px 5px 14px;
+    color: #FFFFFF;
+}
+
+
+
+
+
+
+
+
+
+a.icon_contact_pm {
+    background: transparent url('../images/red/buttons/icon_right.png') no-repeat scroll top right;
+    display: block;
+    float: left;
+    font:bold 10px arial, sans-serif;
+    height: 20px;
+    margin-left: 24px;
+    margin-right: 6px;
+    padding-right: 6px;
+	text-transform:uppercase;
+}
+
+a.icon_contact_pm:hover {
+    background-position: bottom right;
+    outline: none; /* hide dotted outline in Firefox */
+    text-decoration: none;
+}
+
+a.icon_contact_pm span {
+    background: transparent url('../images/red/buttons/icon_contact_pm.png') no-repeat;
+    display: block;
+    line-height: 10px;
+    padding: 5px 3px 5px 32px;
+    color: #FFFFFF;
+}
+
+a.icon_contact_pm:hover span {
+    background-position: bottom left;
+    padding: 5px 3px 5px 32px;
+    color: #FFFFFF;
+}
+
+
+a.icon_profile {
+    background: transparent url('../images/red/buttons/icon_right.png') no-repeat scroll top right;
+    display: block;
+    float: left;
+    font:bold 10px arial, sans-serif;
+    height: 20px;
+    margin-left: 24px;
+    margin-right: 6px;
+    padding-right: 6px;
+	text-transform:uppercase;
+}
+
+a.icon_profile:hover {
+    background-position: bottom right;
+    outline: none; /* hide dotted outline in Firefox */
+    text-decoration: none;
+}
+
+a.icon_profile span {
+    background: transparent url('../images/red/buttons/icon_profile.png') no-repeat;
+    display: block;
+    line-height: 10px;
+    margin-left: -24px;
+    padding: 5px 3px 5px 18px;
+    color: #FFFFFF;
+}
+
+a.icon_profile:hover span {
+    background-position: bottom left;
+    padding: 5px 3px 5px 18px;
+    color: #FFFFFF;
+}
+
+a.icon_contact_email {
+    background: transparent url('../images/red/buttons/icon_right.png') no-repeat scroll top right;
+    display: block;
+    float: left;
+    font:bold 10px arial, sans-serif;
+    height: 20px;
+    margin-left: 24px;
+    margin-right: 6px;
+    padding-right: 6px;
+	text-transform:uppercase;
+}
+
+a.icon_contact_email:hover {
+    background-position: bottom right;
+    outline: none; /* hide dotted outline in Firefox */
+    text-decoration: none;
+}
+
+a.icon_contact_email span {
+    background: transparent url('../images/red/buttons/icon_email.png') no-repeat;
+    display: block;
+    line-height: 10px;
+    margin-left: -24px;
+    padding: 5px 3px 5px 22px;
+    color: #FFFFFF;
+}
+
+a.icon_contact_email:hover span {
+    background-position: bottom left;
+    padding: 5px 3px 5px 22px;
+    color: #FFFFFF;
+}
+
+a.icon_edit {
+    background: transparent url('../images/red/buttons/icon_right.png') no-repeat scroll top right;
+    display: block;
+    float: left;
+    font:bold 10px arial, sans-serif;
+    height: 20px;
+    margin-left: 24px;
+    margin-right: 6px;
+    padding-right: 6px;
+	text-transform:uppercase;
+}
+
+a.icon_edit:hover {
+    background-position: bottom right;
+    outline: none; /* hide dotted outline in Firefox */
+    text-decoration: none;
+}
+
+a.icon_edit span {
+    background: transparent url('../images/red/buttons/icon_edit.png') no-repeat;
+    display: block;
+    line-height: 10px;
+    margin-left: -24px;
+    padding: 5px 3px 5px 24px;
+    color: #FFFFFF;
+}
+
+a.icon_edit:hover span {
+    background-position: bottom left;
+    padding: 5px 3px 5px 24px;
+    color: #FFFFFF;
+}
+
+a.icon_quote {
+    background: transparent url('../images/red/buttons/icon_right.png') no-repeat scroll top right;
+    display: block;
+    float: left;
+    font:bold 10px arial, sans-serif;
+    height: 20px;
+    margin-left: 24px;
+    margin-right: 6px;
+    padding-right: 6px;
+	text-transform:uppercase;
+}
+
+a.icon_quote:hover {
+    background-position: bottom right;
+    outline: none; /* hide dotted outline in Firefox */
+    text-decoration: none;
+}
+
+a.icon_quote span {
+    background: transparent url('../images/red/buttons/icon_quote.png') no-repeat;
+    display: block;
+    line-height: 10px;
+    margin-left: -24px;
+    padding: 5px 3px 5px 24px;
+    color: #FFFFFF;
+}
+
+a.icon_post_quote:hover span {
+    background-position: bottom left;
+    padding: 5px 3px 5px 24px;
+    color: #FFFFFF;
+}
+
+a.icon_member_online {
+    background: transparent url('../images/red/buttons/icon_right.png') no-repeat scroll top right;
+    display: block;
+    float: left;
+    font:bold 10px arial, sans-serif;
+    height: 20px;
+    margin-left: 24px;
+    margin-right: 6px;
+    padding-right: 6px;
+    text-transform:capitalize;
+}
+
+a.icon_member_online:hover {
+    background-position: bottom right;
+    outline: none; /* hide dotted outline in Firefox */
+    text-decoration: none;
+}
+
+a.icon_member_online span {
+    background: transparent url('../images/red/buttons/icon_online.png') no-repeat;
+    display: block;
+    line-height: 10px;
+    margin-left: -24px;
+    padding: 5px 3px 5px 22px;
+    color: #FFFFFF;
+}
+
+a.icon_member_online:hover span {
+    background-position: bottom left;
+    padding: 5px 3px 5px 22px;
+    color: #FFFFFF;
+}
+
+a.icon_member_offline {
+    background: transparent url('../images/red/buttons/icon_right.png') no-repeat scroll top right;
+    display: block;
+    float: left;
+    font:bold 10px arial, sans-serif;
+    height: 20px;
+    margin-left: 24px;
+    margin-right: 6px;
+    padding-right: 6px;
+    text-transform:capitalize;
+}
+
+a.icon_member_offline:hover {
+    background-position: bottom right;
+    outline: none; /* hide dotted outline in Firefox */
+    text-decoration: none;
+}
+
+a.icon_member_offline span {
+    background: transparent url('../images/red/buttons/icon_offline.png') no-repeat;
+    display: block;
+    line-height: 10px;
+    margin-left: -24px;
+    padding: 5px 3px 5px 22px;
+    color: #FFFFFF;
+}
+
+a.icon_member_offline:hover span {
+    background-position: bottom left;
+    padding: 5px 3px 5px 22px;
+    color: #FFFFFF;
+}
+
+a.icon_contact_aol {
+    background: transparent url('../images/red/buttons/icon_right.png') no-repeat scroll top right;
+    display: block;
+    float: left;
+    font:bold 10px arial, sans-serif;
+    height: 20px;
+    margin-left: 24px;
+    margin-right: 6px;
+    padding-right: 6px;
+	text-transform:uppercase;
+}
+
+a.icon_contact_aol:hover {
+    background-position: bottom right;
+    outline: none; /* hide dotted outline in Firefox */
+    text-decoration: none;
+}
+
+a.icon_contact_aol span {
+    background: transparent url('../images/red/buttons/icon_aim.png') no-repeat;
+    display: block;
+    line-height: 10px;
+    margin-left: -24px;
+    padding: 5px 3px 5px 26px;
+    color: #FFFFFF;
+}
+
+a.icon_contact_aol:hover span {
+    background-position: bottom left;
+    padding: 5px 3px 5px 26px;
+    color: #FFFFFF;
+}
+
+a.icon_contact_icq {
+    background: transparent url('../images/red/buttons/icon_right.png') no-repeat scroll top right;
+    display: block;
+    float: left;
+    font:bold 10px arial, sans-serif;
+    height: 20px;
+    margin-left: 24px;
+    margin-right: 6px;
+    padding-right: 6px;
+	text-transform:uppercase;
+}
+
+a.icon_contact_icq:hover {
+    background-position: bottom right;
+    outline: none; /* hide dotted outline in Firefox */
+    text-decoration: none;
+}
+
+a.icon_contact_icq span {
+    background: transparent url('../images/red/buttons/icon_icq_add.png') no-repeat;
+    display: block;
+    line-height: 10px;
+    margin-left: -24px;
+    padding: 5px 3px 5px 26px;
+    color: #FFFFFF;
+}
+
+a.icon_contact_icq:hover span {
+    background-position: bottom left;
+    padding: 5px 3px 5px 26px;
+    color: #FFFFFF;
+}
+
+a.icon_contact_yim {
+    background: transparent url('../images/red/buttons/icon_right.png') no-repeat scroll top right;
+    display: block;
+    float: left;
+    font:bold 10px arial, sans-serif;
+    height: 20px;
+    margin-left: 24px;
+    margin-right: 6px;
+    padding-right: 6px;
+	text-transform:uppercase;
+}
+
+a.icon_contact_yim:hover {
+    background-position: bottom right;
+    outline: none; /* hide dotted outline in Firefox */
+    text-decoration: none;
+}
+
+a.icon_contact_yim span {
+    background: transparent url('../images/red/buttons/icon_yim.png') no-repeat;
+    display: block;
+    line-height: 10px;
+    margin-left: -24px;
+    padding: 5px 3px 5px 26px;
+    color: #FFFFFF;
+}
+
+a.icon_contact_yim:hover span {
+    background-position: bottom left;
+    padding: 5px 3px 5px 26px;
+    color: #FFFFFF;
+}
+
+a.icon_contact_msnm {
+    background: transparent url('../images/red/buttons/icon_right.png') no-repeat scroll top right;
+    display: block;
+    float: left;
+    font:bold 10px arial, sans-serif;
+    height: 20px;
+    margin-left: 24px;
+    margin-right: 6px;
+    padding-right: 6px;
+	text-transform:uppercase;
+}
+
+a.icon_contact_msnm:hover {
+    background-position: bottom right;
+    outline: none; /* hide dotted outline in Firefox */
+    text-decoration: none;
+}
+
+a.icon_contact_msnm span {
+    background: transparent url('../images/red/buttons/icon_msnm.png') no-repeat;
+    display: block;
+    line-height: 10px;
+    margin-left: -24px;
+    padding: 5px 3px 5px 26px;
+    color: #FFFFFF;
+}
+
+a.icon_contact_msnm:hover span {
+    background-position: bottom left;
+    padding: 5px 3px 5px 26px;
+    color: #FFFFFF;
+}
+
+a.icon_contact_skype {
+    background: transparent url('../images/red/buttons/icon_right.png') no-repeat scroll top right;
+    display: block;
+    float: left;
+    font:bold 10px arial, sans-serif;
+    height: 20px;
+    margin-left: 24px;
+    margin-right: 6px;
+    padding-right: 6px;
+	text-transform:uppercase;
+}
+
+a.icon_contact_skype:hover {
+    background-position: bottom right;
+    outline: none; /* hide dotted outline in Firefox */
+    text-decoration: none;
+}
+
+a.icon_contact_skype span {
+    background: transparent url('../images/red/buttons/icon_skype.png') no-repeat;
+    display: block;
+    line-height: 10px;
+    margin-left: -24px;
+    padding: 5px 3px 5px 26px;
+    color: #FFFFFF;
+}
+
+a.icon_contact_skype:hover span {
+    background-position: bottom left;
+    padding: 5px 3px 5px 26px;
+    color: #FFFFFF;
+}
+
+a.icon_pm {
+    background: transparent url('../images/red/buttons/icon_right.png') no-repeat scroll top right;
+    display: block;
+    float: left;
+    font:bold 10px arial, sans-serif;
+    height: 20px;
+    margin-left: 24px;
+    margin-right: 6px;
+    padding-right: 6px;
+	text-transform:uppercase;
+}
+
+a.icon_pm:hover {
+    background-position: bottom right;
+    outline: none; /* hide dotted outline in Firefox */
+    text-decoration: none;
+}
+
+a.icon_pm span {
+    background: transparent url('../images/red/buttons/icon_pm.png') no-repeat;
+    display: block;
+    line-height: 10px;
+    margin-left: -24px;
+    padding: 5px 3px 5px 26px;
+    color: #FFFFFF;
+}
+
+a.icon_pm:hover span {
+    background-position: bottom left;
+    padding: 5px 3px 5px 26px;
+    color: #FFFFFF;
+}
+
+a.icon_pm_reply {
+    background: transparent url('../images/red/buttons/icon_right.png') no-repeat scroll top right;
+    display: block;
+    float: left;
+    font:bold 10px arial, sans-serif;
+    height: 20px;
+    margin-left: 24px;
+    margin-right: 6px;
+    padding-right: 6px;
+	text-transform:uppercase;
+}
+
+a.icon_pm_reply:hover {
+    background-position: bottom right;
+    outline: none; /* hide dotted outline in Firefox */
+    text-decoration: none;
+}
+
+a.icon_pm_reply span {
+    background: transparent url('../images/red/buttons/button_pm_reply.png') no-repeat;
+    display: block;
+    line-height: 10px;
+    margin-left: -24px;
+    padding: 5px 3px 5px 26px;
+    color: #FFFFFF;
+}
+
+a.icon_pm_reply:hover span {
+    background-position: bottom left;
+    padding: 5px 3px 5px 26px;
+    color: #FFFFFF;
+}
+
+a.icon_contact_www {
+    background: transparent url('../images/red/buttons/icon_right.png') no-repeat scroll top right;
+    display: block;
+    float: left;
+    font:bold 10px arial, sans-serif;
+    height: 20px;
+    margin-left: 24px;
+    margin-right: 6px;
+    padding-right: 6px;
+	text-transform:uppercase;
+}
+
+a.icon_contact_www:hover {
+    background-position: bottom right;
+    outline: none; /* hide dotted outline in Firefox */
+    text-decoration: none;
+}
+
+a.icon_contact_www span {
+    background: transparent url('../images/red/buttons/icon_www.png') no-repeat;
+    display: block;
+    line-height: 10px;
+    margin-left: -24px;
+    padding: 5px 3px 5px 26px;
+    color: #FFFFFF;
+}
+
+a.icon_contact_www:hover span {
+    background-position: bottom left;
+    padding: 5px 3px 5px 26px;
+    color: #FFFFFF;
+}
+
+a.icon_search {
+    background: transparent url('../images/red/buttons/icon_right.png') no-repeat scroll top right;
+    display: block;
+    float: left;
+    font:bold 10px arial, sans-serif;
+    height: 20px;
+    margin-left: 24px;
+    margin-right: 6px;
+    padding-right: 6px;
+	text-transform:uppercase;
+}
+
+a.icon_search:hover {
+    background-position: bottom right;
+    outline: none; /* hide dotted outline in Firefox */
+    text-decoration: none;
+}
+
+a.icon_search span {
+    background: transparent url('../images/red/buttons/icon_search.png') no-repeat;
+    display: block;
+    line-height: 10px;
+    margin-left: -24px;
+    padding: 5px 3px 5px 26px;
+    color: #FFFFFF;
+}
+
+a.icon_search:hover span {
+    background-position: bottom left;
+    padding: 5px 3px 5px 26px;
+    color: #FFFFFF;
+}
+
+a.icon_mod {
+    background: transparent url('../images/red/buttons/icon_right.png') no-repeat scroll top right;
+    display: block;
+    float: left;
+    font:bold 10px arial, sans-serif;
+    height: 20px;
+    margin-left: 24px;
+    margin-right: 6px;
+    padding-right: 6px;
+	text-transform:uppercase;
+}
+
+a.icon_mod:hover {
+    background-position: bottom right;
+    outline: none; /* hide dotted outline in Firefox */
+    text-decoration: none;
+}
+
+a.icon_mod span {
+    background: transparent url('../images/red/buttons/icon_mod_cp.png') no-repeat;
+    display: block;
+    line-height: 10px;
+    margin-left: -24px;
+    padding: 5px 3px 5px 26px;
+    color: #FFFFFF;
+}
+
+a.icon_mod:hover span {
+    background-position: bottom left;
+    padding: 5px 3px 5px 26px;
+    color: #FFFFFF;
+}
+
+a.icon_toplist {
+    background: transparent url('../images/red/buttons/icon_right.png') no-repeat scroll top right;
+    display: block;
+    float: left;
+    font:bold 10px arial, sans-serif;
+    height: 20px;
+    margin-left: 24px;
+    margin-right: 6px;
+    padding-right: 6px;
+	text-transform:uppercase;
+}
+
+a.icon_toplist:hover {
+    background-position: bottom right;
+    outline: none; /* hide dotted outline in Firefox */
+    text-decoration: none;
+}
+
+a.icon_toplist span {
+    background: transparent url('../images/red/buttons/icon_pa_toplist.png') no-repeat;
+    display: block;
+    line-height: 10px;
+    margin-left: -24px;
+    padding: 5px 3px 5px 26px;
+    color: #FFFFFF;
+}
+
+a.icon_toplist:hover span {
+    background-position: bottom left;
+    padding: 5px 3px 5px 26px;
+    color: #FFFFFF;
+}
+
+a.icon_stats {
+    background: transparent url('../images/red/buttons/icon_right.png') no-repeat scroll top right;
+    display: block;
+    float: left;
+    font:bold 10px arial, sans-serif;
+    height: 20px;
+    margin-left: 24px;
+    margin-right: 6px;
+    padding-right: 6px;
+	text-transform:uppercase;
+}
+
+a.icon_stats:hover {
+    background-position: bottom right;
+    outline: none; /* hide dotted outline in Firefox */
+    text-decoration: none;
+}
+
+a.icon_stats span {
+    background: transparent url('../images/red/buttons/icon_pa_stats.png') no-repeat;
+    display: block;
+    line-height: 10px;
+    margin-left: -24px;
+    padding: 5px 3px 5px 26px;
+    color: #FFFFFF;
+}
+
+a.icon_stats:hover span {
+    background-position: bottom left;
+    padding: 5px 3px 5px 26px;
+    color: #FFFFFF;
+}
+
+a.icon_va {
+    background: transparent url('../images/red/buttons/icon_right.png') no-repeat scroll top right;
+    display: block;
+    float: left;
+    font:bold 10px arial, sans-serif;
+    height: 20px;
+    margin-left: 24px;
+    margin-right: 6px;
+    padding-right: 6px;
+	text-transform:uppercase;
+}
+
+a.icon_va:hover {
+    background-position: bottom right;
+    outline: none; /* hide dotted outline in Firefox */
+    text-decoration: none;
+}
+
+a.icon_va span {
+    background: transparent url('../images/red/buttons/icon_pa_viewall.png') no-repeat;
+    display: block;
+    line-height: 10px;
+    margin-left: -24px;
+    padding: 5px 3px 5px 26px;
+    color: #FFFFFF;
+}
+
+a.icon_va:hover span {
+    background-position: bottom left;
+    padding: 5px 3px 5px 26px;
+    color: #FFFFFF;
+}
+
+
+a.icon_upload {
+    background: transparent url('../images/red/buttons/icon_right.png') no-repeat scroll top right;
+    display: block;
+    float: left;
+    font:bold 10px arial, sans-serif;
+    height: 20px;
+    margin-left: 24px;
+    margin-right: 6px;
+    padding-right: 6px;
+	text-transform:uppercase;
+}
+
+a.icon_upload:hover {
+    background-position: bottom right;
+    outline: none; /* hide dotted outline in Firefox */
+    text-decoration: none;
+}
+
+a.icon_upload span {
+    background: transparent url('../images/red/buttons/icon_pa_upload.png') no-repeat;
+    display: block;
+    line-height: 10px;
+    margin-left: -24px;
+    padding: 5px 3px 5px 26px;
+    color: #FFFFFF;
+}
+
+a.icon_upload:hover span {
+    background-position: bottom left;
+    padding: 5px 3px 5px 26px;
+    color: #FFFFFF;
+}
+
+a.icon_gallery {
+    background: transparent url('../images/red/buttons/icon_right.png') no-repeat scroll top right;
+    display: block;
+    float: left;
+    font:bold 10px arial, sans-serif;
+    height: 20px;
+    margin-left: 24px;
+    margin-right: 6px;
+    padding-right: 6px;
+	text-transform:uppercase;
+}
+
+a.icon_gallery:hover {
+    background-position: bottom right;
+    outline: none; /* hide dotted outline in Firefox */
+    text-decoration: none;
+}
+
+a.icon_gallery span {
+    background: transparent url('../images/red/buttons/icon_photo.png') no-repeat;
+    display: block;
+    line-height: 10px;
+    margin-left: -24px;
+    padding: 5px 3px 5px 22px;
+    color: #FFFFFF;
+}
+
+a.icon_gallery:hover span {
+    background-position: bottom left;
+    padding: 5px 3px 5px 22px;
+    color: #FFFFFF;
+}
+
+a.icon_kb {
+    background: transparent url('../images/red/buttons/icon_right.png') no-repeat scroll top right;
+    display: block;
+    float: left;
+    font:bold 10px arial, sans-serif;
+    height: 20px;
+    margin-left: 24px;
+    margin-right: 6px;
+    padding-right: 6px;
+	text-transform:uppercase;
+}
+
+a.icon_kb:hover {
+    background-position: bottom right;
+    outline: none; /* hide dotted outline in Firefox */
+    text-decoration: none;
+}
+
+a.icon_kb span {
+    background: transparent url('../images/red/buttons/icon_kb.png') no-repeat;
+    display: block;
+    line-height: 10px;
+    margin-left: -24px;
+    padding: 5px 3px 5px 26px;
+    color: #FFFFFF;
+}
+
+a.icon_kb:hover span {
+    background-position: bottom left;
+    padding: 5px 3px 5px 26px;
+    color: #FFFFFF;
+}
+
+a.icon_delete {
+    background: transparent url('../images/red/buttons/icon_right.png') no-repeat scroll top right;
+    display: block;
+    float: left;
+    font:bold 10px arial, sans-serif;
+    height: 20px;
+    margin-left: 24px;
+    margin-right: 6px;
+    padding-right: 6px;
+	text-transform:uppercase;
+}
+
+a.icon_delete:hover {
+    background-position: bottom right;
+    outline: none; /* hide dotted outline in Firefox */
+    text-decoration: none;
+}
+
+a.icon_delete span {
+    background: transparent url('../images/red/buttons/icon_del.png') no-repeat;
+    display: block;
+    line-height: 10px;
+    margin-left: -24px;
+    padding: 5px 3px 5px 26px;
+    color: #FFFFFF;
+}
+
+a.icon_delete:hover span {
+    background-position: bottom left;
+    padding: 5px 3px 5px 26px;
+    color: #FFFFFF;
+}
+
+a.icon_friend {
+    background: transparent url('../images/red/buttons/icon_right.png') no-repeat scroll top right;
+    display: block;
+    float: left;
+    font:bold 10px arial, sans-serif;
+    height: 20px;
+    margin-left: 24px;
+    margin-right: 6px;
+    padding-right: 6px;
+	text-transform:uppercase;
+}
+
+a.icon_friend:hover {
+    background-position: bottom right;
+    outline: none; /* hide dotted outline in Firefox */
+    text-decoration: none;
+}
+
+a.icon_friend span {
+    background: transparent url('../images/red/buttons/icon_friend.png') no-repeat;
+    display: block;
+    line-height: 10px;
+    margin-left: -24px;
+    padding: 5px 3px 5px 26px;
+    color: #FFFFFF;
+}
+
+a.icon_friend:hover span {
+    background-position: bottom left;
+    padding: 5px 3px 5px 26px;
+    color: #FFFFFF;
+}
+
+a.icon_blog {
+    background: transparent url('../images/red/buttons/icon_right.png') no-repeat scroll top right;
+    display: block;
+    float: left;
+    font:bold 10px arial, sans-serif;
+    height: 20px;
+    margin-left: 24px;
+    margin-right: 6px;
+    padding-right: 6px;
+	text-transform:uppercase;
+}
+
+a.icon_blog:hover {
+    background-position: bottom right;
+    outline: none; /* hide dotted outline in Firefox */
+    text-decoration: none;
+}
+
+a.icon_blog span {
+    background: transparent url('../images/red/buttons/icon_blog.png') no-repeat;
+    display: block;
+    line-height: 10px;
+    margin-left: -24px;
+    padding: 5px 3px 5px 26px;
+    color: #FFFFFF;
+}
+
+a.icon_blog:hover span {
+    background-position: bottom left;
+    padding: 5px 3px 5px 26px;
+    color: #FFFFFF;
+}

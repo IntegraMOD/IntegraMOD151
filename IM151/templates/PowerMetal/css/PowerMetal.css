@@ -1,0 +1,403 @@
+/* The content of the posts (body of text) */
+body{background:#262626;color:#CACACA;font:12px Verdana,Arial,Helvetica,sans-serif,Dungeon;margin:6px;padding:1;
+}
+
+/* General font families for common tags */
+font,th,td,p{font:12px Verdana,Arial,Helvetica,sans-serif}
+
+/* General text */
+.gensmall{font-size:10px}
+.gensmall2{font-size:10px;font-weight:bold}
+.gensmall3{font-size:10px; color=#000000}
+.genblock{font-size:9px; font-weight:bold; color: #FFFFFF}
+.genmed2{font-size:11px; font-weight:bold; color: #FFFFFF}
+.genfaq{font-size:12px; font-weight:bold; color: #000000}
+.copyright{font-size:10px}
+td.genmed,.genmed{font-size:11px}
+.explaintitle{font-size:11px;font-weight:bold;color:#000000}
+
+
+/* General page style */
+a:link,a:active,a:visited,a.postlink{color:#CACACA;text-decoration:none}
+a:hover{color:#F0F0F0; text-decoration: underline}
+
+/* titles for the topics:could specify viewed link color too */
+.topictitle{font-size:11px;font-weight:bold}
+a.topictitle:visited{color:#9D380E}
+a.topictitle:hover{color:#F0F0F0}
+
+/* Name of poster in viewmsg.php and viewtopic.php and other places */
+.name{font-size:11px;font-weight: bold}
+
+hr{border: 0px solid #000000;border-top-width:1px;height:0px}
+
+/* Category gradients*/
+td.cat,td.catHead,td.catSides,td.catLeft,td.catRight,td.catBottom{font-weight:bold;letter-spacing:1px;color:#000000;background:#EEEEEE url(../images/cellpic1.gif);
+height:27px;text-indent:4px}
+
+/* Main table cell colors and backgrounds */
+.row1{background:#484848}
+.row2,.helpline{background:#696969}
+.row3{background:#414141}
+.row4{background:#707070}
+td.spacerow{background:000000}
+
+/* This is for the table cell above the Topics,Post & Last posts on the index.php */
+td.rowpic{background:url(../images/cellpic2.jpg) #F2F1F1 repeat-y}
+
+/* Table Header cells */
+th{background: url(../images/cellpic3.gif);color:#000000;font-size:11px;
+font-weight:bold;height:21px;white-space:nowrap;text-align:center;padding-left:8px;padding-right:8px}
+
+/* This is the border line & background color round the entire page */
+.bodyline{background:url(../images/bg2.jpg) fixed;border:3px double #696969}
+.bodylinea{background:url(../images/bg2.jpg) fixed;border:3px double #696969}
+
+.profileline{
+-moz-border-radius: 5px;
+-webkit-border-radius: 5px;
+-khtml-border-radius: 5px;
+-webkit-border-radius: 5px;
+border-radius: 5px;
+border: solid 1px #696969;
+background: #484848 none repeat-x 0 0;
+margin-bottom: 4px;
+padding: 5px;
+clear: both;
+box-shadow: 5px 5px 5px rgba(68,68,68,0.6);
+}
+
+.profilelinea{
+-moz-border-radius: 5px;
+-webkit-border-radius: 5px;
+-khtml-border-radius: 5px;
+-webkit-border-radius: 5px;
+border-radius: 5px;
+border: solid 1px #696969;
+background: #2C2C2C none repeat-x 0 0;
+margin-bottom: 8px;
+padding: 5px;
+clear: both;
+box-shadow: 5px 5px 5px rgba(68,68,68,0.6);
+}
+
+/* This is the outline round the main forum tables */
+.forumline{background:#000000;border:0px solid #000000}
+.forumline2{background: url(../images/cellpic3.gif);border:1px solid #000000}
+
+.faqbox{background: #484848; border: 0px solid #000000}
+
+/* This is the outline round the portal blocks */
+.blockborder{background:#4E0000;border:2px #4E0000}
+
+/* The largest text used in the index page title and toptic title etc. */
+.maintitle,h1{
+font:bold 20px/120% "Trebuchet MS",Verdana,Arial,Helvetica,sans-serif;text-decoration:none;color:#FF0000}
+
+.description{
+font:bold 20px/120% "Trebuchet MS",Verdana,Arial,Helvetica,sans-serif;text-decoration:none;color:#CCCCCC}
+
+.subtitle,h2{font:bold 18px/180% "Trebuchet MS",Verdana,Arial,Helvetica,sans-serif;
+text-decoration:none}
+
+/* Used for the navigation text,(Page 1,2,3 etc) and the navigation bar when in a forum */
+.nav{font-size:11px;font-weight:bold; color: #990000}
+.postbody{font-size:12px;line-height:125%}
+
+/* Location,number of posts,post date etc */
+.postdetails{font-size:10px;color:#000000}
+
+/* Quote blocks */
+.quotetitle,.quote {color:#FFFFFF;font-size:11px;border: 1px solid #cacaca;padding:2px 2px 3px 3px}
+.quotetitle {background:#333333;text-indent:2px;font-weight:bold;margin:10px 20px 0 20px}
+.quote {background:#262626;border-top-width:0;color:#ffffff;font-size:10px;margin:0 20px 10px 20px}
+.quote {overflow:auto;height:40px}
+
+/* Code blocks */
+.codetitle,.code {border:1px solid #FFFFFF;padding:2px 2px 3px 3px}
+.codetitle {font-size:11px;background: #333333;text-indent:2px;font-weight:bold;margin:10px 20px 0 20px}
+.code {background:#262626;border-top-width:0;font-size:10px;margin:0 20px 10px 20px}
+.code {overflow:auto;height:40px}
+.code {color:#FF0000}
+
+/* PHP blocks */
+.phptitle,.php {border:1px solid #CACACA;padding:2px 2px 3px 3px}
+.phptitle {font-size:11px;background: #333333;text-indent:2px;font-weight:bold;margin:10px 20px 0 20px}
+.php {background:#898989;border-top-width:0;color:#99FFFF; font-size:10px;margin:0 20px 10px 20px}
+.php {overflow:auto;height:40px}
+.php {color:#99FFFF}
+
+/* This is for the error messages that pop up */
+.errorline{background:#add8e6;border:1px solid #000000}
+
+/* Form elements */
+form{display:inline}
+
+input{background: #262626; font:11px Verdana,Arial,Helvetica,sans-serif; color: #CACACA}
+
+select{background:#262626;font:11px Verdana,Arial,Helvetica,sans-serif; color: #CACACA}
+
+input.post, textarea.post{background:#262626;border:1px solid #CACACA;
+font:11px Verdana,Arial,Helvetica,sans-serif;color: #CACACA;padding-bottom:2px;padding-left:2px}
+
+input.button, input.liteoption, .fakebut{border:1px solid #CACACA;background:#262626;font-size:11px}
+input.catbutton{border:1px solid #CACACA;background:#262626;font-size:10px}
+input.mainoption{border:1px solid #CACACA;background:#262626;font-size:11px;font-weight:bold}
+
+a.but,a.but:hover,a.but:visited{color:#CACACA;text-decoration:none}
+
+/* This is the line in the posting page which shows the rollover
+help line. Color value in row2 */
+.helpline{border:0 solid;font-size:10px}
+
+/*-- mod : profile cp --*/
+.foundercolor, a.foundercolor, a.foundercolor:link, a.foundercolor:active, a.foundercolor:visited {
+	color: #FF0000;
+	font-weight: bold;
+}
+a.foundercolor:hover {
+	color:	#FFFFFF;
+	text-decoration: underline;
+}
+.jadmincolor, a.jadmincolor, a.jadmincolor:link, a.jadmincolor:active, a.jadmincolor:visited {
+	color: #7A9861;
+	font-weight: bold;
+}
+a.jadmincolor:hover {
+	color:	#FFFFFF;
+	text-decoration: underline;
+}
+.admincolor, a.admincolor, a.admincolor:link, a.admincolor:active, a.admincolor:visited {
+	color: #FFFF33;
+	font-weight: bold;
+}
+a.admincolor:hover {
+	color:	#FFFFFF;
+	text-decoration: underline;
+}
+
+.modcolor, a.modcolor, a.modcolor:link, a.modcolor:active, a.modcolor:visited {
+	color: #000099;
+	font-weight: bold;
+}
+a.modcolor:hover {
+	color:	#FFFFFF;
+	text-decoration: underline;
+}
+
+.usercolor, a.usercolor, a.usercolor:link, a.usercolor:active, a.usercolor:visited {
+	color : #0D0D0D;
+	font-weight: bold;
+}
+a.usercolor:hover {
+	color: #FFFFFF;
+	text-decoration: underline;
+}
+/*-- fin mod : profile cp --*/
+
+/* This is the gradient background at the top of the page */
+.topbkg{height:124px; background: #dbe3ee url(../images/logo_M.gif) repeat-x}
+.topnav{ height:39px; padding-bottom: 4px; font-size: 10px; color: #000000; font-weight: bold; white-space:nowrap;border: 0px solid #000000}
+
+.btmbkg{height:124px; background: #dbe3ee url(../images/logo_BM.gif) repeat-x}
+.btmnav{background: url(../images/nav_BM.gif) repeat-x;
+height:39px; padding-bottom: 4px; font-size: 10px; color: #000000; font-weight: bold; white-space:nowrap;border: 0px solid #000000}
+
+td.cat{font-weight:bold;letter-spacing:1px;color:#000000;background:#EEEEEE url(../images/cellpic1.gif);
+height:27px;text-indent:4px}
+
+/* Admin & Moderator Colors MODification */
+.admin,.mod{font-size:11px;font-weight:bold}
+.admin,a.admin,a.admin:visited{color:#ff0000}
+.mod,a.mod,a.mod:visited{color:#006600}
+a.admin:hover,a.mod:hover{color:#839fbc}
+
+/* Specify the space around images */
+.imgtopic,.imgicon{margin-left:3px}
+.imgspace{margin-left:1px;margin-right:2px}
+.imgfolder{margin:1px 4px 1px 4px}
+
+/* Gets rid of the need for border="0" on hyperlinked images */
+img{border:0 solid}
+
+abbr, acronym {
+	font-weight: bold;
+	text-decoration: overline;
+	cursor: help;
+}
+
+.acronym{background:#262626}
+
+.alert{color:#FF3300}
+
+/* Background images for tables */
+.blk{border-collapse:collapse;height:23px;width:100%}
+.blkl{background: url(../images/blk_tlc.gif) no-repeat;width:8px}
+.blkm{background: url(../images/blk_tm.gif) repeat-x;width:100%}
+.blkr{background: url(../images/blk_trc.gif) no-repeat;width:77px}
+
+.blk2{border-collapse:collapse;height:23px;width:50%}
+.blkl2{background: url(../images/blk_tlc.gif) no-repeat;width:8px}
+.blkm2{background: url(../images/blk_tm.gif) repeat-x;width:100%}
+.blkr2{background: url(../images/blk_trc.gif) no-repeat;width:77px}
+
+/* Mighty Gorgon - Full Album Pack - BEGIN */
+.forumline_left {
+	background-color: #FFFFFF;
+	border-bottom: 2px #006699 solid;
+	border-left: 2px #006699 solid;
+}
+
+.tab_links, a.tab_links:hover, a.tab_links:link, a.tab_links:active, a.tab_links:visited { 
+	font-size: 11px;
+	color: #FF8866; 
+	text-decoration: none;
+}
+
+.tab_links_unsel, a.tab_links_unsel:hover, a.tab_links_unsel:link, a.tab_links_unsel:active, a.tab_links_unsel:visited { 
+	font-size: 11px;
+	color: #FFFFAA; 
+	text-decoration: none;
+}
+
+a.tab_links:hover, a.tab_links_unsel:hover { 
+	text-decoration: underline;
+}
+
+.tab_headers, th.tab_headers {
+	color: #FF8866; 
+	font-size: 11px; 
+	font-weight : bold;
+	padding-left: 4px;
+	padding-right: 8px;
+	border: #003366; 
+	border-style: solid; 
+	border-width: 1px 1px 0px 1px;
+	background-color: #006699;
+}
+
+.tab_headers_unsel, th.tab_headers_unsel {
+	color: #FFFFAA; 
+	font-size: 11px; 
+	font-weight : bold;
+	padding-left: 4px;
+	padding-right: 8px;
+	border: #336699; 
+	border-style: solid; 
+	border-width: 1px 1px 0px 1px;
+	background-color: #6699AA;
+}
+
+.tab_border {
+	background-color: #888888;
+	border: 1px;
+}
+
+.filler, th.filler {
+	background-color:#6699AA; 
+	background-image:none;
+}
+
+.picframe{
+	display: block;
+	background-color: #FFFFFF;
+	border: 1px solid #555555;
+	padding: 2px 6px 2px 6px;
+	position: relative;
+	bottom: 2px;
+	right: 2px;
+}
+
+.picshadow{
+	background-color: #888888;
+	color: inherit;
+	margin-left: 4px;
+	margin-top: 4px;
+}
+/* Mighty Gorgon - Full Album Pack - END */
+
+/* Background images for tables */
+.tbl{}
+.tbll{}
+.tblbot{}
+.tblr{}
+
+/* Nav bar images */
+.hdr_left{	background: url(../images/nav_R.gif) top left no-repeat;
+}
+.hdr_right{ background: url(../images/nav_L.gif) top right no-repeat;
+}
+.ftr_left{	background: url(../images/nav_BR.gif) top left no-repeat;
+}
+.ftr_right{ background: url(../images/nav_BL.gif) top right no-repeat;
+}
+
+.clear-fix {
+    display: block;
+    clear: both;
+}
+
+ .clearfix:after {
+    content: ".";
+    display: block;
+    height: 0;
+    clear: both;
+    visibility: hidden;
+ }
+
+.clearfix {display: inline-block;}  /* for IE/Mac */
+
+.space {
+	margin: 4px auto 10px auto;
+}
+
+.openclose {
+    background: transparent url('../images/icon_openclose.png') no-repeat;
+    display: block;
+	float:right;
+	width:15px;
+	height:15px;
+}
+
+.finews {
+    height: 20px;
+    text-align: center;
+}
+
+a.kb {
+    background: transparent;
+    display: block;
+    float: left;
+    font: bold 40px 'Nunito', sans-serif;
+	text-shadow: 2px 2px 2px #000000;
+    height: 75px;
+    margin-right: 20px;
+    padding-right: 20px;
+    padding-bottom: 20px;
+	text-transform:capitalize;
+
+}
+
+a.kb:hover {
+    background-position: bottom right;
+    outline: none; /* hide dotted outline in Firefox */
+    text-decoration: none;
+}
+
+a.kb span {
+    display: block;
+    line-height: 65px;
+    padding: 6px 20px 4px 30px;
+    color: #626262;
+	appearance: button;
+	-moz-appearance: button; /* Firefox */
+	-webkit-appearance: button; /* Safari and Chrome */
+}
+
+a.kb:hover span {
+    background-position: bottom left;
+    padding: 6px 20px 4px 30px;
+}
+
+ul.lft{padding:0px;margin:0px;list-style-type: none;display: inline-block;}
+li.pcpvt {display: inline-block;vertical-align: bottom;}

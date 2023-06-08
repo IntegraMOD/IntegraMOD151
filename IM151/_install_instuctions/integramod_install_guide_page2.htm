@@ -1,0 +1,772 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=<?php echo $lang['ENCODING']; ?>">
+<meta http-equiv="Content-Style-Type" content="text/css">
+<title>Settings to do after Install</title>
+<link rel="stylesheet" type="text/css" href="../templates/fisubice/css/fisubice.css">
+<style type="text/css">
+
+th			{ background-image: url('../templates/fisubice/images/cellpic3.gif') }
+td.cat		{ background-image: url('../templates/fisubice/images/cellpic1.gif') }
+td.rowpic	{ background-image: url('../templates/fisubice/images/cellpic2.jpg'); background-repeat: repeat-y }
+td.catHead,td.catSides,td.catLeft,td.catRight,td.catBottom { background-image: url('../templates/fisubice/images/cellpic1.gif') }
+
+/* Import the fancy styles for IE only (NS4.x doesn't use the @import function) */
+@import url("../templates/fisubice/formIE.css"); 
+
+</style>
+
+</head>
+
+<body>
+
+<table class="topbkg" border="0" cellpadding="0" cellspacing="0" width="100%">
+<tbody>
+<tr> 
+<td><a href="http://www.integramod.com" target="_blank" name="pagetop"><img src="../images/spacer.gif" width="1" height="110" border="0"><img src="../images/logo/phpbb2_logo.png" width="504" height="110" border="0"></a></td>
+</tr>
+</tbody></table>
+<table align="center" border="0" cellpadding="0" cellspacing="0" width="100%">
+<tbody><tr>
+		<td class="topnav" align="center" nowrap="nowrap" width="15%">
+						<a class="mainmenu" href="http://www.integramod.com">
+						integramod.com</a> &bull;&nbsp;<a class="mainmenu" href="integramod_install_guide_page1.htm">Installation 
+						Page 1</a>								&bull;&nbsp;<a class="mainmenu" href="#pagebase2">To 
+						the End of Page</a></td>
+
+	</tr>
+</tbody></table>
+<p class="maintitle">Fresh Install for IntegraMOD 1.4.1 Page 2 <br>
+  Settings to do after Installation</p>
+<table border="0" width="100%" id="table6">
+	<tr>
+		<th>
+		<p style="text-align: left"><b>Enter the Admin Control Panel (ACP):</b></th>
+	</tr>
+</table>
+<p>1) Click on Admin in the menu bar (or &quot;Go to Administration Panel&quot; at the bottom 
+of the page)<br>
+<br>
+2) It will ask you for your log in details again. You need to fill this in every 
+session that you go to the ACP<br>
+<br>
+You are now ready to configure your system</p>
+<table border="0" width="100%" id="table7">
+	<tr>
+		<th>
+		<p style="text-align: left"><b>Basic ACP Layout:</b></th>
+	</tr>
+</table>
+<p>You will notice the main column on the <b>right</b> contains <b>Forum Statistics</b>, 
+<b>IntegraMOD News</b> which is linked to integramod.com. to keep you informed of any 
+important information, and <b>Version Information</b>, containing phpBB update 
+information. Below this is a list of <b>who is online</b> and the IP address from 
+where they have accessed the forum.<br>
+<br>
+On the left hand column is a <b>navigation menu</b> to get you to settings within 2 
+clicks.<br>
+<br>
+The following are settings to personalise your forum and make sure it performs 
+as you would hope. I have placed a short comment about each section. On every page you need to submit or update these setting you 
+change. If you change a variable and then move on without submitting, it will 
+not save the changed contents.<br>
+&nbsp;</p>
+<table border="1" width="100%" id="table2" cellpadding="4" cellspacing="0">
+	<tr>
+		<th colspan="2" valign="top" class="genmed" style="text-align: left">
+		Administration</th>
+	</tr>
+	<tr>
+		<td colspan="2" valign="top" class="genmed" align="left">
+		Here are five links that allow you to navigate the main part of your 
+		forum. Previewing Forum and Portal will maintain the Admin Navigation 
+		column for easy access back to the ACP</td>
+	</tr>
+	<tr>
+		<th colspan="2" valign="top" class="genmed" style="text-align: left">
+		<p style="text-align: left">
+<b>Security</b></th>
+	</tr>
+	<tr>
+		<td colspan="2" valign="top" class="genmed" align="left">
+		<p style="text-align: left" class="gensmall">
+This is the an important addition to IntegraMOD and whilst it may occasionally 
+frustrate, most of the time it will help protect you.</td>
+	</tr>
+	<tr>
+		<td valign="top" class="genmed" align="left" width="11%">Configuration</td>
+		<td class="genmed" align="left" width="87%">- Login Attempts - initially set at three but if you have a forum 
+		with noobs and less computer able, you may want to up this to 10<br>
+		- Notify Admin- you may wish to be notified by only one of these 
+		constants</td>
+	</tr>
+	<tr>
+		<td valign="top" class="genmed" align="left" width="11%">Special</td>
+		<td class="genmed" align="left" width="87%">- Protect admin &amp; moderator 
+      accounts - <br>If set to enabled you will not be able to have more than the 
+      specified number of admins (<strong>Amount of allowed admins</strong>) moderators 
+      (<strong>Amount of allowed mods</strong>) on your forum. If you intend to 
+      have 2 or more admins or moderatos you must set the specific numbers or 
+      disable this constant.<br><br>
+      - Amount of allowed admins &amp; Amount of allowed mods as explained above. </td>
+	</tr>
+	<tr>
+		<th valign="top" class="genmed" colspan="2" style="text-align: left">
+		<span class="genmed">Attachments</span></th>
+	</tr>
+	<tr>
+		<td valign="top" class="genmed" colspan="2" align="left">
+		<p style="text-align: left" class="genmed">This allows you to control 
+		items attached to posts within your forums</td>
+	</tr>
+	<tr>
+		<th valign="top" class="genmed" align="left" width="98%" colspan="2" height="25">
+		<p style="text-align: left" class="genmed"><b>Approval</b></th>
+	</tr>
+	<tr>
+		<td valign="top" class="genmed" align="left" width="98%" colspan="2">
+		Here if you have set restrictions on users or forums, you can see all 
+		who wish approval and you can administer from this panel.</td>
+	</tr>
+	<tr>
+		<th valign="top" class="genmed" colspan="2" style="text-align: left">
+		<span class="genmed">Download</span></th>
+	</tr>
+	<tr>
+		<td valign="top" class="genmed" colspan="2" align="left">
+		This Download manager allows you to manages downloads from your site or 
+		elsewhere. Setup your download limits and banned extensions in here.</td>
+	</tr>
+	<tr>
+		<th valign="top" class="genmed" colspan="2" style="text-align: left">
+		<span class="genmed">Extensions</span> </th>
+	</tr>
+	<tr>
+		<td valign="top" class="genmed" colspan="2" align="left">
+		<p style="text-align: left" class="genmed">File extension allowed and 
+		forbidden are named and configured here</td>
+	</tr>
+	<tr>
+		<th valign="top" class="genmed" colspan="2" style="text-align: left">
+		<p style="text-align: left" class="genmed"><b>eXtreme Styles</b></th>
+	</tr>
+	<tr>
+		<td valign="top" class="genmed" colspan="2" align="left">
+		This is the area you can manage the style and templates for your site. 
+		It is very important part of personalising your forum. Her you can make 
+		sure everyone sees the style you want them too. You can also clone a 
+		style then develop it into your own.</td>
+	</tr>
+	<tr>
+		<td valign="top" class="genmed" align="left" width="11%">Configuration</td>
+		<td class="genmed" align="left" width="87%">- Show on left frame - You can select what items to 
+		show on left frame in admin control panel. You may find selecting 
+		Default Style and Manage Cache useful to select here.<br>
+		- Default template directory - check initially that it says fisubice<br>
+		- make sure that &quot;set Add tpl filenames in html&quot; is set to No.</td>
+	</tr>
+	<tr>
+		<td valign="top" class="genmed" align="left" width="11%">Styles Management</td>
+		<td class="genmed" align="left" width="87%">- Set default style - switch 
+		all users to use an IntegraMOD 1.4.x compatible style.<br>
+		NOTE: It is recommended to uninstall all those styles that are NOT 
+		IntegraMOD 1.4.x compatible.<br>
+		- Manage Cache - Click 'Clear All', wait for next page 
+		to load, then at the bottom of the page, click on 'Compile All'. It may say 
+		it could take some time, at this stage, it won't :)</td>
+	</tr>
+	<tr>
+		<th valign="top" class="genmed" align="left" width="97%" colspan="2" style="text-align: left">
+		<span class="genmed">Force Topic Read</span> </th>
+	</tr>
+	<tr>
+		<td valign="top" class="genmed" align="left" width="97%" colspan="2">
+		This is the Force Topic Read, where you can make sure that every 
+		registered user reads the specified topic before they read anything 
+		more. It is initially set ON but you can turn it of or amend the message 
+		for new users.</td>
+	</tr>
+	<tr>
+		<th valign="top" class="genmed" align="left" width="97%" colspan="2" style="text-align: left">
+		<span class="genmed">FAQ Admin</span> </th>
+	</tr>
+	<tr>
+		<td valign="top" class="genmed" align="left" width="97%" colspan="2">You 
+		have an opportunity here to amend, and develop FAQ pages that already 
+		are set up, if you wish.</td>
+	</tr>
+	<tr>
+		<th valign="top" class="genmed" align="left" width="97%" colspan="2" style="text-align: left">
+		<span class="genmed">Forum Admin</span> </th>
+	</tr>
+	<tr>
+		<td valign="top" class="genmed" align="left" width="97%" colspan="2">
+		this is the heart of how you structure your forums. You can set 
+		permissions for access, make categories, and manage whether points are 
+		added for posting. There is already a demo forum provided but it would 
+		be better in time to remove this. (Please Note the FTR topic is 
+		initially set to the welcome post in this forum. You will need to change 
+		the FTR configuration if you delete this post or the test forum.)</td>
+	</tr>
+	<tr>
+		<td valign="top" class="genmed" align="left" width="11%">Spellcheck</td>
+		
+    <td class="genmed" align="left" width="87%">One of the important tools for 
+      your forum is the spell checker. Build your dictionaries in this section. 
+      Remember part1 then part2 of each language you wish to support. <strong>You 
+      must install at least one dictionary in order to use the Spell Check option</strong>. 
+      If no dictionary is installed the spell check popup window will appear blank.<br>
+      NOTE: The Dictionaries take up a lot of DB Space. (approx 4-5mb each language). 
+      Delete the /spelling/xxxxxx.dic Files once you've built your Dictionaries.</td>
+	</tr>
+	<tr>
+		<th valign="top" class="genmed" align="left" width="97%" colspan="2" style="text-align: left">
+		<span class="genmed">General Admin</span> </th>
+	</tr>
+	<tr>
+		<td valign="top" class="genmed" align="left" width="97%" colspan="2">
+		This is the nerve centre of the ACP. There is much in this section and 
+		will take time to feel fully confident. The more familiarity you gain of 
+		this section, the more solid your forum will be.</td>
+	</tr>
+	<tr>
+		<td valign="top" class="genmed" align="left" width="11%">
+		phpBBMyAdmin </td>
+		<td class="genmed" align="left" width="87%">This is a phpBB's own cut 
+		down version of phpmyadmin. You will find this useful if you wish to 
+		quickly look up tables and manage elements of your forum.</td>
+	</tr>
+	<tr>
+		<td valign="top" class="genmed" align="left" width="11%">
+		Acronyms </td>
+		<td class="genmed" align="left" width="87%">If you have words specific 
+		to your usergroup or abbreviations that may be less known, place them in 
+		this section and they will be highlighted in the forum to provide a 
+		reference to all.</td>
+	</tr>
+	<tr>
+		<td valign="top" class="genmed" align="left" width="11%">Auto language 
+		detection </td>
+		<td class="genmed" align="left" width="87%">This very useful feature 
+		detects the language set in a browsers configuration, so that when an 
+		unregistered user accesses your site, thay are greeted and can register 
+		details in their own language. It is worth noting that these need to be 
+		set when a new language is added to your forum.</td>
+	</tr>
+	<tr>
+		<td valign="top" class="genmed" align="left" width="11%">Backup Database </td>
+		<td class="genmed" align="left" width="87%">Although not essential, it 
+		is worth betting into the habit of backing up your database, in case of 
+		server problems or site attack. this section will allow the Admins the 
+		ability to backup the database on their local computer.</td>
+	</tr>
+	<tr>
+		<td valign="top" class="genmed" align="left" width="11%">Configuration </td>
+		<td class="genmed" align="left" width="87%">VERY IMPORTANT section<br>
+		- Site Name - This will appear at the top of your browser windows and is 
+		the name of your portal. IntegraMOD adds the term 'Forum' after this 
+		text as the title of your system.<br>
+		- Description - Go on, sell yourself. This is where you detail what you 
+		site is about and who it is aimed at.<br>
+		- Disable board - DO NOT click Yes to this and log out. You will find it 
+		difficult to log back in if the board is disabled.<br>
+		- Enable account activation - This is to help moderate who joins your 
+		board. It may be wise to initially set this as 'Admin', and it means you 
+		will need to approve anyone who joins. Once you are happy that your 
+		e-mail from the board is functioning properly, you will generally want 
+		to select 'User' here. This means this user will need to verify there 
+		e-mail address when they join. Unless you wish a completely anonymous 
+		Forum, or you are having mailing difficulty it would be preferable not 
+		to keep this set at 'None'<br>
+		- User email via board - If selected 'Yes' then users will be able to 
+		mail via an e-mail messaging page, in order to protect that mail address 
+		from anyone other than the owner. If No is selected, the e-mail button 
+		holds the address and is linked to open the sender's mail program for a 
+		new mail on clicking the e-mail button.<br>
+		- Default Language - This dropdown will only show installed languages.<br>
+		- System Timezone - This is the Timezone your Host server is based in.<br>
+		- Logo Setting - you are able to change aspects of your main logo here.<br>
+		- Cookie name - If you have had another phpbb type forum before on your 
+		domain, it is highly recommended that you change the cookie name to 
+		different one as it can conflict when previous users of older forums 
+		come to visit your new site.<br>
+		- Avatar Settings - IntegraMOD now has a set of avatars within your 
+		install. You can add more folders of avatars in the 
+		Images/Avatars/Gallery/ directory. To enable the user to use them, 
+		select Enable gallery avatars. Using remote avatars or allowing the 
+		uploading of avatars carries a small security risk, but the benefits 
+		encourage individuality and can help to maintain your memory usage.<br>
+		- Admin Email Address - This will go out on all automatically 
+		distributed mail from your site. It may be worth using specific address 
+		purely for this purpose.<br>
+		- Use SMTP Server for email - You may not need to set up this as most 
+		servers will send out mail without external SMTP. It is worth testing 
+		first to see if you need this to be set.<br>
+		- PayPal IPN Settings - IntegraMOD 1.4.0 onwards, has greater 
+		integration with PayPal to promote your site funding. Take care that you 
+		set these correctly. And feel free to share the wealth this way, if you 
+		so wish :)</td>
+	</tr>
+	<tr>
+		<td valign="top" class="genmed" align="left" width="11%">Configuration + </td>
+		<td class="genmed" align="left" width="87%">Another Important section<br>
+		Here you will be able to set the default values for users and override 
+		the if need be. When a category has override selected, the user will not 
+		be shown the options that have been withheld.<br>
+		- Registration information - Items marked with a red star will be 
+		compulsory for the user to submit information.<br>
+		- Profile Settings - Internationalization - Here you can restrict the 
+		user to maintain a board system if appropriate. e.g. If a Forum is set 
+		in one country alone then only one timezone may be needed.<br>
+		- Profile Settings - <span class="genmed">Privacy - As Board Founder, 
+		you have a duty to protect the information, unsuspecting persons may 
+		give. If you or the user selects not to display their personal 
+		information, themselves and admins only will be able to see it, with the 
+		addition of nominated friends if selected.</span><br>
+		- Profile Settings - Reading - Please make sure you have
+		<span class="gen">'Display images</span>' set as Yes, otherwise 
+		unregistered visitors will not automatically be able to see images in 
+		forum posts<br>
+		Further setting below this help you manage your site behaviour.</td>
+	</tr>
+	<tr>
+		<td valign="top" class="genmed" align="left" width="11%">Hacks/Mods List</td>
+		<td class="genmed" align="left" width="87%">Please visit and see over 
+		100 MODs added into IntegraMOD to make it 'The Best Pre-MODded phpBB 
+		Package Available'. If Mod owners find their MODs have not been 
+		correctly labelled or updated please contact the IntegraMOD Team.</td>
+	</tr>
+	<tr>
+		<td valign="top" class="genmed" align="left" width="11%">Meta Tags +</td>
+		<td class="genmed" align="left" width="87%">Here is an opportunity to 
+		add search engine information to hopefully boost your position in the 
+		global ratings.</td>
+	</tr>
+	<tr>
+		<td valign="top" class="genmed" align="left" width="11%">Optimize DB</td>
+		<td class="genmed" align="left" width="87%">Enable Cron and set to how 
+		often you'd like your DB to be optimized, this will help&nbsp; make your 
+		forum run smoother.</td>
+	</tr>
+	<tr>
+		<td valign="top" class="genmed" align="left" width="11%">Welcome PM</td>
+		<td class="genmed" align="left" width="87%">Here you can edit the 
+		Private Message each new user receives.</td>
+	</tr>
+	<tr>
+		<td valign="top" class="genmed" align="left" width="11%">Qbar</td>
+		<td class="genmed" align="left" width="87%">This is the hub of you site 
+		navigation. You have a variety of ways to show links on your site and 
+		Qbar also can set permissions as to who sees those links.</td>
+	</tr>
+	<tr>
+		<td valign="top" class="genmed" align="left" width="11%">Rating System</td>
+		<td class="genmed" align="left" width="87%">In order to allow users to 
+		rate post and images you need to set 'Rating system active' to Yes. Then 
+		click Update configuration at the base of this block.</td>
+	</tr>
+	<tr>
+		<td valign="top" class="genmed" align="left" width="11%">Restore 
+		Database</td>
+		<td class="genmed" align="left" width="87%">It is worth noting this tab 
+		- if you have previously backed up your database and your site has need 
+		to return to a previous state - you can upload you database backup here.</td>
+	</tr>
+	<tr>
+		<th valign="top" class="genmed" align="left" width="97%" colspan="2" style="text-align: left">
+		Group Admin</th>
+	</tr>
+	<tr>
+		<td valign="top" class="genmed" align="left" width="97%" colspan="2">You 
+		can set specific groups here to allow private forum, or groups when 
+		user's have given a set number of posts</td>
+	</tr>
+	<tr>
+		<th valign="top" class="genmed" align="left" width="97%" colspan="2" style="text-align: left">IM 
+		Portal</th>
+	</tr>
+	<tr>
+		<td valign="top" class="genmed" align="left" width="97%" colspan="2">
+		Masterdavid created a superb system which allowed phpbb owners a portal 
+		system that could offer a highly customisable web system. This offers a 
+		continuity of layout throughout the site, and new pages can easily be 
+		constructed whilst maintaining the overall professional presentation. 
+		Integrating this with with the other phpBB based MODs make IntegraMOD a 
+		formidable package.</td>
+	</tr>
+	<tr>
+		<td valign="top" class="genmed" align="left" width="11%">Blocks 
+		Management</td>
+		<td class="genmed" align="left" width="87%">- Selecting IntegraMOD 
+		Default, you are shown the main block structure for the majority of your 
+		site. Caution should be taken here as Deleting a block may delete it 
+		forum-wide.<br>
+		- Edit - when clicked on a specific block line, will take you to the 
+		configuration of that block. You can change the block title here, and 
+		you may wish to change the names of 'IntegraNews' For you portal news 
+		column,&nbsp; and 'Welcome to IntegraMOD' to something more pertinent to 
+		your site. If you do change the title , you may need to set the Localize 
+		Titlebar to 'No'.<br>
+		- Most of the blocks have preset code in the site files, however you 
+		will see that the 'Welcome to IntegraMOD' block has content you can 
+		easily change, making its either BBcode based or HTML.<br>
+		- It is worth noting - the cache for the following blocks must be set to 
+		No (disabled);- Board Navigation, IntegraNews, Recent Topics and Who is 
+		Online.</td>
+	</tr>
+	<tr>
+		<td valign="top" class="genmed" align="left" width="11%">Delete Cache 
+		Files</td>
+		<td class="genmed" align="left" width="87%" valign="top">This enables 
+		the portal to take the latest information from the Forum to be displayed 
+		around the site. I would be would clicking this after you have updated 
+		you Blocks management section.</td>
+	</tr>
+	<tr>
+		<td valign="top" class="genmed" align="left" width="11%">Portal 
+		Configuration</td>
+		<td class="genmed" align="left" width="87%">- Default Portal Page - 
+		Although not at first, you may build a portal page that you wish to be 
+		the home page of the site other than the current one. If so you can set 
+		this here.<br>
+		- Links -&gt; Style - You can decide whether you wish scrolling or static 
+		links on your portal page. the same applies for the Recent Topics block.<br>
+		- Search option - Forum text - The portal search block at the bottom of 
+		the left hand column, can search your site, or send a search request to 
+		Google. Change IntegraMOD to a short tile for your own site.<br>
+		- Display users who didn't visit - Although not initially, as you site 
+		grows you may want to remove the tick in this box.</td>
+	</tr>
+	<tr>
+		<th valign="top" class="genmed" align="left" width="98%" colspan="2" style="text-align: left">
+		Knowledge Base</th>
+	</tr>
+	<tr>
+		<td valign="top" class="genmed" align="left" width="98%" colspan="2">The 
+		Knowledge Base is an incredibly useful way of collecting and displaying 
+		articles of interest to your site visitors. Users can post articles 
+		which can be approved before being displayed in the portal.</td>
+	</tr>
+	<tr>
+		<td valign="top" class="genmed" align="left" width="11%">Configuration</td>
+		<td class="genmed" align="left" width="87%">- KB Moderator Group - It is 
+		worth setting this to Admin<br>
+		- Forum ID - it is worth making a forum specifically for knowledge base 
+		articles, and then reference it here.<br>
+		- Allow Ratings and Allow Comments, both add extra feedback to the 
+		article creators.</td>
+	</tr>
+	<tr>
+		<th valign="top" class="genmed" align="left" width="98%" colspan="2" style="text-align: left">
+		Donors Admin</th>
+	</tr>
+	<tr>
+		<td valign="top" class="genmed" align="left" width="98%" colspan="2">
+		When you set up you PayPal IPN and configure this section, your 
+		Donations Block will link users to PayPal in the hope they like your 
+		site :)</td>
+	</tr>
+	<tr>
+		<th valign="top" class="genmed" align="left" width="98%" colspan="2" style="text-align: left">
+		Languages</th>
+	</tr>
+	<tr>
+		<td valign="top" class="genmed" align="left" width="98%" colspan="2">
+		When you have more than one language to offer users, this can offer 
+		greater manipulation of your lang files.</td>
+	</tr>
+	<tr>
+		<th valign="top" class="genmed" align="left" width="98%" colspan="2" style="text-align: left">
+		Links</th>
+	</tr>
+	<tr>
+		<td valign="top" class="genmed" align="left" width="98%" colspan="2">You 
+		can configure how users can offer links to outside your site an upload 
+		images to further highlight them.</td>
+	</tr>
+	<tr>
+		<th valign="top" class="genmed" align="left" width="98%" colspan="2" style="text-align: left">
+		News Management</th>
+	</tr>
+	<tr>
+		<td valign="top" class="genmed" align="left" width="98%" colspan="2">
+		Your portal contains a comprehensive news display system, allowing 
+		topics to be shown categorised, in archive form or as latest news from 
+		from the site. Also included is an RSS News feed system to allow news 
+		from your forum to be displayed on others' sites without any further 
+		input from you!</td>
+	</tr>
+	<tr>
+		<td valign="top" class="genmed" align="left" width="11%">Categories</td>
+		<td class="genmed" align="left" width="87%">You will need to add at 
+		least one category in order for your News system to start functioning. 
+		Click on Add New News Category, where you will need select an image an 
+		give the category a title. You can upload your own images to the 
+		images/news/ directory.</td>
+	</tr>
+	<tr>
+		<td valign="top" class="genmed" align="left" width="11%">Configuration</td>
+		<td class="genmed" align="left" width="87%">- News Mod Base URL - set 
+		this to the exact URL of your portal.php (e.g.
+		http://www.mysite.com/forum/portal.php)<br>
+		- News Mod Index File - make sure this is portal.php<br>
+		- Enable RSS Syndication - although very useful, you may not wish your 
+		news so easily accessible by others. Is so, set this button to 'No'</td>
+	</tr>
+	<tr>
+		<th valign="top" class="genmed" align="left" width="98%" colspan="2" style="text-align: left">
+		P.C.P.</th>
+	</tr>
+	<tr>
+		<td valign="top" class="genmed" align="left" width="98%" colspan="2">The 
+		Profile Control Panel is exactly what it says, but 
+		adds more functionality, information and individuality to your forum. By 
+		defining more fields that relate to users, more enjoyment and 
+		understanding takes place. Initially you will probably not wish 
+		to touch this. However there is now the PCP Wizard, 
+		which can help the intermediate Board Founder flourish.</td>
+	</tr>
+	<tr>
+		<th valign="top" class="genmed" align="left" width="98%" colspan="2" style="text-align: left">
+		Photo Album</th>
+	</tr>
+	<tr>
+		<td valign="top" class="genmed" align="left" width="98%" colspan="2">
+		Smartor's Photo album is a useful feature on the site. It provides 
+		Personal and Public Galleries that can also update the homepage and a 
+		part of the Users Profile. You can set a watermark to be used to protect 
+		the copyright of the images from your site.</td>
+	</tr>
+	<tr>
+		<td valign="top" class="genmed" align="left" width="11%">Categories</td>
+		<td class="genmed" align="left" width="87%">You will need to make at 
+		least one Category in order to use the public Galleries. You can also 
+		set user permissions as to who can upload and view these galleries.</td>
+	</tr>
+	<tr>
+		<td valign="top" class="genmed" align="left" width="11%">Clear Cache</td>
+		<td class="genmed" align="left" width="87%">It is worthwhile clearing 
+		your thumbnail cache, especially after every time you change any album 
+		settings.</td>
+	</tr>
+	<tr>
+		<td valign="top" class="genmed" align="left" width="11%">Configuration</td>
+		<td class="genmed" align="left" width="87%">You can set up maximum sizes 
+		for downloads here, with the options for multiple uploads.<br>
+		- <span class="genmed">Maximum number of files user can upload at a time</span> 
+		- Initially set at one you can allow many uploads from one entry point.<br>
+		- <span class="genmed">Optimize for the version of GD</span> - Most of 
+		the latest versions of Linux have GD2 which we have placed by default. 
+		You can tell your GD version by looking in ACP/Security/Info:GDlib. It 
+		is important to get this correct or your images will be poor.</td>
+	</tr>
+	<tr>
+		<th valign="top" class="genmed" align="left" width="98%" colspan="2">
+		<p style="text-align: left" class="genmed"><b>Prillian</b></th>
+	</tr>
+	<tr>
+		<td valign="top" class="genmed" align="left" width="98%" colspan="2">
+		Prillian is a cross some where between a chat system and a PM system. It 
+		can give you instant message that pop up in front of you to Keep you on 
+		the story. Some would rather disable it. Here are the settings to 
+		disable Prillian:-</td>
+	</tr>
+	<tr>
+		<td valign="top" class="genmed" align="left" width="11%">Configuration</td>
+		<td class="genmed" align="left" width="87%">Enable Instant Messaging 
+		System No<br>
+		Enable Network Messaging system No<br>
+		Override user settings Yes</td>
+	</tr>
+	<tr>
+		<th valign="top" class="genmed" align="left" width="98%" colspan="2">
+		<p style="text-align: left" class="genmed"><b>Pseudocron</b></th>
+	</tr>
+	<tr>
+		<td valign="top" class="genmed" align="left" width="98%" colspan="2">
+		Pseudocron is you IntegraMOD internal clock. It Keeps ticking and sets 
+		up the sending out of Digests to users. This need to be set to On to 
+		promote better automation.</td>
+	</tr>
+	<tr>
+		<th valign="top" class="genmed" align="left" width="98%" colspan="2">
+		<p style="text-align: left"><b>
+		<span class="genmed">Statistics</span> </b> </th>
+	</tr>
+	<tr>
+		<td valign="top" class="genmed" align="left" width="98%" colspan="2">
+		Here you can configure how you would like to see your Statistics page, 
+		and add more or remove items.</td>
+	</tr>
+	<tr>
+		<th valign="top" class="genmed" align="left" width="98%" colspan="2" style="text-align: left">
+		<span class="genmed">Styles Admin</span> </th>
+	</tr>
+	<tr>
+		<td valign="top" class="genmed" align="left" width="98%" colspan="2">
+		This is partly left over from the phpBB days, but of importance is 
+		Banner Admin where you can setup rotating banners on your site, and 
+		specify, the complete running of a banner ad campaign</td>
+	</tr>
+	<tr>
+		<th valign="top" class="genmed" align="left" width="98%" colspan="2" style="text-align: left">
+		<span class="genmed">Subscriptions</span> </th>
+	</tr>
+	<tr>
+		<td valign="top" class="genmed" align="left" width="98%" colspan="2">
+		Organise subscriptions to individual forums though this control panel</td>
+	</tr>
+	<tr>
+		<th valign="top" class="genmed" align="left" width="98%" colspan="2">
+		<p style="text-align: left"><span style="font-weight: 700">
+		<span class="genmed">Tools</span> </span> </th>
+	</tr>
+	<tr>
+		<td valign="top" class="genmed" align="left" width="11%">PHPInfo</td>
+		<td class="genmed" align="left" width="87%">This is a very useful 
+		diagnostic page if faults arise and </td>
+	</tr>
+	<tr>
+		<th valign="top" class="genmed" align="left" width="98%" colspan="2">
+		<p style="text-align: left"><b>
+		<span class="genmed">User Admin</span> </b> </th>
+	</tr>
+	<tr>
+		<td valign="top" class="genmed" align="left" width="98%" colspan="2">
+		This final section really helps to manage you users and any bad 
+		influences too.</td>
+	</tr>
+	<tr>
+		<td valign="top" class="genmed" align="left" width="11%">Admins &amp; Mod's</td>
+		<td class="genmed" align="left" width="87%">A useful quick reference as 
+		to how many users hold levels of authority. Remember this should also 
+		concur with the Security MOD/Special Settings.</td>
+	</tr>
+	<tr>
+		<td valign="top" class="genmed" align="left" width="11%">Ban Control</td>
+		<td class="genmed" align="left" width="87%">You can ban or un-ban 
+		individuals, IP Addresses or whole IP domains. You will also find that 
+		the security mod will add IPs and Users if there are hacking attempts or 
+		the user enters the wrong password too many times.</td>
+	</tr>
+	<tr>
+		<td valign="top" class="genmed" align="left" width="11%">Disallowed 
+		Names</td>
+		<td class="genmed" align="left" width="87%">Enter names here you do not 
+		wish to be used one the forum as they are either rude, or are close to 
+		other members of the forum.</td>
+	</tr>
+	<tr>
+		<td valign="top" class="genmed" align="left" width="11%">Junior Admin</td>
+		<td class="genmed" align="left" width="87%">Sometime you wish to give 
+		members Admin responsibilities but not the whole show. You can give 
+		Junior Admins as much or as little power as you wish. To make a junior 
+		admin, find their name in the Junior admin user list. Then click Edit 
+		Modules beside their name. You will now see every admin function 
+		available. Simply tick the boxes to which powers you wish the person to 
+		have. No Junior admin or admin can change who the board founder is on 
+		your board but caution should still be observed as they may have access 
+		that could damage the boards reputation.</td>
+	</tr>
+	<tr>
+		<td valign="top" class="genmed" align="left" width="11%">Manage</td>
+		<td class="genmed" align="left" width="87%">On this section, enter a 
+		user's name and you will be able to amend any aspect of that persons 
+		profile, including their password, username, and points accumulated.</td>
+	</tr>
+	<tr>
+		<td valign="top" class="genmed" align="left" width="11%">Permissions</td>
+		<td class="genmed" align="left" width="87%">Here you can give individual 
+		users certain rights to particular forums. You must remember that if you 
+		make someone and admin or a moderator of a forum, they will not be able 
+		to access the forum until you have entered a minimum number of admins or 
+		mods in the Security module.<br>
+		If You wish to give someone full Admin access to your site, you enter 
+		their username here, and then at the top of the page is a menu. Change 
+		their status from User to Administrator, and submit. Again Security 
+		restrictions apply.</td>
+	</tr>
+	<tr>
+		<td valign="top" class="genmed" align="left" width="11%">Points 
+		Configuration</td>
+		<td class="genmed" align="left" width="87%">You can give users points 
+		for the number of posts and replies they have made. These points can be 
+		named whatever you like and can be awarded via posting, user to user 
+		donation, paypal donation, Admin donation (where points can also be 
+		deducted) and through additional mods where points can be one or used as 
+		payment.</td>
+	</tr>
+	<tr>
+		<td valign="top" class="genmed" align="left" width="11%">Private 
+		Messages</td>
+		<td class="genmed" align="left" width="87%">Here you have access to 
+		every message that has been sent and receive until its owner has deleted 
+		it. A point of not that before a pm has been read, it is only one, but 
+		is duplicated once read, one for the sender and one for the recipient. 
+		This is where admin discretion needs to be the better part of Valour if 
+		you dare read anyone else's PM!</td>
+	</tr>
+	<tr>
+		<td valign="top" class="genmed" align="left" width="11%">Prune users</td>
+		<td class="genmed" align="left" width="87%">You can automatically set 
+		limits for users to be pruned off the forum, or you can manage them by 
+		hand. Caution, some may be regular visitors, just not good posters.</td>
+	</tr>
+	<tr>
+		<td valign="top" class="genmed" align="left" width="11%">Ranks</td>
+		<td class="genmed" align="left" width="87%">When Rank images are 
+		uploaded to your server they appear in the dropdown list for you to 
+		select a hierarchy of staff and users. The may be set manual, or by 
+		number of posts they have made. Do note that changing someone the Site 
+		Admin here does not give any admin level permissions.</td>
+	</tr>
+	<tr>
+		<td valign="top" class="genmed" align="left" width="11%">User list</td>
+		<td class="genmed" align="left" width="87%">This is a comprehensive list 
+		of all your users, able to be sorted in most formats. Selecting Open 
+		will also allow you to manage, set permissions or contact them via 
+		e-mail or PM. If you tick the box beside them you will find a dropdown 
+		menu at the bottom of the table where you can Ban, add to a group, 
+		activate, deactivate or delete those you have selected.</td>
+	</tr>
+	<tr>
+		<td valign="top" class="genmed" align="left" width="11%">Inactive Users</td>
+		<td class="genmed" align="left" width="87%">A colourful page devoted to 
+		the most lethargic users!</td>
+	</tr>
+	</table>
+<p>
+<br>
+Once you've done these then feel free to familiarise yourself with the rest of 
+the Admin controls you have at your command.<br>
+<br>
+&nbsp;</p>
+<p>Thank you to all of the IntegraMOD team for their help, patience and devotion to the cause.</p>
+<p>If 
+you have any further questions, please feel free to discuss them with us at 
+<a href="http://www.integramod.com">www.integramod.com</a></p>
+<p>Please remember that this is Free Open-Source software and the IntegraMOD 
+team has worked extremely hard over the past months and years to make it as good 
+as it is. Your help would be appreciated by joining and supporting other users in 
+anyway you can.</p>
+<p>Enjoy using IntegraMOD ;) </p>
+
+<p align="center">
+<a name="pagebase2">
+<img src="../images/phpbbintegramod.jpg" alt="IntegraMOD Forum Index" title="IntegraMOD Forum Index" border="0" height="160" width="530"></a></p>
+<p align="center">&nbsp;
+</p>
+<table align="center" border="0" cellpadding="0" cellspacing="0" width="100%">
+<tbody><tr>
+		<td class="topnav" align="center" nowrap="nowrap" width="15%">
+						<a class="mainmenu" href="http://www.integramod.com">
+						integramod.com</a> &bull;&nbsp;<a class="mainmenu" href="integramod_install_guide_page1.htm">Installation 
+						Page 1</a>								&bull;&nbsp;<a class="mainmenu" href="#pagetop2">To 
+						the Top of Page</a></td>
+
+	</tr>
+</tbody></table>
+</body>
+
+</html>
