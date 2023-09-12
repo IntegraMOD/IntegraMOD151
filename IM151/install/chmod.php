@@ -94,14 +94,10 @@ function page_footer()
 
 }
 
-
-
-
-
 function autodetect_install()  // Pre-install or after install?  Install directory detection
 {
      $detection = "";
-     $install = '/';
+     $install = '';
      $prillinstall = '../prill_install/';
      if (file_exists($install) !== false) {
         $preinstall = 1;

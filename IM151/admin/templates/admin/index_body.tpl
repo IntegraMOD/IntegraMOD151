@@ -1,97 +1,111 @@
+<style> 
+   .row .st:nth-child(even) {
+        background-color:#D6DDF0;
+    }
+</style>
+
+<div class="container-fluid">
+
 <div class="maintitle">{L_WELCOME_IM}</div>
 <br />
 <div class="genmed">{L_ADMIN_INTRO}</div>
 <br />
 <div class="subtitle">{L_FORUM_STATS}</div>
-<table width="100%" cellpadding="3" cellspacing="1" border="0" class="forumline">
-<tr> 
-	<th width="25%">{L_STATISTIC}</th>
-	<th width="25%">{L_VALUE}</th>
-	<th width="25%">{L_STATISTIC}</th>
-	<th width="25%">{L_VALUE}</th>
-</tr>
-<tr> 
-	<td class="row1" nowrap="nowrap" align="right">{L_NUMBER_POSTS}:</td>
-	<td class="row2">{NUMBER_OF_POSTS}</td>
-	<td class="row1" align="right">{L_POSTS_PER_DAY}:</td>
-	<td class="row2">{POSTS_PER_DAY}</td>
-</tr>
-<tr> 
-	<td class="row1" nowrap="nowrap" align="right">{L_NUMBER_TOPICS}:</td>
-	<td class="row2">{NUMBER_OF_TOPICS}</td>
-	<td class="row1" nowrap="nowrap" align="right">{L_TOPICS_PER_DAY}:</td>
-	<td class="row2">{TOPICS_PER_DAY}</td>
-</tr>
-<tr> 
-	<td class="row1" nowrap="nowrap" align="right">{L_NUMBER_USERS}:</td>
-	<td class="row2">{NUMBER_OF_USERS}</td>
-	<td class="row1" nowrap="nowrap" align="right">{L_USERS_PER_DAY}:</td>
-	<td class="row2">{USERS_PER_DAY}</td>
-</tr>
-<tr> 
-	<td class="row1" nowrap="nowrap" align="right">{L_BOARD_STARTED}:</td>
-	<td class="row2"><span class="genmed">{START_DATE}</span></td>
-	<td class="row1" nowrap="nowrap" align="right">{L_AVATAR_DIR_SIZE}:</td>
-	<td class="row2">{AVATAR_DIR_SIZE}</td>
-</tr>
-<tr> 
-	<td class="row1" nowrap="nowrap" align="right">{L_DB_SIZE}:</td>
-	<td class="row2">{DB_SIZE}</td>
-	<td class="row1" align="right">{L_GZIP_COMPRESSION}:</td>
-	<td class="row2">{GZIP_COMPRESSION}</td>
-</tr>
-<tr> 
-	<td class="row1" nowrap="nowrap" align="right">{L_PHP_VERSION}:</td>
-	<td class="row2">{PHP_VERSION}</td>
-	<td class="row1" align="right">{L_MYSQL_VERSION}:</td>
-	<td class="row2">{MYSQL_VERSION}</td>
-</tr>
-</table>
+
+
+<div class="container-fluid forumline">
+	<div class="row th pt-2 text-start">
+		<div class="col col-sm-6 col-md-3">{L_STATISTIC}</div>
+		<div class="col col-sm-6 col-md-3">{L_VALUE}</div>
+		<div class="col col-sm-6 col-md-3">{L_STATISTIC}</div>
+		<div class="col col-sm-6 col-md-3">{L_VALUE}</div>
+	</div>
+	<div class="row">
+		<div class="col col-sm-6 col-md-3 row2 py-1">{L_NUMBER_POSTS}:</div>
+		<div class="col col-sm-6 col-md-3 row1 py-1">{NUMBER_OF_POSTS}</div>
+		<div class="col col-sm-6 col-md-3 row2 py-1">{L_POSTS_PER_DAY}:</div>
+		<div class="col col-sm-6 col-md-3 row1 py-1">{POSTS_PER_DAY}</div>
+	</div>
+	<div class="row">
+		<div class="col col-sm-6 col-md-3 row2 py-1 hr">{L_NUMBER_TOPICS}:</div>
+		<div class="col col-sm-6 col-md-3 row1 py-1 hr">{NUMBER_OF_TOPICS}</div>
+		<div class="col col-sm-6 col-md-3 row2 py-1 hr">{L_TOPICS_PER_DAY}:</div>
+		<div class="col col-sm-6 col-md-3 row1 py-1 hr">{TOPICS_PER_DAY}</div>
+	</div>
+	<div class="row">
+		<div class="col col-sm-6 col-md-3 row2 py-1 hr">{L_NUMBER_USERS}:</div>
+		<div class="col col-sm-6 col-md-3 row1 py-1 hr">{NUMBER_OF_USERS}</div>
+		<div class="col col-sm-6 col-md-3 row2 py-1 hr">{L_USERS_PER_DAY}:</div>
+		<div class="col col-sm-6 col-md-3 row1 py-1 hr">{USERS_PER_DAY}</div>
+	</div>
+	<div class="row">
+		<div class="col col-sm-6 col-md-3 row2 py-1 hr">{L_BOARD_STARTED}:</div>
+		<div class="col col-sm-6 col-md-3 row1 py-1 hr"><span class="genmed">{START_DATE}</span></div>
+		<div class="col col-sm-6 col-md-3 row2 py-1 hr">{L_AVATAR_DIR_SIZE}:</div>
+		<div class="col col-sm-6 col-md-3 row1 py-1 hr">{AVATAR_DIR_SIZE}</div>
+	</div>
+	<div class="row">
+		<div class="col col-sm-6 col-md-3 row2 py-1 hr">{L_DB_SIZE}:</div>
+		<div class="col col-sm-6 col-md-3 row1 py-1 hr">{DB_SIZE}</div>
+		<div class="col col-sm-6 col-md-3 row2 py-1 hr">{L_GZIP_COMPRESSION}:</div>
+		<div class="col col-sm-6 col-md-3 row1 py-1 hr">{GZIP_COMPRESSION}</div>
+	</div>
+	<div class="row">
+		<div class="col col-sm-6 col-md-3 row2 py-1 hr">{L_PHP_VERSION}:</div>
+		<div class="col col-sm-6 col-md-3 row1 py-1 hr">{PHP_VERSION}</div>
+		<div class="col col-sm-6 col-md-3 row2 py-1 hr">{L_MYSQL_VERSION}:</div>
+		<div class="col col-sm-6 col-md-3 row1 py-1 hr">{MYSQL_VERSION}</div>
+	</div>	
+</div>
+
+
 <br />
-<table width="100%" cellpadding="3" cellspacing="1" border="0" class="forumline">
-<tr> 
-	<th style="width: 50%;">{L_INTEGRA_TITLE}</th>
-	<th style="width: 50%;">{L_VERSION_INFORMATION}</th>
-</tr>
-<tr>
-	<td class="row1" style="height: 50px; overflow: auto;">{INTEGRA_NEWS}</td>
-	<td class="row2" style="height: 50px; overflow: auto;">{VERSION_INFO}</td>
-</tr>
-</table>
+
+<div class="container-fluid forumline">
+	<div class="row">
+		<div class="col col-sm-12 col-md-6 order-sm-1 order-md-1 th pt-2">{L_INTEGRA_TITLE}</div>
+		<div class="col col-sm-12 col-md-6 order-3 order-xs-3 order-sm-3 order-md-2 order-lg-2 order-xl-3 th pt-2">{L_VERSION_INFORMATION}</div>
+		<div class="col col-sm-12 col-md-6 order-2 order-xs-2 order-sm-2 order-md-3 order-lg-3 order-xl-3 p-2 row1">{INTEGRA_NEWS}</div>
+		<div class="col col-sm-12 col-md-6 order-sm-4 order-md-4 p-2  row2">{VERSION_INFO}</div>	
+	</div>
+</div>
+
 
 <br />
 
 <div class="subtitle">{L_WHO_IS_ONLINE}</div>
 
-<table width="100%" cellpadding="3" cellspacing="1" border="0" class="forumline">
-<tr> 
-<th width="20%">&nbsp;{L_USERNAME}&nbsp;</th>
-<th width="20%">&nbsp;{L_STARTED}&nbsp;</th>
-<th width="20%">&nbsp;{L_LAST_UPDATE}&nbsp;</th>
-<th width="20%">&nbsp;{L_FORUM_LOCATION}&nbsp;</th>
-<th width="20%">&nbsp;{L_IP_ADDRESS}&nbsp;</th>
-</tr>
+<div class="container-fluid forumline row2">
+  <div class="row text-start th"> 
+	<div class="col pt-2">&nbsp;{L_USERNAME}&nbsp;</div>
+	<div class="col pt-2">&nbsp;{L_STARTED}&nbsp;</div>
+	<div class="col pt-2">&nbsp;{L_LAST_UPDATE}&nbsp;</div>
+	<div class="col pt-2">&nbsp;{L_FORUM_LOCATION}&nbsp;</div>
+	<div class="col pt-2">&nbsp;{L_IP_ADDRESS}&nbsp;</div>
+  </div>
+  
 <!-- BEGIN reg_user_row -->
-<tr> 
-<td width="20%" class="{reg_user_row.ROW_CLASS}">&nbsp;<a href="{reg_user_row.U_USER_PROFILE}" class="name">{reg_user_row.USERNAME}</a>&nbsp;</td>
-<td width="20%" align="center" nowrap="nowrap" class="{reg_user_row.ROW_CLASS}">&nbsp;<span class="genmed">{reg_user_row.STARTED}</span>&nbsp;</td>
-<td width="20%" align="center" nowrap="nowrap" class="{reg_user_row.ROW_CLASS}">&nbsp;<span class="genmed">{reg_user_row.LASTUPDATE}</span>&nbsp;</td>
-<td width="20%" class="{reg_user_row.ROW_CLASS}">&nbsp;<a href="{reg_user_row.U_FORUM_LOCATION}">{reg_user_row.FORUM_LOCATION}</a>&nbsp;</td>
-<td width="20%" class="{reg_user_row.ROW_CLASS}">&nbsp;<a href="{reg_user_row.U_WHOIS_IP}" target="_phpbbwhois">{reg_user_row.IP_ADDRESS}</a>&nbsp;</td>
-</tr>
+  <div class="row text-start row1 st"> 
+	<div class="col py-2">&nbsp;<a href="{reg_user_row.U_USER_PROFILE}" class="name">{reg_user_row.USERNAME}</a>&nbsp;</div>
+	<div class="col py-2">&nbsp;<span class="genmed">{reg_user_row.STARTED}</span>&nbsp;</div>
+	<div class="col py-2">&nbsp;<span class="genmed">{reg_user_row.LASTUPDATE}</span>&nbsp;</div>
+	<div class="col py-2">&nbsp;<a href="{reg_user_row.U_FORUM_LOCATION}">{reg_user_row.FORUM_LOCATION}</a>&nbsp;</div>
+	<div class="col py-2">&nbsp;<a href="{reg_user_row.U_WHOIS_IP}" target="_phpbbwhois">{reg_user_row.IP_ADDRESS}</a>&nbsp;</div>
+  </div>
 <!-- END reg_user_row -->
-<tr> 
-<td colspan="5" height="1" class="row3"><img src="../images/spacer.gif" width="1" height="1" alt="" /></td>
-</tr>
+  <div class="row"><div class="col py-2">&nbsp;</div>
 <!-- BEGIN guest_user_row -->
-<tr> 
-<td width="20%" class="{guest_user_row.ROW_CLASS}">&nbsp;<span class="genmed">{guest_user_row.USERNAME}</span>&nbsp;</td>
-<td width="20%" align="center" class="{guest_user_row.ROW_CLASS}">&nbsp;<span class="genmed">{guest_user_row.STARTED}</span>&nbsp;</td>
-<td width="20%" align="center" nowrap="nowrap" class="{guest_user_row.ROW_CLASS}">&nbsp;<span class="genmed">{guest_user_row.LASTUPDATE}</span>&nbsp;</td>
-<td width="20%" class="{guest_user_row.ROW_CLASS}">&nbsp;<a href="{guest_user_row.U_FORUM_LOCATION}">{guest_user_row.FORUM_LOCATION}</a>&nbsp;</td>
-<td width="20%" class="{guest_user_row.ROW_CLASS}">&nbsp;<a href="{guest_user_row.U_WHOIS_IP}" target="_phpbbwhois">{guest_user_row.IP_ADDRESS}</a>&nbsp;</td>
-</tr>
+  <div class="row text-start row1 st"> 
+	<div class="col py-2">&nbsp;<span class="genmed">{guest_user_row.USERNAME}</span>&nbsp;</div>
+	<div class="col py-2">&nbsp;<span class="genmed">{guest_user_row.STARTED}</span>&nbsp;</div>
+	<div class="col py-2">&nbsp;<span class="genmed">{guest_user_row.LASTUPDATE}</span>&nbsp;</div>
+	<div class="col py-2">&nbsp;<a href="{guest_user_row.U_FORUM_LOCATION}">{guest_user_row.FORUM_LOCATION}</a>&nbsp;</div>
+	<div class="col py-2">&nbsp;<a href="{guest_user_row.U_WHOIS_IP}" target="_phpbbwhois">{guest_user_row.IP_ADDRESS}</a>&nbsp;</div>
+  </div>
 <!-- END guest_user_row -->
-</table>
+</div>
+
+
 {JR_ADMIN_INFO_TABLE}
 <br />
+</div>

@@ -17,8 +17,8 @@
 
 //-->
 
-<div align="center" class="gensmall">
-	{SITENAME} is powered by <a href="http://www.phpbb.com/" target="_phpbb" class="copyright">phpBB</a>{PHPBB_VERSION} &copy; 2001, 2005 phpBB Group & <a href="http://www.integramod.com" target="_phpbb" class="copyright">IntegraMOD</a>{INTEGRAMOD_VERSION} &copy; 2004, 2019 The IntegraTeam
+<div align="center" class="copyright">
+	{SITENAME} is powered by <a href="http://www.phpbb.com/" target="_phpbb">phpBB</a>{PHPBB_VERSION} &copy; 2001, 2005 phpBB Group & <a href="http://www.integramod.com" target="_phpbb">IntegraMOD</a>{INTEGRAMOD_VERSION} &copy; 2004, 2023 The IntegraTeam
 <script src="templates/js/jquery-3.7.0.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.2.3/js/bootstrap.bundle.min.js" integrity="sha512-i9cEfJwUwViEPFKdC1enz4ZRGBj8YQo6QByFTF92YXHi7waCqyexvRD75S5NVTsSiTv7rKWqG9Y5eFxmRsOn0A==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>

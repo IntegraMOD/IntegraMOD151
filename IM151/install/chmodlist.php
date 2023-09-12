@@ -9,7 +9,6 @@ function chmodlist()
 // The CHMOD mode has been changed to 3 numbers, because that's the way it works for the FTP method
 // For the normal method '0' will be added by the chmod_routine function
 // --------------------------------------------------------------------------------------------------------------------------------
-// --------------------------------------------------------------------------------------------------------------------------------
 //---------------------------------------------------------------------------------------------------------------------------------
 // Chmod Settings array for pre-install and installed  ----------------------------------------------------------------------------
 global $relpath, $preinstall_list, $afterinstall_list;
@@ -164,7 +163,7 @@ $file_list = array(
   "../modules/cache" => 777 ,
   "../modules/cache/explain" => 777 ,
   "../pafiledb/cache" => 777 ,
-  "../pafiledb/cache/data_global.php" => 666 ,
+ // "../pafiledb/cache/data_global.php" => 666 ,
   "../pafiledb/cache/templates" => 777 ,
 
   "../pafiledb/images/ss" => 777 ,
