@@ -363,9 +363,9 @@ class log_manager
 		// Current entries in the logfiles have to be added
 		for($i = 2; $i <= 5; $i++)
 		{
-			// Ignore the wrong logins
-      if ($i == 4) continue;
-      $this->ct_counter_value += $this->check_log_size($i);
+		// Ignore the wrong logins
+        if ($i == 4) continue;
+        $this->ct_counter_value .= $this->check_log_size($i);
 		}
 
 		$this->ct_counter_value - 4; // System comment will not be counted
