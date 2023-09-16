@@ -559,7 +559,7 @@ function album_build_index($user_id, &$keys, $cur_cat_id = ALBUM_ROOT_CATEGORY, 
 	} // if ($level == 0)...
 
 	// display sub-levels
-	for ($i = 0; $i < count($album_data['sub'][$cur_cat_id]); $i++)
+	for ($i = 0; $i < (isset($album_data['sub'][$cur_cat_id]) ? count($album_data['sub'][$cur_cat_id]) : 0); $i++)
 	{
 		if (!empty($keys['keys'][$album_data['sub'][$cur_cat_id][$i]]))
 		{
