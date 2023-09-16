@@ -15,7 +15,7 @@
  *   (at your option) any later version.
  *
  ***************************************************************************/
-
+define("IN_TOUR", true);
 // Define page is using in phpBB
 define('IN_PHPBB', true);
 
@@ -39,6 +39,8 @@ $page_bbcode_uid = '';
 $page_sort = '';
 $pagination = '';
 $first_page = '';
+
+define('LESS_ADMIN', 'LESS_ADMIN');
 
 //
 // Load templates
