@@ -24,6 +24,7 @@
 // public pafiledb class
 //===================================================
 define('toplist', 'toplist');
+define('search', 'search');
 
 class pafiledb_public extends pafiledb
 {
