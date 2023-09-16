@@ -647,14 +647,14 @@ function topic_list($box, $tpl='', $topic_rowset, $list_title='', $split_type=fa
 
 		// get the announces dates
 		$topic_announces_dates = '';
-		if (function_exists(get_announces_title) && in_array( $topic_rowset[$i]['topic_type'], array(POST_ANNOUNCE, POST_GLOBAL_ANNOUNCE)))
+		if (function_exists('get_announces_title') && in_array( $topic_rowset[$i]['topic_type'], array(POST_ANNOUNCE, POST_GLOBAL_ANNOUNCE)))
 		{
 			$topic_announces_dates = get_announces_title($topic_rowset[$i]['topic_time'], $topic_rowset[$i]['topic_announce_duration']);
 		}
 
 		// get the calendar dates
 		$topic_calendar_dates = '';
-		if (function_exists(get_calendar_title))
+		if (function_exists('get_calendar_title'))
 		{
 			$topic_calendar_dates = get_calendar_title($topic_rowset[$i]['topic_calendar_time'], $topic_rowset[$i]['topic_calendar_duration']);
 		}
@@ -837,7 +837,8 @@ $approve_mod['moderators'] = explode('|', get_moderators_user_id_of_forum($forum
 		// send topic to template
 		$selected = (!empty($select_values) && in_array($topic_rowset[$i]['topic_id'], $select_values));
 		$color = !$color;
-		$topic_rating = ( count($topic_rank_set) > 0 && $topic_rowset[$i]['rating_rank_id'] > 0 ) ?  $topic_rank_set[$topic_rowset[$i]['rating_rank_id']] : '';
+		$topic_rating = ( (isset($topic_rank_set) ? count($topic_rank_set) : 0) > 0 && $topic_rowset[$i]['rating_rank_id'] > 0 ) ?  $topic_rank_set[$topic_rowset[$i]['rating_rank_id']] : '';
+//		$topic_rating = ( count($topic_rank_set) > 0 && $topic_rowset[$i]['rating_rank_id'] > 0 ) ?  $topic_rank_set[$topic_rowset[$i]['rating_rank_id']] : '';
 		$template->assign_block_vars( $tpl . '.row', array(
 			'RATING'				=> $topic_rating,
 			'ROW_CLASS'				=> ($color || !defined('TOPIC_ALTERNATE_ROW_CLASS')) ? 'row1' : 'row2',
