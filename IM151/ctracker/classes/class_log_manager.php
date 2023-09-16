@@ -365,7 +365,7 @@ class log_manager
 		{
 		// Ignore the wrong logins
         if ($i == 4) continue;
-        $this->ct_counter_value .= $this->check_log_size($i);
+        $this->ct_counter_value -= $this->check_log_size($i);
 		}
 
 		$this->ct_counter_value - 4; // System comment will not be counted
@@ -374,5 +374,3 @@ class log_manager
 		return $this->ct_counter_value;
 	}
 }
-
-?>
