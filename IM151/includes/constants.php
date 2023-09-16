@@ -212,6 +212,8 @@ define('PAGE_SHOUTBOX', -1035);
 define('PAGE_CONTACT', -8050);
 define('PAGE_PRILLIAN', -8051);
 define('PAGE_TOPIC_OFFSET', 5000);
+define('PAGE_KB', 'PAGE_KB');
+define('PAGE_MYCOOKIES', 'PAGE_MYCOOKIES');
 
 // ### Post Types ###
 define('POST_NORMAL', 0);
