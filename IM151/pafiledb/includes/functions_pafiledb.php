@@ -25,6 +25,8 @@
 //===================================================
 define('toplist', 'toplist');
 define('search', 'search');
+define('stats', 'stats');
+define('viewall', 'viewall');
 
 class pafiledb_public extends pafiledb
 {
