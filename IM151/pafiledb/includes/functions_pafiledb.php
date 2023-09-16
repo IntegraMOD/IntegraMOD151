@@ -55,8 +55,9 @@ class pafiledb_public extends pafiledb
 	//===================================================
 	// this will be replaced by the loaded module
 	//===================================================
+//  function main($module_id = false)
+    function main($action)
 
-	function main($module_id = false)
 	{
 		return false;
 	}
