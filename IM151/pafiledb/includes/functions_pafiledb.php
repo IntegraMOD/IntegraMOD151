@@ -23,6 +23,7 @@
 //===================================================
 // public pafiledb class
 //===================================================
+define('toplist', 'toplist');
 
 class pafiledb_public extends pafiledb
 {
