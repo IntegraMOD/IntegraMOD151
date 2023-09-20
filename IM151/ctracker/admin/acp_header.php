@@ -25,7 +25,7 @@ if ( !defined('IN_PHPBB') || !defined('CTRACKER_ACP') )
  */
 
 $template->set_filenames(array(
-	'ct_header' => 'ctracker/acp/acp_header.tpl')
+	'ct_header' => './ctracker/acp/acp_header.tpl')
 );
 
 
