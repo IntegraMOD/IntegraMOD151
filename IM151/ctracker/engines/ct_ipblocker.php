@@ -33,7 +33,7 @@ if ( !defined('IN_PHPBB') )
  * If so we use our ct_database class to load the Blocklist from the
  * Database in an array and check if someone who was blocked is in the list.
  */
-if ( $ctracker_config->settings['ipblock_enabled'] == 1 )
+if ( !empty($ctracker_config->settings['ipblock_enabled']) )
 {
 	// Fetch Blocklist from Database
 	$ctracker_config->unset_blocklist_verbose();

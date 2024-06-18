@@ -254,8 +254,7 @@ function pcp_output($field_name, &$view_userdata, $map_name='', $legend_only=fal
 	// values overwritten in maps
 	if ( !empty($user_maps[$map_name]['fields'][$field_name]) )
 	{
-		@reset($user_maps[$map_name]['fields'][$field_name]);
-		while ( list($field_def, $field_def_value) = @each($user_maps[$map_name]['fields'][$field_name]) )
+		foreach($user_maps[$map_name]['fields'][$field_name] as $field_def => $field_def_value)
 		{
 			$user_fields[$field_name][$field_def] = $field_def_value;
 		}
@@ -373,8 +372,7 @@ function pcp_output_panel($map_name, &$view_userdata) {
 	
 	preProcessUserConfig($view_userdata);
 	$res = '';
-	@reset($user_maps[$map_name]['fields']);
-	while ( list($field_name, $field_data) = @each($user_maps[$map_name]['fields']) )
+	foreach($user_maps[$map_name]['fields'] as $field_name => $field_data)
 	{
 		$res .= pcp_output($field_name, $view_userdata, $map_name);
 	}
@@ -421,8 +419,7 @@ function pcp_get_values_list($field_name, $field_data, $map_name='')
 			$values = $func();
 
 			// transfert in values
-			@reset($values);
-			while ( list($key, $value) = @each($values) )
+			foreach($values as $key => $value)
 			{
 				$values_list[$list_name]['values'][$key] = $value;
 			}
@@ -472,8 +469,7 @@ function pcp_get_values_list($field_name, $field_data, $map_name='')
 		{
 			// add all the tables to the where and tables statements
 			@ksort($tables_used);
-			@reset($tables_used);
-			while ( list($table_name, $used) = @each($tables_used) )
+			foreach($tables_used as $table_name => $used)
 			{
 				if ( !in_array($table_name, $tables_processed) )
 				{
@@ -489,8 +485,7 @@ function pcp_get_values_list($field_name, $field_data, $map_name='')
 
 			// check if any unprocessed table remains
 			$all_done = true;
-			@reset($tables_used);
-			while ( list($table_name, $used) = @each($tables_used) )
+			foreach($tables_used as $table_name => $used)
 			{
 				$all_done = in_array($table_name, $tables_processed);
 				if ( !$all_done )
@@ -527,8 +522,7 @@ function pcp_get_values_list($field_name, $field_data, $map_name='')
 			$db->sql_freeresult($result);
 
 			// transfert in values
-			@reset($values);
-			while ( list($key, $value) = @each($values) )
+			foreach($values as $key => $value)
 			{
 				$values_list[$list_name]['values'][$key] = $value;
 			}
@@ -543,28 +537,30 @@ function pcp_get_values_list($field_name, $field_data, $map_name='')
 		$field_data['txt'] = true;
 	}
 
-	@reset($values_list[$list_name]['values']);
-	while ( list( $key, $value_data) = @each($values_list[$list_name]['values']) )
-	{
-		$txt = '';
-		$img = '';
-		if ( !empty($field_data['txt']) )
-		{
-			$txt = isset($lang[ $value_data['txt'] ]) ? $lang[ $value_data['txt'] ] : $value_data['txt'];
-		}
-		if ( !empty($field_data['img']) )
-		{
-			$img = isset($images[ $value_data['img'] ]) ? $images[ $value_data['img'] ] : $value_data['img'];
-		}
+  if (!empty($values_list[$list_name]['values']))
+  {
+    foreach($values_list[$list_name]['values'] as $key => $value_data)
+    {
+      $txt = '';
+      $img = '';
+      if ( !empty($field_data['txt']) )
+      {
+        $txt = isset($lang[ $value_data['txt'] ]) ? $lang[ $value_data['txt'] ] : $value_data['txt'];
+      }
+      if ( !empty($field_data['img']) )
+      {
+        $img = isset($images[ $value_data['img'] ]) ? $images[ $value_data['img'] ] : $value_data['img'];
+      }
 
-		$value = !empty($img) ? '<img src"' . $img . '" border="0" alt="' . $txt . '" title="' . $txt . '" />' : '';
-		$value .= ( !empty($img) && !empty($txt) ) ? '&nbsp;' : '';
-		$value .= $txt;
-		if ( !empty($value) )
-		{
-			$res[$value] = $key;
-		}
-	}
+      $value = !empty($img) ? '<img src"' . $img . '" border="0" alt="' . $txt . '" title="' . $txt . '" />' : '';
+      $value .= ( !empty($img) && !empty($txt) ) ? '&nbsp;' : '';
+      $value .= $txt;
+      if ( !empty($value) )
+      {
+        $res[$value] = $key;
+      }
+    }
+  }
 	return $res;
 }
 
@@ -581,8 +577,7 @@ function pcp_get_field( $field_cfg, $map_name='', $field_name='' )
 	$found = false;
 	if ( empty($field_name) )
 	{
-		@reset($user_fields);
-		while ( list($field_name, $field_data) = @each($user_fields) )
+		foreach($user_fields as $field_name => $field_data)
 		{
 			$found = ($field_data[$field_name]['input_id'] == $field_cfg);
 			if ( $found )
@@ -600,8 +595,7 @@ function pcp_get_field( $field_cfg, $map_name='', $field_name='' )
 	$field_data = $user_fields[$field_name];
 
 	// overwrite by the map definition
-	@reset($user_maps[$map_name]['fields'][$field_name]);
-	while ( list($key, $value) = @each($user_maps[$map_name]['fields'][$field_name]) )
+	foreach($user_maps[$map_name]['fields'][$field_name] as $key => $value)
 	{
 		$field_data[$key] = $value;
 	}
@@ -630,9 +624,8 @@ function pcp_get_field( $field_cfg, $map_name='', $field_name='' )
 		else
 		{
 			// check if the default value is in the values list
-			@reset($field_data['values']);
 			$found = false;
-			while ( list($value, $key) = @each($field_data['values']) )
+			foreach ($field_data['values'] as $value => $key)
 			{
 				$found = ( isset($field_data['default']) && $field_data['default'] == $key );
 				if ( $found )
@@ -640,11 +633,11 @@ function pcp_get_field( $field_cfg, $map_name='', $field_name='' )
 					break;
 				}
 			}
-			if ( !$found )
+			if ( !$found && !empty($field_data['values'][0]))
 			{
-				$first_key = '';
-				@reset($field_data['values']);
-				list($first_value, $first_key) = @each($field_data['values']);
+        $first = $field_data['values'][0];
+        $first_value = $first[0];
+        $first_key = $first[1];
 				$field_data['default'] = $first_key;
 			}
 		}
@@ -694,10 +687,9 @@ function pcp_get_mods_setting_config_fields( $map_name='' )
 	global $values_list, $tables_linked, $classes_fields, $user_maps, $user_fields;
 
 	$res = array();
-	if ( isset($user_maps[$map_name]) )
+	if ( isset($user_maps[$map_name]['fields']) )
 	{
-		@reset($user_maps[$map_name]['fields']);
-		while ( list($field_name, $field_data) = @each($user_maps[$map_name]['fields']) )
+		foreach ($user_maps[$map_name]['fields'] as $field_name => $field_data)
 		{
 			if ( empty($field_data['input_id']) )
 			{

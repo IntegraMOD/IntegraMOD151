@@ -216,8 +216,7 @@ function guess_lang()
 		$accept_lang_ary = explode(',', $_SERVER['HTTP_ACCEPT_LANGUAGE']);
 		for ($i = 0; $i < sizeof($accept_lang_ary); $i++)
 		{
-			@reset($match_lang);
-			while (list($lang, $match) = each($match_lang))
+      foreach ($match_lang as $lang => $match)
 			{
 				if (preg_match('#' . $match . '#i', trim($accept_lang_ary[$i])))
 				{
@@ -239,22 +238,25 @@ function guess_lang()
 
 // Begin
 set_time_limit(280);
-error_reporting(E_ERROR | E_WARNING | E_PARSE); // This will NOT report uninitialized variables
 if (function_exists('set_magic_quotes_runtime'))
 {
   @set_magic_quotes_runtime(0); // Disable magic_quotes_runtime
 }
 
-// Slash data if it isn't slashed
-if (!function_exists('get_magic_quotes_gpc') || !get_magic_quotes_gpc())
+//
+// addslashes to vars if magic_quotes_gpc is off
+// this is a security precaution to prevent someone
+// trying to break out of a SQL statement.
+//
+if( !function_exists('get_magic_quotes_gpc') || !get_magic_quotes_gpc() )
 {
-	if (is_array($_GET))
+	if( is_array($_GET) )
 	{
-		while (list($k, $v) = each($_GET))
+    foreach ($_GET as $k => $v)
 		{
-			if (is_array($_GET[$k]))
+			if( is_array($_GET[$k]) )
 			{
-				while (list($k2, $v2) = each($_GET[$k]))
+        foreach ($_GET[$k] as $k2 => $v2)
 				{
 					$_GET[$k][$k2] = addslashes($v2);
 				}
@@ -268,13 +270,13 @@ if (!function_exists('get_magic_quotes_gpc') || !get_magic_quotes_gpc())
 		@reset($_GET);
 	}
 
-	if (is_array($_POST))
+	if( is_array($_POST) )
 	{
-		while (list($k, $v) = each($_POST))
+    foreach ($_POST as $k => $v)
 		{
-			if (is_array($_POST[$k]))
+			if( is_array($_POST[$k]) )
 			{
-				while (list($k2, $v2) = each($_POST[$k]))
+        foreach ($_POST[$k] as $k2 => $v2)
 				{
 					$_POST[$k][$k2] = addslashes($v2);
 				}
@@ -288,13 +290,13 @@ if (!function_exists('get_magic_quotes_gpc') || !get_magic_quotes_gpc())
 		@reset($_POST);
 	}
 
-	if (is_array($_COOKIE))
+	if( is_array($_COOKIE) )
 	{
-		while (list($k, $v) = each($_COOKIE))
+    foreach ($_COOKIE as $k => $v)
 		{
-			if (is_array($_COOKIE[$k]))
+			if( is_array($_COOKIE[$k]) )
 			{
-				while (list($k2, $v2) = each($_COOKIE[$k]))
+        foreach ($_COOKIE[$k] as $k2 => $v2)
 				{
 					$_COOKIE[$k][$k2] = addslashes($v2);
 				}
@@ -308,7 +310,6 @@ if (!function_exists('get_magic_quotes_gpc') || !get_magic_quotes_gpc())
 		@reset($_COOKIE);
 	}
 }
-
 // Begin main prog
 define('IN_PHPBB', true);
 // Uncomment the following line to completely disable the ftp option...
@@ -322,6 +323,7 @@ $lang = array();
 $error = false;
 
 // Include some required functions
+if (!isset($table_prefix)) $table_prefix = 'phpbb_';
 include($phpbb_root_path.'includes/constants.'.$phpEx);
 include($phpbb_root_path.'includes/functions.'.$phpEx);
 include($phpbb_root_path.'includes/sessions.'.$phpEx);
@@ -632,7 +634,7 @@ else if ((empty($install_step) || $admin_pass1 != $admin_pass2 || empty($admin_p
 	@reset($lang_options);
 
 	$lang_select = '<select name="lang" onchange="this.form.submit()">';
-	while (list($displayname, $filename) = @each($lang_options))
+  foreach ($lang_options as $displayname => $filename)
 	{
 		$selected = ($language == $filename) ? ' selected="selected"' : '';
 		$lang_select .= '<option value="' . $filename . '"' . $selected . '>' . ucwords($displayname) . '</option>';
@@ -640,7 +642,7 @@ else if ((empty($install_step) || $admin_pass1 != $admin_pass2 || empty($admin_p
 	$lang_select .= '</select>';
 
 	$dbms_select = '<select name="dbms" onchange="if(this.form.upgrade.options[this.form.upgrade.selectedIndex].value == 1){ this.selectedIndex = 0;}">';
-	while (list($dbms_name, $details) = @each($available_dbms))
+  foreach ($available_dbms as $dbms_name => $details)
 	{
 		$selected = ($dbms_name == $dbms) ? 'selected="selected"' : '';
 		$dbms_select .= '<option value="' . $dbms_name . '">' . $details['LABEL'] . '</option>';
@@ -1026,8 +1028,7 @@ else
 	}
 }
 
-
-if($_GET['im'])
+if(isset($_GET['im']) && $_GET['im'])
 {
 		// Ok we are basically done with the install process let's go on
 		// and let the user configure their board now. We are going to do
@@ -1102,15 +1103,18 @@ function integra_extra()
 			$dir = @opendir("./extra/");
 
 			$setmodules = 1;
-			while( $file = @readdir($dir) )
-			{
-				if( preg_match("/^db_.*?\." . $phpEx . "$/", $file) )
-				{
-					include('./extra/'.$file);
-				}
-			}
+      if (is_resource($dir))
+      {
+        while( $file = @readdir($dir) )
+        {
+          if( preg_match("/^db_.*?\." . $phpEx . "$/", $file) )
+          {
+            include('./extra/'.$file);
+          }
+        }
 
-			@closedir($dir);
+        @closedir($dir);
+      }
 
 			unset($setmodules);
 		if($no_prill_install){

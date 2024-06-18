@@ -191,17 +191,20 @@ $file_list = array(
 // Chmod Settings array for pafile templates
 $pafiledb_list = array();
 $dir = @opendir($relpath.'pafiledb/cache/templates');
-while( $file = @readdir($dir) )
+if ($dir)
 {
-	if(is_dir($relpath.'language/'.$file) && substr($file,0,1) != '.' ){
+  while( $file = @readdir($dir) )
+  {
+    if(is_dir($relpath.'language/'.$file) && substr($file,0,1) != '.' ){
 
-                $pafiledb_list = array(
-                "../pafiledb/cache/templates/".$file => 777 ,
-                "../pafiledb/cache/templates/".$file."/admin" => 777
-                );
-	}
+                  $pafiledb_list = array(
+                  "../pafiledb/cache/templates/".$file => 777 ,
+                  "../pafiledb/cache/templates/".$file."/admin" => 777
+                  );
+    }
+  }
+  @closedir($dir);
 }
-@closedir($dir);
 
 //---------------------------------------------------------------------------------------------------------------------------------
 // Chmod Settings array for Pre-install package ONLY

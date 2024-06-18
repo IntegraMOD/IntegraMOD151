@@ -69,7 +69,7 @@ include_once($phpbb_root_path . './includes/bbcode.' . $phpEx);
 //  topic_id should have in first position the main data row type, meaning for topics :
 //    $topic_rowset[]['topic_id'] = POST_TOPIC_URL . $row['topic_id'];
 //--------------------------------------------------
-function topic_list($box, $tpl='', $topic_rowset, $list_title='', $split_type=false, $display_nav_tree=true, $footer='', $inbox=true, $select_field='', $select_type=0, $select_formname='', $select_values=array(), $topic_rank_set=array())
+function topic_list($box, $tpl='', $topic_rowset=[], $list_title='', $split_type=false, $display_nav_tree=true, $footer='', $inbox=true, $select_field='', $select_type=0, $select_formname='', $select_values=array(), $topic_rank_set=array())
 {
 	global $db, $template, $board_config, $userdata, $phpEx, $lang, $images, $_COOKIE;
 	global $tree;

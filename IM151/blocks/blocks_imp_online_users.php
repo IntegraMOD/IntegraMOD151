@@ -220,7 +220,7 @@ if(!function_exists('imp_online_users_block_func'))
 
 		$template->assign_vars(array(
 // ******************** BEGIN phpBBChatSpot MOD ******************** 
-			'CHATSPOT_IDENTIFICATION' => $lang[ 'ChatSpot_id' ],
+			'CHATSPOT_IDENTIFICATION' => isset($lang[ 'ChatSpot_id' ]) ? $lang[ 'ChatSpot_id' ] : '',
 			'TOTAL_CHATTERS_ONLINE' => sprintf( $lang[ 'How_Many_Chatters' ], $num_users_in_chat ),
 			'CHATTERS_LIST' => '<b>' . $users_in_chat . '</b>', 
 			'L_CHAT_LINK' => $chat_link,

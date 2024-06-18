@@ -42,8 +42,7 @@ $list_yes_no_friend = array('Yes' => 1, 'No' => 0, 'Friend_only' => 2);
 //-------------------------------------------
 // first pass : get main maps
 $w_maps = array();
-@reset($user_maps);
-while ( list($map_name, $map_data) = @each($user_maps) )
+foreach ($user_maps as $map_name => $map_data)
 {
 	$map_tree = explode('.', $map_name);
 	if ( ($map_tree[0] == 'PCP') && !empty($map_data['custom']) && ($map_data['custom'] == 1) )
@@ -56,8 +55,7 @@ while ( list($map_name, $map_data) = @each($user_maps) )
 }
 
 // second pass : get sub maps
-@reset($user_maps);
-while ( list($map_name, $map_data) = @each($user_maps) )
+foreach ($user_maps as $map_name => $map_data)
 {
 	for ( $i=0; $i < count($w_maps['name']); $i++ )
 	{

@@ -24,7 +24,7 @@ if ( !defined('IN_PHPBB') )
 	die('Hacking attempt');
 }
 
-if ( $is['admin'] || !defined('CH_CURRENT_VERSION') )
+if ( !empty($is['admin']) || !defined('CH_CURRENT_VERSION') )
 {
 	//
 	// CH Specific

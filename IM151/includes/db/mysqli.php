@@ -42,7 +42,7 @@ if(!defined("SQL_LAYER"))
 		//
 		// Constructor
 		//
-		function sql_db($sqlserver, $sqluser, $sqlpassword, $database, $port = false, $persistency = false)
+		function __construct($sqlserver, $sqluser, $sqlpassword, $database, $port = false, $persistency = false)
 		{
 			$this->persistency = (version_compare(PHP_VERSION, '5.3.0', '>=')) ? $persistency : false;
 			$this->user = $sqluser;
@@ -438,7 +438,8 @@ if(!defined("SQL_LAYER"))
 					unset($this->rowset[$this->query_result]);
 				}
 
-				@mysqli_free_result($query_id);
+        if ($query_id instanceof mysqli_result)
+          @mysqli_free_result($query_id);
 
 				return true;
 			}

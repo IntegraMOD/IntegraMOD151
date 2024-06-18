@@ -110,20 +110,21 @@ if (@ini_get('register_globals') == '1' || strtolower(@ini_get('register_globals
 	unset($input);
 }
 
+
 //
 // addslashes to vars if magic_quotes_gpc is off
 // this is a security precaution to prevent someone
 // trying to break out of a SQL statement.
 //
-if( !get_magic_quotes_gpc() )
+if( !function_exists('get_magic_quotes_gpc') || !get_magic_quotes_gpc() )
 {
 	if( is_array($_GET) )
 	{
-		while( list($k, $v) = each($_GET) )
+    foreach ($_GET as $k => $v)
 		{
 			if( is_array($_GET[$k]) )
 			{
-				while( list($k2, $v2) = each($_GET[$k]) )
+        foreach ($_GET[$k] as $k2 => $v2)
 				{
 					$_GET[$k][$k2] = addslashes($v2);
 				}
@@ -139,11 +140,11 @@ if( !get_magic_quotes_gpc() )
 
 	if( is_array($_POST) )
 	{
-		while( list($k, $v) = each($_POST) )
+    foreach ($_POST as $k => $v)
 		{
 			if( is_array($_POST[$k]) )
 			{
-				while( list($k2, $v2) = each($_POST[$k]) )
+        foreach ($_POST[$k] as $k2 => $v2)
 				{
 					$_POST[$k][$k2] = addslashes($v2);
 				}
@@ -159,11 +160,11 @@ if( !get_magic_quotes_gpc() )
 
 	if( is_array($_COOKIE) )
 	{
-		while( list($k, $v) = each($_COOKIE) )
+    foreach ($_COOKIE as $k => $v)
 		{
 			if( is_array($_COOKIE[$k]) )
 			{
-				while( list($k2, $v2) = each($_COOKIE[$k]) )
+        foreach ($_COOKIE[$k] as $k2 => $v2)
 				{
 					$_COOKIE[$k][$k2] = addslashes($v2);
 				}
@@ -282,7 +283,7 @@ if (!empty ($accept_language))
 	reset ($board_config);
 	$needle = 'auto_lang_';
 	$needle_length = strlen($needle);
-	while (list ($key, $value) = each ($board_config))
+  foreach ($board_config as $key => $value)
 	{
 		if ((strstr($key, $needle)))
 		{
@@ -295,7 +296,7 @@ if (!empty ($accept_language))
 	{
 		$accepted_languages = explode (',', $accept_language);
 		reset ($accepted_languages);
-		while (list(, $lng) = each ($accepted_languages))
+    foreach ($accepted_languages as $lng)
 		{
 			$pos = strpos ($lng, ';');
 			if ($pos > 0) // The ; never occurs on position 0 in this case (unless spoofed)

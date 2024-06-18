@@ -37,7 +37,7 @@ function page_header()
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=<?php echo $lang['ENCODING']; ?>">
+<meta http-equiv="Content-Type" content="text/html; charset=<?php echo isset($lang) ? $lang['ENCODING'] : 'utf8'; ?>">
 <meta http-equiv="Content-Style-Type" content="text/css">
 <title><?php echo $lang['Welcome_install'];?></title>
 <link rel="stylesheet" href="../templates/fisubice/css/fisubice.css" type="text/css">
@@ -110,6 +110,7 @@ function autodetect_install()  // Pre-install or after install?  Install directo
 
 function chmodsettingsbox()  // Pre-install or after install?  Install directory detection
 {
+     global $preinstall;
      $permissionstate = chmodlister("permissionstatus");
      $detection = "";
      $install = 'install/';
@@ -973,7 +974,7 @@ if ($list !== "permissionstatus") tableboxend3();
 
 if ($list == "pre" or $list == "") box($title1, $report1);
 if ($list == "after" or $list == "") box($title2, $report2);
-if ($list == "permissionstatus") return $ready;
+if ($list == "permissionstatus") return isset($ready) ? $ready : null;
 
 }
 else {
@@ -1252,7 +1253,7 @@ $process = array(
    'delinstall',
    'install');
 
-if ( (int)$_GET['page'] < count($process) ) {
+if (isset($_GET['page']) && (int)$_GET['page'] < count($process) ) {
   $call = (int)$_GET['page'];
 }
 else {

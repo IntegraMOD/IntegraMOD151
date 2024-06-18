@@ -360,7 +360,7 @@ $data = %s;
 	{
 		global $template, $phpEx, $phpbb_root_path;
 
-		if ( count($this->data) != 0 )
+		if ( !empty($this->data) && count($this->data) != 0 )
 		{
 			for ($i = 0; $i < count($this->data); $i++)
 			{
