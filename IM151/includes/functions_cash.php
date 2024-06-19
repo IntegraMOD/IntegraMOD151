@@ -509,7 +509,7 @@ class cash_menucat
 {
 	var $category;
 	var $items;
-	function cash_menucat($category)
+	function __construct($category)
 	{
 		$this->category = $category;
 	}
@@ -530,7 +530,7 @@ class cash_menuitem
 	var $url;
 	var $desc;
 	var $id;
-	function cash_menuitem(&$id, $title,$url,$desc)
+	function __construct(&$id, $title,$url,$desc)
 	{
 		global $lang;
 		$this->url = $url . '%s';
@@ -727,7 +727,7 @@ class cash_currency
 {
 	var $currency;
 	var $forumlist;
-	function cash_currency(&$data, $is_group = false)
+	function __construct(&$data, $is_group = false)
 	{
 		$this->currency = $data;
 		if ( !$is_group )
@@ -867,7 +867,7 @@ class cash_groups
 	var $groups_ordered_list;
 	var $loaded;
 	var $ranks;
-	function cash_groups()
+	function __construct()
 	{
 		$this->loaded = false;
 		$this->groups = array(CASH_GROUPS_LEVEL => array(),CASH_GROUPS_RANK => array(),CASH_GROUPS_USERGROUP => array());
@@ -1051,7 +1051,7 @@ class cash_forumgroup
 	var $group_name;
 	var $group_description;
 	var $currency_settings;
-	function cash_forumgroup($group_type,$group_id,$group_name,$group_description)
+	function __construct($group_type,$group_id,$group_name,$group_description)
 	{
 		$this->group_type = $group_type;
 		$this->group_id = $group_id;
@@ -1077,7 +1077,7 @@ class cash_group extends cash_currency
 	var $group_id;
 	var $cash_id;
 	var $loaded;
-	function cash_group($rows)
+	function __construct($rows)
 	{
 		$this->cash_currency($rows,true);
 		$this->group_type = $rows['group_type'];
@@ -1112,7 +1112,7 @@ class cash_user
 	var $usergroups;
 	var $cashgroups;
 	var $cashgroups_init;
-	function cash_user($user_id,$userdata = false)
+	function __construct($user_id,$userdata = false)
 	{
 		$this->user_id = $user_id;
 		if ( $userdata )

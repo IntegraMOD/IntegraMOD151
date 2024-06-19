@@ -33,10 +33,14 @@ function setDefaultUserdata(&$data,$setalways=false){
 		$userfields[] = $row['Field'];
 	}
 	// fetch all fields and set the default to the value in configuration+
-	while (list($k1, $d1) = each($mods)){ 
-		while (list($k2, $d2) = each($mods[$k1]['data'])){ 
-			while (list($k3, $d3) = each($mods[$k1]['data'][$k2]['data'])){ 
-				while (list($k4, $d4) = each($mods[$k1]['data'][$k2]['data'][$k3]['data'])){ 
+	foreach ($mods as $k1 => $d1)
+  { 
+		foreach ($mods[$k1]['data'] as $k2 => $d2)
+    { 
+			foreach ($mods[$k1]['data'][$k2]['data'] as $k3 => $d3)
+      { 
+				foreach ($mods[$k1]['data'][$k2]['data'][$k3]['data'] as $k4 => $d4)
+        { 
 					// only if userfield defined and userfield not yet set in passed data unless setalways is defined
 					if(isset($d4['user']) && (!isset($data[$d4['user']]) || $setalways)){ 
 						$userfield = $d4['user']; 
