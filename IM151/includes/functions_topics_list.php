@@ -377,7 +377,7 @@ function topic_list($box, $tpl='', $topic_rowset=[], $list_title='', $split_type
 			if ( $topic_item_type == POST_TOPIC_URL )
 			{
 				// have we got a last visit time for this topic
-				$topic_last_read = intval($board_config['tracking_unreads'][$topic_id]);
+				$topic_last_read = isset($board_config['tracking_unreads'][$topic_id]) ? intval($board_config['tracking_unreads'][$topic_id]) : 0;
 				if ( !empty($board_config['tracking_all']) && ($board_config['tracking_all'] > $topic_last_read) )
 				{
 					$topic_last_read = $board_config['tracking_all'];
@@ -703,7 +703,7 @@ $approve_mod['moderators'] = explode('|', get_moderators_user_id_of_forum($forum
 // 
 // Begin Approve_Mod Block : 9
 // 
-		if ( $approve_mod['enabled'] )
+		if ( !empty($approve_mod['enabled']) )
 		{
 			$approve_mod['topics_awaiting'] = false;
 			$approve_sql = "SELECT * FROM " . APPROVE_POSTS_TABLE . " 

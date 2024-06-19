@@ -39,7 +39,7 @@ include_once($phpbb_root_path . 'includes/functions_topics_list.'. $phpEx);
 //
 // Start session management
 //
-$userdata = session_pagestart($user_ip, $forum_id);
+$userdata = session_pagestart($user_ip, 0);
 init_userprefs($userdata);
 //
 // End session management
@@ -139,7 +139,7 @@ else
 	$install_time 	= time();
 	$bypass			= '';
 		
-	( !$_GET['mode'] ) ? $viewed_mode = $_GET['mode'] : $viewed_mode = $_GET['mode'];
+	isset( $_GET['mode'] ) ? $viewed_mode = $_GET['mode'] : $viewed_mode = null;
 	
 	$q = "SELECT active, effected, install_date
 		  FROM ". $table_prefix ."force_read"; 
@@ -485,10 +485,10 @@ if ( $is_auth['auth_mod'] && $board_config['prune_enable'] )
 // moderators list
 $moderators = array(); 
 $idx = $tree['keys'][ POST_FORUM_URL . $forum_id ]; 
-for ( $i = 0; $i < count($tree['mods'][$idx]['user_id']); $i++ ) { 
+for ( $i = 0; !empty($tree['mods'][$idx]['user_id']) && $i < count($tree['mods'][$idx]['user_id']); $i++ ) { 
     $moderators[] = '<a href="' . append_sid("./profile.$phpEx?mode=viewprofile&amp;" . POST_USERS_URL . "=" . $tree['mods'][$idx]['user_id'][$i]) . '" class="'.$agcm_color->get_user_color($tree['mods'][$idx]['user_group_id'][$i], $tree['mods'][$idx]['user_session_time'][$i]).'">' . $tree['mods'][$idx]['username'][$i] . '</a>'; 
 } 
-for ( $i = 0; $i < count($tree['mods'][$idx]['group_id']); $i++ ) { 
+for ( $i = 0; !empty($tree['mods'][$idx]['group_id']) && $i < count($tree['mods'][$idx]['group_id']); $i++ ) { 
   // V: AGCM is not doing this properly, add it myself
     $moderators[] = '<a href="' . append_sid("./groupcp.$phpEx?" . POST_GROUPS_URL . "=" . $tree['mods'][$idx]['group_id'][$i]) . '" class="' . $agcm_color->get_user_color($data['group_id'][$i]) . '">' . $tree['mods'][$idx]['group_name'][$i] . '</a>'; 
 }
@@ -500,6 +500,7 @@ for ( $i = 0; $i < count($tree['mods'][$idx]['group_id']); $i++ ) {
 // If use has no permission for delayed topics, let's not show the topics that have dates that we do not have yet reached... 
 /* altered by edwin mod is not OK! 
 if (($userdata['user_level'] != ADMIN && $userdata['user_level'] != MOD) || !$is_auth['auth_delayedpost'])*/ 
+$limit_topics_time = '';
 if (($userdata['user_level'] != ADMIN && !$is_auth['auth_mod']) || !$is_auth['auth_delayedpost']) 
 { 
     $current_time = time(); 
@@ -793,8 +794,8 @@ $footer = $lang['Display_topics'] . ':&nbsp;' . $select_topic_days . '&nbsp;' . 
 $allow_split_type = true;
 $display_nav_tree = false;
 
-if(!count($topic_rank_set)){ 
-    if(!$RATING_PATH){ 
+if(empty($topic_rank_set)){ 
+    if(!defined('RATING_PATH')){ 
         define('RATING_PATH', $phpbb_root_path.'mods/rating/'); 
     } 
     include_once(RATING_PATH.'functions_rating.'.$phpEx); 
