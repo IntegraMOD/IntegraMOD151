@@ -382,7 +382,7 @@ class ct_userfunctions
 		include_once($phpbb_root_path . 'ctracker/constants.' . $phpEx);
 
 		// Register Protection (TIME)
-		if ( intval($ctracker_config->settings['reg_protection']) == 1 && $mode == 'register')
+		if ( !empty($ctracker_config->settings['reg_protection']) && $mode == 'register')
 		{
 			if ( time() <= intval($ctracker_config->settings['reg_last_reg']) )
 			{
@@ -392,7 +392,7 @@ class ct_userfunctions
 		}
 
 		// Register IP Feature
-		if ( intval($ctracker_config->settings['reg_ip_scan']) == 1 && $mode == 'register' )
+		if ( !empty($ctracker_config->settings['reg_ip_scan']) && $mode == 'register' )
 		{
 			if ( $ctracker_config->user_ip_value == $ctracker_config->settings['reg_lastip'] )
 			{

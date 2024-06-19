@@ -536,7 +536,7 @@ if ($submit || $preview)
 			$lang['sig_bbcodes_off'] .= ( !$board_config['sig_allow_images'] ) ? '[img]' : '';
 
 			$exotic_bbcodes_list = explode(",", $board_config['sig_exotic_bbcodes_disallowed']);
-			while ( list($bbckey, $exotic_bbcode) = @each($exotic_bbcodes_list) )
+      foreach ($exotic_bbcodes_list as $bbckey => $exotic_bbcode)
 			{
 				$exotic_bbcode = trim(strtolower($exotic_bbcode));
 				if ( $exotic_bbcode != '' )

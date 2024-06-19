@@ -865,7 +865,7 @@ if ( $userdata['ct_global_msg_read'] == 1 && $userdata['session_logged_in'] && $
 /*
  * CrackerTracker Password Expirement Check
  */
-if ( $userdata['session_logged_in'] && $ctracker_config->settings['pw_control'] == 1 )
+if ( $userdata['session_logged_in'] && !empty($ctracker_config->settings['pw_control']) )
 {
 	if ( time() > $userdata['ct_last_pw_reset'] )
 	{
@@ -1074,7 +1074,7 @@ $template->assign_vars(array(
 	'LOGO_WIDTH' => $board_config['logo_image_w'],
 	'LOGO_HEIGHT' => $board_config['logo_image_h'],
 	// Logo Selector MOD
-	'PAGE_TITLE' => $page_title,
+	'PAGE_TITLE' => ( isset($page_title) ? $page_title : '') ,
 	'LAST_VISIT_DATE' => sprintf($lang['You_last_visit'], $s_last_visit),
 	'CURRENT_TIME' => sprintf($lang['Current_time'], create_date($board_config['default_dateformat'], time(), $board_config['board_timezone'])),
 	'TOTAL_USERS_ONLINE' => $l_online_users,

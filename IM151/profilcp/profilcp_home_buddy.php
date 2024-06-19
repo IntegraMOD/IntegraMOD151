@@ -42,7 +42,7 @@ if ( !empty($set_homemodules) )
 //	build a buddy list box
 //
 //-------------------------------------------
-if ( !function_exists(box_buddy_list) )
+if ( !function_exists('box_buddy_list') )
 {
 	function box_buddy_list($friend=false, $yours=false, $tpl='')
 	{
@@ -109,6 +109,7 @@ if ( !function_exists(box_buddy_list) )
 
 		// read buddy rows
 		$offlines = array();
+    $buddy_rowset = array();
 		while ($row = $db->sql_fetchrow($result))
 		{
 			$row['online']	= ( intval($row['user_session_time']) >= $floor );

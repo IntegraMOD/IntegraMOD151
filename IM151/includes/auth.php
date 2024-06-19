@@ -436,6 +436,7 @@ function auth_check_user($type, $key, $u_access, $is_admin)
 
 	// V: this is when we pass in a single access record
 	//    instead of an array thereof
+  if ($u_access === null) $u_access = [];
 	if (count($u_access) && !isset($u_access[0]))
 	{
 		$u_access = array($u_access);

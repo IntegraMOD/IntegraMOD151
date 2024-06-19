@@ -90,7 +90,7 @@ if ($buddy_id > 0)
 // coming from
 $from = '';
 $l_from = '';
-switch ($_GET['from'])
+switch (isset($_GET['from']) ? $_GET['from'] : '')
 {
 	case 'profil' :
 		$from = append_sid("profile.$phpEx?mode=viewprofile&" . POST_USERS_URL . "=$buddy_id");
@@ -179,7 +179,7 @@ else if ($adduser)
 			$error_msg = $lang['profilcp_buddy_could_not_add_user'];
 		}
 	}
-	if ( !$error && ($userrow['user_id'] == $view_user_id) )
+	if ( empty($error) && ($userrow['user_id'] == $view_user_id) )
 	{
 		$error = true;
 		$error_msg = $lang['profilcp_buddy_add_yourself'];
@@ -190,7 +190,7 @@ else if ($adduser)
 		$error_msg = $lang['profilcp_buddy_could_not_anon_user'];
 	}
 	// check if exist
-	if ( !$error )
+	if ( empty($error) )
 	{
 		$sql = "SELECT * FROM " . BUDDYS_TABLE . " 
 				WHERE user_id = $view_user_id 
@@ -333,9 +333,11 @@ else
 
 	// PCP Extra :: Begin Add
 	@reset($user_maps[$map_name]['fields']);
-	while ( list($field_name, $map_field_data) = @each($user_maps[$map_name]['fields']) ){
+  foreach ($user_maps[$map_name]['fields'] as $field_name => $map_field_data)
+  {
 		$user_data = $user_fields[$field_name];
-		while ( list($key, $value) = @each($user_data) ){
+    foreach ($user_data as $key => $value)
+    {
 			if(!isset($map_field_data[$key])){
 				$user_maps[$map_name]['fields'][$field_name][$key] = $value;
 			}
@@ -345,8 +347,7 @@ else
 
 	// get the last ind of the user fields map
 	$last_ind = 0;
-	@reset($user_maps[$map_name]['fields']);
-	while ( list($field_name, $map_field_data) = @each($user_maps[$map_name]['fields']) )
+  foreach ($user_maps[$map_name]['fields'] as $field_name => $map_field_data)
 	{
 		if ( !$map_field_data['hidden'] && ($map_field_data['ind'] > $last_ind) )
 		{
@@ -390,8 +391,7 @@ else
 			// get back the default values for the fields added
 			if ( $max < ($last_ind+1) )
 			{
-				@reset($user_maps[$map_name]['fields']);
-				while ( list($field_name, $map_field_data) = @each($user_maps[$map_name]['fields']) )
+        foreach ($user_maps[$map_name]['fields'] as $field_name => $map_field_data)
 				{
 					if ( ( $max < ($map_field_data['ind']+1) ) && ($map_field_data['dft'] || $map_field_data['rqd']) )
 					{
@@ -415,8 +415,7 @@ else
 		}
 
 		// force the required fields
-		@reset($user_maps[$map_name]['fields']);
-		while ( list($field_name, $map_field_data) = @each($user_maps[$map_name]['fields']) )
+    foreach ($user_maps[$map_name]['fields'] as $field_name => $map_field_data)
 		{
 			if ($map_field_data['rqd'])
 			{
@@ -446,8 +445,7 @@ else
 
 	// ordered fields : all available to display
 	$ord_fields = array();
-	@reset($user_maps[$map_name]['fields']);
-	while ( list($field_name, $map_field_data) = each($user_maps[$map_name]['fields']) )
+  foreach ($user_maps[$map_name]['fields'] as $field_name => $map_field_data)
 	{
 		if ( !$map_field_data['hidden'] )
 		{
@@ -508,8 +506,7 @@ else
 	$s_filter = '<select name="filter">';
 
 	// header & sort icons
-	@reset($user_maps[$map_name]['fields']);
-	while ( list($field_name, $map_field_data) = @each($user_maps[$map_name]['fields']) )
+  foreach ($user_maps[$map_name]['fields'] as $field_name => $map_field_data)
 	{
 		if ( isset($field_ids[ $map_field_data['ind'] ]) )
 		{
@@ -574,8 +571,7 @@ else
 
 	// operand
 	$s_comp = '<select name="comp">';
-	@reset($operators);
-	while ( list($key, $value) = @each($operators) )
+  foreach ($operators as $key => $value)
 	{
 		$select = ($comp == $key) ? ' selected="selected"' : '';
 		$s_comp .= '<option value="' . $key . '"' . $select . '>' . $value . '</option>';
@@ -589,8 +585,7 @@ else
 	// sql classes fields
 	$admin = is_admin($userdata);
 	$tables_used_class = array();
-	@reset($classes_fields);
-	while ( list($class_name, $class_data) = @each($classes_fields) )
+  foreach ($classes_fields as $class_name => $class_data)
 	{
 		$sql_var = 'sql_' . $class_name . '_class';
 		$$sql_var = '';
@@ -618,8 +613,7 @@ else
 
 	// fields
 	$sql_fields = $tables_linked['USERS']['sql_id'] . ".*";
-	@reset($user_maps[$map_name]['fields']);
-	while ( list($field_name, $map_field_data) = each($user_maps[$map_name]['fields']) ) 
+  foreach ($user_maps[$map_name]['fields'] as $field_name => $map_field_data)
 	{
 		$field_data = $user_fields[$field_name];
 		if ( isset($field_ids[ $map_field_data['ind'] ]) || $map_field_data['hidden'] )
@@ -709,8 +703,7 @@ else
 		}
 
 		// get the tables used by this class
-		@reset( $tables_used_class[$class_name] );
-		while ( list($table_name, $used) = @each($tables_used_class[$class_name]) )
+    foreach ( $tables_used_class[$class_name]  as $table_name => $used)
 		{
 			$tables_used[$table_name] = true;
 		}
@@ -880,8 +873,7 @@ else
 	while ( !$done )
 	{
 		@ksort($tables_used);
-		@reset($tables_used);
-		while ( list($table_name, $used) = @each($tables_used) )
+    foreach ($tables_used as $table_name => $used)
 		{
 			if ( !in_array($table_name, $tables_processed) )
 			{
@@ -895,8 +887,7 @@ else
 
 		// check if any unprocessed table remains
 		$done = true;
-		@reset($tables_used);
-		while ( list($table_name, $used) = @each($tables_used) )
+    foreach ($tables_used as $table_name => $used)
 		{
 			$done = in_array($table_name, $tables_processed);
 			if ( !$done )
@@ -931,8 +922,7 @@ else
 	$users = array();
 	while ($row = $db->sql_fetchrow($result))
 	{
-		@reset($user_maps[$map_name]['fields']);
-		while ( list($field_name, $map_field_data) = @each($user_maps[$map_name]['fields']) )
+    foreach ($user_maps[$map_name]['fields'] as $field_name => $map_field_data)
 		{
 			if ( isset($row[$field_name . '_virt']) )
 			{
@@ -951,8 +941,7 @@ else
 			'NUMBER'	=> $i+1+$start,
 			)
 		);
-		@reset($user_maps[$map_name]['fields']);
-		while ( list($field_name, $map_field_data) = @each($user_maps[$map_name]['fields']) )
+    foreach ($user_maps[$map_name]['fields'] as $field_name => $map_field_data)
 		{
 			if ($field_ids[ $map_field_data['ind'] ] )
 			{

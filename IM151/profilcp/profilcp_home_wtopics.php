@@ -115,7 +115,7 @@ if ($process == 'pre')
 		$is_auth = array();
 		$is_auth = auth(AUTH_READ, AUTH_LIST_ALL, $userdata, $forum_row);
 		$s_forum_ids = '';
-		while ( list($key, $data) = @each($is_auth) )
+    foreach ($is_auth as $key => $data)
 		{
 			if ( $data['auth_read'] )
 			{

@@ -55,7 +55,7 @@ $newpm = false;
 for ($i = 0; $i < count($get_vars); $i++)
 {
 	$key = $get_vars[$i];
-	$val = $_GET[$get_vars[$i]];
+	$val = ( isset($_GET[$get_vars[$i]]) ? $_GET[$get_vars[$i]] : '');
 	switch ($get_vars[$i])
 	{
 		case POST_USERS_URL: $key = 'b'; break;

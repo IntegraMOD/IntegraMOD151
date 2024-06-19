@@ -80,6 +80,7 @@ if( !$is_auth['auth_read'] )
 //
 // End auth check
 //
+$s_hidden_fields = '';
 
 $refresh = (isset($_POST['auto_refresh']) || isset($_POST['refresh'])) ? 1 : 0;
 $submit = (isset($_POST['shout']) && isset($_POST['message'])) ? 1 : 0;
@@ -180,13 +181,13 @@ if ($submit || isset($_POST['message']))
 	}
 	$message = (isset($_POST['message'])) ? trim($_POST['message']) : '';
 	// insert shout !
-	if (!empty($message) && $is_auth['auth_post'] && !$error)
+	if (!empty($message) && $is_auth['auth_post'] && empty($error))
 	{
 		include_once($phpbb_root_path . 'includes/functions_post.'.$phpEx);
 		$bbcode_uid = ( $bbcode_on ) ? make_bbcode_uid() : '';
 		$message = prepare_message(trim($message), $html_on, $bbcode_on, $smilies_on, $bbcode_uid);
 		$sql = "INSERT INTO " . SHOUTBOX_TABLE. " (shout_text, shout_session_time, shout_user_id, shout_ip, shout_username, shout_bbcode_uid,enable_bbcode,enable_html,enable_smilies) 
-				VALUES ('$message', '".time()."', '".$userdata['user_id']."', '$user_ip', '".$username."', '".$bbcode_uid."',$bbcode_on,$html_on,$smilies_on)";
+				VALUES ('$message', '".time()."', '".$userdata['user_id']."', '$user_ip', '". ( isset($username) ? $username : '') ."', '".$bbcode_uid."',$bbcode_on,$html_on,$smilies_on)";
 		if (!$result = $db->sql_query($sql)) 
 		{
 			message_die(GENERAL_ERROR, 'Error inserting shout.', '', __LINE__, __FILE__, $sql);
@@ -246,10 +247,10 @@ $template->assign_vars(array(
 'S_CONTENT_ENCODING' => $lang['ENCODING'],
 	'L_BBCODE_CLOSE_TAGS' => $lang['Close_Tags'], 
 
-	'SHOUT_VIEW_SIZE' => ($max) ? $max : 0,
+	'SHOUT_VIEW_SIZE' => !empty($max) ? $max : 0,
 	'S_HIDDEN_FIELDS' => $s_hidden_fields
 	));
-	if( $error_msg != '' )
+	if( !empty($error_msg) )
 	{
 		$template->set_filenames(array(
 			'reg_header' => 'error_body.tpl')

@@ -223,7 +223,7 @@ function unprepare_message($message)
 // here we have added
 //	, $topic_calendar_time = 0, $topic_calendar_duration = 0
 //-- modify
-function prepare_post(&$mode, &$post_data, &$bbcode_on, &$html_on, &$smilies_on, &$error_msg, &$username, &$bbcode_uid, &$subject, &$message, &$poll_title, &$poll_options, &$poll_length, &$max_vote, &$hide_vote, &$tothide_vote, &$topic_desc, $topic_calendar_time = 0, $topic_calendar_duration = 0, $topic_calendar_repeat)
+function prepare_post(&$mode, &$post_data, &$bbcode_on, &$html_on, &$smilies_on, &$error_msg, &$username, &$bbcode_uid, &$subject, &$message, &$poll_title, &$poll_options, &$poll_length, &$max_vote, &$hide_vote, &$tothide_vote, &$topic_desc, $topic_calendar_time = 0, $topic_calendar_duration = 0, $topic_calendar_repeat = 0)
 //-- fin mod : calendar ----------------------------------------------------------------------------
 {
 	global $board_config, $userdata, $lang, $phpEx, $phpbb_root_path;
@@ -353,7 +353,7 @@ if ( !empty($topic_desc) )
 // here we added
 //	, $post_icon = 0
 //-- modify
-function submit_post($mode, &$post_data, &$message, &$meta, &$forum_id, &$topic_id, &$post_id, &$poll_id, &$topic_type, &$bbcode_on, &$html_on, &$smilies_on, &$attach_sig, &$bbcode_uid, $post_username, $post_subject, $post_message, $poll_title, &$poll_options, &$poll_length, &$max_vote, &$hide_vote, &$tothide_vote, $forcetime='', &$topic_desc, &$news_category, $topic_announce_duration = 0, $topic_calendar_time = 0, $topic_calendar_duration = 0, $post_icon = 0, $topic_calendar_repeat)
+function submit_post($mode, &$post_data, &$message, &$meta, &$forum_id, &$topic_id, &$post_id, &$poll_id, &$topic_type, &$bbcode_on, &$html_on, &$smilies_on, &$attach_sig, &$bbcode_uid, $post_username, $post_subject, $post_message, $poll_title, &$poll_options, &$poll_length, &$max_vote, &$hide_vote, &$tothide_vote, $forcetime='', &$topic_desc, &$news_category, $topic_announce_duration = 0, $topic_calendar_time = 0, $topic_calendar_duration = 0, $post_icon = 0, $topic_calendar_repeat = 0)
 //-- fin mod : post icon ---------------------------------------------------------------------------
 //-- fin mod : calendar ----------------------------------------------------------------------------
 //-- fin mod : announces ---------------------------------------------------------------------------
@@ -1181,8 +1181,7 @@ function generate_smilies($mode, $page_id)
 //-- delete
 //		while ($row = $db->sql_fetchrow($result))
 //-- add
-		@reset($smilies);
-		while ( list($row_id, $row) = @each($smilies) )
+    foreach ($smilies as $row_id => $row)
 //-- fin mod : cache -------------------------------------------------------------------------------
 		{
 			if (empty($rowset[$row['smile_url']]))
@@ -1202,7 +1201,7 @@ function generate_smilies($mode, $page_id)
 			$row = 0;
 			$col = 0;
 
-			while (list($smile_url, $data) = @each($rowset))
+      foreach ($rowset as $smile_url => $data)
 			{
 				if (!$col)
 				{

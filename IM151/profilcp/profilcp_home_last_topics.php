@@ -42,6 +42,9 @@ if ( !empty($set_homemodules) )
 $topics_last_previous_days = array(0, 1, 7, 14, 30, 90, 180, 364);
 $topics_last_previous_days_text = array($lang['PCP_topics_last_visit'], $lang['1_Day'], $lang['7_Days'], $lang['2_Weeks'], $lang['1_Month'], $lang['3_Months'], $lang['6_Months'], $lang['1_Year']);
 
+$s_pagination_fields = '';
+$s_hidden_fields = '';
+
 //-------------------------------------------
 //
 //	Subscribed topics
@@ -89,9 +92,9 @@ if ($process == 'pre')
 
 		// get forums list
 		$is_auth = array();
-		$is_auth = auth(AUTH_READ, AUTH_LIST_ALL, $userdata, $forum_row);
+		$is_auth = auth(AUTH_READ, AUTH_LIST_ALL, $userdata, isset($forum_row) ? $forum_row : '');
 		$s_forum_ids = '';
-		while ( list($key, $data) = @each($is_auth) )
+    foreach ($is_auth as $key => $data)
 		{
 			if ( $data['auth_read'] )
 			{
@@ -103,7 +106,7 @@ if ($process == 'pre')
 		$topics_last_total = 0;
 		if ( !empty($s_forum_ids) )
 		{
-			if (($userdata['user_level'] != ADMIN && $userdata['user_level'] != MOD) || !$is_auth['auth_delayedpost'])
+			if (($userdata['user_level'] != ADMIN && $userdata['user_level'] != MOD) || empty($is_auth['auth_delayedpost']))
 			{
 				$current_time = time();
 				$limit_topics_time = " AND (t.topic_time <= $current_time OR t.topic_poster = " . $userdata['user_id'] . ")";
@@ -188,7 +191,7 @@ if ( ($process == 'post') && ($topics_last_page_size > 0) )
 	$template->_tpldata = $sav_tpl;
 
 	// init right part of the home panel
-	if ( !$right_part )
+	if ( empty($right_part) )
 	{
 		$template->assign_block_vars('right_part', array());
 		$right_part = true;
@@ -213,10 +216,11 @@ if ( ($process == 'post') && ($topics_last_page_size > 0) )
 	$w_pagination = str_replace( "&startlt=$topics_last_start", '', $s_pagination_fields );
 
 	// send the pagination sentence to display
+  $script_url = isset($_SERVER["SCRIPT_URL"]) ? $_SERVER["SCRIPT_URL"] : "";
 	$template->assign_block_vars('right_part.box.pagination', array(
 		/* Topics Since :: Altered
 		'PAGINATION'	=> generate_pagination("./profile.$phpEx?$w_pagination", $topics_last_total, $topics_last_page_size, $topics_last_start, true, 'startlt'),*/
-		'PAGINATION'	=> generate_pagination($_SERVER["SCRIPT_URL"]."?$w_pagination", $topics_last_total, $topics_last_page_size, $topics_last_start, true, 'startlt'),
+		'PAGINATION'	=> generate_pagination($script_url."?$w_pagination", $topics_last_total, $topics_last_page_size, $topics_last_start, true, 'startlt'),
 		'PAGE_NUMBER'	=> sprintf($lang['Page_of'], ( floor( $topics_last_start / $topics_last_page_size ) + 1 ), ceil( $topics_last_total / $topics_last_page_size )), 
 		)
 	);

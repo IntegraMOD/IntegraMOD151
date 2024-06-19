@@ -120,7 +120,7 @@ function tl_select($default, $select_name = 'text_length')
 	}
 	$tl_select = '<select name="' . $select_name . '">';
 
-	while( list($offset, $text_length) = @each($lang['tl']) )
+  foreach ($lang['tl'] as $offset => $text_length)
 	{
 		$selected = ( $offset == $default ) ? ' selected="selected"' : '';
 		$tl_select .= '<option value="' . $offset . '"' . $selected . '>' . $text_length . '</option>';

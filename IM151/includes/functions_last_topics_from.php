@@ -68,7 +68,7 @@ function last_topics_from($view_userdata, $last_started_box='', $last_replied_bo
 	if ($sum <= 0) return false;
 
 	// read the forums authorized
-	$cat_hierarchy = function_exists(get_auth_keys);
+	$cat_hierarchy = function_exists('get_auth_keys');
 	$forum_ids = array();
 	if (!$cat_hierarchy)
 	{
@@ -127,7 +127,7 @@ function last_topics_from($view_userdata, $last_started_box='', $last_replied_bo
 							AND t.topic_id = p.topic_id
 							AND p.poster_id = $view_user_id
 						GROUP BY p.topic_id
-						ORDER BY p.post_time DESC
+						ORDER BY max(p.post_time) DESC
 						LIMIT 0, " . $to_display[$k];
 				if (!$result = $db->sql_query($sql))
 				{

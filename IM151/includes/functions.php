@@ -2209,7 +2209,7 @@ function lw_check_membership(&$userinfo)
 	global $db;
 
 	$result = 0;
-	if($userinfo['user_level'] != ADMIN && $userinfo['user_level'] != MOD )
+	if(!empty($userinfo['user_level']) && $userinfo['user_level'] != ADMIN && $userinfo['user_level'] != MOD )
 	{
 		$sql = "SELECT * FROM " . GROUPS_TABLE . " WHERE group_type = " . GROUP_PAYMENT . " AND group_amount > 0 AND group_moderator <> " . $userinfo['user_id'];
 		if ( !($result = $db->sql_query($sql)) )
@@ -2597,7 +2597,7 @@ function bbcode_box()
 	include_once($phpbb_root_path . 'language/lang_' . $board_config['default_lang'] . '/lang_bbcode_box.' . $phpEx);
 
 	$template->set_filenames(array(
-		'bbcode_box' => $current_template_path . 'bbcode_box.tpl')
+		'bbcode_box' => 'bbcode_box.tpl')
 	);
 
 	$template->assign_vars(array(
@@ -2633,7 +2633,7 @@ function bbcode_box()
 		'L_BBCODE_URL_HELP' => $lang['bbcode_url_help'],
 		'L_BBCODE_YOUTUBE_HELP' => $lang['bbcode_youtube_help'],
 		'L_BBCODE_MAIL_HELP' => $lang['bbcode_mail_help'],
-		'L_BBCODE_GOTOPOST_HELP' => $lang['bbcode_goto_help'],
+		'L_BBCODE_GOTOPOST_HELP' => ( isset($lang['bbcode_goto_help']) ? $lang['bbcode_goto_help'] : '' ),
 		'L_BBCODE_IMG_HELP' => $lang['bbcode_img_help'],
 		'L_BBCODE_STREAM_HELP' => $lang['bbcode_stream_help'],
 		'L_BBCODE_RAM_HELP' => $lang['bbcode_ram_help'],
