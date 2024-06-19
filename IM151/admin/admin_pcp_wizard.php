@@ -84,6 +84,7 @@ function menu(){
 		)
 	);
 	setMessage();
+	$color = false;
 	foreach ($menuactions as $idx =>$action)
 	{
 		$color = !$color;
@@ -262,7 +263,7 @@ function is_input_map($var){
 	global $user_maps;
 	global $profil_map, $register_map;
 	if (substr($var,0,strlen($profil_map)) == $profil_map || substr($var,0,strlen($register_map)) == $register_map){
-		if (count($user_maps[$var]['fields'])){
+		if (!empty($user_maps[$var]['fields'])){
 			return 1;
 		}
 	}
@@ -1169,7 +1170,7 @@ function validate($autocorrect=false){
 	$template->assign_vars(array(
 		'L_TITLE'						=> $wiznav.'&raquo; '.$lang['Wiz_validate'],
 		'L_TITLE_EXPLAIN'		=> $lang['Wiz_validate_description'],
-		'HELP'							=> $lang['Wiz_validate_explain'],
+		'HELP'							=> isset($lang['Wiz_validate_explain']) ? $lang['Wiz_validate_explain'] : 'Wiz_validate_explain',
 		'AUTOCORRECT'				=> sprintf($lang['Wiz_autocorrect'],wizurl($nextmode)),
 		)
 	);
@@ -1192,7 +1193,7 @@ function validate($autocorrect=false){
 		$template->assign_block_vars('type.page', array(
 			'text'					=> $map,
 		));
-		if(!count($user_maps[$map]['title'])){
+		if(empty($user_maps[$map]['title'])){
 			if($autocorrect){
 				// defailt to map name recursively
 				$mapsplit = preg_split('\.',$map);
@@ -1211,13 +1212,14 @@ function validate($autocorrect=false){
 			}
 		}
 		$fields = $user_maps[$map]['fields'];
+		$color = false;
 		foreach ($fields as $field => $data)
 		{
 			$color = !$color;
 			$template->assign_block_vars('type.page.fields', array(
 				'COLOR'					=> $color ? 'row1' : 'row2',
 				'field'					=> $field,
-				'description'		=> $lang[$user_fields[$field]['lang_key']],
+				'description'		=> isset($user_fields[$field]['lang_key']) && isset($lang[$user_fields[$field]['lang_key']]) ? $lang[$user_fields[$field]['lang_key']] : ( isset($user_fields[$field]['lang_key']) ? $user_fields[$field]['lang_key'] : '' ),
 			));
 			// validate if field is in def_userfields
 			if(!isset($user_fields[$field]) && substr($field,0,4) != '[lf]'){
@@ -1272,7 +1274,7 @@ function validate($autocorrect=false){
 		$template->assign_block_vars('type.page.fields', array(
 			'COLOR'						=> $color ? 'row1' : 'row2',
 			'field'						=> $field,
-			'description'			=> $lang[$user_fields[$field]['lang_key']],
+			'description'			=> isset($user_fields[$field]['lang_key']) ? ( isset($lang[$user_fields[$field]['lang_key']]) ? $lang[$user_fields[$field]['lang_key']] : '' ) : '',
 		));
 		$keys = array_keys($data);
 		foreach ($keys as $idx => $key)

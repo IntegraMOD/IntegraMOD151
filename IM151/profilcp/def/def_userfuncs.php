@@ -158,23 +158,23 @@ function pcp_output_format($field_name, $txt, $img, $map_name, $lnk='', $view_us
 	// get field settings
 	if ( isset($user_fields[$field_name]) )
 	{
-		$map_leg = $user_fields[$field_name]['leg'];
-		$map_txt = $user_fields[$field_name]['txt'];
-		$map_img = $user_fields[$field_name]['img'];
-		$map_lnk = $user_fields[$field_name]['lnk'];
-		$map_crlf = $user_fields[$field_name]['crlf'];
-		$map_style = $user_fields[$field_name]['style'];
+		$map_leg = ( isset($user_fields[$field_name]['leg']) ? $user_fields[$field_name]['leg'] : '' );
+		$map_txt = ( isset($user_fields[$field_name]['txt']) ? $user_fields[$field_name]['txt'] : '' );
+		$map_img = ( isset($user_fields[$field_name]['img']) ? $user_fields[$field_name]['img'] : '' );
+		$map_lnk = ( isset($user_fields[$field_name]['lnk']) ? $user_fields[$field_name]['lnk'] : '' );
+		$map_crlf = ( isset($user_fields[$field_name]['crlf']) ? $user_fields[$field_name]['crlf'] : '' );
+		$map_style = ( isset($user_fields[$field_name]['style']) ? $user_fields[$field_name]['style'] : '' );
 	}
 
 	// get map settings
 	if ( !empty($map_name) && isset($user_maps[$map_name]) )
 	{
-		$map_leg = $user_maps[$map_name]['fields'][$field_name]['leg'];
-		$map_txt = $user_maps[$map_name]['fields'][$field_name]['txt'];
-		$map_img = $user_maps[$map_name]['fields'][$field_name]['img'];
-		$map_lnk = $user_maps[$map_name]['fields'][$field_name]['lnk'];
-		$map_crlf = $user_maps[$map_name]['fields'][$field_name]['crlf'];
-		$map_style = $user_maps[$map_name]['fields'][$field_name]['style'];
+		$map_leg = ( isset($user_maps[$map_name]['fields'][$field_name]['leg']) ? $user_maps[$map_name]['fields'][$field_name]['leg'] : '' );
+		$map_txt = ( isset($user_maps[$map_name]['fields'][$field_name]['txt']) ? $user_maps[$map_name]['fields'][$field_name]['txt'] : '' );
+		$map_img = ( isset($user_maps[$map_name]['fields'][$field_name]['img']) ? $user_maps[$map_name]['fields'][$field_name]['img'] : '' );
+		$map_lnk = ( isset($user_maps[$map_name]['fields'][$field_name]['lnk']) ? $user_maps[$map_name]['fields'][$field_name]['lnk'] : '' );
+		$map_crlf = ( isset($user_maps[$map_name]['fields'][$field_name]['crlf']) ? $user_maps[$map_name]['fields'][$field_name]['crlf'] : '' );
+		$map_style = ( isset($user_maps[$map_name]['fields'][$field_name]['style']) ? $user_maps[$map_name]['fields'][$field_name]['style'] : '' );
 	}
 	if ( !$map_leg && !$map_txt && !$map_img )
 	{
@@ -316,10 +316,10 @@ function pcp_output($field_name, &$view_userdata, $map_name='', $legend_only=fal
 		// value
 		$txt = '';
 		$img = '';
-		$lnk = $field_data['link'];
+		$lnk = ( isset($field_data['link']) ? $field_data['link'] : '' );
 		$res = '';
-		$constant_link = $field_data['lnk'] && !isset($view_userdata[$field_name]) && ( ($field_data['txt'] && !empty($field_data['title'])) || ($field_data['img'] && !empty($field_data['image'])) );
-		if  ( $view_userdata['user_id'] != ANONYMOUS && ( !empty($view_userdata[$field_name]) || ($field_data['leg'] && !$field_data['txt'] && !$field_data['img']) || $constant_link ) )
+		$constant_link = $lnk && !isset($view_userdata[$field_name]) && ( ($field_data['txt'] && !empty($field_data['title'])) || ($field_data['img'] && !empty($field_data['image'])) );
+		if  ( $view_userdata['user_id'] != ANONYMOUS && ( !empty($view_userdata[$field_name]) || (!empty($field_data['leg']) && !$field_data['txt'] && !$field_data['img']) || $constant_link ) )
 		{
 			$title = isset($field_data['title']) ? mods_settings_get_lang($field_data['title']) : $view_userdata[$field_name];
 			$alt = mods_settings_get_lang($field_data['lang_key']);
@@ -345,11 +345,11 @@ function pcp_output($field_name, &$view_userdata, $map_name='', $legend_only=fal
 					break;
 				default:
 					$txt = $view_userdata[$field_name];
-					if ( $field_data['lnk'] && !isset($view_userdata[$field_name]) )
+					if ( $lnk && !isset($view_userdata[$field_name]) )
 					{
 						$txt = $title;
 					}
-					$img .= isset($images[$field_data['image']]) ? '<img src="' . $images[$field_data['image']] . '" border="0" alt="' . $alt . '" title="' . $title . '" />' : '';
+					$img .= isset($field_data['image']) && isset($images[$field_data['image']]) ? '<img src="' . $images[$field_data['image']] . '" border="0" alt="' . $alt . '" title="' . $title . '" />' : '';
 					break;
 			}
 
@@ -735,9 +735,9 @@ function display_field($userfield, &$viewdata){
     */ 
      
     // tha vals 
-    $config_value = $board_config[$userfield]; 
-    $override = $board_config[$userfield.'_over']; 
-    $user_value = $viewdata[$userfield]; 
+    $config_value = ( isset($board_config[$userfield]) ? $board_config[$userfield] : '' ); 
+    $override = ( isset($board_config[$userfield.'_over']) ? $board_config[$userfield.'_over'] : '' );  
+    $user_value = ( isset($viewdata[$userfield]) ? $viewdata[$userfield] : '') ; 
     $display = false; 
     // let's go! 
     // special cases 

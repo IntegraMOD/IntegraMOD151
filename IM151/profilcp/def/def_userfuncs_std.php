@@ -169,6 +169,7 @@ function pcp_output_my_ignore($field_name, $view_userdata, $map_name='')
 
 	$txt = '';
 	$img = '';
+	$res = '';
 	if ( ($view_userdata['user_id'] != $userdata['user_id']) && ($view_userdata['user_id'] != ANONYMOUS) && $userdata['session_logged_in'] && ($userdata['user_id'] != ANONYMOUS) )
 	{
 		$from = '&from=profil';

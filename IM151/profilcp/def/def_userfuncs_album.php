@@ -46,7 +46,8 @@ function pcp_output_album($field_name, $view_userdata, $map_name='')
 		$temp_url = append_sid("album.$phpEx?user_id=" . $view_userdata['user_id']);
 		$img = '<a class="icon_gallery" href="' . $temp_url . '" title="' . sprintf($lang['Personal_Gallery_Of_User'], $view_userdata['username']) . '"><span>' . $lang['Album'] . '</span></a>';
 
-	if ($album_config['show_all_in_personal_gallery'] == 1)
+		$toggle = '';
+	if (!empty($album_config['show_all_in_personal_gallery']))
 	{
 		$u_toggle_view_all = append_sid("album.$phpEx?user_id=" . $view_userdata['user_id'] . "&mode=" . ALBUM_VIEW_ALL);
 		$toggle_view_all_img = $images['mini_all_pic_view_mode'];
@@ -56,7 +57,7 @@ function pcp_output_album($field_name, $view_userdata, $map_name='')
 		$u_personal_gallery = append_sid("album.$phpEx?user_id=" . $view_userdata['user_id']);
 		$l_personal_gallery = sprintf($lang['Personal_Gallery_Of_User_Profile'], $view_userdata['username'], $totalpicrow);
 		$u_all_images_by_user = append_sid("album.$phpEx?user_id=" . $view_userdata['user_id'] . "&mode=" . ALBUM_VIEW_LIST);
-		$l_all_images_by_user = sprintf($lang['Picture_List_Of_User'], $view_userdata['username']);
+		$l_all_images_by_user = sprintf( ( isset($lang['Picture_List_Of_User']) ? $lang['Picture_List_Of_User'] : 'Pictures of %s' ), $view_userdata['username']);
 		$txt = '<a href="'.$u_personal_gallery.'">'.$l_personal_gallery.'</a> '.$toggle.' <br /><a href="'.$u_all_images_by_user.'">'.$l_all_images_by_user.'</a>';
 
 		// result

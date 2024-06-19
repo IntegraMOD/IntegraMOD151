@@ -131,14 +131,26 @@ function prepare_bbcode_template($bbcode_tpl)
 	$bbcode_tpl['fullalbumimgr'] = str_replace('{IMG_NUM}', '\\1', $bbcode_tpl['fullalbumimgr']);
 	$bbcode_tpl['fullalbumimgc'] = str_replace('{IMG_NUM}', '\\1', $bbcode_tpl['fullalbumimgc']);
 	$bbcode_tpl['albumimg'] = str_replace('{IMG_NUM}', '\\1', $bbcode_tpl['albumimg']);
-	$bbcode_tpl['albumimgl'] = str_replace('{IMG_NUM}', '\\1', $bbcode_tpl['albumimgl']);
-	$bbcode_tpl['albumimgr'] = str_replace('{IMG_NUM}', '\\1', $bbcode_tpl['albumimgr']);
-	$bbcode_tpl['albumimgc'] = str_replace('{IMG_NUM}', '\\1', $bbcode_tpl['albumimgc']);
+	if (!empty($bbcode_tpl['albumimgl']))
+	{ // V: TODO check why these are empty
+		$bbcode_tpl['albumimgl'] = str_replace('{IMG_NUM}', '\\1', $bbcode_tpl['albumimgl']);
+	}
+	if (!empty($bbcode_tpl['albumimgr']))
+	{
+		$bbcode_tpl['albumimgr'] = str_replace('{IMG_NUM}', '\\1', $bbcode_tpl['albumimgr']);
+	}
+	if (!empty($bbcode_tpl['albumimgc']))
+	{
+		$bbcode_tpl['albumimgc'] = str_replace('{IMG_NUM}', '\\1', $bbcode_tpl['albumimgc']);
+	}
 // Mighty Gorgon - Full Album Pack - END
 
 	$bbcode_tpl['email'] = str_replace('{EMAIL}', '\\1', $bbcode_tpl['email']);
 	$bbcode_tpl['youtube'] = str_replace('{YOUTUBEID}', '\\3', $bbcode_tpl['youtube']);
-	$bbcode_tpl['youtube'] = str_replace('{YOUTUBELINK}', $lang['youtube_link'], $bbcode_tpl['youtube']); 
+	if (!empty($bbcode_tpl['youtube']))
+	{
+		$bbcode_tpl['youtube'] = str_replace('{YOUTUBELINK}', ( isset($lang['youtube_link']) ? $lang['youtube_link'] : 'YouTube' ) , $bbcode_tpl['youtube']); 
+	}
 
 	$bbcode_tpl['acronym_open'] = str_replace('{DESCRIPTION}', '\\1', $bbcode_tpl['acronym_open']);
 
@@ -439,16 +451,25 @@ function bbencode_second_pass($text, $uid)
 	$album_img_replacements[1] = $bbcode_tpl['albumimg'];
 
 	// [albumimgl]image number here[/albumimgl]
-	$album_img_patterns[2] = "#\[albumimgl:$uid\]([0-9]+)\[/albumimgl:$uid\]#si";
-	$album_img_replacements[2] = $bbcode_tpl['albumimgl'];
+	if (!empty($bbcode_tpl['albumimgl']))
+	{
+		$album_img_patterns[2] = "#\[albumimgl:$uid\]([0-9]+)\[/albumimgl:$uid\]#si";
+		$album_img_replacements[2] = $bbcode_tpl['albumimgl'];
+	}
 
 	// [albumimgr]image number here[/albumimgr]
-	$album_img_patterns[3] = "#\[albumimgr:$uid\]([0-9]+)\[/albumimgr:$uid\]#si";
-	$album_img_replacements[3] = $bbcode_tpl['albumimgr'];
+	if (!empty($bbcode_tpl['albumimgr']))
+	{
+		$album_img_patterns[3] = "#\[albumimgr:$uid\]([0-9]+)\[/albumimgr:$uid\]#si";
+		$album_img_replacements[3] = $bbcode_tpl['albumimgr'];
+	}
 
 	// [albumimgc]image number here[/albumimgc]
-	$album_img_patterns[4] = "#\[albumimgc:$uid\]([0-9]+)\[/albumimgc:$uid\]#si";
-	$album_img_replacements[4] = $bbcode_tpl['albumimgc'];
+	if (!empty($bbcode_tpl['albumimgc']))
+	{
+		$album_img_patterns[4] = "#\[albumimgc:$uid\]([0-9]+)\[/albumimgc:$uid\]#si";
+		$album_img_replacements[4] = $bbcode_tpl['albumimgc'];
+	}
 	// site image-end
 
 	// [fullalbumimg]image number here[/fullalbumimg]

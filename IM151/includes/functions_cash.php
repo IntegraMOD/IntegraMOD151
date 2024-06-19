@@ -667,7 +667,7 @@ class cash_table
 		{
 			$iterater = 0;
 		}
-		if ( !($iterater < count($this->ordered_list)) )
+		if ( empty($this->ordered_list) || !($iterater < count($this->ordered_list)) )
 		{
 			$iterater = 0;
 			return false;
@@ -697,12 +697,12 @@ class cash_table
 	{
 		if ( !$mask )
 		{
-			return count($this->ordered_list);
+			return count_safe($this->ordered_list);
 		}
 		$count = 0;
 		$i = 0;
 
-		while ( $i < count($this->ordered_list) )
+		while ( $i < count_safe($this->ordered_list) )
 		{
 			$cash_id = $this->ordered_list[$i];
 			if ( $this->currencies[$cash_id]->mask($mask,$forum_id) )
