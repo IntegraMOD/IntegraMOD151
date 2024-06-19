@@ -297,8 +297,7 @@ class Cache_Lite
         } else {
             $motif = ($group) ? 'cache_'.$group.'_' : 'cache_';
         }
-        if (!($dh = opendir($this->_cacheDir))) {
-            $this->raiseError('Cache_Lite : Unable to open cache directory !', -4);
+        if (!($dh = @opendir($this->_cacheDir))) {
             return false;
         }
         while ($file = readdir($dh)) {

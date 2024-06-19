@@ -311,8 +311,7 @@ function pcp_input_fieldname($name, $value)
 	$opt = '<option value="" ' . ($value ? '' : 'selected="selected"') . '>' . $lang['PCP_userfields_field_pick_up'] . '</option>';
 	$fields = $user_fields;
 	@ksort($fields);
-	@reset($fields);
-	while ( list($field_name, $field_data) = @each($fields) )
+	foreach ($fields as $field_name => $field_data)
 	{
 		$opt .= "\n" . '<option value="' . $field_name . '" ' . ($value == $field_name ? 'selected="selected"' : '') . '>' . $field_name . '</option>';
 	}
@@ -324,8 +323,7 @@ function pcp_input_fieldname($name, $value)
 function pcp_output_lang($value)
 {
 	global $lang;
-	$opt = '<option value="" selected="selected">' . $lang['PCP_field_pick_up'] . '</option>';
-	@reset($user_fields);
+	$opt = '<option value="" selected="selected">' . ( isset($lang['PCP_field_pick_up']) ? $lang['PCP_field_pick_up'] : 'Pick up') . '</option>';
 
 	$res = pcp_format_lang($value, true);
 	return $res;
@@ -391,8 +389,7 @@ function pcp_input_lang($name, $value)
 
 	// process a list
 	$opt = '<option value="" ' . ($value ? '' : 'selected="selected"') . '>' . $lang['PCP_userfields_lang_key_pick_up'] . '</option>';
-	@reset($normal_lang);
-	while ( list($field_name, $field_data) = @each($normal_lang) )
+	foreach ($normal_lang as $field_name => $field_data)
 	{
 		$opt .= "\n" . '<option value="' . $field_name . '" ' . ($value === $field_name ? 'selected="selected"' : '') . '>' . $field_name . '</option>';
 	}
@@ -413,8 +410,7 @@ function pcp_input_class($name, $value)
 	}
 
 	$res = '<select name="' . $name . '">';
-	@reset($classes_fields);
-	while ( list($class_name, $class_data) = @each($classes_fields) )
+	foreach ($classes_fields as $class_name => $class_data)
 	{
 		$selected = ($class_name === $value) ? ' selected="selected"' : '';
 		$res .= '<option value="' . $class_name . '"' . $selected . '>' . pcp_format_lang($class_name) . '</option>';
@@ -465,8 +461,7 @@ function pcp_input_values($name, $value)
 	$res = '<select name="' . $name . '">';
 	$selected = empty($value) ? ' selected="selected"' : '';
 	$res .= '<option value=""' . $selected . '>' . $lang['None'] . '</option>';
-	@reset($values_list);
-	while ( list($values_list_name, $values_list_data) = @each($values_list) )
+	foreach ($values_list as $values_list_name => $values_list_data)
 	{
 		$selected = ( $values_list_name == $value ) ? ' selected="selected"' : '';
 		$res .= '<option value="' . $values_list_name . '"' . $selected . '>' . pcp_format_lang($values_list_name) . '</option>';
@@ -484,8 +479,7 @@ function pcp_input_auth($name, $value)
 		$value = USER;
 	}
 	$res = '';
-	@reset($auth_list);
-	while ( list($auth_level, $auth_name) = @each($auth_list) )
+	foreach ($auth_list as $auth_level => $auth_name)
 	{
 		$checked = ($value == $auth_level) ? ' checked="checked"' : '';
 		$res .= ( empty($res) ? '' : '<br />' ) . '&nbsp;';
@@ -539,8 +533,7 @@ function pcp_input_sql_def($name, $value)
 
 	// list of tables
 	$s_tables_opt = '<option value="" selected="selected">' . $lang['None'] . '</option>';
-	@reset($tables_linked);
-	while ( list($table_name, $table_data) = @each($tables_linked) )
+	foreach ($tables_linked as $table_name => $table_data)
 	{
 		$s_tables_opt .= '<option value="[' . $table_name . ']">[' . $table_name . ']</option>';
 	}
@@ -549,8 +542,7 @@ function pcp_input_sql_def($name, $value)
 	@ksort($board_config);
 	$s_cfg_values_opt = '<option value="" selected="selected">' . $lang['None'] . '</option>';
 	$s_cfg_values_opt .= '<option value="[time]">[time]</option>';
-	@reset($board_config);
-	while ( list($config_name, $config_data) = @each($board_config) )
+	foreach ($board_config as $config_name => $config_data)
 	{
 		$s_cfg_values_opt .= '<option value="[board.' . $config_name . ']">[board.' . $config_name . ']</option>';
 	}
@@ -559,7 +551,7 @@ function pcp_input_sql_def($name, $value)
 	@ksort($userdata);
 	$s_viewed_user = '<option value="" selected="selected">' . $lang['None'] . '</option>';
 	$s_acting_user = '<option value="" selected="selected">' . $lang['None'] . '</option>';
-	while ( list($field_name, $field_value) = @each($userdata) )
+	foreach ($userdata as $field_name => $field_value)
 	{
 		$n_name = intval($field_name);
 		if ($field_name != "$n_name")
@@ -732,8 +724,7 @@ function pcp_output_fields($values_list, $tables_linked, $classes_fields, $user_
 	);
 
 	// tables linked
-	@reset($tables_linked);
-	while ( list($table_name, $table_data) = @each($tables_linked) )
+	foreach ($tables_linked as $table_name => $table_data)
 	{
 		// name
 		$template->assign_block_vars('tables', array(
@@ -742,8 +733,7 @@ function pcp_output_fields($values_list, $tables_linked, $classes_fields, $user_
 		);
 
 		// rows
-		@reset($table_data);
-		while ( list($key, $value) = @each($table_data) )
+		foreach ($table_data as $key => $value)
 		{
 			$template->assign_block_vars('tables.row', array(
 				'KEY'	=> str_replace( "''", "\'", $key),
@@ -754,8 +744,7 @@ function pcp_output_fields($values_list, $tables_linked, $classes_fields, $user_
 	}
 
 	// values_list
-	@reset($values_list);
-	while ( list($value_name, $value_data) = @each($values_list) )
+	foreach ($values_list as $value_name => $value_data)
 	{
 		// name, func and table def.
 		$template->assign_block_vars('values', array(
@@ -779,8 +768,7 @@ function pcp_output_fields($values_list, $tables_linked, $classes_fields, $user_
 		if ( !empty($value_data['values']) )
 		{
 			$template->assign_block_vars('values.set', array());
-			@reset($value_data['values']);
-			while ( list($value_item, $value_item_data) = @each($value_data['values']) )
+			foreach ($value_data['values'] as $value_item => $value_item_data)
 			{
 				if ( is_string($value_item) || ( empty($value_item) && ($value_item != "0") ) )
 				{
@@ -797,8 +785,7 @@ function pcp_output_fields($values_list, $tables_linked, $classes_fields, $user_
 	}
 
 	// classes fields
-	@reset($classes_fields);
-	while ( list($class_name, $class_data) = @each($classes_fields) )
+	foreach ($classes_fields as $class_name => $class_data)
 	{
 		$template->assign_block_vars('classes', array(
 			'NAME'			=> str_replace( "''", "\'", $class_name),
@@ -811,10 +798,9 @@ function pcp_output_fields($values_list, $tables_linked, $classes_fields, $user_
 	}
 
 	// sort user fields
-	@reset($user_fields);
 	$class = array();
 	$name = array();
-	while ( list($field_name, $field_data) = @each($user_fields) )
+	foreach ($user_fields as $field_name => $field_data)
 	{
 		$name[] = $field_name;
 		$class[] = $field_data['class'];
@@ -823,8 +809,7 @@ function pcp_output_fields($values_list, $tables_linked, $classes_fields, $user_
 
 	// first pass : get the longest field lib
 	$max_length = 0;
-	@reset($field_def);
-	while ( list($def_key, $def_value) = @each($field_def) )
+	foreach ($field_def as $def_key => $def_value)
 	{
 		if ( strlen($def_key) > $max_length )
 		{
@@ -834,8 +819,7 @@ function pcp_output_fields($values_list, $tables_linked, $classes_fields, $user_
 	$max_length += 2;
 
 	// send the header description
-	@reset($field_def);
-	while ( list($def_key, $def_value) = @each($field_def) )
+	foreach ($field_def as $def_key => $def_value)
 	{
 		$template->assign_block_vars('def_title', array(
 			'KEY'	=> $def_key,
@@ -847,8 +831,7 @@ function pcp_output_fields($values_list, $tables_linked, $classes_fields, $user_
 
 	// ouput
 	$class_sav = '';
-	@reset($user_fields);
-	while ( list($field_name, $field_data) = @each($user_fields) )
+	foreach ($user_fields as $field_name => $field_data)
 	{
 		$template->assign_block_vars('field', array(
 			'NAME'		=> $field_name,
@@ -862,8 +845,7 @@ function pcp_output_fields($values_list, $tables_linked, $classes_fields, $user_
 		$class_sav = $field_data['class'];
 
 		// dump the field
-		@reset($field_data);
-		while ( list($def_key, $data) = @each($field_data) )
+		foreach ($field_data as $def_key => $data)
 		{
 			$pres = "'%s'";
 			switch ($def_key)
@@ -939,8 +921,7 @@ function pcp_output_maps($user_maps)
 
 	// first pass : get the longest field lib
 	$max_length = 0;
-	@reset($field_def);
-	while ( list($def_key, $def_value) = @each($field_def) )
+	foreach ($field_def as $def_key => $def_value)
 	{
 		if ( strlen($def_key) > $max_length )
 		{
@@ -950,8 +931,7 @@ function pcp_output_maps($user_maps)
 	$max_length += 2;
 
 	// send the header description
-	@reset($field_def);
-	while ( list($def_key, $def_value) = @each($field_def) )
+	foreach ($field_def as $def_key => $def_value)
 	{
 		$template->assign_block_vars('def_title', array(
 			'KEY'	=> $def_key,
@@ -962,8 +942,7 @@ function pcp_output_maps($user_maps)
 	}
 
 	// dump map
-	@reset($user_maps);
-	while ( list($map_name, $map_data) = @each($user_maps) )
+	foreach ($user_maps as $map_name => $map_data)
 	{
 		// map header
 		$template->assign_block_vars('map', array(
@@ -998,15 +977,13 @@ function pcp_output_maps($user_maps)
 				'NAME'	=> 'title',
 				)
 			);
-			@reset($map_data['title']);
-			while ( list($field_name, $field_data) = @each($map_data['title']) )
+			foreach ($map_data['title'] as $field_name => $field_data)
 			{
 				$template->assign_block_vars('map.block.field', array(
 					'NAME'	=> str_replace( "''", "\'", $field_name),
 					)
 				);
-				@reset($field_def);
-				while ( list($def_key, $def_value) = @each($field_def) )
+				foreach ($field_def as $def_key => $def_value)
 				{
 					if ( ($def_key != 'field_name') && ($field_data[$def_key] != $user_fields[$field_name][$def_key]) && ( !empty($field_data[$def_key]) || ( empty($field_data[$def_key]) && !is_string($field_data[$def_key]) && ($field_data[$def_key] == "0") ) ) )
 					{
@@ -1038,15 +1015,13 @@ function pcp_output_maps($user_maps)
 				'NAME'	=> 'fields',
 				)
 			);
-			@reset($map_data['fields']);
-			while ( list($field_name, $field_data) = @each($map_data['fields']) )
+			foreach ($map_data['fields'] as $field_name => $field_data)
 			{
 				$template->assign_block_vars('map.block.field', array(
 					'NAME'	=> str_replace( "''", "\'", $field_name),
 					)
 				);
-				@reset($field_def);
-				while ( list($def_key, $def_value) = @each($field_def) )
+				foreach ($field_def as $def_key => $def_value)
 				{
 					// use array_key_exists here, because we want to allow an empty value
 					if ( ($def_key != 'field_name') && ($field_data[$def_key] != $user_fields[$field_name][$def_key]) && array_key_exists($def_key, $field_data) )

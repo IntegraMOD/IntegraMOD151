@@ -188,7 +188,7 @@ else if ( CT_SECLEVEL == 'MEDIUM' ||  CT_SECLEVEL == 'LOW' )
   $ct_rules = isset($ct_delheuristic) ? array_diff($ct_rules, (array) $ct_delheuristic) : $ct_rules;
 
   // Maybe also some new $_POST fields to ignore?
-  $ct_ignorepvar 			= array_diff((array) $ct_ignorepvar, $unchecked_post_fields);
+  $ct_ignorepvar 			= isset($ct_ignorepvar) ? array_diff((array) $ct_ignorepvar, $unchecked_post_fields) : [];
   $unchecked_post_fields 	= array_merge($unchecked_post_fields, $ct_ignorepvar);
 
   // Last but not least the same with $_GET

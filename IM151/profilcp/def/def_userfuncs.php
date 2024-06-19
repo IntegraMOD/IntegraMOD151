@@ -636,9 +636,10 @@ function pcp_get_field( $field_cfg, $map_name='', $field_name='' )
 			if ( !$found && !empty($field_data['values'][0]))
 			{
         $first = $field_data['values'][0];
-        $first_value = $first[0];
-        $first_key = $first[1];
-				$field_data['default'] = $first_key;
+        foreach ($field_data['values'] as $first_value => $first_key)
+        {
+          break; // Just populate $first_value / $first_key
+        }
 			}
 		}
 	}

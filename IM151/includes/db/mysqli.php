@@ -438,8 +438,8 @@ if(!defined("SQL_LAYER"))
 					unset($this->rowset[$this->query_result]);
 				}
 
-        if ($query_id instanceof mysqli_result)
-          @mysqli_free_result($query_id);
+        //if ($query_id instanceof mysqli_result)
+          //@mysqli_free_result($query_id);
 
 				return true;
 			}

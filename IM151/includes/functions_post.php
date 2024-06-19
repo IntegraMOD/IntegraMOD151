@@ -353,7 +353,7 @@ if ( !empty($topic_desc) )
 // here we added
 //	, $post_icon = 0
 //-- modify
-function submit_post($mode, &$post_data, &$message, &$meta, &$forum_id, &$topic_id, &$post_id, &$poll_id, &$topic_type, &$bbcode_on, &$html_on, &$smilies_on, &$attach_sig, &$bbcode_uid, $post_username, $post_subject, $post_message, $poll_title, &$poll_options, &$poll_length, &$max_vote, &$hide_vote, &$tothide_vote, $forcetime='', &$topic_desc, &$news_category, $topic_announce_duration = 0, $topic_calendar_time = 0, $topic_calendar_duration = 0, $post_icon = 0, $topic_calendar_repeat = 0)
+function submit_post($mode, &$post_data, &$message, &$meta, &$forum_id, &$topic_id, &$post_id, &$poll_id, &$topic_type, &$bbcode_on, &$html_on, &$smilies_on, &$attach_sig, &$bbcode_uid, $post_username, $post_subject, $post_message, $poll_title, &$poll_options, &$poll_length, &$max_vote, &$hide_vote, &$tothide_vote, $forcetime='', &$topic_desc = '', &$news_category = 0, $topic_announce_duration = 0, $topic_calendar_time = 0, $topic_calendar_duration = 0, $post_icon = 0, $topic_calendar_repeat = 0)
 //-- fin mod : post icon ---------------------------------------------------------------------------
 //-- fin mod : calendar ----------------------------------------------------------------------------
 //-- fin mod : announces ---------------------------------------------------------------------------

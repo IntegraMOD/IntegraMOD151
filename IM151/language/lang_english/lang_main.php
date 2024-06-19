@@ -573,7 +573,7 @@ $lang['PS_login_step_failed']		= 'Sorry, the information you provided is incorre
 $lang['PS_login_button']			= 'Validate';
 $lang['PS_login_validated']			= 'Thank you for unlocking your account. You may now login.';
 $lang['PS_profile_explain']			= 'It is important you think before filling this in. You will not be able to change these at will. You will need an admins approval to change them, for security purposes. Once they are set, all you will be able to do is view them.';
-if (!empty($board_config)) {
+if (!empty($board_config['board_email'])) {
   $lang['PS_forgot_exp']				= 'If you have forgoten your security answer, you will need to contact an admin and have them reset your security information. The email to contact is '. $board_config['board_email'] .'. If you can not reach an admin that way, please look at admin profiles for email links. When you update it, please use information you can remember to avoid having to do this again.';
 }
 $lang['PS_user_lock']				= 'Locked Status';

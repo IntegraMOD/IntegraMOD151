@@ -57,8 +57,7 @@ function pcp_get_classes_fields()
 
 	// sort
 	$names = array();
-	@reset($classes_fields);
-	while ( list($class, $data) = @each($classes_fields) )
+	foreach ($classes_fields as $class => $data)
 	{
 		$names[] = $class;
 	}
@@ -203,8 +202,7 @@ if ( $mode == 'edit' )
 	else if ( $delete )
 	{
 		$new_classes = array();
-		@reset($classes);
-		while ( list($class_name, $class_data) = @each($classes) )
+		foreach ($classes as $class_name => $class_data)
 		{
 			if ($class_name != $class)
 			{
@@ -278,8 +276,7 @@ if ( $mode == 'edit' )
 		else
 		{
 			$new_classes = array();
-			@reset($classes);
-			while ( list($class_name, $class_data) = @each($classes) )
+			foreach ($classes as $class_name => $class_data)
 			{
 				if ($class_name == $class)
 				{
@@ -345,8 +342,7 @@ if ( $mode == 'edit' )
 
 		// list of tables
 		$s_tables_opt = '<option value="" selected="selected">' . $lang['None'] . '</option>';
-		@reset($tables_linked);
-		while ( list($table_name, $table_data) = @each($tables_linked) )
+		foreach ($tables_linked as $table_name => $table_data)
 		{
 			$s_tables_opt .= '<option value="[' . $table_name . ']">[' . $table_name . ']</option>';
 		}
@@ -355,8 +351,7 @@ if ( $mode == 'edit' )
 		@ksort($board_config);
 		$s_cfg_values_opt = '<option value="" selected="selected">' . $lang['None'] . '</option>';
 		$s_cfg_values_opt .= '<option value="[time]">[time]</option>';
-		@reset($board_config);
-		while ( list($config_name, $config_data) = @each($board_config) )
+		foreach ($board_config as $config_name => $config_data)
 		{
 			$s_cfg_values_opt .= '<option value="[board.' . $config_name . ']">[board.' . $config_name . ']</option>';
 		}
@@ -426,8 +421,7 @@ if ($mode == '')
 
 	// list
 	$color = false;
-	@reset($classes);
-	while ( list($class_name, $class_data) = @each($classes) )
+	foreach ($classes as $class_name => $class_data)
 	{
 		$color = !$color;
 		$template->assign_block_vars('row', array(

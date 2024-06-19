@@ -66,7 +66,7 @@ $page_title = $lang['Admin_panel'];
 if( isset($_GET['pane']) && $_GET['pane'] == 'left' )
 {
 	$jr_admin_userdata = jr_admin_get_user_info($userdata['user_id']);
-	$module = jr_admin_get_module_list($jr_admin_userdata['user_jr_admin']);
+	$module = jr_admin_get_module_list(isset($jr_admin_userdata) ? $jr_admin_userdata['user_jr_admin'] : null);
 
 	include('./page_header_admin.'.$phpEx);
 

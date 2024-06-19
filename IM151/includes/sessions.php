@@ -136,7 +136,7 @@ function session_begin($user_id, $user_ip, $page_id, $auto_create = 0, $enable_a
 	// * User does not exist
 	// * User is inactive
 	//
-	if (!sizeof($userdata) || !is_array($userdata) || !$userdata)
+	if (empty($userdata) || !is_array($userdata) || !sizeof($userdata) || !$userdata)
 	{
 		$sessiondata['autologinid'] = '';
 		$sessiondata['userid'] = $user_id = ANONYMOUS;
@@ -193,7 +193,7 @@ function session_begin($user_id, $user_ip, $page_id, $auto_create = 0, $enable_a
 	if ( !$db->sql_query($sql) || !$db->sql_affectedrows() )
 	{
 		$session_id = md5(dss_rand());
-        $priv_session_id = md5(dss_rand());
+    $priv_session_id = md5(dss_rand());
 		
 		global $_SERVER; 
 		$session_id = ( !strstr($_SERVER['HTTP_USER_AGENT'] ,'Googlebot') ) ? md5(uniqid(mt_rand(), true)) : md5(d8ef2eab);
@@ -298,7 +298,10 @@ $sql = "TRUNCATE TABLE " . SESSIONS_TABLE . "";
 	}
 
 	$userdata['session_id'] = $session_id;
-    $userdata['priv_session_id'] = $priv_session_id;
+	if (!empty($priv_session_id))
+	{
+		$userdata['priv_session_id'] = $priv_session_id;
+	}
 	$userdata['session_ip'] = $user_ip;
 	$userdata['session_user_id'] = $user_id;
 	$userdata['session_logged_in'] = $login;

@@ -268,7 +268,7 @@ while ( $row = $db->sql_fetchrow($result) )
 	$board_config[$row['config_name']] = $row['config_value'];
 }
 $db->sql_freeresult($result);
-if ($board_config['summer_time'] != date('I') && $board_config['summer_time_auto']) 
+if ((empty($board_config['summer_time']) || $board_config['summer_time'] != date('I')) && !empty($board_config['summer_time_auto'])) 
 { 
 	$board_config['summer_time'] = date('I'); 
 } 

@@ -412,9 +412,8 @@ function pcp_get_userfields_table()
 		message_die(CRITICAL_ERROR, 'Could not query users table informations', '', __LINE__, __FILE__, $sql);
 	}
 
-	@reset($row);
 	$user_fields_table = array();
-	while ( list($key, $data) = @each($row) )
+	foreach ($row as $key => $data)
 	{
 		$n_key = intval($key);
 		if ($key != "$n_key")
@@ -446,8 +445,7 @@ function pcp_get_userfields($sort, $order, &$maps_usage)
 	$sorts = array();
 
 	// read the user_fields
-	@reset($fields);
-	while ( list($field_name, $field_data) = @each($fields) )
+	foreach ($fields as $field_name => $field_data)
 	{
 		// basic sort
 		$names[] = $field_name;
@@ -458,18 +456,14 @@ function pcp_get_userfields($sort, $order, &$maps_usage)
 
 		// class
 		$class = empty($field_data['class']) ? 'generic' : $field_data['class'];
-		if ($field_data['system'])
+		if (!empty($field_data['system']))
 		{
 			$class = 'system';
 		}
 		$fields[$field_name]['class'] = $class;
 
 		// get mode
-		$get_mode = $field_data['get_mode'];
-		if ( empty($get_mode) )
-		{
-			$get_mode = $type;
-		}
+		$get_mode = empty($field_data['get_mode']) ? $type : $field_data['get_mode'];
 		if ( !empty($field_data['get_func']) || !empty($field_data['chk_func']) )
 		{
 			$get_mode = '';
@@ -483,8 +477,7 @@ function pcp_get_userfields($sort, $order, &$maps_usage)
 		}
 
 		// search the usage in maps
-		@reset($user_maps);
-		while ( list($map_name, $map_data) = @each($user_maps) )
+		foreach ($user_maps as $map_name => $map_data)
 		{
 			$in_title = false;
 			$in_fields = false;
@@ -535,6 +528,29 @@ function pcp_get_userfields($sort, $order, &$maps_usage)
 //	process
 //
 //---------------------------------
+
+// sort
+$sort = '';
+if (isset($_POST['sort']) || isset($_GET['sort']) )
+{
+	$sort = isset($_POST['sort']) ? $_POST['sort'] : $_GET['sort'];
+}
+if ( !in_array($sort, $sort_list) )
+{
+	$sort = 'name';
+}
+// order
+$order = '';
+if (isset($_POST['order']) || isset($_GET['order']) )
+{
+	$order = isset($_POST['order']) ? $_POST['order'] : $_GET['order'];
+}
+if ( !in_array($order, $order_list) )
+{
+	$order = 'ASC';
+}
+
+//
 // read user fields
 $maps_usage = array();
 $fields = pcp_get_userfields($sort, $order, $maps_usage);
@@ -552,28 +568,6 @@ if (isset($_POST['mode']) || isset($_GET['mode']) )
 if ( !in_array($mode, array('edit', 'create', 'delete', 'sqledit', 'sqlcreate', 'sqldelete')) )
 {
 	$mode = '';
-}
-
-// sort
-$sort = '';
-if (isset($_POST['sort']) || isset($_GET['sort']) )
-{
-	$sort = isset($_POST['sort']) ? $_POST['sort'] : $_GET['sort'];
-}
-if ( !in_array($sort, $sort_list) )
-{
-	$sort = 'name';
-}
-
-// order
-$order = '';
-if (isset($_POST['order']) || isset($_GET['order']) )
-{
-	$order = isset($_POST['order']) ? $_POST['order'] : $_GET['order'];
-}
-if ( !in_array($order, $order_list) )
-{
-	$order = 'ASC';
 }
 
 // field name
@@ -872,8 +866,7 @@ if ( $mode == 'edit' )
 {
 	// which field cat is displayed ?
 	$cur_cat = isset($_POST['cur_cat']) ? $_POST['cur_cat'] : '';
-	@reset($field_cat);
-	while ( list($cat_name, $cat_data) = @each($field_cat) )
+	foreach ($field_cat as $cat_name => $cat_data)
 	{
 		if ( isset($_POST['select_field_cat_' . $cat_name]) )
 		{
@@ -882,14 +875,15 @@ if ( $mode == 'edit' )
 	}
 	if ( !isset($field_cat[$cur_cat]) )
 	{
-		@reset($field_cat);
-		list( $cur_cat, $cat_data ) = @each($field_cat);
+		foreach ($field_cat as  $cur_cat => $cat_data )
+		{
+			break; // Just populate $cur_cat/$cat_data
+		}
 	}
 
 	// reclaim values
 	$field_det = array();
-	@reset($field_def);
-	while ( list($def_key, $def_data) = @each($field_def) )
+	foreach ($field_def as $def_key => $def_data)
 	{
 		// get values from memory
 		if ( $def_key == 'field_name' )
@@ -946,8 +940,7 @@ if ( $mode == 'edit' )
 
 			// delete field definition
 			$w_fields = array();
-			@reset($fields);
-			while ( list( $field_name, $field_data) = @each($fields) )
+			foreach ($fields as  $field_name => $field_data)
 			{
 				if ( $field_name != $field )
 				{
@@ -1018,8 +1011,7 @@ if ( $mode == 'edit' )
 			$s_hidden_fields .= '<input type="hidden" name="delete" value="1" />';
 
 			// spare field
-			@reset($field_def);
-			while ( list($def_key, $def_data) = @each($field_def) )
+			foreach ($field_def as $def_key => $def_data)
 			{
 				$value = htmlspecialchars(htmldecode($field_det[$def_key]));
 				$s_hidden_fields .= '<input type="hidden" name="field_det_' . $def_key .'" value="' . $value . '" />';
@@ -1035,7 +1027,7 @@ if ( $mode == 'edit' )
 	}
 
 	// still on edition ?
-	if ( $cancel && ($mode == 'edit') )
+	if ( !empty($cancel) && ($mode == 'edit') )
 	{
 		$mode = '';
 		$cancel = false;
@@ -1154,8 +1146,7 @@ if ( $mode == 'edit' )
 		// write the field
 		$new_field_name = $field_name;
 		$new_field = array();
-		@reset($field_def);
-		while ( list($def_key, $def_data) = @each($field_def) )
+		foreach ($field_def as $def_key => $def_data)
 		{
 			if ( $def_key != 'field_name' )
 			{
@@ -1166,8 +1157,7 @@ if ( $mode == 'edit' )
 		{
 			// remove the entry and add the new in place
 			$w_fields = array();
-			@reset($fields);
-			while ( list( $field_name, $field_data) = @each($fields) )
+			foreach ($fields as  $field_name => $field_data)
 			{
 				if ( $field_name == $field )
 				{
@@ -1233,8 +1223,7 @@ if ( $mode == 'edit' )
 		);
 
 		// cats
-		@reset($field_cat);
-		while ( list($cat_name, $cat_data) = @each($field_cat) )
+		foreach ($field_cat as $cat_name => $cat_data)
 		{
 			$template->assign_block_vars('catmenu', array(
 				'CAT_NAME'		=> $cat_name,
@@ -1254,10 +1243,9 @@ if ( $mode == 'edit' )
 		// values
 		$s_hidden_fields = '';
 		$sav_cat = '';
-		@reset($field_def);
-		while ( list($def_key, $def_data) = @each($field_def) )
+		foreach ($field_def as $def_key => $def_data)
 		{
-			$def_type = $def_data['type'];
+			$def_type = ( isset($def_data['type']) ? $def_data['type'] : null );
 			$def_name = 'field_det_' . $def_key;
 			$def_value = $field_det[$def_key];
 			$protected = ( ($def_key=='field_name') && !empty($field) );
@@ -1361,8 +1349,7 @@ if ( $mode == '' )
 
 	// display the fields
 	$color = false;
-	@reset($fields);
-	while ( list($field_name, $field_data) = @each($fields) )
+	foreach ($fields as $field_name => $field_data)
 	{
 		// check if sql actions can be performed
 		$sql_actions = '';
@@ -1384,7 +1371,7 @@ if ( $mode == '' )
 			'NAME'			=> $field_name,
 			'LANG_KEY'		=> pcp_format_lang($field_data['lang_key'], true),
 			'EXPLAIN'		=> empty($field_data['explain']) ? '' : '<br />' . pcp_format_lang($field_data['explain'], true),
-			'IMAGE'			=> pcp_format_image($field_data['image'], true),
+			'IMAGE'			=> pcp_format_image(isset($field_data['image']) ? $field_data['image'] : null, true),
 			'CLASS'			=> $field_data['class'],
 			'TYPE'			=> $field_data['type'],
 			'GET_MODE'		=> ($field_data['type'] == $field_data['get_mode']) ? '' : $field_data['get_mode'],
@@ -1394,7 +1381,7 @@ if ( $mode == '' )
 			'SQL_ACTIONS'	=> $sql_actions,
 			)
 		);
-		for ($i = 0; $i < count_safe($maps_usage[$field_name]); $i++ )
+		for ($i = 0; isset($maps_usage[$field_name]) ? ($i < count_safe($maps_usage[$field_name])) : false; $i++ )
 		{
 			$template->assign_block_vars('fields.maps', array(
 				'NAME'		=> $maps_usage[$field_name][$i],

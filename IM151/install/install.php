@@ -1100,21 +1100,13 @@ function integra_extra()
 ?>
 <?php echo $extra_text; ?>
 <?php
-			$dir = @opendir("./extra/");
 
 			$setmodules = 1;
-      if (is_resource($dir))
+      foreach (glob('extra/db_*.'.$phpEx) as $file)
       {
-        while( $file = @readdir($dir) )
-        {
-          if( preg_match("/^db_.*?\." . $phpEx . "$/", $file) )
-          {
-            include('./extra/'.$file);
-          }
-        }
-
-        @closedir($dir);
+        include($file);
       }
+
 
 			unset($setmodules);
 		if($no_prill_install){
