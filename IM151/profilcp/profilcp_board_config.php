@@ -39,11 +39,10 @@ if ( !empty($setmodules) )
 {
 	// first pass : get main maps
 	$w_maps = array();
-	@reset($user_maps);
-	while ( list($map_name, $map_data) = @each($user_maps) )
+  foreach ($user_maps as $map_name => $map_data)
 	{
 		$map_tree = explode('.', $map_name);
-		if ( ($map_tree[0] = 'PCP') && ($map_data['custom'] == 1) )
+		if ( ($map_tree[0] = 'PCP') && !empty($map_data['custom']) )
 		{
 			// get this map
 			$map_tree = explode('.', $map_name);
@@ -54,8 +53,7 @@ if ( !empty($setmodules) )
 
 	// second pass : get sub maps
 	$res_maps = array();
-	@reset($user_maps);
-	while ( list($map_name, $map_data) = @each($user_maps) )
+  foreach ($user_maps as $map_name => $map_data)
 	{
 		for ( $i=0; $i < count($w_maps['name']); $i++ )
 		{
@@ -82,14 +80,14 @@ if ( !empty($setmodules) )
 					{
 						$pgm = __FILE__;
 					}
-					$res_maps[ $map_tree[$start-1] ]['']['order'] = $user_maps[$map_root]['order'];
+					$res_maps[ $map_tree[$start-1] ]['']['order'] = isset($user_maps[$map_root]['order']) ? $user_maps[$map_root]['order'] : 0;
 					$res_maps[ $map_tree[$start-1] ]['']['pgm'] = $pgm;
 					$res_maps[ $map_tree[$start-1] ]['']['shortcut'] = $user_maps[$map_root]['title'];
 					$res_maps[ $map_tree[$start-1] ]['']['pagetitle'] = $user_maps[$map_root]['title'];
 
 					// sub-menu
 					$map_root .= ( empty($map_root) ? '' : '.' ) . $map_tree[$start];
-					$res_maps[ $map_tree[$start-1] ][ $map_tree[$start] ]['order'] = $user_maps[$map_root]['order'];
+					$res_maps[ $map_tree[$start-1] ][ $map_tree[$start] ]['order'] = ( isset($user_maps[$map_root]['order']) ? $user_maps[$map_root]['order'] : 0 );
 					$res_maps[ $map_tree[$start-1] ][ $map_tree[$start] ]['pgm'] = __FILE__;
 					$res_maps[ $map_tree[$start-1] ][ $map_tree[$start] ]['shortcut'] = $user_maps[$map_root]['title'];
 					$res_maps[ $map_tree[$start-1] ][ $map_tree[$start] ]['pagetitle'] = $user_maps[$map_root]['title'];
@@ -100,11 +98,9 @@ if ( !empty($setmodules) )
 	}
 	
 	// process the maps found
-	@reset($res_maps);
-	while ( list($main, $main_data) = @each($res_maps) )
+  foreach ($res_maps as $main => $main_data)
 	{
-		@reset($main_data);
-		while ( list($sub, $data) = @each($main_data) )
+    foreach ($main_data as $sub => $data)
 		{
 			if ( empty($sub) )
 			{
@@ -123,8 +119,7 @@ if ( !empty($setmodules) )
 if ( ($userdata['user_id'] != $view_userdata['user_id']) && !is_admin($userdata) ) return;
 
 // create entry if NULL : fix isset issue
-@reset($view_userdata);
-while (list($key, $data) = each($view_userdata) )
+foreach ($view_userdata as $key => $data)
 {
 	if ($view_userdata[$key] == NULL )
 	{
@@ -184,16 +179,13 @@ $mod_sort = array();
 $sub_keys = array();
 $sub_sort = array();
 
-@reset($mods[$menu_name]['data']);
-while ( list($mod_name, $mod) = @each($mods[$menu_name]['data']) )
+foreach ($mods[$menu_name]['data'] as $mod_name => $mod)
 {
 	// check if there is some users fields
 	$found = false;
-	@reset($mod['data']);
-	while ( list($sub_name, $subdata) = @each($mod['data']) )
+  foreach ($mod['data'] as $sub_name => $subdata)
 	{
-		@reset($subdata['data']);
-		while ( list($field_name, $field) = @each($subdata['data']) )
+    foreach ($subdata['data'] as $field_name => $field)
 		{
 			$is_auth = auth_field($field);
 			if ( ( ( !empty($field['user']) && isset($view_userdata[ $field['user'] ]) && !$board_config[ $field_name . '_over'] )  || $field['system'] ) && $is_auth )
@@ -214,15 +206,13 @@ while ( list($mod_name, $mod) = @each($mods[$menu_name]['data']) )
 		$sub_sort[$i] = array();
 
 		// sub names
-		@reset($mod['data']);
-		while ( list($sub_name, $subdata) = @each($mod['data']) )
+    foreach ($mod['data'] as $sub_name => $subdata)
 		{
 			if ( !empty($sub_name) )
 			{
 				// user fields in this level
 				$found = false;
-				@reset($subdata['data']);
-				while ( list($field_name, $field) = @each($subdata['data']) )
+        foreach ($subdata['data'] as $field_name => $field)
 				{
 					$is_auth = auth_field($field);
 					if ( ( ( !empty($field['user']) && isset($view_userdata[ $field['user'] ]) && !$board_config[ $field_name . '_over'] ) || $field['system'] ) && $is_auth )
@@ -249,7 +239,7 @@ if ( $mod_id > count($mod_keys) )
 {
 	$mod_id = 0;
 }
-if ( $sub_id > count($sub_keys[$mod_id]) )
+if ( $sub_id > ( isset($sub_keys[$mod_id]) ? count($sub_keys[$mod_id]) : 0 ) )
 {
 	$sub_id = 0;
 }
@@ -281,8 +271,7 @@ if ($submit)
 	$error_msg = '';
 
 	// format and verify data
-	@reset($mods[$menu_name]['data'][$mod_name]['data'][$sub_name]['data']);
-	while ( list($field_name, $field) = @each($mods[$menu_name]['data'][$mod_name]['data'][$sub_name]['data']) )
+  foreach ($mods[$menu_name]['data'][$mod_name]['data'][$sub_name]['data'] as $field_name => $field)
 	{
 		$user_field = $field['user'];
 		$is_auth = auth_field($field);
@@ -387,8 +376,8 @@ if ($submit)
 		// get the defaults... 
 		setDefaultUserdata($values);
 		// get the fields and values
-		@reset($values);
-		while (list($key, $value) = each($values)){
+    foreach ($values as $key => $value)
+    {
 			$sql_key .= ( empty($sql_key) ? '' : ', ') . $key;
 			$sql_val .= ( empty($sql_val) ? '' : ', ') . "'" . str_replace("\'", "''", $value) . "'";
 		}
@@ -493,8 +482,8 @@ if ($submit)
 			}
 		}
 		// save result :: update user
-		@reset($values);
-		while ( list($field_name, $value) = @each($values)){
+    foreach ($values as $field_name => $value)
+    {
 			$sql = "UPDATE " . USERS_TABLE . " 
 			 					 SET $field_name='" . $value . "'
 						   WHERE user_id = " . $view_userdata['user_id'];
@@ -630,8 +619,7 @@ if ($submit)
 	}
 
 	// send items
-	@reset($mods[$menu_name]['data'][$mod_name]['data'][$sub_name]['data']);
-	while ( list($field_name, $field) = @each($mods[$menu_name]['data'][$mod_name]['data'][$sub_name]['data']) )
+  foreach ($mods[$menu_name]['data'][$mod_name]['data'][$sub_name]['data'] as $field_name => $field)
 	{
 		// process only not overwritten fields from users table and system fields
 		$user_field = $field['user'];
@@ -643,8 +631,7 @@ if ($submit)
 			switch ($field['type'])
 			{
 				case 'LIST_RADIO':
-					@reset($field['values']);
-					while ( list($key, $val) = @each($field['values']) )
+          foreach ($field['values'] as $key => $val)
 					{
 						$selected = ($view_userdata[$user_field] == $val) ? ' checked="checked"' : '';
 						$l_key = mods_settings_get_lang($key);
@@ -652,8 +639,7 @@ if ($submit)
 					}
 					break;
 				case 'LIST_DROP':
-					@reset($field['values']);
-					while ( list($key, $val) = @each($field['values']) )
+          foreach ($field['values'] as $key => $val)
 					{
 						$selected = ($view_userdata[$user_field] == $val) ? ' selected="selected"' : '';
 						$l_key = mods_settings_get_lang($key);

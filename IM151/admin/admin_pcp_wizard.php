@@ -84,8 +84,9 @@ function menu(){
 		)
 	);
 	setMessage();
-	@reset($menuactions);
-	while (list($idx,$action) = @each($menuactions) )	{
+	$color = false;
+	foreach ($menuactions as $idx =>$action)
+	{
 		$color = !$color;
 		$template->assign_block_vars('menuitems', array(
 			'color'						=> $color ? 'row1' : 'row2',
@@ -123,7 +124,9 @@ function buddylist(){
 		)
 	);
 	setMessage();
-	while (list($key, $data) = @each($buddyfields) )	{
+	foreach ($buddyfields as $key => $data)
+	{
+
 		$color = !$color;
 		$template->assign_block_vars('fields', array(
 			'COLOR'						=> $color ? 'row1' : 'row2',
@@ -153,8 +156,8 @@ function find_buddy_fields($var){
 
 function sortfields($array,$sortkey){
 	// make a new array to sort on...
-	@reset($array);
-	while (list($key, $data) = @each($array) )	{
+	foreach ($array as $key => $data)
+	{
 		$sort[] = $data[$sortkey];
 	}
 	array_multisort($sort,SORT_ASC,SORT_NUMERIC,$array);
@@ -164,7 +167,8 @@ function sortfields($array,$sortkey){
 function buddyupdate(){
 	global $values_list, $tables_linked, $classes_fields, $user_fields;
 	global $buddy_map, $nextmode, $posted, $submit_name;
-	while (list($key, $value) = @each($posted) )	{
+	foreach ($posted as $key => $value)
+	{
 		$name = substr($key,4);
 		$field = substr($key,0,3);
 		if ($field == 'ind'){
@@ -217,7 +221,8 @@ function update_user_list_option(){
 function setBuddyInd($buddyfields){
 	global $user_fields;
 	$ind = 1;
-	while (list($key, $data) = @each($buddyfields) )	{
+	foreach ($buddyfields as $key => $data)
+	{
 		// only ind when not hidden!
 		if($data['hidden']){
 			unset($user_fields[$key]['ind']);
@@ -228,7 +233,8 @@ function setBuddyInd($buddyfields){
 	}
 	// delete all buddy keys if not in sorted anymore...
 	$userfields = array_filter($user_fields,"find_buddy_fields");
-	while (list($key, $data) = @each($userfields) )	{
+	foreach ($userfields as $key => $data)
+	{
 		if(!is_array($buddyfields[$key])){
 			unset($user_fields[$key]['rqd'],$user_fields[$key]['dft'],$user_fields[$key]['hidden'],$user_fields[$key]['ind']);
 		}
@@ -239,7 +245,8 @@ function reorder_mapfields($sorted,$map){
 	global $user_maps;
 	$oldfields = $user_maps[$map]['fields'];
 	// copy the old field values into the new sorted array
-	while (list($fieldname, $data) = @each($sorted) )	{
+	foreach ($sorted as $fieldname => $data)
+	{
 		if(isset($oldfields[$fieldname])){
 			$newfields[$fieldname] = $oldfields[$fieldname];
 		} else {
@@ -256,7 +263,7 @@ function is_input_map($var){
 	global $user_maps;
 	global $profil_map, $register_map;
 	if (substr($var,0,strlen($profil_map)) == $profil_map || substr($var,0,strlen($register_map)) == $register_map){
-		if (count($user_maps[$var]['fields'])){
+		if (!empty($user_maps[$var]['fields'])){
 			return 1;
 		}
 	}
@@ -268,7 +275,7 @@ function is_output_map($var){
 	global $profil_map, $register_map, $ignore_map_string;
 	// remove ignore
 	if (substr($var,0,strlen($profil_map)) != $profil_map && substr($var,0,strlen($register_map)) != $register_map && substr($var,-strlen($ignore_map_string)) != $ignore_map_string){
-		if (count_safe($user_maps[$var]['fields'])){
+		if (!empty($user_maps[$var]['fields']) && count_safe($user_maps[$var]['fields'])){
 			return 1;
 		}
 	}
@@ -293,7 +300,8 @@ function get_output_maps(){
 
 function rebuild_array($array){
 	// filtered arrays don't have [1],[2],... but [21],[55],...
-	while(list($idx,$value) = each($array)){
+	foreach ($array as $value)
+	{
 		$new[] = $value;
 	}
 	return $new;
@@ -326,8 +334,8 @@ function build_map_options($type,$selected){
 			break;
 	}
 	$options = '';
-	@reset($themaps);
-	while (list($idx,$map) = @each($themaps) )	{
+	foreach ($themaps as $idx =>$map)
+	{
 		if($map == $selected){
 			$extra = "selected";
 		} else $extra = "";
@@ -382,8 +390,8 @@ function build_field_options($map){
 	$fields = array_keys($user_maps[$map]['fields']);
 	$options = '';
 	// do not sort... keep the order... sort($fields);
-	@reset($fields);
-	while (list($idx,$fieldname) = @each($fields) )	{
+	foreach ($fields as $idx =>$fieldname)
+	{
 		$options .= '<option value="'.$fieldname.'">'.$fieldname.'</option>';
 	}
 	return $options; 
@@ -418,8 +426,8 @@ function build_allfields_options($excludemap='',$selected=''){
 	}
 	$options = '';
 	sort($fields); // sort for easy finding
-	@reset($fields);
-	while (list($idx,$fieldname) = @each($fields) )	{
+	foreach ($fields as $idx =>$fieldname)
+	{
 		if($fieldname == $selected){
 			$extra = "selected";
 		} else $extra = "";
@@ -477,7 +485,8 @@ function addremovefieldsupdate($buddy){
 	// correct the map...
 	$posted['map'] = $posted['orig_map'];
 	// fix the fields so thay are more like in the maps...
-	while (list($idx, $fieldname) = @each($posted['selected'])){
+	foreach ($posted['selected'] as $idx => $fieldname)
+	{
 		$sorted[$fieldname] = array();
 	}
 	if($buddy){
@@ -485,7 +494,8 @@ function addremovefieldsupdate($buddy){
 		$buddyfields = array_filter($user_fields,"find_buddy_fields");
 		// make tmp var for user fields... sorted needs to go to the maps!
 		$tmp = $sorted;
-		while (list($key, $data) = @each($buddyfields) )	{
+		foreach ($buddyfields as $key => $data)
+		{
 			if(is_array($tmp[$key])) $tmp[$key] = $data;
 		}
 		// corret with new ind marker and remove removed fields
@@ -527,7 +537,8 @@ function showfieldinfo(){
 		//'PAGES'							=> $pages,
 		)
 	);
-	while (list($idx, $map) = @each($fieldmaps)){
+	foreach ($fieldmaps as $idx => $map)
+	{
 		// do not use the ignore...
 		if(substr($map,-strlen($ignore_map_string)) != $ignore_map_string){
 			if(is_input_map($map)){ 
@@ -567,8 +578,8 @@ function set_demouserdata(){
 		global $userdata;
 		$demouserdata = $userdata;
 		preProcessUserConfig($demouserdata); // used for pcp_output!
-		@reset($demouserdata);
-		while(list($key,$value) = @each($demouserdata)){
+		foreach ($demouserdata as $key =>$value)
+		{
 			if($value == ''){
 				$demouserdata[$key] = $key;
 			}
@@ -579,8 +590,8 @@ function set_demouserdata(){
 function get_all_maps_for_field($field){
 	global $user_maps;
 	global $filtermap;
-	@reset($user_maps);
-	while (list($map, $data) = @each($user_maps) )	{
+	foreach ($user_maps as $map => $data)
+	{
 		$filtermap = $map;
 		if(is_in_filtermap($field)){
 			$fieldmaps[] = $map;
@@ -596,8 +607,8 @@ function preview_input_field($field, $user_field){
 	if ($field['values']){
 		$fieldvaluelist = $field['values'];
 		$field['values'] = array();
-		@reset($values_list[$fieldvaluelist]['values']);
-		while (list($key, $data) = @each($values_list[$fieldvaluelist]['values']) ){
+		foreach ($values_list[$fieldvaluelist]['values'] as $key => $data)
+		{
 			$field['values'][$data['txt']] = $key;
 		}
 	}
@@ -607,8 +618,7 @@ function preview_input_field($field, $user_field){
 	switch ($field['get_mode'])
 	{
 		case 'LIST_RADIO':
-			@reset($field['values']);
-			while ( list($key, $val) = @each($field['values']) )
+			foreach ($field['values'] as $key => $val)
 			{
 				$selected = ($demouserdata[$user_field] == $val) ? ' checked="checked"' : '';
 				$l_key = mods_settings_get_lang($key);
@@ -616,8 +626,7 @@ function preview_input_field($field, $user_field){
 			}
 			break;
 		case 'LIST_DROP':
-			@reset($field['values']);
-			while ( list($key, $val) = @each($field['values']) )
+			foreach ($field['values'] as $key => $val)
 			{
 				$selected = ($demouserdata[$user_field] == $val) ? ' selected="selected"' : '';
 				$l_key = mods_settings_get_lang($key);
@@ -709,8 +718,8 @@ function preview_input_field($field, $user_field){
 
 function is_output_function($var){
 	global $outputfunction, $outputfunctignore;
-	@reset($outputfunction);
-	while(list($idx,$funct) = @each($outputfunction)){
+	foreach ($outputfunction as $idx =>$funct)
+	{
 		if (substr($var,0,strlen($funct)) == $funct && !in_array($var, $outputfunctignore)) return 1;	
 	}
 	return 0;
@@ -722,8 +731,8 @@ function build_dspfunct_options($selected=''){
 	$arrFuncs = array_filter($arrFuncs['user'],"is_output_function");
 	$options = '<option value="">'.$lang['Default_Output'] .'</option>';
 	sort($arrFuncs); // sort for easy finding
-	@reset($arrFuncs);
-	while (list($idx,$funct) = @each($arrFuncs) )	{
+	foreach ($arrFuncs as $idx =>$funct)
+	{
 		$options .= '<option value="'.$funct.'"'.((strtolower($selected) == $funct)?'selected':'').'>'.$funct.'</option>';
 	}
 	return $options; 
@@ -732,8 +741,8 @@ function build_dspfunct_options($selected=''){
 function build_classes_options($selected=''){
 	global $classes_fields, $user_fields, $lang;
 	$arrClass = array();
-	@reset($classes_fields);
-	while (list($class,$data) = @each($classes_fields) )	{
+	foreach ($classes_fields as $class =>$data)
+	{
 		if (strlen($data['user_field'])){
 			$arrClass[$class]['classtext'] = $lang[$user_fields[$data['user_field']]['lang_key']];
 		} else {
@@ -741,8 +750,8 @@ function build_classes_options($selected=''){
 		}
 	}
 	$arrClass = sortfields($arrClass,'classtext');
-	@reset($arrClass);
-	while (list($class,$data) = @each($arrClass) )	{
+	foreach ($arrClass as $class =>$data)
+	{
 		$options .= '<option value="'.$class.'"'.(($selected == $class)?'selected':'').'>'.$data['classtext'].'</option>';
 	}
 	return $options; 
@@ -766,7 +775,8 @@ function setMessage(){
 			break;
 		case 3:
 			$text = '';
-			while(list($idx,$filename) = @each($posted['bad_permissions'])){
+			foreach ($posted['bad_permissions'] as $idx =>$filename)
+			{
 				$text .= ($text == '')? '':'<br />';
 				$text .= sprintf($lang['File_permissions'],$filename);
 			}
@@ -830,8 +840,8 @@ function outputlist(){
 	);
 	setMessage();
 	$map = $user_maps[$posted['map']]['fields'];
-	@reset($map);
-	while (list($fieldname,$data) = @each($map) )	{
+	foreach ($map as $fieldname =>$data)
+	{
 		if($data['dsp_func']){
 			$dspfunct = $data['dsp_func'];
 		} else $dspfunct = $user_fields[$fieldname]['dsp_func'];
@@ -872,12 +882,13 @@ function outputlistupdate(){
 	$posted['map'] = $posted['orig_map'];
 	// get original fields...
 	$fields = array_keys($user_maps[$posted['map']]['fields']);
-	while(list($idx,$field) = @each($fields)){
+	foreach ($fields as $idx =>$field)
+	{
 		// keep old values
 		$oldfield = $user_maps[$posted['map']]['fields'][$field];
 		// destroy the field
 		$user_maps[$posted['map']]['fields'][$field] = array(); 
-		// reset old values
+		// reset old value
 		for($i=0; $i<count($keynotupdated); $i++){
 			$key = $keynotupdated[$i];
 			if(strlen($oldfield[$key])){
@@ -885,7 +896,8 @@ function outputlistupdate(){
 			}
 		}
 		$fieldparams = rebuild_array(array_filter(array_keys($posted),"is_param_of_field"));
-		while(list($x,$paramname) = @each($fieldparams)){
+		foreach ($fieldparams as $x =>$paramname)
+		{
 			$paramname = substr($paramname,0,-strlen($field)-1);
 			$value = $posted[$paramname.'_'.$field];
 			if(strlen($value)){
@@ -965,10 +977,10 @@ function inputlist(){
 	);
 	setMessage();
 	$map = $user_maps[$posted['map']]['fields'];
-	@reset($map);
 	$template->set_filenames(array(
 					'input' => 'admin/pcp_wiz_inputexample.tpl'));
-	while (list($fieldname,$data) = @each($map) )	{
+	foreach ($map as $fieldname =>$data)
+	{
 		$inputstyle = preview_input_field($user_fields[$fieldname],$fieldname);
 		$template->assign_var_from_handle('example', 'input');
 		$color = !$color;
@@ -1024,8 +1036,8 @@ function build_getfunct_options($selected=''){
 	$arrFuncs = get_defined_functions();
 	$arrFuncs = array_filter($arrFuncs['user'],"is_get_function");
 	sort($arrFuncs); // sort for easy finding
-	@reset($arrFuncs);
-	while (list($idx,$funct) = @each($arrFuncs) )	{
+	foreach ($arrFuncs as $idx =>$funct)
+	{
 		$options .= '<option value="'.$funct.'"'.((strtolower($selected) == $funct)?'selected':'').'>'.$funct.'</option>';
 	}
 	return $options; 
@@ -1033,8 +1045,8 @@ function build_getfunct_options($selected=''){
 
 function is_get_function($var){
 	global $getfunction;
-	@reset($getfunction);
-	while(list($idx,$funct) = @each($getfunction)){
+	foreach ($getfunction as $idx =>$funct)
+	{
 		if (substr($var,0,strlen($funct)) == $funct) return 1;
 	}
 	return 0;
@@ -1044,8 +1056,8 @@ function build_chkfunct_options($selected=''){
 	$arrFuncs = get_defined_functions();
 	$arrFuncs = array_filter($arrFuncs['user'],"is_check_function");
 	sort($arrFuncs); // sort for easy finding
-	@reset($arrFuncs);
-	while (list($idx,$funct) = @each($arrFuncs) )	{
+	foreach ($arrFuncs as $idx =>$funct)
+	{
 		$options .= '<option value="'.$funct.'"'.((strtolower($selected) == $funct)?'selected':'').'>'.$funct.'</option>';
 	}
 	return $options; 
@@ -1053,8 +1065,8 @@ function build_chkfunct_options($selected=''){
 
 function is_check_function($var){
 	global $checkfunction;
-	@reset($checkfunction);
-	while(list($idx,$funct) = @each($checkfunction)){
+	foreach ($checkfunction as $idx =>$funct)
+	{
 		if (substr($var,0,strlen($funct)) == $funct) return 1;	
 	}
 	return 0;
@@ -1062,8 +1074,8 @@ function is_check_function($var){
 
 function build_auth_options($selected=''){
 	global $auth_list;
-	@reset($auth_list);
-	while (list($auth_level, $auth_name) = @each($auth_list) )	{
+	foreach ($auth_list as $auth_level => $auth_name)
+	{
 		$options .= '<option value="'.$auth_level.'"'.(($selected == $auth_level)?'selected':'').'>'.pcp_format_lang('Auth_' . $auth_name).'</option>';
 	}
 	return $options; 
@@ -1071,8 +1083,8 @@ function build_auth_options($selected=''){
 
 function build_values_options($selected=''){
 	global $values_list;
-	@reset($values_list);
-	while (list($values_list_name, $values_list_data) = @each($values_list) )	{
+	foreach ($values_list as $values_list_name => $values_list_data)
+	{
 		$options .= '<option value="'.$values_list_name.'"'.(($selected == $values_list_name)?'selected':'').'>'.pcp_format_lang($values_list_name).'</option>';
 	}
 	return $options; 
@@ -1087,7 +1099,8 @@ function inputlistupdate(){
 	$posted['map'] = $posted['orig_map'];
 	// get original fields...
 	$fields = array_keys($user_maps[$posted['map']]['fields']);
-	while(list($idx,$field) = @each($fields)){
+	foreach ($fields as $idx =>$field)
+	{
 		// keep old values
 		$oldfield = $user_fields[$field];
 		// destroy the field
@@ -1100,7 +1113,8 @@ function inputlistupdate(){
 			}
 		}
 		$fieldparams = rebuild_array(array_filter(array_keys($posted),"is_param_of_field"));
-		while(list($x,$paramname) = @each($fieldparams)){
+		foreach ($fieldparams as $x =>$paramname)
+		{
 			$paramname = substr($paramname,0,-strlen($field)-1);
 			// correct values depending on get_mode
 			$mode = $posted['get_mode_'.$field];
@@ -1156,7 +1170,7 @@ function validate($autocorrect=false){
 	$template->assign_vars(array(
 		'L_TITLE'						=> $wiznav.'&raquo; '.$lang['Wiz_validate'],
 		'L_TITLE_EXPLAIN'		=> $lang['Wiz_validate_description'],
-		'HELP'							=> $lang['Wiz_validate_explain'],
+		'HELP'							=> isset($lang['Wiz_validate_explain']) ? $lang['Wiz_validate_explain'] : 'Wiz_validate_explain',
 		'AUTOCORRECT'				=> sprintf($lang['Wiz_autocorrect'],wizurl($nextmode)),
 		)
 	);
@@ -1174,16 +1188,18 @@ function validate($autocorrect=false){
 		'L_DELETE'					=> $lang['Delete'],
 		'L_MOVE'						=> $lang['Move2field'],
 	));
-	while (list($idxmap, $map) = @each($all_maps) )	{
+	foreach ($all_maps as $idxmap => $map)
+	{
 		$template->assign_block_vars('type.page', array(
 			'text'					=> $map,
 		));
-		if(!count($user_maps[$map]['title'])){
+		if(empty($user_maps[$map]['title'])){
 			if($autocorrect){
 				// defailt to map name recursively
 				$mapsplit = preg_split('\.',$map);
 				$map2alter = "";
-				while(list($idxCorr, $submap) = @each($mapsplit)){
+				foreach ($mapsplit as $idxCorr => $submap)
+				{
 					$map2alter .= count($map2alter) ? '.'.$submap : $submap;
 					$title = ucfirst($submap);
 					$user_maps[$map2alter]['title'] = $title;
@@ -1196,12 +1212,14 @@ function validate($autocorrect=false){
 			}
 		}
 		$fields = $user_maps[$map]['fields'];
-		while (list($field, $data) = @each($fields) )	{
+		$color = false;
+		foreach ($fields as $field => $data)
+		{
 			$color = !$color;
 			$template->assign_block_vars('type.page.fields', array(
 				'COLOR'					=> $color ? 'row1' : 'row2',
 				'field'					=> $field,
-				'description'		=> $lang[$user_fields[$field]['lang_key']],
+				'description'		=> isset($user_fields[$field]['lang_key']) && isset($lang[$user_fields[$field]['lang_key']]) ? $lang[$user_fields[$field]['lang_key']] : ( isset($user_fields[$field]['lang_key']) ? $user_fields[$field]['lang_key'] : '' ),
 			));
 			// validate if field is in def_userfields
 			if(!isset($user_fields[$field]) && substr($field,0,4) != '[lf]'){
@@ -1211,7 +1229,8 @@ function validate($autocorrect=false){
 					));
 			}
 			$keys = array_keys($data);
-			while (list($idx, $key) = @each($keys) )	{
+			foreach ($keys as $idx => $key)
+			{
 				if(!in_array($key,$usermapdata)){
 					if(!in_array($key,$userfielddata)){
 						$errors['maps'][$map][$field]['alien'][$key] = $data[$key];
@@ -1249,15 +1268,17 @@ function validate($autocorrect=false){
 		'L_MOVE'						=> $lang['Move2map'],
 	));
 	$template->assign_block_vars('type.page', array());
-	while (list($field, $data) = @each($user_fields) )	{
+	foreach ($user_fields as $field => $data)
+	{
 		$color = !$color;
 		$template->assign_block_vars('type.page.fields', array(
 			'COLOR'						=> $color ? 'row1' : 'row2',
 			'field'						=> $field,
-			'description'			=> $lang[$user_fields[$field]['lang_key']],
+			'description'			=> isset($user_fields[$field]['lang_key']) ? ( isset($lang[$user_fields[$field]['lang_key']]) ? $lang[$user_fields[$field]['lang_key']] : '' ) : '',
 		));
 		$keys = array_keys($data);
-		while (list($idx, $key) = @each($keys) )	{
+		foreach ($keys as $idx => $key)
+		{
 			if(!in_array($key,$userfielddata)){
 				if(!in_array($key,$usermapdata)){
 					$errors['fields'][$field]['alien'][$key] = $data[$key];
@@ -1282,7 +1303,8 @@ function validate($autocorrect=false){
 		}
 		@reset($fieldkeyrequired);
 		@reset($fieldkeydefaults);
-		while (list($idx, $reqkey) = @each($fieldkeyrequired) )	{
+		foreach ($fieldkeyrequired as $idx => $reqkey)
+		{
 			if(!in_array($reqkey,$keys)){
 				$errors['fields'][$field]['required'][$reqkey] = '';
 				if($autocorrect){
@@ -1350,7 +1372,8 @@ function fields(){
 	$template->set_filenames(array(
 		'input' => 'admin/pcp_wiz_inputexample.tpl')
 	);
-	while(list($idx, $key) = @each($baseparams) )	{
+	foreach ($baseparams as $idx => $key)
+	{
 		$value = $user_fields[$posted['field']][$key];
 		if(in_array($key,$fieldkeyrequired)){
 			$dbvalue = $lang['Required_field'];
@@ -1423,15 +1446,15 @@ function fieldsupdate(){
 	// CAUTION :: set orig_field to field...
 	$posted['field'] = $posted['orig_field'];
 	// check required field params
-	@reset($fieldkeyrequired);
-	while (list($idx, $reqkey) = @each($fieldkeyrequired) )	{
+	foreach ($fieldkeyrequired as $idx => $reqkey)
+	{
 		if(!strlen($posted[$reqkey])){
 			$error_msg = sprintf($lang['Required_Error'],$lang['Required_field']);
 			message_die( GENERAL_MESSAGE, $error_msg );
 		}
 	}
-	@reset($baseparams);
-	while (list($idx, $key) = @each($baseparams) )	{
+	foreach ($baseparams as $idx => $key)
+	{
 		if(strlen($posted[$key])){
 			$user_fields[$posted['field']][$key] = $posted[$key];
 		} else {
@@ -1462,7 +1485,8 @@ function fieldimport(){
 		)
 	);
 	setMessage();
-	while(list($idx,$fieldimport) = @each($fieldimports)){
+	foreach ($fieldimports as $idx =>$fieldimport)
+	{
 		$color = !$color;
 		$template->assign_block_vars('type', array(
 			'COLOR'						=> $color ? 'row1' : 'row2',
@@ -1486,7 +1510,8 @@ function fieldimportupdate(){
 		if(substr($posted['lists'],0,9) == 'new_lists'){
 			$code = "\$". stripslashes($posted['lists']);
 			eval($code);
-			while(list($listname,$data) = @each($new_lists)){
+			foreach ($new_lists as $listname =>$data)
+			{
 				$values_list[$listname] = $data;
 			}
 		}
@@ -1499,7 +1524,8 @@ function fieldimportupdate(){
 		if(substr($posted['classes'],0,11) == 'new_classes'){
 			$code = "\$". stripslashes($posted['classes']);
 			eval($code);
-			while(list($classname,$data) = @each($new_classes)){
+			foreach ($new_classes as $classname =>$data)
+			{
 				$classes_fields[$classname] = $data;
 			}
 		}
@@ -1512,8 +1538,10 @@ function fieldimportupdate(){
 		if(substr($posted['deletes'],0,7) == 'deletes'){
 			$code = "\$". stripslashes($posted['deletes']);
 			eval($code);
-			while(list($type,$data) = @each($deletes)){
-				while(list($idx,$item) = @each($data)){
+			foreach ($deletes as $type =>$data)
+			{
+				foreach ($data as $idx =>$item)
+				{
 					switch($type){
 						case 'lists':
 							unset($values_list[$item]);
@@ -1537,7 +1565,8 @@ function fieldimportupdate(){
 		if(substr($posted['fields'],0,10) == 'new_fields'){
 			$code = "\$". stripslashes($posted['fields']);
 			eval($code);
-			while(list($fieldname,$data) = @each($new_fields)){
+			foreach ($new_fields as $fieldname =>$data)
+			{
 				$user_fields[$fieldname] = $data;
 			}
 		}
@@ -1569,7 +1598,8 @@ function pageimport(){
 		)
 	);
 	setMessage();
-	while(list($idx,$pageimport) = @each($pageimports)){
+	foreach ($pageimports as $idx =>$pageimport)
+	{
 		$color = !$color;
 		$template->assign_block_vars('type', array(
 			'COLOR'						=> $color ? 'row1' : 'row2',
@@ -1592,7 +1622,8 @@ function pageimportupdate(){
 		if(substr($posted['delpages'],0,9) == 'del_pages'){
 			$code = "\$". stripslashes($posted['delpages']);
 			eval($code);
-			while(list($idx,$mapname) = @each($del_pages)){
+			foreach ($del_pages as $idx =>$mapname)
+			{
 				unset($user_maps[$mapname]);
 			}
 		}
@@ -1605,7 +1636,8 @@ function pageimportupdate(){
 		if(substr($posted['newpages'],0,9) == 'new_pages'){
 			$code = "\$". stripslashes($posted['newpages']);
 			eval($code);
-			while(list($mapname,$data) = @each($new_pages)){
+			foreach ($new_pages as $mapname =>$data)
+			{
 				$user_maps[$mapname] = $data;
 			}
 		}
@@ -1618,8 +1650,10 @@ function pageimportupdate(){
 		if(substr($posted['delpagefields'],0,14) == 'del_pagefields'){
 			$code = "\$". stripslashes($posted['delpagefields']); 
 			eval($code);
-			while(list($mapname, $data) = @each($del_pagefields)){
-				while(list($fieldname,$fielddata) = @each($data['fields'])){
+			foreach ($del_pagefields as $mapname => $data)
+			{
+				foreach ($data['fields'] as $fieldname =>$fielddata)
+				{
 					// update the map
 					unset($user_maps[$mapname]['fields'][$fieldname]);
 				}
@@ -1634,7 +1668,8 @@ function pageimportupdate(){
 		if(substr($posted['newpagefields'],0,14) == 'new_pagefields'){
 			$code = "\$". stripslashes($posted['newpagefields']); 
 			eval($code);
-			while(list($mapname, $data) = @each($new_pagefields)){
+			foreach ($new_pagefields as $mapname => $data)
+			{
 				$newfields = array();
 				switch($data['position']){
 					case 'begin': 
@@ -1644,7 +1679,8 @@ function pageimportupdate(){
 						$newfields = array_merge($user_maps[$mapname]['fields'],$data['fields']);
 					default:
 						// choosing field
-						while(list($fieldname,$fielddata) = @each($user_maps[$mapname]['fields'])){
+						foreach ($user_maps[$mapname]['fields'] as $fieldname =>$fielddata)
+						{
 							$newfields[$fieldname] = $fielddata;
 							if($fieldname == $data['position']){
 								$newfields = array_merge($newfields,$data['fields']);
@@ -1678,8 +1714,7 @@ if (!function_exists('pcp_sort_usermaps')) {
 		// working array
 		$maps = $user_maps;
 		// set the parent tree
-		@reset($maps);
-		while ( list($map_name, $map_data) = @each($maps) )
+		foreach ($maps as $map_name => $map_data)
 		{
 			// find parent
 			$w_map_name = $map_name;
@@ -1716,8 +1751,7 @@ if (!function_exists('pcp_sort_usermaps')) {
 		// get the parent name and the local order
 		$local_order = array();
 		$names = array();
-		@reset($maps);
-		while ( list($map_name, $map_data) = @each($maps) )
+		foreach ($maps as $map_name => $map_data)
 		{
 			$names[] = $map_name;
 			// get the parent name
@@ -1735,8 +1769,7 @@ if (!function_exists('pcp_sort_usermaps')) {
 		// sort : get the full order expression
 		$cumul_order = array();
 		$order = array();
-		@reset($maps);
-		while ( list($map_name, $map_data) = @each($maps) )
+		foreach ($maps as $map_name => $map_data)
 		{
 			$cumul_order[$map_name] = ( empty($cumul_order[ $map_data['parent'] ]) ? '' : $cumul_order[ $map_data['parent'] ] . '.' ) .  $local_order[$map_name];
 			$order[] = $cumul_order[$map_name];
@@ -1752,8 +1785,7 @@ if (!function_exists('pcp_affect_order')) {
 		// taken from admin_pcp_usermaps.php
 		$stack = array();
 		$w_maps = $maps;
-		@reset($maps);
-		while ( list($map_name, $map_data) = @each($maps) )
+		foreach ($maps as $map_name => $map_data)
 		{
 			// get parent
 			$w_keys = explode('.', $map_name);
@@ -1766,8 +1798,7 @@ if (!function_exists('pcp_affect_order')) {
 			if ( empty($stack) || !in_array($parent, $stack) )
 			{
 				$order = -1;
-				@reset($w_maps);
-				while ( list($w_map_name, $w_map_data) = @each($w_maps) )
+				foreach ($w_maps as $w_map_name => $w_map_data)
 				{
 					// get parent
 					$w_keys = explode('.', $w_map_name);
@@ -1898,7 +1929,10 @@ function correctrequired(){
 	
 	$requiredfields = array_keys(array_filter($user_fields,"find_required_fields"));
 	get_input_maps();
-	while (count($requiredfields) && list($idxmap, $map) = @each($input_maps) )	{
+	foreach ($input_maps as $idxmap => $map)
+	{
+		if (!count($requiredfields)) break;
+
 		$mapfields = array();
 		if( is_array($user_maps[$map]['fields'])){
 			$mapfields = array_keys($user_maps[$map]['fields']);
@@ -1940,7 +1974,7 @@ $nowstr = date("YmdHis");
 $userfieldsfilebackup = $defdir . '/def_userfields.' . $nowstr;
 $usermapsfilebackup = $defdir . '/def_usermaps.' . $nowstr;
 $posted = array_merge($_POST,$_GET);
-$mode = ($posted['mode']) ? $posted['mode'] : 'menu'; //default to menu
+$mode = !empty($posted['mode']) ? $posted['mode'] : 'menu'; //default to menu
 $fieldsmode = 'fields';
 $buddy_map = 'PCP.buddy';
 $profil_map = 'PCP.profil';
@@ -1986,22 +2020,22 @@ $select = array(
 );
 $goto = array(
 	'outputlistupdate' 			=> 'addremovefields',
-	'addremovefieldsupdate' => is_output_map($posted['map'])?'outputlist':'inputlist',
+	'addremovefieldsupdate' => isset($posted['map']) && is_output_map($posted['map'])?'outputlist':'inputlist',
 	'inputlistupdate' 			=> 'addremovefields',
 	'fieldsupdate'		 			=> 'showfieldinfo',
 );
 
-if($posted[$select_name]){
+if(!empty($posted[$select_name])){
 	$posted['message'] = 1;
 	$mode = $select[$mode];
-} elseif($posted[$submit_name]){
+} elseif(!empty($posted[$submit_name])){
 	$posted['message'] = 2;
-} elseif($posted[$goto_name]){
+} elseif(!empty($posted[$goto_name])){
 	$mode = $goto[$mode];
-} elseif($posted[$select_name]){	
+} elseif(!empty($posted[$select_name])){	
 	$posted['message'] = 3;
 	$mode = $select[$mode];
-} elseif($posted[$new_name]){	
+} elseif(!empty($posted[$new_name])){	
 	$posted['message'] = 1;
 	$mode = $select[$mode];
 	$posted['field'] = $posted['newfield'];

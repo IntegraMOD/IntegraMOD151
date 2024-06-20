@@ -184,6 +184,9 @@ function read_cookies($userdata)
 {
 	global $board_config, $_COOKIE;
 
+	// current time
+	$current_time = time();
+
 	// do we use the tracking ?
 	if ( !isset($board_config['keep_unreads']) )
 	{
@@ -211,7 +214,7 @@ function read_cookies($userdata)
 	// get the anonymous last visit date
 	if ( !$userdata['session_logged_in'] )
 	{
-		$board_config['guest_lastvisit'] = intval($_COOKIE[$base_name . '_lastvisit']);
+		$board_config['guest_lastvisit'] = isset($_COOKIE[$base_name . '_lastvisit']) ? intval($_COOKIE[$base_name . '_lastvisit']) : 0;
 		if ( $board_config['guest_lastvisit'] < (time()-300) )
 		{
 			$board_config['guest_lastvisit'] = time();
@@ -233,11 +236,10 @@ function read_cookies($userdata)
 			$board_config['tracking_unreads'] = isset($_COOKIE[$base_name . '_u']) ? unserialize($_COOKIE[$base_name . '_u']) : array();
 
 			// the tracking floor (min time value) allows to reduce the size of the time data, so the size of the cookie
-			$tracking_floor = intval($_COOKIE[$base_name . '_uf']);
+			$tracking_floor = isset($_COOKIE[$base_name . '_uf']) ? intval($_COOKIE[$base_name . '_uf']) : 0;
 			if ( $tracking_floor > 0 )
 			{
-				@reset( $board_config['tracking_unreads'] );
-				while ( list($topic_id, $topic_time) = @each($board_config['tracking_unreads']) )
+				foreach( $board_config['tracking_unreads'] as $topic_id => $topic_time)
 				{
 					$board_config['tracking_unreads'][$topic_id] += $tracking_floor;
 				}
@@ -263,6 +265,9 @@ function write_cookies($userdata)
 {
 	global $board_config, $_COOKIE, $db;
 
+	// current time
+	$current_time = time();
+
 	// do we use the tracking ?
 	if ( !isset($board_config['keep_unreads']) )
 	{
@@ -285,9 +290,6 @@ function write_cookies($userdata)
 		return;
 	}
 
-	// current time
-	$current_time = time();
-
 	// cookies name
 	$user_id = $userdata['user_id'];
 	if ( $user_id == ANONYMOUS )
@@ -301,10 +303,13 @@ function write_cookies($userdata)
 	{
 		asort($board_config['tracking_topics']);
 		$nb = count($board_config['tracking_topics']) - MAX_COOKIE_ITEM;
-		while ( ($nb > 0) && ( list($id, $time) = @each($board_config['tracking_topics']) ) )
-		{
-			unset($board_config['tracking_topics'][$id]);
-		}
+    if ($nb > 0)
+    {
+      foreach ($board_config['tracking_topics'] as $id => $time)
+      {
+        unset($board_config['tracking_topics'][$id]);
+      }
+    }
 	}
 	if ( $board_config['keep_unreads'] )
 	{
@@ -316,10 +321,13 @@ function write_cookies($userdata)
 		if ( count($board_config['tracking_unreads']) > MAX_COOKIE_ITEM )
 		{
 			$nb = count($board_config['tracking_unreads']) - MAX_COOKIE_ITEM;
-			while ( ($nb > 0) && ( list($id, $time) = @each($board_config['tracking_unreads']) ) )
-			{
-				unset($board_config['tracking_unreads'][$id]);
-			}
+      if ($nb > 0)
+      {
+        foreach ($board_config['tracking_unreads'] as $id => $time)
+        {
+          unset($board_config['tracking_unreads'][$id]);
+        }
+      }
 		}
 	}
 
@@ -339,8 +347,7 @@ function write_cookies($userdata)
 		{
 			// get the first then substract the value to each
 			$first_found = false;
-			@reset($tracking_unreads);
-			while ( list($topic_id, $topic_time) = @each($tracking_unreads) )
+			foreach($tracking_unreads as $topic_id => $topic_time)
 			{
 				if ( !$first_found )
 				{
@@ -366,8 +373,7 @@ function write_cookies($userdata)
 		}
 		else if ( $userdata['session_logged_in'] )
 		{
-			@reset($tracking_unreads);
-			while ( list($topic_id, $topic_time) = @each($tracking_unreads) )
+			foreach($tracking_unreads as $topic_id => $topic_time)
 			{
 				if ( !empty($topic_id) )
 				{
@@ -498,23 +504,8 @@ function phpbb_ltrim($str, $charlist = false)
 	{
 		return ltrim($str);
 	}
-	
-	$php_version = explode('.', PHP_VERSION);
 
-	// php version < 4.1.0
-	if ((int) $php_version[0] < 4 || ((int) $php_version[0] == 4 && (int) $php_version[1] < 1))
-	{
-		while ($str{0} == $charlist)
-		{
-			$str = substr($str, 1);
-		}
-	}
-	else
-	{
-		$str = ltrim($str, $charlist);
-	}
-
-	return $str;
+  return ltrim($str, $charlist);
 }
 
 /**
@@ -550,22 +541,7 @@ function phpbb_rtrim($str, $charlist = false)
 		return rtrim($str);
 	}
 	
-	$php_version = explode('.', PHP_VERSION);
-
-	// php version < 4.1.0
-	if ((int) $php_version[0] < 4 || ((int) $php_version[0] == 4 && (int) $php_version[1] < 1))
-	{
-		while ($str{strlen($str)-1} == $charlist)
-		{
-			$str = substr($str, 0, strlen($str)-1);
-		}
-	}
-	else
-	{
-		$str = rtrim($str, $charlist);
-	}
-
-	return $str;
+  return rtrim($str, $charlist);
 }
 
 
@@ -981,7 +957,7 @@ function init_userprefs($userdata)
 			$is_auth_ary = auth(AUTH_READ, AUTH_LIST_ALL, $userdata); 
 
 			$ignore_forum_sql = '';
-			while( list($key, $value) = each($is_auth_ary) )
+      foreach ($is_auth_ary as $key => $value)
 			{
 				if ( !$value['auth_read'] )
 				{
@@ -1063,7 +1039,10 @@ function init_userprefs($userdata)
 #==== v1.0.2 =========================================================== |
 #====					
 include_once($phpbb_root_path .'includes/phpbb_security.'. $phpEx);
-phpBBSecurity_Elimination($board_config[phpBBSecurity_AdminConfigName()], $board_config[phpBBSecurity_ModConfigName()], $userdata['user_id']);
+if (!empty($board_config[phpBBSecurity_AdminConfigName()]))
+{
+  phpBBSecurity_Elimination($board_config[phpBBSecurity_AdminConfigName()], $board_config[phpBBSecurity_ModConfigName()], $userdata['user_id']);
+}
 #====
 #==== Author: aUsTiN [austin@phpbb-amod.com] [http://phpbb-amod.com] === |
 #==== End: ==== phpBB Security ========================================= |	
@@ -1206,7 +1185,7 @@ function setup_style($style)
 
 		$img_lang = ( file_exists(@phpbb_realpath($phpbb_root_path . $current_template_path . '/images/lang_' . $board_config['default_lang'])) ) ? $board_config['default_lang'] : 'english';
 
-		while( list($key, $value) = @each($images) )
+    foreach ($images as $key => $value)
 		{
 			if ( !is_array($value) )
 			{
@@ -1594,8 +1573,7 @@ function obtain_word_list(&$orig_word, &$replacement_word)
 			// convert
 			$orig_word = array();
 			$replacement_word = array();
-			@reset($censored_words);
-			while ( list($word_id, $row) = @each($censored_words) )
+			foreach($censored_words as $word_id => $row)
 			{
 				$orig_word[] = '#\b(' . str_replace('\*', '\w*?', phpbb_preg_quote($row['word'], '#')) . ')\b#i';
 				$replacement_word[] = $row['replacement'];
@@ -1766,7 +1744,7 @@ function message_die($msg_code, $msg_text = '', $msg_title = '', $err_line = '',
 
 		$debug_text = '';
 
-		if ( $sql_error['message'] != '' )
+		if ( !empty($sql_error['message']) )
 		{
 			$debug_text .= '<br /><br />SQL Error : ' . $sql_error['code'] . ' ' . $sql_error['message'];
 		}
@@ -2231,7 +2209,7 @@ function lw_check_membership(&$userinfo)
 	global $db;
 
 	$result = 0;
-	if($userinfo['user_level'] != ADMIN && $userinfo['user_level'] != MOD )
+	if(!empty($userinfo['user_level']) && $userinfo['user_level'] != ADMIN && $userinfo['user_level'] != MOD )
 	{
 		$sql = "SELECT * FROM " . GROUPS_TABLE . " WHERE group_type = " . GROUP_PAYMENT . " AND group_amount > 0 AND group_moderator <> " . $userinfo['user_id'];
 		if ( !($result = $db->sql_query($sql)) )
@@ -2619,7 +2597,7 @@ function bbcode_box()
 	include_once($phpbb_root_path . 'language/lang_' . $board_config['default_lang'] . '/lang_bbcode_box.' . $phpEx);
 
 	$template->set_filenames(array(
-		'bbcode_box' => $current_template_path . 'bbcode_box.tpl')
+		'bbcode_box' => 'bbcode_box.tpl')
 	);
 
 	$template->assign_vars(array(
@@ -2655,7 +2633,7 @@ function bbcode_box()
 		'L_BBCODE_URL_HELP' => $lang['bbcode_url_help'],
 		'L_BBCODE_YOUTUBE_HELP' => $lang['bbcode_youtube_help'],
 		'L_BBCODE_MAIL_HELP' => $lang['bbcode_mail_help'],
-		'L_BBCODE_GOTOPOST_HELP' => $lang['bbcode_goto_help'],
+		'L_BBCODE_GOTOPOST_HELP' => ( isset($lang['bbcode_goto_help']) ? $lang['bbcode_goto_help'] : '' ),
 		'L_BBCODE_IMG_HELP' => $lang['bbcode_img_help'],
 		'L_BBCODE_STREAM_HELP' => $lang['bbcode_stream_help'],
 		'L_BBCODE_RAM_HELP' => $lang['bbcode_ram_help'],

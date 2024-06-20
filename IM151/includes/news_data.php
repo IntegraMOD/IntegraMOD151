@@ -79,7 +79,7 @@ class NewsDataAccess
   *
   * @access public
   **/
-  function NewsDataAccess( $phpbb_root )
+  function __construct( $phpbb_root )
   {
     global $db, $phpEx, $board_config;
 

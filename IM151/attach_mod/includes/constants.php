@@ -57,7 +57,7 @@ define('QUOTA_LIMITS_TABLE', $table_prefix . 'quota_limits');
 
 // Pages
 define('PAGE_UACP', -32);
-define('PAGE_RULES', -33);
+if (!defined('PAGE_RULES')) define('PAGE_RULES', -33);
 
 // Misc
 define('MEGABYTE', 1024);

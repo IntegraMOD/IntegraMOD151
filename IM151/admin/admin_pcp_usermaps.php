@@ -52,8 +52,7 @@ $list_field = array('field_name', 'lang_key', 'leg', 'txt', 'img', 'lnk' );
 // process the field_def array
 $i = -1;
 $cat_order = array();
-@reset($field_cat);
-while ( list($cat_name, $cat_data) = @each($field_cat) )
+foreach ($field_cat as $cat_name => $cat_data)
 {
 	$i++;
 	$cat_order[$cat_name] = $i;
@@ -61,8 +60,7 @@ while ( list($cat_name, $cat_data) = @each($field_cat) )
 $i = -1;
 $order = array();
 $cats = array();
-@reset($field_def);
-while ( list($def_key, $def_data) = @each($field_def) )
+foreach ($field_def as $def_key => $def_data)
 {
 	$i++;
 	$cats[] = $cat_order[$def_data['cat']];
@@ -79,8 +77,7 @@ function pcp_affect_order(&$maps)
 {
 	$stack = array();
 	$w_maps = $maps;
-	@reset($maps);
-	while ( list($map_name, $map_data) = @each($maps) )
+	foreach ($maps as $map_name => $map_data)
 	{
 		// get parent
 		$w_keys = explode('.', $map_name);
@@ -94,8 +91,7 @@ function pcp_affect_order(&$maps)
 		if ( empty($stack) || !in_array($parent, $stack) )
 		{
 			$order = -1;
-			@reset($w_maps);
-			while ( list($w_map_name, $w_map_data) = @each($w_maps) )
+			foreach ($w_maps as $w_map_name => $w_map_data)
 			{
 				// get parent
 				$w_keys = explode('.', $w_map_name);
@@ -123,8 +119,7 @@ function pcp_sort_usermaps($user_maps)
 	$maps = $user_maps;
 
 	// set the parent tree
-	@reset($maps);
-	while ( list($map_name, $map_data) = @each($maps) )
+	foreach ($maps as $map_name => $map_data)
 	{
 		// find parent
 		$w_map_name = $map_name;
@@ -159,15 +154,14 @@ function pcp_sort_usermaps($user_maps)
 
 			// loop
 			$w_map_name = $parent_map;
-			$w_map_data = $maps[$parent_map];
+			$w_map_data = isset($maps[$parent_map]) ? $maps[$parent_map] : null;
 		}
 	}
 
 	// get the parent name and the local order
 	$local_order = array();
 	$names = array();
-	@reset($maps);
-	while ( list($map_name, $map_data) = @each($maps) )
+	foreach ($maps as $map_name => $map_data)
 	{
 		$names[] = $map_name;
 
@@ -181,15 +175,14 @@ function pcp_sort_usermaps($user_maps)
 		$maps[$map_name]['parent'] = implode( '.', $new_keys);
 
 		// get the local order (order+name)
-		$local_order[$map_name] = implode('.', array( sprintf('%09d', intval($map_data['order'])), $w_keys[ count($w_keys)-1 ] ) );
+		$local_order[$map_name] = implode('.', array( sprintf('%09d', intval(isset($map_data['order']) ? $map_data['order'] : 0)), $w_keys[ count($w_keys)-1 ] ) );
 	}
 	@array_multisort($names, $maps);
 
 	// sort : get the full order expression
 	$cumul_order = array();
 	$order = array();
-	@reset($maps);
-	while ( list($map_name, $map_data) = @each($maps) )
+	foreach ($maps as $map_name => $map_data)
 	{
 		$cumul_order[$map_name] = ( empty($cumul_order[ $map_data['parent'] ]) ? '' : $cumul_order[ $map_data['parent'] ] . '.' ) .  $local_order[$map_name];
 		$order[] = $cumul_order[$map_name];
@@ -225,8 +218,7 @@ function pcp_get_tree_options($maps, $cur='')
 	$res .= '<option value=""' . $selected . '>' . $lang['PCP_usermaps_root'] . '</option>';
 
 	// read the maps
-	@reset($maps);
-	while ( list($map_name, $map_data) = @each($maps) )
+	foreach ($maps as $map_name => $map_data)
 	{
 		$w_keys = explode('.', $map_name);
 		$inc = count($w_keys);
@@ -286,8 +278,7 @@ $add_title = isset($_POST['add_title']);
 // check if action on the main list
 $direction = 0;
 $map_id = -1;
-@reset($maps);
-while ( list($map_name, $map_data) = @each($maps) )
+foreach ($maps as $map_name => $map_data)
 {
 	$map_id++;
 	if ( isset($_POST['edit_map_' . $map_id]) )
@@ -412,8 +403,7 @@ if ( $mode == 'edit' )
 		else
 		{
 			// read fields definition
-			@reset($maps[$map]['title']);
-			while ( list( $field_name, $field_data) = @each($maps[$map]['title']) )
+			foreach ($maps[$map]['title'] as  $field_name => $field_data)
 			{
 				// count
 				$nb_title_fields++;
@@ -433,16 +423,14 @@ if ( $mode == 'edit' )
 				}
 
 				// overwrite with the map definition
-				@reset($field_data);
-				while ( list($key, $value) = @each($field_data) )
+				foreach ($field_data as $key => $value)
 				{
 					$field[$key] = $value;
 				}
 				$field['field_name'] = $field_name;
 
 				// fill the result
-				@reset($field_def);
-				while ( list($def_key, $def_data) = @each($field_def) )
+				foreach ($field_def as $def_key => $def_data)
 				{
 					$title_fields[$def_key][] = $field[$def_key];
 				}
@@ -454,8 +442,7 @@ if ( $mode == 'edit' )
 	if ( isset($maps[$map]['fields']) )
 	{
 		// read fields definition
-		@reset($maps[$map]['fields']);
-		while ( list( $field_name, $field_data) = @each($maps[$map]['fields']) )
+		foreach ($maps[$map]['fields'] as  $field_name => $field_data)
 		{
 			// count
 			$nb_fields++;
@@ -475,16 +462,14 @@ if ( $mode == 'edit' )
 			}
 
 			// overwrite with the map definition
-			@reset($field_data);
-			while ( list($key, $value) = @each($field_data) )
+			foreach ($field_data as $key => $value)
 			{
 				$field[$key] = $value;
 			}
 			$field['field_name'] = $field_name;
 
 			// fill the result
-			@reset($field_def);
-			while ( list($def_key, $def_data) = @each($field_def) )
+			foreach ($field_def as $def_key => $def_data)
 			{
 				$fields[$def_key][] = $field[$def_key];
 			}
@@ -520,8 +505,7 @@ if ( $mode == 'edit' )
 		{
 			$lf_count_title++;
 		}
-		@reset($field_def);
-		while ( list($def_key, $def_data) = @each($field_def) )
+		foreach ($field_def as $def_key => $def_data)
 		{
 			$title_fields[$def_key][$i] = isset($_POST['title_' . $def_key . '_' . $i]) ? $_POST['title_' . $def_key . '_' . $i] : $sav_title_fields[$def_key][$i];
 		}
@@ -561,22 +545,19 @@ if ( $mode == 'edit' )
 
 			// save the dest
 			$sav = array();
-			@reset($field_def);
-			while ( list($def_key, $def_data) = @each($field_def) )
+			foreach ($field_def as $def_key => $def_data)
 			{
 				$sav[$def_key] = $title_fields[$def_key][$dst_i];
 			}
 
 			// copy the src into the dest
-			@reset($field_def);
-			while ( list($def_key, $def_data) = @each($field_def) )
+			foreach ($field_def as $def_key => $def_data)
 			{
 				$title_fields[$def_key][$dst_i] = $title_fields[$def_key][$title_id];
 			}
 
 			// restore the sav into the src
-			@reset($field_def);
-			while ( list($def_key, $def_data) = @each($field_def) )
+			foreach ($field_def as $def_key => $def_data)
 			{
 				$title_fields[$def_key][$title_id] = $sav[$def_key];
 			}
@@ -603,8 +584,7 @@ if ( $mode == 'edit' )
 		{
 			$lf_count++;
 		}
-		@reset($field_def);
-		while ( list($def_key, $def_data) = @each($field_def) )
+		foreach ($field_def as $def_key => $def_data)
 		{
 			$fields[$def_key][$i] = isset($_POST['field_' . $def_key . '_' . $i]) ? $_POST['field_' . $def_key . '_' . $i] : $sav_fields[$def_key][$i];
 		}
@@ -643,22 +623,19 @@ if ( $mode == 'edit' )
 
 			// save the dest
 			$sav = array();
-			@reset($field_def);
-			while ( list($def_key, $def_data) = @each($field_def) )
+			foreach ($field_def as $def_key => $def_data)
 			{
 				$sav[$def_key] = $fields[$def_key][$dst_i];
 			}
 
 			// copy the src into the dest
-			@reset($field_def);
-			while ( list($def_key, $def_data) = @each($field_def) )
+			foreach ($field_def as $def_key => $def_data)
 			{
 				$fields[$def_key][$dst_i] = $fields[$def_key][$field_id];
 			}
 
 			// restore the sav into the src
-			@reset($field_def);
-			while ( list($def_key, $def_data) = @each($field_def) )
+			foreach ($field_def as $def_key => $def_data)
 			{
 				$fields[$def_key][$field_id] = $sav[$def_key];
 			}
@@ -670,8 +647,7 @@ if ( $mode == 'edit' )
 	{
 		// which field cat is displayed ?
 		$cur_cat = isset($_POST['cur_cat']) ? $_POST['cur_cat'] : '';
-		@reset($field_cat);
-		while ( list($cat_name, $cat_data) = @each($field_cat) )
+		foreach ($field_cat as $cat_name => $cat_data)
 		{
 			if ( isset($_POST['select_field_cat_' . $cat_name]) )
 			{
@@ -680,14 +656,15 @@ if ( $mode == 'edit' )
 		}
 		if ( !isset($field_cat[$cur_cat]) )
 		{
-			@reset($field_cat);
-			list( $cur_cat, $cat_data ) = @each($field_cat);
+			foreach ($field_cat as  $cur_cat => $cat_data )
+			{
+				break; // Just populate $cur_cat => $cat_data
+			}
 		}
 
 		// get the values
 		$field_det = array();
-		@reset($field_def);
-		while ( list($def_key, $def_data) = @each($field_def) )
+		foreach ($field_def as $def_key => $def_data)
 		{
 			// get values from memory
 			if ($edit_title)
@@ -748,8 +725,7 @@ if ( $mode == 'edit' )
 				{
 					if ( $i != $title_id )
 					{
-						@reset($field_def);
-						while ( list($def_key, $def_data) = @each($field_def) )
+						foreach ($field_def as $def_key => $def_data)
 						{
 							$new_title_fields[$def_key][] = $title_fields[$def_key][$i];
 						}
@@ -765,8 +741,7 @@ if ( $mode == 'edit' )
 				{
 					if ( $i != $field_id )
 					{
-						@reset($field_def);
-						while ( list($def_key, $def_data) = @each($field_def) )
+						foreach ($field_def as $def_key => $def_data)
 						{
 							$new_fields[$def_key][] = $fields[$def_key][$i];
 						}
@@ -910,8 +885,7 @@ if ( $mode == 'edit' )
 				}
 				$id = $field_id;
 			}
-			@reset($field_def);
-			while ( list($def_key, $ddef_data) = @each($field_def) )
+			foreach ($field_def as $def_key => $ddef_data)
 			{
 				if ( $is_title )
 				{
@@ -955,8 +929,7 @@ if ( $mode == 'edit' )
 			);
 
 			// cats
-			@reset($field_cat);
-			while ( list($cat_name, $cat_data) = @each($field_cat) )
+			foreach ($field_cat as $cat_name => $cat_data)
 			{
 				$template->assign_block_vars('catmenu', array(
 					'CAT_NAME'		=> $cat_name,
@@ -976,8 +949,7 @@ if ( $mode == 'edit' )
 			// values
 			$s_hidden_fields = '';
 			$sav_cat = '';
-			@reset($field_def);
-			while ( list($def_key, $def_data) = @each($field_def) )
+			foreach ($field_def as $def_key => $def_data)
 			{
 				$def_type = $def_data['type'];
 				$def_name = 'field_det_' . $def_key;
@@ -1048,8 +1020,7 @@ if ( $mode == 'edit' )
 			// store the dsp fields
 			for ( $i=0; $i < $nb_title_fields; $i++)
 			{
-				@reset($field_def);
-				while ( list($def_key, $def_data) = @each($field_def) )
+				foreach ($field_def as $def_key => $def_data)
 				{
 					$value = $title_fields[$def_key][$i];
 					$s_hidden_fields .= '<input type="hidden" name="title_' . $def_key . '_' . $i .'" value="' . htmlspecialchars(htmldecode($value)) . '" />';
@@ -1057,8 +1028,7 @@ if ( $mode == 'edit' )
 			}
 			for ( $i=0; $i < $nb_fields; $i++)
 			{
-				@reset($field_def);
-				while ( list($def_key, $def_data) = @each($field_def) )
+				foreach ($field_def as $def_key => $def_data)
 				{
 					$value = $fields[$def_key][$i];
 					$s_hidden_fields .= '<input type="hidden" name="field_' . $def_key . '_' . $i .'" value="' . htmlspecialchars(htmldecode($value)) . '" />';
@@ -1100,8 +1070,7 @@ if ( $mode == 'edit' )
 
 			// search if maps are attached to the one to remove
 			$found = false;
-			@reset($maps);
-			while ( list($map_name, $map_data) = @each($maps) )
+			foreach ($maps as $map_name => $map_data)
 			{
 				$found = ( ($map_name != $map) && ( substr($map_name, 0, strlen($map)) == $map ) );
 				if ( $found )
@@ -1120,8 +1089,7 @@ if ( $mode == 'edit' )
 
 			// delete
 			$new_maps = array();
-			@reset($maps);
-			while ( list($map_name, $map_data) = @each($maps) )
+			foreach ($maps as $map_name => $map_data)
 			{
 				if ( substr($map_name, 0, strlen($map)) != $map )
 				{
@@ -1184,8 +1152,7 @@ if ( $mode == 'edit' )
 			if ( !empty($map) )
 			{
 				$new_maps = array();
-				@reset($maps);
-				while ( list($map_name, $map_data) = @each($maps) )
+				foreach ($maps as $map_name => $map_data)
 				{
 					if ( (substr($map_name, 0, strlen($map)) == $map) && (($map_name == $map) || (substr($map_name, strlen($map), 1) == '.')) )
 					{
@@ -1225,8 +1192,7 @@ if ( $mode == 'edit' )
 						{
 							// get all the key if different from the user field ones
 							$done = false;
-							@reset($field_def);
-							while ( list($key, $def) = @each($field_def) )
+							foreach ($field_def as $key => $def)
 							{
 								if ( ($key != 'field_name') && ( !isset($user_maps[$field_name]) || ($title_fields[$key][$i] != $user_maps[$field_name][$key]) ) )
 								{
@@ -1266,8 +1232,7 @@ if ( $mode == 'edit' )
 				{
 					// get all the key if different from the user field ones
 					$done = false;
-					@reset($field_def);
-					while ( list($key, $def) = @each($field_def) )
+					foreach ($field_def as $key => $def)
 					{
 						if ( ($key != 'field_name') && ( !isset($user_maps[$field_name]) || ($fields[$key][$i] != $user_maps[$field_name][$key]) ) )
 						{
@@ -1466,8 +1431,7 @@ if ( $mode == 'edit' )
 			// store the dsp fields
 			for ( $i=0; $i < $nb_title_fields; $i++)
 			{
-				@reset($field_def);
-				while ( list($def_key, $def_data) = @each($field_def) )
+				foreach ($field_def as $def_key => $def_data)
 				{
 					$value = $title_fields[$def_key][$i];
 					$s_hidden_fields .= '<input type="hidden" name="title_' . $def_key . '_' . $i .'" value="' . htmlspecialchars(htmldecode($value)) . '" />';
@@ -1475,8 +1439,7 @@ if ( $mode == 'edit' )
 			}
 			for ( $i=0; $i < $nb_fields; $i++)
 			{
-				@reset($field_def);
-				while ( list($def_key, $def_data) = @each($field_def) )
+				foreach ($field_def as $def_key => $def_data)
 				{
 					$value = $fields[$def_key][$i];
 					$s_hidden_fields .= '<input type="hidden" name="field_' . $def_key . '_' . $i .'" value="' . htmlspecialchars(htmldecode($value)) . '" />';
@@ -1531,8 +1494,7 @@ if ($mode == '')
 	$i = 0;
 	$map_id = -1;
 	$color = false;
-	@reset($maps);
-	while ( list($map_name, $map_data) = @each($maps) )
+	foreach ($maps as $map_name => $map_data)
 	{
 		$map_id++;
 		if ($map_data['parent'] == $map)
@@ -1551,8 +1513,7 @@ if ($mode == '')
 				}
 				else
 				{
-					@reset($map_data['title']);
-					while ( list($field_name, $field_data) = @each($map_data['title']) )
+					foreach ($map_data['title'] as $field_name => $field_data)
 					{
 						$title .= ( empty($title) ? '' : '<br />' ) . $field_name;
 					}
@@ -1618,9 +1579,8 @@ if ($mode == '')
 				);
 			}
 			$color = false;
-			@reset($maps[$map]['title']);
 			$i = 0;
-			while ( list($field_name, $field_data) = @each($maps[$map]['title']) )
+			foreach ($maps[$map]['title'] as $field_name => $field_data)
 			{
 				$field_data['field_name'] = $field_name;
 				$i++;
@@ -1653,7 +1613,7 @@ if ($mode == '')
 		//-------------------
 		// fields
 		//-------------------
-		$text = ( is_string($maps[$map]['fields']) || empty($maps[$map]['fields']) );
+		$text = empty($maps[$map]['fields']) || ( is_string($maps[$map]['fields']) );
 		$template->assign_block_vars('details.block', array(
 			'L_TITLE'	=> $lang['PCP_usermaps_fields'],
 			'TITLE'		=> $text ? ( empty($maps[$map]['fields']) ? $lang['None'] : pcp_format_lang($maps[$map]['fields'], true) ) : '',
@@ -1682,9 +1642,8 @@ if ($mode == '')
 				);
 			}
 			$color = false;
-			@reset($maps[$map]['fields']);
 			$i = 0;
-			while ( list($field_name, $field_data) = @each($maps[$map]['fields']) )
+			foreach ($maps[$map]['fields'] as $field_name => $field_data)
 			{
 				$field_data['field_name'] = $field_name;
 				$i++;
@@ -1695,14 +1654,14 @@ if ($mode == '')
 				);
 				for ( $j = 0; $j < count($list_field); $j++ )
 				{
-					$value = $field_data[ $list_field[$j] ];
+					$value = isset($field_data[ $list_field[$j] ]) ? $field_data[ $list_field[$j] ] : null;
 					if ( empty($value) && !empty($user_fields[$field_name][ $list_field[$j] ]) )
 					{
 						$value = $user_fields[$field_name][ $list_field[$j] ];
 					}
 					$template->assign_block_vars('details.block.multi.row.col', array(
 						'ALIGN'	=> empty($types_list[ $field_def[ $list_field[$j] ]['type'] ]['align']) ? 'left' : $types_list[ $field_def[ $list_field[$j] ]['type'] ]['align'],
-						'VALUE'	=> pcp_format_output( $field_def[ $list_field[$j] ]['type'], $value, $field_def[ $list_field[$j] ]['style'] ),
+						'VALUE'	=> pcp_format_output( isset($field_def[ $list_field[$j] ]['type']) ? $field_def[ $list_field[$j] ]['type'] : null, $value, isset($field_def[ $list_field[$j] ]['style']) ? $field_def[ $list_field[$j] ]['style'] : '' ),
 						)
 					);
 				}

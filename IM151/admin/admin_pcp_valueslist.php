@@ -58,8 +58,7 @@ function pcp_get_values_lists()
 
 	// sort
 	$names = array();
-	@reset($values_list);
-	while ( list($vlist, $data) = @each($values_list) )
+	foreach ($values_list as $vlist => $data)
 	{
 		$names[] = $vlist;
 	}
@@ -126,8 +125,7 @@ if ($mode == 'edit')
 	$item_txts = array();
 	$item_imgs = array();
 	$item_chks = array();
-	@reset($vlists[$vlist]['values']);
-	while ( list($item_key, $item_data) = @each($vlists[$vlist]['values']) )
+	foreach ($vlists[$vlist]['values'] as $item_key => $item_data)
 	{
 		$item_keys[] = $item_key;
 		$item_txts[] = $item_data['txt'];
@@ -246,8 +244,7 @@ if ($mode == 'edit')
 	else if ( $delete )
 	{
 		$new_vlists = array();
-		@reset($vlists);
-		while ( list($vlist_name, $vlist_data) = @each($vlists) )
+		foreach ($vlists as $vlist_name => $vlist_data)
 		{
 			if ( ($vlist_name != $vlist) && !empty($vlist_name) )
 			{
@@ -308,8 +305,7 @@ if ($mode == 'edit')
 			$values[ $item_keys[$i] ] = array( 'txt' => $item_txts[$i], 'img' => $item_imgs[$i] );
 		}
 		$new_vlists = array();
-		@reset($vlists);
-		while ( list($vlist_name, $vlist_data) = @each($vlists) )
+		foreach ($vlists as $vlist_name => $vlist_data)
 		{
 			if ( ($vlist_name == $vlist) && !empty($vlist) )
 			{
@@ -389,8 +385,7 @@ if ($mode == 'edit')
 		// tables list
 		$selected = empty($main) ? ' selected="selected"' : '';
 		$s_tables_opt = '<option value=""' . $selected . '>' . $lang['None'] . '</option>';
-		@reset($tables_linked);
-		while ( list($table_name, $table_data) = @each($tables_linked) )
+		foreach ($tables_linked as $table_name => $table_data)
 		{
 			$selected = ($main == $table_name) ? ' selected="selected"' : '';
 			$s_tables_opt .= '<option value="' . $table_name . '"' . $selected . '>[' . $table_name . ']</option>';
@@ -471,27 +466,25 @@ if ($mode == '')
 
 	// dump tables linked list
 	$color = false;
-	@reset($vlists);
-	while ( list($vlist_name, $vlist_data) = @each($vlists) )
+	foreach ($vlists as $vlist_name => $vlist_data)
 	{
 		$color = !$color;
 		$template->assign_block_vars('row', array(
 			'COLOR'		=> $color ? 'row1' : 'row2',
 			'NAME'		=> $vlist_name,
-			'FUNC'		=> $vlist_data['func'],
-			'MAIN'		=> $vlist_data['table']['main'],
+			'FUNC'		=> ( isset($vlist_data['func']) ? $vlist_data['func'] : '' ),
+			'MAIN'		=> ( isset($vlist_data['table']['main']) ? $vlist_data['table']['main'] : '' ),
 
 			'U_VLIST'	=> append_sid("./admin_pcp_valueslist.$phpEx?mode=edit&vlist=$vlist_name"),
-			'U_MAIN'	=> append_sid("./admin_pcp_tableslinked.$phpEx?mode=edit&table=" . $vlist_data['table']['main']),
+			'U_MAIN'	=> append_sid("./admin_pcp_tableslinked.$phpEx?mode=edit&table=" . ( isset($vlist_data['table']['main']) ? $vlist_data['table']['main'] : '') ),
 			)
 		);
 		if ( !empty($vlist_data['values']) )
 		{
 			$template->assign_block_vars('row.items', array());
 			$color_sub = false;
-			@reset($vlist_data['values']);
 			$i = 0;
-			while ( list($item_val, $item_data) = @each($vlist_data['values']) )
+			foreach ($vlist_data['values'] as $item_val => $item_data)
 			{
 				if ($i >= PCP_threshold)
 				{

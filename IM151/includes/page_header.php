@@ -76,7 +76,7 @@ if(!defined('PORTAL_INIT'))
 	$var_cache = new Cache_Lite($options);
 	define('PORTAL_INIT', TRUE);
 }
-if($portal_config['collapse_layout'] == 1)
+if(!empty($portal_config['collapse_layout']) && $portal_config['collapse_layout'] == 1)
 {
 	$template->assign_block_vars('layout_collapse',array(
 		'LAYOUT_IMAGER' => $images['layout_imager'],
@@ -666,7 +666,7 @@ if (!isset($nav_links))
 
 $nav_links_html = '';
 $nav_link_proto = '<link rel="%s" href="%s" title="%s" />' . "\n";
-while( list($nav_item, $nav_array) = @each($nav_links) )
+foreach ($nav_links as $nav_item => $nav_array)
 {
 	if ( !empty($nav_array['url']) )
 	{
@@ -800,7 +800,7 @@ if (isset($_GET['marknow']) && $_GET['marknow'] == 'ipfeature' && $userdata['ses
 	}
 }
 
-if ( $ctracker_config->settings['login_ip_check'] == 1 && $userdata['ct_enable_ip_warn'] == 1 && $userdata['session_logged_in'] )
+if ( !empty($ctracker_config->settings['login_ip_check']) && $ctracker_config->settings['login_ip_check'] == 1 && $userdata['ct_enable_ip_warn'] == 1 && $userdata['session_logged_in'] )
 {
 	include_once($phpbb_root_path . '/ctracker/classes/class_ct_userfunctions.' . $phpEx);
 	$ctracker_user = new ct_userfunctions();
@@ -860,12 +860,12 @@ if ( $userdata['ct_global_msg_read'] == 1 && $userdata['session_logged_in'] && $
 	);
 }
 
-(($ctracker_config->settings['login_history'] == 1 || $ctracker_config->settings['login_ip_check'] == 1) && $userdata['session_logged_in'])? $template->assign_block_vars('login_sec_link', array()): null;
+(((!empty($ctracker_config->settings['login_history']) && $ctracker_config->settings['login_history'] == 1) || (!empty($ctracker_config->settings['login_ip_check']) && $ctracker_config->settings['login_ip_check'] == 1)) && $userdata['session_logged_in'])? $template->assign_block_vars('login_sec_link', array()): null;
 
 /*
  * CrackerTracker Password Expirement Check
  */
-if ( $userdata['session_logged_in'] && $ctracker_config->settings['pw_control'] == 1 )
+if ( $userdata['session_logged_in'] && !empty($ctracker_config->settings['pw_control']) )
 {
 	if ( time() > $userdata['ct_last_pw_reset'] )
 	{
@@ -918,15 +918,15 @@ while ($possible_banner = $db->sql_fetchrow($result))
 	{
 		case 2:
 			if (!$hour_within)
-				continue;
+				continue 2;
 
 		case 4:
 			if (!$date_within)
-				continue;
+				continue 2;
 
 		case 6:
 			if (!$week_within)
-				continue;
+				continue 2;
 
 		// case: 0: ;
 	}
@@ -951,16 +951,16 @@ while ($possible_banner = $db->sql_fetchrow($result))
 	{
 		case 0: // must be equal
 			if ($banner_level != $banner_user_level)
-				continue; // it's not, skip this row
+				continue 2; // it's not, skip this row
 		case 1: // must be less or equal
 			if ($banner_level > $banner_user_level)
-				continue; // it's not, skip this row
+				continue 2; // it's not, skip this row
 		case 2: // must be greater or equal
 			if ($banner_level < $banner_user_level)
-				continue; // it's not, skip this row
+				continue 2; // it's not, skip this row
 		case 1: // must be unequal
 			if ($banner_level == $banner_user_level)
-				continue; // it's not, skip this row
+				continue 2; // it's not, skip this row
 	}
 
 	// TODO implement banner_weight(?)
@@ -1074,7 +1074,7 @@ $template->assign_vars(array(
 	'LOGO_WIDTH' => $board_config['logo_image_w'],
 	'LOGO_HEIGHT' => $board_config['logo_image_h'],
 	// Logo Selector MOD
-	'PAGE_TITLE' => $page_title,
+	'PAGE_TITLE' => ( isset($page_title) ? $page_title : '') ,
 	'LAST_VISIT_DATE' => sprintf($lang['You_last_visit'], $s_last_visit),
 	'CURRENT_TIME' => sprintf($lang['Current_time'], create_date($board_config['default_dateformat'], time(), $board_config['board_timezone'])),
 	'TOTAL_USERS_ONLINE' => $l_online_users,
@@ -1462,7 +1462,7 @@ die('debug: ' . strval(empty($gen_simple_header)) . ' | ' . strval($temp_debug) 
 //
 if(empty($gen_simple_header))
 {
-	if(!$layout_forum_wide_flag&&$portal_config['portal_header'])
+	if(empty($layout_forum_wide_flag) && $portal_config['portal_header'])
 	{
 		if(defined('HAS_DIED') || defined('IN_LOGIN')){
 			$template->assign_vars(array('FOOTER_WIDTH' => 0));

@@ -217,11 +217,10 @@ function read_tree($force=false)
 	if ( !empty($board_config['tracking_unreads']) )
 	{
 		// get the unreads topic id
-		@reset($board_config['tracking_unreads']);
-		while ( list($id, $time) = @each($board_config['tracking_unreads']) )
+    foreach ($board_config['tracking_unreads'] as $id => $time)
 		{
 			// don't add obsolete cookies
-			if ( ($time > intval($board_config['tracking_all'])) && ($time > intval($board_config['tracking_topics'][$id])) )
+			if ( ($time > intval($board_config['tracking_all'])) && !empty($board_config['tracking_topics'][$id]) && ($time > intval($board_config['tracking_topics'][$id])) )
 			{
 				$sql_unreads .= ( empty($sql_unreads) ? '' : ', ' ) . $id;
 			}
@@ -343,8 +342,7 @@ if (!defined('IN_INSTALL'))
 
 			// store the added columns
 			$idx = $tree['keys'][POST_FORUM_URL . $row['forum_id'] ];
-			@reset($row);
-			while ( list($key, $value) = @each($row) )
+			foreach($row as $key => $value)
 			{
 				$nkey = intval($key);
 				if ( $key != "$nkey" )
@@ -375,8 +373,7 @@ if (!defined('IN_INSTALL'))
 			if ( !empty($new_topic_data[$forum_id]) )
 			{
 				$forum_last_post_time = 0;
-				@reset($new_topic_data[$forum_id]);
-				while( list($check_topic_id, $check_post_time) = @each($new_topic_data[$forum_id]) )
+        foreach ($new_topic_data[$forum_id] as $check_topic_id => $check_post_time)
 				{
 //-- mod : keep unread -----------------------------------------------------------------------------
 //-- delete
@@ -596,8 +593,7 @@ function get_user_tree(&$userdata)
 		$wauth = auth(AUTH_ALL, AUTH_LIST_ALL, $userdata);
 		if (!empty($wauth))
 		{
-			reset($wauth);
-			while (list($key, $data) = each($wauth))
+      foreach ($wauth as $key => $data)
 			{
 				$tree['auth'][POST_FORUM_URL . $key] = $data;
 			}
@@ -682,7 +678,7 @@ function get_auth_keys($cur='Root', $all=false, $level=-1, $max=-1, $auth_key='a
 // get_max_depth() : return the maximum level in the branch of the tree
 //
 //--------------------------------------------------------------------------------------------------
-function get_max_depth($cur='Root', $all=false, $level=-1, &$keys, $max=-1)
+function get_max_depth($cur='Root', $all=false, $level=-1, &$keys=[], $max=-1)
 {
 	global $tree;
 	if (empty($keys['id']))
@@ -820,7 +816,7 @@ function get_tree_option($cur='', $all=false, $disable_non_forum = false)
 // build_index() : display a level and its sublevels : use dislay_index() as entry point
 //
 //--------------------------------------------------------------------------------------------------
-function build_index($cur='Root', $cat_break=false, &$forum_moderators, $real_level=-1, $max_level=-1, &$keys)
+function build_index($cur='Root', $cat_break=false, &$forum_moderators=[], $real_level=-1, $max_level=-1, &$keys=[])
 {
 	global $template, $phpEx, $board_config, $lang, $images, $db, $userdata;
 	global $tree;
@@ -1004,7 +1000,7 @@ function build_index($cur='Root', $cat_break=false, &$forum_moderators, $real_le
 			$moderator_list = '';
 			if ($type == POST_FORUM_URL)
 			{
-				if ( $forum_moderators[$id] && count($forum_moderators[$id]) > 0 )
+				if ( !empty($forum_moderators[$id]) && count($forum_moderators[$id]) > 0 )
 				{
 					$l_moderators = ( count($forum_moderators[$id]) == 1 ) ? $lang['Moderator'] : $lang['Moderators'];
 					$moderator_list = implode(', ', $forum_moderators[$id]);
@@ -1142,7 +1138,7 @@ function build_index($cur='Root', $cat_break=false, &$forum_moderators, $real_le
 									$approve_mod['enabled'] = true;
 								}
 							}
-							if ( $approve_mod['enabled'] )
+							if ( !empty($approve_mod['enabled']) )
 							{
 								if ( $data['tree.post_user_id'] == ANONYMOUS || $approve_mod['forum_hide_unapproved_posts'] || $approve_mod['forum_hide_unapproved_topics'] )
 								{
@@ -1276,7 +1272,7 @@ function build_index($cur='Root', $cat_break=false, &$forum_moderators, $real_le
 	}
 
 	// display sub-levels
-  $tree_count = $tree['sub'][$cur] ? count($tree['sub'][$cur]) : 0;
+  $tree_count = !empty($tree['sub'][$cur]) ? count($tree['sub'][$cur]) : 0;
 	for ($i=0; $i < $tree_count; $i++) if (!empty($keys['keys'][$tree['sub'][$cur][$i]]))
 	{
 		$wdisplay = build_index($tree['sub'][$cur][$i], $cat_break, $forum_moderators, $level+1, $max_level, $keys);
@@ -1339,8 +1335,7 @@ function display_index($cur='Root')
 
 	// moderators list
 	$forum_moderators = array();
-	@reset($tree['mods']);
-	while ( list($idx, $data) = @each($tree['mods']) )
+  foreach ($tree['mods'] as $idx => $data)
 	{
 		if ( $tree['type'][$idx] == POST_FORUM_URL )
 		{

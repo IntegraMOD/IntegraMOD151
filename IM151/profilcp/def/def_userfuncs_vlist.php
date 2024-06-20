@@ -81,8 +81,8 @@ function get_timezones_list()
 function get_auth_list(){
 	global $phpbb_root_path, $phpEx, $board_config;
 	include_once($phpbb_root_path . './includes/def_auth.' . $phpEx );
-	@reset($field_names);
-	while (list($auth_id, $auth_description) = @each($field_names) )	{
+  foreach($field_names as $auth_id => $auth_description)
+  {
 		$auths[$auth_id] = array( 'txt' => $auth_id, 'img' => '');
 	}
 	return $auths;
@@ -113,6 +113,7 @@ function get_group_list()
 			ORDER BY g.group_weight ASC';
 	$result = $db->sql_query($sql, false, __LINE__, __FILE__);
 
+  $list_color = [];
 	while ( $group_data = $db->sql_fetchrow($result) )
 	{
 		$list_color[ intval($group_data['group_id']) ] = array( 'txt' => $group_data['group_name'] );

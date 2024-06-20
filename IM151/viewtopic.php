@@ -29,14 +29,14 @@ include($phpbb_root_path . 'common.'.$phpEx);
 //
 // Start session management
 //
-$userdata = session_pagestart($user_ip, $forum_id);
+$userdata = session_pagestart($user_ip, 0);
 init_userprefs($userdata);
 //
 // End session management
 //
 
 //Begin Lo-Fi Mod 
-if ($lofi) {
+if (!empty($lofi)) {
  $lang['Reply_with_quote'] = $lang['quote_lofi'] ;
  $lang['Edit_delete_post'] = $lang['edit_lofi'];
  $lang['View_IP'] = $lang['ip_lofi'];
@@ -222,7 +222,7 @@ $topic_id = $row['topic_id'];
 	$install_time 	= time();
 	$bypass			= '';
 		
-	( !$_GET['mode'] ) ? $viewed_mode = $_GET['mode'] : $viewed_mode = $_GET['mode'];
+	( !empty($_GET['mode']) ) ? $viewed_mode = $_GET['mode'] : $viewed_mode = '';
 	
 	$q = "SELECT active, effected, install_date
 		  FROM ". $table_prefix ."force_read"; 
@@ -350,7 +350,7 @@ if ( !$userdata['session_logged_in'] )
 }
 
 // get the last time the user visited the topic
-$topic_last_read = intval($board_config['tracking_unreads'][$topic_id]);
+$topic_last_read = isset($board_config['tracking_unreads'][$topic_id]) ? intval($board_config['tracking_unreads'][$topic_id]) : 0;
 if ( !empty($board_config['tracking_all']) && ($board_config['tracking_all'] > $topic_last_read) )
 {
 	$topic_last_read = $board_config['tracking_all'];
@@ -1167,10 +1167,11 @@ if ( $userdata['session_logged_in'] )
 	$template->assign_block_vars('bookmark_state', array());
 	// Send vars to template
 	$bm_action = ($is_bookmark_set) ? ("&amp;removebm=true") : ("&amp;setbm=true");
+	$highlight = isset($_GET['highlight']) ? urlencode($_GET['highlight']) : '';
 	$template->assign_vars(array(
 		'L_BOOKMARK_ACTION' => ($is_bookmark_set) ? ($lang['Remove_Bookmark']) : ($lang['Set_Bookmark']),
 		'BM_IMG' => ($is_bookmark_set) ? $images['bm_remove'] : $images['bm_add'],
-		'U_BOOKMARK_ACTION' => append_sid("viewtopic.$phpEx?" . POST_TOPIC_URL . "=$topic_id&amp;start=$start&amp;postdays=$post_days&amp;postorder=$post_order&amp;highlight=" . $_GET['highlight'] . $bm_action))
+		'U_BOOKMARK_ACTION' => append_sid("viewtopic.$phpEx?" . POST_TOPIC_URL . "=$topic_id&amp;start=$start&amp;postdays=$post_days&amp;postorder=$post_order&amp;highlight=" . $highlight . $bm_action))
 	);
 }
 
@@ -1178,13 +1179,16 @@ if ( $userdata['session_logged_in'] )
 // If we've got a hightlight set pass it on to pagination,
 // I get annoyed when I lose my highlight after the first page.
 //
+$pagination_printertopic = '';
+$pagination_highlight = '';
+$pagination_finish_rel = '';
 if(isset($_GET['printertopic']))
 {
-$pagination_printertopic = "printertopic=1&amp;";
+	$pagination_printertopic = "printertopic=1&amp;";
 }
 if($highlight != '')
 {
-$pagination_highlight = "highlight=$highlight&amp;";
+	$pagination_highlight = "highlight=$highlight&amp;";
 }
 $pagination_ppp = $board_config['posts_per_page'];
 if(isset($finish))
@@ -1279,8 +1283,8 @@ $template->assign_vars(array(
 	'L_POST_REPLY_TOPIC' => $reply_alt,
 	'L_PRINTER_TOPIC' => $lang['Printer_topic'],
 	'L_BACK_TO_TOP' => $lang['Back_to_top'],
-	'L_GO_TO_BOTTOM' => $lang['Go_to_bottom'],
-	'L_GO_TO_TOP' => $lang['Go_to_top'],
+	'L_GO_TO_BOTTOM' => ( isset($lang['Go_to_bottom']) ? $lang['Go_to_bottom'] : '' ),
+	'L_GO_TO_TOP' => ( isset($lang['Go_to_top']) ? $lang['Go_to_top'] : '' ),
 	'L_REPLY_WITH_QUOTE' => $lang['Reply_with_quote'],
 
 	'L_DISPLAY_POSTS' => $lang['Display_posts'],
@@ -1342,7 +1346,7 @@ if ( $approve_row = $db->sql_fetchrow($approve_result) )
 $db->sql_freeresult($result);
 $approve_mod['moderators'] = explode('|', get_moderators_user_id_of_forum($forum_id));
 
-if ( $approve_mod['enabled'] )
+if ( !empty($approve_mod['enabled']) )
 {
 	if ( in_array($userdata['user_id'], $approve_mod['moderators']) || $is_auth['auth_mod'] )
 	{
@@ -2007,7 +2011,7 @@ for($i = 0; $i < $total_posts; $i++)
 	$ignore_buttons	= pcp_output_panel('PHPBB.viewtopic.buttons.ignore', $postrow[$i]);
 //-- fin mod : profile cp --------------------------------------------------------------------------
 
-	if ( count_safe($post_rank_set) > 0 && ( $i == 0 || $rating_config[2] == 0 ) )
+	if ( !empty($post_rank_set) > 0 && ( $i == 0 || $rating_config[2] == 0 ) )
 	{
 		$post_rating = ( $postrow[$i]['rating_rank_id'] > 0 ) ? $lang['Rating'].':&nbsp;'.$post_rank_set[$postrow[$i]['rating_rank_id']] : $lang['No_rating'];
 		$rating_url = append_sid($phpbb_root_path.'rating.php?p='.$postrow[$i]['post_id']);
@@ -2393,7 +2397,7 @@ if ( $userdata['user_allowsignature'] != 2 && $board_config['sig_allow_font_size
 // 
 // Begin Approve_Mod Block : 11
 // 		
-		if ( $approve_mod['enabled'] )
+		if ( !empty($approve_mod['enabled']) )
 		{
 			$approve_mod['poster_id'] = $postrow[$i]['poster_id'];
 			$approve_mod['posts_awaiting'] = false;
@@ -2553,7 +2557,7 @@ if ( $userdata['user_allowsignature'] != 2 && $board_config['sig_allow_font_size
 //-- mod : profile cp ------------------------------------------------------------------------------
 //-- add
 		'POST_ID' => $postrow[$i]['post_id'],
-		'AUTHOR_PANEL'	=> $postrow[$i]['user_my_ignore'] ? $ignore_panel : $auto_approve.$author_panel,
+		'AUTHOR_PANEL'	=> !empty($postrow[$i]['user_my_ignore']) ? $ignore_panel : ( isset($auto_approve) ? $auto_approve : '') .$author_panel,
 		'BUTTONS_PANEL'	=> $buttons_panel,
 		'IGNORE_IMG'	=> $ignore_buttons,
 //-- fin mod : profile cp --------------------------------------------------------------------------
@@ -2578,9 +2582,9 @@ if ( $userdata['user_allowsignature'] != 2 && $board_config['sig_allow_font_size
 		'IP' => $ip,
 		'DELETE_IMG' => $delpost_img,
 		'DELETE' => $delpost,
-		'REPORT_IMG' => $report_img,
-		'REPORT' => $report,
-		'USER_WARNINGS' => $user_warnings,
+		'REPORT_IMG' => ( isset($report_img) ? $report_img : '' ),
+		'REPORT' => ( isset($report) ? $report : '' ),
+		'USER_WARNINGS' => ( isset($user_warnings) ? $user_warnings : '' ),
 		'CARD_IMG' => $card_img,
 		'CARD_HIDDEN_FIELDS' => $card_hidden,
 		'CARD_EXTRA_SPACE' => ($r_card_img || $y_card_img || $g_card_img || $b_card_img) ? ' ' : '',
@@ -2601,7 +2605,7 @@ if ( $userdata['user_allowsignature'] != 2 && $board_config['sig_allow_font_size
 	display_post_attachments($postrow[$i]['post_id'], $postrow[$i]['post_attachment']);
 		//-- mod : profile cp ------------------------------------------------------------------------------
 //-- add
-	if ($postrow[$i]['user_my_ignore'])
+	if (!empty($postrow[$i]['user_my_ignore']))
 	{
 		$template->assign_block_vars('postrow.switch_buddy_ignore', array());
 	}

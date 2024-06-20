@@ -29,11 +29,10 @@ if ( !defined('IN_PHPBB') )
 if ( !empty($setmodules) )
 {
 	// read maps
-	@reset($user_maps);
-	while ( list($map_name, $map_data) = @each($user_maps) )
+  foreach ($user_maps as $map_name => $map_data)
 	{
 		$map_tree = explode('.', $map_name);
-		if ( ($map_tree[0] = 'PCP') && ($map_data['custom'] == 2) )
+		if ( ($map_tree[0] = 'PCP') && isset($map_data['custom']) && ($map_data['custom'] == 2) )
 		{
 			// build 
 			$map_root = '';
@@ -50,7 +49,7 @@ if ( !empty($setmodules) )
 					{
 						$pgm = __FILE__;
 					}
-					$order = $user_maps[$map_root]['order'];
+					$order = ( isset($user_maps[$map_root]['order']) ? $user_maps[$map_root]['order'] : 0);
 					$shortcut = $user_maps[$map_root]['title'];
 					$pagetitle = $user_maps[$map_root]['title'];
 					pcp_set_menu( $map_tree[$i], $order, $pgm, $shortcut, $pagetitle );
@@ -62,7 +61,7 @@ if ( !empty($setmodules) )
 					{
 						$pgm = __FILE__;
 					}
-					$order = $user_maps[$map_root]['order'];
+					$order = ( isset($user_maps[$map_root]['order']) ? $user_maps[$map_root]['order'] : 0 );
 					$shortcut = $user_maps[$map_root]['title'];
 					$pagetitle = $user_maps[$map_root]['title'];
 					pcp_set_sub_menu( $map_tree[$i-1], $map_tree[$i], $order, $pgm, $shortcut, $pagetitle );
@@ -217,8 +216,7 @@ if ( !empty($sub) )
 {
 	$map_base .= $sub . '.';
 }
-@reset($user_maps);
-while ( list($map_name, $map_data) = @each($user_maps) )
+foreach ($user_maps as $map_name => $map_data)
 {
 	if ( (substr($map_name, 0, strlen($map_base)) == $map_base) && ( !empty($map_data['title']) || !empty($map_data['fields']) ) )
 	{
@@ -261,8 +259,7 @@ for ($i = 0; $i < count($maps); $i++ )
 
 	// count how many cols in the panel
 	$col = 1;
-	@reset( $user_maps[ $maps[$i] ]['fields'] );
-	while ( list($field_name, $field_data) = @each($user_maps[ $maps[$i] ]['fields']) )
+  foreach ( $user_maps[ $maps[$i] ]['fields']  as $field_name => $field_data)
 	{
 		if ( $field_data['leg'] && ($field_data['img'] || $field_data['txt']) )
 		{
@@ -295,8 +292,7 @@ for ($i = 0; $i < count($maps); $i++ )
 	}
 
 	// panel field
-	@reset( $user_maps[ $maps[$i] ]['fields'] );
-	while ( list($field_name, $field_data) = @each($user_maps[ $maps[$i] ]['fields']) )
+  foreach ( $user_maps[ $maps[$i] ]['fields']  as $field_name => $field_data)
 	{
 		if (substr($field_name, 0, 4) == '[lf]')
 		{

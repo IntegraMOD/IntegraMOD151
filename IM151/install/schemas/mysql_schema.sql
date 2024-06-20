@@ -222,7 +222,7 @@ CREATE TABLE phpbb_album (
 CREATE TABLE phpbb_album_cat (
   cat_id mediumint(8) unsigned NOT NULL auto_increment,
   cat_title varchar(255) NOT NULL default '',
-  cat_desc mediumtext NOT NULL default '',
+  cat_desc mediumtext NOT NULL,
   cat_order mediumint(8) NOT NULL default '0',
   cat_view_level tinyint(3) NOT NULL default '-1',
   cat_upload_level tinyint(3) NOT NULL default '0',
@@ -716,7 +716,7 @@ CREATE TABLE phpbb_categories (
   cat_order mediumint(8) unsigned NOT NULL default '0',
   cat_main_type char(1) default NULL,
   cat_main mediumint(8) unsigned NOT NULL default '0',
-  cat_desc mediumtext NOT NULL default '',
+  cat_desc mediumtext NOT NULL,
   icon varchar(255) default NULL,
   PRIMARY KEY  (cat_id),
   KEY cat_order (cat_order)
@@ -1497,7 +1497,7 @@ CREATE TABLE phpbb_optimize_db (
 CREATE TABLE phpbb_pa_cat (
   cat_id int(10) NOT NULL auto_increment,
   cat_name mediumtext NOT NULL,
-  cat_desc mediumtext NOT NULL default '',
+  cat_desc mediumtext NOT NULL,
   cat_parent int(50) default NULL,
   parents_data text NOT NULL,
   cat_order int(50) default NULL,
@@ -2458,8 +2458,8 @@ CREATE TABLE phpbb_users (
   user_inactive_last_eml int( 11 ) NOT NULL default '0',
   user_state varchar(3) NOT NULL default '0',
   user_country varchar(3) NOT NULL default '0',
-  phpBBSecurity_answer mediumtext NOT NULL default '',
-  phpBBSecurity_question mediumtext NOT NULL default '',
+  phpBBSecurity_answer mediumtext NOT NULL,
+  phpBBSecurity_question mediumtext NOT NULL,
   phpBBSecurity_login_tries smallint(5) NOT NULL default '0',
   phpBBSecurity_pm_sent smallint(1) NOT NULL default '0',
   user_group_id MEDIUMINT(8) DEFAULT 0 NOT NULL,
@@ -2476,7 +2476,7 @@ CREATE TABLE phpbb_users (
 CREATE TABLE phpbb_vote_desc (
   vote_id mediumint(8) unsigned NOT NULL auto_increment,
   topic_id mediumint(8) unsigned NOT NULL default '0',
-  vote_text mediumtext NOT NULL default '',
+  vote_text mediumtext NOT NULL,
   vote_start int(11) NOT NULL default '0',
   vote_length int(11) NOT NULL default '0',
   vote_max int(3) NOT NULL default '1',
@@ -2538,7 +2538,7 @@ CREATE TABLE phpbb_words (
 
 CREATE TABLE phpbb_wpm (
 	name varchar(255) NOT NULL default '',
-	value mediumtext NOT NULL default ''
+	value mediumtext NOT NULL
 );
 
 # --------------------------------------------------------
@@ -2576,9 +2576,9 @@ CREATE TABLE phpbb_reports (
   report_status tinyint(1) NOT NULL,
   report_reason_id mediumint(8) UNSIGNED NOT NULL,
   report_subject int(11) NOT NULL,
-  report_subject_data mediumtext DEFAULT NULL,
+  report_subject_data mediumtext NULL,
   report_title varchar(255) NOT NULL,
-  report_desc mediumtext NOT NULL default '',
+  report_desc mediumtext NOT NULL,
   reportee_user_id mediumint(8) NULL,
   reportee_username varchar(25) NULL,
   PRIMARY KEY (report_id),
@@ -2603,7 +2603,7 @@ CREATE TABLE phpbb_reports_changes (
   user_id mediumint(8) NOT NULL,
   report_change_time int(11) NOT NULL,
   report_status tinyint(1) NOT NULL,
-  report_change_comment mediumtext NOT NULL default '',
+  report_change_comment mediumtext NOT NULL,
   PRIMARY KEY (report_change_id),
   KEY report_id (report_id),
   KEY user_id (user_id),

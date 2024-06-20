@@ -1340,7 +1340,7 @@ else
 	}
 	$s_group_list = '<select name="' . POST_GROUPS_URL . '">' . $s_group_list_opt . '</select>';
 
-	if ( $s_group_list_opt != '' || $s_pending_groups_opt != '' || $s_member_groups_opt != '' )
+	if ( !empty($s_group_list_opt) || !empty($s_pending_groups_opt) || !empty($s_member_groups_opt) )
 	{
 		//
 		// Load and process templates

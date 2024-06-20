@@ -61,7 +61,7 @@ $dir = @opendir($phpbb_root_path . "profilcp");
 $setmodules = true;
 while( $file = @readdir($dir) )
 {
-	if( preg_match("/^profilcp_.*?\." . $phpEx . "$/", $file) )
+  if (strpos($file, 'profilcp_') === 0 && strpos($file, '.'.$phpEx) !== false)
 	{
 		include($phpbb_root_path . "profilcp/" . $file);
 	}
@@ -216,7 +216,8 @@ if ( !isset($module['sub'][$curopt]['mode']) || !in_array($sub, $module['sub'][$
 
 // get cur subopt
 $cur_subopt = -1;
-for ($i=0; ( ($i < count_safe($module['sub'][$curopt]['mode'])) && ($cur_subopt < 0) ); $i++ )
+$mode_count = isset($module['sub'][$curopt]['mode']) ? count_safe($module['sub'][$curopt]['mode']) : 0;
+for ($i=0; ( ($i < $mode_count) && ($cur_subopt < 0) ); $i++ )
 {
 	if ($sub == $module['sub'][$curopt]['mode'][$i])
 	{
@@ -322,7 +323,7 @@ else
 		$switch = ($curopt==$i) ? 'curopt' : ( ($userdata['session_logged_in'] && ( ($userdata['user_id'] == $view_user_id) || (is_admin($userdata) && ($level_prior[get_user_level($userdata)] > $level_prior[get_user_level($view_userdata)])))) ? 'otheropt' : 'inactopt' );
 		$template->assign_block_vars('opt', array());
 		$link = append_sid("./profile.$phpEx?mode=" . $module['mode'][$i] . ( ($view_userdata['user_id'] != ANONYMOUS) ? '&' . POST_USERS_URL . '=' . $view_userdata['user_id'] : '') );
-		if ( count_safe($module['sub'][$i]['mode']) == 1 )
+		if ( !empty($module['sub'][$i]['mode']) && count_safe($module['sub'][$i]['mode']) == 1 )
 		{
 			// only one sub-module
 			$link = append_sid("./profile.$phpEx?mode=" . $module['mode'][$i] . "&sub=" . $module['sub'][$i]['mode'][0] . ( ($view_userdata['user_id'] != ANONYMOUS) ? '&' . POST_USERS_URL . '=' . $view_userdata['user_id'] : '') );

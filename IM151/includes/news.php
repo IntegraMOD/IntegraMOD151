@@ -57,7 +57,7 @@ class NewsModule
   *
   * @access public
   */
-  function NewsModule( $root_path )
+  function __construct( $root_path )
   {
     global $CFG, $db, $phpEx, $template, $board_config;
 

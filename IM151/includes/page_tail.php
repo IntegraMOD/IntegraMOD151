@@ -27,7 +27,7 @@ if ( !defined('IN_PHPBB') )
 
 // Start add - Complete banner MOD
 // V: only update it 1/3 times, and increment it by 3 instead
-if ($banner_show_list && rand(1, 3) == 3)
+if (!empty($banner_show_list) && rand(1, 3) == 3)
 {
 	$sql = "UPDATE ".BANNERS_TABLE."
 		SET banner_view=banner_view+3
@@ -80,7 +80,7 @@ die('debug: ' . strval($temp_debug) . ' | ' . strval($portal_config['portal_tail
 // IM Portal https://integramod.com
 //
 
-if(!$layout_forum_wide_flag&&$portal_config['portal_tail']&&(!defined('HAS_DIED'))&&(!defined('IN_LOGIN')))
+if(!empty($layout_forum_wide_flag) && $portal_config['portal_tail'] && (!defined('HAS_DIED')) && (!defined('IN_LOGIN')))
 {
 	$template->set_filenames(array(
 		'portal_tail'         => 'portal_page_tail.tpl')
@@ -136,8 +136,8 @@ $template->assign_vars(array(
 	'PROTECTED'	=> ($userdata['user_level'] == ADMIN && $userdata['user_id'] != ANONYMOUS) ? ' ' . $lang['PS_blocked_line2'].' :: ' : 'Protected by phpBB Security &copy; <a href="http://phpbb-amod.com" class="copyright" target="_blank">phpBB-Amod</a> ::',
 	'TRANSLATION_INFO' => (isset($lang['TRANSLATION_INFO'])) ? $lang['TRANSLATION_INFO'] : ((isset($lang['TRANSLATION'])) ? $lang['TRANSLATION'] : ''),
 	'COOKIES_LINK' => $cookies_link,
-	'CRACKER_TRACKER_FOOTER' => !empty($ctracker_config) ? create_footer_layout($ctracker_config->settings['footer_layout']) : '',
-	'L_STATUS_LOGIN' => (!empty($ctracker_config) && $ctracker_config->settings['login_ip_check'])? sprintf($lang['ctracker_ipwarn_info'], $output_login_status) : '',
+	'CRACKER_TRACKER_FOOTER' => !empty($ctracker_config) && !empty($ctracker_config->settings['footer_layout']) ? create_footer_layout($ctracker_config->settings['footer_layout']) : '',
+	'L_STATUS_LOGIN' => (!empty($ctracker_config) && !empty($ctracker_config->settings['login_ip_check']))? sprintf($lang['ctracker_ipwarn_info'], $output_login_status) : '',
 	'ADMIN_LINK' => $admin_link,
 	'COPYRIGHT' => "Powered by <a href=\"http://www.integramod.com\" target=\"_phpbb\">IntegraMOD</a> &copy; 2004, 2011 The Integramod Group",
 	'STYLECWI2' => "Style <a href=\"http://www.integramod.com\" target=\"_phpbb\">Integra2 </a> &copy; IntegraMod Team 2011<br />",

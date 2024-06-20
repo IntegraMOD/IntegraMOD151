@@ -226,7 +226,7 @@ function report_modules($mode = 'all', $module = null)
 				return false;
 			}
 			
-			$key = ($mode == 'name') ? $module_names[$module] : $module;
+			$key = ($mode == 'name') && isset($module_names[$module]) ? $module_names[$module] : $module;
 			return (isset($modules[$key])) ? $modules[$key] : false;
 		break;
 		

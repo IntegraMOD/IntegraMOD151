@@ -181,29 +181,30 @@ if ( !defined('CT_SECLEVEL') || CT_SECLEVEL == 'HIGH' )
 else if ( CT_SECLEVEL == 'MEDIUM' ||  CT_SECLEVEL == 'LOW' )
 {
   // Delete all duplicate heuristics and then merge with the standard rules
-  $ct_addheuristic 	= array_diff((array) $ct_addheuristic, $ct_rules);
+  $ct_addheuristic 	= isset($ct_addheuristic) ? array_diff((array) $ct_addheuristic, $ct_rules) : [];
   $ct_rules 		= array_merge($ct_rules, $ct_addheuristic);
 
   // Now let's check if there are heuristics we want to ignore for this time
-  $ct_rules = array_diff($ct_rules, (array) $ct_delheuristic);
+  $ct_rules = isset($ct_delheuristic) ? array_diff($ct_rules, (array) $ct_delheuristic) : $ct_rules;
 
   // Maybe also some new $_POST fields to ignore?
-  $ct_ignorepvar 			= array_diff((array) $ct_ignorepvar, $unchecked_post_fields);
+  $ct_ignorepvar 			= isset($ct_ignorepvar) ? array_diff((array) $ct_ignorepvar, $unchecked_post_fields) : [];
   $unchecked_post_fields 	= array_merge($unchecked_post_fields, $ct_ignorepvar);
 
   // Last but not least the same with $_GET
-  $ct_ignoregvar 		= array_diff((array) $ct_ignoregvar, $unchecked_get_fields);
+  $ct_ignoregvar 		= isset($ct_ignoregvar) ? array_diff((array) $ct_ignoregvar, $unchecked_get_fields) : [];
   $unchecked_get_fields = array_merge($unchecked_get_fields, $ct_ignoregvar);
 
-  // Oh look, a new regex ignore method for smart admins and mod coders
-  if ( isset($ct_regex_ignorep) )
-  {
-    $ct_regex_ignorep = implode('|', $ct_regex_ignorep);
-  }
-  if ( isset($ct_regex_ignoreg) )
-  {
-    $ct_regex_ignoreg = implode('|', $ct_regex_ignoreg);
-  }
+}
+
+// Oh look, a new regex ignore method for smart admins and mod coders
+if ( isset($ct_regex_ignorep) )
+{
+  $ct_regex_ignorep = implode('|', $ct_regex_ignorep);
+}
+if ( isset($ct_regex_ignoreg) )
+{
+  $ct_regex_ignoreg = implode('|', $ct_regex_ignoreg);
 }
 
 // Initialize detector var

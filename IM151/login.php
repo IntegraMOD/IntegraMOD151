@@ -74,7 +74,7 @@ else
 }
 
 // CrackerTracker v5.x
-if ( !empty($_POST['username']) && $ctracker_config->settings['loginfeature'] == 1 )
+if ( !empty($_POST['username']) && !empty($ctracker_config->settings['loginfeature']) )
 {
 	$ctracker_config->check_login_status($_POST['username']);	
 }

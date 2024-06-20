@@ -1189,7 +1189,8 @@
 		{
 	global $board_config, $phpbb_root_path, $phpEx;
 	global $db, $lang, $user_ip, $userdata;
-	include($phpbb_root_path .'config.'. $phpEx);
+  // PHPBB_INSTALLED is already defined
+	@include($phpbb_root_path .'config.'. $phpEx);
 		
 		$today 			= date('d');
 		$last_backup 	= $board_config['phpBBSecurity_last_backup_date'];

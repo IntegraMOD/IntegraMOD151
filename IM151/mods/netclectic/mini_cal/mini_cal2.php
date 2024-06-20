@@ -27,7 +27,7 @@ define ('IN_MINI_CAL', 1);
     {
     	$mini_cal_mode = ( isset($_POST['mode']) ) ? $_POST['mode'] : $_GET['mode'];
     }
-    $mini_cal_mode = ($mini_cal_mode == 'personal') ? $mini_cal_mode : 'default';
+    $mini_cal_mode = isset($mini_cal_mode) && ($mini_cal_mode == 'personal') ? $mini_cal_mode : 'default';
     
     // get the user (for personal calendar)
     if( isset($_GET[POST_USERS_URL]) || isset($_POST[POST_USERS_URL]) )
@@ -151,8 +151,8 @@ define ('IN_MINI_CAL', 1);
     $prev_qs = setQueryStringVal('month', $mini_cal_month -1);
     $next_qs = setQueryStringVal('month', $mini_cal_month +1);
 	$page = ( isset($_GET['page']) ) ? '&page=' . trim($_GET['page']) : '';
-    $prev_month = '<a href="' . append_sid($HTTP_SERVER_VARS["PHP_SELF"] . $prev_qs . $page) . '" class="gen"><img src="' . $images['mini_cal_icon_left_arrow'] . '" title="' . $lang['View_previous_month'] . '" border="0" alt="&lt;&lt;"></a>';
-    $next_month = '<a href="' . append_sid($HTTP_SERVER_VARS["PHP_SELF"] . $next_qs . $page) . '" class="gen"><img src="' . $images['mini_cal_icon_right_arrow'] . '" title="' . $lang['View_next_month'] . '" border="0" alt="&gt;&gt;"></a>';
+    $prev_month = '<a href="' . append_sid($_SERVER["PHP_SELF"] . $prev_qs . $page) . '" class="gen"><img src="' . $images['mini_cal_icon_left_arrow'] . '" title="' . ( isset($lang['View_previous_month']) ? $lang['View_previous_month'] : '') . '" border="0" alt="&lt;&lt;"></a>';
+    $next_month = '<a href="' . append_sid($_SERVER["PHP_SELF"] . $next_qs . $page) . '" class="gen"><img src="' . $images['mini_cal_icon_right_arrow'] . '" title="' . ( isset($lang['View_next_month']) ? $lang['View_next_month'] : '') . '" border="0" alt="&gt;&gt;"></a>';
 	$template->assign_vars(array(
 		'L_MINI_CAL_MONTH' => $lang['mini_cal']['long_month'][$mini_cal->day[0][4]] . " " . $mini_cal->day[0][5],
 		'L_MINI_CAL_ADD_EVENT' => $lang['Mini_Cal_add_event'],

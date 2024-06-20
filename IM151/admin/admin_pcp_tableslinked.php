@@ -56,8 +56,7 @@ function pcp_get_tables_linked()
 
 	// sort
 	$names = array();
-	@reset($tables_linked);
-	while ( list($table, $data) = @each($tables_linked) )
+	foreach ($tables_linked as $table => $data)
 	{
 		$names[] = $table;
 	}
@@ -135,8 +134,7 @@ if ($mode == 'edit')
 	else if ( $delete )
 	{
 		$new_tables = array();
-		@reset($tables);
-		while ( list($table_name, $table_data) = @each($tables) )
+		foreach ($tables as $table_name => $table_data)
 		{
 			if ($table_name != $table)
 			{
@@ -203,8 +201,7 @@ if ($mode == 'edit')
 		else
 		{
 			$new_tables = array();
-			@reset($tables);
-			while ( list($table_name, $table_data) = @each($tables) )
+			foreach ($tables as $table_name => $table_data)
 			{
 				if ($table_name == $table)
 				{
@@ -308,8 +305,7 @@ if ($mode == '')
 
 	// dump tables linked list
 	$color = false;
-	@reset($tables);
-	while ( list($table_name, $table_data) = @each($tables) )
+	foreach ($tables as $table_name => $table_data)
 	{
 		$color = !$color;
 		$template->assign_block_vars('row', array(
@@ -317,8 +313,8 @@ if ($mode == '')
 			'TABLE_NAME'	=> $table_name,
 			'TABLE_ID'		=> $table_data['sql_id'],
 			'TABLE_JOIN'	=> $table_data['sql_join'],
-			'TABLE_WHERE'	=> $table_data['sql_where'],
-			'TABLE_ORDER'	=> $table_data['sql_order'],
+			'TABLE_WHERE'	=> ( isset($table_data['sql_where']) ? $table_data['sql_where'] : '' ),
+			'TABLE_ORDER'	=> ( isset($table_data['sql_order']) ? $table_data['sql_order'] : '' ),
 
 			'U_TABLE'		=> append_sid("./admin_pcp_tableslinked.$phpEx?mode=edit&table=$table_name"),
 			)

@@ -436,6 +436,7 @@ function auth_check_user($type, $key, $u_access, $is_admin)
 
 	// V: this is when we pass in a single access record
 	//    instead of an array thereof
+  if ($u_access === null) $u_access = [];
 	if (count($u_access) && !isset($u_access[0]))
 	{
 		$u_access = array($u_access);
@@ -475,11 +476,11 @@ function get_moderators_user_id_of_forum($forum_id){
     $users = ''; 
     $groups = array(); 
     $idx = $tree['keys'][ POST_FORUM_URL . $forum_id ]; 
-    if(count_safe($tree['mods'][$idx]['user_id'])){ 
+    if(!empty($tree['mods'][$idx]['user_id'])){ 
         $users = implode(',',$tree['mods'][$idx]['user_id']); 
         $userwhere = ' AND user_id not in ('.implode(',',$tree['mods'][$idx]['user_id']).')'; 
     } 
-    if(count_safe($tree['mods'][$idx]['group_id'])){ 
+    if(!empty($tree['mods'][$idx]['group_id'])){ 
         $groups = implode(',',$tree['mods'][$idx]['group_id']); 
         $sql = "SELECT distinct user_id 
                 FROM " . USER_GROUP_TABLE . " 

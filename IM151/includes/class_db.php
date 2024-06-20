@@ -40,9 +40,9 @@ class class_db extends sql_db
 
 	var $sql_version;
 
-	function db_class($sqlserver, $sqluser, $sqlpassword, $database, $persistency = true)
+	function __construct($sqlserver, $sqluser, $sqlpassword, $database, $persistency = true)
 	{
-		@parent::sql_db($sqlserver, $sqluser, $sqlpassword, $database, $persistency);
+		@parent::__construct($sqlserver, $sqluser, $sqlpassword, $database, $persistency);
 		$this->trc_sql = array();
 		$this->sql_version = array();
 	}

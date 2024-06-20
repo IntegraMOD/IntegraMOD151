@@ -37,8 +37,8 @@ function GetUsersView($user)
 		   WHERE user = '$user'"; 
 	$r1 	= $db -> sql_query($q1); 
 	$row1 	= $db -> sql_fetchrow($r1); 
-	$user 	= $row1['user']; 
-	$read	= $row1['read'];
+	$user 	= ( isset($row1['user']) ? $row1['user'] : '' );
+	$read	= ( isset($row1['read']) ? $row1['read'] : '' );
 	
 	if(($user) && ($read == "1"))
 		{

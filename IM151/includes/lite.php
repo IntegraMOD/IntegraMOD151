@@ -184,7 +184,7 @@ class Cache_Lite
     * @param array $options options
     * @access public
     */
-    function Cache_Lite($options = array(NULL))
+    function __construct($options = array(NULL))
     {
         $availableOptions = array('automaticSerialization', 'fileNameProtection', 'memoryCaching', 'onlyMemoryCaching', 'memoryCachingLimit', 'cacheDir', 'caching', 'lifeTime', 'fileLocking', 'writeControl', 'readControl', 'readControlType', 'pearErrorMode');
         foreach($options as $key => $value) {
@@ -297,8 +297,7 @@ class Cache_Lite
         } else {
             $motif = ($group) ? 'cache_'.$group.'_' : 'cache_';
         }
-        if (!($dh = opendir($this->_cacheDir))) {
-            $this->raiseError('Cache_Lite : Unable to open cache directory !', -4);
+        if (!($dh = @opendir($this->_cacheDir))) {
             return false;
         }
         while ($file = readdir($dh)) {

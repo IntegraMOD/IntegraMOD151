@@ -68,7 +68,7 @@
      ***************************************************************************/
     function setQueryStringVal($var, $value)
     {
-        $querystring = $HTTP_SERVER_VARS["QUERY_STRING"];
+        $querystring = $_SERVER["QUERY_STRING"];
     
         if (!stristr($querystring, $var))
         { 
@@ -124,6 +124,7 @@
 	                        $forums_list .= '<option value="-2">' . $row['cat_title'] . '</option>';
 	                        $forums_list .= '<option value="-2">----------------</option>';
 	                    }
+                      $selected = false; // TODO review
 	                    $forums_list .=  '<option value="' . $row['forum_id'] . '"' . $selected . '>  - ' . $row['forum_name'] . '</option>';
 	                    $cat_id = $row['cat_id'];
 	               }

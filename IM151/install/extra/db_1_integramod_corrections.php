@@ -59,7 +59,7 @@ $correct_config = array(
 		'summer_time_auto' 			=> '1',
 		'board_fdow'				=> '0'
 );	
-while (list($config_name, $config_value) = each($correct_config))
+foreach ($correct_config as $config_name => $config_value)
 {
 	$sql = "INSERT INTO " . $table_prefix . "config (config_name, config_value) 
 			VALUES ('".$config_name."','".$config_value."')";
@@ -118,7 +118,7 @@ $pcp_config = array(
 		'user_extra'						=> 1	
 );
 $usersql = "UPDATE " . $table_prefix . "users SET ";
-while (list($config_name, $config_value) = each($pcp_config))
+foreach ($pcp_config as $config_name => $config_value)
 {
 	$sql = "INSERT INTO " . $table_prefix . "config (config_name, config_value) 
 			VALUES ('".$config_name."','".$config_value."')";
@@ -135,7 +135,7 @@ $pcp_config = array(
 		'user_lang'							=> str_replace("'", "''", $language),
 		'user_dateformat'						=> 'd M Y h:i a',
 );
-while (list($config_name, $config_value) = each($pcp_config))
+foreach ($pcp_config as $config_name => $config_value)
 {
 	$sql = "INSERT INTO " . $table_prefix . "config (config_name, config_value) 
 			VALUES ('".$config_name."','".$config_value."')";
@@ -208,7 +208,7 @@ $portal_config = array(
 		'portal_header'				=> '1',
 		'portal_tail'				=> '0'
 );
-while (list($config_name, $config_value) = each($portal_config))
+foreach ($portal_config as $config_name => $config_value)
 {
 	$sql = "INSERT INTO " . $table_prefix . "portal_config (config_name, config_value) 
 			VALUES ('".$config_name."','".$config_value."')";

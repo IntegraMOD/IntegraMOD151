@@ -28,11 +28,10 @@ function qbar_add_order()
 {
 	global $qbar_maps, $qbar_keys;
 
-	@reset($qbar_maps);
 	$qbar_keys = array();
 	$qbar_order = 0;
 	$i=0;
-	while ( list($qbar_name, $qbar_data) = @each($qbar_maps) )
+  foreach ($qbar_maps as $qbar_name => $qbar_data)
 	{
 		$i++;
 		$qbar_order = $qbar_order + 10;
@@ -48,10 +47,9 @@ function qbar_add_order()
 		$qbar_keys[$i][0] = $qbar_name;
 		$qbar_maps[$qbar_name]['idx'] = $i;
 
-		@reset($qbar_data['fields']);
 		$fields_order = 0;
 		$j=0;
-		while (list($field_name, $field_data) = @each($qbar_data['fields']))
+    foreach ($qbar_data['fields'] as $field_name => $field_data)
 		{
 			$j++;
 			$fields_order = $fields_order + 10;
@@ -148,8 +146,7 @@ function qbar_get_tree()
 		$wauth = auth(AUTH_ALL, AUTH_LIST_ALL, $userdata);
 		if (!empty($wauth))
 		{
-			reset($wauth);
-			while (list($key, $data) = each($wauth))
+      foreach ($wauth as $key => $data)
 			{
 				$tree['auth'][POST_FORUM_URL . $key] = $data;
 			}
@@ -310,8 +307,7 @@ function qbar_display_qbars($display=false)
 	$qnav = array();
 	$qnav2 = array();
 	$qlist = array();
-	@reset($qbar_maps);
-	while (list($qname, $qdata) = @each($qbar_maps))
+  foreach ($qbar_maps as $qname => $qdata)
 	{
 		$ok = ($qdata['display'] && ($qdata['class'] != 'System'));
 
@@ -334,8 +330,7 @@ function qbar_display_qbars($display=false)
 		{
 			// get the options
 			$options = array();
-			@reset($qdata['fields']);
-			while( list($fname, $fdata) = @each($qdata['fields']))
+      foreach ($qdata['fields'] as $fname => $fdata)
 			{
 				$ok = true;
 

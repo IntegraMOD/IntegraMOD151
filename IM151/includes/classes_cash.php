@@ -234,7 +234,7 @@ if ( defined('CM_EVENT') )
     class cash_events
     {
         var $events;
-        function cash_events()
+        function __construc()
         {
             global $db;
             $this->events = array();

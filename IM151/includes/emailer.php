@@ -32,7 +32,7 @@ class emailer
 
 	var $tpl_msg = array();
 
-	function emailer($use_smtp)
+	function __construct($use_smtp)
 	{
 		$this->reset();
 		$this->use_smtp = $use_smtp;
@@ -281,7 +281,7 @@ class emailer
 	//
 	// Attach files via MIME.
 	//
-	function attachFile($filename, $mimetype = "application/octet-stream", $szFromAddress, $szFilenameToDisplay)
+	function attachFile($filename, $mimetype = "application/octet-stream", $szFromAddress = '', $szFilenameToDisplay = '')
 	{
 		global $lang;
 		$mime_boundary = "--==================_846811060==_";

@@ -35,7 +35,6 @@ include_once( $phpbb_root_path . 'config.' . $phpEx );*/
 $table_chatspot_messages_name = $table_prefix . 'chatspot_messages';
 $table_chatspot_sessions_name = $table_prefix . 'chatspot_sessions';
 $table_chatspot_rooms_name = $table_prefix . 'chatspot_rooms';
-$default_room_id = $chatspot_config[ 'default_room_id' ];
 
 define( 'AWAY', 0 );
 define( 'ACTIVE', 1 );

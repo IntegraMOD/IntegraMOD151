@@ -880,7 +880,7 @@ function pcp_user_photo_upload($photo_mode, &$current_photo, &$current_type, &$e
 		global $user_maps;
 
 		// get the menu idx
-		$count_mode = $idx = $module['mode'] ? count($module['mode']) : 0;
+		$count_mode = $idx = ( isset($module['mode']) ? $module['mode'] : 0) ? count($module['mode']) : 0;
 		$new = false;
 		$found = false;
 		for ( $i = 0; $i < $count_mode; $i++ )
@@ -910,7 +910,7 @@ function pcp_user_photo_upload($photo_mode, &$current_photo, &$current_type, &$e
 		$module['shortcut'][$idx]		= empty($module['shortcut'][$idx]) ? $lang[$shortcut] : $module['shortcut'][$idx];
 		$module['page_title'][$idx]		= empty($module['page_title'][$idx]) ? $lang[$page_title] : $module['page_title'][$idx];
 
-		if ( isset($user_maps['PCP.' . $mode]) )
+		if ( isset($user_maps['PCP.' . $mode]['order']) )
 		{
 			$module['sort'][$idx] = $user_maps['PCP.' . $mode]['order'];
 		}
@@ -928,7 +928,7 @@ function pcp_user_photo_upload($photo_mode, &$current_photo, &$current_type, &$e
 		$idx = pcp_set_menu($mode);
 
 		// check if the sub_menu exists
-		$sub_count = $sub_idx = $module['sub'][$idx]['mode'] ? count($module['sub'][$idx]['mode']) : 0;
+		$sub_count = $sub_idx = ( isset($module['sub'][$idx]['mode']) ? $module['sub'][$idx]['mode'] : 0) ? count($module['sub'][$idx]['mode']) : 0;
 		$found = false;
 		for ( $i = 0; $i < $sub_count; $i++ )
 		{
@@ -956,7 +956,7 @@ function pcp_user_photo_upload($photo_mode, &$current_photo, &$current_type, &$e
 		$module['sub'][$idx]['shortcut'][$sub_idx]		= empty($module['sub'][$idx]['shortcut'][$sub_idx]) ? $lang[$sub_shortcut] : $module['sub'][$idx]['shortcut'][$sub_idx];
 		$module['sub'][$idx]['page_title'][$sub_idx]	= empty($module['sub'][$idx]['page_title'][$sub_idx]) ? $lang[$sub_page_title] : $module['sub'][$idx]['page_title'][$sub_idx];
 
-		if ( isset($user_maps['PCP.' . $mode . '.' . $sub_mode]) )
+		if ( isset($user_maps['PCP.' . $mode . '.' . $sub_mode]['order']) )
 		{
 			$module['sub'][$idx]['sort'][$sub_idx] = $user_maps['PCP.' . $mode . '.' . $sub_mode]['order'];
 		}

@@ -54,6 +54,7 @@ function pcp_output_warnings($field_name, $view_userdata, $map_name='')
 {
 	global $board_config, $images, $lang;
 	$user_warnings = $view_userdata[$field_name];
+	$img = $txt = '';
 	if ($user_warnings >= $board_config['max_user_bancard']) {
 		$txt = $lang['Banned'];
 		$img = '<img src="'.$images['icon_r_card'] . '" alt="'. $txt .'">';

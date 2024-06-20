@@ -189,7 +189,7 @@ function announces_from_forums($cur='Root', $force_prune=false)
         } 	
 
 		// go to root on this branch
-		if (isset($tree['main'][ $tree['keys'][$cur] ]))
+		if (isset($tree['keys'][$cur]) && isset($tree['main'][ $tree['keys'][$cur] ]))
 		{
 			$fid = $tree['main'][ $tree['keys'][$cur] ];
 			while ($fid != 'Root')
@@ -239,6 +239,7 @@ function announces_from_forums($cur='Root', $force_prune=false)
 				$limit_topics_time
 			ORDER BY t.topic_type DESC, p.post_time DESC ";
 	if ( !($result = $db->sql_query($sql)) ) message_die(GENERAL_ERROR, 'Could not obtain topic information', '', __LINE__, __FILE__, $sql);
+  $topic_rowset = [];
 	while ($row = $db->sql_fetchrow($result))
 	{
 		$row['topic_id'] = POST_TOPIC_URL . $row['topic_id'];

@@ -527,7 +527,7 @@ $lang['New_password'] = 'New password';
 $lang['Confirm_password'] = 'Confirm password';
 $lang['Confirm_password_explain'] = 'You must confirm your current password if you wish to change it or alter your e-mail address';
 
-if($userdata['session_logged_in']){ 
+if(!empty($userdata) && $userdata['session_logged_in']){ 
     $lang['password_if_changed'] = 'You only need to supply a password if you want to change it'; 
     $lang['password_confirm_if_changed'] = 'You only need to confirm your password if you changed it above.'; 
 } else { 
@@ -545,8 +545,11 @@ $lang['PS_security_error']			= 'Error';
 $lang['PS_security_info']			= 'Information';
 $lang['PS_security_one']			= 'The Security Question & Answer Are Required Fields.';
 $lang['PS_security_a_exp']			= '<br>The above is a \'hash\' of your Security Answer. This is how it is saved in the database so no one can steal it or see it. You need to write down the real (un-hashed) answer so you dont lose it.';
-$lang['PS_security_locked']			= 'Sorry, this account has exceeded its log in attempts. It is now locked. If you are the rightfull user, please click below to be redirected to a page to unlock your id.<br><br>Click <a href="login_security.'. $phpEx .'?phpBBSecurity=retreive&sid='. $userdata['session_id'] .'">Here</a> to unlock your account.';
-$lang['PS_security_force']			= 'Sorry, it appears this is your first visit since we added the security questions to accounts. You will only be able to view your profile until you update it and add a question and answer. Thanks!<br><br>Click <b><a href="profile.'. $phpEx .'?mode=register&sub=registering&sid='. $userdata['session_id'] .'">here</a></b> to goto your profile.';
+if (!empty($userdata)) {
+  $lang['PS_security_locked']			= 'Sorry, this account has exceeded its log in attempts. It is now locked. If you are the rightfull user, please click below to be redirected to a page to unlock your id.<br><br>Click <a href="login_security.'. $phpEx .'?phpBBSecurity=retreive&sid='. $userdata['session_id'] .'">Here</a> to unlock your account.';
+  $lang['PS_security_force']			= 'Sorry, it appears this is your first visit since we added the security questions to accounts. You will only be able to view your profile until you update it and add a question and answer. Thanks!<br><br>Click <b><a href="profile.'. $phpEx .'?mode=register&sub=registering&sid='. $userdata['session_id'] .'">here</a></b> to goto your profile.';
+  $lang['PS_forgot_sq']				= '<a href="login_security.'. $phpEx .'?phpBBSecurity=forgot&sid='. $userdata['session_id'] .'">Forgot Your Security Question?</a>';
+}
 $lang['PS_admin_one']				= 'Login Attempts';
 $lang['PS_admin_one_exp']			= '<br>This is the amount of times someone can get the password incorrect before locking the account.';
 $lang['PS_admin_two']				= 'Notify Admin';
@@ -570,8 +573,9 @@ $lang['PS_login_step_failed']		= 'Sorry, the information you provided is incorre
 $lang['PS_login_button']			= 'Validate';
 $lang['PS_login_validated']			= 'Thank you for unlocking your account. You may now login.';
 $lang['PS_profile_explain']			= 'It is important you think before filling this in. You will not be able to change these at will. You will need an admins approval to change them, for security purposes. Once they are set, all you will be able to do is view them.';
-$lang['PS_forgot_sq']				= '<a href="login_security.'. $phpEx .'?phpBBSecurity=forgot&sid='. $userdata['session_id'] .'">Forgot Your Security Question?</a>';
-$lang['PS_forgot_exp']				= 'If you have forgoten your security answer, you will need to contact an admin and have them reset your security information. The email to contact is '. $board_config['board_email'] .'. If you can not reach an admin that way, please look at admin profiles for email links. When you update it, please use information you can remember to avoid having to do this again.';
+if (!empty($board_config['board_email'])) {
+  $lang['PS_forgot_exp']				= 'If you have forgoten your security answer, you will need to contact an admin and have them reset your security information. The email to contact is '. $board_config['board_email'] .'. If you can not reach an admin that way, please look at admin profiles for email links. When you update it, please use information you can remember to avoid having to do this again.';
+}
 $lang['PS_user_lock']				= 'Locked Status';
 $lang['PS_user_lock_exp']			= 'If the account is locked, anytime the user tries to log in, they will be forced to input their security information.';
 $lang['PS_user_reset']				= 'Reset Security Information';
