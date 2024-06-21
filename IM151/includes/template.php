@@ -908,13 +908,16 @@ class Template {
 	function execute($filename, $code, $handle)
 	{
 		global $lang, $theme, $board_config;
-		$template = $theme['template_name'];
-		global $$template;
-		$theme_info = &$$template;
-		if($board_config['xs_add_comments'] && $handle)
-		{
-			echo '<!-- template ', $this->files[$handle], ' start -->';
-		}
+    if (!empty($theme))
+    {
+      $template = $theme['template_name'];
+      global $$template;
+      $theme_info = &$$template;
+      if($board_config['xs_add_comments'] && $handle)
+      {
+        echo '<!-- template ', $this->files[$handle], ' start -->';
+      }
+    }
 		if($filename)
 		{
 			include($filename);

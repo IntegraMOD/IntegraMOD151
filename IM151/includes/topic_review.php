@@ -26,6 +26,7 @@ function topic_review($topic_id, $is_inline_review)
 	global $userdata, $user_ip;
 	global $orig_word, $replacement_word;
 	global $starttime;
+	global $is_auth;
 //-- mod : Advanced Group Color Management -------------------------------------
 //-- add
 	global $agcm_color;
@@ -68,62 +69,60 @@ function topic_review($topic_id, $is_inline_review)
 	global $sub_template_key_image, $sub_templates;
 //-- fin mod : sub-template ------------------------------------------------------------------------
 
-	if ( !$is_inline_review )
-	{
-      if ( !isset($topic_id) || !$topic_id)
-      {
-         message_die(GENERAL_MESSAGE, 'Topic_post_not_exist');
-      }
-		//
-		// Get topic info ...
-		//
+		if ( !isset($topic_id) || !$topic_id)
+		{
+			 message_die(GENERAL_MESSAGE, 'Topic_post_not_exist');
+		}
+	//
+	// Get topic info ...
+	//
 //-- mod : calendar --------------------------------------------------------------------------------
 // here we added
 //	, t.topic_calendar_time, t.topic_calendar_duration, t.topic_first_post_id
 //-- modify
-		$sql = "SELECT t.topic_title, t.topic_calendar_time, t.topic_calendar_duration, t.topic_first_post_id, f.forum_id, f.auth_view, f.auth_read, f.auth_post, f.auth_reply, f.auth_edit, f.auth_delete, f.auth_sticky, f.auth_announce, f.auth_pollcreate, f.auth_vote, f.auth_attachments, f.auth_delayedpost 
-			FROM " . TOPICS_TABLE . " t, " . FORUMS_TABLE . " f 
-			WHERE t.topic_id = $topic_id
-				AND f.forum_id = t.forum_id";
+	$sql = "SELECT t.topic_title, t.topic_calendar_time, t.topic_calendar_duration, t.topic_first_post_id, f.forum_id, f.auth_view, f.auth_read, f.auth_post, f.auth_reply, f.auth_edit, f.auth_delete, f.auth_sticky, f.auth_announce, f.auth_pollcreate, f.auth_vote, f.auth_attachments, f.auth_delayedpost 
+		FROM " . TOPICS_TABLE . " t, " . FORUMS_TABLE . " f 
+		WHERE t.topic_id = $topic_id
+			AND f.forum_id = t.forum_id";
 //-- fin mod : calendar ----------------------------------------------------------------------------
-		$tmp = '';
-		attach_setup_viewtopic_auth($tmp, $sql);
-		if ( !($result = $db->sql_query($sql)) )
-		{
-			message_die(GENERAL_ERROR, 'Could not obtain topic information', '', __LINE__, __FILE__, $sql);
-		}
+	$tmp = '';
+	attach_setup_viewtopic_auth($tmp, $sql);
+	if ( !($result = $db->sql_query($sql)) )
+	{
+		message_die(GENERAL_ERROR, 'Could not obtain topic information', '', __LINE__, __FILE__, $sql);
+	}
 
-		if ( !($forum_row = $db->sql_fetchrow($result)) )
-		{
-			message_die(GENERAL_MESSAGE, 'Topic_post_not_exist');
-		}
-		$db->sql_freeresult($result);
+	if ( !($forum_row = $db->sql_fetchrow($result)) )
+	{
+		message_die(GENERAL_MESSAGE, 'Topic_post_not_exist');
+	}
+	$db->sql_freeresult($result);
 
-		$forum_id = $forum_row['forum_id'];
-		$topic_title = $forum_row['topic_title'];
+	$forum_id = $forum_row['forum_id'];
+	$topic_title = $forum_row['topic_title'];
 //-- mod : calendar --------------------------------------------------------------------------------
 //-- add
-		$topic_calendar_time = intval($forum_row['topic_calendar_time']);
-		$topic_first_post_id = intval($forum_row['topic_first_post_id']);
-		$topic_calendar_duration = intval($forum_row['topic_calendar_duration']);
+	$topic_calendar_time = intval($forum_row['topic_calendar_time']);
+	$topic_first_post_id = intval($forum_row['topic_first_post_id']);
+	$topic_calendar_duration = intval($forum_row['topic_calendar_duration']);
 //-- fin mod : calendar ----------------------------------------------------------------------------
-		
-		//
-		// Start session management
-		//
+	
+	//
+	// Start session management
+	//
+	if (!$is_inline_review)
+	{
 		$userdata = session_pagestart($user_ip, $forum_id);
 		init_userprefs($userdata);
-		//
-		// End session management
-		//
+	}
+	//
+	// End session management
+	//
 
-		$is_auth = array();
-		$is_auth = auth(AUTH_ALL, $forum_id, $userdata, $forum_row);
 
-		if ( !$is_auth['auth_read'] )
-		{
-			message_die(GENERAL_MESSAGE, sprintf($lang['Sorry_auth_read'], $is_auth['auth_read_type']));
-		}
+	if ( !$is_auth['auth_read'] )
+	{
+		message_die(GENERAL_MESSAGE, sprintf($lang['Sorry_auth_read'], $is_auth['auth_read_type']));
 	}
 
 	//
@@ -311,7 +310,7 @@ function topic_review($topic_id, $is_inline_review)
 // 
 // Begin Approve_Mod Block : 13
 // 		
-		if ( $approve_mod['enabled'] )
+		if ( !empty($approve_mod['enabled']) )
 		{
 			$approve_mod['posts_awaiting'] = false;
 			$approve_sql = "SELECT * FROM " . APPROVE_POSTS_TABLE . " 

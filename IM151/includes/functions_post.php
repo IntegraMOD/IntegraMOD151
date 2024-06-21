@@ -223,7 +223,7 @@ function unprepare_message($message)
 // here we have added
 //	, $topic_calendar_time = 0, $topic_calendar_duration = 0
 //-- modify
-function prepare_post(&$mode, &$post_data, &$bbcode_on, &$html_on, &$smilies_on, &$error_msg, &$username, &$bbcode_uid, &$subject, &$message, &$poll_title, &$poll_options, &$poll_length, &$max_vote, &$hide_vote, &$tothide_vote, &$topic_desc, $topic_calendar_time = 0, $topic_calendar_duration = 0, $topic_calendar_repeat = 0)
+function prepare_post(&$mode, &$post_data, &$bbcode_on, &$html_on, &$smilies_on, &$error_msg, &$username, &$bbcode_uid, &$subject, &$message, &$poll_title, &$poll_options, &$poll_length, &$max_vote, &$hide_vote, &$tothide_vote, $topic_desc, $topic_calendar_time = 0, $topic_calendar_duration = 0, $topic_calendar_repeat = 0)
 //-- fin mod : calendar ----------------------------------------------------------------------------
 {
 	global $board_config, $userdata, $lang, $phpEx, $phpbb_root_path;
@@ -297,7 +297,7 @@ if ( !empty($topic_desc) )
 	//
 	if ($mode == 'newtopic' || ($mode == 'editpost' && $post_data['first_post']))
 	{
-		$poll_length = (isset($poll_length)) ? max(0, ($poll_length+$poll_length_h/24)) : 0;
+		$poll_length = (isset($poll_length)) ? max(0, ($poll_length+ ( isset($poll_length_h) ? $poll_length_h/24 : 0 ) )) : 0;
 		$$max_vote = (isset($max_vote)) ? max(0, intval($max_vote)) : 0;
 		$$hide_vote = (isset($hide_vote)) ? max(0, intval($hide_vote)) : 0;
 		$$tothide_vote = (isset($tothide_vote)) ? max(0, intval($tothide_vote)) : 0;
@@ -310,7 +310,7 @@ if ( !empty($topic_desc) )
 		if(!empty($poll_options))
 		{
 			$temp_option_text = array();
-			while(list($option_id, $option_text) = @each($poll_options))
+      foreach ($poll_options as $option_id => $option_text)
 			{
 				$option_text = trim($option_text);
 				if (!empty($option_text))
@@ -353,7 +353,7 @@ if ( !empty($topic_desc) )
 // here we added
 //	, $post_icon = 0
 //-- modify
-function submit_post($mode, &$post_data, &$message, &$meta, &$forum_id, &$topic_id, &$post_id, &$poll_id, &$topic_type, &$bbcode_on, &$html_on, &$smilies_on, &$attach_sig, &$bbcode_uid, $post_username, $post_subject, $post_message, $poll_title, &$poll_options, &$poll_length, &$max_vote, &$hide_vote, &$tothide_vote, $forcetime='', &$topic_desc = '', &$news_category = 0, $topic_announce_duration = 0, $topic_calendar_time = 0, $topic_calendar_duration = 0, $post_icon = 0, $topic_calendar_repeat = 0)
+function submit_post($mode, &$post_data, &$message, &$meta, &$forum_id, &$topic_id, &$post_id, &$poll_id, &$topic_type, &$bbcode_on, &$html_on, &$smilies_on, &$attach_sig, &$bbcode_uid, $post_username, $post_subject, $post_message, $poll_title, &$poll_options, &$poll_length, &$max_vote, &$hide_vote, &$tothide_vote, $forcetime='', $topic_desc = '', &$news_category = 0, $topic_announce_duration = 0, $topic_calendar_time = 0, $topic_calendar_duration = 0, $post_icon = 0, $topic_calendar_repeat = 0)
 //-- fin mod : post icon ---------------------------------------------------------------------------
 //-- fin mod : calendar ----------------------------------------------------------------------------
 //-- fin mod : announces ---------------------------------------------------------------------------
@@ -363,7 +363,7 @@ function submit_post($mode, &$post_data, &$message, &$meta, &$forum_id, &$topic_
 	// CrackerTracker v5.x
 	global $ctracker_config;
 	
-	if ( ($mode == 'newtopic' || $mode == 'reply') && ($ctracker_config->settings['spammer_blockmode'] > 0 || $ctracker_config->settings['spam_attack_boost'] == 1) && $userdata['user_level'] != ANONYMOUS )
+	if ( ($mode == 'newtopic' || $mode == 'reply') && (!empty($ctracker_config->settings['spammer_blockmode']) || !empty($ctracker_config->settings['spam_attack_boost'])) && $userdata['user_level'] != ANONYMOUS )
 	{
 		include_once($phpbb_root_path . 'ctracker/classes/class_ct_userfunctions.' . $phpEx);
 		$login_functions = new ct_userfunctions();
@@ -594,10 +594,9 @@ if($old_forcetime > time()){
 			$poll_id = $db->sql_nextid();
 		}
 
-		@reset($poll_options);
 
 		$poll_option_id = 1;
-		while (list($option_id, $option_text) = each($poll_options))
+    foreach ($poll_options as $option_id => $option_text)
 		{
 			if (!empty($option_text))
 			{
@@ -1012,8 +1011,7 @@ function user_notification($mode, &$post_data, &$topic_title, &$forum_id, &$topi
 
 					$topic_title = (count($orig_word)) ? preg_replace($orig_word, $replacement_word, unprepare_message($topic_title)) : unprepare_message($topic_title);
 
-					@reset($bcc_list_ary);
-					while (list($user_lang, $bcc_list) = each($bcc_list_ary))
+          foreach ($bcc_list_ary as $user_lang => $bcc_list)
 					{
 						$emailer->use_template('topic_notify', $user_lang);
 		

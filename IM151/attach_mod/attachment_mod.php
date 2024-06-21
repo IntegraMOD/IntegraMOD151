@@ -109,9 +109,8 @@ if (file_exists($cache_dir) && is_dir($cache_dir) && is_writable($cache_dir))
 		$fp = @fopen($cache_file, 'wt+');
 		if ($fp)
 		{
-			@reset($attach_config);
 			fwrite($fp, "<?php\n");
-			while (list($key, $value) = @each($attach_config) )
+			foreach ($attach_config as $key => $value)
 			{
 				fwrite($fp, '$attach_config[\'' . $key . '\'] = \'' . trim($value) . '\';' . "\n");
 			}
@@ -120,7 +119,9 @@ if (file_exists($cache_dir) && is_dir($cache_dir) && is_writable($cache_dir))
 		}
 	}
 }
-else
+
+// If the cache file doesn't exist or was corrupted
+if (empty($attach_config))
 {
 	$attach_config = get_config();
 }

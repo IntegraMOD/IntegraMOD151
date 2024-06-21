@@ -97,6 +97,7 @@ $fields_type = array(
 	'desc'					=> 'HTML',
 	'icon'					=> 'HTML',
 	'status'				=> 'INTEGER',
+	'prune_enable' => 'INTEGER',
 	'enable'				=> 'INTEGER',
 	'link'					=> 'HTML',
 	'link_internal'			=> 'INTEGER',
@@ -118,6 +119,8 @@ $forum_status_list = array(
 	FORUM_UNLOCKED		=> 'Status_unlocked', 
 	FORUM_LOCKED		=> 'Status_locked'
 );
+
+$return_msg = '';
 
 // check the presence of the field allowing to attach forums to forums
 $sql = "SELECT main_type FROM " . FORUMS_TABLE . " LIMIT 0, 1";
@@ -141,6 +144,7 @@ if ( $db->sql_query($sql) && function_exists(get_forum_display_sort_option) )
 include( $phpbb_root_path . './includes/prune.' . $phpEx);
 
 // return message after update
+if (empty($selected_id)) $selected_id = '';
 $return_msg .= '<br /><br />' . sprintf($lang['Click_return_forumadmin'], '<a href="' . append_sid("./admin_forums_extend.$phpEx?selected_id=$selected_id") . '">', '</a>') . '<br /><br />' . sprintf($lang['Click_return_admin_index'], '<a href="' . append_sid("./index.$phpEx?pane=right") . '">', '</a>');
 
 //--------------------------------
@@ -666,8 +670,7 @@ if ( ($mode == 'edit') || ($mode == 'create') || ($mode == 'delete') )
 	}
 
 	// get value from the tree for all fields in the list
-	@reset($$fields_list);
-	while ( list($table_field, $process_field) = @each($$fields_list) )
+	foreach ($$fields_list as $table_field => $process_field)
 	{
 		$item[$process_field] = empty($this_key) ? '' : trim($tree['data'][$idx][$table_field]);
 	}
@@ -691,7 +694,7 @@ if ( ($mode == 'edit') || ($mode == 'create') || ($mode == 'delete') )
 	$found = false;
 	if ( !empty($this_key) )
 	{
-		for ( $i = 0; $i < count($tree['sub'][ $item['main'] ]); $i++ )
+		for ( $i = 0; isset($tree['sub'][ $item['main'] ]) && $i < count($tree['sub'][ $item['main'] ]); $i++ )
 		{
 			$item['position'] = ( $i == 0 ) ? $item['main'] : $tree['sub'][ $item['main'] ][$i-1];
 			$found = ( $tree['sub'][ $item['main'] ][$i] == $fid );
@@ -738,9 +741,8 @@ if ( ($mode == 'edit') || ($mode == 'create') || ($mode == 'delete') )
 	$forum_auth = array();
 
 	// initiate with the first preset (public)
-	@reset($field_names);
 	$i = 0;
-	while ( list($auth_key, $auth_name) = @each($field_names) )
+	foreach ($field_names as $auth_key => $auth_name)
 	{
 		$auth_value = isset($simple_auth_ary[0][$i]) ? $simple_auth_ary[0][$i] : AUTH_ADMIN;
 		$forum_auth[$auth_key] = $auth_value;
@@ -748,12 +750,15 @@ if ( ($mode == 'edit') || ($mode == 'create') || ($mode == 'delete') )
 	}
 
 	// get the value from memory
-	@reset($tree['data'][$idx]);
-	while ( list($key, $value) = @each($tree['data'][$idx]) )
+	// (not set for create)
+	if (!$create_forum && !empty($idx))
 	{
-		if ( substr($key, 0, strlen('auth_')) == 'auth_' )
+		foreach ($tree['data'][$idx] as $key => $value)
 		{
-			$forum_auth[$key] = $value;
+			if ( substr($key, 0, strlen('auth_')) == 'auth_' )
+			{
+				$forum_auth[$key] = $value;
+			}
 		}
 	}
 
@@ -783,14 +788,13 @@ if ( ($mode == 'edit') || ($mode == 'create') || ($mode == 'delete') )
 	}
 
 	// get value from form
-	@reset($$fields_list);
-	while ( list($table_field, $process_field) = @each($$fields_list) )
+	foreach ($$fields_list as $table_field => $process_field)
 	{
 		if ( isset($_POST[$process_field]) )
 		{
 			// get field from form
 			$form_field = $_POST[$process_field];
-			switch ($fields_type[$process_field])
+			switch (( isset($fields_type[$process_field]) ? $fields_type[$process_field] : '' ))
 			{
 				case 'INTEGER':
 					$form_field = intval($form_field);
@@ -855,14 +859,15 @@ if ( ($mode == 'edit') || ($mode == 'create') || ($mode == 'delete') )
 	// status
 	if ( !isset($forum_status_list[ $item['status'] ]) )
 	{
-		@reset($forum_status_list);
-		list($status, $value) = @each($forum_status_list);
+		foreach ($forum_status_list as $status => $value)
+		{
+			break; // Just populate $status => $value
+		}
 		$item['status'] = $status;
 	}
 
 	// auth
-	@reset($forum_auth);
-	while ( list($key, $value) = @each($forum_auth) )
+	foreach ($forum_auth as $key => $value)
 	{
 		if ( isset($_POST[$key]) )
 		{
@@ -878,9 +883,8 @@ if ( ($mode == 'edit') || ($mode == 'create') || ($mode == 'delete') )
 		{
 			$forum_preset = intval($_POST['forum_preset']);
 			$preset_data = $simple_auth_ary[$forum_preset];
-			@reset($field_names);
 			$i = 0;
-			while ( list($field_key, $field_lang) = @each($field_names) )
+			foreach ($field_names as $field_key => $field_lang)
 			{
 				$forum_auth[$field_key] = $preset_data[$i];
 				$i++;
@@ -890,13 +894,11 @@ if ( ($mode == 'edit') || ($mode == 'create') || ($mode == 'delete') )
 	else
 	{
 		// try to identify a preset
-		@reset($simple_auth_ary);
-		while( list($preset_key, $preset_data) = @each($simple_auth_ary) )
+		foreach ($simple_auth_ary as $preset_key => $preset_data)
 		{
 			$matched = true;
-			@reset($field_names);
 			$i = 0;
-			while ( list($field_key, $field_lang) = @each($field_names) )
+			foreach ($field_names as $field_key => $field_lang)
 			{
 				$matched = ( $forum_auth[$field_key] == $preset_data[$i] );
 				if ( !$matched )
@@ -1160,10 +1162,9 @@ if ( ($mode == 'edit') || ($mode == 'create') || ($mode == 'delete') )
 			$sql_update = '';
 
 			// regular fields
-			@reset($$fields_list);
-			while ( list($table_field, $process_field) = @each($$fields_list) )
+			foreach ($$fields_list as $table_field => $process_field)
 			{
-				if ( ($table_field != 'main_type') || defined('SUB_FORUM_ATTACH') || ($item['type'] != POST_FORUM_URL) )
+				if ( ( $table_field != 'main_type' || defined('SUB_FORUM_ATTACH') || ($item['type'] != POST_FORUM_URL) ) && isset($item[$process_field]) )
 				{
 					$table_value = ($fields_type[$process_field] == 'INTEGER') ? intval($item[$process_field]) : sprintf("'%s'", str_replace("\'", "''", str_replace('\"', '"', addslashes($item[$process_field]))));
 					$sql_fields .= ( empty($sql_fields) ? '' : ', ' ) . $table_field;
@@ -1175,8 +1176,7 @@ if ( ($mode == 'edit') || ($mode == 'create') || ($mode == 'delete') )
 			// auth fields
 			if ( $item['type'] == POST_FORUM_URL )
 			{
-				@reset($forum_auth);
-				while ( list($table_field, $auth_value) = @each($forum_auth) )
+				foreach ($forum_auth as $table_field => $auth_value)
 				{
 					$table_value = intval($auth_value);
 					$sql_fields .= ( empty($sql_fields) ? '' : ', ' ) . $table_field;
@@ -1316,8 +1316,7 @@ if ( ($mode == 'edit') || ($mode == 'create') || ($mode == 'delete') )
 
 		// type select list
 		$s_type_opt = '';
-		@reset($forum_type_list);
-		while ( list($key, $value) = @each($forum_type_list) )
+		foreach ($forum_type_list as $key => $value)
 		{
 			$selected = ( $item['type'] == $key ) ? ' selected="selected"' : '';
 			$s_type_opt .= '<option value="' . $key . '"' . $selected . '>' . $lang[$value] . '</option>';
@@ -1325,8 +1324,7 @@ if ( ($mode == 'edit') || ($mode == 'create') || ($mode == 'delete') )
 
 		// status select list
 		$s_status_opt = '';
-		@reset($forum_status_list);
-		while ( list($key, $value) = @each($forum_status_list) )
+		foreach ($forum_status_list as $key => $value)
 		{
 			$selected = ( $item['status'] == $key ) ? ' selected="selected"' : '';
 			$s_status_opt .= '<option value="' . $key . '"' . $selected . '>' . $lang[$value] . '</option>';
@@ -1336,9 +1334,8 @@ if ( ($mode == 'edit') || ($mode == 'create') || ($mode == 'delete') )
 		$s_presets = '';
 		$selected = ( $forum_preset < 0) ? ' selected="selected"' : '';
 		$s_presets .= '<option value="-1"' . $selected . '>' . $lang['None'] . '</option>';
-		@reset($simple_auth_ary);
 		$i = 0;
-		while ( list($preset_key, $preset_data) = @each($simple_auth_ary) )
+		foreach ($simple_auth_ary as $preset_key => $preset_data)
 		{
 			$selected = ($preset_key == $forum_preset) ? ' selected="selected"' : '';
 			$s_presets .= '<option value="' . $preset_key . '"' . $selected . '>' . $simple_auth_types[$i] . '</option>';
@@ -1346,10 +1343,9 @@ if ( ($mode == 'edit') || ($mode == 'create') || ($mode == 'delete') )
 		}
 
 		// position list
-		$s_post_opt = '';
 		$selected = ($item['position'] == $item['main']) ? ' selected="selected"' : '';
-		$s_pos_opt .= '<option value="' . $item['main'] . '"' . $selected . '>' . get_object_lang($item['main'], 'name', true) . '</option>';
-		for ( $i = 0; $i < count($tree['sub'][ $item['main'] ]); $i++ )
+		$s_pos_opt = '<option value="' . $item['main'] . '"' . $selected . '>' . get_object_lang($item['main'], 'name', true) . '</option>';
+		for ( $i = 0; isset($tree['sub'][ $item['main'] ]) && $i < count($tree['sub'][ $item['main'] ]); $i++ )
 		{
 			if ( $tree['sub'][ $item['main'] ][$i] != $fid )
 			{
@@ -1458,8 +1454,7 @@ if ( ($mode == 'edit') || ($mode == 'create') || ($mode == 'delete') )
 			// list of auth
 			$offset = 3;
 			$color_line = false;
-			@reset($forum_auth);
-			while ( list($key, $value) = @each($forum_auth) )
+			foreach ($forum_auth as $key => $value)
 			{
 				// forum link only use the auth view
 				if ( ($item['type'] == POST_FORUM_URL) || ($key == 'auth_view') )
@@ -1591,7 +1586,7 @@ if ( $mode == '' )
 	}
 
 	$color = false;
-	for ($i=0; $i < count($tree['sub'][$selected_id]); $i++)
+	for ($i=0; isset($tree['sub'][$selected_id]) && $i < count($tree['sub'][$selected_id]); $i++)
 	{
 		$this_key = $tree['sub'][$selected_id][$i];
 		$idx = $tree['keys'][$this_key];
@@ -1599,7 +1594,7 @@ if ( $mode == '' )
 		// get data for this level
 		$folder = $images['forum'];
 		$l_folder = $lang['Forum'];
-		if ( $tree['data'][$idx]['forum_status'] == FORUM_LOCKED)
+		if ( isset($tree['data'][$idx]['forum_status']) && $tree['data'][$idx]['forum_status'] == FORUM_LOCKED)
 		{
 			$folder = $images['forum_locked'];
 			$l_folder = $lang['Forum_locked'];
@@ -1608,7 +1603,7 @@ if ( $mode == '' )
 		{
 			$folder = $images['category'];
 			$l_folder = $lang['Category'];
-			if ( $tree['data'][$idx]['forum_status'] == FORUM_LOCKED)
+			if (isset($tree['data'][$idx]['forum_status']) && $tree['data'][$idx]['forum_status'] == FORUM_LOCKED)
 			{
 				$folder = $images['category_locked'];
 				$l_folder = $lang['Category_locked'];
@@ -1623,7 +1618,7 @@ if ( $mode == '' )
 		// is there some sub-levels for this level ?
 		$sub = isset($tree['sub'][$this_key]);
 		$links = '';
-		for ($j = 0; $j < count($tree['sub'][$this_key]); $j++ )
+		for ($j = 0; isset($tree['sub'][$this_key]) && $j < count($tree['sub'][$this_key]); $j++ )
 		{
 			$sub_this = $tree['sub'][$this_key][$j];
 			$sub_idx = $tree['keys'][$sub_this];
@@ -1660,7 +1655,7 @@ if ( $mode == '' )
 			$links .= ( empty($links) ? '' : ', ' ) . $link;
 		}
 
-		$icon = '';
+		$icon = $icon_img = '';
 		if ( !empty($tree['data'][$idx]['icon']) )
 		{
 			$icon = $tree['data'][$idx]['icon'];

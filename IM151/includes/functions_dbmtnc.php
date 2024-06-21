@@ -374,7 +374,7 @@ function create_cat()
 
 	if (!$cat_created)
 	{
-		// Höchten Wert von cat_order ermitteln
+		// Hochten Wert von cat_order ermitteln
 		$sql = 'SELECT Max(cat_order) AS cat_order
 			FROM ' . CATEGORIES_TABLE;
 		$result = $db->sql_query($sql);
@@ -416,7 +416,7 @@ function create_forum()
 
 	if (!$forum_created)
 	{
-		// Höchten Wert von forum_id ermitteln
+		// Hochten Wert von forum_id ermitteln
 		$sql = 'SELECT Max(forum_id) AS forum_id
 			FROM ' . FORUMS_TABLE;
 		$result = $db->sql_query($sql);
@@ -431,7 +431,7 @@ function create_forum()
 		}
 		$db->sql_freeresult($result);
 		$next_forum_id = $row['forum_id'] + 1;
-		// Höchten Wert von forum_order ermitteln
+		// Hochten Wert von forum_order ermitteln
 		$sql = 'SELECT Max(forum_order) AS forum_order
 			FROM ' . FORUMS_TABLE . "
 			WHERE cat_id = $cat_id";

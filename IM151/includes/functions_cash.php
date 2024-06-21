@@ -661,7 +661,7 @@ class cash_table
 		}
 		return false;
 	}
-	function &currency_next(&$iterater, $mask = false,$forum_id = false)
+	function currency_next(&$iterater, $mask = false,$forum_id = false)
 	{
 		if ( empty($iterater) )
 		{
@@ -670,7 +670,7 @@ class cash_table
 		if ( empty($this->ordered_list) || !($iterater < count($this->ordered_list)) )
 		{
 			$iterater = 0;
-			return false;
+			return null;
 		}
 		$cash_id = $this->ordered_list[$iterater];
 

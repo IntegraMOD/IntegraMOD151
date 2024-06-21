@@ -133,7 +133,7 @@ function cache_tree_output()
 	global $tree, $phpbb_root_path, $phpEx, $userdata;
     global $agcm_color;
 
-	if ( !defined('CACHE_TREE') )
+	if ( !defined('CACHE_TREE') || !CACHE_TREE )
 	{
 		return;
 	}
@@ -153,8 +153,7 @@ function cache_tree_output()
 
 	// keys
 	$cells = array();
-	@reset($tree['keys']);
-	while ( list($key, $value) = @each($tree['keys']) )
+  foreach ($tree['keys'] as $key => $value)
 	{
 		$cells[] = sprintf("'%s' => %s", $key, $value);
 	}
@@ -197,8 +196,7 @@ function cache_tree_output()
 	{
 		$template->assign_block_vars('data', array());
 
-		@reset($tree['data'][$i]);
-		while ( list($key, $value) = @each($tree['data'][$i]) )
+    foreach ($tree['data'][$i] as $key => $value)
 		{
 			$nkey = intval($key);
 			if ( $key != "$nkey" )
@@ -213,8 +211,7 @@ function cache_tree_output()
 	}
 
 	// subs
-	@reset($tree['sub']);
-	while ( list($main, $data) = @each($tree['sub']) )
+  foreach ($tree['sub'] as $main => $data)
 	{
 		$cells = array();
 		for ( $i = 0; $i < count($data); $i++ )
@@ -230,8 +227,7 @@ function cache_tree_output()
 	}
 
 	// moderators
-	@reset($tree['mods']);
-	while ( list($idx, $data) = @each($tree['mods']) )
+  foreach (( isset($tree['mods']) ? $tree['mods'] : []) as $idx => $data)
 	{
 		$s_user_ids = empty($data['user_id']) ? '' : implode(', ', $data['user_id']);
 		$s_group_ids = empty($data['group_id']) ? '' : implode(', ', $data['group_id']);
@@ -256,6 +252,7 @@ function cache_tree_output()
 	}
 
 	// transfert to a var
+  global $theme;
 	$template->assign_var_from_handle('def_tree', 'def_tree');
 	$res = "<?php\n" . $template->_tpldata['.'][0]['def_tree'] . "\n?>";
 
@@ -278,13 +275,18 @@ function cache_tree_level($main, &$parents, &$cats, &$forums, $level=-1)
 	global $tree;
 
 	// read all parents
-	$tree_level = array();
+  $tree_level = array(
+    'type' => [],
+    'id' => [],
+    'data' => [],
+    'sort' => [],
+  );
 
 	// increment the cur level
 	$level++;
 
 	// get the forums of the level
-	for ($i=0; $i < count_safe($parents[POST_FORUM_URL][$main]); $i++)
+	for ($i=0; isset($parents[POST_FORUM_URL][$main]) && $i < count_safe($parents[POST_FORUM_URL][$main]); $i++)
 	{
 		$idx = $parents[POST_FORUM_URL][$main][$i];
 		$forums[$idx]['tree_level'] = $level;
@@ -295,7 +297,7 @@ function cache_tree_level($main, &$parents, &$cats, &$forums, $level=-1)
 	}
 
 	// add the categories of this level
-	for ($i=0; $i < count_safe($parents[POST_CAT_URL][$main]); $i++)
+	for ($i=0; isset($parents[POST_CAT_URL][$main]) && $i < count_safe($parents[POST_CAT_URL][$main]); $i++)
 	{
 		$idx = $parents[POST_CAT_URL][$main][$i];
 		$cats[$idx]['tree_level'] = $level;
@@ -312,7 +314,7 @@ function cache_tree_level($main, &$parents, &$cats, &$forums, $level=-1)
 	$order = 0;
 	for ($i=0; $i < count_safe($tree_level['data']); $i++)
 	{
-		$this_key = count_safe($tree['data']);
+		$this_key = isset($tree['data']) ? count_safe($tree['data']) : 0;
 		$key = $tree_level['type'][$i] . $tree_level['id'][$i];
 		$order = $order + 10;
 		$tree['keys'][$key] = $this_key;
@@ -372,6 +374,7 @@ function cache_tree($write=false)
 	// read forums
 	$sql = "SELECT * FROM " . FORUMS_TABLE . " ORDER BY forum_order, forum_id";
 	if ( !$result = $db->sql_query($sql) ) message_die(GENERAL_ERROR, "Couldn't access list of Forums", "", __LINE__, __FILE__, $sql);
+  $forums = [];
 	while ($row = $db->sql_fetchrow($result))
 	{
 		$main_type = (empty($row['main_type'])) ? POST_CAT_URL : $row['main_type'];
@@ -553,8 +556,7 @@ function cache_generic($cache_tpl, $cache_file, $table, $key_field, $sql_where='
 	{
 		$id = $row[$key_field];
 		$cells = array();
-		@reset($row);
-		while ( list($key, $value) = @each($row) )
+    foreach ($row as $key => $value)
 		{
 			$nkey = intval($key);
 			if ( $key != "$nkey" )

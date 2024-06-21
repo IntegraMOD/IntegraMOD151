@@ -242,6 +242,7 @@ class phpbb_color extends agcm_color
 			message_die(GENERAL_ERROR, "Couldn't retrieve group color's data.", "", __LINE__, __FILE__, $sql);
 		}
 
+    $data = [];
 		while ( $row = $db->sql_fetchrow($result) )
 		{
 			$data[] = $row;

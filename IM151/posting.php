@@ -52,7 +52,7 @@ include($phpbb_root_path . 'language/lang_' . $board_config['default_lang'] . '/
 //
 // Check and set various parameters
 //
-$params = array('submit' => 'post','news_category' => 'news_category', 'preview' => 'preview', 'delete' => 'delete', 'poll_delete' => 'poll_delete', 'poll_add' => 'add_poll_option', 'poll_edit' => 'edit_poll_option', 'mode' => 'mode');
+$params = array('submit' => 'post','news_category' => 'news_category', 'preview' => 'preview', 'delete' => 'delete', 'poll_delete' => 'poll_delete', 'poll_add' => 'add_poll_option_text', 'poll_edit' => 'edit_poll_option', 'mode' => 'mode');
 foreach ($params as $var => $param)
 {
 	if ( !empty($_POST[$param]) || !empty($_GET[$param]) )
@@ -163,18 +163,7 @@ else
 }
 //-- fin mod : announces ---------------------------------------------------------------------------
 
-//
-// If the mode is set to topic review then output
-// that review ...
-//
-if ( $mode == 'topicreview' )
-{
-	require($phpbb_root_path . 'includes/topic_review.'.$phpEx);
-
-	topic_review($topic_id, false);
-	exit;
-}
-else if ( $mode == 'smilies' )
+if ( $mode == 'smilies' )
 {
 	generate_smilies('window', PAGE_POSTING);
 	exit;
@@ -304,6 +293,18 @@ switch( $mode )
 	default:
 		message_die(GENERAL_MESSAGE, $lang['No_post_mode']);
 		break;
+}
+
+//
+// If the mode is set to topic review then output
+// that review ...
+//
+if ( $mode == 'topicreview' )
+{
+	require($phpbb_root_path . 'includes/topic_review.'.$phpEx);
+
+	topic_review($topic_id, false);
+	exit;
 }
 
 //
@@ -716,8 +717,7 @@ if ( $mode == 'newtopic' || $mode == 'reply' || $mode == 'editpost' || $mode == 
 			$approve_mod['enabled'] = true;
 		}
 	}
-	$approve_mod['moderators'] = array();
-	$approve_mod['moderators'] = explode('|', $approve_mod['approve_moderators']);
+	$approve_mod['moderators'] = !empty($approve_mod['approve_moderators']) ? explode('|', $approve_mod['approve_moderators']) : [];
 	if ( in_array($userdata['user_id'], $approve_mod['moderators']) || $is_auth['auth_mod'] )
 	{
 		//moderator, don't screen their post
@@ -933,14 +933,18 @@ if( $userdata['session_logged_in'] && $post_data['disp_news'] )
 		}
 		$news_cat[] = $row;
 	}
-	
-	if( $post_data['news_id'] == 0 && $news_category == 0)
+
+	$boxstring = '';
+	if( empty($post_data['news_id']) && $news_category == 0)
 	{
 		$boxstring = '<option value="0">' . $lang['Regular_Post'] . '</option>';
 	}
 	else
 	{
-		$boxstring = '<option value="' . $news_sel['news_id'] .'">' . $news_sel['news_category'] . ' (' . $lang['Current_Selection'] . ')</option>';
+		if (!empty($news_sel))
+		{
+			$boxstring = '<option value="' . $news_sel['news_id'] .'">' . $news_sel['news_category'] . ' (' . $lang['Current_Selection'] . ')</option>';
+		}
 		$boxstring .= '<option value="0">' . $lang['Regular_Post'] . '</option>';
 	} 
 
@@ -1135,7 +1139,7 @@ else if ( $submit || $confirm )
 		case 'newtopic':
 		case 'reply':
 		  // CrackerTracker v5.x
-		  if ( $ctracker_config->settings['vconfirm_guest'] == 1 && !$userdata['session_logged_in'])
+		  if ( !empty($ctracker_config->settings['vconfirm_guest']) && !$userdata['session_logged_in'])
 		  {
 			  define('CRACKER_TRACKER_VCONFIRM', true);
 			  define('POST_CONFIRM_CHECK', true);
@@ -1147,10 +1151,10 @@ else if ( $submit || $confirm )
 			$message = ( !empty($_POST['message']) ) ? $_POST['message'] : '';
 //-- mod : calendar --------------------------------------------------------------------------------
 //-- add
-			$topic_calendar_time = ( $topic_calendar_time != $post_data['topic_calendar_time'] && !$is_auth['auth_cal']) ? $post_data['topic_calendar_time'] : $topic_calendar_time;
+			$topic_calendar_time = !empty($post_data['topic_calendar_time']) && ( $topic_calendar_time != $post_data['topic_calendar_time'] && !$is_auth['auth_cal']) ? $post_data['topic_calendar_time'] : $topic_calendar_time;
 			if (empty($topic_calendar_time)) $topic_calendar_time = 0;
 // repeat
-			$repeat_mode = $post_info['topic_calendar_repeat'];
+			$repeat_mode = ( isset($post_info['topic_calendar_repeat']) ? $post_info['topic_calendar_repeat'] : null );
 			if($repeat_mode)
 			{
 				$repeat_type = substr($repeat_mode,0,2);
@@ -1165,7 +1169,7 @@ else if ( $submit || $confirm )
 			{
 				$topic_calendar_repeat = $topic_calendar_repeats . $topic_calendar_repeats_value;
 			}
-			$topic_calendar_duration = ( $topic_calendar_duration != $post_data['topic_calendar_duration'] && !$is_auth['auth_cal']) ? $post_data['topic_calendar_duration'] : $topic_calendar_duration;
+			$topic_calendar_duration = !empty($post_data['topic_calendar_duration']) && ( $topic_calendar_duration != $post_data['topic_calendar_duration'] && !$is_auth['auth_cal']) ? $post_data['topic_calendar_duration'] : $topic_calendar_duration;
 			if ( !empty($topic_calendar_duration) )
 			{
 				$topic_calendar_duration--;
@@ -1218,7 +1222,7 @@ else if ( $submit || $confirm )
 
 			if ( $error_msg == '' )
 			{
-				$topic_type = ( $topic_type != $post_data['topic_type'] && !$is_auth['auth_sticky'] && !$is_auth['auth_announce'] ) ? $post_data['topic_type'] : $topic_type;
+				$topic_type = !empty($post_data['topic_type']) && ( $topic_type != $post_data['topic_type'] && !$is_auth['auth_sticky'] && !$is_auth['auth_announce'] ) ? $post_data['topic_type'] : $topic_type;
 //-- mod : announces -------------------------------------------------------------------------------
 //-- add
 				if ($topic_announce_duration < -1) $topic_announce_duration == 0;
@@ -2075,7 +2079,7 @@ if ( $mode == 'editpost' && ( ( $is_auth['auth_delete'] && $post_data['last_post
 //
 // Lock/Unlock topic selection
 //
-if ( ( $mode == 'editpost' || $mode == 'reply' || $mode == 'quote' || $mode == 'newtopic' ) && ( $is_auth['auth_mod'] ) )
+if ( ( $mode == 'editpost' || $mode == 'reply' || $mode == 'quote' || $mode == 'newtopic' ) && ( $is_auth['auth_mod'] ) && !empty($post_info['topic_status']))
 {
 	if ( $post_info['topic_status'] == TOPIC_LOCKED )
 	{
@@ -2145,7 +2149,7 @@ if ( $mode == 'newtopic' || ( $mode == 'editpost' && $post_data['first_post'] ) 
 //-- add
 	if( $is_auth['auth_announce'] || $is_auth['auth_global_announce'])
 	{
-		if (empty($topic_announce_duration)) $topic_announce_duration = $post_data['topic_announce_duration'];
+		if (empty($topic_announce_duration) && !empty($post_data['topic_announce_duration'])) $topic_announce_duration = $post_data['topic_announce_duration'];
 		$topic_type_toggle .= '<br />' . $lang['announcement_duration'] . ': <input type="post" size="3" name="topicduration" value="' . $topic_announce_duration . '" />&nbsp;' . $lang['Days'] . '<br /><span class="gensmall">(' . $lang['announcement_duration_explain'] . ')</span>';
 	}
 //-- fin mod : announces ---------------------------------------------------------------------------
@@ -2179,10 +2183,10 @@ if ( $mode == 'newtopic' || ( $mode == 'editpost' && $post_data['first_post'] ) 
 		);
 
 		// get the date
-		$topic_calendar_time = ( intval($post_data['topic_calendar_time']) ) ? intval($post_data['topic_calendar_time']) : $topic_calendar_time;
-		$topic_calendar_duration = ($topic_calendar_duration != intval($post_data['topic_calendar_duration'])) ? intval($post_data['topic_calendar_duration']) : $topic_calendar_duration;
+		$topic_calendar_time = ( isset($post_data['topic_calendar_time']) ) ? intval($post_data['topic_calendar_time']) : $topic_calendar_time;
+		$topic_calendar_duration = isset($post_data['topic_calendar_duration']) && ($topic_calendar_duration != intval($post_data['topic_calendar_duration'])) ? intval($post_data['topic_calendar_duration']) : $topic_calendar_duration;
 		// repeat
-		$topic_calendar_repeat = $repeat_mode;
+		$topic_calendar_repeat = isset($repeat_mode) ? $repeat_mode : null;
 
 /*		// get the components of the event date
 		$year	= '';
@@ -2231,7 +2235,7 @@ if ( $mode == 'newtopic' || ( $mode == 'editpost' && $post_data['first_post'] ) 
 		for ($i=1; $i <= 99; $i++)
 		{
 			$temp_list[$i] = str_pad($i, 2, '0', STR_PAD_LEFT);
-			$selected = ( $repeat_type_value == $temp_list[$i] ) ? ' selected="selected"' : '';
+			$selected = isset($repeat_type_value) && ( $repeat_type_value == $temp_list[$i] ) ? ' selected="selected"' : '';
 			$s_topic_calendar_repeats_value .= '<option value="' . $temp_list[$i] . '"' . $selected . '>' . $temp_list[$i] . '</option>';
 		}
 		$s_topic_calendar_repeats_value .= '</select>';
@@ -2243,7 +2247,7 @@ if ( $mode == 'newtopic' || ( $mode == 'editpost' && $post_data['first_post'] ) 
 		$s_topic_calendar_repeats = '<select name="topic_calendar_repeats"><option value=\"--\">-------------------------</option>';
 		for ($i=0; $i <= 4; $i++)
 		{
-			$selected = ( $repeat_type == $temp_list[$i] ) ? ' selected="selected"' : '';
+			$selected = isset($repeat_type) && ( $repeat_type == $temp_list[$i] ) ? ' selected="selected"' : '';
 			$s_topic_calendar_repeats .= '<option value="' . $temp_list[$i] . '"' . $selected . '>' . $temp_list2[$i] . '</option>';
 		}
 		$s_topic_calendar_repeats .= '</select>';
@@ -2329,7 +2333,7 @@ switch( $mode )
 		break;
 }
 
-$page_title = ($postreport || $lock_subject) ? $lang['Post_a_report']: $page_title;
+$page_title = (!empty($postreport) || $lock_subject) ? $lang['Post_a_report']: $page_title;
 
 // Generate smilies listing for page output
 generate_smilies('inline', PAGE_POSTING);
@@ -2371,7 +2375,7 @@ $template->assign_block_vars('switch_not_privmsg', array());
 
 // CrackerTracker v5.x
 $confirm_image = '';
-if ( $ctracker_config->settings['vconfirm_guest'] == 1 && !$userdata['session_logged_in'])
+if ( !empty($ctracker_config->settings['vconfirm_guest'])	&& !$userdata['session_logged_in'])
 {
 	define('CRACKER_TRACKER_VCONFIRM', true);
 	$template->assign_block_vars('switch_confirm', array());
@@ -2467,7 +2471,7 @@ $template->assign_vars(array(
 
 	'U_VIEWTOPIC' => ( $mode == 'reply' ) ? append_sid("viewtopic.$phpEx?" . POST_TOPIC_URL . "=$topic_id&amp;postorder=desc") : '', 
 	'U_REVIEW_TOPIC' => ( $mode == 'reply' ) ? append_sid("posting.$phpEx?mode=topicreview&amp;" . POST_TOPIC_URL . "=$topic_id") : '',
-	'TOPIC_DESCRIPTION' => $topic_desc,
+	'TOPIC_DESCRIPTION' => ( isset($topic_desc) ? $topic_desc : '' ),
 	'TEMPLATE_PATH' => $images['template'],
 	'LANG' => 'lang_' . $board_config['default_lang'],
 
@@ -2489,8 +2493,8 @@ $template->assign_vars(array(
 //	'S_CALENDAR_YEAR'			=> $s_topic_calendar_year,
 //	'S_CALENDAR_MONTH'			=> $s_topic_calendar_month,
 //	'S_CALENDAR_DAY'			=> $s_topic_calendar_day,
-	'S_REPEATS_VALUE'			=> $s_topic_calendar_repeats_value,
-	'S_REPEATS'					=> $s_topic_calendar_repeats,
+	'S_REPEATS_VALUE'			=> ( isset($s_topic_calendar_repeats_value) ? $s_topic_calendar_repeats_value : '' ),
+	'S_REPEATS'					=> ( isset($s_topic_calendar_repeats) ? $s_topic_calendar_repeats : '' ),
 
 //	'CALENDAR_HOUR'				=> $topic_calendar_hour,
 //	'CALENDAR_MIN'				=> $topic_calendar_min,
@@ -2518,7 +2522,7 @@ $template->assign_vars(array(
  	'S_TYPE_TOGGLE' => $topic_type_toggle, 
 	'S_TOPIC_ID' => $topic_id, 
 	'S_POST_ACTION' => append_sid("posting.$phpEx"),
-	'S_HIDDEN_FIELDS' => $s_hidden_fields,
+	'S_HIDDEN_FIELDS' => ( isset($s_hidden_fields) ? $s_hidden_fields : '' ),
 	'S_HIDDEN_FORM_FIELDS' => $hidden_form_fields)
 );
 
@@ -2665,7 +2669,7 @@ if( ( $mode == 'newtopic' || ( $mode == 'editpost' && $post_data['edit_poll']) )
 		'POLL_TITLE' => $poll_title,
 		'HIDE_VOTE' => ( $hide_vote ) ? 'checked="checked"' : '',
 		'TOTHIDE_VOTE' => ( $tothide_vote ) ? 'checked="checked"' : '',
-		'POLL_LENGTH_H' => $poll_length_h,
+		'POLL_LENGTH_H' => isset($poll_length_h) ? $poll_length_h : 0,
 		'MAX_VOTE' => $max_vote,
 		'POLL_LENGTH' => $poll_length)
 	);

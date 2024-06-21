@@ -139,7 +139,7 @@ function read_tree($force=false)
 
 	// try the cache
 	$use_cache_file = false;
-	if ( defined('CACHE_TREE') )
+	if ( defined('CACHE_TREE') && CACHE_TREE )
 	{
 		$cache_file = $phpbb_root_path . 'includes/def_tree.' . $phpEx;
 		@include($cache_file);
@@ -345,7 +345,7 @@ if (!defined('IN_INSTALL'))
 			foreach($row as $key => $value)
 			{
 				$nkey = intval($key);
-				if ( $key != "$nkey" )
+				if ( $key !== "$nkey" )
 				{
 					$tree['data'][$idx][$key] = $row[$key];
 				}
@@ -465,7 +465,7 @@ function set_tree_user_auth()
 		if ($main != 'Root')
 		{
 			// V: if no auth (i.e. for category), just pretend it's false
-			$main_auth = isset($tree['auth'][$main]['tree.auth_view']) ? $tree['auth'][$main]['tree.auth_view'] : false;
+			$main_auth = isset($tree['auth'][$main]['tree.auth_view']) && $tree['auth'][$main]['tree.auth_view'];
 			$tree['auth'][$main]['tree.auth_view'] = $main_auth || ($tree['auth'][$cur]['tree.auth_view']);
 		}
 
@@ -657,7 +657,7 @@ function get_auth_keys($cur='Root', $all=false, $level=-1, $max=-1, $auth_key='a
 				$tkeys = get_auth_keys($tree['sub'][$cur][$i], $all, $orig_level+1, $max, $auth_key, $align_level);
 
 				// add sub-levels
-				for ($j=0; $j < count($tkeys['id']); $j++)
+				for ($j=0; isset($tkeys['id']) && $j < count($tkeys['id']); $j++)
 				{
 					$last_i++;
 					$keys['keys'][$tkeys['id'][$j]] = $last_i;
@@ -987,8 +987,8 @@ function build_index($cur='Root', $cat_break=false, &$forum_moderators=[], $real
 			}
 
 			// front icon
-			$folder_image = ( $data['tree.unread_topics'] ) ? $i_new : $i_norm;
-			$folder_alt   = ( $data['tree.unread_topics'] ) ? $a_new : $a_norm;
+			$folder_image = !empty( $data['tree.unread_topics'] ) ? $i_new : $i_norm;
+			$folder_alt   = !empty( $data['tree.unread_topics'] ) ? $a_new : $a_norm;
 			if ($data['tree.locked'])
 			{
 				$folder_image	= $i_locked;
@@ -1009,7 +1009,7 @@ function build_index($cur='Root', $cat_break=false, &$forum_moderators=[], $real
 
 			// last post
 			$last_post = $lang['No_Posts'];
-			if ( $data['tree.topic_last_post_id'] )
+			if ( !empty($data['tree.topic_last_post_id']) )
 			{
 				// resize
 				$topic_title = $data['tree.topic_title'];
@@ -1072,7 +1072,7 @@ function build_index($cur='Root', $cat_break=false, &$forum_moderators=[], $real
 						else
 						{
 							$wi_new		= $images['icon_minipost_new'];
-							$wa_new		= $lang['icon_minipost'];
+							$wa_new		= ( isset($lang['icon_minipost']) ? $lang['icon_minipost'] : '' );
 							$wi_norm	= $images['icon_minipost'];
 							$wa_norm	= $lang['No_new_posts'];
 							$wi_locked	= $images['icon_minipost_lock'];
@@ -1091,8 +1091,8 @@ function build_index($cur='Root', $cat_break=false, &$forum_moderators=[], $real
 						}
 
 						// front icon
-						$wfolder_image	= ( $wdata['tree.unread_topics'] ) ? $wi_new : $wi_norm;
-						$wfolder_alt	= ( $wdata['tree.unread_topics'] ) ? $wa_new : $wa_norm;
+						$wfolder_image	= !empty( $wdata['tree.unread_topics'] ) ? $wi_new : $wi_norm;
+						$wfolder_alt	= !empty( $wdata['tree.unread_topics'] ) ? $wa_new : $wa_norm;
 						if ($wdata['tree.locked'])
 						{
 							$wfolder_image	= $wi_locked;
@@ -1335,7 +1335,7 @@ function display_index($cur='Root')
 
 	// moderators list
 	$forum_moderators = array();
-  foreach ($tree['mods'] as $idx => $data)
+  foreach (( isset($tree['mods']) ? $tree['mods'] : []) as $idx => $data)
 	{
 		if ( $tree['type'][$idx] == POST_FORUM_URL )
 		{

@@ -284,7 +284,7 @@ if ( defined('CM_MEMBERLIST') )
             {
                 return;
             }
-            while ( $c_cur = &$cash->currency_next($cm_i,CURRENCY_ENABLED | CURRENCY_VIEWMEMBERLIST) )
+            while ( $c_cur = $cash->currency_next($cm_i,CURRENCY_ENABLED | CURRENCY_VIEWMEMBERLIST) )
             {
                 $mode_types_text[] = $c_cur->name(true);
                 $mode_types[] = 'cash_' . $c_cur->id();
@@ -602,7 +602,7 @@ if ( defined('CM_POSTING') )
             $message_clause = array();
             $reply_bonus = array();
             $all_spam = !$all_active;
-            while ( $c_cur = &$cash->currency_next($cm_i,CURRENCY_ENABLED,$forum_id) )
+            while ( $c_cur = $cash->currency_next($cm_i,CURRENCY_ENABLED,$forum_id) )
             {
                 $this_enabled = $all_active;
                 if ( !$all_active )

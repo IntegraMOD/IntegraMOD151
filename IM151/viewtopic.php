@@ -1724,7 +1724,7 @@ if ( !empty($approve_mod['enabled']) )
 //
 // Does this topic contain a poll?
 //
-if ( !empty($forum_topic_data['topic_vote']) && !$approve_mod['topics_awaiting'] )
+if ( !empty($forum_topic_data['topic_vote']) && empty($approve_mod['topics_awaiting']) )
 {
 
 // 
@@ -1844,6 +1844,7 @@ if ( !empty($forum_topic_data['topic_vote']) && !$approve_mod['topics_awaiting']
 				}
 			}
 
+			$poll_expire_1 = $poll_expire_2 = $poll_expire_3 = $poll_expire_4 = $poll_expire_5 = $poll_expire_6 = $poll_expire_7 = $poll_expire_8 = '';
 			if ( ( $poll_expired == 0 ) && ( $vote_info[0]['vote_length'] <> 0 ) )
 			{
 				$poll_expire_1 = (( $vote_info[0]['vote_start'] + $vote_info[0]['vote_length'] ) - time() );

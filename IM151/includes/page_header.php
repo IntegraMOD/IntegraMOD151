@@ -1415,13 +1415,13 @@ if ( empty($nav_key) )
 $nav_cat_desc = make_cat_nav_tree($nav_key, isset($nav_pgm) ? $nav_pgm : '', 'nav', isset($topic_topic_title) ? $topic_topic_title : '', isset($topic_forum_id) ? $topic_forum_id : 0);
 if ( !empty($nav_cat_desc) )
 {
-	$nav_cat_desc = $nav_separator . $nav_cat_desc;
+	$nav_cat_desc = ( isset($nav_separator) ? $nav_separator : '' ) . $nav_cat_desc;
 }
 
 // send to template
 $template->assign_vars(array(
 	'SPACER'		=> $images['spacer'],
-	'NAV_SEPARATOR' => $nav_separator,
+	'NAV_SEPARATOR' => ( isset($nav_separator) ? $nav_separator : '' ),
 	'NAV_CAT_DESC'	=> $nav_cat_desc,
 	)
 );

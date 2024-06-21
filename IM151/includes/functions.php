@@ -258,7 +258,7 @@ function read_cookies($userdata)
 		}
 	}
 
-	define('COOKIE_READ', true);
+	if (!defined('COOKIE_READ')) define('COOKIE_READ', true);
 }
 
 function write_cookies($userdata)

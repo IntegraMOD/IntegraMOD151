@@ -51,7 +51,7 @@ class attach_parent
 	//
 	// Constructor
 	//
-	function attach_parent()
+	function __construct()
 	{
 		global $_POST, $_FILES;
 		
@@ -66,7 +66,7 @@ class attach_parent
 		}
 
 		$this->file_comment = ( isset($_POST['filecomment']) ) ? trim( strip_tags($_POST['filecomment'])) : '';
-		$this->filename = ($_FILES['fileupload']['name'] != 'none') ? trim( $_FILES['fileupload']['name'] ) : '';
+		$this->filename = !empty($_FILES['fileupload']['name']) && ($_FILES['fileupload']['name'] != 'none') ? trim( $_FILES['fileupload']['name'] ) : '';
 		$this->attachment_list = ( isset($_POST['attachment_list']) ) ? $_POST['attachment_list'] : array();
 		$this->attachment_comment_list = ( isset($_POST['comment_list']) ) ? $_POST['comment_list'] : array();
 		$this->attachment_filename_list = ( isset($_POST['filename_list']) ) ? $_POST['filename_list'] : array();
@@ -310,7 +310,7 @@ class attach_parent
 			$add_attachment_box = ( !empty($_POST['add_attachment_box']) ) ? TRUE : FALSE;
 			$posted_attachments_box = ( !empty($_POST['posted_attachments_box']) ) ? TRUE : FALSE;
 
-			$refresh = $add || $delete || $edit || $del_thumbnail || $update_attachment || $add_attachment_box || $posted_attachment_box;
+			$refresh = $add || $delete || $edit || $del_thumbnail || $update_attachment || $add_attachment_box || $posted_attachments_box;
 		}
 
 		//
@@ -1562,9 +1562,9 @@ class attach_posting extends attach_parent
 	//
 	// Constructor
 	//
-	function attach_posting()
+	function __construct()
 	{
-		$this->attach_parent();
+		parent::__construct();
 		$this->page = 0;
 	}
 	
