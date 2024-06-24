@@ -325,7 +325,7 @@ class sql_parser
 	 * @param string Path to the includes directory for "friend" classes.
 	 * @param string SQL_LAYER.
 	 */
-	function sql_parser($includes_path = '', $sql_layer = '')
+	function __construct($includes_path = '', $sql_layer = '')
 	{
 		global $phpbb_root_path;
 

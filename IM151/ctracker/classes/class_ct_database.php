@@ -45,7 +45,7 @@ class ct_database
 	 * <b>Constructor</b><br>
 	 * Loads all Configuration Data from Database
 	 */
-	function ct_database()
+	function __construct()
 	{
 		global $db, $lang, $_SERVER, $_ENV;
 

@@ -47,7 +47,9 @@ class pafiledb_public extends pafiledb
 			$this->module_name = $module_name;
 
 			require_once($phpbb_root_path . 'pafiledb/modules/pa_' . $module_name . '.'.$phpEx);
-			eval('$this->modules[' . $module_name . '] = new pafiledb_' . $module_name . '();');
+      $classname = "pafiledb_$module_name";
+      $this->modules[$module_name] = new $classname();
+			//eval('$this->modules[' . $module_name . '] = new pafiledb_' . $module_name . '();');
 
 			if (method_exists($this->modules[$module_name], 'init'))
 			{

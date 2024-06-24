@@ -320,7 +320,7 @@ function cache_tree_level($main, &$parents, &$cats, &$forums, $level=-1)
 		$tree['keys'][$key] = $this_key;
 		$tree['main'][]		= $main;
 		$tree['type'][]		= $tree_level['type'][$i];
-		$tree['id'][]		= $tree_level['id'][$i];
+		$tree['id'][]		  = $tree_level['id'][$i];
 		$tree['data'][]		= $tree_level['data'][$i];
 		$tree['sub'][$main][] = $key;
 

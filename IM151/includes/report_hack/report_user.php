@@ -8,7 +8,7 @@ class report_user extends report_module
 	//
 	// Constructor
 	//
-	function report_user($id, $data, $lang)
+	function __construct($id, $data, $lang)
 	{
 		$this->id = $id;
 		$this->data = $data;

@@ -75,7 +75,7 @@ class mod_io
 	//
 
 	// get sent the method and ftp info (install proggie)
-	function mod_io( $filename, $path, $read_method, $write_method, $move_method, $ftp_user, $ftp_pass, $ftp_path, $ftp_host, $ftp_port, $ftp_type, $ftp_cache)
+	function __construct( $filename, $path, $read_method, $write_method, $move_method, $ftp_user, $ftp_pass, $ftp_path, $ftp_host, $ftp_port, $ftp_type, $ftp_cache)
 	{
 		$this->filename = $filename ;
 		$this->path = $path ;

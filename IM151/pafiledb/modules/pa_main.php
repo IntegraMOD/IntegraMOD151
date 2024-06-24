@@ -9,7 +9,6 @@
   Sub category counting bug fix by Kron
   Please read the license included with this script for more information.
 */
-define('main', 'main');
 
 class pafiledb_main extends pafiledb_public
 {

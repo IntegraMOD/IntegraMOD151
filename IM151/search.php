@@ -332,7 +332,7 @@ else if ( $search_keywords != '' || $search_author != '' || $search_id )
 				$sort_by = 0;
 				$sort_dir = 'DESC';
 			}
-            else if ( MINI_CAL_CALENDAR_VERSION != 'NONE' && $search_id == 'mini_cal' )
+            else if ( defined('MINI_CAL_CALENDAR_VERSION') && MINI_CAL_CALENDAR_VERSION != 'NONE' && $search_id == 'mini_cal' )
             {
                 $nix_tomorrow  = mktime (0,0,0,date("m", $search_date), date("d", $search_date)+1,date("Y", $search_date)); 
                 
@@ -344,7 +344,7 @@ else if ( $search_keywords != '' || $search_author != '' || $search_id )
 				$sort_by = 0;
 				$sort_dir = 'DESC';
             }
-            else if ( MINI_CAL_CALENDAR_VERSION != 'NONE' && $search_id == 'mini_cal_events' )
+            else if (defined('MINI_CAL_CALENDAR_VERSION') && MINI_CAL_CALENDAR_VERSION != 'NONE' && $search_id == 'mini_cal_events' )
             {
 //-- mod : topic calendar ext ----------------------------------------------------------------------
 //-- add

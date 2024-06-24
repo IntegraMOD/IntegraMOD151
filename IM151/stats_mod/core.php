@@ -65,11 +65,7 @@ class StatisticsCORE
 	// Namespaces
 	var $namespace_vars = array();
 	var $namespace_functions = array();
-
-	function StatisticsCore()
-	{
-	}
-	
+  
 	// Init Module
 	function start_module($db_cache_on = false)
 	{

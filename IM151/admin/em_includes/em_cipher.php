@@ -322,11 +322,6 @@ class Cipher_blowfish {
     /* The number of rounds to do */
     var $_rounds = 16;
 
-    /* Constructor */
-    function Cipher_blowfish()
-    {
-    }
-
     /**
      * Set the key to be used for en/decryption
      *
@@ -527,7 +522,7 @@ class Cipher_BlockMode_cbc
 	var $key_set;
 
 	// constructor
-	function Cipher_BlockMode_cbc()
+	function __construct()
 	{
 		$this->blowfish = new Cipher_blowfish();
 		$this->key_set = false;

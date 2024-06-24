@@ -25,16 +25,6 @@ if ( !defined('IN_PHPBB') || !defined('CTRACKER_ACP') )
 class ct_adminfunctions
 {
 	/**
-	 * <b>ct_adminfunctions</b>
-	 * Constructor
-	 */
-	function ct_adminfunctions()
-	{
-		// Currently nothing to do
-	}
-
-
-	/**
 	 * <b>ct_spammer_block</b>
 	 * Generates the Block Modes Switchfields
 	 *

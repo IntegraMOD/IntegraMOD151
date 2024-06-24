@@ -365,7 +365,7 @@ class ftp
 	var $_buf;
 
 	/* Constractor */
-	function ftp($debug = FALSE, $timeout = 30, $umask = 0022)
+	function __construct($debug = FALSE, $timeout = 30, $umask = 0022)
 	{
 		$this->debug   = $debug;
 		$this->timeout = $timeout;
@@ -953,7 +953,7 @@ class emftp
 
 
 	// constructor
-	function emftp( $type, $debug = FALSE)
+	function __construct( $type, $debug = FALSE)
 	{
 		// define either fsock or ext
 		$this->ftp_type = $type ;

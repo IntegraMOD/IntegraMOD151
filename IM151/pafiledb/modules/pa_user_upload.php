@@ -8,7 +8,6 @@
   Keep all copyright links on the script visible
   Please read the license included with this script for more information.
 */
-define('user_upload', 'user_upload');
 class pafiledb_user_upload extends pafiledb_public
 {
 	function main($action)

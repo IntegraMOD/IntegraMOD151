@@ -36,11 +36,9 @@ class attach_pm extends attach_parent
 	//
 	// Constructor
 	//
-	function attach_pm()
+	function __construct()
 	{
-		global $_POST;
-
-		$this->attach_parent();
+    parent::__construct();
 		$this->pm_delete_attachments = ( isset($_POST['pm_delete_attach']) ) ? TRUE : FALSE;
 		$this->page = PAGE_PRIVMSGS;
 	}

@@ -31,10 +31,6 @@ class Content_statistical
 	var $align = array();
 	var $width = array();
 
-	function Content_statistical()
-	{
-	}
-
 	function set_columns($data)
 	{
 		global $stats_template;

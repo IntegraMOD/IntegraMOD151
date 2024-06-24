@@ -40,7 +40,7 @@ class sql_db
 	//
 	// Constructor
 	//
-	function sql_db($sqlserver, $sqluser, $sqlpassword, $database, $persistency = true)
+	function __construct($sqlserver, $sqluser, $sqlpassword, $database, $persistency = true)
 	{
 		$mtime = microtime();
 		$mtime = explode(" ",$mtime);

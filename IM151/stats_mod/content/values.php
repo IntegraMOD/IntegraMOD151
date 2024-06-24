@@ -29,10 +29,6 @@ class Content_values
 	var $width_step = array();
 	var $align = 'center';
 
-	function Content_values()
-	{
-	}
-
 	function set_columns($data)
 	{
 		global $stats_template;

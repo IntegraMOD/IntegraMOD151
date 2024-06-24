@@ -68,18 +68,15 @@ class log_manager
 	 * Write User Information to Vars we need these informations later into the
 	 * Log File
 	 */
-	function log_manager()
+	function __construct()
 	{
-
-		global $_SERVER;
-
 		$this->ct_type_msg      = 0;
 		$this->ct_timestamp     = time();
 		$this->ct_request       = $_SERVER['PHP_SELF'] . '?' . $_SERVER['QUERY_STRING'];
-		$this->ct_referer       = $_SERVER['HTTP_REFERER'];
-		$this->ct_user_agent    = $_SERVER['HTTP_USER_AGENT'];
+		$this->ct_referer       = ( isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : '' );
+		$this->ct_user_agent    = ( isset($_SERVER['HTTP_USER_AGENT']) ? $_SERVER['HTTP_USER_AGENT'] : '' );
 		$this->ct_remote_addr   = ( !empty($_SERVER['REMOTE_ADDR']) ) ? $_SERVER['REMOTE_ADDR'] : ( ( !empty($_ENV['REMOTE_ADDR']) ) ? $_ENV['REMOTE_ADDR'] : getenv('REMOTE_ADDR') );
-		$this->ct_remote_host   = $_SERVER['REMOTE_HOST'];
+		$this->ct_remote_host   = ( isset($_SERVER['REMOTE_HOST']) ? $_SERVER['REMOTE_HOST'] : '' );
 		$this->ct_counter_value = 0;
 
 	}
@@ -359,6 +356,7 @@ class log_manager
 		// Create Path to Counter file and load the current value
 		$path                   = $this->create_ct_path(1);
 		$this->ct_counter_value = @file_get_contents($path);
+    if (!intval($this->ct_counter_value)) $this->ct_counter_value = 0;
 
 		// Current entries in the logfiles have to be added
 		for($i = 2; $i <= 5; $i++)

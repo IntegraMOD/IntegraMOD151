@@ -8,7 +8,7 @@ class report_privmsg extends report_module
 	//
 	// Constructor
 	//
-	function report_privmsg($id, $data, $lang)
+	function __construct($id, $data, $lang)
 	{
 		$this->id = $id;
 		$this->data = $data;

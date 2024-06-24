@@ -25,7 +25,7 @@ class acm
 	var $vars_ts = array();
 	var $modified = FALSE;
 
-	function acm()
+	function __construct()
 	{
 		global $phpbb_root_path;
 		$this->cache_dir = $phpbb_root_path . 'pafiledb/cache/';
@@ -70,7 +70,7 @@ class acm
 		$dir = opendir($this->cache_dir);
 		while ($entry = readdir($dir))
 		{
-			if ($entry{0} == '.' || substr($entry, 0, 4) != 'sql_')
+			if ($entry[0] == '.' || substr($entry, 0, 4) != 'sql_')
 			{
 				continue;
 			}

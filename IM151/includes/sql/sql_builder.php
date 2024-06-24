@@ -33,7 +33,7 @@ class sql_builder
 	/**
 	 * Constructor
 	 */
-	function sql_builder(&$parser)
+	function __construct(&$parser)
 	{
 		$this->parser = &$parser;
 	}

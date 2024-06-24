@@ -92,7 +92,7 @@ var $day;									// return array s.a.
 *
 * Sets default values for e.g. language (default=english)
 **/
-function calendarSuite(){
+function __construct(){
 	switch (language) {
 
 		case 0:

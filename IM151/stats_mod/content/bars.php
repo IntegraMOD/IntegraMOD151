@@ -40,10 +40,6 @@ class Content_bars
 	var $bar_percent = 0;
 	
 
-	function Content_bars()
-	{
-	}
-
 	function init_bars($bars = '')
 	{
 		global $board_config, $userdata, $theme, $db, $stats_template, $phpbb_root_path;

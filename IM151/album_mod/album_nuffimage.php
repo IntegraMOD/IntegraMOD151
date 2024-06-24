@@ -28,7 +28,7 @@ class NuffImage
 	//****************************************************************************
 	// Function called when object created
 	//****************************************************************************
-	function NuffImage()
+	function __construct()
 	{
 		$this->ChangeFlag = false;
 		$this->Alpha = false;

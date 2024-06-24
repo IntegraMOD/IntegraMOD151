@@ -28,7 +28,7 @@ class contact_list
 	var $append_msg;		// Holds Close Window link text
 
 	// Constructor.
-	function contact_list()
+	function __construct()
 	{
 		global $gen_simple_header, $lang;
 

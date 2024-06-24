@@ -361,7 +361,7 @@ if(!defined("SQL_LAYER"))
 				{
 					// V TODO: this probably (definitely...) doesn't work with cached results!
 					mysqli_data_seek($query_id, $rownum);
-					$resrow = (is_numeric($col)) ? mysqli_fetch_row($query_id) : mysqli_fetch_assoc($query_id);
+					$resrow = (is_numeric($field)) ? mysqli_fetch_row($query_id) : mysqli_fetch_assoc($query_id);
 					if (isset($resrow[$field])){
 						return $resrow[$field];
 					} else {

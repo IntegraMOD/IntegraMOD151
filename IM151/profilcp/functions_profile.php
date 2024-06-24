@@ -73,7 +73,7 @@ if ( $is_called == FALSE )
 		}
 
 		$jadmin_ary = array();
-		if($portal_config['cache_enabled'])
+		if(!empty($portal_config['cache_enabled']))
 		{
 			$jadmin_ary=$var_cache->get('jadmin', 200000, 'jadmin');
 		}

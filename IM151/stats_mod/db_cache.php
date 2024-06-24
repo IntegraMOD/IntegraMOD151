@@ -28,7 +28,7 @@ class cached_db
 	var $fs = array();
 	var $f = array();
 
-	function cached_db($numrows, $fetchrowset, $fetchrow)
+	function __construct($numrows, $fetchrowset, $fetchrow)
 	{
 		$this->n = $numrows;
 		$this->fs = $fetchrowset;
@@ -52,10 +52,6 @@ class StatisticsDB
 	var $num_queries = 0;
 	var $sql_time = 0;
 	var $sql_report = '';
-
-	function StatisticsDB()
-	{
-	}
 
 	function begin_cached_query($cache_enabled = FALSE, $cached_data = '')
 	{

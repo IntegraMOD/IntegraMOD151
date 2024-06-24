@@ -9,7 +9,7 @@ class report_topic extends report_module
 	//
 	// Constructor
 	//
-	function report_topic($id, $data, $lang)
+	function __construct($id, $data, $lang)
 	{
 		$this->id = $id;
 		$this->data = $data;

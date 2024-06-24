@@ -64,7 +64,7 @@ class mod_parser_xml
 	* @access public
 	* @param string Filename
 	*/
-	function mod_parser_xml($mod_contents)
+	function __construct($mod_contents)
 	{
 		$this->mod_contents = str_replace(array("\r\n", "\r", "\n"), "\n", trim($mod_contents));
 	}
