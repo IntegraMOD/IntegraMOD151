@@ -19,6 +19,7 @@ function album_enable_debug($state = true)
 function album_is_debug_enabled()
 {
 	global $album_config;
+	if (defined('DEV_MODE') && DEV_MODE) return true;
 
 	if (@!array_key_exists('album_debug_enabled', $GLOBALS))
 	{
@@ -60,7 +61,7 @@ function album_debugEx($file, $line)
 		$array = func_get_args();
 		$numargs = func_num_args();
 
-		if (gettype($array[2]) == 'array')
+		if (isset($array[2]) && gettype($array[2]) == 'array')
 		{
 			print('<pre>' . print_r($array[2], true) . '</pre>');
 			return;
@@ -68,7 +69,7 @@ function album_debugEx($file, $line)
 
 		$intermediat_format = $array[2];
 
-		for ($i = 3 ; $i <= $numargs ; $i++)
+		for ($i = 3 ; $i < $numargs ; $i++)
 		{
 			$out_array[] = album_debug_render($array[$i]);
 		}
@@ -83,6 +84,7 @@ function album_debug_dump_array($array, $level = 0)
 	$counted_keys = 1;
 	$result = "<i>array</i> = (";
 
+	$indent = '';
 	if ( 0 != ($total_keys =count($array)) )
 	{
 		$result .= "\n";

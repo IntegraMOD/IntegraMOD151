@@ -54,7 +54,7 @@ if (ALBUM_ROOT_CATEGORY == ($check_cat_id = album_get_personal_root_id($album_us
 }
 else
 {
-	if (empty($cat_id) || $cat_id == 0)
+	if (empty($cat_id) || $cat_id <= 0)
 	{
 		$cat_id = $check_cat_id;
 	}
@@ -367,7 +367,7 @@ if( $auth_data['upload'] == true && empty($enable_picture_upload_switch) )
 
 // Enable download only for own personal galleries
 //if ( ($total_pics > 0) && ($enable_picture_download_switch == false) && ($thiscat['cat_user_id'] == $userdata['user_id']) )
-if ( ($total_pics > 0) && ($enable_picture_download_switch == false) )
+if ( ($total_pics > 0) && empty($enable_picture_download_switch) )
 {
 	$template->assign_block_vars('enable_picture_download_pg', array());
 }
@@ -423,12 +423,12 @@ $template->assign_vars(array(
 	'DOWNLOAD_FULL_LINK' => $download_full_link,
 
 	//'L_CREATE_PERSONAL_GALLERY' => $lang['Create_Personal_Categories'],
-	'U_CREATE_PERSONAL_GALLERY' => $create_personal_cat_link,
+	'U_CREATE_PERSONAL_GALLERY' => ( isset($create_personal_cat_link) ? $create_personal_cat_link : '' ),
 	'CREATE_CATEGORY_IMG' => $images['manage_pic'],
 
 	'U_MANAGE_PIC' => append_sid(album_append_uid("album_personal_cat_admin.$phpEx?cat_id=$cat_id")),
 	'MANAGE_PIC_IMG' => $images['manage_pic'],
-	'L_MANAGE_PIC' => $lang['manage_Pic'],
+	'L_MANAGE_PIC' => ( isset($lang['manage_Pic']) ? $lang['manage_Pic'] : '' ),
 
 	'U_TOGGLE_VIEW_ALL' => $view_mode_url,
 	'TOGGLE_VIEW_ALL_IMG' => $image_toggle_button,
@@ -436,7 +436,7 @@ $template->assign_vars(array(
 
 	'L_CATEGORY' => sprintf($lang['Personal_Gallery_Of_User'], $username),
 
-	'L_NO_PICS' => $no_picture_message,
+	'L_NO_PICS' => ( isset($no_picture_message) ? $no_picture_message : '' ),
 	'L_PERSONAL_GALLERY_NOT_CREATED' => sprintf($lang['Personal_gallery_not_created'], $username),
 
 	'L_RECENT_PUBLIC_PICS' => sprintf($lang['Recent_Personal_Pics'], $username),
@@ -449,7 +449,7 @@ $template->assign_vars(array(
 	'L_POSTER' => $lang['Pic_Poster'],
 	'L_POSTED' => $lang['Posted'],
 
-	'ALBUM_JUMPBOX' => $album_jumpbox,
+	'ALBUM_JUMPBOX' => ( isset($album_jumpbox) ? $album_jumpbox : '' ),
 
 	'S_ALBUM_ACTION' => append_sid(album_append_uid("$album_page_url?cat_id=" . intval($cat_id))),
 
@@ -470,7 +470,7 @@ $template->assign_vars(array(
 	'SORT_RATING_OPTION' => $sort_rating_option,
 	'SORT_COMMENTS_OPTION' => $sort_comments_option,
 	'SORT_NEW_COMMENT_OPTION' => $sort_new_comment_option,
-	'SORT_USERNAME_OPTION' => $sort_username_option,
+	'SORT_USERNAME_OPTION' => ( isset($sort_username_option) ? $sort_username_option : '' ),
 
 	'L_ASC' => $lang['Sort_Ascending'],
 	'L_DESC' => $lang['Sort_Descending'],

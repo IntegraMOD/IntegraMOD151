@@ -188,7 +188,7 @@ foreach ($mods[$menu_name]['data'] as $mod_name => $mod)
     foreach ($subdata['data'] as $field_name => $field)
 		{
 			$is_auth = auth_field($field);
-			if ( ( ( !empty($field['user']) && isset($view_userdata[ $field['user'] ]) && !$board_config[ $field_name . '_over'] )  || $field['system'] ) && $is_auth )
+			if ( ( ( !empty($field['user']) && isset($view_userdata[ $field['user'] ]) && !$board_config[ $field_name . '_over'] )  || !empty($field['system']) ) && $is_auth )
 			{
 				$found=true;
 				break;
@@ -215,7 +215,7 @@ foreach ($mods[$menu_name]['data'] as $mod_name => $mod)
         foreach ($subdata['data'] as $field_name => $field)
 				{
 					$is_auth = auth_field($field);
-					if ( ( ( !empty($field['user']) && isset($view_userdata[ $field['user'] ]) && !$board_config[ $field_name . '_over'] ) || $field['system'] ) && $is_auth )
+					if ( ( ( !empty($field['user']) && isset($view_userdata[ $field['user'] ]) && !$board_config[ $field_name . '_over'] ) || !empty($field['system']) ) && $is_auth )
 					{
 						$found=true;
 						break;
@@ -235,11 +235,11 @@ foreach ($mods[$menu_name]['data'] as $mod_name => $mod)
 @array_multisort($mod_sort, $mod_keys, $sub_sort, $sub_keys);
 
 // fix mod id
-if ( $mod_id > count($mod_keys) )
+if ( $mod_id >= count($mod_keys) )
 {
 	$mod_id = 0;
 }
-if ( $sub_id > ( isset($sub_keys[$mod_id]) ? count($sub_keys[$mod_id]) : 0 ) )
+if ( $sub_id >= ( isset($sub_keys[$mod_id]) ? count($sub_keys[$mod_id]) : 0 ) )
 {
 	$sub_id = 0;
 }
@@ -248,7 +248,7 @@ if ( $sub_id > ( isset($sub_keys[$mod_id]) ? count($sub_keys[$mod_id]) : 0 ) )
 $mod_name = $mod_keys[$mod_id];
 
 // sub name
-$sub_name = $sub_keys[$mod_id][$sub_id];
+$sub_name = isset($sub_keys[$mod_id][$sub_id]) ? $sub_keys[$mod_id][$sub_id] : '';
 
 // buttons
 $submit = isset($_POST['submit']);
@@ -317,7 +317,7 @@ if ($submit)
 					break;
 			}
 			// handle required...
-			if($field['required']){
+			if(!empty($field['required'])){
 				if(!$$user_field){
 					$error = true;
 					$msg = mods_settings_get_lang($mods[$menu_name]['data'][$mod_name]['data'][$sub_name]['data'][$field_name]['lang_key'] );
@@ -325,7 +325,7 @@ if ($submit)
 				}
 			}
 			// set in values array only if not a system field
-			if(!$field['system']){
+			if(empty($field['system'])){
 				$values[$user_field]=$$user_field;
 			}
 		}
@@ -335,28 +335,34 @@ if ($submit)
 		$message = $error_msg . '<br /><br />';
 		message_die(GENERAL_MESSAGE, $message);
 	}
+
+	$email_changed = isset($values['user_email']) && strtolower($values['user_email']) != strtolower($view_userdata['user_email']);
 	// set re-activate for guest and email changed
-	if ( $is_guest || $email_changed){
-		if ($board_config['require_activation'] != USER_ACTIVATION_NONE) {
+	if ( $is_guest || $email_changed)
+	{
+		if ($board_config['require_activation'] != USER_ACTIVATION_NONE)
+		{
 		// if admin user is active :: need 0 and 1 for updating user table!
-		if($is_admin){
+			if($is_admin){
+				$values['user_active'] = 1;
+			} else{
+				$values['user_active'] = 0;
+			}
+			// get an activation key
+			if (!$values['user_active']) {
+				$values['user_actkey'] = pcp_gen_rand_string(true);
+				$key_len = 54 - ( strlen($server_url) );
+				$key_len = ( $key_len > 6 ) ? $key_len : 6;
+				$values['user_actkey'] = substr($values['user_actkey'], 0, $key_len);
+			}
+		} else {
 			$values['user_active'] = 1;
-		} else{
-			$values['user_active'] = 0;
+			$values['user_actkey'] = '';
 		}
-		// get an activation key
-		if (!$values['user_active']) {
-			$values['user_actkey'] = pcp_gen_rand_string(true);
-			$key_len = 54 - ( strlen($server_url) );
-			$key_len = ( $key_len > 6 ) ? $key_len : 6;
-			$values['user_actkey'] = substr($values['user_actkey'], 0, $key_len);
-		}
-	} else {
-		$values['user_active'] = 1;
-		$values['user_actkey'] = '';
-	}
 		$user_active_changed = true;
-	} else{
+	}
+	else
+	{
 		$user_active_changed = false;
 	}
 	if($is_guest){
@@ -510,7 +516,7 @@ if ($submit)
 	// relocate
 	$ret_link = append_sid("./portal.$phpEx");
 	$ret_msg = sprintf($lang['Click_return_portal'],  '<a href="' . $ret_link . '">', '</a>');
-	if (!$values['user_active'] && $user_active_changed){
+	if (empty($values['user_active']) && $user_active_changed){
 		if ($is_guest){
 			if ( $board_config['require_activation'] == USER_ACTIVATION_SELF ){
 				$message = $lang['Account_inactive'] . '<br /><br />' . $ret_msg;

@@ -2523,7 +2523,7 @@ if ( defined('SMILIES_TABLE') )
 		{
 			$arr = array(
 				'code' => $smilies[$i]['code'],
-				'replace' => '<img src="http://' . $_SERVER['HTTP_HOST'] . $board_config['script_path'] . 'images/smiles/' . $smilies[$i]['smile_url'] . '" alt="' . htmlspecialchars($smilies[$i]['emotion']) . '" />'
+				'replace' => '<img src="http://' . $_SERVER['HTTP_HOST'] . $board_config['script_path'] . 'images/smiles/' . $smilies[$i]['smile_url'] . '" alt="' . htmlspecialchars($smilies[$i]['emoticon']) . '" />'
 			);
 			$bbcode->allowed_smilies[] = $arr;
 		}

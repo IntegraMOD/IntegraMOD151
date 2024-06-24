@@ -44,7 +44,7 @@ if ( !defined('IN_PHPBB') )
 // ... but $passed_auth will make it worked very much faster (because this function is often
 // called in a loop)
 //
-function album_user_access($cat_id, $passed_auth = 0, $view_check, $upload_check, $rate_check, $comment_check, $edit_check, $delete_check)
+function album_user_access($cat_id, $passed_auth, $view_check, $upload_check, $rate_check, $comment_check, $edit_check, $delete_check)
 {
 	global $db, $album_config, $userdata;
 

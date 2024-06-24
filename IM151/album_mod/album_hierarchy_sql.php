@@ -90,7 +90,7 @@ function album_read_tree($user_id = ALBUM_PUBLIC_GALLERY, $options = ALBUM_AUTH_
 	// read categories and categories with right user access rights
 	$cats = array();
 
-	if ( count_safe($album_data['data']) > 0)
+	if ( !empty($album_data['data']))
 	{
 		return ALBUM_DATA_ALREADY_READ;
 	}
@@ -139,7 +139,7 @@ function album_read_tree($user_id = ALBUM_PUBLIC_GALLERY, $options = ALBUM_AUTH_
 	{
 		if (album_is_debug_enabled() == true)
 		{
-			album_debugEx('album_read_tree : no rows was selected using this sql = %s', $sql);
+			album_debugEx(__FILE__, __LINE__, 'album_read_tree : no rows was selected using this sql = %s', $sql);
 		}
 		return;
 	}
@@ -233,13 +233,13 @@ function album_init_personal_gallery($user_id)
 
 	$row = init_personal_gallery_cat($user_id);
 
-	if ($row['cat_parent'] == $row['cat_id'])
+	if (isset($row['cat_parent']) && $row['cat_parent'] == $row['cat_id'])
 	{
 		$row['cat_parent'] = 0;
 	}
 
 	// store the parent id for this category in the row array
-	$row['parent'] = ($row['cat_parent'] == 0) ? $parent_root_id : $row['cat_parent'];
+	$row['parent'] = empty($row['cat_parent']) ? $parent_root_id : $row['cat_parent'];
 	$idx = count($cats);
 	$cats[$idx] = $row;
 	$parents[$row['parent']][] = $idx;
@@ -257,7 +257,7 @@ function album_init_personal_gallery($user_id)
 // ------------------------------------------------------------------------
 function album_get_personal_root_id($user_id)
 {
-	global $db, $album_data;
+	global $db, $album_data, $userdata;
 
 	// ------------------------------------------------------------------------
 	// if we aren't in a personal gallery cat
@@ -269,7 +269,7 @@ function album_get_personal_root_id($user_id)
 	}
 
 	//if ( is_array($album_data ) && count($album_data['data']) > 0)
-	if ( $userdata['user_id'] == $user_id && is_array($album_data ) && count($album_data['data']) > 0 && $album_data['personal'][0] == 1)
+	if ( $userdata['user_id'] == $user_id && !empty($album_data ) && count($album_data['data']) > 0 && $album_data['personal'][$album_data['id'][0]] == 1)
 	{
 		return $album_data['id'][0]; // the first array index is always root
 	}
@@ -581,7 +581,7 @@ function album_no_newest_pictures($check_date, $cats, $exclude_cat_id = 0)
 	}
 
 	// remove all the alpha characters from the string, since they aren't needed anymore
-	$check_date = ereg_replace("[A-Z]+", "", trim($check_date));
+	$check_date = preg_replace("/[A-Z]+/", "", trim($check_date));
 
 	// doa final test to see if it's a valid checkm further more
 	// if intval should return 0 then we will not find any images
@@ -609,7 +609,7 @@ function album_no_newest_pictures($check_date, $cats, $exclude_cat_id = 0)
 	$sql_exclude = ($exclude_cat_id != 0) ? ' AND NOT IN (' . $exclude_cat_id .')' : '';
 	$sql_include = (is_array($cats)) ? implode(',', $cats) : $cats;
 
-	$sql = 'SELECT c.cat_id, p.pic_id, COUNT(p.pic_id) AS pic_total
+	$sql = 'SELECT c.cat_id, COUNT(p.pic_id) AS pic_total
 			FROM ' . ALBUM_TABLE . ' AS p, ' . ALBUM_CAT_TABLE . ' AS c
 			WHERE c.cat_id IN ('. $sql_include  .')' .  $sql_exclude . '
 			AND p.pic_cat_id = c.cat_id ' . $sql_time . '
@@ -649,7 +649,7 @@ function album_get_cat_user_id($cat_id)
 {
 	global $db, $album_data;
 
-	if ( @!array_key_exists($cat_id, $album_data['keys']) || !isset($album_data) || !is_array($album_data))
+	if ( empty($album_data) || !array_key_exists($cat_id, $album_data['keys']) )
 	{
 		$sql = 'SELECT cat_user_id FROM ' . ALBUM_CAT_TABLE . ' WHERE cat_id = (' . $cat_id . ') LIMIT 1';
 
@@ -1107,6 +1107,8 @@ function album_build_picture_table($user_id, $cat_ids, $AH_thiscat, $auth_data, 
 				continue;
 				//break;
 			}
+
+			$approval_link = '';
 			//if ( ($AH_thiscat['cat_approval'] != ALBUM_USER) || (($album_config['personal_pics_approval'] == 1) && ($AH_thiscat['cat_user_id'] > 0)))
 			if ( ($AH_thiscat['cat_approval'] != ALBUM_USER) || (($album_config['personal_pics_approval'] == 1) && (album_get_cat_user_id($cat_ids) != false)) )
 			{
@@ -1189,7 +1191,7 @@ function album_build_picture_table($user_id, $cat_ids, $AH_thiscat, $auth_data, 
 			}
 			// Mighty Gorgon - Slideshow - END
 
-			if ( is_array($cats) )
+			if ( !empty($cats) )
 			{
 				// is a personal category that the picture belongs to AND
 				// is it the main category in the personal gallery ?

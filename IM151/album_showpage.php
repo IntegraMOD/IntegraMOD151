@@ -744,7 +744,6 @@ if( !isset($_POST['comment']) && !isset($_POST['rating']) )
 
 		$sql = 'SELECT emoticon, code, smile_url
 						FROM ' . SMILIES_TABLE . '
-						GROUP BY smile_url
 						ORDER BY smilies_id LIMIT ' . $max_smilies;
 
 		if (!$result = $db->sql_query($sql))

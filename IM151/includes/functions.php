@@ -1220,6 +1220,12 @@ function decode_ip($int_ip)
 	{ /* V: TODO ipv6 */
 		return "";
 	}
+	$hexipbang = [
+		$int_ip[0].$int_ip[1],
+		$int_ip[2].$int_ip[3],
+		$int_ip[4].$int_ip[5],
+		$int_ip[6].$int_ip[7],
+	];
 	return hexdec($hexipbang[0]). '.' . hexdec($hexipbang[1]) . '.' . hexdec($hexipbang[2]) . '.' . hexdec($hexipbang[3]);
 }
 

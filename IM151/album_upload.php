@@ -279,6 +279,7 @@ if( !isset($_POST['pic_title']) ) // is it not submitted?
 	// Build categories select
 	// --------------------------------
 	album_read_tree($userdata['user_id'], ALBUM_READ_ALL_CATEGORIES|ALBUM_AUTH_VIEW_AND_UPLOAD);
+	$personal_gallery_list = '';
 	if( $userdata['session_logged_in'] )
 	{
 		// build fake list of personal galleries (these will get created when needed later automatically
@@ -287,7 +288,7 @@ if( !isset($_POST['pic_title']) ) // is it not submitted?
 		//for($idx=0; $idx < count($userinfo); $idx++)
 		//Replaced to fix slowdown
 		$count = count($userinfo);
-		for($idx=0; $idx < count; $idx++)
+		for($idx=0; $idx < $count; $idx++)
 		//End Replace
 		{
 			// Is user allowed to create this personal gallery?
@@ -484,7 +485,7 @@ else
 	$pic_count = 0;
 	$thumb_count = 0;
 	$upload_files = $_FILES['pic_file'];
-	$thumbnail_upload_files = $_FILES['pic_thumbnail']; 	
+	$thumbnail_upload_files = ( isset($_FILES['pic_thumbnail']) ? $_FILES['pic_thumbnail'] : '' );
 	for($index = 0; $index < count($upload_files['name']);$index++)
 	{
 		if (was_file_uploaded($upload_files,$index) == true)
@@ -730,7 +731,7 @@ else
 		// --------------------------------
 
 		// this should ensure that the images don't all have the same timestamp
-		if ( $pic_time == '' )
+		if ( empty($pic_time) )
 		{
 			$pic_time = time() + 1;
 		}

@@ -16,7 +16,7 @@ if ( !defined('IN_PHPBB') )
 	die("Hacking attempt");
 }
 
-define("BBCODE_UID_LEN", 10);
+if (!defined('BBCODE_UID_LEN'))define("BBCODE_UID_LEN", 10);
 
 // global that holds loaded-and-prepared bbcode templates, so we only have to do
 // that stuff once.

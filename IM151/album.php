@@ -77,6 +77,7 @@ else
 	$album_user_id = ALBUM_PUBLIC_GALLERY;
 }
 
+$album_view_mode = '';
 if ($album_user_id != ALBUM_PUBLIC_GALLERY)
 {
 	$cat_id = ALBUM_ROOT_CATEGORY;
@@ -128,6 +129,10 @@ if ($album_user_id != ALBUM_PUBLIC_GALLERY)
 	{
 		redirect(append_sid(album_append_uid("album_cat.$phpEx" . album_build_url_parameters($_GET), false)));
 	}
+}
+else
+{
+	$cat_id = null;
 }
 
 $catrows = array ();

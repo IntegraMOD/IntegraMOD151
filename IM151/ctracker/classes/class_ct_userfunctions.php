@@ -426,26 +426,26 @@ class ct_userfunctions
 		// Registration Scan blocked Words
 		if ( isset($_POST['submit']) && intval($ctracker_config->settings['spam_keyword_det']) >= 1 )
 		{
-			for($i = 0; $i < count($ct_spammer_def); $i++)
+			foreach ($ct_spammer_def as $current_value)
 			{
-				$current_value = preg_quote($ct_spammer_def[$i]);
 		 		$current_value = str_replace('\*', '.*?', $current_value);
 
-				$clean_aim 	   	   = str_replace("\xAD", '', $_POST['aim']);
-				$clean_msn 	   	   = str_replace("\xAD", '', $_POST['msn']);
-				$clean_yim 	   	   = str_replace("\xAD", '', $_POST['yim']);
-				$clean_website 	   = str_replace("\xAD", '', $_POST['website']);
-				$clean_location    = str_replace("\xAD", '', $_POST['location']);
-				$clean_occupation  = str_replace("\xAD", '', $_POST['occupation']);
-				$clean_interests   = str_replace("\xAD", '', $_POST['interests']);
-				$clean_signature   = str_replace("\xAD", '', $_POST['signature']);
-
-				if ( preg_match('/^' . $current_value . '$/is', $clean_aim) || preg_match('/^' . $current_value . '$/is', $clean_msn) || preg_match('/^' . $current_value . '$/is', $clean_yim) ||  preg_match('/^' . $current_value . '$/is', $clean_website) ||  preg_match('/^' . $current_value . '$/is', $clean_location) ||  preg_match('/^' . $current_value . '$/is', $clean_occupation) ||  preg_match('/^' . $current_value . '$/is', $clean_interests) ||  preg_match('/^' . $current_value . '$/is', $clean_signature))
+        $social_fields = array('aim', 'msn', 'yim', 'website', 'location', 'occupation', 'interests', 'signature');
+				foreach ($social_fields as $social_field)
 				{
-					($mode != 'register' && $userdata['user_level'] == 0)? $this->block_handler() : null;
-					message_die(GENERAL_MESSAGE, $lang['ctracker_info_profile_spammer']);
-				} // if
-			} // for
+					if (!isset($_POST[$social_field]))
+					{
+						continue;
+					}
+
+					$clean = str_replace("\xAD", '', $_POST[$social_field]);
+					if (preg_match('/^' . $current_value . '$/is', $clean))
+					{
+						($mode != 'register' && $userdata['user_level'] == 0)? $this->block_handler() : null;
+						message_die(GENERAL_MESSAGE, $lang['ctracker_info_profile_spammer']);
+					}
+				} // foreach field
+			} // foreach spammer def
 		} // reg scan blocked words
 	} // function
 
@@ -475,7 +475,7 @@ class ct_userfunctions
 		global $db, $_POST, $ctracker_config, $lang, $mode, $userdata;
 
 		// Password length check
-		$pw_length = strlen($_POST['new_password']);
+		$pw_length = !empty($_POST['new_password']) ? strlen($_POST['new_password']) : 0;
 		if ( $pw_length < $ctracker_config->settings['pw_complex_min'] && !empty($_POST['new_password']) )
 		{
 			message_die(GENERAL_MESSAGE, sprintf($lang['ctracker_info_password_minlng'], $ctracker_config->settings['pw_complex_min'], $pw_length));

@@ -240,7 +240,7 @@ function album_build_index($user_id, &$keys, $cur_cat_id = ALBUM_ROOT_CATEGORY, 
 		$keys = array();
 		$keys = album_get_auth_keys($cur_cat_id, ALBUM_AUTH_VIEW ); //, true, -1, -1);
 		$max_level = album_get_max_depth($keys, ALBUM_AUTH_VIEW, $cur_cat_id ); //, false);
-		$newestpic = album_no_newest_pictures($album_config['new_pic_check_interval'], $album_data['id']);
+		$newestpic = album_no_newest_pictures($album_config['new_pic_check_interval'], ( isset($album_data['id']) ? $album_data['id'] : null ));
 	}
 
 	// get the level
@@ -559,7 +559,7 @@ function album_build_index($user_id, &$keys, $cur_cat_id = ALBUM_ROOT_CATEGORY, 
 	} // if ($level == 0)...
 
 	// display sub-levels
-	for ($i = 0; $i < (isset($album_data['sub'][$cur_cat_id]) ? count($album_data['sub'][$cur_cat_id]) : 0); $i++)
+	for ($i = 0; isset($album_data['sub'][$cur_cat_id]) && $i < count($album_data['sub'][$cur_cat_id]); $i++)
 	{
 		if (!empty($keys['keys'][$album_data['sub'][$cur_cat_id][$i]]))
 		{
@@ -587,10 +587,12 @@ function album_free_album_data()
 //-----------------------------------------------
 function album_build_tree(&$cats, &$parents, $level = ALBUM_ROOT_CATEGORY, $parent = ALBUM_ROOT_CATEGORY) {
 	global $db, $album_data, $album_config;
-	$album_data_level = array();
+	$album_data_level = array(
+		'data' => [],
+	);
 
 	// add the categories of this level
-	for ($i = 0; $i < count($parents[$parent]); $i++)
+	for ($i = 0; isset($parents[$parent]) && $i < count($parents[$parent]); $i++)
 	{
 		$idx = $parents[$parent][$i];
 
@@ -622,6 +624,7 @@ function album_build_tree(&$cats, &$parents, $level = ALBUM_ROOT_CATEGORY, $pare
 
 	// add the tree_level to the tree
 	$level++;
+	if (empty($album_data['data'])) $album_data['data'] = [];
 	for ($i = 0; $i < count($album_data_level['data']); $i++)
 	{
 		$AH_this = count($album_data['data']);
@@ -729,7 +732,7 @@ function album_get_max_depth(&$keys, $cur_cat_id = ALBUM_ROOT_CATEGORY, $auth_ke
 // Returns all the category id for current
 // catgory and it subs
 //-----------------------------------------------
-function album_get_sub_cat_ids($cur_cat_id = ALBUM_ROOT_CATEGORY, &$cats, $auth_key = ALBUM_AUTH_VIEW, $include_cur_cat_id = false)
+function album_get_sub_cat_ids($cur_cat_id = ALBUM_ROOT_CATEGORY, &$cats = [], $auth_key = ALBUM_AUTH_VIEW, $include_cur_cat_id = false)
 {
 	global $album_data;
 
@@ -816,10 +819,10 @@ function album_make_nav_tree($cur_cat_id, $pgm, $nav_class = 'nav', $user_id = A
 	$fcur = '';
 
 	// keep the compliancy with prec versions
-	if (!isset($album_data['keys'][$cur_cat_id]))
-	{
-			$cur_cat_id = isset($album_data['keys'][$cur_cat_id]) ? $cur_cat_id : $cur_cat_id;
-	}
+	//if (!isset($album_data['keys'][$cur_cat_id]))
+	//{
+	//		$cur_cat_id = isset($album_data['keys'][$cur_cat_id]) ? $cur_cat_id : $cur_cat_id;
+	//}
 
 	// find the object
 	$AH_this = isset($album_data['keys'][$cur_cat_id]) ? $album_data['keys'][$cur_cat_id] : ALBUM_ROOT_CATEGORY;
@@ -862,7 +865,7 @@ function album_make_nav_tree($cur_cat_id, $pgm, $nav_class = 'nav', $user_id = A
 			{
 				$AH_this = ALBUM_ROOT_CATEGORY;
 			}
-		} // while
+	} // while
 	return $res;
 }
 
@@ -1245,7 +1248,7 @@ function album_display_index($user_id, $cur_cat_id = ALBUM_ROOT_CATEGORY, $show_
 				)
 			);
 
-			$cols_span = album_generate_index_columns($username);
+			$cols_span = album_generate_index_columns();
 
 			// but we need to specific ly specify if we want to show the public gallery header
 			if ($show_public_footer == true)
