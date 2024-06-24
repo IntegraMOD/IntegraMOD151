@@ -994,7 +994,14 @@ else
 	// Comment System
 	if ( $album_config['comment'] == 1 && $auth_data['comment'] == 1 )
 	{
-		$comment_text = str_replace("\'", "''", htmlspecialchars(substr(trim($_POST['comment']), 0, $album_config['desc_length'])));
+		if (isset($_POST['comment']))
+		{
+			$comment_text = str_replace("\'", "''", htmlspecialchars(substr(trim($_POST['comment']), 0, $album_config['desc_length'])));
+		}
+		else
+		{
+			$comment_text = '';
+		}
 
 		$comment_username = (!$userdata['session_logged_in']) ? str_replace("\'", "''", substr(htmlspecialchars(trim($_POST['comment_username'])), 0, 32)) : str_replace("'", "''", htmlspecialchars(trim($userdata['username'])));
 
