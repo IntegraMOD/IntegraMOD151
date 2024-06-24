@@ -48,7 +48,8 @@ class pafiledb_main extends pafiledb_public
 			'U_DOWNLOAD' => append_sid('dload.'.$phpEx),
 
 			'DOWNLOAD' => $pafiledb_config['settings_dbname'],
-			'TREE' => $menu_output)
+      //'TREE' => $menu_output // V: it's commented out
+      )
 		); 
 
 		//===================================================

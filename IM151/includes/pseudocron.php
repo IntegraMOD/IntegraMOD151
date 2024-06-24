@@ -52,7 +52,7 @@ if ( ($board_config['nextcron'] < $current_time) && $board_config['pseudocron'] 
 	$sql = "UPDATE " . CONFIG_TABLE . " 
 		SET config_value = $temp_value
 		WHERE config_name = 'nextcron'"; 
-	if ( !($db->sql_query($sql)) ) 
+	if ( !($result = $db->sql_query($sql)) ) 
 	{ 
 	//	message_die(GENERAL_ERROR, 'Error updating cron status', '', __LINE__, __FILE__, $sql); 
 	}

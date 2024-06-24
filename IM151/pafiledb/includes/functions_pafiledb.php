@@ -178,7 +178,7 @@ class pafiledb
 			}
 		}
 
-		$cat_list .= '';
+		$cat_list = '';
 
 		$pre = str_repeat('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;', $depth);
 
@@ -186,6 +186,7 @@ class pafiledb
 
 		if(!empty($temp_cat_rowset))
 		{
+      $sel = '';
 			foreach ($temp_cat_rowset as $temp_cat_id => $cat)
 			{
 				if ($cat['cat_parent'] == $cat_id)
@@ -295,14 +296,15 @@ class pafiledb
 				message_die(GENERAL_ERROR, 'Couldnt Query Files info', '', __LINE__, __FILE__, $sql);
 			}
 
+      $temp_cat = [];
 			while($row = $db->sql_fetchrow($result))
 			{
 				$temp_cat[] = $row;
 			}
 
-			$file_info = $temp_cat[0];
-			if(!empty($file_info))
+			if(!empty($temp_cat))
 			{
+        $file_info = $temp_cat[0];
 				$sql = 'UPDATE ' . PA_CATEGORY_TABLE . "
 					SET cat_last_file_id = " . intval($file_info['file_id']) . ",
 					cat_last_file_name = '" . addslashes($file_info['file_name']) . "',
@@ -602,7 +604,7 @@ class pafiledb
 		for($k = 0; $k < count($c_access); $k++)
 		{
 			$c_cat_id = $c_access[$k]['cat_id'];
-			$this->auth[$c_cat_id]['auth_mod'] = ( $userdata['session_logged_in'] ) ? $this->auth_check_user(AUTH_MOD, 'auth_mod', $u_access[$c_cat_id], $is_admin) : 0;
+			$this->auth[$c_cat_id]['auth_mod'] = ( $userdata['session_logged_in'] ) ? $this->auth_check_user(AUTH_MOD, 'auth_mod', ( isset($u_access[$c_cat_id]) ? $u_access[$c_cat_id] : null ), $is_admin) : 0;
 		}
 
 		for($i = 0; $i < count($auth_fields_global); $i++)
@@ -849,7 +851,7 @@ class pafiledb
 							$sub_cat = $this->get_sub_cat($sub_cat_rowset[$k]['cat_id']);
 
 							$pafiledb_template->assign_block_vars('no_cat_parent', array(
-								'IS_HIGER_CAT' => FALSE,
+								'IS_HIGHER_CAT' => FALSE,
 								'U_CAT' => append_sid('dload.php?action=category&cat_id=' . $sub_cat_rowset[$k]['cat_id']),
 								'SUB_CAT' => ( !empty($sub_cat) ) ? $sub_cat : $lang['None'],
 								'CAT_IMAGE' => ($is_new) ? $images['folder_new'] : $images['folder'],
@@ -1105,8 +1107,10 @@ class pafiledb
 			$pafiledb_template->assign_vars(array(
 				'NO_FILE' => $show_file_message,
 				'L_NO_FILES' => $lang['No_files'],
-				'L_NO_FILES_CAT' => $lang['No_files_cat'])
-			);
+        'L_NO_FILES_CAT' => $lang['No_files_cat'],
+        'FILELIST' => null,
+        'CAT_PARENT' => null,
+      ));
 		}
 	}
 
@@ -1852,7 +1856,7 @@ class pafiledb
 		return false;
 	}
 
-	function file_approve($mode = 'do_approve', $file_id)
+	function file_approve($mode = 'do_approve', $file_id=null)
 	{
 		global $db;
 

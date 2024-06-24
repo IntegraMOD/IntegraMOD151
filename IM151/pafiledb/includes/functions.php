@@ -616,6 +616,7 @@ function pafiledb_page_header($page_title)
 // MX Addon
 		$upload_auth = FALSE;
 		$mcp_auth = FALSE;
+    $mcp_url = '';
 		unset($cat_list);
 	}
 	
@@ -626,7 +627,7 @@ function pafiledb_page_header($page_title)
 		'IS_AUTH_TOPLIST' => ($pafiledb->modules[$pafiledb->module_name]->auth_global['auth_toplist']) ? TRUE : FALSE,
 		'IS_AUTH_UPLOAD' => $upload_auth,
 		'IS_ADMIN' => ( $userdata['user_level'] == ADMIN && $userdata['session_logged_in'] ) ? TRUE : 0,
-		'IS_MOD' => $pafiledb->modules[$pafiledb->module_name]->auth[$_REQUEST['cat_id']]['auth_mod'],
+		'IS_MOD' => !empty($_REQUEST['cat_id']) && $pafiledb->modules[$pafiledb->module_name]->auth[$_REQUEST['cat_id']]['auth_mod'],
 		
 		'IS_AUTH_MCP' => $mcp_auth,
 		'U_MCP' => $mcp_url,
@@ -675,7 +676,7 @@ function pafiledb_page_footer()
 	}
 	$cache->unload();
 
-	if($action != 'download')
+	if(empty($action) || $action != 'download')
 	{
 		include_once($phpbb_root_path . 'includes/page_tail.'.$phpEx);
 	}

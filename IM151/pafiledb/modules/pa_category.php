@@ -12,7 +12,7 @@ class pafiledb_category extends pafiledb_public
 {
 	function main($action)
 	{
-		global $pafiledb_template, $lang, $phpEx, $pafiledb_config, $_REQUEST, $userdata;
+		global $pafiledb_template, $lang, $phpEx, $pafiledb_config, $_REQUEST, $userdata, $board_config;
 
 		// =======================================================
 		// Get the id

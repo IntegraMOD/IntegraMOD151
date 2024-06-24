@@ -624,7 +624,7 @@ if( !isset($_POST['comment']) && !isset($_POST['rating']) )
 			}
 
 			$buddys = [];
-			if (!empty($userdata['user_logged_in']))
+			if (!empty($userdata['session_logged_in']))
 			{
 				$sql = "SELECT * FROM " . BUDDYS_TABLE .
 					" WHERE user_id = " . $userdata['user_id'] .

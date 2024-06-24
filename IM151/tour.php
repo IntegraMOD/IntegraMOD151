@@ -55,9 +55,9 @@ $template->set_filenames(array(
 //
 // Get currect page number
 $start = 0;
-$page = ( $_POST['page'] ) ? $_POST['page'] : $_GET['page'];
+$page = isset( $_POST['page'] ) ? $_POST['page'] : ( isset($_GET['page']) ? $_GET['page'] : '' );
 $page = ( !$page ) ? $start : intval($page);
-$cp = ( $_POST['cp'] ) ? $_POST['cp'] : $_GET['cp'];
+$cp = isset( $_POST['cp'] ) ? $_POST['cp'] : ( isset($_GET['cp']) ? $_GET['cp'] : '' );
 $cp = intval($cp);
 
 // Check userlevel and prepare page access

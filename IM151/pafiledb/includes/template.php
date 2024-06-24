@@ -307,7 +307,7 @@ class pafiledb_Template
 					break;
 
 				case 'BEGINELSE':
-					$this->block_else_level[sizeof($this->block_else_level) - 1] = true;
+					$this->block_else_level[count($this->block_else_level) - 1] = true;
 					$compile_blocks[] = '<?php }} else { ?>';
 					break;
 
@@ -333,8 +333,7 @@ class pafiledb_Template
 					break;
 
 				case 'INCLUDE':
-					$temp = '';
-					list(, $temp) = each($include_blocks);
+          $temp = array_pop($include_blocks);
 					$compile_blocks[] = '<?php ' . $this->compile_tag_include($temp) . ' ?>';
 					$this->_tpl_include($temp, false);
 					break;
@@ -342,8 +341,7 @@ class pafiledb_Template
 				case 'INCLUDEPHP':
 					if ($pafiledb_config['tpl_php'])
 					{
-						$temp = '';
-						list(, $temp) = each($includephp_blocks);
+            $temp = array_pop($includephp_blocks);
 						$compile_blocks[] = '<?php ' . $this->compile_tag_include_php($temp) . ' ?>';
 					}
 					break;
@@ -351,8 +349,7 @@ class pafiledb_Template
 				case 'PHP':
 					if ($pafiledb_config['tpl_php'])
 					{
-						$temp = '';
-						list(, $temp) = each($php_blocks);
+            $temp = array_pop($php_blocks);
 						$compile_blocks[] = '<?php ' . $temp . ' ?>';
 					}
 					break;
