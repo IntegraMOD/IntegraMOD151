@@ -206,7 +206,7 @@ function get_kb_nav( $parent )
 
 // get articles for the category
 
-function get_kb_articles( $id = false, $approve, $block_name, $start = -1, $articles_in_cat = 0, $kb_is_auth = '' )
+function get_kb_articles( $id = false, $approve = false, $block_name = null, $start = -1, $articles_in_cat = 0, $kb_is_auth = '' )
 {
 	global $db, $template, $images, $phpEx, $module_root_path, $phpbb_root_path, $mx_root_path, $board_config, $lang, $is_block, $page_id, $is_admin, $userdata;
 	global $kb_news_sort_method_extra, $kb_news_sort_method, $kb_news_sort_par, $kb_config, $kb_is_auth; 
@@ -379,7 +379,7 @@ function get_kb_articles( $id = false, $approve, $block_name, $start = -1, $arti
 
 // get articles for the category
 
-function get_kb_stats( $type = false, $approve, $block_name, $start = -1, $articles_in_cat = 0, $kb_is_auth )
+function get_kb_stats( $type, $approve, $block_name, $start = -1, $articles_in_cat = 0, $kb_is_auth = false)
 {
 	global $db, $template, $images, $phpEx, $module_root_path, $phpbb_root_path, $mx_root_path, $board_config, $lang, $is_block, $page_id, $is_admin, $userdata;
 
@@ -1055,7 +1055,7 @@ function get_kb_cat_subs( $parent, $kb_is_auth_all = false )
 // get_kb_cat_subs($parent)
 // gets sub categories for a category
 
-function get_kb_cat_subs_admin( $parent, $select = 1, $indent, $ss )
+function get_kb_cat_subs_admin( $parent, $select = 1, $indent = 0, $ss  = 0)
 {
 	global $db, $template, $phpbb_root_path, $module_root_path, $phpEx, $images, $row_color, $row_class, $theme, $i, $lang; 
 
@@ -1126,7 +1126,7 @@ function get_kb_cat_subs_admin( $parent, $select = 1, $indent, $ss )
 	return $ss;
 }
 
-function get_kb_cat_subs_list( $auth_type, $parent, $select = 1, $selected = false, $is_admin = false, $kb_is_auth_all, $indent, $current_id = 0)
+function get_kb_cat_subs_list( $auth_type, $parent, $select = 1, $selected = false, $is_admin = false, $kb_is_auth_all = [], $indent = 0, $current_id = 0)
 {
 	global $db; 
 
@@ -2028,12 +2028,12 @@ function kb_word_wrap_pass( $message )
 
 	for ( $num = 0;$num < strlen( $message );$num++ )
 	{
-		$curChar = $message{$num};
+		$curChar = $message[$num];
 
 		if ( $curChar == "<" )
 		{
 			for ( $snum = 0;$snum < strlen( $ampText );$snum++ )
-			kb_addWrap( $ampText{$snum}, $ampText{$snum+1}, $finalText, $tempText, $curCount, $tempCount );
+			kb_addWrap( $ampText[$snum], $ampText[$snum+1], $finalText, $tempText, $curCount, $tempCount );
 			$ampText = "";
 			$tempText .= "<";
 			$inTag = true;
@@ -2046,23 +2046,23 @@ function kb_word_wrap_pass( $message )
 		elseif ( $curChar == "&" )
 		{
 			for ( $snum = 0;$snum < strlen( $ampText );$snum++ )
-			kb_addWrap( $ampText{$snum}, $ampText{$snum+1}, $finalText, $tempText, $curCount, $tempCount );
+			kb_addWrap( $ampText[$snum], $ampText[$snum+1], $finalText, $tempText, $curCount, $tempCount );
 			$ampText = "&";
 		}elseif ( strlen( $ampText ) < $longestAmp && $curChar == ";" &&
 				( strlen( html_entity_decode( "$ampText;" ) ) == 1 || preg_match( '/^&#[0-9][0-9]*$/', $ampText ) ) )
 		{
-			kb_addWrap( "$ampText;", $message{$num+1}, $finalText, $tempText, $curCount, $tempCount );
+			kb_addWrap( "$ampText;", $message[$num+1], $finalText, $tempText, $curCount, $tempCount );
 			$ampText = "";
 		}elseif ( strlen( $ampText ) >= $longestAmp || $curChar == ";" )
 		{
 			for ( $snum = 0;$snum < strlen( $ampText );$snum++ )
-			kb_addWrap( $ampText{$snum}, $ampText{$snum+1}, $finalText, $tempText, $curCount, $tempCount );
-			kb_addWrap( $curChar, $message{$num+1}, $finalText, $tempText, $curCount, $tempCount );
+			kb_addWrap( $ampText[$snum], $ampText[$snum+1], $finalText, $tempText, $curCount, $tempCount );
+			kb_addWrap( $curChar, $message[$num+1], $finalText, $tempText, $curCount, $tempCount );
 			$ampText = "";
 		}elseif ( strlen( $ampText ) != 0 && strlen( $ampText ) < $longestAmp )
 			$ampText .= $curChar;
 		else
-			kb_addWrap( $curChar, $message{$num+1}, $finalText, $tempText, $curCount, $tempCount );
+			kb_addWrap( $curChar, $message[$num+1], $finalText, $tempText, $curCount, $tempCount );
 	}
 
 	return $finalText . $tempText;

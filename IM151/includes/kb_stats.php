@@ -63,7 +63,8 @@ elseif ( $stats == 'mostpopular' )
 	$path_kb = $lang['Top_most_popular'];
 } 
 
-$template->assign_vars( array( 'L_CATEGORY_NAME' => $category_name,
+$template->assign_vars( array(
+		'L_CATEGORY_NAME' => ( isset($category_name) ? $category_name : '' ),
 		'L_ARTICLE' => $lang['Article'],
 		'L_CAT' => $lang['Category'],
 		'L_ARTICLE_TYPE' => $lang['Article_type'],
@@ -75,7 +76,7 @@ $template->assign_vars( array( 'L_CATEGORY_NAME' => $category_name,
 		'L_CATEGORY' => $lang['Category_sub'],
 		'L_ARTICLES' => $lang['Articles'],
 		'PATH' => '&raquo; ' . $path_kb,
-		'U_CAT' => append_sid( this_kb_mxurl( 'mode=cat&cat=' . $category_id ) ) 
+		'U_CAT' => append_sid( this_kb_mxurl( 'mode=cat&cat=' . ( isset($category_id) ? $category_id : '' ) ) ) 
 		) );
 
 $total_articles = get_kb_stats( $stats, '1', 'articlerow', $start, $kb_config['art_pagination'], $kb_is_auth_all );

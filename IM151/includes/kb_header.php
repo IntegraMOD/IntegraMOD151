@@ -61,7 +61,7 @@ $search = '<a href="' . $temp_url . '">' . $lang['Search'] . '</a>';
 if ( $kb_config['header_banner'] == 1 )
 {
 	$temp_url = append_sid( this_kb_mxurl() );
-	$block_title = '<td align="center"><a href="' . $temp_url . '"><img src="' . $images['kb_title'] . '" width="285" height="45" border="0" alt="' . $title . '"></a></td>';
+	$block_title = '<td align="center"><a href="' . $temp_url . '"><img src="' . $images['kb_title'] . '" width="285" height="45" border="0" alt="' . ( isset($title) ? $title : '') . '"></a></td>';
 }
 else
 {
@@ -85,7 +85,7 @@ $template->assign_vars( array( 'U_PORTAL' => $mx_root_path,
 
 if ( $kb_config['stats_list'] == 1 )
 {
-	get_quick_stats( $category_id );
+	get_quick_stats( ( isset($category_id) ? $category_id : '' ) );
 }
 
 $template->pparse( 'kb_header' );

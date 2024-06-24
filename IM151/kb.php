@@ -36,7 +36,7 @@ if ( file_exists( './viewtopic.php' ) ) // -------------------------------------
 	include( $phpbb_root_path . 'extension.inc' );
 	include( $phpbb_root_path . 'common.' . $phpEx );
 	
-	define( 'PAGE_KB', -500 ); // If this id generates a conflict with other mods, change it ;)	
+	if (!defined('PAGE_KB')) define( 'PAGE_KB', -500 ); // If this id generates a conflict with other mods, change it ;)	
 	
 	// Start session management
 	
@@ -253,6 +253,7 @@ $is_admin = ( ( $userdata['user_level'] == ADMIN  ) && $userdata['session_logged
 
 // mode
 
+$mode = '';
 if ( isset( $_POST['mode'] ) || isset( $_GET['mode'] ) )
 {
 	$mode = ( isset( $_POST['mode'] ) ) ? $_POST['mode'] : $_GET['mode'];

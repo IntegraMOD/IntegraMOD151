@@ -219,7 +219,7 @@ function kb_auth( $type, $cat_id, $userdata, $f_access = '', $f_access_group = '
 				{
 					case AUTH_ALL:
 						$auth_user[$f_cat_id][$key] = true;
-						$auth_user[$f_cat_id][$key . '_type'] = $lang['Auth_Anonymous_users'];
+						$auth_user[$f_cat_id][$key . '_type'] = ( isset($lang['Auth_Anonymous_users']) ? $lang['Auth_Anonymous_users'] : 'Auth_Anonymous_users' );
 						break;
 		
 					case AUTH_REG:

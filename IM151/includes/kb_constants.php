@@ -44,7 +44,7 @@ if ( !MXBB_MODULE )
 // ---------------------------------------------------------------------START
 // This file defines specific constants for the module
 // -------------------------------------------------------------------------
-define( 'PAGE_KB', -500 );
+if (!defined('PAGE_KB')) define( 'PAGE_KB', -500 );
 define( 'KB_ARTICLES_TABLE', $mx_table_prefix . 'kb_articles' );
 define( 'KB_CATEGORIES_TABLE', $mx_table_prefix . 'kb_categories' );
 define( 'KB_CONFIG_TABLE', $mx_table_prefix . 'kb_config' );

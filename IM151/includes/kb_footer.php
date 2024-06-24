@@ -59,7 +59,7 @@ $template->assign_vars( array(
 		'L_QUICK_JUMP' => $lang['Quick_jump'],
 		'QUICK_NAV' => $kb_quick_nav,
 		
-		'S_AUTH_LIST' => $kb_auth_can,
+		'S_AUTH_LIST' => ( isset($kb_auth_can) ? $kb_auth_can : '' ),
 		
 		'L_MODULE_VERSION' => $kb_module_version,
 		'L_MODULE_ORIG_AUTHOR' => $kb_module_orig_author,
