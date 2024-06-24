@@ -181,21 +181,23 @@ if( !$result = $db->sql_query($sql) )
 // ------------------------------------
 // Okay, now we can send image to the browser
 // ------------------------------------
-switch( $pic_filetype )
+$clean_title = preg_replace("/[^A-Za-z0-9]/", "_", $pic_title);
+switch($pic_filetype)
 {
 	case '.png':
 		header('Content-type: image/png');
-		header("Content-Disposition: filename=" . ereg_replace("[^A-Za-z0-9]", "_", $pic_title) . $pic_filetype);
+		header("Content-Disposition: filename=" . $clean_title . $pic_filetype);
 		break;
 
 	case '.gif':
 		header('Content-type: image/gif');
-		header("Content-Disposition: filename=" . ereg_replace("[^A-Za-z0-9]", "_", $pic_title) . $pic_filetype);
+		header("Content-Disposition: filename=" . $clean_title . $pic_filetype);
 		break;
 
 	case '.jpg':
+  case '.jpeg':
 		header('Content-type: image/jpeg');
-		header("Content-Disposition: filename=" . ereg_replace("[^A-Za-z0-9]", "_", $pic_title) . $pic_filetype);
+		header("Content-Disposition: filename=" . $clean_title . $pic_filetype);
 		break;
 
 	default:
@@ -219,7 +221,6 @@ else
 {
 	readfile(ALBUM_UPLOAD_PATH . $pic_filename);
 }
-//exit;
 
 
 // +-------------------------------------------------------------+

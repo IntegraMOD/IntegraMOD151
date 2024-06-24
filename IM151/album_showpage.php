@@ -120,6 +120,8 @@ else
 // ------------------------------------
 // TEMPLATE ASSIGNEMENT
 // ------------------------------------
+$nuffimage_pic = 'album_pic.';
+$nuff_http_full_string = '';
 if ((isset($_GET['slideshow']) && (intval($_GET['slideshow']) > 0)) || (isset($_POST['slideshow']) && (intval($_POST['slideshow']) > 0)))
 {
 	$gen_simple_header = true;
@@ -148,7 +150,6 @@ else
 		$show_template = 'album_showpage_body.tpl';
 		$nuffimage_vars = '';
 		$nuffimage_pic = ( $picm == false ) ? 'album_pic.' : 'album_picm.';
-		$nuff_http_full_string = '';
 	}
 }
 

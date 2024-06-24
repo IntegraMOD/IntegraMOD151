@@ -1754,7 +1754,6 @@ class NuffImage
 	function Destroy()
 	{
 		$this->DestroyImage();
-		settype(&$this, 'null');
 	}
 }
 

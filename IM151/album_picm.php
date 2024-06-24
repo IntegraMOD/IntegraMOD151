@@ -365,7 +365,7 @@ else
 	else
 	{
 		// It seems you have not GD installed :(
-		if($pic_filetype = '.jpg')
+		if($pic_filetype == '.jpg')
 		{
 			if ($album_config['show_img_no_gd'] == 1)
 			{

@@ -124,7 +124,7 @@ $template->assign_vars(array(
 	'NUFF_SEPIA_CHECKED' => ($nuff_http['nuff_sepia'] == 0) ? '' : ' checked="checked"' ,
 	'NUFF_FLIP_CHECKED' => ($nuff_http['nuff_flip'] == 0) ? '' : ' checked="checked"',
 	'NUFF_MIRROR_CHECKED' => ($nuff_http['nuff_mirror'] == 0) ? '' : ' checked="checked"',
-	'NUFF_ALPHA_CHECKED' => ($nuff_http['nuff_alpha'] == 0) ? '' : ' checked="checked"',
+	'NUFF_ALPHA_CHECKED' => empty($nuff_http['nuff_alpha']) ? '' : ' checked="checked"',
 	'NUFF_BLUR_CHECKED' => ($nuff_http['nuff_blur'] == 0) ? '' : ' checked="checked"',
 	'NUFF_SCATTER_CHECKED' => ($nuff_http['nuff_scatter'] == 0) ? '' : ' checked="checked"',
 	'NUFF_PIXELATE_CHECKED' => ($nuff_http['nuff_pixelate'] == 0) ? '' : ' checked="checked"',
