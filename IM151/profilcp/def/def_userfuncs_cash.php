@@ -53,7 +53,7 @@ function pcp_output_cashtp($field_name, $view_userdata, $map_name='')
 			{
 				return;
 			}
-         while ( $c_cur = &$cash->currency_next($cm_i,CURRENCY_ENABLED | CURRENCY_VIEWTOPIC) ) 
+         while ( $c_cur = $cash->currency_next($cm_i,CURRENCY_ENABLED | CURRENCY_VIEWTOPIC) ) 
          { 
             $u_link = append_sid('cash.'.$phpEx.'?mode=modedit&amp;ref=viewtopic&'.POST_USERS_URL.'='.$view_userdata['user_id'].'&amp;'.POST_POST_URL.'='.$view_userdata['post_id']); 
             $l_name = sprintf($lang['Mod_usercash'],$view_userdata['username']); 

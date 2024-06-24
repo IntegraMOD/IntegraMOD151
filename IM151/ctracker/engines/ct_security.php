@@ -388,10 +388,11 @@ function ct_debugger($checkstring, $checkmode)
     }
   }
   $matching_vars = array_unique($matching_vars);
+	$has_matching_vars = !empty($matching_vars);
   $matching_vars = implode("','", $matching_vars);
   $matching_vars = "'" . $matching_vars . "'";
 
-  if ( count($matching_vars) )
+  if ( $has_matching_vars )
   {
     // let's open the debug file and write in some stuff ;)
     $debugstream = @fopen($phpbb_root_path . 'ctracker/logfiles/logfile_debug_mode.txt', 'ab');

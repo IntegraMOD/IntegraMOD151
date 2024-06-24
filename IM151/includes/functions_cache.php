@@ -78,7 +78,7 @@ function users_stats()
 	}
 
 	// is there a change in the last user ?
-	if ( ($last_user['user_id'] != $board_config['record_last_user_id']) || empty($board_config['record_last_username']) || ($last_user['username'] != $board_config['record_last_username']) )
+	if ( empty($board_config['record_last_user_id']) || ($last_user['user_id'] != $board_config['record_last_user_id']) || empty($board_config['record_last_username']) || ($last_user['username'] != $board_config['record_last_username']) )
 	{
 		// last user id
 		init_board_config_key('record_last_user_id', $last_user['user_id']);

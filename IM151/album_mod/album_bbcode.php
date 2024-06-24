@@ -2429,7 +2429,7 @@ class BBCode {
 	function process_urls()
 	{
 		// characters allowed in email
-		$chars = array();
+		$chars = '';
 		for($i=224; $i<256; $i++)
 		{
 			if($i != 247)

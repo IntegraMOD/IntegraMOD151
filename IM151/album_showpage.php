@@ -612,10 +612,31 @@ if( !isset($_POST['comment']) && !isset($_POST['rating']) )
 
 			$commentrow = array();
 
+			$buddy_userids = [];
 			while( $row = $db->sql_fetchrow($result) )
 			{
 				$commentrow[] = $row;
+				if ($row['user_id'] != ALBUM_GUEST && $row['username'] != '')
+				{
+					$buddy_userids[] = $row['user_id'];
+				}
 			}
+
+			$buddys = [];
+			if (!empty($userdata['user_logged_in']))
+			{
+				$sql = "SELECT * FROM " . BUDDYS_TABLE .
+					" WHERE user_id = " . $userdata['user_id'] .
+					" OR " . $db->sql_in_set('buddy_id', $buddys, false, true);
+				$result = $db->sql_query($sql, false, false, 'Error fetching buddies', __LINE__, __FILE__);
+
+				while ($row = $db->sql_fetchrow($result))
+				{
+					$buddys[ $row['buddy_id']	] = $row;
+				}
+				$db->sql_freeresult($result);
+			}
+
 
 			for ($i = 0; $i < count($commentrow); $i++)
 			{
@@ -653,10 +674,14 @@ if( !isset($_POST['comment']) && !isset($_POST['rating']) )
 				}
 
 				$album_panel = '';
-				$commentrow[$i]['user_friend']		= $buddys[ $commentrow[$i]['user_id'] ]['buddy_friend'];
-				$commentrow[$i]['user_visible']		= $buddys[ $commentrow[$i]['user_id'] ]['buddy_visible'];
-				$commentrow[$i]['user_my_friend']	= $buddys[ $commentrow[$i]['user_id'] ]['buddy_my_friend'];
-				$commentrow[$i]['user_my_ignore']	= $buddys[ $commentrow[$i]['user_id'] ]['buddy_my_ignore'];
+				if (isset($buddys[ $commentrow[$i]['user_id'] ]))
+				{
+					$rowbuddy = $buddys[ $commentrow[$i]['user_id'] ];
+					$commentrow[$i]['user_friend']		= $rowbuddy['buddy_friend'];
+					$commentrow[$i]['user_visible']		= $rowbuddy['buddy_visible'];
+					$commentrow[$i]['user_my_friend']	= $rowbuddy['buddy_my_friend'];
+					$commentrow[$i]['user_my_ignore']	= $rowbuddy['buddy_my_ignore'];
+				}
 				$commentrow[$i]['user_online']		= ( $commentrow[$i]['user_session_time'] >= (time()-300) );
 				$commentrow[$i]['user_pm'] = 1;
 
@@ -672,15 +697,15 @@ if( !isset($_POST['comment']) && !isset($_POST['rating']) )
 				$bbcode->allow_bbcode = $bbcode_on;
 				$bbcode->allow_smilies = $smilies_on;
 				
-				$commentrow[$i]['comment_text'] = $bbcode->parse($commentrow[$i]['comment_text'], $bbcode_uid);
-				$commentrow[$i]['comment_text'] = strtr($commentrow[$i]['comment_text'], array_flip(get_html_translation_table(HTML_ENTITIES)));	
+				// V: TODO this somehow gets double encoded? We probably need to do something when saving
+				$commentrow[$i]['comment_text'] = $bbcode->parse($commentrow[$i]['comment_text']);
 				
 				$template->assign_block_vars('commentrow', array(
 					'ID' => $commentrow[$i]['comment_id'],
 					'PANEL_INFO' => $album_panel,
-					'AUTHOR_PANEL'	=> $commentrow[$i]['user_my_ignore'] ? $ignore_panel : $album_panel,
+					'AUTHOR_PANEL'	=> !empty($commentrow[$i]['user_my_ignore']) ? $ignore_panel : $album_panel,
 					'BUTTONS_PANEL'	=> $buttons_panel,
-					'IGNORE_IMG'	=> $ignore_buttons,
+					'IGNORE_IMG'	=> ( isset($ignore_buttons) ? $ignore_buttons : '' ),
 					'MINI_POST_IMG' => $images['icon_minipost'],
 					'U_MINI_POST' => 'album_showpage.' . $phpEx . '?pic_id=' . $pic_id .'#'. $commentrow[$i]['comment_id'],
 					'POSTER_NAME' => $poster,
@@ -824,14 +849,16 @@ if( !isset($_POST['comment']) && !isset($_POST['rating']) )
 		$next_pic = ($no_next_pic == false) ? '<a href="' . append_sid(album_append_uid("album_showpage." . $phpEx . "?pic_id=" . $pic_id . $full_size_param . "&amp;mode=next" . $nuffimage_vars)) . '#TopPic"><img src="' . $images['icon_left_arrow3'] . '" title="' . $lang['Next_Pic'] . '" border="0" alt="' . $lang['Next_Pic'] . '" align="absmiddle" /></a>' : '';
 		$prev_pic = ($no_prev_pic == false) ? '<a href="' . append_sid(album_append_uid("album_showpage." . $phpEx . "?pic_id=" . $pic_id . $full_size_param . "&amp;mode=prev" . $nuffimage_vars)) . '#TopPic"><img src="' . $images['icon_right_arrow3'] . '" title="' . $lang['Prev_Pic'] . '" border="0" alt="' . $lang['Prev_Pic'] . '" align="absmiddle" /></a>' : '';
 	}
-	
+
+	$slideshow_refresh = $slideshow_refresh_meta = '';
 	if ( $album_config['slideshow_script'] == 1 )
 	{
 		$slideshow_refresh = '</body><body onload="runSlideShow()">';
 	}
-	else
+	else if (!empty($slideshow_delay) && !empty($next_pic_url)) // V: can this ever be present?
 	{
 		$slideshow_refresh = '</body><head><meta http-equiv="refresh" content="' . $slideshow_delay .  ';url=' . $next_pic_url . '"></head><body>';
+		$slideshow_refresh_meta = '<meta http-equiv="refresh" content="' . $slideshow_delay .  ';url=' . $next_pic_url . '">';
 	}
 	// Mighty Gorgon - Slideshow - END
 
@@ -862,11 +889,11 @@ if( !isset($_POST['comment']) && !isset($_POST['rating']) )
 		'L_SLIDESHOW_DELAY' => $lang['Slideshow_Delay'],
 		'L_SLIDESHOW_ONOFF' => $slideshow_onoff,
 		'SLIDESHOW_SELECT' => $slideshow_select,
-		'SLIDESHOW_DELAY' => $slideshow_delay,
+		'SLIDESHOW_DELAY' => ( isset($slideshow_delay) ? $slideshow_delay : '' ),
 		'U_SLIDESHOW' => $slideshow_link,
 		'U_SLIDESHOW_FULL' => $slideshow_link_full,
 		'U_SLIDESHOW_REFRESH' => $slideshow_refresh,
-		'U_SLIDESHOW_REFRESH_META' => '<meta http-equiv="refresh" content="' . $slideshow_delay .  ';url=' . $next_pic_url . '">',
+		'U_SLIDESHOW_REFRESH_META' => $slideshow_refresh_meta,
 		// Mighty Gorgon - Slideshow - END
 
 		// Mighty Gorgon - Pic Size - BEGIN

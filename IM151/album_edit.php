@@ -24,6 +24,8 @@ define('IN_PHPBB', true);
 $phpbb_root_path = './';
 $album_root_path = $phpbb_root_path . 'album_mod/';
 include($phpbb_root_path . 'extension.inc');
+define('CT_SECLEVEL', 'MEDIUM');
+$ct_ignorepvar = array('pic_desc');
 include($phpbb_root_path . 'common.'.$phpEx);
 
 //
