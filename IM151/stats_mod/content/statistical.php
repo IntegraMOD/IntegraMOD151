@@ -35,14 +35,18 @@ class Content_statistical
 	{
 		global $stats_template;
 
-		@reset($data);
 		$i = 0;
-		while (list($key, $value) = each($data))
+		foreach ($data as $key => $value)
 		{
 			// check pre-defined value
 			if (is_array($value))
 			{
-				list($this->column_data[$i]['key'], $this->column_data[$i]['value']) = each($value);
+				foreach ($value as $k => $v)
+				{
+					$this->column_data[$i]['key'] = $k;
+				 	$this->column_data[$i]['value'] = $v;
+					break; // Just populate our data
+				}
 			}
 			else
 			{

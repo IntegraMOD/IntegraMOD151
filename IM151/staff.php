@@ -128,7 +128,7 @@ for( $i = 0; $i < count($level_cat); $i++ )
 }
 
 $template->assign_vars(array( 
-	'L_USER' => $lang['User'], 
+	//'L_USER' => $lang['User'], 
 	'L_FORUMS' => $lang['Staff_forums'], 
 	'L_STATS' => $lang['Staff_stats'], 
 	'L_CONTACT' => $lang['Staff_contact'],

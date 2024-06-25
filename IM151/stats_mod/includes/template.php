@@ -347,7 +347,8 @@ class Stats_template {
 
 		$compile_blocks = array();
 
-        for ($curr_tb = 0; $curr_tb < count($text_blocks); $curr_tb++)
+    // This is technically $curr_tb < count($text_blocks - 1), because templates will almost always end with HTML
+		for ($curr_tb = 0; $curr_tb < count($text_blocks) && $curr_tb < count($blocks[1]); $curr_tb++)
 		{
 			switch ($blocks[1][$curr_tb])
 			{

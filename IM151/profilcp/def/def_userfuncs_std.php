@@ -461,8 +461,7 @@ function pcp_output_timezone($field_name, $view_userdata, $map_name='')
 	$res = '';
 	if ( $view_userdata['user_id'] != ANONYMOUS )
 	{
-		@reset($lang['tz']);
-		while ( list($offset, $value) = @each($lang['tz']) )
+		foreach ($lang['tz'] as $offset => $value)
 		{
 			if ( $view_userdata[$field_name] == $offset )
 			{
@@ -737,7 +736,7 @@ function pcp_output_posts_stat($field_name, $view_userdata, $map_name='')
 	{
 		$temp_url	= append_sid("./search.$phpEx?search_author=" . urlencode($view_userdata['username']) . "&amp;showresults=posts");
 		$img = '<a href="' . $temp_url . '"><img src="' . $images['icon_search'] . '" alt="' . sprintf($lang['Search_user_posts'], $view_userdata['username']) . '" title="' . sprintf($lang['Search_user_posts'], $view_userdata['username']) . '" border="0" /></a>';
-		if ( !$user_maps[$map_name]['fields'][$field_name]['img'] )
+		if ( empty($user_maps[$map_name]['fields'][$field_name]['img']) )
 		{
 			$txt .= '<a href="' . $temp_url . '" title="' . sprintf($lang['Search_user_posts'], $view_userdata['username']) . '" class="topictitle"><b>' . sprintf($lang['Search_user_posts'], $view_userdata['username']) . '</b></a>';
 		}
@@ -778,7 +777,7 @@ function pcp_output_topics_stat($field_name, $view_userdata, $map_name='')
 		// get the value
 		$is_auth = auth(AUTH_VIEW, AUTH_LIST_ALL, $userdata);
 		$forum_ids = array();
-		while (list($forum_id, $auth) = @each($is_auth) )
+		foreach ($is_auth as $forum_id => $auth)
 		{
 			if ($auth['auth_view']) $forum_ids[] = $forum_id;
 		}
@@ -854,7 +853,7 @@ function pcp_output_forums_stat($field_name, $view_userdata, $map_name='')
 
 		$is_auth = auth(AUTH_VIEW, AUTH_LIST_ALL, $userdata);
 		$forum_ids = array();
-		while (list($forum_id, $auth) = @each($is_auth) )
+		foreach ($is_auth as $forum_id => $auth)
 		{
 			if ($auth['auth_view']) $forum_ids[] = $forum_id;
 		}

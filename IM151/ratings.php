@@ -29,9 +29,9 @@ init_userprefs($userdata);
 
 // VALIDATE GET VARS
 $type = ( empty($_GET['type']) ) ? 'l' : $_GET['type'];
-$forum_id = intval($_GET['forum_id']);
-$postedby = intval($_GET['postedby']);
-$ratedby = intval($_GET['ratedby']);
+$forum_id = isset($_GET['forum_id']) ? intval($_GET['forum_id']) : 0;
+$postedby = isset($_GET['postedby']) ? intval($_GET['postedby']) : 0;
+$ratedby = isset($_GET['ratedby']) ? intval($_GET['ratedby']) : 0;
 $ratingsby = ( !empty($_GET['ratingsby']) ) ? intval($_GET['ratingsby']) : 1;
 $sql_limit = 20; // Number of posts/topics you want displayed 
 

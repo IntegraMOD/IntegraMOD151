@@ -22,8 +22,8 @@ $core->set_content('values');
 
 $sql = "SELECT YEAR(FROM_UNIXTIME(topic_time)) as year_topic, MONTH(FROM_UNIXTIME(topic_time)) as month_topic, COUNT(*) AS num_topics 
 FROM " . TOPICS_TABLE . " 
-GROUP BY YEAR(FROM_UNIXTIME(topic_time)), MONTH(FROM_UNIXTIME(topic_time)) 
-ORDER BY topic_time";
+GROUP BY 1, 2 
+ORDER BY YEAR(FROM_UNIXTIME(topic_time)), MONTH(FROM_UNIXTIME(topic_time)) ";
 
 $result = $core->sql_query($sql, 'Couldn\'t retrieve users data');
 
@@ -37,9 +37,8 @@ for ($i = 0; $i < $row_count; $i++)
 	$month_array[$rows[$i]['year_topic']][($rows[$i]['month_topic']-1)]['num_topics'] = $rows[$i]['num_topics'];
 }
 
-@reset($month_array);
 
-while (list($year, $data) = each($month_array))
+foreach ($month_array as $year => $data)
 {
 	for ($i = 0; $i < 12; $i++)
 	{
@@ -49,7 +48,6 @@ while (list($year, $data) = each($month_array))
 		}
 	}
 }
-@reset($month_array);
 
 $year_ar = array();
 $month_1 = array();
@@ -65,7 +63,7 @@ $month_10 = array();
 $month_11 = array();
 $month_12 = array();
 
-while (list($year, $data) = each($month_array))
+foreach ($month_array as $year => $data)
 {
 	$year_ar[] = $year;
 	for ($i = 0; $i < 12; $i++)

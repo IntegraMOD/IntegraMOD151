@@ -134,14 +134,13 @@ class StatisticsFUNCTIONS
 	{
 		global $db;
 
-		$this->auth_data_sql = '';
+		$this->auth_data_sql = [];
 
 		$auth_ary = auth(AUTH_ALL, AUTH_LIST_ALL, $userdata);
 
-		@reset($auth_ary);
 
 		// Generate the Forum Authorization Level
-		while (list($forum_id, $auth_setting) = each($auth_ary))
+		foreach ($auth_ary as $forum_id => $auth_setting)
 		{
 			$this->auth_data_sql['forum'][$forum_id] = $auth_setting;
 		}
@@ -196,8 +195,7 @@ class StatisticsFUNCTIONS
 					$if_eval .= ($i == 0) ? '($this->auth_data_sql[$auth_type][$forum_id][\'' . trim($pattern[$i]) . '\'])' : ' ' . $split_cond . ' ($this->auth_data_sql[$auth_type][$forum_id][\'' . trim($pattern[$i]) . '\'])';
 				}
 
-				@reset($this->auth_data_sql[$auth_type]);
-				while (list($forum_id, $auth_cond) = each($this->auth_data_sql[$auth_type]))
+				foreach ($this->auth_data_sql[$auth_type] as $forum_id => $auth_cond)
 				{
 					eval('$val = (' . $if_eval . ');');
 					$auth_return['auth_check'][$forum_id] = $val;

@@ -23,8 +23,8 @@ $core->set_content('values');
 $sql = "SELECT YEAR(FROM_UNIXTIME(user_regdate)) as year_regdate, MONTH(FROM_UNIXTIME(user_regdate)) as month_regdate, COUNT(*) AS num_user 
 FROM " . USERS_TABLE . " 
 WHERE (user_id <> " . ANONYMOUS . " )
-GROUP BY YEAR(FROM_UNIXTIME(user_regdate)), MONTH(FROM_UNIXTIME(user_regdate)) 
-ORDER BY user_regdate";
+GROUP BY 1, 2
+ORDER BY YEAR(FROM_UNIXTIME(user_regdate)), MONTH(FROM_UNIXTIME(user_regdate)) ";
 
 $result = $core->sql_query($sql, 'Couldn\'t retrieve users data');
 
@@ -38,9 +38,8 @@ for ($i = 0; $i < $user_count; $i++)
 	$month_array[$user_data[$i]['year_regdate']][($user_data[$i]['month_regdate']-1)]['num_user'] = $user_data[$i]['num_user'];
 }
 
-@reset($month_array);
 
-while (list($year, $data) = each($month_array))
+foreach ($month_array as $year => $data)
 {
 	for ($i = 0; $i < 12; $i++)
 	{
@@ -50,7 +49,6 @@ while (list($year, $data) = each($month_array))
 		}
 	}
 }
-@reset($month_array);
 
 $year_ar = array();
 $month_1 = array();
@@ -66,7 +64,7 @@ $month_10 = array();
 $month_11 = array();
 $month_12 = array();
 
-while (list($year, $data) = each($month_array))
+foreach ($month_array as $year => $data)
 {
 	$year_ar[] = $year;
 	for ($i = 0; $i < 12; $i++)

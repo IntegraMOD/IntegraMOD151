@@ -38,9 +38,8 @@ class Content_values
 			die('Invalid Call(' . get_class($content) . '): set_columns before set_view or num_blocks <= 0');
 		}
 		
-		@reset($data);
 		$i = 0;
-		while (list($key, $value) = each($data))
+		foreach ($data as $key => $value)
 		{
 			$this->column_data[$i]['key'] = $key;
 			$this->column_data[$i]['value'] = $value;

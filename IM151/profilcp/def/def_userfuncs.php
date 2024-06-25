@@ -328,11 +328,11 @@ function pcp_output($field_name, &$view_userdata, $map_name='', $legend_only=fal
 			{
 				case 'DATE':
 					$txt = !empty($view_userdata[$field_name]) ? create_date($lang['DATE_FORMAT'], $view_userdata[$field_name], $userdata['user_timezone']) : '';
-					$img .= isset($images[$field_data['image']]) ? '<img src="' . $images[$field_data['image']] . '" border="0" alt="' . $alt . '" title="' . $title . '" />' : '';
+					$img .= isset($field_data['image']) && isset($images[$field_data['image']]) ? '<img src="' . $images[$field_data['image']] . '" border="0" alt="' . $alt . '" title="' . $title . '" />' : '';
 					break;
 				case 'DATETIME':
 					$txt = !empty($view_userdata[$field_name]) ? create_date($userdata['user_dateformat'], $view_userdata[$field_name], $userdata['user_timezone']) : '';
-					$img .= isset($images[$field_data['image']]) ? '<img src="' . $images[$field_data['image']] . '" border="0" alt="' . $alt . '" title="' . $title . '" />' : '';
+					$img .= isset($field_data['image']) && isset($images[$field_data['image']]) ? '<img src="' . $images[$field_data['image']] . '" border="0" alt="' . $alt . '" title="' . $title . '" />' : '';
 					break;
 				case 'BIRTHDAY':
 					$pm_display = pcp_get_class_check('pm', $view_userdata);

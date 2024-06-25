@@ -42,7 +42,7 @@ class Content_bars
 
 	function init_bars($bars = '')
 	{
-		global $board_config, $userdata, $theme, $db, $stats_template, $phpbb_root_path;
+		global $board_config, $userdata, $theme, $db, $stats_template, $phpbb_root_path, $template;
 		
 		if (is_array($bars))
 		{
@@ -88,14 +88,18 @@ class Content_bars
 	{
 		global $stats_template;
 
-		@reset($data);
 		$i = 0;
-		while (list($key, $value) = each($data))
+		foreach ($data as $key => $value)
 		{
 			// check pre-defined value
 			if (is_array($value))
 			{
-				list($this->column_data[$i]['key'], $this->column_data[$i]['value']) = each($value);
+				foreach ($value as $k => $v)
+				{
+					$this->column_data[$i]['key'] = $k;
+				 	$this->column_data[$i]['value'] = $v;
+					break;
+				}
 			}
 			else
 			{
@@ -145,7 +149,7 @@ class Content_bars
 		$this->bar_percent = round($value * $cst);
 	}
 
-	function set_rows($data)
+	function set_rows($data, $auth_data)
 	{
 		global $core, $stats_template, $phpbb_root_path, $phpEx, $stat_functions, $lang;
 
@@ -188,6 +192,8 @@ class Content_bars
 					$this->align[$j] = 'center';
 				}
 
+				$auth_replace[$j]['replace'] = false;
+				$auth_replace[$j]['lang'] = false;
 				if ($result == '__PRE_DEFINED_VALUE__')
 				{
 					if ($this->column_data[$j]['key'] == '__PRE_DEFINE_RANK__')

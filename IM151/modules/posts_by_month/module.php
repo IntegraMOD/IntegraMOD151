@@ -22,8 +22,8 @@ $core->set_content('values');
 
 $sql = "SELECT YEAR(FROM_UNIXTIME(post_time)) as year_post, MONTH(FROM_UNIXTIME(post_time)) as month_post, COUNT(*) AS num_posts 
 FROM " . POSTS_TABLE . " 
-GROUP BY YEAR(FROM_UNIXTIME(post_time)), MONTH(FROM_UNIXTIME(post_time)) 
-ORDER BY post_time";
+GROUP BY 1, 2
+ORDER BY YEAR(FROM_UNIXTIME(post_time)), MONTH(FROM_UNIXTIME(post_time))";
 
 $result = $core->sql_query($sql, 'Couldn\'t retrieve post data');
 
@@ -37,9 +37,7 @@ for ($i = 0; $i < $row_count; $i++)
 	$month_array[$rows[$i]['year_post']][($rows[$i]['month_post']-1)]['num_posts'] = $rows[$i]['num_posts'];
 }
 
-@reset($month_array);
-
-while (list($year, $data) = each($month_array))
+foreach ($month_array as $year => $data)
 {
 	for ($i = 0; $i < 12; $i++)
 	{
@@ -49,7 +47,6 @@ while (list($year, $data) = each($month_array))
 		}
 	}
 }
-@reset($month_array);
 
 $year_ar = array();
 $month_1 = array();
@@ -65,7 +62,7 @@ $month_10 = array();
 $month_11 = array();
 $month_12 = array();
 
-while (list($year, $data) = each($month_array))
+foreach ($month_array as $year => $data)
 {
 	$year_ar[] = $year;
 	for ($i = 0; $i < 12; $i++)

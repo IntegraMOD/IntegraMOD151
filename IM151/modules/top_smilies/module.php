@@ -30,8 +30,8 @@ $smile_pref = 0;
 // End user modifiable variables
 //
 
-define('SMILIE_INDEX_TABLE', $table_prefix . 'stats_smilies_index');
-define('SMILIE_INFO_TABLE', $table_prefix . 'stats_smilies_info');
+if (!defined('SMILIE_INDEX_TABLE')) define('SMILIE_INDEX_TABLE', $table_prefix . 'stats_smilies_index');
+if (!defined('SMILIE_INFO_TABLE')) define('SMILIE_INFO_TABLE', $table_prefix . 'stats_smilies_info');
 
 $core->start_module();
 
@@ -148,7 +148,7 @@ if ($num_smilie_rows > 0)
 		$build_new_smilie = FALSE;
 		$update_smilie = FALSE;
 
-		if (count($index_smilies['smile_url']) > 0)
+		if (!empty($index_smilies['smile_url']))
 		{
 			if (!in_array($smilies[$i]['smile_url'], $index_smilies['smile_url']))
 			{
