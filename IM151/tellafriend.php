@@ -11,11 +11,11 @@ init_userprefs($userdata);
 
 include($phpbb_root_path . 'language/lang_' . $board_config['default_lang'] . '/lang_tellafriend.' . $phpEx);
 
-$topic = (isset($_POST['topic'])) ? $_POST['topic'] : $_GET['topic']; 
-$friendname =  $_POST['friendname'];
+$topic = (isset($_POST['topic'])) ? $_POST['topic'] : ( isset($_GET['topic']) ? $_GET['topic'] : '' ); 
+$friendname =  ( isset($_POST['friendname']) ? $_POST['friendname'] : '' );
 //$message = $_POST['message'];
-$message = trim(stripslashes($_POST['message']));
-$link = $_GET['link'];
+$message = isset($_POST['message']) ? trim(stripslashes($_POST['message'])) : '';
+$link = ( isset($_GET['link']) ? $_GET['link'] : '' );
 $PHP_SELF = $_SERVER['PHP_SELF'];
 
 if( !$userdata['session_logged_in'] ) 
@@ -32,7 +32,7 @@ $mail_body = str_replace("{SITENAME}", $board_config['sitename'], $mail_body);
 
 $template->assign_vars(array(
 'L_TELL_FRIEND_TITLE' => $lang['Tell_Friend_Title'],
-'L_TELL_FRIEND_EMAIL_MESSAGE' => $lang['Tell_Friend_Email_Message'],
+'L_TELL_FRIEND_EMAIL_MESSAGE' => ( isset($lang['Tell_Friend_Email_Message']) ? $lang['Tell_Friend_Email_Message'] : '' ),
 'L_TELL_FRIEND_SENDER_USER' => $lang['Tell_Friend'],
 'L_TELL_FRIEND_SENDER_USER' => $lang['Tell_Friend_Sender_User'],
 'L_TELL_FRIEND_SENDER_EMAIL' => $lang['Tell_Friend_Sender_Email'],

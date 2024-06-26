@@ -47,7 +47,6 @@ if (!$result = $db->sql_query($sql))
 //
 // Lets build a page ...
 //
-$page_title = $l_title;
 include($phpbb_root_path . 'includes/page_header.'.$phpEx);
 
 $template->set_filenames(array(

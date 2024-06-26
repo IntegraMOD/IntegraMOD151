@@ -1184,160 +1184,162 @@
 	if ($userdata['user_level'] == ADMIN)
 		$userdata['user_level'] = ADMIN;
 		}
-		
-	function phpBBSecurity_DBBackup()
-		{
-	global $board_config, $phpbb_root_path, $phpEx;
-	global $db, $lang, $user_ip, $userdata;
+
+function phpBBSecurity_DBBackup()
+{
+  global $board_config, $phpbb_root_path, $phpEx;
+  global $db, $lang, $user_ip, $userdata;
   // PHPBB_INSTALLED is already defined
-	@include($phpbb_root_path .'config.'. $phpEx);
-		
-		$today 			= date('d');
-		$last_backup 	= $board_config['phpBBSecurity_last_backup_date'];
-		$backup_time 	= $board_config['phpBBSecurity_backup_time'];
-		$use_backup 	= $board_config['phpBBSecurity_backup_on'];
-		$backup_folder	= $board_config['phpBBSecurity_backup_folder'];
-		$backup_file 	= $board_config['phpBBSecurity_backup_filename'];
-		
-		if ($use_backup)
-			{
-			if ( ($last_backup != $today) && (date('H') >= $backup_time) )
-				{				
-			system("/usr/bin/mysqldump -u". $dbuser ." -p". $dbpasswd ." -h ". $dbhost ." ". $dbname ." > ". (($_SERVER['DOCUMENT_ROOT']) ? $_SERVER['DOCUMENT_ROOT'] : $_SERVER['DOCUMENT_ROOT']) . $board_config['script_path'] . $backup_folder ."/". $backup_file  ."-". date('Y-m-d') .".sql", $fp);
-			
-				if ($fp == 0)
-					$msg = 'Your Daily Database Backup Was Completed.';
-				else
-					$msg = 'Your Daily Database Backup Failed.';
-			
-			$q = "UPDATE ". CONFIG_TABLE ."
-				  SET config_value = '". date('d') ."'
-				  WHERE config_name = 'phpBBSecurity_last_backup_date'";
-			$db->sql_query($q);
-			$db->clear_cache('board_config');
-			
-			$dest_user 	= intval(phpBBSecurity_OldestAdmin());
-			$msg_time 	= time();
-			$from_id 	= intval(phpBBSecurity_OldestAdmin());
-			$subject 	= 'phpBB Security Update';
-			$message	= $msg;
-			$html_on 	= 1;
-			$bbcode_on 	= 1;
-			$smilies_on = 1;
-		
-			include_once($phpbb_root_path .'includes/functions_post.'. $phpEx);
-			include_once($phpbb_root_path .'includes/bbcode.'. $phpEx);
-		   
-			$privmsg_subject 	= trim(strip_tags($subject));
-			$bbcode_uid 		= make_bbcode_uid();
-			$privmsg_message 	= trim(strip_tags($message));
-		
-				if ( defined('PRIVMSGA_TABLE'))
-					{
-				include_once($phpbb_root_path . 'includes/functions_messages.'.$phpEx);
-				send_pm( 0 , '' , $dest_user , $privmsg_subject, $privmsg_message, '' );
-					}
-				else
-					{
-					$sql = "SELECT user_id, user_notify_pm, user_email, user_lang, user_active
-							FROM ". USERS_TABLE ."
-							WHERE user_id = '". $dest_user ."'";
-					$result = $db->sql_query($sql);
-					$to_userdata = $db->sql_fetchrow($result);
-			
-					$sql = "SELECT COUNT(privmsgs_id) AS inbox_items, MIN(privmsgs_date) AS oldest_post_time
-							FROM ". PRIVMSGS_TABLE ."
-							WHERE ( privmsgs_type = ". PRIVMSGS_NEW_MAIL ."
-							OR privmsgs_type = ". PRIVMSGS_READ_MAIL ." 
-							OR privmsgs_type = ". PRIVMSGS_UNREAD_MAIL ." )
-							AND privmsgs_to_userid = '". $dest_user ."'";
-					$result = $db->sql_query($sql);
-			
-					$sql_priority = (SQL_LAYER == 'mysql') ? 'LOW_PRIORITY' : '';
-			
-					if($inbox_info = $db->sql_fetchrow($result))
-						{
-						if ($inbox_info['inbox_items'] >= $board_config['max_inbox_privmsgs'])
-							{
-							$sql = "SELECT privmsgs_id 
-									FROM ". PRIVMSGS_TABLE ."
-									WHERE ( privmsgs_type = ". PRIVMSGS_NEW_MAIL ."
-									OR privmsgs_type = ". PRIVMSGS_READ_MAIL ."
-									OR privmsgs_type = ". PRIVMSGS_UNREAD_MAIL ."  )
-									AND privmsgs_date = ". $inbox_info['oldest_post_time'] . "
-									AND privmsgs_to_userid = '". $dest_user ."'";
-							if (!$result = $db->sql_query($sql))	
-								message_die(GENERAL_ERROR, 'Could not find oldest privmsgs (inbox)', '', __LINE__, __FILE__, $sql);
-							
-							$old_privmsgs_id = $db->sql_fetchrow($result);
-							$old_privmsgs_id = $old_privmsgs_id['privmsgs_id'];
-					   
-							$sql = "DELETE $sql_priority 
-									FROM ". PRIVMSGS_TABLE ."
-									WHERE privmsgs_id = '". $old_privmsgs_id ."'";
-							if (!$db->sql_query($sql))
-								message_die(GENERAL_ERROR, 'Could not delete oldest privmsgs (inbox)'.$sql, '', __LINE__, __FILE__, $sql);
-			
-							$sql = "DELETE $sql_priority 
-									FROM " . PRIVMSGS_TEXT_TABLE . "
-									WHERE privmsgs_text_id = '". $old_privmsgs_id ."'";
-							if (!$db->sql_query($sql))
-								message_die(GENERAL_ERROR, 'Could not delete oldest privmsgs text (inbox)', '', __LINE__, __FILE__, $sql);
-							}
-						}
-			
-					$sql_info = "INSERT INTO ". PRIVMSGS_TABLE ." 
-								(privmsgs_type, privmsgs_subject, privmsgs_from_userid, privmsgs_to_userid, privmsgs_date, privmsgs_ip, privmsgs_enable_html, privmsgs_enable_bbcode, privmsgs_enable_smilies)
-								VALUES ( 1 , '". str_replace("\'", "''", addslashes($privmsg_subject)) ."' , '". $from_id ."', '". $to_userdata['user_id'] ."', $msg_time, '$user_ip' , $html_on, $bbcode_on, $smilies_on)";
-					if (!$db->sql_query($sql_info))
-						message_die(GENERAL_ERROR, 'Could not delete oldest privmsgs text (inbox)', '', __LINE__, __FILE__, $sql_info);
-			
-					$privmsg_sent_id = $db->sql_nextid();
-			
-					$sql = "INSERT INTO ". PRIVMSGS_TEXT_TABLE ." (privmsgs_text_id, privmsgs_bbcode_uid, privmsgs_text)
-							VALUES ($privmsg_sent_id, '" . $bbcode_uid . "', '" . str_replace("\'", "''", addslashes($privmsg_message)) . "')"; 
-					if (!$db->sql_query($sql, END_TRANSACTION))
-						message_die(GENERAL_ERROR, "Could not insert/update private message sent text.", "", __LINE__, __FILE__, $sql);
-			
-					$sql = "UPDATE ". USERS_TABLE ."
-							SET user_new_privmsg = user_new_privmsg + 1, user_last_privmsg = " . time() . " 
-							WHERE user_id = '". $to_userdata['user_id'] ."'";
-					if (!$status = $db->sql_query($sql))
-						message_die(GENERAL_ERROR, 'Could not update private message new/read status for user', '', __LINE__, __FILE__, $sql);
-					}					
-				}
-			}
-		else
-			return;
-		}
+  @include($phpbb_root_path .'config.'. $phpEx);
 
-	function phpBBSecurity_Guests()
-	{
-		global $db, $board_config;
+  $today 			= date('d');
+  $last_backup 	= $board_config['phpBBSecurity_last_backup_date'];
+  $backup_time 	= $board_config['phpBBSecurity_backup_time'];
+  $use_backup 	= $board_config['phpBBSecurity_backup_on'];
+  $backup_folder	= $board_config['phpBBSecurity_backup_folder'];
+  $backup_file 	= $board_config['phpBBSecurity_backup_filename'];
 
-		// V: only try to clear guests once in a while
-		$do_clear = rand(1, 20) == 20;
+  if ($use_backup)
+  {
+    if ( ($last_backup != $today) && (date('H') >= $backup_time) )
+    {				
+      $filename = $_SERVER['DOCUMENT_ROOT'] . $board_config['script_path'] . $backup_folder ."/". $backup_file  ."-". date('Y-m-d') .".sql";
+      file_put_contents($filename, "--<?php\n\n\n");
+      system("/usr/bin/mysqldump -u". $dbuser ." -p". $dbpasswd ." -h ". $dbhost ." ". $dbname ." >> ". $filename, $fp);
 
-		if ($board_config['phpBBSecurity_guest_matches'] > 0 && $do_clear)
-		{
-			$q = "SELECT count(session_id) AS total, session_ip
-				FROM ". SESSIONS_TABLE ." 
-				WHERE session_user_id = '". ANONYMOUS ."'
-				GROUP BY session_ip
-				ORDER BY total DESC";
-			$r = $db->sql_query($q);
-			$rows = $db->sql_fetchrowset($r);
+      if ($fp == 0)
+        $msg = 'Your Daily Database Backup Was Completed.';
+      else
+        $msg = 'Your Daily Database Backup Failed.';
 
-			foreach ($rows as $row)
-			{
-				if ($row['total'] > $board_config['phpBBSecurity_guest_matches'])
-				{
-					$q = "DELETE FROM ". SESSIONS_TABLE ."
-						WHERE session_ip = '". $row['session_ip'] ."'
-						AND session_user_id = '". ANONYMOUS ."'";
-					$db->sql_query($q);
-				}
-			}
-		}
-	}
+      $q = "UPDATE ". CONFIG_TABLE ."
+        SET config_value = '". date('d') ."'
+        WHERE config_name = 'phpBBSecurity_last_backup_date'";
+      $db->sql_query($q);
+      $db->clear_cache('board_config');
+
+        $dest_user 	= intval(phpBBSecurity_OldestAdmin());
+        $msg_time 	= time();
+        $from_id 	= intval(phpBBSecurity_OldestAdmin());
+        $subject 	= 'phpBB Security Update';
+        $message	= $msg;
+        $html_on 	= 1;
+        $bbcode_on 	= 1;
+        $smilies_on = 1;
+
+        include_once($phpbb_root_path .'includes/functions_post.'. $phpEx);
+        include_once($phpbb_root_path .'includes/bbcode.'. $phpEx);
+
+        $privmsg_subject 	= trim(strip_tags($subject));
+        $bbcode_uid 		= make_bbcode_uid();
+        $privmsg_message 	= trim(strip_tags($message));
+
+        if ( defined('PRIVMSGA_TABLE'))
+        {
+          include_once($phpbb_root_path . 'includes/functions_messages.'.$phpEx);
+          send_pm( 0 , '' , $dest_user , $privmsg_subject, $privmsg_message, '' );
+        }
+        else
+        {
+          $sql = "SELECT user_id, user_notify_pm, user_email, user_lang, user_active
+            FROM ". USERS_TABLE ."
+            WHERE user_id = '". $dest_user ."'";
+          $result = $db->sql_query($sql);
+          $to_userdata = $db->sql_fetchrow($result);
+
+          $sql = "SELECT COUNT(privmsgs_id) AS inbox_items, MIN(privmsgs_date) AS oldest_post_time
+            FROM ". PRIVMSGS_TABLE ."
+            WHERE ( privmsgs_type = ". PRIVMSGS_NEW_MAIL ."
+            OR privmsgs_type = ". PRIVMSGS_READ_MAIL ." 
+            OR privmsgs_type = ". PRIVMSGS_UNREAD_MAIL ." )
+            AND privmsgs_to_userid = '". $dest_user ."'";
+          $result = $db->sql_query($sql);
+
+          $sql_priority = (SQL_LAYER == 'mysql') ? 'LOW_PRIORITY' : '';
+
+          if($inbox_info = $db->sql_fetchrow($result))
+          {
+            if ($inbox_info['inbox_items'] >= $board_config['max_inbox_privmsgs'])
+            {
+              $sql = "SELECT privmsgs_id 
+                FROM ". PRIVMSGS_TABLE ."
+                WHERE ( privmsgs_type = ". PRIVMSGS_NEW_MAIL ."
+                OR privmsgs_type = ". PRIVMSGS_READ_MAIL ."
+                OR privmsgs_type = ". PRIVMSGS_UNREAD_MAIL ."  )
+                AND privmsgs_date = ". $inbox_info['oldest_post_time'] . "
+                AND privmsgs_to_userid = '". $dest_user ."'";
+              if (!$result = $db->sql_query($sql))	
+                message_die(GENERAL_ERROR, 'Could not find oldest privmsgs (inbox)', '', __LINE__, __FILE__, $sql);
+
+              $old_privmsgs_id = $db->sql_fetchrow($result);
+              $old_privmsgs_id = $old_privmsgs_id['privmsgs_id'];
+
+              $sql = "DELETE $sql_priority 
+                FROM ". PRIVMSGS_TABLE ."
+                WHERE privmsgs_id = '". $old_privmsgs_id ."'";
+              if (!$db->sql_query($sql))
+                message_die(GENERAL_ERROR, 'Could not delete oldest privmsgs (inbox)'.$sql, '', __LINE__, __FILE__, $sql);
+
+              $sql = "DELETE $sql_priority 
+                FROM " . PRIVMSGS_TEXT_TABLE . "
+                WHERE privmsgs_text_id = '". $old_privmsgs_id ."'";
+              if (!$db->sql_query($sql))
+                message_die(GENERAL_ERROR, 'Could not delete oldest privmsgs text (inbox)', '', __LINE__, __FILE__, $sql);
+            }
+          }
+
+          $sql_info = "INSERT INTO ". PRIVMSGS_TABLE ." 
+            (privmsgs_type, privmsgs_subject, privmsgs_from_userid, privmsgs_to_userid, privmsgs_date, privmsgs_ip, privmsgs_enable_html, privmsgs_enable_bbcode, privmsgs_enable_smilies)
+            VALUES ( 1 , '". str_replace("\'", "''", addslashes($privmsg_subject)) ."' , '". $from_id ."', '". $to_userdata['user_id'] ."', $msg_time, '$user_ip' , $html_on, $bbcode_on, $smilies_on)";
+          if (!$db->sql_query($sql_info))
+            message_die(GENERAL_ERROR, 'Could not delete oldest privmsgs text (inbox)', '', __LINE__, __FILE__, $sql_info);
+
+          $privmsg_sent_id = $db->sql_nextid();
+
+          $sql = "INSERT INTO ". PRIVMSGS_TEXT_TABLE ." (privmsgs_text_id, privmsgs_bbcode_uid, privmsgs_text)
+            VALUES ($privmsg_sent_id, '" . $bbcode_uid . "', '" . str_replace("\'", "''", addslashes($privmsg_message)) . "')"; 
+          if (!$db->sql_query($sql, END_TRANSACTION))
+            message_die(GENERAL_ERROR, "Could not insert/update private message sent text.", "", __LINE__, __FILE__, $sql);
+
+          $sql = "UPDATE ". USERS_TABLE ."
+            SET user_new_privmsg = user_new_privmsg + 1, user_last_privmsg = " . time() . " 
+            WHERE user_id = '". $to_userdata['user_id'] ."'";
+          if (!$status = $db->sql_query($sql))
+            message_die(GENERAL_ERROR, 'Could not update private message new/read status for user', '', __LINE__, __FILE__, $sql);
+        }					
+      }
+    }
+    else
+      return;
+  }
+
+  function phpBBSecurity_Guests()
+  {
+    global $db, $board_config;
+
+    // V: only try to clear guests once in a while
+    $do_clear = rand(1, 20) == 20;
+
+    if ($board_config['phpBBSecurity_guest_matches'] > 0 && $do_clear)
+    {
+      $q = "SELECT count(session_id) AS total, session_ip
+        FROM ". SESSIONS_TABLE ." 
+        WHERE session_user_id = '". ANONYMOUS ."'
+        GROUP BY session_ip
+        ORDER BY total DESC";
+      $r = $db->sql_query($q);
+      $rows = $db->sql_fetchrowset($r);
+
+      foreach ($rows as $row)
+      {
+        if ($row['total'] > $board_config['phpBBSecurity_guest_matches'])
+        {
+          $q = "DELETE FROM ". SESSIONS_TABLE ."
+            WHERE session_ip = '". $row['session_ip'] ."'
+            AND session_user_id = '". ANONYMOUS ."'";
+          $db->sql_query($q);
+        }
+      }
+    }
+  }
 ?>

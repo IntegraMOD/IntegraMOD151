@@ -31,7 +31,7 @@ if ( file_exists( './viewtopic.php' ) ) // -------------------------------------
 	include( $phpbb_root_path . 'extension.inc' );
 	include( $phpbb_root_path . 'common.' . $phpEx );
 	
-	define( 'PAGE_KB', -500 );
+	if (!defined('PAGE_KB')) define( 'PAGE_KB', -500 );
 	
 	// Start session management
 	
@@ -93,6 +93,7 @@ else // ------------------------------------------------------------------------
 	include_once( $module_root_path . 'includes/functions_kb_mx.' . $phpEx );
 }
 
+include( $phpbb_root_path . 'language/lang_' . $board_config['default_lang'] . '/lang_search.' . $phpEx );
 // -------------------------------------------------------------------------------------------------------------------------
 // -------------------------------------------------------------------------------------------------------------------------
 // -------------------------------------------------------------------------------------------------------------------------
@@ -164,6 +165,7 @@ else
 
 $start = ( isset( $_GET['start'] ) ) ? intval( $_GET['start'] ) : 0;
 
+$multibyte_charset = 'utf-8, big5, shift_jis, euc-kr, gb2312';
 switch ( $mode )
 {
 	case "results": 
@@ -226,7 +228,7 @@ switch ( $mode )
 								$match_word = addslashes( '%' . str_replace( '*', '', $split_search[$i] ) . '%' );
 								$search_msg_only = ( $search_fields ) ? "OR article_title LIKE '$match_word'" : '';
 								$sql = "SELECT article_id
-								    FROM " . KB_ARTICLE_TABLE . "
+								    FROM " . KB_ARTICLES_TABLE . "
 									WHERE article_body  LIKE '$match_word'
 									$search_msg_only";
 							}
@@ -271,10 +273,9 @@ switch ( $mode )
 					}
 				}
 
-				@reset( $result_list );
 
 				$search_ids = array();
-				while ( list( $article_id, $matches ) = each( $result_list ) )
+        foreach ( $result_list  as  $article_id => $matches )
 				{
 					if ( $matches )
 					{
@@ -310,7 +311,7 @@ switch ( $mode )
 	
 				for( $i = 0; $i < count( $store_vars ); $i++ )
 				{
-					$store_search_data[$store_vars[$i]] = $$store_vars[$i];
+					$store_search_data[$store_vars[$i]] = isset(${$store_vars[$i]}) ? ${$store_vars[$i]} : '';
 				}
 	
 				$result_array = serialize( $store_search_data );
@@ -356,9 +357,10 @@ switch ( $mode )
 					}
 				}
 			} 
-			
+
 			// Look up data ...
-			
+
+			$searchset = array();
 			if ( $search_results != '' )
 			{
 				$sql = "SELECT t.*, u.username, u.user_id 
@@ -375,7 +377,6 @@ switch ( $mode )
 					mx_message_die( GENERAL_ERROR, 'Could not obtain search results', '', __LINE__, __FILE__, $sql );
 				}
 
-				$searchset = array();
 				while ( $kb_row = $db->sql_fetchrow( $result ) )
 				{
 					$searchset[] = $kb_row;
@@ -423,7 +424,9 @@ switch ( $mode )
 
 					for ( $k = 0; $k < count( $synonym_array ); $k++ )
 					{
-						list( $replace_synonym, $match_synonym ) = explode( ' ', trim( strtolower( $synonym_array[$k] ) ) );
+						$results = explode( ' ', trim( strtolower( $synonym_array[$k] ) ) );
+						$replace_synonym = $results[0];
+					 	$match_synonym = $results[1];
 
 						if ( $replace_synonym == $split_word )
 						{
@@ -500,7 +503,6 @@ switch ( $mode )
 		}
 
 		//include ( $module_root_path . "includes/kb_header." . $phpEx );
-		include( $phpbb_root_path . 'language/lang_' . $board_config['default_lang'] . '/lang_search.' . $phpEx );
 
 		$template->set_filenames( array( 'body' => 'kb_search_body.tpl' ) 
 			);

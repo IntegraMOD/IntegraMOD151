@@ -59,6 +59,7 @@ if(!$result = $db->sql_query($sql))
 }
 else
 {
+  $n = 0;
   while( $users = $db->sql_fetchrow($result))
   {
      $sub_sql='UPDATE '.USERS_TABLE.' SET user_posts='.$users['posts'].' where user_id='.$users['user_id'];
@@ -68,7 +69,7 @@ else
      }
      $n++;
   }
-  $message .='<b><font color=#0000fF>users updated:</font></b> in total '.$n.' users updated';
+  $message ='<b><font color=#0000fF>users updated:</font></b> in total '.$n.' users updated';
   message_die(GENERAL_MESSAGE, $message); 
 }
 ?>

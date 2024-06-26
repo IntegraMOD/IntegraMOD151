@@ -84,7 +84,7 @@ if ( $ctracker_config->settings['login_ip_check'] == 1 )
 	$sel1 = '';
 	$sel2 = '';
 	
-	if ( $_POST['submit'] )
+	if ( !empty($_POST['submit']) )
 	{
 		$newsetting = intval($_POST['ct_enable_ip_warn']);
 		$sql = 'UPDATE ' . USERS_TABLE . ' SET ct_enable_ip_warn=' . $newsetting . ' WHERE user_id=' . $userdata['user_id'];

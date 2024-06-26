@@ -128,7 +128,7 @@ $template->set_filenames(array(
 make_jumpbox('viewforum.'.$phpEx);
 
 $template->assign_vars(array(
-	'U_CFAQ_JSLIB' => $phpbb_root_path . 'templates/collapsible_faq.js',
+	'U_CFAQ_JSLIB' => $phpbb_root_path . 'templates/_js/collapsible_faq.js',
 	'L_CFAQ_NOSCRIPT' => sprintf($lang['dhtml_faq_noscript'], ('<a href="'.append_sid("faq.$phpEx?dhtml=no".(isset($_GET['mode']) ? '&amp;mode='.$_GET['mode'] : '')).'">'), '</a>'),
 	'L_FAQ_TITLE' => $l_title, 
 	'L_BACK_TO_TOP' => $lang['Back_to_top'])

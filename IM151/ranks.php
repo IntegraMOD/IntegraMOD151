@@ -34,7 +34,7 @@ $phpbb_root_path = './';
 include($phpbb_root_path . 'extension.inc');
 include($phpbb_root_path . 'common.' . $phpEx);
 
-$rank_extended = function_exists(extended_rank);
+$rank_extended = function_exists('extended_rank');
 $profilcp = file_exists($phpbb_root_path . 'profilcp/functions_profile.' . $phpEx);
 if ($profilcp)
 {

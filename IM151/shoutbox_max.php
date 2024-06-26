@@ -142,7 +142,7 @@ if ( !empty($username) )
 		if ( $result['error'] )
 		{
 			$error = true;
-			$error_msg .= ( !empty($error_msg) ) ? '<br />' . $result['error_msg'] : $result['error_msg'];
+			$error_msg = ( !empty($error_msg) ) ? '<br />' . $result['error_msg'] : $result['error_msg'];
 		}
 	}
 }
@@ -214,7 +214,7 @@ if ($submit || isset($_POST['message']))
 
 	$message = (isset($_POST['message'])) ? trim($_POST['message']) : '';
 	// insert shout !
-	if (!empty($message) && $is_auth['auth_post'] && !$error)
+	if (!empty($message) && $is_auth['auth_post'] && empty($error))
 	{
 		require_once($phpbb_root_path . 'includes/functions_post.'.$phpEx);
 		$bbcode_uid = ( $bbcode_on ) ? make_bbcode_uid() : '';
@@ -607,7 +607,7 @@ if ( !($result = $db->sql_query($sql)) )
 		{
 			$user_sig = make_clickable($user_sig);
 		}
-		$message = make_clickable($message);
+		$message = !empty($message) ? make_clickable($message) : '';
 
 // 
 	// Highlight active words (primarily for search) 
@@ -722,7 +722,7 @@ else
 		'NUMBER_OF_SHOUTS' => $total_shouts,
 		'HTML_STATUS' => $html_status,
 		'BBCODE_STATUS' => sprintf($bbcode_status, '<a href="' . append_sid("faq.$phpEx?mode=bbcode") . '" target="_phpbbcode">', '</a>'), 
-	'L_SHOUTBOX_LOGIN' => $lang['Login_join'],
+	'L_SHOUTBOX_LOGIN' => ( isset($lang['Login_join']) ? $lang['Login_join'] : '' ),
 	'L_POSTED' => $lang['Posted'], 
 	'L_AUTHOR' => $lang['Author'],
 	'L_MESSAGE' => $lang['Message'],
@@ -734,7 +734,7 @@ else
 'L_SHOUT_SUBMIT' => $lang['Go'],
 'L_SHOUT_TEXT' => $lang['Shout_text'],
 'L_SHOUT_REFRESH' => $lang['Shout_refresh'],
-'S_HIDDEN_FIELDS' => $s_hidden_fields,
+'S_HIDDEN_FIELDS' => ( isset($s_hidden_fields) ? $s_hidden_fields : '' ),
 
 'SMILIES_STATUS' => $smilies_status,
 'L_BBCODE_B_HELP' => $lang['bbcode_b_help'], 
@@ -786,14 +786,14 @@ else
 
 ));
 
-if( $error_msg != '' )
+if( !empty($error_msg) )
 {
 	$template->set_filenames(array(
 		'reg_header' => 'error_body.tpl')
 	);
 	$template->assign_vars(array(
-		'ERROR_MESSAGE' => $error_msg)
-	);
+		'ERROR_MESSAGE' => $error_msg
+	));
 	$template->assign_var_from_handle('ERROR_BOX', 'reg_header');
 	$message = ( !empty($_POST['message']) ) ? htmlspecialchars(trim(stripslashes($_POST['message']))) : '';
 	$template->assign_vars(array('SHOUTBOX_MESSAGE' => $message));

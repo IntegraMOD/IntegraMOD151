@@ -297,7 +297,7 @@ class pafiledb_Template
 
 		$compile_blocks = array();
 
-		for ($curr_tb = 0; $curr_tb < count($text_blocks); $curr_tb++)
+		for ($curr_tb = 0; $curr_tb < count($text_blocks) && $curr_tb < count($blocks[1]); $curr_tb++)
 		{
 			switch ($blocks[1][$curr_tb])
 			{

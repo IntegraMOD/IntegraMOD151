@@ -21,7 +21,7 @@ $cookiename = $board_config['cookie_name'];
 //
 //Delete teh cookies
 //
-if ($_GET['confirm'] == 1)
+if (!empty($_GET['confirm']))
 {
      setcookie($board_config['cookie_name'] . '_f_all', time(), - 3600, $board_config['cookie_path'], $board_config['cookie_domain'], $board_config['cookie_secure']);
 
@@ -58,12 +58,12 @@ else if(!isset($_GET['confirm']) || $_GET['confirm'] != 1)
 	 'L_COOKIES_EXPLAIN' => $lang['cookies_explain'],
 	 'L_COOKIES' => $lang['cookies_link'],
 	 'L_CURRENT_CONTENTS' => $lang['current_contents'],
-	 'TOPIC_COOKIE' => print_r(unserialize(stripslashes($_COOKIE[$cookiename .'t'])), true),
-	 'MARKED_COOKIE' => print_r(unserialize(stripslashes($_COOKIE[$cookiename .'_f_all'])), true),
-	 'FORUM_COOKIE' => print_r(unserialize(stripslashes($_COOKIE[$cookiename .'_f'])), true),
-	 'DATA_COOKIE' => print_r(unserialize(stripslashes($_COOKIE[$cookiename .'_data'])), true),
-	 'SID_COOKIE' => print_r(unserialize(stripslashes($_COOKIE[$cookiename .'sid'])), true))
-	 );
+	 'TOPIC_COOKIE' => isset($_COOKIE[$cookiename .'t']) ? print_r(unserialize(stripslashes($_COOKIE[$cookiename .'t'])), true) : '',
+	 'MARKED_COOKIE' => isset($_COOKIE[$cookiename .'_f_all']) ? print_r(unserialize(stripslashes($_COOKIE[$cookiename .'_f_all'])), true) : '',
+	 'FORUM_COOKIE' => isset($_COOKIE[$cookiename .'_f']) ? print_r(unserialize(stripslashes($_COOKIE[$cookiename .'_f'])), true) : '',
+	 'DATA_COOKIE' => isset($_COOKIE[$cookiename .'_data']) ? print_r(unserialize(stripslashes($_COOKIE[$cookiename .'_data'])), true) : '',
+	 'SID_COOKIE' => isset($_COOKIE[$cookiename .'sid']) ? print_r(unserialize(stripslashes($_COOKIE[$cookiename .'sid'])), true) : '',
+	 ));
 
 	 $template->pparse('body');
 

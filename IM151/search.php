@@ -263,6 +263,7 @@ else if ( $search_keywords != '' || $search_author != '' || $search_id )
 				}
 			}
 		}		
+    $total_match_count = 0;
 		if ( $search_id == 'newposts' || $search_id == 'egosearch' || ( $search_author != '' && $search_keywords == '' ) || $search_id == 'mini_cal' || $search_id == 'mini_cal_events'  )
 		{
 			if ( $search_id == 'newposts' )
@@ -572,10 +573,9 @@ else if ( $search_keywords != '' || $search_author != '' || $search_id )
 					}
 			}
 
-			@reset($result_list);
 
 			$search_ids = array();
-			while( list($post_id, $matches) = each($result_list) )
+      foreach ($result_list as $post_id => $matches)
 			{
 				if ( $matches )
 				{
@@ -642,7 +642,7 @@ else if ( $search_keywords != '' || $search_author != '' || $search_id )
 		$s_flist = '';
 		for ($i=0; $i < count($keys['id']); $i++)
 		{
-			if ( ($tree['type'][ $keys['idx'][$i] ] == POST_FORUM_URL) && $tree['auth'][ $keys['id'][$i] ]['auth_read'] )
+			if ( $keys['idx'][$i] > -1 && ($tree['type'][ $keys['idx'][$i] ] == POST_FORUM_URL) && $tree['auth'][ $keys['id'][$i] ]['auth_read'] )
 			{
 				$s_flist .= (($s_flist != '') ? ', ' : '') . $tree['id'][ $keys['idx'][$i] ];
 			}
@@ -962,7 +962,7 @@ else if ( $search_keywords != '' || $search_author != '' || $search_id )
 
 		for($i = 0; $i < count($store_vars); $i++)
 		{
-			$store_search_data[$store_vars[$i]] = $$store_vars[$i];
+			$store_search_data[$store_vars[$i]] = ( isset(${$store_vars[$i]}) ? ${$store_vars[$i]} : '' );
 		}
 
 		$result_array = serialize($store_search_data);
@@ -2060,7 +2060,7 @@ $template->assign_vars(array(
 	'S_SEARCH_ACTION' => append_sid("search.$phpEx?mode=results"),
 	'S_CHARACTER_OPTIONS' => $s_characters,
 	'S_FORUM_OPTIONS' => $s_forums, 
-	'S_CATEGORY_OPTIONS' => $s_categories, 
+	'S_CATEGORY_OPTIONS' => ( isset($s_categories) ? $s_categories : '' ),
 	'S_TIME_OPTIONS' => $s_time, 
 	'S_SORT_OPTIONS' => $s_sort_by,
 	'S_HIDDEN_FIELDS' => '')
