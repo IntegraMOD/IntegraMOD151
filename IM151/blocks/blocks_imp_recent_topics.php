@@ -57,7 +57,7 @@ if(!function_exists('imp_recent_topics_block_func'))
 		$is_auth_ary = array();
 		$is_auth_ary = auth(AUTH_ALL, AUTH_LIST_ALL, $userdata, $forum_data);
 
-		if( $portal_config['md_except_forum_id'] == '' )
+		if( empty($portal_config['md_except_forum_id']) )
 		{
 			$except_forum_id = '\'start\'';
 		}
@@ -128,7 +128,7 @@ if(!function_exists('imp_recent_topics_block_func'))
 			$style_row = 'static';
 		}
 
-		$template->assign_block_vars($style_row,"");
+		$template->assign_block_vars($style_row,array());
 
 		for ($i = 0; $i < $number_recent_topics; $i++) 
 		{
