@@ -124,7 +124,8 @@ if( $mode != "" )
 				$template_dir = $phpbb_root_path .'/templates/' . $row['template_name']. '/layout';
 	    		$templates = opendir($template_dir);
 				
-	    		while ($file = readdir($templates)) 
+				$templatefile = '';
+				while ($file = readdir($templates)) 
 				{
 					$pos = strpos($file, ".tpl");
 					if ($pos!==false)
@@ -498,7 +499,7 @@ else
 		"L_LAYOUT_TITLE" => $lang['Layout_Title'],
 		"L_LAYOUT_TEXT" => $lang['Layout_Explain'],
 		"L_LAYOUT_NAME" => $lang['Layout_Name'],
-		"L_LAYOUT_PAGETITLE" => $lang['Layout_pagetitle'],
+		"L_LAYOUT_PAGETITLE" => $lang['Layout_Pagetitle'] ,
 		"L_LAYOUT_PAGE" => $lang['Layout_Page'],
 		"L_LAYOUT_VIEW" => $lang['Layout_View'],
 		"L_LAYOUT_GROUPS" => $lang['B_Groups'],

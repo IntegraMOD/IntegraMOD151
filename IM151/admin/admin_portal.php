@@ -154,12 +154,10 @@ else
 				$options = explode("," , $var[$portal_name]['field_options']);
 				$values = explode("," , $var[$portal_name]['field_values']);
 				$field = '<select name = "' . $portal_name . '">';
-				$i=0;
-				while ($options[$i])
+				for ($i = 0; $i < count($options) && $i < count($values); $i++)
 				{
 					$selected = ($portal_value == trim($values[$i])) ? 'selected' : '';
 					$field .= '<option value = "' . trim($values[$i]) . '" ' . $selected . '>' . trim($options[$i]);
-					$i++;
 				}
 				$field .= '</selected>';
 				break;
@@ -167,12 +165,10 @@ else
 				$options = explode("," , $var[$portal_name]['field_options']);
 				$values = explode("," , $var[$portal_name]['field_values']);
 				$field = '';
-				$i=0;
-				while ($options[$i])
+				for ($i = 0; $i < count($options) && $i < count($values); $i++)
 				{
 					$checked = ($portal_value == trim($values[$i])) ? 'checked' : '';
 					$field .= '<input type="radio" name = "' . $portal_name . '" value = "' . trim($values[$i]) . '" ' . $checked . '>' . trim($options[$i]) . '&nbsp;&nbsp;';
-					$i++;
 				}
 				break;
 			case '4':

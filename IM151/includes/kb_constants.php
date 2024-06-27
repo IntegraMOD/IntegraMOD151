@@ -68,6 +68,7 @@ define( 'CHECKBOX', 5 );
 // **********************************************************************
 // Read language definition
 // **********************************************************************
+global $module_root_path;
 if ( !file_exists( $module_root_path . 'language/lang_' . $board_config['default_lang'] . '/lang_kb.' . $phpEx ) )
 {
 	include( $module_root_path . 'language/lang_english/lang_kb.' . $phpEx );
@@ -81,6 +82,7 @@ else
 // **********************************************************************
 // Read theme definition
 // **********************************************************************
+global $theme;
 if ( file_exists( $module_root_path . "templates/" . $theme['template_name'] . "/images" ) )
 {
 	// ----------

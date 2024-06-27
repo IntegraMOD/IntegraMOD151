@@ -49,6 +49,7 @@ $options = array(
 $var_cache = new Cache_Lite($options);
 
 $var_cache->clean('block');
+$s_hidden_fields = '';
 
 function fix_weight_blocks($l_id)
 {
@@ -84,6 +85,7 @@ function fix_weight_blocks($l_id)
 
 function format_blockfile_name($file)
 {
+	global $phpEx;
 	$temp = str_replace(".".$phpEx,"",$file);
 	$temp1 = str_replace('blocks_imp_','',$temp);
 	$temp1 = str_replace('_',' ',$temp1);
@@ -204,7 +206,7 @@ function generate_smilies2($mode, $page_id)
 
 if( isset($_GET['mode']) || isset($_POST['mode']) )
 {
-	$mode = ($_GET['mode']) ? $_GET['mode'] : $_POST['mode'];
+	$mode = isset($_GET['mode']) ? $_GET['mode'] : $_POST['mode'];
 	$mode = htmlspecialchars($mode);
 }
 else 
@@ -262,14 +264,14 @@ if( $mode != "" && $mode != "blocks" )
 
 		$message='';
 
-		$sql = "SELECT forum_wide FROM " . LAYOUT_TABLE . " WHERE lid ='" . $l_id . "'";
+		$sql = "SELECT * FROM " . LAYOUT_TABLE . " WHERE lid ='" . $l_id . "'";
 		if( !$result = $db->sql_query($sql) )
 		{
 			message_die(GENERAL_ERROR, "Could not query layout table", $lang['Error'], __LINE__, __FILE__, $sql);
 		}
 		$l_row = $db->sql_fetchrow($result);
 
-		$temp_layout = ($l_row['forum_wide']) ? "'" . $l_id . "','0'" : $temp_layout = "'" . $l_id . "'";
+		$temp_layout = ($l_row['forum_wide']) ? "$l_id,0" : $temp_layout = $l_id;
 
 		if( $mode == "edit" )
 		{
@@ -292,6 +294,7 @@ if( $mode != "" && $mode != "blocks" )
 					message_die(CRITICAL_ERROR, "Could not query blocks position information", "", __LINE__, __FILE__, $sql);
 				}
 
+				$position = '';
 				while ($row = $db->sql_fetchrow($result))
 				{
 					$position .= '<option value="' . $row['bposition'] . '" ';
@@ -378,7 +381,7 @@ if( $mode != "" && $mode != "blocks" )
 		}
 		else
 		{ // $mode == "add"
-			$sql = "SELECT pkey, bposition FROM " . BLOCK_POSITION_TABLE . " WHERE layout IN (". $temp_layout .") ORDER BY layout, bpid"; 
+			$sql = "SELECT layout, pkey, bposition FROM " . BLOCK_POSITION_TABLE . " WHERE layout IN (". $temp_layout .") ORDER BY layout, bpid"; 
 			if( !($result = $db->sql_query($sql)) )
 			{
 				message_die(CRITICAL_ERROR, "Could not query blocks position information", "", __LINE__, __FILE__, $sql);
@@ -458,35 +461,35 @@ if( $mode != "" && $mode != "blocks" )
 			"L_B_VIEW_BY" => $lang['B_View'],
 			"L_B_BORDER" => $lang['B_Border'],
 			"L_B_TITLEBAR" => $lang['B_Titlebar'],
-			"L_B_OPENCLOSE" => $lang['B_Openclose'],
+			"L_B_OPENCLOSE" => $lang['B_OPENCLOSE'] ,
 			"L_B_LOCAL" => $lang['B_Local'],
 			"L_B_BACKGROUND" => $lang['B_Background'],
 			"L_B_GROUP" => $lang['B_Groups'],
 			"L_YES" => $lang['Yes'],
 			"L_NO" => $lang['No'],
-			"TITLE" => $b_info['title'],
-			"TITLE_IMAGE" => $b_info['title_image'],
+			"TITLE" => ( isset($b_info['title']) ? $b_info['title'] : '' ),
+			"TITLE_IMAGE" => ( isset($b_info['title_image']) ? $b_info['title_image'] : '' ),
 			"POSITION" => $position,
-			"ACTIVE" => ( $b_info['active'] ) ? "checked=\"checked\"" : "",
-			"NOT_ACTIVE" =>	( !$b_info['active'] ) ? "checked=\"checked\"" : "",
-			"HTML" => ( !$b_info['type'] ) ? "checked=\"checked\"" : "",
-			"BBCODE" => ( $b_info['type'] ) ? "checked=\"checked\"" : "",
-			"CACHE" => ( $b_info['cache'] ) ? "checked=\"checked\"" : "",
-			"NO_CACHE" =>	( !$b_info['cache'] ) ? "checked=\"checked\"" : "",
-			"CACHETIME" => $b_info['cache_time'],
+			"ACTIVE" => !empty( $b_info['active'] ) ? "checked=\"checked\"" : "",
+			"NOT_ACTIVE" =>	empty( $b_info['active'] ) ? "checked=\"checked\"" : "",
+			"HTML" => empty( $b_info['type'] ) ? "checked=\"checked\"" : "",
+			"BBCODE" => !empty( $b_info['type'] ) ? "checked=\"checked\"" : "",
+			"CACHE" => !empty( $b_info['cache'] ) ? "checked=\"checked\"" : "",
+			"NO_CACHE" =>	empty( $b_info['cache'] ) ? "checked=\"checked\"" : "",
+			"CACHETIME" => ( isset($b_info['cache_time']) ? $b_info['cache_time'] : 0 ),
 			"CONTENT" => $message,
 			"BLOCKFILE" => $blockfile,
 			"VIEWBY" => $view,
-			"BORDER" => ( $b_info['border'] ) ? "checked=\"checked\"" : "",
-			"NO_BORDER" => ( !$b_info['border'] ) ? "checked=\"checked\"" : "",
-			"TITLEBAR" => ( $b_info['titlebar'] ) ? "checked=\"checked\"" : "",
-			"NO_TITLEBAR" => ( !$b_info['titlebar'] ) ? "checked=\"checked\"" : "",
-			"OPENCLOSE" => ( $b_info['titlebar'] ) ? "checked=\"checked\"" : "",
-			"NO_OPENCLOSE" => ( !$b_info['openclose'] ) ? "checked=\"checked\"" : "",
-			"LOCAL" => ( $b_info['local'] ) ? "checked=\"checked\"" : "",
-			"NOT_LOCAL" => ( !$b_info['local'] ) ? "checked=\"checked\"" : "",
-			"BACKGROUND" => ( $b_info['background'] ) ? "checked=\"checked\"" : "",
-			"NO_BACKGROUND" => ( !$b_info['background'] ) ? "checked=\"checked\"" : "",
+			"BORDER" => !empty( $b_info['border'] ) ? "checked=\"checked\"" : "",
+			"NO_BORDER" => empty( $b_info['border'] ) ? "checked=\"checked\"" : "",
+			"TITLEBAR" => !empty( $b_info['titlebar'] ) ? "checked=\"checked\"" : "",
+			"NO_TITLEBAR" => empty( $b_info['titlebar'] ) ? "checked=\"checked\"" : "",
+			"OPENCLOSE" => !empty( $b_info['titlebar'] ) ? "checked=\"checked\"" : "",
+			"NO_OPENCLOSE" => empty( $b_info['openclose'] ) ? "checked=\"checked\"" : "",
+			"LOCAL" => !empty( $b_info['local'] ) ? "checked=\"checked\"" : "",
+			"NOT_LOCAL" => empty( $b_info['local'] ) ? "checked=\"checked\"" : "",
+			"BACKGROUND" => !empty( $b_info['background'] ) ? "checked=\"checked\"" : "",
+			"NO_BACKGROUND" => empty( $b_info['background'] ) ? "checked=\"checked\"" : "",
 			"GROUP" => $group,
 
 			'L_BBCODE_B_HELP' => $lang['bbcode_b_help'], 
@@ -864,7 +867,7 @@ else if ($mode == "blocks")
 	$l_name = $l_row['name'];
 	$l_template = $l_row['template'];
 
-	$temp_layout = ($l_row['forum_wide']) ? "'" . $l_id . "','0'" : $temp_layout = "'" . $l_id . "'";
+	$temp_layout = ($l_row['forum_wide']) ? "$l_id,0" : $temp_layout = $l_id;
 
 	$sql = "SELECT * FROM " . BLOCKS_TABLE . " WHERE layout in (". $temp_layout .") ORDER BY bposition, weight";
 	if( !$result = $db->sql_query($sql) )
@@ -896,7 +899,7 @@ else if ($mode == "blocks")
 		"L_B_VIEW_BY" => $lang['B_View'],
 		"L_B_BORDER" => $lang['B_Border'],
 		"L_B_TITLEBAR" => $lang['B_Titlebar'],
-		"L_B_OPENCLOSE" => $lang['B_Openclose'],
+		"L_B_OPENCLOSE" => $lang['B_OPENCLOSE'],
 		"L_B_LOCAL" => $lang['B_Local'],
 		"L_B_BACKGROUND" => $lang['B_Background'],
 		"L_B_GROUPS" => $lang['B_Groups'],
@@ -1016,7 +1019,7 @@ else if ($mode == "blocks")
 			{
 				foreach ($blocks_by_pos[$letter] as $b)
 				{
-					$template->assign_block_vars('blocks', $b['template_vars']);
+					$template->assign_block_vars('blocks', array_merge($b['template_vars'], array('NONE' => false)));
 				}
 			}
 			else

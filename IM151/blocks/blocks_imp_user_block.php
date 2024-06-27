@@ -63,7 +63,7 @@ if(!function_exists('imp_user_block_block_func'))
 		}
 		if ($userdata['user_id'] != '-1')
 		{
-			$name_link = '<a href="' . append_sid("profile.$phpEx?mode=profil") . '" class="' . $agcm_color->get_user_color($userdata['user_group_id'], $userdata['user_session_id']) . '">' . $userdata['username'] . '</a>';
+			$name_link = '<a href="' . append_sid("profile.$phpEx?mode=profil") . '">' . $agcm_color->get_user_color($userdata['user_group_id'], $userdata['user_session_time'], $userdata['username']). '</a>';
 		}
 		else
 		{
