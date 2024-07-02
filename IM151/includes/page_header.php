@@ -340,7 +340,7 @@ if (defined('SHOW_ONLINE'))
 
 		$view_ignore	= ($is_admin || $view_is_admin || ($view_user_id == $user_id)) ? false : $buddys[$view_user_id]['buddy_ignore'];
 		$view_friend	= isset($buddys[$view_user_id]) ? $buddys[$view_user_id]['buddy_friend'] : false;
-		$view_visible	= ($is_admin || ($view_user_id == $user_id)) ? YES : $buddys[$view_user_id]['buddy_visible'];
+		$view_visible	= ($is_admin || ($view_user_id == $user_id)) ? YES : ( isset($buddys[$view_user_id]['buddy_visible']) ? $buddys[$view_user_id]['buddy_visible'] : NO );
 
 		// online/offline/hidden icon
 		if ($view_user_id == ANONYMOUS)

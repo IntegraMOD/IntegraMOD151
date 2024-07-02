@@ -30,6 +30,7 @@ if ( !defined( 'IN_PORTAL' ) )
 
 // Parse and show the overall footer.
 
+global $kb_auth_can;
 $template->set_filenames( array( 'kb_footer' => 'kb_footer.tpl' ) );
 
 if ( !empty($kb_auth_can) )

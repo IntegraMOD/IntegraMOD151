@@ -28,6 +28,8 @@ if ( !defined( 'IN_PORTAL' ) )
 	die( "Hacking attempt" );
 }
 
+global $title, $category_id;
+
 // Parse and show the overall header.
 
 $template->set_filenames( array( 'kb_header' => 'kb_header.tpl' ) );

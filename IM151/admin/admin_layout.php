@@ -163,7 +163,7 @@ if( $mode != "" )
 				{
 					message_die(CRITICAL_ERROR, "Could not query user groups information", "", __LINE__, __FILE__, $sql);
 				}
-				$group_array = explode(",", $l_info['groups']);
+				$group_array = explode(",", $l_info['pgroup']);
 				$group = '';
 				while ($row = $db->sql_fetchrow($result))
 				{
@@ -304,7 +304,7 @@ if( $mode != "" )
 				template = '" . str_replace("\'", "''", $l_template) . "',
 				forum_wide = '" . $l_forum_wide . "',
 				view = '" . $l_view . "',
-				groups = '" . $l_group . "'
+				pgroup = '" . $l_group . "'
 				WHERE lid = $l_id";
 			if(!$result = $db->sql_query($sql))
 			{
@@ -346,7 +346,7 @@ if( $mode != "" )
 		}
 		else
 		{
-			$sql = "INSERT INTO " . LAYOUT_TABLE . " (name, pagetitle, template, forum_wide, view, groups) 
+			$sql = "INSERT INTO " . LAYOUT_TABLE . " (name, pagetitle, template, forum_wide, view, pgroup) 
 				VALUES ('" . str_replace("\'", "''", $l_name) . "', '" . str_replace("\'", "''", $l_pagetitle) . "', '" . str_replace("\'", "''", $l_template) . "', '" . $l_forum_wide . "', '" . $l_view . "', '" . $l_group . "')";
 			if(!$result = $db->sql_query($sql))
 			{
@@ -542,9 +542,9 @@ else
 				break;
 		}
 
-		if(!empty($l_rows[$i]['groups']))
+		if(!empty($l_rows[$i]['pgroup']))
 		{
-			$sql = "SELECT group_name FROM " . GROUPS_TABLE . " WHERE group_id in (" . $l_rows[$i]['groups'] . ")"; 
+			$sql = "SELECT group_name FROM " . GROUPS_TABLE . " WHERE group_id in (" . $l_rows[$i]['pgroup'] . ")"; 
 			if( !($result = $db->sql_query($sql)) )
 			{
 				message_die(CRITICAL_ERROR, "Could not query user groups information", "", __LINE__, __FILE__, $sql);

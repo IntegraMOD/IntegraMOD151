@@ -362,7 +362,7 @@ if( $mode != "" && $mode != "blocks" )
 				{
 					message_die(CRITICAL_ERROR, "Could not query user groups information", "", __LINE__, __FILE__, $sql);
 				}
-				$group_array = explode(",", $b_info['groups']);
+				$group_array = explode(",", $b_info['pgroup']);
 				$group = '';
 				while ($row = $db->sql_fetchrow($result))
 				{
@@ -631,7 +631,7 @@ if( $mode != "" && $mode != "blocks" )
 				openclose = '" . $b_openclose . "',
 				local = '" . $b_local . "',
 				background = '" . $b_background . "',
-				groups = '" . $b_group . "'
+				pgroup = '" . $b_group . "'
 				WHERE bid = $b_id";
 			if(!$result = $db->sql_query($sql))
 			{
@@ -958,9 +958,9 @@ else if ($mode == "blocks")
 				break;
 		}
 
-		if(!empty($b_rows[$i]['groups']))
+		if(!empty($b_rows[$i]['pgroup']))
 		{
-			$sql = "SELECT group_name FROM " . GROUPS_TABLE . " WHERE group_id in (" . $b_rows[$i]['groups'] . ")"; 
+			$sql = "SELECT group_name FROM " . GROUPS_TABLE . " WHERE group_id in (" . $b_rows[$i]['pgroup'] . ")"; 
 			if( !($result = $db->sql_query($sql)) )
 			{
 				message_die(CRITICAL_ERROR, "Could not query user groups information", "", __LINE__, __FILE__, $sql);
