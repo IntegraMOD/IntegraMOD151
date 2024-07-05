@@ -6,9 +6,14 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <meta name="copyright" content="2001, 2005 phpBB Group" />
 
-<!-- Bootstrap CSS -->
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<!-- Vendor CSS Files -->
+<link href="templates/fisubice/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+<link href="templates/fisubice/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+<link href="templates/fisubice/vendor/aos/aos.css" rel="stylesheet">
+<link href="templates/fisubice/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
+<link href="templates/fisubice/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
 
 {META_HTTP_EQUIV_TAGS}
@@ -21,9 +26,9 @@
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.2.0/js/tether.min.js" integrity="sha384-Plbmg8JY28KFelvJVai01l8WyZzrYWG825m+cZ0eDDS1f7d/js6ikvy1+X+guPIB" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.3/js/bootstrap.min.js" integrity="sha384-ux8v3A6CPtOTqOzMKiuo3d/DomGaaClxFYdCu2HPMBEkf6x2xiDyJ7gkXU0MWwaD" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/js/bootstrap.min.js" integrity="sha512-ykZ1QQr0Jy/4ZkvKuqWn4iF3lqPZyij9iRv6sGqLRdTPkY69YX6+7wvVGmsdBbiIfN/8OdsI7HABjvEok6ZopQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script src="templates/_js/toggle_display.js"></script>
-<script src="templates/_js/importal.js"></script>
+<script src="templates/assets/js/importal.js"></script>
 <!-- BEGIN switch_enable_pm_popup -->
 <script>
 // <![CDATA[
@@ -152,11 +157,11 @@ window.open('{buddy_alert.U_BUDDY_ALERT}', '_buddyalert', 'HEIGHT=225,resizable=
 <!-- END buddy_alert -->
 <!-- Prillian - End Code Additions -->
 <script src="templates/_js/jquery.toggle.js"></script>
-<script src="templates/_js/immenu.js"></script>
+<script src="templates/_js/css-menu.js"></script>
+
 {COLOR_CSS}
 </head>
 <body>
-
 <!-- BEGIN switch_board_disabled -->
 <div class="container-fluid">
   <div class="row"> 
@@ -203,12 +208,14 @@ window.open('{buddy_alert.U_BUDDY_ALERT}', '_buddyalert', 'HEIGHT=225,resizable=
 <!-- End add - Complete banner MOD -->
 
 {QBARS}
+{QRMENUS}
 
 <a id="top"></a>
-<div class="container-fluid bodyline mb-2">
+<div class="container-fluid bodyline px-0 mx-0 mb-2">
   <div class="row">
     <div class="col">
-	<div class="container-fluid px-0">
+	
+	<div class="container-fluid">
       <div class="row topbkg">
 	    <div class="col align-self-center">
 		  <div class="row">
@@ -217,20 +224,41 @@ window.open('{buddy_alert.U_BUDDY_ALERT}', '_buddyalert', 'HEIGHT=225,resizable=
 		    <div class="col-6 m-auto">{BANNER_0_IMG}</div>
 		    <!-- END switch_banner_0 -->
 		  </div>
-		  <div class="row">
-			<div class="col py-2"></div>
-          </div>
+
         </div>
       </div>
 	</div>
+	
 
-	<div class="container-fluid px-0 resp">
-      <div class="row qb pt-1">
-		<div class="col-1"><a class="fa fa-arrow-down fa-2x" href="#bot" title="{L_TOPIC_DOWN_IMAGE}">&nbsp;</a></div>
-		<div class="col ctr gen">{QMENUS}</div>
-		<div class="col-1 text-right"><a class="fa fa-arrow-down fa-2x" href="#bot" title="{L_TOPIC_DOWN_IMAGE}">&nbsp;</a></div>
-	  </div>
-	</div>
+	<nav class="container-fluid menu nav mx-auto px-0">
+	  <input type="checkbox" class="responsive-menu" onclick="updatemenu()"><label></label>
+	  <ul class="text-nowrap">
+		<li class="menu-item genarrow arrows float-start ms-0"><a href="#bottom" title="{L_BOTTOM}"><i class="fa-solid fa-arrow-down"></i></a></li>
+		{QMENUS}
+		<li><a class="dropdown-arrow" href="#"> {L_SEARCH} </a>
+		  <ul class="sub-menus">
+			<li><a href="{U_SEARCH}"> {L_SEARCH} </a></li>
+			<li><a href="{U_SEARCH_NEW}">{L_SEARCH_NEW}</a></li>
+			<li><a href="{U_SEARCH_UNANSWERED}">{L_SEARCH_UNANSWERED}</a></li>
+			<li><a href="{U_SEARCH_UNREAD}">{L_SEARCH_UNREAD}</a></li>
+			<li><a href="{U_SEARCH_ACTIVE_TOPICS}">{L_SEARCH_ACTIVE_TOPICS}</a></li>
+			<li><a href="{U_SEARCH_SELF}">{L_SEARCH_SELF}</a></li>
+		  </ul>	
+		</li>
+		<li><a class="dropdown-arrow username uname" href="#">&nbsp;{U_THISUSER}&nbsp;</a>
+		  <ul class="sub-menus">
+			<li><a href="{U_PROFILE}"><i class="fa-solid fa-user-gear"></i> {L_PROFILE}</a></li>
+			<li><a href="{U_USER_PROFILE}" title="{L_READ_PROFILE}"><i class="fa-solid fa-address-card"></i> {L_READ_PROFILE}</a></li>
+			<!-- IF S_DISPLAY_SEARCH -->
+			<li><a href="{U_SEARCH_SELF}"><i class="fa-solid fa-magnifying-glass"></i> {L_SEARCH_SELF}</a></li>
+			<!-- ENDIF -->
+			{ADMIN_LINK}
+			<li><a href="{U_LOGIN_LOGOUT}"><i class="fa-solid fa-power-off"></i> {L_LOGIN_LOGOUT}</a></li>		
+		  </ul>
+		</li>
+		<li class="menu-item genarrow arrows right-arrow me-0"><a href="#bottom" title="{L_BOTTOM}"><i class="fa-solid fa-arrow-down"></i></a></li>
+	  </ul>
+	</nav>
 
 	<!-- BEGIN ctracker_message -->
 	<div class="row py-1"></div>
@@ -272,39 +300,8 @@ window.open('{buddy_alert.U_BUDDY_ALERT}', '_buddyalert', 'HEIGHT=225,resizable=
 	</div>
 	<!-- END switch_banner_16 -->
 
-	<div class="container-fluid">
-	<!-- BEGIN switch_portal_header -->
-	  <div class="row">
-	    <div class="w-10">&nbsp;</div>
-		<div class="" width="{HEADER_WIDTH}" valign="top">&nbsp;</div>
-		<div class="w-10">&nbsp;</div>
-		<div class="">&nbsp;</div>
-		<div class="w-10">&nbsp;</div>
-	  </div>
-	  <!-- END switch_portal_header -->
-	  <!-- BEGIN switch_portal_tail -->
-	  <div class="row">
-	    <div class="w-10">&nbsp;</div>
-		<div class="">&nbsp;</div>
-		<div class="w-10">&nbsp;</div>
-		<div class="" width="{FOOTER_WIDTH}" valign="top">&nbsp;</div>
-		<div class="w-10">&nbsp;</div>
-	  </div>
-	  <!-- END switch_portal_tail -->
-	  <!-- BEGIN switch_portal_both -->
-	  <div class="row">
-		<div class="w-10">&nbsp;</div>
-		<div class="" width="{HEADER_WIDTH}" valign="top">&nbsp;</div>
-		<div class="w-10">&nbsp;</div>
-		<div class="">&nbsp;</div>
-		<div class="w-10">&nbsp;</div>
-		<div class="" width="{FOOTER_WIDTH}" valign="top">&nbsp;</div>
-		<div class="w-10">&nbsp;</div>
-	  </div>
-	  <!-- END switch_portal_both -->
-	  </div>
-	  
-  <div class="row align-items-start">
-    {PORTAL_HEADER}
-    <div class="col-sm pl-0">
-      <div class="">
+  
+<table width="100%" border="0" cellspacing="0" cellpadding="6">
+  <tr> 
+  {PORTAL_HEADER}
+    <td valign="top">

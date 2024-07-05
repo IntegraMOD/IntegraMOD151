@@ -9,28 +9,19 @@
 	  <!-- END switch_banner_18 -->
 
 	  <div class="container-fluid mb-2">
-		<div class="row">
-		  <div class="maintitle ml-0">{L_INDEX}</div>
-		</div>
 	 	<!-- BEGIN switch_user_logged_in -->
 		<div class="row">
-		  <div class="p-0 flex-fill gensmall"><a href="#"></a></div>
-		  <div class="p-0 flex-fill text-right"><a href="{U_SEARCH_NEW}" class="gensmall">{L_SEARCH_NEW}</a></div>
-		</div>
-		<!-- END switch_user_logged_in -->
-		<div class="row">
-		  <div class="p-0 flex-fill gensmall">{LAST_VISIT_DATE}</div>
-		<!-- BEGIN switch_user_logged_in -->
-		  <div class="p-0 flex-fill text-right"><a href="{U_SEARCH_SELF}" class="gensmall">{L_SEARCH_SELF}</a></div>
+		  <div class="p-0 flex-fill gensmall"></div>
+		  <div class="p-0 flex-fill text-end"><a href="{U_SEARCH_SELF}" class="gensmall">{LAST_VISIT_DATE}</a></div>
 		<!-- END switch_user_logged_in -->
 		</div>
 		<div class="row">
-		  <div class="p-0 flex-fill text-nowrap">{CURRENT_TIME}</div>
-		  <div class="p-0 flex-fill text-right"><a href="{U_SEARCH_UNANSWERED}" class="gensmall">{L_SEARCH_UNANSWERED}</a></div>
+		  <div class="p-0 flex-fill text-nowrap"></div>
+		  <div class="p-0 flex-fill text-end"><a href="{U_SEARCH_UNANSWERED}" class="gensmall">{CURRENT_TIME}</a></div>
 		</div>
 		<div class="row">
 		  <div class="p-0 flex-fill text-nowrap"><a href="{U_INDEX}" class="nav">{L_INDEX}</a>{NAV_CAT_DESC}</div>
-		  <div class="p-0 flex-fill text-right"><a href="{U_MARK_READ}"><strong>{L_MARK_FORUMS_READ}</strong></a></div>
+		  <div class="p-0 flex-fill text-end"><a href="{U_MARK_READ}"><strong>{L_MARK_FORUMS_READ}</strong></a></div>
 		</div>
 	  </div>
 
@@ -45,62 +36,65 @@
 		</div>
 	  </div>
 
-	  <div class="container-fluid">
-	    <div class="row">
-	      <div class="col-sm- mr-2">
+	  <div class="container-fluid mx-0 py-2 px-0">
+	    <div class="row mx-0 px-0">
+	      <div class="col-5">
 		  {MINI_CAL_OUTPUT}
 	      </div>
-	      <div class="col-md pl-0 align-self-end">
-			<!-- BEGIN switch_user_logged_in -->
-			<!-- Start add - Fully integrated shoutbox MOD -->
-	        <div class="row pb-4 pl-3">
-	 	  	  <div class="container-fluid forumline">
-			    <div class="row th">
-			      <div class="col cattitle pt-1"><a href="{U_SHOUTBOX_MAX}">{L_SHOUTBOX}</a></div>
-			    </div>
-			    <div class="row row1">
-			      <iframe src="{U_SHOUTBOX}" scrolling="NO" width="100%" height="210" frameborder="0" marginheight="0" marginwidth="0" allowtransparency="true"></iframe> 
-			    </div>
-			  </div>
-	        </div>
-			<!-- End add - Fully integrated shoutbox MOD -->
-			<!-- END switch_user_logged_in -->
-
-
+		  <!-- BEGIN switch_user_logged_in -->
+		  <!-- Start add - Fully integrated shoutbox MOD -->
+ 	  	  <div class="col forumline">
+		    <div class="row th">
+		      <div class="col cattitle pt-1"><a href="{U_SHOUTBOX_MAX}">{L_SHOUTBOX}</a></div>
+		    </div>
+		    <div class="row row2">
+		      <iframe src="{U_SHOUTBOX}" scrolling="NO" width="100%" height="210" frameborder="0" marginheight="0" marginwidth="0" allowtransparency="true"></iframe> 
+		    </div>
+		  </div>
+		  <!-- End add - Fully integrated shoutbox MOD -->
+		  <!-- END switch_user_logged_in -->
+		</div>
+	  </div>
+		  
+		  
+		  
+	  <div class="container-fluid">
+	    <div class="row">
+	      <div class="col ps-0 align-self-end">
   		    <!-- BEGIN disable_viewonline -->
-	        <div class="row pl-3">
+	        <div class="row ps-3">
 		      <div class="container forumline mb-2">
 			    <div class="row th">
 			      <div class="col cattitle pt-2"><a href="{U_VIEWONLINE}">{L_WHO_IS_ONLINE}</a></div>
 			    </div>
 			    <div class="row row1">
-				  <div class="col-2 pt-4 pr-0 ctr bdrr resp"><i class="fa fa-users fa-3x hov" title="{L_WHO_IS_ONLINE}"></i></div>
-				  <div class="col row1 pl-1 mb-2">
-				    <div class="row row1 ml-1">
-				      <div class="col pl-1"><span class="gensmall">{TOTAL_POSTS}<br />{TOTAL_USERS}<br />{NEWEST_USER}</span></div>
+				  <div class="col-2 pt-4 pe-0 ctr bdrr resp"><i class="fa fa-users fa-3x hov" title="{L_WHO_IS_ONLINE}"></i></div>
+				  <div class="col row1 ps-1 mb-2">
+				    <div class="row row1 ms-1">
+				      <div class="col ps-1"><span class="gensmall">{TOTAL_POSTS}<br />{TOTAL_USERS}<br />{NEWEST_USER}</span></div>
 				    </div>
-				    <div class="row row1 ml-1">
-			          <div class="col pl-1"><span class="gensmall">{TOTAL_USERS_ONLINE} &nbsp; [ {L_WHOSONLINE_ADMIN} ] &nbsp; [ {L_WHOSONLINE_MOD} ]<br />{RECORD_USERS}<br />{LOGGED_IN_USER_LIST}</span></div>
+				    <div class="row row1 ms-1">
+			          <div class="col ps-1"><span class="gensmall">{TOTAL_USERS_ONLINE} &nbsp; [ {L_WHOSONLINE_ADMIN} ] &nbsp; [ {L_WHOSONLINE_MOD} ]<br />{RECORD_USERS}<br />{LOGGED_IN_USER_LIST}</span></div>
 				    </div>
-				    <div class="row row1 ml-1">
-			           <div class="col pl-1 gensmall font-weight-bold">{L_GROUP_LEGEND}</div>
+				    <div class="row row1 ms-1">
+			           <div class="col ps-1 gensmall font-weight-bold">{L_GROUP_LEGEND}</div>
 				    </div>
 					<!-- BEGIN legend -->
 					<!-- BEGIN color -->  
-				    <div class="row row1 ml-1">
-			          <div class="col pl-1 gensmall font-weight-bold">{legend.color.L_COMMA}<a href="{legend.U_GROUP}" title="{legend.GROUP_DESCRIPTION}" class="{legend.GROUP_COLOR}">{legend.GROUP_NAME}</a>{legend.color.L_COMMA2}</div>
+				    <div class="row row1 ms-1">
+			          <div class="col ps-1 gensmall font-weight-bold">{legend.color.L_COMMA}<a href="{legend.U_GROUP}" title="{legend.GROUP_DESCRIPTION}" class="{legend.GROUP_COLOR}">{legend.GROUP_NAME}</a>{legend.color.L_COMMA2}</div>
 				    </div>
 					<!-- END color -->
 					<!-- END legend -->
-				    <div class="row row1 ml-1">
-			          <div class="col pl-1 gensmall">{L_ONLINE_EXPLAIN}</div>
+				    <div class="row row1 ms-1">
+			          <div class="col ps-1 gensmall">{L_ONLINE_EXPLAIN}</div>
 				    </div>
-				    <div class="row row1 ml-1">
-			          <div class="col pl-1 gensmall">{USERS_OF_THE_DAY_LIST}</div>
+				    <div class="row row1 ms-1">
+			          <div class="col ps-1 gensmall">{USERS_OF_THE_DAY_LIST}</div>
 				    </div>
 					<!-- BEGIN switch_happy_birthday -->
-				    <div class="row row1 ml-1">
-			          <div class="col pl-1 gensmall font-weight-bold"><i class="far fa-birthday-cake"></i>{HAPPY_BIRTHDAY_FELLOWS}</div>
+				    <div class="row row1 ms-1">
+			          <div class="col ps-1 gensmall font-weight-bold"><i class="far fa-birthday-cake"></i>{HAPPY_BIRTHDAY_FELLOWS}</div>
 				    </div>
 					<!-- END switch_happy_birthday -->
 				  </div>

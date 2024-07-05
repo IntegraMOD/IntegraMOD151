@@ -1,4 +1,4 @@
-<!-- BEGIN _qmenu -->
+<!-- BEGIN _qrmenu -->
 <table cellspacing="0" cellpadding="0" border="0">
 <!-- BEGIN line -->
 <tr>
@@ -10,10 +10,10 @@
 <a class="icon_nav">
 <table cellspacing="0" cellpadding="0" border="0" width="100%">
   <tr>
-   	<td align="center" nowrap="nowrap" class="qnav">
+   	<td align="center" nowrap="nowrap" class="qrmenu">
 	  <span>
 		<!-- END in_table -->
-		{_qmenu.line.cell.field.OPTION}
+		{_qrmenu.line.cell.field.OPTION}
 		<!-- BEGIN in_table -->
 	  </span>
 	</td>
@@ -28,4 +28,4 @@
 </tr>
 <!-- END line -->
 </table>
-<!-- END _qmenu --> 
+<!-- END _qrmenu --> 

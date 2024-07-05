@@ -1,7 +1,7 @@
 <!-- BEGIN switch_user_logged_in -->
 <table border="0" cellpadding="0" cellspacing="1" width="100%">
 <tr> 
-<td align="center"><br />
+<td align="center" class="row1"><br />
 {AVATAR_IMG}<br /><br />
 <span class="name">{U_NAME_LINK}<br /></span>
 <span class="gensmall">{LAST_VISIT_DATE}<br />
@@ -16,7 +16,7 @@
 <form method="post" action="{S_LOGIN_ACTION}">
 <table border="0" cellpadding="0" cellspacing="1" width="100%">
 <tr> 
-<td align="center"><span class="gensmall"> 
+<td align="center" class="row1"><span class="gensmall"> 
 <input type="hidden" name="redirect" value="{U_PORTAL}" />
 {L_USERNAME}:<br />
 <input class="post" type="text" name="username" size="15" />

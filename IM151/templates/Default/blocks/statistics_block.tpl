@@ -1,6 +1,6 @@
 <table border="0" cellpadding="0" cellspacing="1" width="100%">
 	<tr> 
-		<td><span class="gensmall">{TOTAL_USERS}<br />
+		<td class="row1"><span class="gensmall">{TOTAL_USERS}<br />
 			{NEWEST_USER}<br />
 			<br/>
 			{TOTAL_POSTS} {TOTAL_TOPICS}</span>

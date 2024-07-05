@@ -1,6 +1,7 @@
-        </div>
-	  </div>
-   	  {PORTAL_TAIL}
+    {PORTAL_TAIL}
+  </tr>
+</table>
+
 
 	<!-- BEGIN switch_banner_17 -->
 	<div class="container-fluid px-0">
@@ -11,17 +12,16 @@
 	  </div>
 	</div>
 	<!-- END switch_banner_17 -->
-  </div>
-	<div class="container-fluid px-0 resp">
-      <div class="row qb pt-1">
-		<div class="col-1"><a class="fa fa-arrow-up fa-2x" href="#bot" title="{L_TOPIC_UP_IMAGE}">&nbsp;</a></div>
-		<div class="col ctr gen">{QMENUS}</div>
-		<div class="col-1 text-right"><a class="fa fa-arrow-up fa-2x" href="#bot" title="{L_TOPIC_UP_IMAGE}">&nbsp;</a></div>
-	  </div>
-	</div>
 
+<nav class="container-fluid menu nav mx-auto px-0">
+  <input type="checkbox" class="responsive-menu" onclick="updatemenu()"><label></label>
+  <ul class="text-nowrap">
+  	<li class="menu-item genarrow arrows float-start ms-0"><a href="#top" title="{L_TOP}"><i class="fa-solid fa-arrow-up"></i></a></li>
+    {QMENUS}
+  	<li class="menu-item genarrow arrows right-arrow px-0 mx-0"><a href="#top" title="{L_TOP}"><i class="fa-solid fa-arrow-up"></i></a></li>
+  </ul>
+</nav>
 
-</div>
 <!--
 We request you retain the full copyright notice below including the link to www.phpbb.com.
 This not only gives respect to the large amount of time given freely by the developers
@@ -90,8 +90,23 @@ masterdavid : 2004
 	</div>
 	<!-- End Banners -->
 	<!-- End add - Complete banner MOD -->
+	
+	
     </div>
   </div>
 </div>
+<!-- Preloader -->
+<div id="preloader"></div>
+
+<!-- Vendor JS Files -->
+<script src="templates/fisubice/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="templates/fisubice/vendor/aos/aos.js"></script>
+<script src="templates/fisubice/vendor/glightbox/js/glightbox.min.js"></script>
+<script src="templates/fisubice/vendor/swiper/swiper-bundle.min.js"></script>
+<script src="templates/fisubice/vendor/imagesloaded/imagesloaded.pkgd.min.js"></script>
+<script src="templates/fisubice/vendor/isotope-layout/isotope.pkgd.min.js"></script>
+
+<!-- Main JS File -->
+<script src="templates/fisubice/vendor/js/main.js"></script>
 </body>
 </html>

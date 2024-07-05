@@ -1,7 +1,7 @@
 <tr>
-	<td colspan="2"><table cellspacing="0" cellpadding="4" border="0" align="center"><form method="POST" action="{S_POLL_ACTION}">
+	<td class="row1" colspan="2"><table cellspacing="0" cellpadding="4" border="0" align="center"><form method="POST" action="{S_POLL_ACTION}">
 		<tr>
-			<td align="center"><span class="gensmall"><b>{POLL_QUESTION}</b></span></td>
+			<td class="row1" align="center"><span class="gensmall"><b>{POLL_QUESTION}</b></span></td>
 		</tr>
 		<tr>
 			<td align="center"><table cellspacing="0" cellpadding="2" border="0">
@@ -14,7 +14,7 @@
 			</table></td>
 		</tr>
 		<tr>
-			<td align="center">
+			<td  class="row1" align="center">
 			 <!-- BEGIN switch_user_logged_in -->
 			 <input type="submit" name="submit" value="{L_SUBMIT_VOTE}" class="liteoption" />
 			 <!-- END switch_user_logged_in -->		

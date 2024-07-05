@@ -1,7 +1,42 @@
 /* fiSubIce  */
 @import url("main.css");
+@import url("fisub.css");
 @import url("report_hack.css");
 
+/* Fonts */
+:root {
+  --default-font: "Roboto",  system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  --heading-font: "Source Sans Pro",  sans-serif;
+  --nav-font: "Poppins",  sans-serif;
+}
+
+/* Global Colors - The following color variables are used throughout the website. Updating them here will change the color scheme of the entire website */
+:root { 
+  --background-color: #ffffff; /* Background color for the entire website, including individual sections */
+  --default-color: #1a1f24; /* Default color used for the majority of the text content across the entire website */
+  --heading-color: #485664; /* Color for headings, subheadings and title throughout the website */
+  --accent-color: #11C0DF; /* Accent color that represents your brand on the website. It's used for buttons, links, and other elements that need to stand out */
+  --contrast-color: #ffffff; /* The contrast color is used for elements when the background color is one of the heading, accent, or default colors. Its purpose is to ensure proper contrast and readability when placed over these more dominant colors */
+}
+
+/* Nav Menu Colors - The following color variables are used specifically for the navigation menu. They are separate from the global colors to allow for more customization options */
+:root {
+  --nav-color: #32475f;  /* The default color of the main navmenu links */
+  --nav-hover-color: #839fbc; /* Applied to main navmenu links when they are hovered over or active */
+  --nav-dropdown-background-color: #ffffff; /* Used as the background color for dropdown items that appear when hovering over primary navigation items */
+  --nav-dropdown-color: #485664; /* Used for navigation links of the dropdown items in the navigation menu. */
+  --nav-dropdown-hover-color: #11C0DF; /* Similar to --nav-hover-color, this color is applied to dropdown navigation links when they are hovered over. */
+}
+
+/* Template Custom Colors */
+:root {
+  --footer-background-color: #3a4753;
+}
+
+/* Smooth scroll */
+:root {
+  scroll-behavior: smooth;
+}
 /* The content of the posts (body of text) */
 body{background:#ecf0f6;color:#000000;}
 
@@ -211,144 +246,6 @@ a.kb span {color:#516A88;}
 a.postbtn, a.postbtn:hover, .genbtn li, .genbtn a, .folder a {color:#587DA3;}
 .genbtn li:hover, .genbtn a:hover, .folder a:hover {color:#6E9BD5;}
 
-span.folder {
-	-webkit-border-radius: 20;
-	-moz-border-radius: 20;
-	border-radius: 20px;
-	font-size: 1.1em;
-	font-weight:800;
-	padding: 4px 5px 4px 3px;
-	text-decoration: none;
-	margin:1px;
-    width: 2.1em;
-    height: 2.1em;
-}
-
-.fa-hot {color:#F19635;}
-
-.fa {
-  font-size:1.5em !important;
-  text-decoration: none !important;
-}
-
-.fa1 {
-  font-size:1em !important;
-  text-decoration: none !important;
-}
-
-.fa2 {
-  font-size:1.3em !important;
-  text-decoration: none !important;
-  padding: 3px 0px 3px 0px;
-}
-
-.fa-3x {
-  font-size:3em !important;
-  text-decoration: none !important;
-}
-
-span.folder {color:#006699;}
-span.folder:hover {color:#DD6900; text-decoration: none !important;}
-
-/* Clock css*/
-#clock {
-  width: 30em;
-  height: 30em;
-  border-radius: 50%;
-  border: solid 2px #BECDE0;
-  margin: auto auto;
-  position: relative;
-  background-color:#E1E8F1;
-}
-#clock div,
-.faceBox {
-  border: 0;
-  position: absolute;
-  transform-origin: center bottom;
-  -webkit-transform-origin: center bottom;
-  -moz-transform-origin: center bottom;
-  -o-transform-origin: center bottom;
-  transform: rotate(0deg);
-}
-#clock #hour {
-  border-radius: 0.75em 0.75em 0 0;
-  width: 1.5em;
-  height: 6em;
-  top: 9em;
-  left: 14.25em;
-  background-color: #BECDE0;
-  border: solid 1px #486386;
-}
-#clock #minute {
-  border-radius: 0.5em;
-  width: 1em;
-  height: 11em;
-  top: 4em;
-  left: 14.5em;
-  background-color: #BECDE0;
-  border: solid 1px #486386;
-}
-#clock #second {
-  border-radius: 0.25em;
-  width: 0.5em;
-  height: 14em;
-  top: 1em;
-  left: 14.75em;
-  background-color: #BECDE0;
-}
-#clock #center {
-  height: 2em;
-  width: 2em;
-  border-radius: 50%;
-  top: 14em;
-  left: 14em;
-  transform: rotate(0deg);
-  background-color: #BECDE0;
-  border: solid 1px #486386;
-}
-.smallTick {
-  width: 0.1em;
-  height: 0.5em;
-  background-color: #BECDE0;
-  margin: 0 1.45em;
-}
-.mediumTick {
-  width: 0.25em;
-  height: 0.8em;
-  background-color: #BECDE0;
-  margin: 0 1.375em;
-}
-.largeTick {
-  width: 0.4em;
-  height: 0.8em;
-  background-color: #BECDE0;
-  position: relative;
-  margin: 0 1.3em;
-}
-.tickNum {
-  font-family: Arial, sans-serif;
-  font-size: 2em;
-  line-height: 0;
-  color: black;
-  position: relative;
-  top: 1em;
-  left: 0;
-  padding: 0 0.5em;
-}
-div.faceBox {
-  border: 0;
-  width: 3em;
-  height: 15em;
-  top: 0;
-  left: 13.5em;
-  position: absolute;
-  text-align: center;
-  overflow: visible;
-}
-div#cssclock {
-  width: 150px !important;
-}
-
 div.bd {
   border-left: 1px solid #FFF;
   border-bottom: 1px solid #FFF;
@@ -366,4 +263,55 @@ div.table1 {
 
 .bdrl {
   border-left: 2px solid #FFF !important;
+}
+
+.fa-hot {color:#FF2F0A;}
+span.folder {color:#006699;}
+span.folder:hover {color:#9FB4D1; text-decoration: none !important;}
+
+
+/* nav menu */
+.menu {
+	background: #e2e9f1; /* Old browsers */
+	background: -moz-linear-gradient(top, #e2e9f1 0%, #becde0 75%); /* FF3.6-15 */
+	background: -webkit-linear-gradient(top, #e2e9f1 0%,#becde0 75%); /* Chrome10-25,Safari5.1-6 */
+	background: linear-gradient(to bottom, #e2e9f1 0%,#becde0 75%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#e2e9f1', endColorstr='#becde0',GradientType=0 ); /* IE6-9 */border-color:#91a0ae;
+
+}
+
+.menu a {
+	color: #32475F;
+}
+
+.menu a.dropdown-arrow:after {
+	content: "\25BF";
+}
+
+.menu li a:hover {
+	color: #839FBC;
+	background: #DCE5EE;
+}
+
+.menu label:before {
+	color: #FFFFFF;
+	content: "\2261"; 
+}
+
+.menu ul.sub-menus{
+	background: #DCE5EE;
+}
+
+.menu ul.sub-menus a {
+	color: #444444;
+}
+
+.menu ul.sub-menus a:hover{
+	background: #5A5A5A;
+	color: #FFFFFF;
+}
+@media screen and (max-width: 800px){
+	.menu ul {background:#E9E9EF;}
+	.menu input:checked + label {color:#FFFFFF}
+	.menu input:checked + label:before {content:"\00d7"}
 }

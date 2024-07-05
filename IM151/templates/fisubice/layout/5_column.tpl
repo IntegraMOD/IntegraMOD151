@@ -23,7 +23,7 @@ class="forumline shadow"
 </table>
 <br />
 
-<script>
+<script type="text/javascript">
 <!--
 tmp = 'block3_{toprow_blocks_row.BLOCKID}';
 if(GetCookie(tmp) == '2')
@@ -62,7 +62,7 @@ class="forumline shadow"
 </table>
 <br />
 
-<script>
+<script type="text/javascript">
 <!--
 tmp = 'block3_{left_blocks_row.BLOCKID}';
 if(GetCookie(tmp) == '2')
@@ -102,7 +102,7 @@ class="forumline shadow"
 </table>
 <br />
 
-<script>
+<script type="text/javascript">
 <!--
 tmp = 'block3_{center_blocks_row.BLOCKID}';
 if(GetCookie(tmp) == '2')
@@ -141,7 +141,7 @@ class="forumline shadow"
 </table>
 <br />
 
-<script>
+<script type="text/javascript">
 <!--
 tmp = 'block3_{right_blocks_row.BLOCKID}';
 if(GetCookie(tmp) == '2')
@@ -180,7 +180,7 @@ class="forumline shadow"
 </table>
 <br />
 
-<script>
+<script type="text/javascript">
 <!--
 tmp = 'block3_{bottomrow_blocks_row.BLOCKID}';
 if(GetCookie(tmp) == '2')

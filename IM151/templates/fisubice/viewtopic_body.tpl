@@ -102,25 +102,25 @@ jQuery(document).ready(function(){
       <div class="col maintitle">{TOPIC_TITLE}</div>
     </div>
     <div class="row"> 
-      <div class="col text-right nw">
-	    <ul class="genbtn uct gen">
-		  <a href="{U_VIEW_OLDER_TOPIC}"><li class="fa fa-arrow-left fa-2x" title="{L_VIEW_PREVIOUS_TOPIC}"></li></a>
-		  <a href="{U_PRINTER_TOPIC}"><li class="fa fa-print fa-2x" title="{L_PRINTER_TOPIC}"></li></a>
+      <div class="col d-inline text-end">
+	    <ul class="genbtn uct gen pt-2 align-middle">
+		  <a href="{U_VIEW_OLDER_TOPIC}"><li class="fa-solid fa-arrow-left fa-2x" title="{L_VIEW_PREVIOUS_TOPIC}"></li></a>
+		  <a href="{U_PRINTER_TOPIC}"><li class="fa-solid fa-print fa-2x" title="{L_PRINTER_TOPIC}"></li></a>
 		  <!-- BEGIN switch_logged_in -->
-		  <a href="tellafriend.php?topic={TOPIC_TITLE2}&link={TELL_LINK}"><li class="fa fa-envelope-o fa-2x" title="{L_TELL_FRIEND}"></li></a>
+		  <a href="tellafriend.php?topic={TOPIC_TITLE2}&link={TELL_LINK}"><li class="fa-regular fa-envelope fa-2x" title="{L_TELL_FRIEND}"></li></a>
 		  <!-- END switch_logged_in -->
-		  <a href="{U_SEARCH}"><li class="fa fa-search fa-2x" title="{L_SEARCH}"></li></a>
-		  <li>{S_WATCH_TOPIC_IMG}</li>
+		  <a href="{U_SEARCH}"><li class="fa-solid fa-search fa-2x" title="{L_SEARCH}"></li></a>
+		  <li><span class="">{S_WATCH_TOPIC_IMG}</span></li>
 		  <!-- BEGIN bookmark_state -->
-		  <a href="{U_BOOKMARK_ACTION}"><li class="fa fa-bookmark-o fa-2x" title="{L_BOOKMARK_ACTION}"></li></a>
+		  <a href="{U_BOOKMARK_ACTION}"><li class="fa-regular fa-bookmark fa-2x" title="{L_BOOKMARK_ACTION}"></li></a>
 		  <!-- END bookmark_state -->
 		  <!-- BEGIN switch_logged_in -->
-		  <a href="{U_PRIVATEMSGS}"><li class="fa fa-comments-o fa-2x" title="{L_PRIVATEMSGS}"></li></a>
+		  <a href="{U_PRIVATEMSGS}"><li class="fa-regular fa-message fa-2x" title="{L_PRIVATEMSGS}"></li></a>
 		  <!-- END switch_logged_in -->
-		  <a href="{U_POSTINGS_POPUP}" onClick="NewWindow(this.href,'PopupWin');return false" onFocus="this.blur()";><li class="fa-stack fa-lg fa1x move" title="{L_POPUP_MESSAGE}"><i class="fa fa-user-o fa-stack-1x fa1x"></i><i class="fa fa-hashtag fa-stack-1x fab"></i></li></a>
-		  <a href="{U_EXPORT}"><li class="fa fa-external-link fa-2x" title="{L_EXPORT}"></li></a>
-		  <a href="#bot"><li class="fa fa-arrow-down fa-2x" title="{L_TOPIC_DOWN_IMAGE}"></li></a>
-		  <a href="{U_VIEW_NEWER_TOPIC}"><li class="fa fa-arrow-right fa-2x" title="{L_VIEW_NEXT_TOPIC}"></li></a>
+		  <a href="{U_POSTINGS_POPUP}" onClick="NewWindow(this.href,'PopupWin');return false" onFocus="this.blur()";><li class="fa-solid fa-clipboard-user fa-2x" title="{L_POPUP_MESSAGE}"></a>
+		  <a href="{U_EXPORT}"><li class="fa-solid fa-arrow-up-right-from-square fa-2x" title="{L_EXPORT}"></li></a>
+		  <a href="#bot"><li class="fa-solid fa-arrow-down fa-2x" title="{L_TOPIC_DOWN_IMAGE}"></li></a>
+		  <a href="{U_VIEW_NEWER_TOPIC}"><li class="fa-solid fa-arrow-right fa-2x" title="{L_VIEW_NEXT_TOPIC}"></li></a>
         </ul>
       </div>
     </div>
@@ -129,10 +129,10 @@ jQuery(document).ready(function(){
     <div class="row"> 
       <div class="col">
 		<!-- BEGIN is_auth_post -->
-		<a class="postbtn" href="{U_POST_NEW_TOPIC}"><i class="fa fa-file-o fa1 mr-1" aria-hidden="true"></i>{L_POST_NEW_TOPIC}</a>
+		<a class="postbtn" href="{U_POST_NEW_TOPIC}"><i class="fa-regular fa-file fa1 me-1"></i>{L_POST_NEW_TOPIC}</a>
 		<!-- END is_auth_post -->
 		<!-- BEGIN is_auth_reply -->
-		<a class="postbtn" href="{U_POST_REPLY_TOPIC}"><i class="fa fa-file-text-o fa1 mr-1" aria-hidden="true"></i>{L_POST_REPLY_TOPIC}</a>
+		<a class="postbtn" href="{U_POST_REPLY_TOPIC}"><i class="fa-solid fa-reply fa1 me-1"></i>{L_POST_REPLY_TOPIC}</a>
 		<!-- END is_auth_reply -->
       </div>
 	  <!-- BEGIN switch_banner_14 -->
@@ -256,13 +256,13 @@ jQuery(document).ready(function(){
 
 
 
-  <div class="container-fluid pr-0">
+  <div class="container-fluid pe-0">
     <div class="row"> 
       <div class="col nav gen"><a href="{U_INDEX}">{L_INDEX}</a> {NAV_CAT_DESC}</div>
     </div>
     <!-- BEGIN ratingsbox -->
     <div class="row"> 
-      <div class="col pr-0 gen text-right">
+      <div class="col pe-0 gen text-end">
 		<form method="get" name="ratingsbox" action="{ratingsbox.U_RATINGS}">
 		<input type="hidden" name="forum_id" value="{FORUM_ID}">
 		<select name="type">
@@ -281,11 +281,11 @@ jQuery(document).ready(function(){
     <div class="row"> 
       <div class="col">
 		<!-- BEGIN is_auth_post -->
-		<a class="postbtn" href="{U_POST_NEW_TOPIC}"><i class="fa fa-file-o fa1 mr-1" aria-hidden="true"></i>{L_POST_NEW_TOPIC}</a>
+		<a class="postbtn" href="{U_POST_NEW_TOPIC}"><i class="fa-regular fa-file fa1 me-1"></i>{L_POST_NEW_TOPIC}</a>
 		<!-- END is_auth_post -->
 		<!-- BEGIN is_auth_reply -->
-		<a class="postbtn" href="{U_POST_REPLY_TOPIC}"><i class="fa fa-file-text-o fa1 mr-1" aria-hidden="true"></i>{L_POST_REPLY_TOPIC}</a>
-		<a class="postbtn" id="fast-reply" href="javascript:void(0);" title="" onclick="this.blur();"><i class="fa fa-file-text-o fa1 mr-1" aria-hidden="true"></i>{L_QUICK_LOFI}</a>
+		<a class="postbtn" href="{U_POST_REPLY_TOPIC}"><i class="fa-solid fa-reply fa1 me-1"></i>{L_POST_REPLY_TOPIC}</a>
+		<a class="postbtn" id="fast-reply" href="javascript:void(0);" title="" onclick="this.blur();"><i class="fa-solid fa-reply-all fa1 me-1"></i>{L_QUICK_LOFI}</a>
 		<!-- END is_auth_reply -->
       </div>
     </div>
@@ -297,7 +297,7 @@ jQuery(document).ready(function(){
     <div class="row">
       <div class="col-7">
 	    <div class="row"> 
-	      <div class="col text-left nw my-2">{S_TOPIC_ADMIN}</div>
+	      <div class="col text-start nw my-2">{S_TOPIC_ADMIN}</div>
 	    </div>
 	    <div class="row"> 
 	      <div class="col" id="fastreply">{QUICK_REPLY_FORM}</div>
@@ -305,32 +305,33 @@ jQuery(document).ready(function(){
       </div>
       <div class="col-5">
 
-        <div class="row"> 
-          <div class="col text-right nw">
-	        <ul class="genbtn uct gen">
-			  <a href="{U_VIEW_OLDER_TOPIC}"><li class="fa fa-arrow-left fa-2x" title="{L_VIEW_PREVIOUS_TOPIC}"></li></a>
-			  <a href="{U_PRINTER_TOPIC}"><li class="fa fa-print fa-2x" title="{L_PRINTER_TOPIC}"></li></a>
+		<div class="row"> 
+		  <div class="col d-inline text-end">
+			<ul class="genbtn uct gen pt-2 align-middle">
+			  <a href="{U_VIEW_OLDER_TOPIC}"><li class="fa-solid fa-arrow-left fa-2x" title="{L_VIEW_PREVIOUS_TOPIC}"></li></a>
+			  <a href="{U_PRINTER_TOPIC}"><li class="fa-solid fa-print fa-2x" title="{L_PRINTER_TOPIC}"></li></a>
 			  <!-- BEGIN switch_logged_in -->
-			  <a href="tellafriend.php?topic={TOPIC_TITLE2}&link={TELL_LINK}"><li class="fa fa-envelope-o fa-2x" title="{L_TELL_FRIEND}"></li></a>
+			  <a href="tellafriend.php?topic={TOPIC_TITLE2}&link={TELL_LINK}"><li class="fa-regular fa-envelope fa-2x" title="{L_TELL_FRIEND}"></li></a>
 			  <!-- END switch_logged_in -->
-			  <a href="{U_SEARCH}"><li class="fa fa-search fa-2x" title="{L_SEARCH}"></li></a>
-		      <li>{S_WATCH_TOPIC_IMG}</li>
+			  <a href="{U_SEARCH}"><li class="fa-solid fa-search fa-2x" title="{L_SEARCH}"></li></a>
+			  <li><span class="">{S_WATCH_TOPIC_IMG}</span></li>
 			  <!-- BEGIN bookmark_state -->
-			  <a href="{U_BOOKMARK_ACTION}"><li class="fa fa-bookmark-o fa-2x" title="{L_BOOKMARK_ACTION}"></li></a>
+			  <a href="{U_BOOKMARK_ACTION}"><li class="fa-regular fa-bookmark fa-2x" title="{L_BOOKMARK_ACTION}"></li></a>
 			  <!-- END bookmark_state -->
 			  <!-- BEGIN switch_logged_in -->
-			  <a href="{U_PRIVATEMSGS}"><li class="fa fa-comments-o fa-2x" title="{L_PRIVATEMSGS}"></li></a>
+			  <a href="{U_PRIVATEMSGS}"><li class="fa-regular fa-message fa-2x" title="{L_PRIVATEMSGS}"></li></a>
 			  <!-- END switch_logged_in -->
-			  <a href="{U_POSTINGS_POPUP}" onClick="NewWindow(this.href,'PopupWin');return false" onFocus="this.blur()";><li class="fa-stack fa-lg fa1x move" title="{L_POPUP_MESSAGE}"><i class="fa fa-user-o fa-stack-1x fa1x"></i><i class="fa fa-hashtag fa-stack-1x fab"></i></li></a>
-			  <a href="{U_EXPORT}"><li class="fa fa-external-link fa-2x" title="{L_EXPORT}"></li></a>
-			  <a href="#top"><li class="fa fa-arrow-up fa-2x" title="{L_TOPIC_UP_IMAGE}"></li></a>
-			  <a href="{U_VIEW_NEWER_TOPIC}"><li class="fa fa-arrow-right fa-2x" title="{L_VIEW_NEXT_TOPIC}"></li></a>
-	        </ul>
-	      </div>
-	    </div>
+			  <a href="{U_POSTINGS_POPUP}" onClick="NewWindow(this.href,'PopupWin');return false" onFocus="this.blur()";><li class="fa-solid fa-clipboard-user fa-2x" title="{L_POPUP_MESSAGE}"></a>
+			  <a href="{U_EXPORT}"><li class="fa-solid fa-arrow-up-right-from-square fa-2x" title="{L_EXPORT}"></li></a>
+			  <a href="#top"><li class="fa-solid fa-arrow-up fa-2x" title="{L_TOPIC_UP_IMAGE}"></li></a>
+			  <a href="{U_VIEW_NEWER_TOPIC}"><li class="fa-solid fa-arrow-right fa-2x" title="{L_VIEW_NEXT_TOPIC}"></li></a>
+			</ul>
+		  </div>
+		</div>
+
 	    <!-- BEGIN switch_info -->
 	    <div class="row">
-	      <div class="col text-right">
+	      <div class="col text-end">
 		    <form method="post" action="{S_INFO_ACTION}"><span class="gensmall">{L_TOPIC_INFO}:&nbsp;
 			<input type="text" name="topic_info" maxlength="20" size="20" value="{TOPIC_INFO}">&nbsp;&nbsp;<input type="submit" name="submit_topic_info" value="{L_GO}" class="liteoption" /></span>
 			</form>
@@ -338,10 +339,10 @@ jQuery(document).ready(function(){
 	    </div>
 	    <!-- END switch_info -->
 	    <div class="row">
-	      <div class="col pr-0 my-2 text-right">{JUMPBOX}</div>
+	      <div class="col pe-0 my-2 text-end">{JUMPBOX}</div>
 	    </div>
 	    <div class="row"> 
-	      <div class="col text-right">{S_AUTH_LIST}</div>
+	      <div class="col text-end">{S_AUTH_LIST}</div>
 		</div>
       </div>
     </div>

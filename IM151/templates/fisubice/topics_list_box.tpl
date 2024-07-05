@@ -13,7 +13,7 @@ function NewWindow(mypage,myname)
 <!-- BEGIN header_table -->
 <div class="container-fluid">
   <div class="row my-auto"> 
-    <div class="col nav pl-0 gen"><a href="{catrow.U_VIEWCAT}" class="cattitle">{catrow.CAT_DESC}</a></div>
+    <div class="col nav ps-0 gen"><a href="{catrow.U_VIEWCAT}" class="cattitle">{catrow.CAT_DESC}</a></div>
   </div>
 </div>
 <!-- BEGIN multi_selection -->
@@ -49,14 +49,14 @@ function check_uncheck_all_{topics_list_box.row.header_table.BOX_ID}()
 <!-- END multi_selection -->
 
 <div class="container-fluid forumline">
-  <div class="row d-flex justify-content-end th px-0">
-	<div class="col pt-2">{topics_list_box.row.L_TITLE}</div>
-	<div class="col-1 pt-2 px-0">{topics_list_box.row.L_REPLIES}</div>
-	<div class="col-2 pt-2 ctr">{topics_list_box.row.L_AUTHOR}</div>
-	<div class="col-1 pt-2 px-0">{topics_list_box.row.L_VIEWS}</div>
- 	<div class="col-2 pt-2 ctr">{topics_list_box.row.L_LASTPOST}</div>
+  <div class="row d-flex justify-content-start th px-0">
+	<div class="col-5 pt-2">{topics_list_box.row.L_TITLE}</div>
+	<div class="col-1 pt-2 px-0 replies">{topics_list_box.row.L_REPLIES}</div>
+	<div class="col-2 pt-2 mx-auto author">{topics_list_box.row.L_AUTHOR}</div>
+	<div class="col-1 pt-2 px-0 views">{topics_list_box.row.L_VIEWS}</div>
+ 	<div class="col pt-2 d-flex lastpost justify-content-start">{topics_list_box.row.L_LASTPOST}</div>
     <!-- BEGIN multi_selection -->
-	<div class="col-1 pt-2 ctr"><input type="checkbox" name="all_mark_{topics_list_box.row.header_table.BOX_ID}" value="0" onClick="check_uncheck_all_{topics_list_box.row.header_table.BOX_ID}();" /></div>
+	<div class="col-1 pt-2 mx-auto"><input type="checkbox" name="all_mark_{topics_list_box.row.header_table.BOX_ID}" value="0" onClick="check_uncheck_all_{topics_list_box.row.header_table.BOX_ID}();" /></div>
     <!-- END multi_selection -->
 
   </div>
@@ -67,8 +67,8 @@ function check_uncheck_all_{topics_list_box.row.header_table.BOX_ID}()
   </div>
 <!-- END header_row -->
 <!-- BEGIN topic -->
-  <div class="row justify-content-end pl-0">
-	<div class="col nav nowrap mx-0 {topics_list_box.row.ROW_CLASS}">
+  <div class="row d-flex justify-content-start ps-0">
+	<div class="col-5 nav nowrap mx-0 {topics_list_box.row.ROW_CLASS}">
 	  <!-- BEGIN single_selection -->
 	  <div class="py-2 px-1 {topics_list_box.row.ROW_CLASS}"><input type="radio" name="{topics_list_box.FIELDNAME}" value="{topics_list_box.row.FID}" {topics_list_box.row.L_SELECT} /></div>
 	  <!-- END single_selection -->
@@ -76,7 +76,7 @@ function check_uncheck_all_{topics_list_box.row.header_table.BOX_ID}()
       <!-- BEGIN icon -->
 	  <div class="py-2 {topics_list_box.row.ROW_CLASS} pt-1">{topics_list_box.row.ICON}</div>
       <!-- END icon -->
-	  <div class="py-2 pl-2 {topics_list_box.row.ROW_CLASS}">
+	  <div class="py-2 ps-2 {topics_list_box.row.ROW_CLASS}">
         <div class="topictitle">{topics_list_box.row.MINICLOCK}{topics_list_box.row.NEWEST_POST_IMG}{topics_list_box.row.TOPIC_ATTACHMENT_IMG}{topics_list_box.row.L_NEWS}{topics_list_box.row.TOPIC_TYPE}</span><span class="gensmall">{topics_list_box.row.TOPIC_INFO}</span><span class="topictitle"><a href="{topics_list_box.row.U_VIEW_TOPIC}" class="topictitle">{topics_list_box.row.TOPIC_TITLE}</a></span>&nbsp;<span>{topics_list_box.row.RATING}</span><span class="gensmall">&nbsp;&nbsp;{topics_list_box.row.TOPIC_ANNOUNCES_DATES}
 	    {topics_list_box.row.TOPIC_DESCRIPTION}<br />
 	    {topics_list_box.row.TOPIC_CALENDAR_DATES}
@@ -89,10 +89,10 @@ function check_uncheck_all_{topics_list_box.row.header_table.BOX_ID}()
 	  </span>
       </div>
 	</div>
-	<div class="col-1 py-2 row1 ctr postdetails"><a href="{topics_list_box.row.U_POSTINGS_POPUP}" onclick="NewWindow(this.href,'PopupWin');return false" onfocus="this.blur()"; title="{L_POPUP_MESSAGE}">{topics_list_box.row.REPLIES}</a></div>
-	<div class="col-2 py-2 row1 ctr name">{topics_list_box.row.TOPIC_AUTHOR}</div>
-	<div class="col-1 py-2 row1 ctr postdetails">{topics_list_box.row.VIEWS}</div>
-	<div class="col-2 py-2 row1 postdetails" onclick="window.location.href='{topics_list_box.row.U_VIEW_TOPIC}'">{topics_list_box.row.LAST_POST_TIME}<br />{topics_list_box.row.LAST_POST_AUTHOR} {topics_list_box.row.LAST_POST_IMG}</div>
+	<div class="col-1 py-2 row1 d-flex justify-content-center postdetails replies"><a href="{topics_list_box.row.U_POSTINGS_POPUP}" onclick="NewWindow(this.href,'PopupWin');return false" onfocus="this.blur()"; title="{L_POPUP_MESSAGE}">{topics_list_box.row.REPLIES}</a></div>
+	<div class="col-2 py-2 row1 d-flex justify-content-center name author">{topics_list_box.row.TOPIC_AUTHOR}</div>
+	<div class="col-1 py-2 row1 d-flex justify-content-center postdetails views">{topics_list_box.row.VIEWS}</div>
+	<div class="col py-2 row1 text-start postdetails laspost" onclick="window.location.href='{topics_list_box.row.U_VIEW_TOPIC}'">{topics_list_box.row.LAST_POST_TIME}<br />{topics_list_box.row.LAST_POST_AUTHOR} {topics_list_box.row.LAST_POST_IMG}</div>
 	<!-- BEGIN multi_selection -->
 	<div class="col-1 py-2 row2 postdetails"><input type="checkbox" name="{topics_list_box.FIELDNAME}[]{topics_list_box.row.BOX_ID}" value="{topics_list_box.row.FID}" onClick="javascript:check_uncheck_main_{topics_list_box.row.BOX_ID}();" {topics_list_box.row.L_SELECT} />XXX</div>
 	<!-- END multi_selection -->

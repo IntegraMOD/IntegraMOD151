@@ -1,95 +1,94 @@
-<!-- The button that is shown when the column is closed -->
+<td id="tail_block" style="display: ''; width:{FOOTER_WIDTH}px" valign="top">
+<table cellpadding="0" cellspacing="0" border="0">
+<tr>
+
 <!-- BEGIN layout_collapse -->
-<div class="sp-col" id="tail_hide" style="display: none;" align="left" width="10" height="18"><a href="JavaScript:ShowHide('tail_block','tail_hide','tail_block');"><img src="{layout_collapse.LAYOUT_IMAGER}" width="10" height="18" alt="" /></a></div>
+<td valign="top" style="display: block; cursor: pointer; cursor: hand;" align="right" width="10" height="18">
+<a href="JavaScript:ShowHide('tail_block','tail_hide','tail_block');">
+<img src="{layout_collapse.LAYOUT_IMAGER}" alt="" width="10" height="18" border="0" />
+</a>
+</td>
 <!-- END layout_collapse -->
 
-<!-- The spacer image that replaces the above button when the collapsible layout is turned off -->
 <!-- BEGIN no_layout_collapse -->
-<div class="sp-col" width="10"><img src="{no_layout_collapse.SPACER}" alt="" width="10" height="30" /></div>
+<td width="10"><img src="{no_layout_collapse.SPACER}" alt="" width="10" height="30" /></td>
 <!-- END no_layout_collapse -->
 
-<!-- The td cell that closes when the collapse column button is clicked -->
-<div class="col-xs-3 m-0" id="tail_block" style="display: block; min-width:126px !important;">
+<td width="100%" valign="top">
 
-  <div class="container-fluid">
-    <div class="row">
-      <div class="col px-0 align-top">
-        <!-- The start of the header block -->
-        <!-- BEGIN tail_blocks_row -->
-        <div class="container-fluid 
-        <!-- BEGIN border -->
-         forumline
-        <!-- END border -->
-         ">
 
-          <!-- Shown when the title is text -->
-          <!-- BEGIN title -->
-          <div class="row th pt-1 pl-1">{tail_blocks_row.title.TITLE}</div>
-          <!-- END title -->
+<!-- BEGIN tail_blocks_row -->
+<table width="100%" cellpadding="5" cellspacing="0" border="0" 
+<!-- BEGIN border -->
+class="forumline"
+<!-- END border -->
+>
+	<!-- BEGIN title -->
+	<tr>
+		<th>{tail_blocks_row.title.TITLE}</th>
+	</tr>
+	<!-- END title -->
+       <!-- BEGIN title_image -->
+       <tr>
+         <th><img src="{tail_blocks_row.title_image.TITLE}" /></th>
+       </tr>
+       <!-- END title_image -->
+       <tr> 
+	     <td
+         <!-- BEGIN background -->
+         class="row1"
+         <!-- END background -->
+         >
 
-          <!-- Shown when the title is an image -->
-          <!-- BEGIN title_image -->
-          <div class="row th pt-1"><img src="{tail_blocks_row.title_image.TITLE}" width="17" height="15" alt="" /></div>
-          <!-- END title_image -->
+           <!-- BEGIN openclose -->
+           <div onclick="ShowHide('block1_{tail_blocks_row.BLOCKID}','block2_{tail_blocks_row.BLOCKID}','block1_{tail_blocks_row.BLOCKID}');" style="display: none; width:100%; cursor: pointer; cursor: hand;" id="block2_{tail_blocks_row.BLOCKID}" align="center">
+		     <img src="{tail_blocks_row.openclose.OPEN_IMG}" />
+           </div>
+           <!-- END openclose -->
 
-          <div class="row">
-            <div class="col px-1 
-            <!-- BEGIN background -->
-             row1
-            <!-- END background -->
-            ">
+           <div id="block1_{tail_blocks_row.BLOCKID}" style="display: ''; position: relative;" align="center">{tail_blocks_row.OUTPUT}
+           
+		     <!-- BEGIN openclose -->
+             <div align="center" onclick="ShowHide('block1_{tail_blocks_row.BLOCKID}','block2_{tail_blocks_row.BLOCKID}','block1_{tail_blocks_row.BLOCKID}');" style="width:100%; cursor: pointer; cursor: hand;">
+		       <img src="{tail_blocks_row.openclose.CLOSE_IMG}" />
+		     </div>
+             <!-- END openclose -->
 
-              <!-- The button that is shown when the block is closed -->
-              <!-- BEGIN openclose -->
-              <div onclick="ShowHide('block1_{tail_blocks_row.BLOCKID}','block2_{tail_blocks_row.BLOCKID}','block1_{tail_blocks_row.BLOCKID}');" style="display: none; width:100%; cursor: pointer;" id="block2_{tail_blocks_row.BLOCKID}" >
-                <img src="{tail_blocks_row.openclose.OPEN_IMG}" alt="" />
-              </div>
-        	  <!-- END openclose -->
+           </div>
+         </tr>
+</table>
+<br />
 
-        	  <!-- The div cell that is closed when the collapse block button is clicked -->
-        	  <div id="block1_{tail_blocks_row.BLOCKID}" style="display: block; position: relative;" >{tail_blocks_row.OUTPUT}
-        	  <!-- The button that is shown when the block is open.  Note that it is within the collapsible cell and therefore disappears when the block closes -->
-        	  <!-- BEGIN openclose -->
-        	  <div onclick="ShowHide('block1_{tail_blocks_row.BLOCKID}','block2_{tail_blocks_row.BLOCKID}','block1_{tail_blocks_row.BLOCKID}');" style="width:100%; cursor: pointer;"><img src="{tail_blocks_row.openclose.CLOSE_IMG}" alt="" /></div>
-        	  <!-- END openclose -->
-        	  </div>
-            </div>
-          </div>
-        </div>
-		<br />
-
-		<!-- The cookie related javascript to remember what blocks are open/closed on page load -->
-		<!-- BEGIN openclose -->
-		<script>
-		<!--
-		tmp = 'block1_{tail_blocks_row.BLOCKID}';
-		if(GetCookie(tmp) == '2')
-		{
-			ShowHide('block1_{tail_blocks_row.BLOCKID}','block2_{tail_blocks_row.BLOCKID}','block1_{tail_blocks_row.BLOCKID}');
-		}
-		//-->
-		</script>
-		<!-- END openclose -->
+<script language="javascript" type="text/javascript">
+<!--
+tmp = 'block1_{tail_blocks_row.BLOCKID}';
+if(GetCookie(tmp) == '2')
+{
+	ShowHide('block1_{tail_blocks_row.BLOCKID}','block2_{tail_blocks_row.BLOCKID}','block1_{tail_blocks_row.BLOCKID}');
+}
+//-->
+</script>
 
 <!-- END tail_blocks_row -->
-      </div>
+</td>
+</tr>
+</table>
+</td>
 
-	  <!-- The button that is shown when the column is open.  Note that it is within the collapsible cell and therefore disappears when the column closes -->
-	  <!-- BEGIN layout_collapse -->
-	  <div class="sp-col" style="display: block; cursor: pointer;" align="left" width="10" height="18"><a href="JavaScript:ShowHide('tail_block','tail_hide','tail_block');"><img src="{layout_collapse.LAYOUT_IMAGEL}" alt="" width="10" height="18" /></a></div>
-	  <!-- END layout_collapse -->
-
-    </div>
-  </div>
-</div>
-
-<!-- The spacer image that replaces the above button when the collapsible layout is turned off -->
+<!-- BEGIN layout_collapse -->
+     <td id="tail_hide" style="display: none;" valign="top" align="right" width="10" height="18">
+	     <a href="javascript:ShowHide('tail_block','tail_hide','tail_block');">
+	       <img src="{layout_collapse.LAYOUT_IMAGEL}" width="10" height="18" alt="" border="0" />
+	     </a>
+     </td>
+<!-- END layout_collapse -->
 <!-- BEGIN no_layout_collapse -->
-<div class="sp-col"><img src="{no_layout_collapse.SPACER}" alt="" width="10" height="30" /></div>
+<td width="10"><img src="images/spacer.gif" alt="" width="10" height="30" /></td>
 <!-- END no_layout_collapse -->
+  </tr>
+ </table>
 
-<!-- The cookie related javascript to remember what columns are open/closed on page load -->
-<script>
+<script language="javascript" type="text/javascript">
 <!--
 tmp = 'tail_block';
 if(GetCookie(tmp) == '2')

@@ -1,15 +1,49 @@
 /* fiSubGreen  */
 @import url("main.css");
+@import url("fisub.css");
 @import url("report_hack.css");
+/* Fonts */
+:root {
+  --default-font: "Roboto",  system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  --heading-font: "Source Sans Pro",  sans-serif;
+  --nav-font: "Poppins",  sans-serif;
+}
 
+/* Global Colors - The following color variables are used throughout the website. Updating them here will change the color scheme of the entire website */
+:root { 
+  --background-color: #ffffff; /* Background color for the entire website, including individual sections */
+  --default-color: #1a1f24; /* Default color used for the majority of the text content across the entire website */
+  --heading-color: #485664; /* Color for headings, subheadings and title throughout the website */
+  --accent-color: #11C0DF; /* Accent color that represents your brand on the website. It's used for buttons, links, and other elements that need to stand out */
+  --contrast-color: #ffffff; /* The contrast color is used for elements when the background color is one of the heading, accent, or default colors. Its purpose is to ensure proper contrast and readability when placed over these more dominant colors */
+}
+
+/* Nav Menu Colors - The following color variables are used specifically for the navigation menu. They are separate from the global colors to allow for more customization options */
+:root {
+  --nav-color: #231D20;  /* The default color of the main navmenu links */
+  --nav-hover-color: #055C0D; /* Applied to main navmenu links when they are hovered over or active */
+  --nav-dropdown-background-color: #ffffff; /* Used as the background color for dropdown items that appear when hovering over primary navigation items */
+  --nav-dropdown-color: #485664; /* Used for navigation links of the dropdown items in the navigation menu. */
+  --nav-dropdown-hover-color: #11C0DF; /* Similar to --nav-hover-color, this color is applied to dropdown navigation links when they are hovered over. */
+}
+
+/* Template Custom Colors */
+:root {
+  --footer-background-color: #3a4753;
+}
+
+/* Smooth scroll */
+:root {
+  scroll-behavior: smooth;
+}
 /* The content of the posts (body of text) */
-body{#E3F6E9;color:#000000;}
+body{background:#E3F6E9;color:#000000;}
 
 /* This is the border line & background color round the entire page */
 .bodyline{background:#f7f8fc;border:1px solid #98aab1;}
 
 /* This is the outline round the main forum tables */
-.forumline{background:#ffffff;border:1px solid #486386}
+.forumline{background:#ffffff;border:1px solid #486386;}
 
 /* The largest text used in the index page title and toptic title etc. */
 .maintitle,h1{color:#1EB21C;}
@@ -26,6 +60,10 @@ a.topictitle:visited{color:#059A00}
 a.topictitle:hover{color:#1EB21C}
 
 hr {border-style:solid;border-color:#66D286;}
+
+.fa:before {
+	color:#587DA3;
+}
 
 .icon_quote:before {
 	color:#66D286;
@@ -74,65 +112,65 @@ i.fa-users:hover:before {
 /* Category gradients*/
 .cat, .catHead, .catSides, .catLeft, .catRight, .catBottom {
 	color:#231D20;
-	background: #19911B; /* Old browsers */
-	background: -moz-linear-gradient(top, #19911B 0%, #40B817 100%); /* FF3.6-15 */
-	background: -webkit-linear-gradient(top, #19911B 0%,#40B817 100%); /* Chrome10-25,Safari5.1-6 */
-	background: linear-gradient(to bottom, #19911B 0%,#40B817 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
-	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#19911B', endColorstr='#40B817',GradientType=0 ); /* IE6-9 */
+	background: #55C595; /* Old browsers */
+	background: -moz-linear-gradient(top, #55C595 0%, #5DCA98 100%); /* FF3.6-15 */
+	background: -webkit-linear-gradient(top, #55C595 0%,#5DCA98 100%); /* Chrome10-25,Safari5.1-6 */
+	background: linear-gradient(to bottom, #55C595 0%,#5DCA98 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#55C595', endColorstr='#5DCA98',GradientType=0 ); /* IE6-9 */
 }
 
 /* This is the gradient background at the top of the page */
 .topbkg {
-	background: #19911B; /* Old browsers */
-	background: -moz-linear-gradient(top, #19911B 0%, #4EC615 100%); /* FF3.6-15 */
-	background: -webkit-linear-gradient(top, #19911B 0%,#4EC615 100%); /* Chrome10-25,Safari5.1-6 */
-	background: linear-gradient(to bottom, #19911B 0%,#4EC615 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
-	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#19911B', endColorstr='#4EC615',GradientType=0 ); /* IE6-9 */
+	background: #55C595; /* Old browsers */
+	background: -moz-linear-gradient(top, #55C595 0%, #52C790 100%); /* FF3.6-15 */
+	background: -webkit-linear-gradient(top, #55C595 0%,#52C790 100%); /* Chrome10-25,Safari5.1-6 */
+	background: linear-gradient(to bottom, #55C595 0%,#52C790 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#55C595', endColorstr='#52C790',GradientType=0 ); /* IE6-9 */
 }
 .topnav, .btmnav {
-	background: #4EC615; /* Old browsers */
-	background: -moz-linear-gradient(top, #4EC615 0%, #19911B 75%); /* FF3.6-15 */
-	background: -webkit-linear-gradient(top, #4EC615 0%,#19911B 75%); /* Chrome10-25,Safari5.1-6 */
-	background: linear-gradient(to bottom, #4EC615 0%,#19911B 75%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
-	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#4EC615', endColorstr='#19911B',GradientType=0 ); /* IE6-9 */
+	background: #52C790; /* Old browsers */
+	background: -moz-linear-gradient(top, #52C790 0%, #55C595 75%); /* FF3.6-15 */
+	background: -webkit-linear-gradient(top, #52C790 0%,#55C595 75%); /* Chrome10-25,Safari5.1-6 */
+	background: linear-gradient(to bottom, #52C790 0%,#55C595 75%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#52C790', endColorstr='#55C595',GradientType=0 ); /* IE6-9 */
 	border-color:#231D20;
 }
 .qb  {
-	background: #40B817; /* Old browsers */
-	background: -moz-linear-gradient(top, #40B817 0%, #19911B 75%); /* FF3.6-15 */
-	background: -webkit-linear-gradient(top, #40B817 0%,#19911B 75%); /* Chrome10-25,Safari5.1-6 */
-	background: linear-gradient(to bottom, #40B817 0%,#19911B 75%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
-	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#40B817', endColorstr='#19911B',GradientType=0 ); /* IE6-9 */
+	background: #52C790; /* Old browsers */
+	background: -moz-linear-gradient(top, #52C790 0%, #55C595 75%); /* FF3.6-15 */
+	background: -webkit-linear-gradient(top, #52C790 0%,#55C595 75%); /* Chrome10-25,Safari5.1-6 */
+	background: linear-gradient(to bottom, #52C790 0%,#55C595 75%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#52C790', endColorstr='#55C595',GradientType=0 ); /* IE6-9 */
 	border-color:#231D20;
 }
 .openclose {background:transparent url('../images/icon_openclose.png') no-repeat;}
 
 /* Main table cell colors and backgrounds */
-.row1{background:#f4f6fb}
-.row2,.helpline{background:#E8F8EE}
-.row3{background:#D6F3DF}
+.row1{background:#CFF4D2}
+.row2,.helpline{background:#CAEECD}
+.row3{background:#7CE495}
 
 .spacerow{background:#CAEFD5}
 
 /* This is for the table cell above the Topics,Post & Last posts on the index.php */
 .rowpic{
 	color:#231D20;
-	background: #40B817; /* Old browsers */
-	background: -moz-linear-gradient(top, #40B817 0%, #19911B 75%); /* FF3.6-15 */
-	background: -webkit-linear-gradient(top, #40B817 0%,#19911B 75%); /* Chrome10-25,Safari5.1-6 */
-	background: linear-gradient(to bottom, #40B817 0%,#19911B 75%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
-	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#40B817', endColorstr='#19911B',GradientType=0 ); /* IE6-9 */
+	background: #5DCA98; /* Old browsers */
+	background: -moz-linear-gradient(top, #5DCA98 0%, #55C595 75%); /* FF3.6-15 */
+	background: -webkit-linear-gradient(top, #5DCA98 0%,#55C595 75%); /* Chrome10-25,Safari5.1-6 */
+	background: linear-gradient(to bottom, #5DCA98 0%,#55C595 75%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#5DCA98', endColorstr='#55C595',GradientType=0 ); /* IE6-9 */
 	border-color:#486386;
 }
 
 /* Table Header cells */
 th, .th {
 	color:#231D20;
-	background: #40B817; /* Old browsers */
-	background: -moz-linear-gradient(top, #40B817 0%, #19911B 75%); /* FF3.6-15 */
-	background: -webkit-linear-gradient(top, #40B817 0%,#19911B 75%); /* Chrome10-25,Safari5.1-6 */
-	background: linear-gradient(to bottom, #40B817 0%,#19911B 75%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
-	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#40B817', endColorstr='#19911B',GradientType=0 ); /* IE6-9 */
+	background: #5DCA98; /* Old browsers */
+	background: -moz-linear-gradient(top, #5DCA98 0%, #55C595 75%); /* FF3.6-15 */
+	background: -webkit-linear-gradient(top, #5DCA98 0%,#55C595 75%); /* Chrome10-25,Safari5.1-6 */
+	background: linear-gradient(to bottom, #5DCA98 0%,#55C595 75%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#5DCA98', endColorstr='#55C595',GradientType=0 ); /* IE6-9 */
 	border-color:#486386;
 }
 
@@ -234,32 +272,32 @@ div#mobile-bar {background-color:#000000;}
 .shadow {box-shadow: 2px 2px 2px #888888;}
 .blockshadow {border:1px solid #486386;box-shadow: 2px 2px 2px #888888;}
 
-.postbtn, .genbtn {
-	  background: #4DC515;
-	  background-image: -webkit-linear-gradient(top, #4DC515, #239525);
-	  background-image: -moz-linear-gradient(top, #4DC515, #239525);
-	  background-image: -ms-linear-gradient(top, #4DC515, #239525);
-	  background-image: -o-linear-gradient(top, #4DC515, #239525);
-	  background-image: linear-gradient(to bottom, #4DC515, #239525);
-	  border: solid #A8B9C8 1px;
+.postbtn, .genbtn, .folder {
+	background: #52C790; /* Old browsers */
+	background: -moz-linear-gradient(top, #52C790 0%, #55C595 75%); /* FF3.6-15 */
+	background: -webkit-linear-gradient(top, #52C790 0%,#55C595 75%); /* Chrome10-25,Safari5.1-6 */
+	background: linear-gradient(to bottom, #52C790 0%,#55C595 75%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#52C790', endColorstr='#55C595',GradientType=0 ); /* IE6-9 */
+	border-color:#38A876;
 }
-.postbtn:hover, .genbtn:hover {
-	  background: #32AA18;
-	  background-image: -webkit-linear-gradient(top, #32AA18, #239525);
-	  background-image: -moz-linear-gradient(top, #32AA18, #239525);
-	  background-image: -ms-linear-gradient(top, #32AA18, #239525);
-	  background-image: -o-linear-gradient(top, #32AA18, #239525);
-	  background-image: linear-gradient(to bottom, #32AA18, #239525);
+.postbtn:hover, .genbtn:hover, .folder:hover {
+	background: #52C790; /* Old browsers */
+	background: -moz-linear-gradient(top, #52C790 0%, #52C790 75%); /* FF3.6-15 */
+	background: -webkit-linear-gradient(top, #52C790 0%,#52C790 75%); /* Chrome10-25,Safari5.1-6 */
+	background: linear-gradient(to bottom, #52C790 0%,#52C790 75%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#52C790', endColorstr='#52C790',GradientType=0 ); /* IE6-9 */
+	border-color:#1B5039;
 }
-a.postbtn, a.postbtn:hover, .genbtn li, .genbtn a {color:#231D20;}
-.genbtn li:hover, .genbtn a:hover {color:#BCBABB;}
+
+a.postbtn, .genbtn li, .genbtn a, .folder a {color:#231D20;}
+a.postbtn:hover, .genbtn li:hover, .genbtn a:hover, .folder a:hover {color:#FFFFFF;}
 
 /* Clock css*/
 #clock {
   width: 30em;
   height: 30em;
   border-radius: 50%;
-  border: solid 2px #19911B;
+  border: solid 2px #55C595;
   margin: auto auto;
   position: relative;
   background-color:#C9EABF;
@@ -313,19 +351,19 @@ a.postbtn, a.postbtn:hover, .genbtn li, .genbtn a {color:#231D20;}
 .smallTick {
   width: 0.1em;
   height: 0.5em;
-  background-color: #19911B;
+  background-color: #55C595;
   margin: 0 1.45em;
 }
 .mediumTick {
   width: 0.25em;
   height: 0.8em;
-  background-color: #19911B;
+  background-color: #55C595;
   margin: 0 1.375em;
 }
 .largeTick {
   width: 0.4em;
   height: 0.8em;
-  background-color: #19911B;
+  background-color: #55C595;
   position: relative;
   margin: 0 1.3em;
 }
@@ -370,4 +408,56 @@ div.table1 {
 
 .bdrl {
   border-left: 2px solid #FFF !important;
+}
+
+.fa:before {color:#587DA3;}
+.hov, .fa {color:#587DA3 !important;}
+a .fa:hover:before {color:#32475F !important;}
+.fa-hot {color:#FF2F0A;}
+span.folder {color:#32475F;}
+span.folder:hover {color:#3C5472; text-decoration: none !important;}
+
+/* nav menu */
+.menu {
+	background: #52C790; /* Old browsers */
+	background: -moz-linear-gradient(top, #52C790 0%, #3CB97F 100%); /* FF3.6-15 */
+	background: -webkit-linear-gradient(top, #52C790 0%,#3CB97F 100%); /* Chrome10-25,Safari5.1-6 */
+	background: linear-gradient(to bottom, #52C790 0%,#3CB97F 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#52C790', endColorstr='#3CB97F',GradientType=0 ); /* IE6-9 */
+}
+
+.menu a {
+	color: #32475F;
+}
+
+.menu a.dropdown-arrow:after {
+	content: "\25BF";
+}
+
+.menu li a:hover {
+	color: #444444;
+	background: #3EBA80;
+}
+
+.menu label:before {
+	color: #FFFFFF;
+	content: "\2261"; 
+}
+
+.menu ul.sub-menus{
+	background: #3EBA80;
+}
+
+.menu ul.sub-menus a {
+	color: #444444;
+}
+
+.menu ul.sub-menus a:hover{
+	background: #39A778;
+	color: #FFFFFF;
+}
+@media screen and (max-width: 800px){
+	.menu ul {background:#E9E9EF;}
+	.menu input:checked + label {color:#FFFFFF}
+	.menu input:checked + label:before {content:"\00d7"}
 }

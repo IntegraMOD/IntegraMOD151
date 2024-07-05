@@ -1,7 +1,41 @@
 /* fiSubBlue  */
 @import url("main.css");
+@import url("fisub.css");
 @import url("report_hack.css");
+/* Fonts */
+:root {
+  --default-font: "Roboto",  system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  --heading-font: "Source Sans Pro",  sans-serif;
+  --nav-font: "Poppins",  sans-serif;
+}
 
+/* Global Colors - The following color variables are used throughout the website. Updating them here will change the color scheme of the entire website */
+:root { 
+  --background-color: #ffffff; /* Background color for the entire website, including individual sections */
+  --default-color: #1a1f24; /* Default color used for the majority of the text content across the entire website */
+  --heading-color: #485664; /* Color for headings, subheadings and title throughout the website */
+  --accent-color: #11C0DF; /* Accent color that represents your brand on the website. It's used for buttons, links, and other elements that need to stand out */
+  --contrast-color: #ffffff; /* The contrast color is used for elements when the background color is one of the heading, accent, or default colors. Its purpose is to ensure proper contrast and readability when placed over these more dominant colors */
+}
+
+/* Nav Menu Colors - The following color variables are used specifically for the navigation menu. They are separate from the global colors to allow for more customization options */
+:root {
+  --nav-color: #32475f;  /* The default color of the main navmenu links */
+  --nav-hover-color: #3892E1; /* Applied to main navmenu links when they are hovered over or active */
+  --nav-dropdown-background-color: #ffffff; /* Used as the background color for dropdown items that appear when hovering over primary navigation items */
+  --nav-dropdown-color: #485664; /* Used for navigation links of the dropdown items in the navigation menu. */
+  --nav-dropdown-hover-color: #11C0DF; /* Similar to --nav-hover-color, this color is applied to dropdown navigation links when they are hovered over. */
+}
+
+/* Template Custom Colors */
+:root {
+  --footer-background-color: #3a4753;
+}
+
+/* Smooth scroll */
+:root {
+  scroll-behavior: smooth;
+}
 /* The content of the posts (body of text) */
 body{background:#ecf0f6;color:#000000;}
 
@@ -66,65 +100,65 @@ a.icon_return_top:hover:before, a.icon_delete:hover:before, a.icon_ip:hover:befo
 /* Category gradients*/
 .cat,.catHead,.catSides,.catLeft,.catRight,.catBottom{
 	color:#324778;
-	background: #88b5f9; /* Old browsers */
-	background: -moz-linear-gradient(top, #88b5f9 0%, #c7dbfc 99%); /* FF3.6-15 */
-	background: -webkit-linear-gradient(top, #88b5f9 0%,#c7dbfc 99%); /* Chrome10-25,Safari5.1-6 */
-	background: linear-gradient(to bottom, #88b5f9 0%,#c7dbfc 99%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
-	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#88b5f9', endColorstr='#c7dbfc',GradientType=0 ); /* IE6-9 */
+	background: #1AA7EC; /* Old browsers */
+	background: -moz-linear-gradient(top, #1AA7EC 0%, #1990DF 99%); /* FF3.6-15 */
+	background: -webkit-linear-gradient(top, #1AA7EC 0%,#1990DF 99%); /* Chrome10-25,Safari5.1-6 */
+	background: linear-gradient(to bottom, #1AA7EC 0%,#1990DF 99%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#1AA7EC', endColorstr='#1990DF',GradientType=0 ); /* IE6-9 */
 }
 
 /* This is the gradient background at the top of the page */
 .topbkg{
-	background: #88b5f9; /* Old browsers */
-	background: -moz-linear-gradient(top, #88b5f9 30%, #c7dbfc 99%); /* FF3.6-15 */
-	background: -webkit-linear-gradient(top, #88b5f9 30%,#c7dbfc 99%); /* Chrome10-25,Safari5.1-6 */
-	background: linear-gradient(to bottom, #88b5f9 30%,#c7dbfc 99%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
-	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#88b5f9', endColorstr='#c7dbfc',GradientType=0 ); /* IE6-9 */
+	background: #1AA7EC; /* Old browsers */
+	background: -moz-linear-gradient(top, #1AA7EC 30%, #1990DF 99%); /* FF3.6-15 */
+	background: -webkit-linear-gradient(top, #1AA7EC 30%,#1990DF 99%); /* Chrome10-25,Safari5.1-6 */
+	background: linear-gradient(to bottom, #1AA7EC 30%,#1990DF 99%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#1AA7EC', endColorstr='#1990DF',GradientType=0 ); /* IE6-9 */
 }
 .topnav{
-	background: #cde0fc; /* Old browsers */
-	background: -moz-linear-gradient(top, #cde0fc 0%, #9dc2fa 99%); /* FF3.6-15 */
-	background: -webkit-linear-gradient(top, #cde0fc 0%,#9dc2fa 99%); /* Chrome10-25,Safari5.1-6 */
-	background: linear-gradient(to bottom, #cde0fc 0%,#9dc2fa 99%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
-	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#cde0fc', endColorstr='#9dc2fa',GradientType=0 ); /* IE6-9 */	
+	background: #1AA7EC; /* Old browsers */
+	background: -moz-linear-gradient(top, #1AA7EC 30%, #1990DF 99%); /* FF3.6-15 */
+	background: -webkit-linear-gradient(top, #1AA7EC 30%,#1990DF 99%); /* Chrome10-25,Safari5.1-6 */
+	background: linear-gradient(to bottom, #1AA7EC 30%,#1990DF 99%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#1AA7EC', endColorstr='#1990DF',GradientType=0 ); /* IE6-9 */
 	border-color:#0850BD;
 }
 .qb  {
-	background: #cde0fc; /* Old browsers */
-	background: -moz-linear-gradient(top, #cde0fc 0%, #9dc2fa 99%); /* FF3.6-15 */
-	background: -webkit-linear-gradient(top, #cde0fc 0%,#9dc2fa 99%); /* Chrome10-25,Safari5.1-6 */
-	background: linear-gradient(to bottom, #cde0fc 0%,#9dc2fa 99%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
-	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#cde0fc', endColorstr='#9dc2fa',GradientType=0 ); /* IE6-9 */	
+	background: #1AA7EC; /* Old browsers */
+	background: -moz-linear-gradient(top, #1AA7EC 30%, #1990DF 99%); /* FF3.6-15 */
+	background: -webkit-linear-gradient(top, #1AA7EC 30%,#1990DF 99%); /* Chrome10-25,Safari5.1-6 */
+	background: linear-gradient(to bottom, #1AA7EC 30%,#1990DF 99%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#1AA7EC', endColorstr='#1990DF',GradientType=0 ); /* IE6-9 */
 	border-color:#0850BD;
 }
 .openclose {background:transparent url('images/blue/icon_openclose.png') no-repeat;}
 
 /* Main table cell colors and backgrounds */
-.row1{background:#f4f6fb;}
-.row2,.helpline{background:#e1e9f2;}
-.row3{background:#d7e2ef;}
+.row1{background:#91DCF7;}
+.row2,.helpline{background:#AAE4F9;}
+.row3{background:#7DD6F6;}
 
 .spacerow{background:#cad9ea;}
 
 /* This is for the table cell above the Topics,Post & Last posts on the index.php */
 .rowpic{	
 	color:#516a88;
-	background: #cde0fc; /* Old browsers */
-	background: -moz-linear-gradient(top, #cde0fc 0%, #9dc2fa 99%); /* FF3.6-15 */
-	background: -webkit-linear-gradient(top, #cde0fc 0%,#9dc2fa 99%); /* Chrome10-25,Safari5.1-6 */
-	background: linear-gradient(to bottom, #cde0fc 0%,#9dc2fa 99%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
-	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#cde0fc', endColorstr='#9dc2fa',GradientType=0 ); /* IE6-9 */
+	background: #1AA7EC; /* Old browsers */
+	background: -moz-linear-gradient(top, #1AA7EC 30%, #1990DF 99%); /* FF3.6-15 */
+	background: -webkit-linear-gradient(top, #1AA7EC 30%,#1990DF 99%); /* Chrome10-25,Safari5.1-6 */
+	background: linear-gradient(to bottom, #1AA7EC 30%,#1990DF 99%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#1AA7EC', endColorstr='#1990DF',GradientType=0 ); /* IE6-9 */
 	border-color:#0850BD;
 }
 
 /* Table Header cells */
 th, .th {
-	color:#516a88;
-	background: #cde0fc; /* Old browsers */
-	background: -moz-linear-gradient(top, #cde0fc 0%, #9dc2fa 99%); /* FF3.6-15 */
-	background: -webkit-linear-gradient(top, #cde0fc 0%,#9dc2fa 99%); /* Chrome10-25,Safari5.1-6 */
-	background: linear-gradient(to bottom, #cde0fc 0%,#9dc2fa 99%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
-	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#cde0fc', endColorstr='#9dc2fa',GradientType=0 ); /* IE6-9 */
+	color:#FFF;
+	background: #1AA7EC; /* Old browsers */
+	background: -moz-linear-gradient(top, #1AA7EC 30%, #1990DF 99%); /* FF3.6-15 */
+	background: -webkit-linear-gradient(top, #1AA7EC 30%,#1990DF 99%); /* Chrome10-25,Safari5.1-6 */
+	background: linear-gradient(to bottom, #1AA7EC 30%,#1990DF 99%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#1AA7EC', endColorstr='#1990DF',GradientType=0 ); /* IE6-9 */
 	border-color:#0850BD;
 	border-bottom: 1px solid #839FBC;
 }
@@ -215,37 +249,23 @@ a.kb span {color:#516A88;}
 .date-today, .last-post b { color: #E61A1A;}
 .date-yesterday, .last-post em { color: #18C935;}
 
-/* Responsive qbar qmenu */
-
-a.mob-tab-menu-toggle {background:transparent url('../images/button.gif') no-repeat left top;}
-nav.mobile-menu a{color:#B4C5D5;}
-nav.mobile-menu a:hover{color:#D8D8D8;}
-nav.mobile-menu {background-color: #111111;border-right:1px solid #000000;}
-nav.mobile-menu a {border-bottom:1px solid #000000;}
-div#mobile-bar {background-color:#000000;}
-
 .shadow {box-shadow: 2px 2px 2px #888888;}
 .blockshadow {border:1px solid #486386;box-shadow: 2px 2px 2px #888888;}
 
-.postbtn, .genbtn {
-	  background: #CCDFFC;
-	  background-image: -webkit-linear-gradient(top, #CCDFFC, #88B5F9);
-	  background-image: -moz-linear-gradient(top, #CCDFFC, #88B5F9);
-	  background-image: -ms-linear-gradient(top, #CCDFFC, #88B5F9);
-	  background-image: -o-linear-gradient(top, #CCDFFC, #88B5F9);
-	  background-image: linear-gradient(to bottom, #CCDFFC, #88B5F9);
-	  border: solid #A8B9C8 1px;
+.postbtn, .genbtn, .folder {
+	background: #26ABED; /* Old browsers */
+	border: solid #1F6AC1 1px;
 }
-.postbtn:hover, .genbtn:hover {
-	  background: #E1E8EF;
-	  background-image: -webkit-linear-gradient(top, #B4D1FB, #88B5F9);
-	  background-image: -moz-linear-gradient(top, #B4D1FB, #88B5F9);
-	  background-image: -ms-linear-gradient(top, #B4D1FB, #88B5F9);
-	  background-image: -o-linear-gradient(top, #B4D1FB, #88B5F9);
-	  background-image: linear-gradient(to bottom, #B4D1FB, #88B5F9);
+.postbtn:hover, .genbtn:hover, .folder:hover {
+	background: #7DD6F6; /* Old browsers */
+	background: -moz-linear-gradient(top, #7DD6F6 30%, #7DD6F6 99%); /* FF3.6-15 */
+	background: -webkit-linear-gradient(top, #7DD6F6 30%,#7DD6F6 99%); /* Chrome10-25,Safari5.1-6 */
+	background: linear-gradient(to bottom, #7DD6F6 30%,#7DD6F6 99%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#7DD6F6', endColorstr='#7DD6F6',GradientType=0 ); /* IE6-9 */
+	border: solid #1F6AC1 1px;
 }
-a.postbtn, a.postbtn:hover, .genbtn li, .genbtn a {color:#2F82CE;}
-.genbtn li:hover, .genbtn a:hover {color:#32475F;}
+a.postbtn, .genbtn li, .genbtn a, .folder a, .folder i {color:#FFF;}
+a.postbtn:hover, .genbtn li:hover, .genbtn a:hover, .folder a:hover {color:#32475F;}
 
 /* Clock css*/
 #clock {
@@ -363,4 +383,57 @@ div.table1 {
 
 .bdrl {
   border-left: 2px solid #FFF !important;
+}
+
+.fa:before {color:#587DA3;}
+.hov, .fa {color:#587DA3 !important;}
+a .fa:hover:before {color:#32475F !important;}
+.fa-hot {color:#FF2F0A;}
+span.folder {color:#32475F;}
+span.folder:hover {color:#3C5472; text-decoration: none !important;}
+
+/* nav menu */
+.menu {
+	background: #1AA7EC; /* Old browsers */
+	background: -moz-linear-gradient(top, #1AA7EC 30%, #1AA7EC 99%); /* FF3.6-15 */
+	background: -webkit-linear-gradient(top, #1AA7EC 30%,#1AA7EC 99%); /* Chrome10-25,Safari5.1-6 */
+	background: linear-gradient(to bottom, #1AA7EC 30%,#1AA7EC 99%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#1AA7EC', endColorstr='#1AA7EC',GradientType=0 ); /* IE6-9 */
+
+}
+
+.menu a {
+	color: #32475F;
+}
+
+.menu a.dropdown-arrow:after {
+	content: "\25BF";
+}
+
+.menu li a:hover {
+	color: #FFFFFF;
+	background: #1991DF;
+}
+
+.menu label:before {
+	color: #FFFFFF;
+	content: "\2261"; 
+}
+
+.menu ul.sub-menus{
+	background: #1991DF;
+}
+
+.menu ul.sub-menus a {
+	color: #444444;
+}
+
+.menu ul.sub-menus a:hover{
+	background: #1AA7EC;
+	color: #FFFFFF;
+}
+@media screen and (max-width: 800px){
+	.menu ul {background:#E9E9EF;}
+	.menu input:checked + label {color:#FFFFFF}
+	.menu input:checked + label:before {content:"\00d7"}
 }

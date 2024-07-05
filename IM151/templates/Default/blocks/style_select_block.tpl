@@ -9,7 +9,7 @@
 </form>
 <table>
 <tr>
-<td valign="bottom" align="center"><span class="gensmall">Script by <a href="http://www.webmedic.net" target="_blank">webmedic</a>,&nbsp;v1.0.5</span></td>
+<td valign="bottom" nowrap="nowrap" align="center"><span class="gensmall">Script by webmedic</span></td>
 </tr></table>
 </div>
 

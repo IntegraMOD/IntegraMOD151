@@ -10,7 +10,7 @@
   --title-color: hsl(var(--hue-color), 53%, 15%);
   --text-color: hsl(var(--hue-color), 12%, 35%);
   --text-color-light: hsl(var(--hue-color), 12%, 65%);
-  --white-color: #FFF;
+  --white-color: #FFFFFF;
   --body-color: hsl(var(--hue-color), 24%, 94%);
 
   /*========== Font and typography ==========*/
@@ -101,9 +101,10 @@ a {
 .container {
   display: flex;
   justify-content: center;
-  max-width: 140px;
   margin-left: var(--mb-1);
   margin-right: var(--mb-1);
+  background-color: transparent;
+  padding:10px 0px;
 }
 
 .grid {
@@ -112,7 +113,7 @@ a {
 
 /*=============== CLOCK ===============*/
 .clock__container {
-  height: 50vh;
+  height: 30vh;
   grid-template-rows: 1fr max-content;
 }
 

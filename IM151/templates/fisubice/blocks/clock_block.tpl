@@ -1,16 +1,43 @@
-<center>
-<object classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000"
-codebase="http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=4,0,2,0"
-  id="clock" width="140" height="140">
-  <param name="movie" value="images/Clock.swf">
-  <param name="bgcolor" value="#ffffff">
-  <param name="quality" value="high">
-  <param name="allowscriptaccess" value="samedomain">
-  <param name="wmode" value="transparent">
-  <embed type="application/x-shockwave-flash"
-   pluginspage="http://www.macromedia.com/go/getflashplayer"
-   width="140" height="140"
-   name="clock" src="images/Clock.swf"
-   bgcolor="#ffffff" quality="high"
-   swLiveConnect="true" allowScriptAccess="samedomain"></embed>
-</object></center>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css">
+<link rel="stylesheet" href="{TEMPLATE}assets/css/clock.css">
+
+	<div style="margin: auto;">
+        <section class="clock container">
+            <div class="clock__container grid">
+                <div class="clock__content grid">
+                    <div class="clock__circle">
+                        <span class="clock__twelve"></span>
+                        <span class="clock__three"></span>
+                        <span class="clock__six"></span>
+                        <span class="clock__nine"></span>
+    
+                        <div class="clock__rounder"></div>
+                        <div class="clock__hour" id="clock-hour"></div>
+                        <div class="clock__minutes" id="clock-minutes"></div>
+                        <div class="clock__seconds" id="clock-seconds"></div>
+                    </div>
+
+                    <div>
+                        <div class="clock__text">
+                            <div class="clock__text-hour" id="text-hour"></div>
+                            <div class="clock__text-minutes" id="text-minutes"></div>
+                            <div class="clock__text-ampm" id="text-ampm"></div>
+                        </div>
+    
+                        <div class="clock__date">
+                            <!-- <span id="date-day-week"></span> -->
+                            <span id="date-day"></span>
+                            <span id="date-month"></span>
+                            <span id="date-year"></span>
+                        </div>
+                    </div>
+                </div>                
+                <a href="https://www.integramod.com" target="_blank" class="clock__logo">IntegraMOD</a>
+            </div>
+        </section>
+        </div>
+        <!--==================== MAIN JS ====================-->
+        <script src="{TEMPLATE}assets/js/clock.js"></script>
+    </body>
+</html>

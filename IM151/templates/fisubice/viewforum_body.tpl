@@ -5,8 +5,8 @@
       </div>
     </div>
      <div class="row"> 
-      <div class="col pl-0 text-left maintitle"><a href="{U_VIEW_FORUM}">{FORUM_NAME}</a></div>
-      <div class="col text-right gensmall nw">{L_MODERATOR}: {MODERATORS}<br />{LOGGED_IN_USER_LIST}<br /><strong><a href="{U_MARK_READ}">{L_MARK_TOPICS_READ}</a></strong></div>
+      <div class="col ps-0 text-start maintitle"><a href="{U_VIEW_FORUM}">{FORUM_NAME}</a></div>
+      <div class="col text-end gensmall nw">{L_MODERATOR}: {MODERATORS}<br />{LOGGED_IN_USER_LIST}<br /><strong><a href="{U_MARK_READ}">{L_MARK_TOPICS_READ}</a></strong></div>
     </div>
   </div>
 
@@ -15,11 +15,11 @@
   <div class="container-fluid mb-3 px-0">
     <div class="row"> 
       <div class="col">
-        <!-- BEGIN is_auth_post --> 
-	    <a class="postbtn" href="{U_POST_NEW_TOPIC}"><i class="fa fa-file-o fa1 mr-1" aria-hidden="true"></i>{L_POST_NEW_TOPIC}</a>
+        <!-- BEGIN is_auth_post -->
+		<a class="postbtn" href="{U_POST_NEW_TOPIC}"><i class="fa-regular fa-file fa1 me-1"></i>{L_POST_NEW_TOPIC}</a>
 	    <!-- END is_auth_post -->
       </div>
-      <div class="col nav text-right">
+      <div class="col nav text-end">
 	    <!-- BEGIN switch_banner_13 -->
 	    {BANNER_13_IMG}<br />
 	    <!-- END switch_banner_13 -->
@@ -34,29 +34,29 @@
 {TOPICS_LIST_BOX}
 </form> 
 
-  <div class="container-fluid pl-0">
+  <div class="container-fluid ps-0">
     <div class="row"> 
       <div class="col-2">
-	    <div class="nw text-left"><a class="postbtn" href="{U_POST_NEW_TOPIC}"><i class="fa fa-file-o fa1 mr-1" aria-hidden="true"></i>{L_POST_NEW_TOPIC}</a></div>
+	    <div class="nw text-start"><a class="postbtn" href="{U_POST_NEW_TOPIC}"><i class="fa-regular fa-file fa1 me-1"></i>{L_POST_NEW_TOPIC}</a></div>
 	  </div>
-      <div class="col mb-0 pr-0 text-right gensmall"><b>{PAGINATION}</b><br />{PAGE_NUMBER}</div>
+      <div class="col mb-0 pe-0 text-end gensmall"><b>{PAGINATION}</b><br />{PAGE_NUMBER}</div>
     </div>
     <div class="row"> 
-      <div class="col pl-3 my-auto nav"><a href="{U_INDEX}">{L_INDEX}</a>{NAV_CAT_DESC}</div>
-      <div class="col gensmall text-right pr-0">{S_TIMEZONE}</div>
+      <div class="col ps-3 my-auto nav"><a href="{U_INDEX}">{L_INDEX}</a>{NAV_CAT_DESC}</div>
+      <div class="col gensmall text-end pe-0">{S_TIMEZONE}</div>
     </div>
   </div>
 
-  <div class="container-fluid pl-0 my-2">
+  <div class="container-fluid ps-0 my-2">
     <div class="row"> 
-      <div class="col text-right">{JUMPBOX}</div>
+      <div class="col text-end">{JUMPBOX}</div>
 	</div>
   </div>
 
   <!-- BEGIN ratingsbox -->
-  <div class="container-fluid pr-0">
+  <div class="container-fluid pe-0">
     <div class="row"> 
-      <div class="col pr-0 gen text-right">
+      <div class="col pe-0 gen text-end">
 		<form method="get" name="ratingsbox" action="{ratingsbox.U_RATINGS}">
 		<input type="hidden" name="forum_id" value="{FORUM_ID}">
 		<select name="type">
@@ -92,6 +92,6 @@
 	      <div class="col nw"><img src="{FOLDER_LOCKED_IMG}" alt="{L_NO_NEW_POSTS_LOCKED}" />&nbsp;{L_NO_NEW_POSTS_LOCKED}</div>
 		</div>
   	  </div>
-      <div class="col-5 gensmall text-right">{S_AUTH_LIST}</div>
+      <div class="col-5 gensmall text-end">{S_AUTH_LIST}</div>
     </div>
   </div>
