@@ -252,17 +252,14 @@ $template->assign_vars(array(
 );
 $template->pparse("approval_header");
 
-$mode = ($_GET['mode']) ? $_GET['mode'] : $_POST['mode']; 
-$s = ($_GET['s']) ? $_GET['s'] : $_POST['s'];
-$p = ($_GET['p']) ? $_GET['p'] : $_POST['p'];
-$id =($_GET['id']) ? $_GET['id'] : $_POST['id'];
-$submit = ( !empty($_POST['submit']) ) ? true : false;
+$mode = !empty($_GET['mode']) ? $_GET['mode'] : ( isset($_POST['mode']) ? $_POST['mode'] : '' );
+$s = !empty($_GET['s']) ? $_GET['s'] : ( isset($_POST['s'] ) ? $_POST['s'] : '' );
+$p = !empty($_GET['p']) ? $_GET['p'] : ( isset($_POST['p'] ) ? $_POST['p'] : '' );
+$id = !empty($_GET['id']) ? $_GET['id'] : ( isset($_POST['id'] ) ? $_POST['id'] : '' );
+$submit = ( !empty($_POST['submit']) );
 
 switch( $mode )
 {
-	default:
-		$modevar['default'] = true;
-	break;
 	case 'd':
 		$modevar['d'] = true;
 	break;
@@ -278,8 +275,11 @@ switch( $mode )
 	case 'f':
 		$modevar['f'] = true;
 	break;
+	default:
+		$modevar['default'] = true;
+	break;
 }
-if ( $modevar['default'] == true )
+if ( !empty($modevar['default']) )
 {
 		//portal page w/ all info & links
 		$template->set_filenames(array(
@@ -384,7 +384,7 @@ if ( $modevar['default'] == true )
 		
 		$template->pparse("default");
 }
-if ( $modevar['d'] == true )
+if ( !empty($modevar['d']) && $modevar['d'] == true )
 {
 		$s = ($_GET['s']) ? $_GET['s'] : $_POST['s'];
 		$p = ($_GET['p']) ? $_GET['p'] : $_POST['p'];
@@ -1170,7 +1170,7 @@ if ( $modevar['d'] == true )
 		}
 
 }
-if ( $modevar['u'] == true )
+if ( !empty($modevar['u']) && $modevar['u'] == true )
 {
 		//list of users currently under moderation, list of users auto-approved, paginated
 		$template->set_filenames(array(
@@ -1204,10 +1204,10 @@ if ( $modevar['u'] == true )
 			)
 		);
 
-		$s = ($_GET['s']) ? $_GET['s'] : $_POST['s'];
-		$p = ($_GET['p']) ? $_GET['p'] : $_POST['p'];
-		$id =($_GET['id']) ? $_GET['id'] : $_POST['id'];
-		$submit = ( !empty($_POST['submit']) ) ? true : false;
+		$s = !empty($_GET['s']) ? $_GET['s'] : ( isset($_POST['s']) ? $_POST['s'] : '' );
+		$p = !empty($_GET['p']) ? $_GET['p'] : ( isset($_POST['p']) ? $_POST['p'] : '' );
+		$id = !empty($_GET['id']) ? $_GET['id'] : ( isset($_POST['id']) ? $_POST['id'] : '' );
+		$submit = ( !empty($_POST['submit']) );
 
 		switch( $s )
 		{
@@ -1540,7 +1540,7 @@ if ( $modevar['u'] == true )
 				{
 					$approve_row_class = ($approve_row_class == 'row1') ? 'row2' : 'row1';
 					$template->assign_block_vars("moderated.moderated_users", array(
-							"S_ID" => $approve_row2['user_id'],
+							"S_ID" => ( isset($approve_row2['user_id']) ? $approve_row2['user_id'] : null ),
 							"S_USERNAME" => $approve_row2['username'],
 							"S_LINK" => append_sid("admin_approve.$phpEx" . "?mode=d&s=ud&id=" . $approve_row['user_id']),
 							"S_REMOVE" => append_sid("admin_approve.$phpEx" . "?mode=u&s=rm&id=" . $approve_row['user_id']),
@@ -1667,17 +1667,17 @@ if ( $modevar['u'] == true )
 		}
 		$template->pparse("users");
 }
-if ( $modevar['t'] == true )
+if ( !empty($modevar['t']) && $modevar['t'] == true )
 {	
 		//list of topics currently under moderation, list of topics auto-approved, paginated, searchable
 		$template->set_filenames(array(
 			"topics" => "admin/approve_topics.tpl")
 		);
 
-		$s = ($_GET['s']) ? $_GET['s'] : $_POST['s'];
-		$p = ($_GET['p']) ? $_GET['p'] : $_POST['p'];
-		$id =($_GET['id']) ? $_GET['id'] : $_POST['id'];
-		$submit = ( !empty($_POST['submit']) ) ? true : false;
+		$s = !empty($_GET['s']) ? $_GET['s'] : ( isset($_POST['s'] ) ? $_POST['s'] : '' );
+		$p = !empty($_GET['p']) ? $_GET['p'] : ( isset($_POST['p'] ) ? $_POST['p'] : '' );
+		$id = !empty($_GET['id']) ? $_GET['id'] : ( isset($_POST['id'] ) ? $_POST['id'] : '' );
+		$submit = ( !empty($_POST['submit']) );
 
 		$template->assign_vars(array(
 				"L_MODERATION" => $lang['approve_admin_topic_moderation'],
@@ -2328,7 +2328,7 @@ if ( $modevar['t'] == true )
 		}
 		$template->pparse("topics");
 }
-if ( $modevar['p'] == true )
+if ( !empty($modevar['p']) &&$modevar['p'] == true )
 {	
 		//list of posts currently under moderation, paginated, searchable
 		$template->set_filenames(array(
@@ -2354,10 +2354,10 @@ if ( $modevar['p'] == true )
 			)
 		);
 
-		$s = ($_GET['s']) ? $_GET['s'] : $_POST['s'];
-		$p = ($_GET['p']) ? $_GET['p'] : $_POST['p'];
-		$id =($_GET['id']) ? $_GET['id'] : $_POST['id'];
-		$submit = ( !empty($_POST['submit']) ) ? true : false;
+		$s = !empty($_GET['s']) ? $_GET['s'] : ( isset($_POST['s'] ) ? $_POST['s'] : '' );
+		$p = !empty($_GET['p']) ? $_GET['p'] : ( isset($_POST['p'] ) ? $_POST['p'] : '' );
+		$id = !empty($_GET['id']) ? $_GET['id'] : ( isset($_POST['id'] ) ? $_POST['id'] : '' );
+		$submit = ( !empty($_POST['submit']) );
 		
 		if ( $s == "ap" )
 		{	
@@ -2523,7 +2523,7 @@ if ( $modevar['p'] == true )
 		$template->pparse("posts");
 }//mode = p
 
-if ( $modevar['f'] == true )
+if ( !empty($modevar['f']) && $modevar['f'] == true )
 {
     // V: ok, so, Approve Mod doesn't deal with forums_extend correctly.
   // Replace this page with the actual admin_forums page, which has the simpler "Edit" button, and which deals with CH.

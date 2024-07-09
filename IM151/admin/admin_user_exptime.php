@@ -43,8 +43,6 @@
 ***************************************************************************/
  
 
-define('IN_PHPBB', 1);
-
 if( !empty($setmodules) )
 {
 	$filename = basename(__FILE__);
@@ -52,6 +50,8 @@ if( !empty($setmodules) )
 
 	return;
 }
+define('IN_PHPBB', 1);
+
 
 //
 // Let's set the root dir for phpBB
@@ -277,8 +277,8 @@ else
 		'U_SEARCH_USER' => append_sid("./../search.$phpEx?mode=searchuser"), 
 
 		'S_USER_ACTION' => append_sid("admin_user_exptime.$phpEx"),
-		'S_USER_SELECT' => $select_list)
-	);
+		'S_USER_SELECT' => ( isset($select_list ) ? $select_list : '' ),
+	));
 	$template->pparse('body');
 }
 

@@ -148,7 +148,7 @@ if( $mode == 'edit')
 		'L_LW_MONEY' => $lang['LW_ACCT_AMOUNT'],
 		'L_LW_PLUS_MINUS' => $lang['LW_ACCT_PLUS_MINUS'],
 		'L_LW_TXNID' => $lang['LW_ACCT_TXNID'],
-		'L_LW_POSTID' => $lang['LW_ACCT_POSTID'],
+		'L_LW_POSTID' => ( isset($lang['LW_ACCT_POSTID']) ? $lang['LW_ACCT_POSTID'] : 'Acc postid' ),
 		'L_LW_STATUS' => $lang['LW_ACCT_STATUS'],
 		'L_LW_COMMENT' => $lang['LW_ACCT_COMMENT'],
 		'L_LW_DATE' => $lang['NP_DATE'],
@@ -275,7 +275,8 @@ else
 		'U_SEARCH_USER' => append_sid("./../search.$phpEx?mode=searchuser"), 
 
 		'S_USER_ACTION' => append_sid("admin_lwacctrecords.$phpEx"),
-		'S_USER_SELECT' => $select_list)
+		'S_USER_SELECT' => ( isset($select_list) ? $select_list : '' )
+	)
 	);
 	$template->pparse('body');
 }

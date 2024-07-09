@@ -403,7 +403,7 @@ if ($mode == 'mod_edit')
 		$template->assign_block_vars('switch_groups_there', array());
 	}
 
-	if (count($added_groups['group_id']) == 0)
+	if (empty($added_groups['group_id']))
 	{
 		$group_added_select = $lang['No_groups_selected'];
 	}
@@ -522,7 +522,7 @@ if ($mode == 'mod_edit')
 
 		// Set Language
 		$keys = array();
-		eval('\$current_lang = $' . $mod_info['short_name'] . ';');
+		$current_lang = ${$mod_info['short_name']};
 		
 		if (is_array($current_lang))
 		{
@@ -572,18 +572,21 @@ if ($mode == 'mod_edit')
 	
 		$dir = @opendir($phpbb_root_path . 'modules/pakfiles');
 
-		while($file = @readdir($dir))
+		if ($dir)
 		{
-			if( !@is_dir($phpbb_root_path . 'modules/pakfiles' . '/' . $file) )
+			while($file = @readdir($dir))
 			{
-				if ( eregi('.pak$', $file) )
+				if( !@is_dir($phpbb_root_path . 'modules/pakfiles' . '/' . $file) )
 				{
-					$module_paks[] = $file;
+					if ( eregi('.pak$', $file) )
+					{
+						$module_paks[] = $file;
+					}
 				}
 			}
-		}
 
-		@closedir($dir);
+			@closedir($dir);
+		}
 
 		if (count($module_paks) > 0)
 		{

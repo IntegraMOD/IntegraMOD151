@@ -154,8 +154,7 @@ if ( in_array( $mode, array('stpl', 'edit', 'delete') ) )
 	$dir				= array();
 	$head_stylesheet	= array();
 	$imagefile			= array();
-	@reset($sub_templates);
-	while ( list($key, $subtpl) = each($sub_templates) )
+	foreach ($sub_templates as $key => $subtpl)
 	{
 		$row['name']			= $subtpl['name'];
 		$row['dir']				= $subtpl['dir'];
@@ -246,14 +245,14 @@ if ($mode == 'edit')
 	}
 	else if ($submit)
 	{
-		if ( !$delete)
+		if (empty($delete))
 		{
 			// get the screen vars
 			$name				= trim(str_replace('"', '&quot;', strip_tags($_POST['name'])));
 			$dir				= trim(str_replace('"', '&quot;', strip_tags($_POST['dir'])));
 			$head_stylesheet	= trim(str_replace('"', '&quot;', strip_tags($_POST['head_stylesheet'])));
 			$imagefile			= trim(str_replace('"', '&quot;', strip_tags($_POST['imagefile'])));
-			$board_ids			= $_POST['board_ids'];
+			$board_ids			= isset($_POST['board_ids']) ? $_POST['board_ids'] : [];
 
 			// control
 			if ($name == '') message_die(GENERAL_ERROR, $lang['subtpl_error_name_missing'] );
@@ -308,8 +307,7 @@ if ($mode == 'edit')
 		$texte  = "<?php\n";
 		@fputs( $f, $texte );
 		@fputs( $f, "\n" );
-		@reset($sub_templates);
-		while ( list($key, $value) = each($sub_templates) )
+		foreach ($sub_templates as $key => $value)
 		{
 			$nat	= substr( $key, 0, 1);
 			$id		= intval( substr( $key, 1) );
@@ -368,7 +366,7 @@ if ($mode == 'edit')
 			'MAIN_STYLE'			=> $stylerow['style_name'],
 			'L_NAME'				=> $lang['subtpl_name'],
 			'L_DIR'					=> $lang['subtpl_dir'],
-			'L_HEAD_STYLESHEET'		=> $lang['Stylesheet'],
+			'L_HEAD_STYLESHEET'		=> ( isset($lang['Stylesheet']) ? $lang['Stylesheet'] : 'Stylesheet' ),
 			'L_IMAGEFILE'			=> $lang['subtpl_imagefile'],
 			'L_SUBMIT'				=> $lang['Submit'],
 			'L_CANCEL'				=> $lang['Cancel'],
@@ -381,15 +379,22 @@ if ($mode == 'edit')
 		// look for sub-dir
 		$main_tpl = opendir( $tpl_path );
 		$dirs = array();
-		while ( $file = readdir($main_tpl) ) if ( is_dir($tpl_path . '/' . $file) && !in_array( $file, array('.', '..', 'admin', 'images') ) ) $dirs[] = $file;
-		closedir($main_tpl);
+		if ($main_tpl)
+		{
+			while ( $file = readdir($main_tpl) )
+			{
+				if ( is_dir($tpl_path . '/' . $file) && !in_array( $file, array('.', '..', 'admin', 'images') ) )
+					$dirs[] = $file;
+			}
+			closedir($main_tpl);
+		}
 
 		// build the list
 		$select = ( $subtpl_id == -1 ) ? ' selected="selected"' : '';
 		$s_dir = '<select name="dir"><option value=""' . $select . '>' . $lang['Select_dir'] . '</option>';
 		for ($i=0; $i < count($dirs); $i++) 
 		{
-			$select = ( $subtpls[$subtpl_id]['dir'] == $dirs[$i] ) ? ' selected="selected"' : '';
+			$select = ( $subtpl_id != -1 && $subtpls[$subtpl_id]['dir'] == $dirs[$i] ) ? ' selected="selected"' : '';
 			$s_dir .= '<option value="' . $dirs[$i] . '"' . $select . '>' . $dirs[$i] . '</option>';
 		}
 		$s_dir .= '</select>';
@@ -407,7 +412,7 @@ if ($mode == 'edit')
 		for ($i=0; $i < count($board); $i++)
 		{
 			$checked = '';
-			if ( @in_array($board[$i]['type'] . $board[$i]['id'], $subtpls[$subtpl_id]['keys']) ) $checked = ' checked="checked"';
+			if ( $subtpl_id != -1 && @in_array($board[$i]['type'] . $board[$i]['id'], $subtpls[$subtpl_id]['keys']) ) $checked = ' checked="checked"';
 
 			$template->assign_block_vars('boardrow', array(
 				'ROW_CLASS'		=> ( $board[$i]['type'] == POST_CAT_URL ) ? 'cat' : 'row1',
@@ -424,7 +429,7 @@ if ($mode == 'edit')
 		$template->assign_vars(array(
 			'L_USAGE'			=> $lang['subtpl_usage'],
 			'L_FORUM'			=> $lang['Forum'],
-			'L_TEMPLATE'		=> $lang['Style'],
+			'L_TEMPLATE'		=> ( isset($lang['Style']) ? $lang['Style'] : 'Style' ),
 			'MAX_SPAN'			=> $max_inc+1,
 			'MAX_SPAN_FULL'		=> $max_inc+2,
 			'S_CONFIG_ACTION'	=> append_sid("admin_subtemplates.$phpEx"),
@@ -454,7 +459,7 @@ if ($mode == 'stpl')
 		'MAIN_STYLE'				=> $stylerow['style_name'],
 		'L_NAME'					=> $lang['subtpl_name'],
 		'L_DIR'						=> $lang['subtpl_dir'],
-		'L_HEAD_STYLESHEET'			=> $lang['Stylesheet'],
+		'L_HEAD_STYLESHEET'			=> ( isset($lang['Stylesheet']) ? $lang['Stylesheet'] : 'Stylesheet' ),
 		'L_IMAGEFILE'				=> $lang['subtpl_imagefile'],
 		'L_USAGE'					=> $lang['subtpl_usage'],
 		'L_EDIT'					=> $lang['Edit'],
@@ -530,7 +535,7 @@ if ($mode == 'stpl')
 	$template->assign_vars(array(
 		'L_USAGE'			=> $lang['subtpl_usage'],
 		'L_FORUM'			=> $lang['Forum'],
-		'L_TEMPLATE'		=> $lang['Style'],
+		'L_TEMPLATE'		=> ( isset($lang['Style']) ? $lang['Style'] : 'Style' ),
 		'MAX_SPAN'			=> $max_inc+1,
 		'MAX_SPAN_FULL'		=> $max_inc+1+count($subtpls)+1,
 		'TPL_SPAN'			=> $span,
@@ -552,8 +557,8 @@ if ($mode == 'style')
 		'L_SUBTEMPLATE_TITLE'		=> $lang['Subtemplate'],
 		'L_SUBTEMPLATE_EXPLAIN'		=> $lang['Subtemplate_explain'],
 		'L_CHOOSE_MAIN_STYLE'		=> $lang['Choose_main_style'],
-		'L_STYLE'					=> $lang['Style'],
-		'L_TEMPLATE'				=> $lang['Template'],
+		'L_STYLE'					=> ( isset($lang['Style']) ? $lang['Style'] : 'Style' ),
+		'L_TEMPLATE'				=> ( isset($lang['Template']) ? $lang['Template'] : 'Template' ),
 		'S_HIDDEN_FIELDS'			=> '',
 		'NAV_SEPARATOR'				=> $nav_separator,
 		)

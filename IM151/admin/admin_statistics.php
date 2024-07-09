@@ -325,18 +325,21 @@ if (($mode == 'mod_install') && (!$submit))
 	
 		$dir = @opendir($phpbb_root_path . 'modules/pakfiles');
 
-		while($file = @readdir($dir))
+		if ($dir)
 		{
-			if( !@is_dir($phpbb_root_path . 'modules/pakfiles' . '/' . $file) )
+			while($file = @readdir($dir))
 			{
-				if ( eregi('.pak$', $file) )
+				if( !@is_dir($phpbb_root_path . 'modules/pakfiles' . '/' . $file) )
 				{
-					$module_paks[] = $file;
+					if ( eregi('.pak$', $file) )
+					{
+						$module_paks[] = $file;
+					}
 				}
 			}
-		}
 
-		@closedir($dir);
+			@closedir($dir);
+		}
 
 		if (count($module_paks) > 0)
 		{

@@ -275,7 +275,7 @@ switch ($_GET['mode']) {
 	
 	case "contact":
 	
-	if ( $_POST['selected_usr'] != "")
+	if ( !empty($_POST['selected_usr']) )
 	{
 	
 	$date = time();

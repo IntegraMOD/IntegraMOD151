@@ -1846,7 +1846,7 @@ else if (($mode == 'display_backup') || ($mode == 'download_backup'))
 else if (($mode == 'process' ) || ($mode == 'display_file') || ($mode == 'download_file'))
 {
 	// 0.0.11 preview mode
-	$preview = (isset($_POST['preview'])) ? 1 : ($mode == 'display_file') ? 1 : 0;
+	$preview = (isset($_POST['preview'])) ? 1 : ($mode == 'display_file');
 
 	$current_command = '';
 	$commands = array();

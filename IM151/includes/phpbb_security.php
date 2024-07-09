@@ -1203,8 +1203,9 @@ function phpBBSecurity_DBBackup()
   {
     if ( ($last_backup != $today) && (date('H') >= $backup_time) )
     {				
-      $filename = $_SERVER['DOCUMENT_ROOT'] . $board_config['script_path'] . $backup_folder ."/". $backup_file  ."-". date('Y-m-d') .".sql";
-      file_put_contents($filename, "--<?php\n\n\n");
+      // V: add .php so that people can't just query backups from outside
+      $filename = $_SERVER['DOCUMENT_ROOT'] . $board_config['script_path'] . $backup_folder ."/". $backup_file  ."-". date('Y-m-d') .".sql.php";
+      file_put_contents($filename, "--<?php exit; ?>\n\n\n-- NOTE: This is a REAL SQL FILE. You can just rename it to .sql");
       system("/usr/bin/mysqldump -u". $dbuser ." -p". $dbpasswd ." -h ". $dbhost ." ". $dbname ." >> ". $filename, $fp);
 
       if ($fp == 0)

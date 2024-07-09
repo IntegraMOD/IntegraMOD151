@@ -2,14 +2,6 @@
 
 define('EXPLODE_SEPERATOR_CHAR', '|');
 define('JR_ADMIN_DIR', 'admin/modules/');
-define('COPYRIGHT_NIVISEC_FORMAT',
-'<br /><span class="copyright"><center>
-	%s 
-	&copy; %s 
-	<a href="http://www.nivisec.com" class="copyright">Nivisec.com</a>.
-	</center></span>'
-);
-
 
 if (!function_exists('copyright_nivisec'))
 {

@@ -56,7 +56,7 @@ while ( $row = $db->sql_fetchrow($result) )
     
    $new[$config_name] = $default_config[$config_name]; 
 
-   if ( $allowed_array[$config_name] && 
+   if ( !empty($allowed_array[$config_name]) && 
        isset($_POST['submit']) && 
        isset($_POST[$config_name]) ) 
    { 

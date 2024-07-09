@@ -736,7 +736,7 @@ switch( $mode )
 				$alphanum_search_url = append_sid($phpbb_root_path . "admin/admin_userlist.$phpEx?sort=$sort&amp;order=$sort_order&amp;show=$show");
 			}
 
-			if ( ( $alphanum == $temp ) || ( $alpha_range[$i] == $lang['All'] && empty($alphanum) ) )
+			if (( $alpha_range[$i] == $lang['All'] && empty($alphanum) ) || ( !empty($alphanum) && $alphanum == $temp ) )
 			{
 				$alpha_range[$i] = '<b>' . $alpha_range[$i] . '</b>';
 			}
@@ -751,7 +751,10 @@ switch( $mode )
 		}
 
 		$hidden_fields = '<input type="hidden" name="start" value="' . $start . '">';
-		$hidden_fields .= '<input type="hidden" name="alphanum" value="' . $alphanum . '">';
+		if (!empty($alphanum))
+		{
+			$hidden_fields .= '<input type="hidden" name="alphanum" value="' . $alphanum . '">';
+		}
 
 		//
 		// set up template varibles
@@ -787,7 +790,7 @@ switch( $mode )
 			'S_SHOW' => $show,
 			'L_SORT_BY' => $lang['Sort_by'],
 			'L_USER_ID' => $lang['User_id'],
-			'L_USER_LEVEL' => $lang['User_level'],
+			'L_USER_LEVEL' => ( isset($lang['User_level'] ) ? $lang['User_level'] : 'User_level' ),
 			'L_ASCENDING' => $lang['Ascending'],
 			'L_DESCENDING' => $lang['Descending'],
 			'L_SHOW' => $lang['Show'],
@@ -899,7 +902,7 @@ switch( $mode )
 			// setup user row template varibles
 			//
 			$template->assign_block_vars('user_row', array(
-				'ROW_NUMBER' => $i + ( $_GET['start'] + 1 ),
+				'ROW_NUMBER' => $i + ( ( isset($_GET['start']) ? $_GET['start'] : 0 ) + 1 ),
 				'ROW_CLASS' => ( !($i % 2) ) ? $theme['td_class1'] : $theme['td_class2'],
 
 				'USER_ID' => $row['user_id'],

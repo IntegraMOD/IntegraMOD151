@@ -346,7 +346,7 @@ if (NOTIFY_USERS && !empty($user_email))
 	$name_list .= (($name_list) ? ' , ':'</br>') .$username;
 	$i++;
 }
-$messages .= ((DEBUG) ? '<b>Mode:['.$mode.']</b> </br>':'').(($i) ? sprintf($lang['Prune_users_number'],$i).$name_list : $lang['Prune_no_users']);
+$messages = ((DEBUG) ? '<b>Mode:['.$mode.']</b> </br>':'').(($i) ? sprintf($lang['Prune_users_number'],$i).$name_list : $lang['Prune_no_users']);
 message_die(GENERAL_MESSAGE,$messages.'</br>'.sprintf($lang['Click_return_forum'],'<A HREF="'.append_sid("admin/index.$phpEx").'">','</A>')
 ); 
 ?>

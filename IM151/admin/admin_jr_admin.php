@@ -255,7 +255,7 @@ if (!empty($user_id) && !isset($_POST['update_user']))
 	}
 	$jr_admin_row = jr_admin_get_user_info($user_id);
 	$module_list = jr_admin_get_module_list();
-	$user_module_list = explode(EXPLODE_SEPERATOR_CHAR, $jr_admin_row['user_jr_admin']);
+	$user_module_list = !empty($jr_admin_row['user_jr_admin']) ? explode(EXPLODE_SEPERATOR_CHAR, $jr_admin_row['user_jr_admin']) : [];
 	if ($debug)
 	{
 		//Dump out the get and post vars if in debug mode
@@ -333,10 +333,10 @@ if (!empty($user_id) && !isset($_POST['update_user']))
 	'USERNAME' => $row['username'],
 	'DISABLED' => $disabled,
 	'DISABLED_TEXT' => $disabled_text,
-	'START_DATE' => create_date($board_config['default_dateformat'], $jr_admin_row['start_date'], $board_config['board_timezone']),
-	'UPDATE_DATE' => create_date($board_config['default_dateformat'], $jr_admin_row['update_date'], $board_config['board_timezone']),
-	'NOTES' => $jr_admin_row['admin_notes'],
-	'NOTES_VIEW_CHECKED' => ($jr_admin_row['notes_view']) ? 'checked="checked"' : '',
+	'START_DATE' => create_date($board_config['default_dateformat'], ( isset($jr_admin_row['start_date'] ) ? $jr_admin_row['start_date'] : null ), $board_config['board_timezone']),
+	'UPDATE_DATE' => create_date($board_config['default_dateformat'], ( isset($jr_admin_row['update_date'] ) ? $jr_admin_row['update_date'] : null ), $board_config['board_timezone']),
+	'NOTES' => ( isset($jr_admin_row['admin_notes'] ) ? $jr_admin_row['admin_notes'] : '' ),
+	'NOTES_VIEW_CHECKED' => !empty($jr_admin_row['notes_view']) ? 'checked="checked"' : '',
 	'ADMIN_TEXT' => ($row['user_level'] == ADMIN) ? $lang['Admin_Note'] : ''
 	));
 	

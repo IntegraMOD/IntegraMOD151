@@ -28,7 +28,7 @@ define('IN_PHPBB', TRUE);
 		{
 	$file = basename(__FILE__);
 	
-	$module['Tools']['File Status']    = append_sid("modules/admin_file_status.$phpEx?");		
+	$module['Tools']['File Status']    = append_sid("admin_file_status.$phpEx?");		
 
 	return;
 		}

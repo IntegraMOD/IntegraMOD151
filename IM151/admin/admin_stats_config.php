@@ -218,15 +218,16 @@ if ($mode == 'config')
 		'L_RESET_CACHE_EXPLAIN' => $lang['Reset_cache_explain'],
 	
 		'RETURN_LIMIT' => $stats_config['return_limit'],
-		'MODULE_PAGINATION' => $stats_config['modules_per_page'],
+		'MODULE_PAGINATION' => ( isset($stats_config['modules_per_page']) ? $stats_config['modules_per_page'] : '' ),
 		'S_ACTION' => append_sid('admin_stats_config.'.$phpEx.'?mode='.$mode),
-		'MESSAGE' => $message)
+		'MESSAGE' => ( isset($message) ? $message : '' )
+	)
 	);
 }
 
 $template->assign_vars(array(
 	'VIEWED_INFO' => sprintf($lang['Viewed_info'], $stats_config['page_views']),
-	'INSTALL_INFO' => sprintf($lang['Install_info'], create_date($board_config['default_dateformat'], $stats_config['install_date'], $board_config['board_timezone'])),
+	//'INSTALL_INFO' => sprintf($lang['Install_info'], create_date($board_config['default_dateformat'], $stats_config['install_date'], $board_config['board_timezone'])),
 	'VERSION_INFO' => sprintf($lang['Version_info'], $stats_config['version']))
 );
 

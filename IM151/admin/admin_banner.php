@@ -317,16 +317,17 @@ if( $mode!= "")
 		default:	$rule_type=$lang['Not_specify'];
 		}
 		$n=0;
-		while ( $lang['Banner_spot'][$n] )
+		$s_banner_spot = '';
+		while ( !empty($lang['Banner_spot'][$n]) )
 		{
 			$s_banner_spot.= ( $banner_info['banner_spot']==$n ) ? 
 			'<option value="'.$n.'" SELECTED>* '.$lang['Banner_spot'][$n] : 
-			'<option value="'.$n.'" >'.$lang['Banner_spot'][$n];
+			'<option value="'.$n.'" >'. $lang['Banner_spot'][$n];
 			$n++;
 		}
 		$n='-1';
 		$s_level='<select name="banner_level">';
-		while ( $lang['Banner_level'][$n] )
+		while ( !empty($lang['Banner_level'][$n]) )
 		{
 			$s_level.= ( $banner_info['banner_level']==$n ) ? 
 			'<option value="'.$n.'" SELECTED>* '.$lang['Banner_level'][$n] : 
@@ -336,7 +337,7 @@ if( $mode!= "")
 		$s_level .='</select>';			
 		$n=0;
 		$s_level_type = '<select name="banner_level_type">';
-		while ( $lang['Banner_level_type'][$n] )
+		while ( !empty($lang['Banner_level_type'][$n]) )
 		{
 			$s_level_type.= ( $banner_info['banner_level_type']==$n ) ? 
 			'<option value="'.$n.'" SELECTED> '.$lang['Banner_level_type'][$n] : 
@@ -368,7 +369,7 @@ if( $mode!= "")
 		$db->sql_freeresult($result);
 
 		$forum_select_list = '<select name="' . POST_FORUM_URL . '">';
-		$forum_select_list .= '<option value="0">' . $lang['All_available'] . '</option>';
+		$forum_select_list .= '<option value="0">' . ( isset($lang['All_available']) ? $lang['All_available'] : 'All_available' ) . '</option>';
 		for($i = 0; $i < count($forum_rows); $i++)
 		{
 			$forum_select_list .= '<option value="' . $forum_rows[$i]['forum_id'] . '">' . $forum_rows[$i]['forum_name'] . '</option>';
@@ -412,7 +413,7 @@ if( $mode!= "")
 			'L_BANNER_EXAMPLE_EXPLAIN' => $lang['Banner_example_explain'],
 
 			'BANNER_EXAMPLE' => $banner_example,
-			'U_BANNER' => ( preg_match("/http/",strtolower($banner_info['/banner_name/']))) ? $banner_info['/banner_name/'] : '/..//'.$banner_info['/banner_name/'],
+			'U_BANNER' => ( preg_match("/http/",strtolower($banner_info['banner_name']))) ? $banner_info['banner_name'] : '/..//'.$banner_info['banner_name'],
 			'L_BANNER_DESCRIPTION' => $lang['Banner_description'],
 			'L_BANNER_DESCRIPTION_EXPLAIN' => $lang['Banner_description_explain'],
 			'BANNER_DESCRIPTION' => $banner_info['banner_description'],
@@ -438,7 +439,7 @@ if( $mode!= "")
 			'L_BANNER_VIEW' => $lang['Banner_view'],
 			'BANNER_VIEW' => $banner_info['banner_view'],
 			'L_BANNER_COMMENT' => $lang['Banner_comment'],
-			'L_BANNER_COMMENT_EXPLAIN' => $lang['Banner_comment_explain'],
+			'L_BANNER_COMMENT_EXPLAIN' => ( isset($lang['Banner_comment_explain']) ? $lang['Banner_comment_explain'] : 'Banner_comment' ),
 			'BANNER_COMMENT' => $banner_info['banner_comment'],
 			'L_BANNER_URL' => $lang['Banner_url'],
 			'L_BANNER_URL_EXPLAIN' => $lang['Banner_url_explain'],
@@ -459,9 +460,9 @@ if( $mode!= "")
 			'L_BANNER_SHOW_TO_EXPLAIN' => $lang['Show_to_users_explain'],
 			'S_BANNER_SHOW_TO' => sprintf($lang['Show_to_users_select'],$s_level_type,$s_level),
 			'C_NO_TIME' => $c_no_time,
-			'C_BY_TIME' => $c_by_time,
-			'C_BY_WEEK' => $c_by_week,
-			'C_BY_DATE' => $c_by_date,
+			'C_BY_TIME' => ( isset($c_by_time) ? $c_by_time : '' ),
+			'C_BY_WEEK' => ( isset($c_by_week) ? $c_by_week : '' ),
+			'C_BY_DATE' => ( isset($c_by_date) ? $c_by_date : '' ),
 			'L_RULE_TYPE' => $rule_type,
 			'RULE_BEGIN' => $rule_begin,
 			'RULE_END' => $rule_end,
@@ -488,7 +489,7 @@ if( $mode!= "")
 
 			'L_TIME_INTERVAL' => $lang['Time_interval'] ,
 			'L_TIME_INTERVAL_EXPLAIN' => $lang['Time_interval_explain'],
-			'L_TIME_SELECT' => $lang['Time_select'],
+			'L_TIME_SELECT' => ( isset($lang['Time_select']) ? $lang['Time_select'] : 'Time_select' ),
 			'L_TIME_TYPE' => $lang['Time_type'],
 			'L_TIME_TYPE_EXPLAIN' => $lang['Time_type_explain'],
 			'L_TIME_NO' => $lang['No_time'],
@@ -720,7 +721,7 @@ $template->set_filenames(array(
 			'BANNER_CLICKS' => $banners_rows[$i]['banner_click'],
 			'BANNER_VIEW' => $banners_rows[$i]['banner_view'],
 			'BANNER_COMMENT' => $banners_rows[$i]['banner_comment'],
-			'BANNER_SPOT' => $lang['Banner_spot'][$banners_rows[$i]['banner_spot']],
+			'BANNER_SPOT' => ( isset($lang['Banner_spot'][$banners_rows[$i]['banner_spot']]) ? $lang['Banner_spot'][$banners_rows[$i]['banner_spot']] : '' ),
 			'BANNER_ID' => $banner_id,
 			'L_RULE_TYPE' => $rule_type,
 			'RULE_BEGIN' => $rule_begin,

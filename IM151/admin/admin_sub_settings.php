@@ -104,7 +104,7 @@ else
 		'L_SUB_SETTINGS' => $lang['L_SUB_SETTINGS'],
 		'L_SUB_EXTRA_DAYS' => $lang['L_SUB_EXTRA_DAYS'],
 		'L_SUB_EXTRA_DAYS_EXPLAIN' => $lang['L_SUB_EXTRA_DAYS_EXPLAIN'],
-		'SUB_EXTRA_DAYS' => $board_config['extra_days_for_sub'],
+		'SUB_EXTRA_DAYS' => ( isset($board_config['extra_days_for_sub']) ? $board_config['extra_days_for_sub'] : ''),
 
 		'S_SUB_SETTINGS_ACTION' => append_sid("admin_sub_settings.$phpEx"),
 		'S_HIDDEN_FIELDS' => '',

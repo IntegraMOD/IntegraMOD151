@@ -30,8 +30,8 @@ include_once($phpbb_root_path .'extension.inc');
 include_once('pagestart.'. $phpEx);
 include_once($phpbb_root_path .'includes/phpbb_security.'. $phpEx);
 	
-	$action = (isset($_POST['action'])) ? $_POST['action'] : $_GET['action'];
-	$mode 	= (isset($_POST['mode'])) ? $_POST['mode'] : $_GET['mode'];
+	$action = (isset($_POST['action'])) ? $_POST['action'] : ( isset($_GET['action']) ? $_GET['action'] : '' );
+	$mode 	= (isset($_POST['mode'])) ? $_POST['mode'] : ( isset($_GET['mode']) ? $_GET['mode'] : '' );
 	
 	function AdminLinkLength($link, $max)
 		{
@@ -189,7 +189,7 @@ include_once($phpbb_root_path .'includes/phpbb_security.'. $phpEx);
 	$msg = '';
 	$msg .= '<form name="start_searching" method="post" action="admin_security.'. $phpEx .'?mode=search&sid='. $userdata['session_id'] .'">';
 	$msg .= $lang['PS_search_ip'] .'&nbsp;&nbsp;';
-	$msg .= '<input type="text" name="ip" value="'. (($what_ip > '0.0.0.0') ? $what_ip : (($who > '0.0.0.0') ? $who : $what_ip)) .'" class="post"><br>';
+	$msg .= '<input type="text" name="ip" value="'. ((!empty($what_ip) && $what_ip > '0.0.0.0') ? $what_ip : (!empty($who) && ($who > '0.0.0.0') ? $who : ( isset($what_ip) ? $what_ip : '') )) .'" class="post"><br>';
 	$msg .= '<input type="radio" name="match_type" value="1">&nbsp;'. $lang['PS_search_partial'] .'&nbsp;&nbsp;<input type="radio" name="match_type" value="2">&nbsp;'. $lang['PS_search_exact'] .'<br><br>';
 	$msg .= '<input type="hidden" name="action" value="start_search">';	
 	$msg .= '<input type="submit" class="mainoption" value="'. $lang['PS_search_submit'] .'" onclick="document.start_searching.submit()">';
@@ -581,8 +581,8 @@ include_once($phpbb_root_path .'includes/phpbb_security.'. $phpEx);
 		'PS_PASS_MATCH_N'	=> (!$board_config['phpBBSecurity_use_password_match']) ? 'checked="checked"' : '',
 		'PS_L_PASS_LEN'		=> $lang['PS_pass_min_length'],
 		'PS_L_PASS_LEN_E'	=> $lang['PS_pass_min_length_exp'],
-		'PS_PASS_LEN_Y'		=> ($board_config['phpBBSecurity_use_password_length']) ? 'checked="checked"' : '',	
-		'PS_PASS_LEN_N'		=> (!$board_config['phpBBSecurity_use_password_length']) ? 'checked="checked"' : '',
+		'PS_PASS_LEN_Y'		=> !empty($board_config['phpBBSecurity_use_password_length']) ? 'checked="checked"' : '',	
+		'PS_PASS_LEN_N'		=> empty($board_config['phpBBSecurity_use_password_length']) ? 'checked="checked"' : '',
 		'PS_L_PASS_LENGTH'	=> $lang['PS_pass_length'],
 		'PS_L_BACKUP_REMOVE'	=> $lang['PS_backup_remove'],
 		'PS_PASS_LENGTH'	=> $board_config['phpBBSecurity_password_min_length'],)
@@ -709,22 +709,24 @@ include_once($phpbb_root_path .'includes/phpbb_security.'. $phpEx);
 			$time_select .= '<option value="'.$myval.'" class="post"'.(($board_config['phpBBSecurity_backup_time'] == $myval)?'selected':'').'>'.$mytxt.'</option>';
 		}
 		$time_select .= '</select>';
-		
+
 		$backups 		= '';
 		$a				= 0;
 		$backups_dir	= $phpbb_root_path . $board_config['phpBBSecurity_backup_folder'] .'/';
 		$browse 		= @opendir($backups_dir);
-			
-		while ($daily_backups = @readdir($browse)) 
+		if ($browse)
+		{
+			while ($daily_backups = @readdir($browse)) 
 			{			
-			if ( ($daily_backups != '.htaccess') && ($daily_backups != '.') && ($daily_backups != '..') && ($daily_backups != 'index.htm') )
+				if ( ($daily_backups != '.htaccess') && ($daily_backups != '.') && ($daily_backups != '..') && ($daily_backups != 'index.htm') )
 				{
-			$a++;
-			$backups .= '<br>'. $a .'. <a href="'. append_sid('admin_security.'. $phpEx .'?mode=unlink&amp;file='. $daily_backups) .'" title='. $lang['PS_backup_remove'] .'>'. $daily_backups .'</a> :: '. AdminBackupSize(@filesize($backups_dir . $daily_backups)) .' :: '. create_date($board_config['default_dateformat'], @filemtime($backups_dir . $daily_backups), $board_config['board_timezone']);
+					$a++;
+					$backups .= '<br>'. $a .'. <a href="'. append_sid('admin_security.'. $phpEx .'?mode=unlink&amp;file='. $daily_backups) .'" title='. $lang['PS_backup_remove'] .'>'. $daily_backups .'</a> :: '. AdminBackupSize(@filesize($backups_dir . $daily_backups)) .' :: '. create_date($board_config['default_dateformat'], @filemtime($backups_dir . $daily_backups), $board_config['board_timezone']);
 				}
 			}
-		@closedir($backups_dir);
-		
+			@closedir($browse);
+		}
+
 		$template->assign_vars(array(
 			'BACK_ON'		=> $lang['PS_backup_on'],			
 			'BACK_ON_V_Y'	=> ($board_config['phpBBSecurity_backup_on']) ? 'checked="checked"' : '',

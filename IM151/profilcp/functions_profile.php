@@ -193,7 +193,7 @@ if ( $is_called == FALSE )
 			$row['rank_maxi'] = $rank_maxi;
 			if (!$row['rank_special'] ) 
 			{
-				$rank_maxi = $row['rank_mini'];
+				$rank_maxi = ( isset($row['rank_mini']) ? $row['rank_mini'] : 0 );
 			}
 			else $rank_maxi = 99999999;
 		}
@@ -375,7 +375,10 @@ if ( $is_called == FALSE )
 			$error_msg = ( !empty($error_msg) ) ? $error_msg . '<br />' . $lang['Wrong_remote_avatar_format'] : $lang['Wrong_remote_avatar_format'];
 			return;
 		}
-		list($width, $height, $type) = @getimagesize($tmp_filename);
+	 	$sizes = @getimagesize($tmp_filename);
+		$width = $sizes[0];
+		$height = $sizes[1];
+		$type = $sizes[2];
 
       if ( ($width > $board_config['avatar_max_width']) || ($height > $board_config['avatar_max_height']) ) 
       { 
@@ -457,7 +460,10 @@ function pcp_user_avatar_upload($avatar_mode, &$current_avatar, &$current_type, 
 				message_die(GENERAL_ERROR, 'Could not write avatar file to local storage. Please contact the board administrator with this message', '', __LINE__, __FILE__);
 			}
 
-			list($width, $height, $type) = @getimagesize($tmp_filename);
+			$sizes = @getimagesize($tmp_filename);
+			$width = $sizes[0];
+			$height = $sizes[1];
+			$type = $sizes[2];
 		}
 		else
 		{
@@ -483,7 +489,10 @@ function pcp_user_avatar_upload($avatar_mode, &$current_avatar, &$current_type, 
 			return;
 		}
 
-		list($width, $height, $type) = @getimagesize($avatar_filename);
+		$sizes = @getimagesize($avatar_filename);
+		$width = $sizes[0];
+		$height = $sizes[1];
+		$type = $sizes[2];
 	}
 
 	if ( !($imgtype = pcp_check_image_type($avatar_filetype, $error, $error_msg)) )
@@ -592,8 +601,7 @@ function pcp_user_avatar_upload($avatar_mode, &$current_avatar, &$current_type, 
 			$birthday = str_replace( '1971', $year, $temp_date );
 			if ( empty($translate) && $board_config['default_lang'] != 'english' )
 			{
-				@reset($lang['datetime']);
-				while ( list($match, $replace) = @each($lang['datetime']) )
+				foreach ($lang['datetime'] as $match => $replace)
 				{
 					$translate[$match] = $replace;
 				}
@@ -650,7 +658,9 @@ function pcp_user_photo_url(&$error, &$error_msg, $photo_filename)
 		$error_msg = ( !empty($error_msg) ) ? $error_msg . '<br />' . $lang['Wrong_remote_photo_format'] : $lang['Wrong_remote_photo_format'];
 		return;
 	}
-	list($width, $height) = @getimagesize($photo_filename);
+	$sizes = @getimagesize($photo_filename);
+	$width = $sizes[0];
+	$height = $sizes[1];
 	
 	if ( ($width > $board_config['photo_max_width']) || ($height > $board_config['photo_max_height']) )
 	{
@@ -727,7 +737,9 @@ function pcp_user_photo_upload($photo_mode, &$current_photo, &$current_type, &$e
 				message_die(GENERAL_ERROR, 'Could not write photo file to local storage. Please contact the board administrator with this message', '', __LINE__, __FILE__);
 			}
 
-			list($width, $height) = @getimagesize($tmp_filename);
+			$sizes = @getimagesize($tmp_filename);
+			$width = $sizes[0];
+			$height = $sizes[1];
 		}
 		else
 		{
@@ -753,7 +765,9 @@ function pcp_user_photo_upload($photo_mode, &$current_photo, &$current_type, &$e
 			return;
 		}
 
-		list($width, $height) = @getimagesize($photo_filename);
+			$sizes = @getimagesize($photo_filename);
+			$width = $sizes[0];
+			$height = $sizes[1];
 	}
 
 	if ( !($imgtype = pcp_check_image_type($photo_filetype, $error, $error_msg)) )
@@ -1008,14 +1022,15 @@ function pcp_user_photo_upload($photo_mode, &$current_photo, &$current_type, &$e
 				$inputfieldmaps = array_filter(array_keys($user_maps),"find_input_maps");
 				$missing = array_filter(array_keys($user_fields),"find_required");
 				if(count($missing)){
-					while ( list($id,$field_name) = @each($missing) ){
+					foreach ($missing as $id =>$field_name)
+					{
 						$mod = -1;
 						$oldmod = "";
 						$msub = -1;
 						$oldmsub = "";
 						$oldsub = "";
-						@reset($inputfieldmaps);
-						while ( list($id,$map_name) = @each($inputfieldmaps) ){
+						foreach ($inputfieldmaps as $id =>$map_name)
+						{
 							$mapdata = explode(".",$map_name);
 							if ($oldsub != $mapdata[2]){
 								$oldsub = $mapdata[2];

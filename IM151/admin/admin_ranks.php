@@ -124,11 +124,11 @@ if( $mode != "" )
 		} 
 		closedir($dir); 
 		
-        $ranks_list = "<option value=\"" . $rank_info['rank_image'] . "\" selected>" . str_replace($rep, "", $rank_info['rank_image']) . "</option>"; 
+		$ranks_list = "<option value=\"" . ( isset($rank_info['rank_image']) ? $rank_info['rank_image'] : '' ) . "\" selected>" . str_replace($rep, "", ( !empty($rank_info['rank_image']) ? $rank_info['rank_image'] : '' )) . "</option>"; 
 				
 		for($k=0; $k<=$l;$k++) 
 		{ 
-			if ($file1[$k] != "") 
+			if (!empty($file1[$k])) 
 			{ 
 				$ranks_list .= "<option value=\"images/ranks/" . $file1[$k] . "\">images/ranks/" . $file1[$k] . "</option>"; 
 			} 
@@ -140,7 +140,7 @@ if( $mode != "" )
 
 //-- mod : profile cp ------------------------------------------------------------------------------
 //-- add
-		$rank_title		= explode( '|', $rank_info['rank_title']);
+		$rank_title		= isset($rank_info['rank_title']) ? explode( '|', $rank_info['rank_title']) : [];
 		$rank_default	= (isset($rank_title[0]) ) ? $rank_title[0] : '';
 		$rank_male		= (isset($rank_title[1]) ) ? $rank_title[1] : '';
 		$rank_female	= (isset($rank_title[2]) ) ? $rank_title[2] : '';
@@ -160,11 +160,11 @@ if( $mode != "" )
 //-- fin mod : profile cp --------------------------------------------------------------------------
 			"SPECIAL_RANK" => $rank_is_special,
 			"NOT_SPECIAL_RANK" => $rank_is_not_special,
-			"MINIMUM" => ( $rank_is_special ) ? "" : $rank_info['rank_min'],
-			"IMAGE" => ( $rank_info['rank_image'] != "" ) ? $rank_info['rank_image'] : "",
-			"IMAGE_DISPLAY" => ( $rank_info['rank_image'] != "" ) ? '<img src="../' . $rank_info['rank_image'] . '" />' : "",
+			"MINIMUM" => !empty( $rank_is_special ) ? "" : ( isset($rank_info['rank_min']) ? $rank_info['rank_min'] : '' ),
+			"IMAGE" => !empty( $rank_info['rank_image'] ) ? $rank_info['rank_image'] : "",
+			"IMAGE_DISPLAY" => !empty( $rank_info['rank_image'] ) ? '<img src="../' . $rank_info['rank_image'] . '" />' : "",
 			"RANK_LIST" => $ranks_list,
-            "RANK_IMG" => ( $rank_info['rank_image'] != "") ? '../' . $rank_info['rank_image'] : '../images/spacer.gif',
+            "RANK_IMG" => !empty( $rank_info['rank_image'] ) ? '../' . $rank_info['rank_image'] : '../images/spacer.gif',
 			
 			"L_RANKS_TITLE" => $lang['Ranks_title'],
 			"L_RANKS_TEXT" => $lang['Ranks_explain'],

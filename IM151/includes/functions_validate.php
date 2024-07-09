@@ -173,9 +173,9 @@ function validate_optional_fields(&$icq, &$aim, &$msnm, &$yim, &$website, &$loca
 
 	for($i = 0; $i < count($check_var_length); $i++)
 	{
-		if (strlen($$check_var_length[$i]) < 2)
+		if (strlen(${$check_var_length[$i]}) < 2)
 		{
-			$$check_var_length[$i] = '';
+			${$check_var_length[$i]} = '';
 		}
 	}
 

@@ -201,13 +201,13 @@ switch( $mode )
 		$style_rowset = $db->sql_fetchrowset($result);
 	
 		$template->set_filenames(array(
-			"body" => "styles_select_body.tpl")
+			"body" => "admin/styles_select_body.tpl")
 		);
 
 		$template->assign_vars(array(
 			"L_STYLES_TITLE" => $lang['Style_select_manage'],
 			"L_STYLES_TEXT" => $lang['Style_select_explain'],
-			"L_STYLE" => $lang['Style'],
+			"L_STYLE" => ( isset($lang['Style']) ? $lang['Style'] : 'Style' ),
 			"L_STYLE_AUTHOR" => $lang['Style_select_author'],
 			"L_STYLE_VERSION" => $lang['Style_select_version'],
 			"L_STYLE_WEBSITE" => $lang['Style_select_website'],

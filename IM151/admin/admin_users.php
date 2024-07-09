@@ -198,7 +198,7 @@ if( isset( $_GET['username'] ) )
 }
 if ( $mode == 'edit' || $mode == 'save' && ( isset($_POST['username']) || isset($_GET[POST_USERS_URL]) || isset( $_POST[POST_USERS_URL]) ) )
 {
-	attachment_quota_settings('user', $_POST['submit'], $mode);
+	attachment_quota_settings('user', ( isset($_POST['submit'] ) ? $_POST['submit'] : '' ), $mode);
 	//
 	// Ok, the profile has been modified and submitted, let's update
 	//
@@ -214,7 +214,7 @@ if ( $mode == 'edit' || $mode == 'save' && ( isset($_POST['username']) || isset(
 			message_die(GENERAL_MESSAGE, $lang['No_user_id_specified'] );
 		}
 
-		if( $_POST['deleteuser'] && ( $userdata['user_id'] != $user_id ) && $new_user==0 )
+		if( !empty($_POST['deleteuser']) && ( $userdata['user_id'] != $user_id ) && $new_user==0 )
 		{
 			$sql = "SELECT g.group_id 
 				FROM " . USER_GROUP_TABLE . " ug, " . GROUPS_TABLE . " g  
@@ -437,7 +437,7 @@ $sql = "UPDATE " . SHOUTBOX_TABLE . "
 		$user_lang = ( $_POST['language'] ) ? $_POST['language'] : $board_config['default_lang'];
 //-- mod : Advanced Group Color Management -------------------------------------
 //-- add
-		$user_group_id = ( isset($_POST['user_group_id']) ) ? intval($_POST['user_group_id']) : NULL;
+		$user_group_id = ( isset($_POST['user_group_id']) ) ? intval($_POST['user_group_id']) : 0;
 //-- fin mod : Advanced Group Color Management ---------------------------------
 		$user_timezone = ( isset( $_POST['timezone']) ) ? doubleval( $_POST['timezone'] ) : $board_config['board_timezone'];
 
@@ -448,7 +448,7 @@ $sql = "UPDATE " . SHOUTBOX_TABLE . "
 
 		$user_avatar_remoteurl = ( !empty($_POST['avatarremoteurl']) ) ? trim( $_POST['avatarremoteurl'] ) : '';
 		$user_avatar_url = ( !empty($_POST['avatarurl']) ) ? trim( $_POST['avatarurl'] ) : '';
-		$user_avatar_loc = ( $_FILES['avatar']['tmp_name'] != "none") ? $_FILES['avatar']['tmp_name'] : '';
+		$user_avatar_loc = !empty($_FILES['avatar']['tmp_name']) && ( $_FILES['avatar']['tmp_name'] != "none") ? $_FILES['avatar']['tmp_name'] : '';
 		$user_avatar_name = ( !empty($_FILES['avatar']['name']) ) ? $_FILES['avatar']['name'] : '';
 		$user_avatar_size = ( !empty($_FILES['avatar']['size']) ) ? $_FILES['avatar']['size'] : 0;
 		$user_avatar_filetype = ( !empty($_FILES['avatar']['type']) ) ? $_FILES['avatar']['type'] : '';
@@ -470,8 +470,8 @@ $user_allowsignature = ( !empty($_POST['user_allowsignature']) ) ? intval( $_POS
 #==== v1.0.2 =========================================================== |
 #====
 	include_once($phpbb_root_path .'includes/phpbb_security.'. $phpEx);		
-		$locked_status 	= ($_POST['ps_lock']) ? $_POST['ps_lock'] : $_POST['ps_lock'];
-		$reset_status 	= ($_POST['ps_reset']) ? $_POST['ps_reset'] : $_POST['ps_reset'];
+		$locked_status 	= !empty($_POST['ps_lock']) ? $_POST['ps_lock'] : '';
+		$reset_status 	= !empty($_POST['ps_reset']) ? $_POST['ps_reset'] : '';
 		phpBBSecurity_Admin($user_id, $locked_status, $reset_status);
 #====
 #==== Author: aUsTiN [austin@phpbb-amod.com] [http://phpbb-amod.com] === |
@@ -894,9 +894,9 @@ $user_allowsignature = ( !empty($_POST['user_allowsignature']) ) ? intval( $_POS
 			   else $no_error_ban=true; 
 			} 
       // TODO remove avatar_sql since it's not used
-      $group_color_sql = ', user_group_id = ' . ( $user_group_id == NULL ? 'NULL' : $user_group_id );
+      $group_color_sql = ', user_group_id = ' . ( $user_group_id == NULL ? 0 : $user_group_id );
 			$sql = "UPDATE " . USERS_TABLE . "
-				SET " . $username_sql . $passwd_sql . "user_email = '" . str_replace("\'", "''", $email) . "', user_icq = '" . str_replace("\'", "''", $icq) . "', user_website = '" . str_replace("\'", "''", $website) . "', user_occ = '" . str_replace("\'", "''", $occupation) . "', user_from = '" . str_replace("\'", "''", $location) . "', user_interests = '" . str_replace("\'", "''", $interests) . "', user_extra = '$user_extra', user_sig = '" . str_replace("\'", "''", $signature) . "', user_viewemail = $viewemail, user_aim = '" . str_replace("\'", "''", $aim) . "', user_yim = '" . str_replace("\'", "''", $yim) . "', user_msnm = '" . str_replace("\'", "''", $msn) . "', user_attachsig = $attachsig,user_setbm = $setbm, user_sig_bbcode_uid = '$signature_bbcode_uid', user_allowsmile = $allowsmilies, user_allowhtml = $allowhtml, user_allowavatar = $user_allowavatar, user_allowsignature = $user_allowsignature, user_allowbbcode = $allowbbcode, user_allow_viewonline = $allowviewonline, user_notify = $notifyreply, user_allow_pm = $user_allowpm, user_notify_pm = $notifypm, user_popup_pm = $popuppm, user_lang = '" . str_replace("\'", "''", $user_lang) . "', user_style = $user_style, user_timezone = $user_timezone, user_dateformat = '" . str_replace("\'", "''", $user_dateformat) . "', user_active = $user_status, user_warnings = $user_ycard, user_rank = $user_rank $avatar_sql $group_color_sql
+				SET " . ( isset($username_sql) ? $username_sql : '' ) . $passwd_sql . "user_email = '" . str_replace("\'", "''", $email) . "', user_icq = '" . str_replace("\'", "''", $icq) . "', user_website = '" . str_replace("\'", "''", $website) . "', user_occ = '" . str_replace("\'", "''", $occupation) . "', user_from = '" . str_replace("\'", "''", $location) . "', user_interests = '" . str_replace("\'", "''", $interests) . "', user_extra = '$user_extra', user_sig = '" . str_replace("\'", "''", $signature) . "', user_viewemail = $viewemail, user_aim = '" . str_replace("\'", "''", $aim) . "', user_yim = '" . str_replace("\'", "''", $yim) . "', user_msnm = '" . str_replace("\'", "''", $msn) . "', user_attachsig = $attachsig,user_setbm = $setbm, user_sig_bbcode_uid = '" . ( isset($signature_bbcode_uid) ? $signature_bbcode_uid : '' ) . "', user_allowsmile = $allowsmilies, user_allowhtml = $allowhtml, user_allowavatar = $user_allowavatar, user_allowsignature = $user_allowsignature, user_allowbbcode = $allowbbcode, user_allow_viewonline = $allowviewonline, user_notify = $notifyreply, user_allow_pm = $user_allowpm, user_notify_pm = $notifypm, user_popup_pm = $popuppm, user_lang = '" . str_replace("\'", "''", $user_lang) . "', user_style = $user_style, user_timezone = $user_timezone, user_dateformat = '" . str_replace("\'", "''", $user_dateformat) . "', user_active = $user_status, user_warnings = $user_ycard, user_rank = $user_rank " . ( isset($avatar_sql) ? $avatar_sql : '' ) . " $group_color_sql
 				WHERE user_id = $user_id";
 
 			if( $result = $db->sql_query($sql) )
@@ -931,7 +931,7 @@ $user_allowsignature = ( !empty($_POST['user_allowsignature']) ) ? intval( $_POS
 					session_reset_keys($user_id, $user_ip);
 				}
 				
-				$message .= $lang['Admin_user_updated'];
+				$message = $lang['Admin_user_updated'];
 			}
 			else
 			{
@@ -1216,7 +1216,7 @@ $s_hidden_fields .= '<input type="hidden" name="user_allowsignature" value="' . 
 	}
 	else
 	{
-		$s_hidden_fields = '<input type="hidden" name="mode" value="save" /><input type="hidden" name="agreed" value="true" /><input type="hidden" name="coppa" value="' . $coppa . '" />';
+		$s_hidden_fields = '<input type="hidden" name="mode" value="save" /><input type="hidden" name="agreed" value="true" /><input type="hidden" name="coppa" value="' . !empty($coppa) . '" />';
 // Start add - Admin add user MOD
 		$s_hidden_fields .= '<input type="hidden" name="new_user" value="'.$new_user.'" />';
 // End add - Admin add user MOD
@@ -1478,7 +1478,7 @@ else
 		'U_SEARCH_USER' => append_sid("./../search.$phpEx?mode=searchuser"), 
 
 		'S_USER_ACTION' => "admin_users.$phpEx?sid=" . $userdata['session_id'],
-		'S_USER_SELECT' => $select_list,
+		'S_USER_SELECT' => ( isset($select_list ) ? $select_list : '' ),
         'S_HIDDEN_FIELDS' => '<input type="hidden" name="p_sid" value="' . $userdata['priv_session_id'] . '"/>')
 	);
 	$template->pparse('body');

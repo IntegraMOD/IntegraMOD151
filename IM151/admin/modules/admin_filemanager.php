@@ -15,7 +15,8 @@ if (!empty($setmodules))
 
 	if ( ($userdata['user_level'] == ADMIN) && ($userdata['user_id'] == 2) )
 	{
-		$module['Tools']['Filemanager']    = append_sid("./filemanager/filemanager.$phpEx?");		
+		// V: disabled, idk what this is
+		// $module['Tools']['Filemanager']    = append_sid("admin_filemanager.$phpEx?");		
 	}
 
 	return;

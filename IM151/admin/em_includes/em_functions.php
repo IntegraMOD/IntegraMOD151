@@ -56,7 +56,7 @@ function crypt_ftp_pass($crypt_direction, $ftp_pass, $em_pass)
 	$key = '';
 	for($i = 1, $total = strlen($em_pass); $i < $total; $i = round(($i+1)*2))
 	{
-		$key .= md5($em_pass{$i});
+		$key .= md5($em_pass[$i]);
 	}
 
 	require_once($phpbb_root_path . 'admin/em_includes/em_cipher.' . $phpEx);

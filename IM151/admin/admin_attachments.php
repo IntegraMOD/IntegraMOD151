@@ -185,7 +185,7 @@ while ($row = $db->sql_fetchrow($result))
 		{
 			$value = trim($new_attach[$config_name]);
 
-			if ($value[strlen($value)-1] == '/')
+			if ($value && $value[strlen($value)-1] == '/')
 			{
 				$value[strlen($value)-1] = ' ';
 			}
@@ -463,7 +463,7 @@ if ($check_upload)
 //
 if ($submit && $mode == 'manage')
 {
-	if (!$error)
+	if (empty($error))
 	{
 		message_die(GENERAL_MESSAGE, $lang['Attach_config_updated'] . '<br /><br />' . sprintf($lang['Click_return_attach_config'], '<a href="' . append_sid("admin_attachments.$phpEx?mode=manage") . '">', '</a>') . '<br /><br />' . sprintf($lang['Click_return_admin_index'], '<a href="' . append_sid("index.$phpEx?pane=right") . '">', '</a>'));
 	}
@@ -500,7 +500,7 @@ if ($mode == 'manage')
 		'L_ATTACHMENT_FILESIZE_SETTINGS' => $lang['Attach_filesize_settings'],
 		'L_ATTACHMENT_NUMBER_SETTINGS' => $lang['Attach_number_settings'],
 		'L_ATTACHMENT_OPTIONS_SETTINGS' => $lang['Attach_options_settings'],
-		'L_ATTACHMENT_FTP_SETTINGS' => $lang['ftp_info'],
+		'L_ATTACHMENT_FTP_SETTINGS' => ( isset($lang['ftp_info'] ) ? $lang['ftp_info'] : 'FTP Info' ),
 		'L_NO_FTP_EXTENSIONS' => $lang['No_ftp_extensions_installed'],
 		'L_UPLOAD_DIR' => $lang['Upload_directory'],
 		'L_UPLOAD_DIR_EXPLAIN' => $lang['Upload_directory_explain'],
@@ -537,8 +537,8 @@ if ($mode == 'manage')
 		'L_ATTACHMENT_TOPIC_REVIEW' => $lang['Attachment_topic_review'],
 		'L_ATTACHMENT_TOPIC_REVIEW_EXPLAIN' => $lang['Attachment_topic_review_explain'],
 		'L_ATTACHMENT_FTP_PATH' => $lang['Attach_ftp_path'],
-		'L_ATTACHMENT_FTP_USER' => $lang['ftp_username'],
-		'L_ATTACHMENT_FTP_PASS' => $lang['ftp_password'],
+		'L_ATTACHMENT_FTP_USER' => ( isset($lang['ftp_username'] ) ? $lang['ftp_username'] : 'FTP Username' ),
+		'L_ATTACHMENT_FTP_PASS' => ( isset($lang['ftp_password']) ? $lang['ftp_password'] : 'FTP Password' ),
 		'L_ATTACHMENT_FTP_PATH_EXPLAIN' => $lang['Attach_ftp_path_explain'],
 		'L_ATTACHMENT_FTP_SERVER' => $lang['Ftp_server'],
 		'L_ATTACHMENT_FTP_SERVER_EXPLAIN' => $lang['Ftp_server_explain'],
@@ -666,7 +666,7 @@ if ($mode == 'shadow')
 		'L_MARK_ALL' => $lang['Mark_all'],
 		'L_UNMARK_ALL' => $lang['Unmark_all'],
 		
-		'S_HIDDEN' => $hidden,
+		'S_HIDDEN' => ( isset($hidden ) ? $hidden : '' ),
 		'S_ATTACH_ACTION' => append_sid('admin_attachments.' . $phpEx . '?mode=shadow'))
 	);
 
@@ -724,7 +724,7 @@ if ($mode == 'shadow')
 	// Go through all Files on the filespace and see if all are stored within the DB
 	for ($i = 0; $i < count($file_attachments); $i++)
 	{
-		if (count_safe($table_attachments['attach_id']) > 0)
+		if (!empty($table_attachments['attach_id']))
 		{
 			if ($file_attachments[$i] != '')
 			{
@@ -748,7 +748,7 @@ if ($mode == 'shadow')
 	}
 
 	// Go through the Database and get those Files not stored at the Filespace
-	for ($i = 0; $i < count_safe($table_attachments['attach_id']); $i++)
+	for ($i = 0; !empty($table_attachments['attach_id']) && $i < count_safe($table_attachments['attach_id']); $i++)
 	{
 		if ($table_attachments['physical_filename'][$i] != '')
 		{
@@ -767,7 +767,7 @@ if ($mode == 'shadow')
 	}
 
 	// Now look at the missing posts and PM's
-	for ($i = 0; $i < count_safe($table_attachments['attach_id']); $i++)
+	for ($i = 0; !empty($table_attachments['attach_id']) && $i < count_safe($table_attachments['attach_id']); $i++)
 	{
 		if ($table_attachments['attach_id'][$i])
 		{
@@ -801,7 +801,7 @@ if ($mode == 'shadow')
 		);
 	}
 
-	for ($i = 0; $i < count_safe($shadow_row['attach_id']); $i++)
+	for ($i = 0; !empty($shadow_row['attach_id']) && $i < count_safe($shadow_row['attach_id']); $i++)
 	{
 		$template->assign_block_vars('table_shadow_row', array(
 			'ATTACH_ID' => $shadow_row['attach_id'][$i],
@@ -1520,7 +1520,7 @@ if ($mode == 'quota' && $e_mode == 'view_quota')
 }
 
 
-if ($error)
+if (!empty($error))
 {
 	$template->set_filenames(array(
 		'reg_header' => 'error_body.tpl')

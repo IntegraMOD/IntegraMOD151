@@ -46,7 +46,7 @@ if ( ( isset($_POST['user_name']) ) & ( !isset($_POST['username']) ) )
 
 $params = array('mode' => 'mode', 'user_id' => POST_USERS_URL, 'group_id' => POST_GROUPS_URL, 'adv' => 'adv');
 
-while( list($var, $param) = @each($params) )
+foreach ($params as $var => $param)
 {
 	if ( !empty($_POST[$param]) || !empty($_GET[$param]) )
 	{
@@ -118,9 +118,8 @@ $owner = '2';
 include( $phpbb_root_path . './includes/def_auth.' . $phpEx );
 
 // build an indexed array on field names
-@reset($field_names);
 $forum_auth_fields = array();
-while ( list($auth_key, $auth_name) = @each($field_names) )
+foreach ($field_names as $auth_key => $auth_name)
 {
 	$forum_auth_fields[] = $auth_key;
 }
@@ -698,7 +697,7 @@ else if ( ( $mode == 'user' && ( isset($_POST['username']) || $user_id ) ) || ( 
 	$forum_access = array();
 	for ($i=0; $i < count($keys['id']); $i++)
 	{
-		if ($tree['type'][ $keys['idx'][$i] ] == POST_FORUM_URL)
+		if (isset($tree['type'][ $keys['idx'][$i] ]) && $tree['type'][ $keys['idx'][$i] ] == POST_FORUM_URL)
 		{
 			$forum_access[] = $tree['data'][ $keys['idx'][$i] ];
 		}

@@ -151,26 +151,29 @@ if (($mode == 'mod_pak') && (!$submit))
 	
 	$dir = @opendir($phpbb_root_path . 'modules/pakfiles');
 
-	while($file = @readdir($dir))
+	if ($dir)
 	{
-		if( !@is_dir($phpbb_root_path . 'modules/pakfiles' . '/' . $file) )
+		while($file = @readdir($dir))
 		{
-			if ( eregi('.info$', $file) )
+			if( !@is_dir($phpbb_root_path . 'modules/pakfiles' . '/' . $file) )
 			{
-				$info_files[] = $file;
-			}
-			else if ( eregi('.lang$', $file) )
-			{
-				$lang_files[] = $file;
-			}
-			else if ( eregi('.php$', $file) )
-			{
-				$php_files[] = $file;
+				if ( eregi('.info$', $file) )
+				{
+					$info_files[] = $file;
+				}
+				else if ( eregi('.lang$', $file) )
+				{
+					$lang_files[] = $file;
+				}
+				else if ( eregi('.php$', $file) )
+				{
+					$php_files[] = $file;
+				}
 			}
 		}
-	}
 
-	@closedir($dir);
+		@closedir($dir);
+	}
 
 	if ((count($info_files) == 0) || (count($lang_files) == 0) || (count($php_files) == 0))
 	{

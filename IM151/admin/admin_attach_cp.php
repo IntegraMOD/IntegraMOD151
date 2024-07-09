@@ -86,7 +86,7 @@ else
 	$uid = '';
 }
 
-$view = ( $_POST['search'] ) ? 'attachments' : $view;
+$view = !empty( $_POST['search'] ) ? 'attachments' : $view;
 
 //
 // process modes based on view
@@ -233,7 +233,7 @@ $submit_change = ( isset($_POST['submit_change']) ) ? TRUE : FALSE;
 $delete = ( isset($_POST['delete']) ) ? TRUE : FALSE;
 $delete_id_list = ( isset($_POST['delete_id_list']) ) ? array_map('intval', $_POST['delete_id_list']) : array();
 
-$confirm = ( $_POST['confirm'] ) ? TRUE : FALSE;
+$confirm = !empty( $_POST['confirm'] );
 
 if ($confirm && sizeof($delete_id_list) > 0)
 {

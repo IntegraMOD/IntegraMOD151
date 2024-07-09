@@ -133,7 +133,7 @@ while ( !empty($sql[$n]) )
 	}
 	$db->sql_freeresult($result);
 $template->assign_block_vars('prune_list', array(
-		"LIST" => ($list[$n])?$list[$n]:$lang['None'],
+		"LIST" => !empty($list[$n])?$list[$n]:$lang['None'],
 		"USER_COUNT" => $user_count,
 		"L_PRUNE" => $lang['Prune_commands'][$n],
 		"L_PRUNE_EXPLAIN" => sprintf($lang['Prune_explain'][$n],$days[$n]),

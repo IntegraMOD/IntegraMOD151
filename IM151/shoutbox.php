@@ -159,7 +159,7 @@ if ($submit || isset($_POST['message']))
 			if ( $row['last_post_time'] > 0 && ( $current_time - $row['last_post_time'] ) < $board_config['flood_interval'] )
 			{
 				$error = true;
-				$error_msg .= ( !empty($error_msg) ) ? '<br />' . $lang['Flood_Error'] : $lang['Flood_Error'];
+				$error_msg = ( !empty($error_msg) ) ? '<br />' . $lang['Flood_Error'] : $lang['Flood_Error'];
 			}
 		}
 	}
