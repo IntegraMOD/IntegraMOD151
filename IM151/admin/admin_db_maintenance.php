@@ -69,8 +69,7 @@ if ( $phpbb_version[0] == 0 && $phpbb_version[1] >= 5 )
 	sort($tables);
 }
 // Check for parameters
-reset ($config_data);
-while (list(, $value) = each ($config_data))
+foreach ($config_data as $dummy => $value)
 {
 	if ( !isset($board_config[$value]) )
 	{

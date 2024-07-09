@@ -593,7 +593,7 @@ $template->set_filenames(array(
 					$input .= '<select';
 					// MARK CURRENT VALUE AS 'SELECTED'
 					$thisval = $row['num_value'];
-					while (list($key,$val)=each($select_options))
+					foreach ($select_options as $key =>$val)
 					{
 						$option = '<option value="'.$key.'"';
 						$option .= ($key == $thisval) ? ' SELECTED>' : '>';
@@ -682,8 +682,7 @@ $template->set_filenames(array(
 			//	)
 			//);
 			$user_type = $row['user_type'];
-			reset ($user_types);
-			while (list($key,$val) = each($user_types))
+			foreach ($user_types as $key =>$val)
 			{
 				$selected = ($key == $user_type) ? 'SELECTED' : '';
 				$template->assign_block_vars('option.who', array(
@@ -705,8 +704,7 @@ $template->set_filenames(array(
 			'ROWCSS' => 'row3'
 			)
 		);
-		reset ($user_types);
-		while (list($key,$val) = each($user_types))
+		foreach ($user_types as $key =>$val)
 		{
 			$selected = ($key == $r_option_4[0]) ? 'SELECTED' : '';
 			$template->assign_block_vars('option.who', array(
@@ -781,8 +779,7 @@ $template->set_filenames(array(
 			//	)
 			//);
 			$total_type = $row['type'];
-			reset ($total_types);
-			while (list($key,$val) = each($total_types))
+			foreach ($total_types as $key =>$val)
 			{
 				$selected = ($key == $total_type) ? 'SELECTED' : '';
 				$template->assign_block_vars('total.type', array(
@@ -805,8 +802,7 @@ $template->set_filenames(array(
 			'ROWCSS' => 'row3'
 			)
 		);
-		reset ($total_types);
-		while (list($key,$val) = each($total_types))
+		foreach ($total_types as $key =>$val)
 		{
 			$selected = ($key == $r_total_1[0]) ? 'SELECTED' : '';
 			$template->assign_block_vars('total.type', array(

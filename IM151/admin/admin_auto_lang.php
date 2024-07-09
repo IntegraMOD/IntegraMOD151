@@ -200,7 +200,7 @@ ksort ($language_codes);
 reset ($language_codes);
 
 $cnt = 0;
-while (list($key, $value) = each ($language_codes))
+foreach ($language_codes as $key => $value)
 {
 	$template->assign_block_vars ('row', array (
 		'S_AUTOLANG_CNT' => $cnt,

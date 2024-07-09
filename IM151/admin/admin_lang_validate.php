@@ -81,8 +81,8 @@ function validate_language(){
 				$lang=array();
 				include($file);
 				// reset
-				reset($lang_union);
-				while (list($key,) = @each($lang_union)){
+				foreach ($lang_union as $key => $dummy)
+				{
 					if(!array_key_exists($key,$lang)){
 						$lang_diff[] = $key;
 					}

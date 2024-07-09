@@ -149,15 +149,13 @@ foreach ($mods as $menu_name => $menu)
 				$sub_sort[$i][$j] = array();
 
 				// sub names
-				@reset($mod['data']);
-				while ( list($sub_name, $sub) = @each($mod['data']) )
+				foreach ($mod['data'] as $sub_name => $sub)
 				{
 					if ( !empty($sub_name) )
 					{
 						// check if there is some config fields in this level
 						$found = false;
-						@reset($sub['data']);
-						while ( list($field_name, $field) = @each($sub['data']) )
+						foreach ($sub['data'] as $field_name => $field)
 						{
 							if ( !isset($field['user_only']) || !$field['user_only'] )
 							{
@@ -404,16 +402,14 @@ for ($i = 0; $i < count($menu_keys); $i++)
 }
 
 // send items
-@reset($mods[$menu_name]['data'][$mod_name]['data'][$sub_name]['data']);
-while ( list($field_name, $field) = @each($mods[$menu_name]['data'][$mod_name]['data'][$sub_name]['data']) )
+foreach ($mods[$menu_name]['data'][$mod_name]['data'][$sub_name]['data'] as $field_name => $field)
 {
 	// get the field input statement
 	$input = '';
 	switch ($field['type'])
 	{
 		case 'LIST_RADIO':
-			@reset($field['values']);
-			while ( list($key, $val) = @each($field['values']) )
+			foreach ($field['values'] as $key => $val)
 			{
 				$selected = ($config[$field_name] == $val) ? ' checked="checked"' : '';
 				$l_key = mods_settings_get_lang($key);
@@ -421,8 +417,7 @@ while ( list($field_name, $field) = @each($mods[$menu_name]['data'][$mod_name]['
 			}
 			break;
 		case 'LIST_DROP':
-			@reset($field['values']);
-			while ( list($key, $val) = @each($field['values']) )
+			foreach ($field['values'] as $key => $val)
 			{
 				$selected = ($config[$field_name] == $val) ? ' selected="selected"' : '';
 				$l_key = mods_settings_get_lang($key);
@@ -464,8 +459,7 @@ while ( list($field_name, $field) = @each($mods[$menu_name]['data'][$mod_name]['
 	if ( !empty($input) && !empty($field['user']) && isset($userdata[ $field['user'] ]) )
 	{
 		$override = '';
-		@reset($list_yes_no);
-		while ( list($key, $val) = @each($list_yes_no) )
+		foreach ($list_yes_no as $key => $val)
 		{
 			$selected = ($config[$field_name . '_over'] == $val) ? ' checked="checked"' : '';
 			$l_key = mods_settings_get_lang($key);

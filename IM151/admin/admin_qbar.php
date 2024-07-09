@@ -59,11 +59,11 @@ function select_field($import = false)
     global $mode, $s_hidden_fields, $panel_id, $field_id;
 
     // verify if default_tree qbar is present in order to get the increment to display
-    @reset($qbar_maps);
     $max_level = 0;
     $i = 0;
     $is_default = false;
-    while (list($qbar_name, $qbar) = @each($qbar_maps)) {
+		foreach ($qbar_maps as $qbar_name => $qbar)
+		{
         $i++;
         if (($panel_id != 0) || isset($open_ids[$i])) {
             if ((($panel_id == 0) || ($panel_id == $i)) && ($qbar_name == 'default_tree')) {
@@ -139,8 +139,8 @@ function select_field($import = false)
 
     // values
     $i = 0;
-    @reset($qbar_maps);
-    while (list($qbar_name, $qbar) = @each($qbar_maps)) {
+		foreach ($qbar_maps as $qbar_name => $qbar)
+		{
         $i++;
         if (empty($panel_id) || ($panel_id == $i)) {
             if ($import) {

@@ -52,7 +52,7 @@ $params = array(
 	'move' => 'move',
 	'confirm' => 'confirm');
 
-while( list($var, $param) = @each($params) )
+foreach ($params as $var => $param)
 {
 	if ( !empty($_POST[$param]) || !empty($_GET[$param]) )
 	{

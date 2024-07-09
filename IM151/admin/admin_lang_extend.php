@@ -61,8 +61,7 @@ function lang_extend_get_packs()
 
 	// get all the extensions installed
 	$packs = array();
-	@reset($countries);
-	while ( list($country_dir, $country_name) = @each($countries) )
+	foreach ($countries as $country_dir => $country_name)
 	{
 		$dir = @opendir( $phpbb_root_path . './language/' . $country_dir );
 		while ( $file = @readdir($dir) )
@@ -109,13 +108,14 @@ function lang_extend_read_one_pack($country_dir, $pack_file, &$entries)
 		// process
 		$lang = array();
 		@include($file);
-		@reset($lang);
-		while ( list($key_main, $data) = @each($lang) )
+		foreach ($lang as $key_main => $data)
 		{
 			$custom = ($pack_file == 'custom');
 			$first = !is_array($data);
-			while ( ( is_array($data) && (list($key_sub, $value) = @each($data)) ) || $first )
+			while ( ( is_array($data) && $data[0] ) || $first )
 			{
+				$key_sub = $data[0];
+				$value = $data[1];
 				$first = false;
 				if ( !is_array($data) )
 				{
@@ -149,8 +149,7 @@ function lang_extend_get_entries($modified=true)
 	$entries = array();
 
 	// process by countries first
-	@reset($countries);
-	while ( list($country_dir, $country_name) = @each($countries) )
+	foreach ($countries as $country_dir => $country_name)
 	{
 		// phpBB lang keys
 		$pack_file = 'lang';

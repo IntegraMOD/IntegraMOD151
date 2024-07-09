@@ -1615,7 +1615,7 @@ $lang['SEE_REPORTS'] = 'See reports about this user';
 $lang['FILTER_BY_USER'] = 'Filtered by user:';//
 
 //
-/ That's all, Folks!
+// That's all, Folks!
 // -------------------------------------------------
 //
 ?>
