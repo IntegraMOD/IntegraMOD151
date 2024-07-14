@@ -46,6 +46,11 @@ $mode = (empty($mode)) ? $mode_js : $mode;
 
 $mirrors = (isset($_POST['mirrors'])) ? TRUE : 0;
 
+$s_hidden_fields = '';
+$all_file_rowset = [];
+$approved_file_rowset = [];
+$broken_file_rowset = [];
+
 if( isset($_REQUEST['sort_method']) )
 {
 	switch ($_REQUEST['sort_method'])
@@ -367,7 +372,7 @@ if(in_array($mode, array('', 'approved', 'broken', 'do_approve', 'do_unapprove',
 	}
 	
 	$cat_list = '<select name="cat_id">';
-	if (!$pafiledb->cat_rowset[$cat_id]['cat_parent']) 
+	if (empty($pafiledb->cat_rowset[$cat_id]['cat_parent']) )
 	{
 		$cat_list .= '<option value="0" selected>' . $lang['None'] . '</option>\n';
 	}
@@ -523,8 +528,8 @@ elseif($mode == 'add' || $mode == 'edit' || $mirrors)
 		'SS_CHECKED_NO' => $ss_checked_no,
 		'PIN_CHECKED_YES' => $pin_checked_yes,
 		'PIN_CHECKED_NO' => $pin_checked_no,
-		'MIRROR_FILE' => $file_unique_name,
-		'U_UPLOADED_MIRROR' => get_formated_url() . '/' . $file_dir . $file_unique_name,
+		'MIRROR_FILE' => ( isset($file_unique_name) ? $file_unique_name : '' ) ,
+		'U_UPLOADED_MIRROR' => isset($file_dir) && isset($file_unique_name) ? get_formated_url() . '/' . $file_dir . $file_unique_name : '',
 		
 		'L_FILE_APPROVED' => $lang['Approved'],
 		'L_FILE_APPROVED_INFO' => $lang['Approved_info'],
@@ -547,7 +552,7 @@ elseif($mode == 'add' || $mode == 'edit' || $mirrors)
 		'L_FILESSINFO_UPLOAD' => $lang['Filessinfo_upload'],
 		'L_FILE_SSLINK' => $lang['Filess_link'],
 		'L_FILE_SSLINK_INFO' => $lang['Filess_link_info'],
-		'L_FILESSUPLOAD' => $lang['Filessupload'],
+		'L_FILESSUPLOAD' => $lang['Filess_upload'] ,
 		'L_FILE_WEBSITE' => $lang['Filedocs'],
 		'L_FILE_WEBSITE_INFO' => $lang['Filedocsinfo'],
 		'L_FILE_URL' => $lang['Fileurl'],

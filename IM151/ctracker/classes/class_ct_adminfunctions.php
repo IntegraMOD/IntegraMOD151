@@ -39,9 +39,9 @@ class ct_adminfunctions
 		$ch_sel = array();
 		$ch_sel[$current] = ' selected="selected"';
 
-		$switch .= '<option value="0"' . $ch_sel[0] . '>' . $lang['ctracker_blockmode_0'] . '</option>';
-		$switch .= '<option value="1"' . $ch_sel[1] . '>' . $lang['ctracker_blockmode_1'] . '</option>';
-		$switch .= '<option value="2"' . $ch_sel[2] . '>' . $lang['ctracker_blockmode_2'] . '</option>';
+		$switch .= '<option value="0"' . ( isset($ch_sel[0]) ? $ch_sel[0] : '' ). '>' . $lang['ctracker_blockmode_0'] . '</option>';
+		$switch .= '<option value="1"' . ( isset($ch_sel[1]) ? $ch_sel[1] : '' ). '>' . $lang['ctracker_blockmode_1'] . '</option>';
+		$switch .= '<option value="2"' . ( isset($ch_sel[2]) ? $ch_sel[2] : '' ). '>' . $lang['ctracker_blockmode_2'] . '</option>';
 
 		return $switch;
 	}
@@ -62,9 +62,9 @@ class ct_adminfunctions
 		$ch_sel = array();
 		$ch_sel[$current] = ' selected="selected"';
 
-		$switch .= '<option value="0"' . $ch_sel[0] . '>' . $lang['ctracker_settings_off'] . '</option>';
-		$switch .= '<option value="1"' . $ch_sel[1] . '>' . $lang['Profile'] . '</option>';
-		$switch .= '<option value="2"' . $ch_sel[2] . '>' . $lang['Profile'] . '&' . $lang['Post'] . '</option>';
+		$switch .= '<option value="0"' . ( isset($ch_sel[0]) ? $ch_sel[0] : '' ) . '>' . $lang['ctracker_settings_off'] . '</option>';
+		$switch .= '<option value="1"' . ( isset($ch_sel[1]) ? $ch_sel[1] : '' ) . '>' . $lang['Profile'] . '</option>';
+		$switch .= '<option value="2"' . ( isset($ch_sel[2]) ? $ch_sel[2] : '' ) . '>' . $lang['Profile'] . '&' . $lang['Post'] . '</option>';
 
 		return $switch;
 	}
@@ -85,15 +85,15 @@ class ct_adminfunctions
 		$ch_sel = array();
 		$ch_sel[$current] = ' selected="selected"';
 
-		$switch .= '<option value="1"' . $ch_sel[1] . '>' . $lang['ctracker_complex_1'] . '</option>';
-		$switch .= '<option value="2"' . $ch_sel[2] . '>' . $lang['ctracker_complex_2'] . '</option>';
-		$switch .= '<option value="3"' . $ch_sel[3] . '>' . $lang['ctracker_complex_3'] . '</option>';
-		$switch .= '<option value="4"' . $ch_sel[4] . '>' . $lang['ctracker_complex_4'] . '</option>';
-		$switch .= '<option value="5"' . $ch_sel[5] . '>' . $lang['ctracker_complex_5'] . '</option>';
-		$switch .= '<option value="6"' . $ch_sel[6] . '>' . $lang['ctracker_complex_6'] . '</option>';
-		$switch .= '<option value="7"' . $ch_sel[7] . '>' . $lang['ctracker_complex_7'] . '</option>';
-		$switch .= '<option value="8"' . $ch_sel[8] . '>' . $lang['ctracker_complex_8'] . '</option>';
-		$switch .= '<option value="9"' . $ch_sel[9] . '>' . $lang['ctracker_complex_9'] . '</option>';
+		$switch .= '<option value="1"' . ( isset($ch_sel[1]) ? $ch_sel[1] : '' ) . '>' . $lang['ctracker_complex_1'] . '</option>';
+		$switch .= '<option value="2"' . ( isset($ch_sel[2]) ? $ch_sel[2] : '' ) . '>' . $lang['ctracker_complex_2'] . '</option>';
+		$switch .= '<option value="3"' . ( isset($ch_sel[3]) ? $ch_sel[3] : '' ) . '>' . $lang['ctracker_complex_3'] . '</option>';
+		$switch .= '<option value="4"' . ( isset($ch_sel[4]) ? $ch_sel[4] : '' ) . '>' . $lang['ctracker_complex_4'] . '</option>';
+		$switch .= '<option value="5"' . ( isset($ch_sel[5]) ? $ch_sel[5] : '' ) . '>' . $lang['ctracker_complex_5'] . '</option>';
+		$switch .= '<option value="6"' . ( isset($ch_sel[6]) ? $ch_sel[6] : '' ) . '>' . $lang['ctracker_complex_6'] . '</option>';
+		$switch .= '<option value="7"' . ( isset($ch_sel[7]) ? $ch_sel[7] : '' ) . '>' . $lang['ctracker_complex_7'] . '</option>';
+		$switch .= '<option value="8"' . ( isset($ch_sel[8]) ? $ch_sel[8] : '' ) . '>' . $lang['ctracker_complex_8'] . '</option>';
+		$switch .= '<option value="9"' . ( isset($ch_sel[9]) ? $ch_sel[9] : '' ) . '>' . $lang['ctracker_complex_9'] . '</option>';
 
 		return $switch;
 	}
@@ -184,7 +184,7 @@ class ct_adminfunctions
 	 * @param $prefix    = Current File Path
 	 * @param $extension = File Extension to find
 	 */
-	function recursive_filechk($dir, $prefix = '', $extension)
+	function recursive_filechk($dir, $prefix = '', $extension='')
 	{
 		global $db, $lang;
 
@@ -487,7 +487,7 @@ class ct_adminfunctions
 	 * @param $prefix    = current file path
 	 * @param $extension = file extension to find
 	 */
-	function CreateFileList($dir, $prefix = '', $extension)
+	function CreateFileList($dir, $prefix = '', $extension='')
 	{
 	  	global $db, $lang;
 

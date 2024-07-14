@@ -149,7 +149,7 @@ switch( $mode )
 				if ( isset($_POST['cash'][$c_cur->id()]) &&
 					 is_numeric($_POST['cash'][$c_cur->id()]) )
 				{
-					$amount = cash_floatval($_POST['cash'][$c_cur->id()]);
+					$amount = floatval($_POST['cash'][$c_cur->id()]);
 					if ( $amount > 0 )
 					{
 						$amount = ( $donater->has($c_cur->id(),$amount) ) ? $amount : $donater->amount($c_cur->id());
@@ -364,7 +364,7 @@ switch( $mode )
 					 isset($_POST['cashchange'][$c_cur->id()]) &&
 					 is_numeric($_POST['cashchange'][$c_cur->id()]) )
 				{
-					$amount = cash_floatval($_POST['cashchange'][$c_cur->id()]);
+					$amount = floatval($_POST['cashchange'][$c_cur->id()]);
 					$allow_neg = $c_cur->mask(CURRENCY_ALLOWNEG);
 					$type = intval($_POST['cashtype'][$c_cur->id()]);
 					if ( (($type == 1) || ($type == 2)) && $amount < 0 )
@@ -510,7 +510,7 @@ switch( $mode )
 		{
 			$from_id = intval($_POST['from_id']);
 			$to_id = intval($_POST['to_id']);
-			$convert_amount = cash_floatval($_POST['convert_amount']);
+			$convert_amount = floatval($_POST['convert_amount']);
 			if ( ( $convert_amount > 0 ) && ($to_id != $from_id) && $cash->currency_exists($to_id) && $cash->currency_exists($from_id) && isset($exchange_data[$from_id]) && is_array($exchange_data[$from_id]) && isset($exchange_data[$from_id][$to_id]) && $cash->currencies[$from_id]->mask(CURRENCY_ENABLED | CURRENCY_EXCHANGEABLE) && $cash->currencies[$to_id]->mask(CURRENCY_ENABLED | CURRENCY_EXCHANGEABLE) )
 			{
 				$c_cur_from = $cash->currency($from_id);

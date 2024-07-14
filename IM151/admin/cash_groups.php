@@ -61,7 +61,7 @@ switch ( $mode )
 			 is_array($_POST['update_amount']) )
 		{
 			$update_clause = array();
-			while ( $c_cur = &$cash->currency_next($cm_i) )
+			while ( $c_cur = $cash->currency_next($cm_i) )
 			{
 				if ( isset($_POST['update_type'][$c_cur->id()]) )
 				{
@@ -134,7 +134,7 @@ switch ( $mode )
 						}
 						if ( count($users) > 20 )
 						{
-							$group = cash_array_chunk($users,15);
+							$group = array_chunk($users,15);
 							for ( $i = 0; $i < count($group); $i++ )
 							{
 								$where_clause[] = 'WHERE user_id = ' . implode(' OR user_id = ',$group[$i]);
@@ -185,7 +185,7 @@ switch ( $mode )
 			$update_set = array('cash_perpost' => 'float',	'cash_postbonus' => 'float',		'cash_perreply' => 'float',
 								'cash_perchar' => 'float',	'cash_maxearn' => 'float',			'cash_perpm' => 'float',
 								'cash_allowance' => 'int',	'cash_allowanceamount' => 'float',	'cash_allowancetime' => 'int');
-			while ( $c_cur = &$cash->currency_next($cm_i) )
+			while ( $c_cur = $cash->currency_next($cm_i) )
 			{
 				$delete_this = true;
 				$varname = 'cash_' . $c_cur->id();
@@ -330,7 +330,7 @@ switch ( $mode )
 				"L_RESET" => $lang['Reset'])
 			);
 
-			while ( $c_cur = &$cash->currency_next($cm_i) )
+			while ( $c_cur = $cash->currency_next($cm_i) )
 			{
 				if ( isset($group->currency_settings[$c_cur->id()]) )
 				{
@@ -366,7 +366,7 @@ switch ( $mode )
 				}
 				else
 				{
-					$allowances_enabled_yes = (( !defined(CASH_ALLOWANCES_ENABLED) ) ? "disabled=\"disabled\" " : "");
+					$allowances_enabled_yes = (( !defined('CASH_ALLOWANCES_ENABLED') ) ? "disabled=\"disabled\" " : "");
 					$allowances_enabled_no = "checked=\"checked\"";
 
 					$template->assign_block_vars("cashrow",array(	"CASH_INDEX" => $c_cur->id(),
@@ -450,7 +450,7 @@ switch ( $mode )
 		$cm_groups->cleanup();
 
 		$cash_indices = array();
-		while ( $c_cur = &$cash->currency_next($cm_i) )
+		while ( $c_cur = $cash->currency_next($cm_i) )
 		{
 			$cash_indices[] = $c_cur->id();
 			$cash_names[] = $c_cur->name();

@@ -194,7 +194,7 @@ function check_condition($check)
 			{
 				return FALSE; // Status unknown
 			}
-			if ( $row['Type'] == 'HEAP')
+			if ( isset($row['Type']) && $row['Type'] == 'HEAP')
 			{
 				return FALSE;
 			}

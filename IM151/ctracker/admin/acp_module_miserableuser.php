@@ -64,7 +64,7 @@ if ( isset($_POST['submit']) )
 		);
 	}
 }
-else if ( $_GET['mode'] == 'unmis' )
+else if ( ( isset($_GET['mode']) ? $_GET['mode'] : '' ) == 'unmis' )
 {
 	$userid = intval($_GET['userid']);
 	$sql = 'UPDATE ' . USERS_TABLE . ' SET ct_miserable_user = 0 WHERE user_id = ' . $userid;

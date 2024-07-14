@@ -246,7 +246,7 @@ class pafiledb_user_upload extends pafiledb_public
 				'L_FILESSINFO_UPLOAD' => $lang['Filessinfo_upload'],
 				'L_FILE_SSLINK' => $lang['Filess_link'],
 				'L_FILE_SSLINK_INFO' => $lang['Filess_link_info'],
-				'L_FILESSUPLOAD' => $lang['Filessupload'],
+				'L_FILESSUPLOAD' => $lang['Filess_upload'],
 				'L_FILE_WEBSITE' => $lang['Filedocs'],
 				'L_FILE_WEBSITE_INFO' => $lang['Filedocsinfo'],
 				'L_FILE_URL' => $lang['Fileurl'],

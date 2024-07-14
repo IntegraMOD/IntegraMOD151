@@ -219,7 +219,7 @@ if(!defined("SQL_LAYER"))
 			{
 				return count($this->cache);
 			}
-			if ($query_id === false)
+			if ($query_id == false)
 			{
 				$query_id = $this->query_result;
 			}

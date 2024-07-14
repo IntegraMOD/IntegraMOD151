@@ -130,6 +130,7 @@ $pafiledb_template->assign_vars(array(
 	'S_CAT_ACTION' => append_sid("admin_pa_category.$phpEx"))
 );
 
+$cat_list = '';
 if($mode == '' || $mode == 'cat_order' || $mode == 'sync' || $mode == 'sync_all')
 {
 	$pafiledb_template->assign_vars(array(
@@ -147,7 +148,7 @@ elseif($mode == 'add' || $mode == 'edit')
 {
 	if($mode == 'add')
 	{
-		if(!$_POST['cat_parent'])
+		if(empty($_POST['cat_parent']))
 		{
 			$cat_list .= '<option value="0" selected>' . $lang['None'] . '</option>';
 		}
@@ -155,14 +156,14 @@ elseif($mode == 'add' || $mode == 'edit')
 		{
 			$cat_list .= '<option value="0">' . $lang['None'] . '</option>';
 		}
-		$cat_list .= (!$_POST['cat_parent']) ? $pafiledb->jumpmenu_option() : $pafiledb->jumpmenu_option(0, 0, array($_POST['cat_parent'] => 1));
-		$checked_yes = ($_POST['cat_allow_file']) ? ' checked' : '';
-		$checked_no = (!$_POST['cat_allow_file']) ? ' checked' : '';
+		$cat_list .= empty($_POST['cat_parent']) ? $pafiledb->jumpmenu_option() : $pafiledb->jumpmenu_option(0, 0, array($_POST['cat_parent'] => 1));
+		$checked_yes = !empty($_POST['cat_allow_file']) ? ' checked' : '';
+		$checked_no = empty($_POST['cat_allow_file']) ? ' checked' : '';
 		// MX Addon
-		$checked_comments_yes = ($_POST['cat_allow_comments']) ? ' checked' : '';
-		$checked_comments_no = (!$_POST['cat_allow_comments']) ? ' checked' : '';
-		$checked_ratings_yes = ($_POST['cat_allow_ratings']) ? ' checked' : '';
-		$checked_ratings_no = (!$_POST['cat_allow_ratings']) ? ' checked' : '';
+		$checked_comments_yes = !empty($_POST['cat_allow_comments']) ? ' checked' : '';
+		$checked_comments_no = empty($_POST['cat_allow_comments']) ? ' checked' : '';
+		$checked_ratings_yes = !empty($_POST['cat_allow_ratings']) ? ' checked' : '';
+		$checked_ratings_no = empty($_POST['cat_allow_ratings']) ? ' checked' : '';
 		// End
 		$cat_name = (!empty($_POST['cat_name'])) ? $_POST['cat_name'] : '';
 		$cat_desc = (!empty($_POST['cat_desc'])) ? $_POST['cat_desc'] : '';

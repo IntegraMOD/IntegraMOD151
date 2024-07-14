@@ -6,7 +6,7 @@
 	</td>
   </tr>
 <!-- END input -->
-<!-- SPILT -->
+<!-- SPLIT A -->
 <!-- BEGIN textarea -->
   <tr>
 	<td class="row1"><span class="genmed">{textarea.FIELD_NAME}</span><br><span class="gensmall">{textarea.FIELD_DESCRIPTION}</span></td>
@@ -15,7 +15,7 @@
 	</td>
   </tr>
 <!-- END textarea -->
-<!-- SPILT -->
+<!-- SPLIT B -->
 <!-- BEGIN radio -->
   <tr>
 	<td class="row1"><span class="genmed">{radio.FIELD_NAME}</span><br><span class="gensmall">{radio.FIELD_DESCRIPTION}</span></td>
@@ -26,20 +26,20 @@
 	</td>
   </tr>	
 <!-- END radio -->
-<!-- SPILT -->
+<!-- SPLIT c -->
 <!-- BEGIN select -->
   <tr>
 	<td class="row1"><span class="genmed">{select.FIELD_NAME}</span><br><span class="gensmall">{select.FIELD_DESCRIPTION}</span></td>
 	<td class="row2">
 		<select name="field[{select.FIELD_ID}]" class="post">
 		<!-- BEGIN row -->	
-		<option value="{select.row.FIELD_VALUE}"{radio.row.FIELD_SELECTED}>{select.row.FIELD_VALUE}</option>
+		<option value="{select.row.FIELD_VALUE}"{select.row.FIELD_SELECTED}>{select.row.FIELD_VALUE}</option>
 		<!-- END row -->
 		</select>
 	</td>
   </tr>	
 <!-- END select -->
-<!-- SPILT -->
+<!-- SPILT d -->
 <!-- BEGIN select_multiple -->
   <tr>
 	<td class="row1"><span class="genmed">{select_multiple.FIELD_NAME}</span><br><span class="gensmall">{select_multiple.FIELD_DESCRIPTION}</span></td>
@@ -52,7 +52,7 @@
 	</td>
   </tr>	
 <!-- END select_multiple -->
-<!-- SPILT -->
+<!-- SPILT e -->
 <!-- BEGIN checkbox -->
   <tr>
 	<td class="row1"><span class="genmed">{checkbox.FIELD_NAME}</span><br><span class="gensmall">{checkbox.FIELD_DESCRIPTION}</span></td>

@@ -75,7 +75,7 @@ if ( isset($_POST['set']) )
 				$newdecimal = intval($_POST['decimal_value']);
 				$update_name = ($c_cur->data('cash_name') != $newname);
 				$update_default = ($c_cur->data('cash_default') != $newdefault);
-				$update_decimal = ($c_cur->data('cash_decimal') != $newdecimal);
+				$update_decimal = ($c_cur->data('cash_decimal', 0) != $newdecimal);
 				//
 				// If it's points, update the config points variable (retro- Points System. bleh)
 				//
@@ -487,7 +487,7 @@ $template->assign_vars(array(
 );
 
 $c_cur = 0;
-while ( $c_cur = &$cash->currency_next($cm_i) )
+while ( $c_cur = $cash->currency_next($cm_i) )
 {
 	$template->assign_block_vars("cashrow",array(	"U_MOVE_UP" => append_sid("cash_currencies.$phpEx?set=up&cord=" . $c_cur->data('cash_order')),
 													"U_MOVE_DOWN" => append_sid("cash_currencies.$phpEx?set=down&cord=" . $c_cur->data('cash_order')),

@@ -20,11 +20,7 @@
  *
  ***************************************************************************/
 
-// V: added the pagestart stuff here, apparently that's wrong, not sure yet
-define('IN_PHPBB', 1);
-$phpbb_root_path = "./../";
-$phpEx = substr(strrchr(__FILE__, '.'), 1);
-if ( !empty($navbar) && defined('IN_PHPBB') )
+if (!empty($setmodules) || !empty($navbar))
 {
 	/* V: disabled navbar. ACP menus are strictly superior.
 	$menu = array();

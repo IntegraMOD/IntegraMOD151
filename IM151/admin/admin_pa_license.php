@@ -42,6 +42,7 @@ if( isset($_GET['license']) || isset($_POST['license']) )
 				'admin' => 'admin/pa_admin_license_add.tpl')
 			);
 
+			$add = '';
 			if ( isset($_GET['add']) || isset($_POST['add']) )
 			{
 				$add = ( isset($_GET['add']) ) ? $_GET['add'] : $_POST['add'];
@@ -56,7 +57,7 @@ if( isset($_GET['license']) || isset($_POST['license']) )
 
 				//$form['text'] = str_replace("\n", "<br>", $form['text']);
 
-				$sql = "INSERT INTO " . PA_LICENSE_TABLE . " VALUES('NULL', '" . $form['name'] . "', '" . $form['text'] . "')";
+				$sql = "INSERT INTO " . PA_LICENSE_TABLE . " (license_name, license_text) VALUES('" . $form['name'] . "', '" . $form['text'] . "')";
 
 				if ( !($db->sql_query($sql)) )
 				{
@@ -90,6 +91,7 @@ if( isset($_GET['license']) || isset($_POST['license']) )
 				'admin' => 'admin/pa_admin_license_edit.tpl')
 			);
 
+			$edit = '';
 			if ( isset($_GET['edit']) || isset($_POST['edit']) )
 			{
 				$edit = ( isset($_GET['edit']) ) ? $_GET['edit'] : $_POST['edit'];
@@ -123,6 +125,7 @@ if( isset($_GET['license']) || isset($_POST['license']) )
 
 			if ($edit == 'form')
 			{
+				$select = '';
 				if ( isset($_GET['select']) || isset($_POST['select']) )
 				{
 					$select = ( isset($_GET['select']) ) ? $_GET['select'] : $_POST['select'];
@@ -136,6 +139,11 @@ if( isset($_GET['license']) || isset($_POST['license']) )
 				}
 
 				$license = $db->sql_fetchrow($result);
+				if (!$license)
+				{
+					// V: TODO Add a lang key
+					message_die(GENERAL_ERROR, 'No license selected', '', __LINE__, __FILE__);
+				}
 
 				$text = str_replace("<br>", "\n", $license['license_text']);
 
@@ -164,7 +172,7 @@ if( isset($_GET['license']) || isset($_POST['license']) )
 
 				while ($license = $db->sql_fetchrow($result))
 				{
-					$row .= '<tr><td width="3%" class="row1" align="center" valign="middle"><input type="radio" name="select" value="' . $license['license_id'] . '"></td><td width="97%" class="row1">' . $license['license_name'] . '</td></tr>';
+					$row .= '<tr><td width="3%" class="row1" align="center" valign="middle"><input type="radio" checked="checked" name="select" value="' . $license['license_id'] . '"></td><td width="97%" class="row1">' . $license['license_name'] . '</td></tr>';
 				}
 
 				$template->assign_block_vars("license", array());

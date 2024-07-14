@@ -60,6 +60,8 @@ if( !empty($setmodules) )
 // phpBB Adminsite
 $no_page_header  = TRUE;
 $phpbb_root_path = './../';
+define('CT_SECLEVEL', 'LOW');
+$ct_ignorepvar = array('submit');
 
 require($phpbb_root_path . 'extension.inc');
 require('./pagestart.' . $phpEx);

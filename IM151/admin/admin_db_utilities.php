@@ -736,6 +736,9 @@ if( isset($_GET['perform']) || isset($_POST['perform']) )
 
 
 		$i = 0;
+		$total_rec = 0;
+		$total_size = 0;
+		$total_stat = '';
 		while ($opt = $db->sql_fetchrow($result) )
 		{
 	
@@ -777,7 +780,7 @@ if( isset($_GET['perform']) || isset($_POST['perform']) )
 			"S_SELECT_TABLE" => "<input type=\"checkbox\" name=\"selected_tbl[]\" value=\"" . $opt['Name'] . "\"" . $check . ">",
 			"TABLE" => $opt['Name'],
 			"RECORD" => $opt['Rows'],
-			"TYPE" => $opt['Type'],
+			"TYPE" => ( isset($opt['Type']) ? $opt['Type'] : '' ),
 			"SIZE" => $dbsize,
 			"STATUS" => $data_free,
 			"TOT_TABLE" => $i
@@ -896,16 +899,16 @@ $i++;
 		// Select a cron every
 		//
 		$template->assign_block_vars("sel_cron_every", array(
-			"MONTH" => $month,
-			"2WEEKS" => $weeks2,
-			"WEEK" => $week,
-			"3DAYS" => $days3,
-			"DAY" => $day,
-			"6HOURS" => $hours6,
-			"HOUR" => $hour,
-			"30MINUTES" => $minutes30,
-			"20SECONDS" => $seconds20,
-	
+			"MONTH" => ( isset($month ) ? $month : '' ) ,
+			"2WEEKS" => ( isset($weeks2 ) ? $weeks2 : '' ) ,
+			"WEEK" => ( isset($week ) ? $week : '' ) ,
+			"3DAYS" => ( isset($days3 ) ? $days3 : '' ) ,
+			"DAY" => ( isset($day ) ? $day : '' ) ,
+			"6HOURS" => ( isset($hours6 ) ? $hours6 : '' ) ,
+			"HOUR" => ( isset($hour ) ? $hour : '' ) ,
+			"30MINUTES" => ( isset($minutes30 ) ? $minutes30 : '' ) ,
+			"20SECONDS" => ( isset($seconds20 ) ? $seconds20 : '' ) ,
+
 			"L_MONTH" => $lang['Optimize_month'],
 			"L_2WEEKS" => $lang['Optimize_2weeks'],
 			"L_WEEK" => $lang['Optimize_week'],
@@ -971,11 +974,11 @@ $i++;
 					"L_INVERTCHECKED" => $lang['Optimize_InvertChecked'],
 					"L_START_OPTIMIZE" => $lang['Optimize'],
 					"S_DBUTILS_ACTION" => append_sid("admin_db_utilities.$phpEx"),
-					"S_ENABLE_CRON_YES" => $enable_cron_yes,
-					"S_ENABLE_CRON_NO" => $enable_cron_no,
+					"S_ENABLE_CRON_YES" => ( isset($enable_cron_yes) ? $enable_cron_yes : '' ) ,
+					"S_ENABLE_CRON_NO" => ( isset($enable_cron_no) ? $enable_cron_no : '' ) ,
 					"S_SHOW_BEGIN_FOR" => $opt_conf['show_begin_for'],
-					"S_ENABLE_NOT_OPTIMIZED_YES" => $enable_not_optimized_yes,
-					"S_ENABLE_NOT_OPTIMIZED_NO" => $enable_not_optimized_no,
+					"S_ENABLE_NOT_OPTIMIZED_YES" => ( isset($enable_not_optimized_yes) ? $enable_not_optimized_yes : '' ) ,
+					"S_ENABLE_NOT_OPTIMIZED_NO" => ( isset($enable_not_optimized_no) ? $enable_not_optimized_no : '' ) ,
 					"S_HIDDEN_FIELDS" => $s_hidden_fields
 					)
 				);

@@ -46,17 +46,17 @@
 
 	function phpBBSecurity_AdminConfigName()
 	{
-		return 'phpBBSecurity_max_admins';
+		return 'wfxfhluubwaayyyklmvhj';
 	}
 		
 	function phpBBSecurity_ModConfigName()
 	{
-		return 'phpBBSecurity_max_mods';
+		return 'qrajtslubvwfcxpyxgahc';
 	}
 		
 	function phpBBSecurity_UseSpecial()
 	{
-		return 'phpBBSecurity_use_max';
+		return 'fwiwwjvkthucohgalyvga';
 	}			
 	
 	function phpBBSecurity_Validate($q, $a, $user, $mode, $location)

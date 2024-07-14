@@ -69,7 +69,7 @@ if ( isset($_POST['submit']) )
 	{
 		$cash_forums[] = $row['forum_id'];
 	}
-	while ( $c_cur = &$cash->currency_next($cm_i) )
+	while ( $c_cur = $cash->currency_next($cm_i) )
 	{
 		$varname = 'cash_' . $c_cur->id();
 		if ( isset($_POST[$varname]) &&
@@ -129,7 +129,7 @@ $template->assign_vars(array(
 
 $boolean_forums = array();
 
-while ( $c_cur = &$cash->currency_next($cm_i) )
+while ( $c_cur = $cash->currency_next($cm_i) )
 {
 	$template->assign_block_vars("cashrow", array(
 		'CASH_NAME' => $c_cur->name())
@@ -183,6 +183,7 @@ if ( $total_categories = $db->sql_numrows($q_categories) )
 		for ( $j = 0; $j < $total_forums; $j++ )
 		{
 			$forum_id = $forum_rows[$j]['forum_id'];
+			$row_color = '';
 			
 			if ( $forum_rows[$j]['cat_id'] == $cat_id )
 			{
@@ -196,7 +197,7 @@ if ( $total_categories = $db->sql_numrows($q_categories) )
 					'U_VIEWFORUM' => append_sid($phpbb_root_path."viewforum.$phpEx?" . POST_FORUM_URL . "=$forum_id"))
 				);
 
-				while ( $c_cur = &$cash->currency_next($cm_i) )
+				while ( $c_cur = $cash->currency_next($cm_i) )
 				{
 					$template->assign_block_vars("catrow.forumrow.cashrow", array(
 						'S_ON' => (( $c_cur->forum_active($forum_id) )?' checked="checked"':''),

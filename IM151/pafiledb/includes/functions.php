@@ -49,6 +49,7 @@ class pafiledb_functions
 		global $lang, $phpbb_root_path;
 		$curicons = 1;
 
+		$posticons = '';
 		if ($file_posticon == 'none' || $file_posticon == 'none.gif' or empty($file_posticon))
 		{
 			$posticons .= '<input type="radio" name="posticon" value="none" checked><a class="gensmall">' . $lang['None'] . '</a>&nbsp;';
@@ -90,6 +91,7 @@ class pafiledb_functions
 	{
 		global $db, $lang;
 
+		$list = '';
 		if ($license_id == 0) 
 		{
 			$list .= '<option calue="0" selected>' . $lang['None'] . '</option>';

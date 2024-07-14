@@ -50,7 +50,7 @@ $update_set = array(CURRENCY_ENABLED => 'bool',
 					'cash_allowance' => 'int',			'cash_allowanceamount' => 'float',	'cash_allowancetime' => 'int');
 
 $table_updated = false;
-while ( $c_cur = &$cash->currency_next($cm_i) )
+while ( $c_cur = $cash->currency_next($cm_i) )
 {
 	$varname = 'cash_' . $c_cur->id();
 	if ( isset($_POST['submit']) &&
@@ -60,7 +60,7 @@ while ( $c_cur = &$cash->currency_next($cm_i) )
 		$updates = array();
 		$settings = $c_cur->data('cash_settings');
 		$settings_update = false;
-		while ( list($key,$type) = each ( $update_set ) )
+		foreach ( $update_set  as $key =>$type)
 		{
 			if ( isset($_POST[$varname][$key]) )
 			{
@@ -197,13 +197,13 @@ $template->assign_vars(array(
 	"CURRENCY_DONATE" => CURRENCY_DONATE,
 	"CURRENCY_MODEDIT" => CURRENCY_MODEDIT,
 	"CURRENCY_ALLOWNEG" => CURRENCY_ALLOWNEG,
-	"CURRENCY_ALLOWANCE" => CURRENCY_ALLOWANCE,
+	"CURRENCY_ALLOWANCE" => defined('CURRENCY_ALLOWANCE') ? CURRENCY_ALLOWANCE : null,
 
 	"L_SUBMIT" => $lang['Submit'], 
 	"L_RESET" => $lang['Reset'])
 );
 
-while ( $c_cur = &$cash->currency_next($cm_i) )
+while ( $c_cur = $cash->currency_next($cm_i) )
 {
 
 	$enabled_cash_yes = ( $c_cur->mask(CURRENCY_ENABLED) ) ? "checked=\"checked\"" : "";
@@ -239,7 +239,7 @@ while ( $c_cur = &$cash->currency_next($cm_i) )
 	$display_in_memberlist_yes = ( $c_cur->mask(CURRENCY_VIEWMEMBERLIST) ) ? "checked=\"checked\"" : "";
 	$display_in_memberlist_no = ( !$c_cur->mask(CURRENCY_VIEWMEMBERLIST) ) ? "checked=\"checked\"" : "";
 
-	$allowances_enabled_yes = (( !defined(CASH_ALLOWANCES_ENABLED) ) ? "disabled=\"disabled\" " : "") . (( $c_cur->data('cash_allowance') ) ? "checked=\"checked\"" : "");
+	$allowances_enabled_yes = (( !defined('CASH_ALLOWANCES_ENABLED') ) ? "disabled=\"disabled\" " : "") . (( $c_cur->data('cash_allowance') ) ? "checked=\"checked\"" : "");
 	$allowances_enabled_no = ( !$c_cur->data('cash_allowance') ) ? "checked=\"checked\"" : "";
 
 	$allowances_freq_day   = ( $c_cur->data('cash_allowancetime') == CASH_ALLOW_DAY   ) ? "checked=\"checked\"" : "";

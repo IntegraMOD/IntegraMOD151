@@ -37,9 +37,10 @@ $custom_field->init();
 // MX Modified - select
 $mode = (isset($_REQUEST['mode'])) ? htmlspecialchars($_REQUEST['mode']) : 'select';
 $field_id = (isset($_REQUEST['field_id'])) ? intval($_REQUEST['field_id']) : 0;
-$field_type = (isset($_REQUEST['field_type'])) ? intval($_REQUEST['field_type']) : $custom_field->field_rowset[$field_id]['field_type'];
+$field_type = (isset($_REQUEST['field_type'])) ? intval($_REQUEST['field_type']) : ( isset($custom_field->field_rowset[$field_id]['field_type']) ? $custom_field->field_rowset[$field_id]['field_type'] : 0 ) ;
 $field_ids = (isset($_REQUEST['field_ids'])) ? $_REQUEST['field_ids'] : '';
 $submit = (isset($_POST['submit'])) ? TRUE : FALSE;
+$s_hidden_fields = '';
 
 switch($mode)
 {
@@ -146,6 +147,16 @@ if($mode == 'addfield')
 	{
 		$data = $custom_field->get_field_data($field_id);
 	}
+	else
+	{
+		$data = array(
+			'custom_name' => '',
+			'custom_description' => '',
+			'data' => '',
+			'regex' => '',
+			'field_order' => '',
+		);
+	}
 
 	$pafiledb_template->assign_vars(array(
 		'L_FIELD_NAME' => $lang['Fieldname'],
@@ -157,11 +168,12 @@ if($mode == 'addfield')
 		'L_FIELD_REGEX' => $lang['Field_regex'],
 		'L_FIELD_REGEX_INFO' => sprintf($lang['Field_regex_info'], '<a href="http://www.php.net/manual/en/function.preg-match.php" target="_blank">', '</a>'),
 		'L_FIELD_ORDER' => $lang['Field_order'],
-			
+
 		'DATA' => ($field_type != INPUT && $field_type != TEXTAREA) ? TRUE : FALSE,
 		'REGEX' => ($field_type == INPUT || $field_type == TEXTAREA) ? TRUE : FALSE,
 		'ORDER' => ($field_id) ? TRUE : FALSE,
-			
+		'ERROR' => '',
+
 		'FIELD_NAME' => $data['custom_name'],
 		'FIELD_DESC' => $data['custom_description'],
 		'FIELD_DATA' => $data['data'],

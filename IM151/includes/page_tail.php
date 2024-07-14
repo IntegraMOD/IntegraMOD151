@@ -51,7 +51,8 @@ $template->set_filenames(array(
 	'overall_footer' => ( empty($gen_simple_header) ) ? 'overall_footer.tpl' : 'simple_footer.tpl')
 );
 
-include_once($phpbb_root_path . 'ctracker/engines/ct_footer.' . $phpEx);
+//Remove CTracker footer, as the links are dead and it's already in the list mod credits.
+//include_once($phpbb_root_path . 'ctracker/engines/ct_footer.' . $phpEx);
 $output_login_status = ($userdata['ct_enable_ip_warn'])? $lang['ctracker_ma_on'] : $lang['ctracker_ma_off'];
 
 //Begin Lo-Fi Mod
@@ -136,7 +137,7 @@ $template->assign_vars(array(
 	'PROTECTED'	=> ($userdata['user_level'] == ADMIN && $userdata['user_id'] != ANONYMOUS) ? ' ' . $lang['PS_blocked_line2'].' :: ' : 'Protected by phpBB Security &copy; <a href="http://phpbb-amod.com" class="copyright" target="_blank">phpBB-Amod</a> ::',
 	'TRANSLATION_INFO' => (isset($lang['TRANSLATION_INFO'])) ? $lang['TRANSLATION_INFO'] : ((isset($lang['TRANSLATION'])) ? $lang['TRANSLATION'] : ''),
 	'COOKIES_LINK' => $cookies_link,
-	'CRACKER_TRACKER_FOOTER' => !empty($ctracker_config) && !empty($ctracker_config->settings['footer_layout']) ? create_footer_layout($ctracker_config->settings['footer_layout']) : '',
+	//'CRACKER_TRACKER_FOOTER' => !empty($ctracker_config) && !empty($ctracker_config->settings['footer_layout']) ? create_footer_layout($ctracker_config->settings['footer_layout']) : '',
 	'L_STATUS_LOGIN' => (!empty($ctracker_config) && !empty($ctracker_config->settings['login_ip_check']))? sprintf($lang['ctracker_ipwarn_info'], $output_login_status) : '',
 	'ADMIN_LINK' => $admin_link,
 	'COPYRIGHT' => "Powered by <a href=\"http://www.integramod.com\" target=\"_phpbb\">IntegraMOD</a> &copy; 2004, 2011 The Integramod Group",

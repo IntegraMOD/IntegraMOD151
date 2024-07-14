@@ -48,7 +48,7 @@ if ( isset($_POST['currency_val']) && is_array($_POST['currency_val']) )
 }
 
 $exchange = array();
-while ( $c_cur = &$cash->currency_next($cm_i) )
+while ( $c_cur = $cash->currency_next($cm_i) )
 {
 	$exval = $c_cur->exchange();
 	if ( $exchange_update &&
@@ -56,7 +56,7 @@ while ( $c_cur = &$cash->currency_next($cm_i) )
 		 is_numeric($_POST['currency_val'][$c_cur->id()]) &&
 		 (intval($_POST['currency_val'][$c_cur->id()]) > 0) )
 	{
-		$newvalue = $c_cur->attribute_pack('cash_exchange',cash_floatval($_POST['currency_val'][$c_cur->id()]));
+		$newvalue = $c_cur->attribute_pack('cash_exchange',floatval($_POST['currency_val'][$c_cur->id()]));
 		$sql = "UPDATE " . CASH_TABLE . "
 				SET cash_exchange = $newvalue
 				WHERE cash_id = " . $c_cur->id();
@@ -107,12 +107,10 @@ if ( !($result = $db->sql_query($sql)) )
 {
 	message_die(CRITICAL_ERROR, "Could not query config information", "", __LINE__, __FILE__, $sql);
 }
-else
+$exchange_table = [];
+while ( $row = $db->sql_fetchrow($result) )
 {
-	while ( $row = $db->sql_fetchrow($result) )
-	{
-		$exchange_table[$row['ex_cash_id1']][$row['ex_cash_id2']] = 1;
-	}
+	$exchange_table[$row['ex_cash_id1']][$row['ex_cash_id2']] = 1;
 }
 
 //
@@ -164,7 +162,7 @@ for ($i = 0; $i < count($exchange); $i++ )
 		$node = ($i != $j);
 		$row_class = ((( !(($j - 1) % 3) ) || ( !(($i - 1) % 3) )) ? $theme['td_class2'] : $theme['td_class1']);
 
-		$text = (($exchange_table[$exchange[$i]['id']][$exchange[$j]['id']])? ('1 : ' . ($exchange[$j]['exchange'] / $exchange[$i]['exchange'])):$lang['Disabled']);
+		$text = (!empty($exchange_table[$exchange[$i]['id']][$exchange[$j]['id']])? ('1 : ' . ($exchange[$j]['exchange'] / $exchange[$i]['exchange'])):$lang['Disabled']);
 		$button = '<input type="submit" style="width:75" name="exchange_' . $exchange[$i]['id'] . '[' . $exchange[$j]['id'] . ']" value="' . $text . '" class="liteoption" />';
 		
 		$template->assign_block_vars("siderow.entry",array(	"ROW_CLASS" => $row_class,

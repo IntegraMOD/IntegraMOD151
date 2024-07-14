@@ -201,7 +201,7 @@ class log_manager
 
 		// Create Path to Counter file and load the current Status
 		$path                   = $this->create_ct_path(1);
-		$this->ct_counter_value = @file_get_contents($path);
+		$this->ct_counter_value = intval(@file_get_contents($path));
 
 		// Set up new counter value
 		$this->ct_counter_value += $value;
@@ -235,7 +235,7 @@ class log_manager
 		else
 		{
 			$debug_array = file($path);
-			$debug_delimiter = $debug_array[0];
+			$debug_delimiter = ( isset($debug_array[0]) ? $debug_array[0] : '' );
 			$logsize  = count($debug_array) - count(array_diff($debug_array, (array) $debug_delimiter));
 		}
 

@@ -55,11 +55,11 @@ switch ( $mode )
 			{
 				if ( isset($_POST['cash_amount'][$cids[$i]]) )
 				{
-					$cash_check[$cids[$i]] = cash_floatval($_POST['cash_amount'][$cids[$i]]);
+					$cash_check[$cids[$i]] = floatval($_POST['cash_amount'][$cids[$i]]);
 				}
 			}
 			$update_clause = array();
-			while ( $c_cur = &$cash->currency_next($cm_i) )
+			while ( $c_cur = $cash->currency_next($cm_i) )
 			{
 				if ( isset($cash_check[$c_cur->id()]) )
 				{
@@ -89,12 +89,12 @@ switch ( $mode )
 						$s_hidden_fields = '';
 						$c_ids = array();
 
-						while ( $c_cur = &$cash->currency_next($cm_i) )
+						while ( $c_cur = $cash->currency_next($cm_i) )
 						{
 							if ( isset($_POST['cash_check'][$c_cur->id()]) && isset($_POST['cash_amount'][$c_cur->id()]) )
 							{
 								$c_ids[] = $c_cur->id();
-								$s_hidden_fields .= '<input type="hidden" name="cash_amount[' . $c_cur->id() . ']" value="' . cash_floatval($_POST['cash_amount'][$c_cur->id()]) . '" />';
+								$s_hidden_fields .= '<input type="hidden" name="cash_amount[' . $c_cur->id() . ']" value="' . floatval($_POST['cash_amount'][$c_cur->id()]) . '" />';
 							}
 						}
 						if ( count($c_ids) )
@@ -120,7 +120,7 @@ switch ( $mode )
 					break;
 				case $lang['Recount_checked']:
 					$c_ids = array();
-					while ( $c_cur = &$cash->currency_next($cm_i) )
+					while ( $c_cur = $cash->currency_next($cm_i) )
 					{
 						if ( isset($_POST['cash_check'][$c_cur->id()]) )
 						{
@@ -190,7 +190,7 @@ switch ( $mode )
 			);
 
 			$i = 0;
-			while( $c_cur = &$cash->currency_next($cm_i) )
+			while( $c_cur = $cash->currency_next($cm_i) )
 			{
 				$i++;
 				$row_color = ( !($i % 2) ) ? $theme['td_color1'] : $theme['td_color2'];

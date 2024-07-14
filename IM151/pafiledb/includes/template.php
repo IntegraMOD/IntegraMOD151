@@ -68,8 +68,15 @@ class pafiledb_Template
 	{
 		global $phpbb_root_path;
 
-		$this->root = $phpbb_root_path . 'templates/' . $template;
-        $this->cachedir = $phpbb_root_path . $this->cache_root . $template . '/';
+		if (defined('IN_ADMIN'))
+		{
+			$this->root = $phpbb_root_path . 'admin/templates/';
+		}
+		else
+		{
+			$this->root = $phpbb_root_path . 'templates/' . $template;
+		}
+		$this->cachedir = $phpbb_root_path . $this->cache_root . $template . '/';
 
 		$this->static_lang = $static_lang;
 		$this->force_recompile = $force_recompile;
@@ -357,7 +364,7 @@ class pafiledb_Template
 				default:
 					$this->compile_var_tags($blocks[0][$curr_tb]);
 					$trim_check = trim($blocks[0][$curr_tb]);
-					$compile_blocks[] = (!$do_not_echo) ? ((!empty($trim_check)) ? $blocks[0][$curr_tb] : '') : ((!empty($trim_check)) ? $blocks[0][$curr_tb] : '');
+					$compile_blocks[] = ((!empty($trim_check)) ? $blocks[0][$curr_tb] : '');
 					break;
 			}
 		}
@@ -366,7 +373,7 @@ class pafiledb_Template
 		for ($i = 0; $i < count($text_blocks); $i++)
 		{
 			$trim_check_text = trim($text_blocks[$i]);
-			$trim_check_block = trim($compile_blocks[$i]);
+			$trim_check_block = !empty($compile_blocks[$i]) ? trim($compile_blocks[$i]) : '';
 			$template_php .= (!$no_echo) ? ((!empty($trim_check_text)) ? $text_blocks[$i] : '') . ((!empty($compile_blocks[$i])) ? $compile_blocks[$i] : '') : ((!empty($trim_check_text)) ? $text_blocks[$i] : '') . ((!empty($compile_blocks[$i])) ? $compile_blocks[$i] : '');
 		}
 

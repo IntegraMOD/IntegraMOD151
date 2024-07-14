@@ -25,7 +25,8 @@ $template->set_filenames(array(
 	'ct_body' => 'ctracker/acp/acp_systemrestore.tpl')
 );
 
-if ( $_GET['mode'] == 'backup')
+$mode = ( isset($_GET['mode']) ? $_GET['mode'] : '' );
+if ( $mode == 'backup')
 {
 	$backup_system = new ct_adminfunctions();
 	$backup_system->recover_configuration();
@@ -37,7 +38,7 @@ if ( $_GET['mode'] == 'backup')
 				'L_MESSAGE_TEXT'	=> $lang['ctracker_rec_succ'])
 		);
 }
-else if ( $_GET['mode'] == 'restore' )
+else if ( $mode == 'restore' )
 {
 	$backup_system = new ct_adminfunctions();
 	$backup_system->restore_configuration();

@@ -55,7 +55,7 @@ $action_types = array(	CASH_LOG_DONATE => 'user',
 						CASH_LOG_ADMIN_COPY_CURRENCY => 'admin'
 						);
 $action_users = array('user' => array(), 'admin' => array());
-while ( list($type,$user) = each ( $action_types ) )
+foreach ( $action_types  as $type =>$user)
 {
 	$action_users[$user][] = lt($type);
 }
@@ -100,7 +100,7 @@ $saction = ( isset($ar_action[$saction]) ) ? $saction : "all";
 $stime = ( isset($ar_time[$stime]) ) ? $stime : "all";
 $scount = ( isset($ar_count[$scount]) ) ? $scount : "b";
 
-if ( is_numeric($_GET['sindex']) )
+if ( !empty($_GET['sindex']) )
 {
 	$sindex = intval($_GET['sindex']);
 	$sindex = max($sindex,0);
@@ -177,7 +177,7 @@ $template->assign_vars(array(
 // (it looks nice now that it's not hardcoded :P )
 //
 $i = 0;
-while ( list($key,) = each ( $ar_action ) )
+foreach ( $ar_action  as $key =>$dummy)
 {
 	$template->assign_block_vars("actionfilter", array(	"ROW_CLASS" => (( !($i % 2) ) ? $theme['td_class1'] : $theme['td_class2']),
 														"ROW_COLOR" => (( !($i % 2) ) ? $theme['td_color1'] : $theme['td_color2']),
@@ -195,8 +195,7 @@ while ( list($key,) = each ( $ar_action ) )
 	}
 	$i++;
 }
-reset ( $ar_action );
-while ( list($key,) = each ( $ar_time ) )
+foreach ( $ar_time  as $key =>$dummy)
 {
 	$template->assign_block_vars("timefilter", array(	"ROW_CLASS" => (( !($i % 2) ) ? $theme['td_class1'] : $theme['td_class2']),
 														"ROW_COLOR" => (( !($i % 2) ) ? $theme['td_color1'] : $theme['td_color2']),
@@ -212,8 +211,7 @@ while ( list($key,) = each ( $ar_time ) )
 	}
 	$i++;
 }
-reset ( $ar_time );
-while ( list($key,$number) = each ( $ar_count ) )
+foreach ( $ar_count  as $key =>$number)
 {
 	$template->assign_block_vars("countfilter",array("NAME" => $number, "LINK" => append_sid("cash_log.$phpEx?saction=$saction&stime=$stime&scount=$key&sindex=0")));
 	if ( $key != $scount )
@@ -225,7 +223,6 @@ while ( list($key,$number) = each ( $ar_count ) )
 		$template->assign_block_vars("countfilter.switch_linkpage_off", array());
 	}
 }
-reset ( $ar_count );
 
 //$start = $ar_count[$scount] * $sindex;
 $range = $ar_count[$scount];

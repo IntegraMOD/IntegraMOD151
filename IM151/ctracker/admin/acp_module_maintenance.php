@@ -28,7 +28,7 @@ $template->set_filenames(array(
 
 
 // First we look wich mode the user has selected
-$mode = $_GET['mode'];
+$mode = ( isset($_GET['mode']) ? $_GET['mode'] : '' ) ;
 
 // Reset used vars
 $uplink_values = array();
@@ -61,39 +61,10 @@ for($i = 1; $i <= 6; $i++)
 unset($logmanager);
 
 
-// Lets see what the new versions are (Uplink) [original code (C) phpBB Group]
-if ( $fsock = @fsockopen('www.community.cback.de', 80, $errno, $errstr, 10) )
+// V: no version check, of course
+for ( $i = 0; $i <= 4; $i++ )
 {
-	@fputs($fsock, "GET /uplink/ctracker.txt HTTP/1.1\r\n");
-	@fputs($fsock, "HOST: www.community.cback.de\r\n");
-	@fputs($fsock, "Connection: close\r\n\r\n");
-
-	$get_info = false;
-
-	while ( !@feof($fsock) )
-	{
-		if ( $get_info )
-		{
-			$ctinf .= @fread($fsock, 1024);
-		}
-		else
-		{
-			if ( @fgets($fsock, 1024) == "\r\n" )
-			{
-				$get_info = true;
-			} // if
-		} // else
-	} // while
-
-	@fclose($fsock);
-	$uplink_values = explode('|', $ctinf);
-}
-else
-{
-	for ( $i = 0; $i <= 4; $i++ )
-	{
-		$uplink_values[$i] = $lang['ctracker_ma_unknown'];
-	}
+	$uplink_values[$i] = $lang['ctracker_ma_unknown'];
 }
 
 
@@ -103,15 +74,7 @@ else
 ( defined('protection_unit_three') )? $testvalue[3] = $lang['ctracker_ma_active'] : $testvalue[3] = $lang['ctracker_ma_inactive'];
 ( count($ct_rules) >= 260 )         ? $testvalue[4] = $lang['ctracker_ma_active'] : $testvalue[4] = $lang['ctracker_ma_inactive'];
 
-// PHP Version test
-if ( @phpversion() >= '5.0.0' )
-{
-	($uplink_values[2] <= @phpversion())? $testvalue[5] = $lang['ctracker_ma_secure'] : $testvalue[5] = $lang['ctracker_ma_warning'];
-}
-else
-{
-	($uplink_values[1] <= @phpversion())? $testvalue[5] = $lang['ctracker_ma_secure'] : $testvalue[5] = $lang['ctracker_ma_warning'];
-}
+($uplink_values[2] <= @phpversion())? $testvalue[5] = $lang['ctracker_ma_secure'] : $testvalue[5] = $lang['ctracker_ma_warning'];
 
 // Safemode and Globals test
 $testvalue[6] = strtolower(@ini_get('safe_mode'));

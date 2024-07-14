@@ -642,7 +642,7 @@ CREATE TABLE phpbb_blocks (
   openclose tinyint(1) NOT NULL default '1',
   background tinyint(1) NOT NULL default '1',
   local tinyint(1) NOT NULL default '0',
-  groups tinytext NOT NULL,
+  pgroup tinytext NOT NULL,
   PRIMARY KEY  (bid)
 );
 
@@ -1328,7 +1328,7 @@ CREATE TABLE phpbb_layout (
   forum_wide tinyint(1) NOT NULL default '1',
   page_collapse tinyint(1) NOT NULL default '0',
   view tinyint(1) NOT NULL default '0',
-  groups tinytext NOT NULL,
+  pgroup tinytext NOT NULL,
   pagetitle varchar(100) NOT NULL default 'Home',
   PRIMARY KEY  (lid)
 );

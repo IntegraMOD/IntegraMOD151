@@ -38,6 +38,10 @@ if( isset($_GET['safety']) || isset($_POST['safety']) )
 {
     $safety = (isset($_POST['safety'])) ? intval($_POST['safety']) : intval($_GET['safety']);
 }
+else
+{
+	$safety = 0;
+}
 
 $template->set_filenames(array(
     	'admin' => 'admin/pa_admin_file_checker.tpl')

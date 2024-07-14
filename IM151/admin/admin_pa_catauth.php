@@ -66,6 +66,8 @@ $cat_auth_const = array(AUTH_ALL, AUTH_REG, AUTH_ACL, AUTH_MOD, AUTH_ADMIN);
 
 $cat_parent = (isset($_REQUEST['cat_parent'])) ? intval($_REQUEST['cat_parent']) : 0;
 
+$s_hidden_fields = '';
+
 if(isset($_REQUEST['cat_id']))
 {
 	$cat_id = intval($_REQUEST['cat_id']);

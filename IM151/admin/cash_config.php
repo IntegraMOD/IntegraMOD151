@@ -68,7 +68,8 @@ while ( $row = $db->sql_fetchrow($result) )
 	
 	$new[$config_name] = $default_config[$config_name];
 
-	if ( $allowed_array[$config_name] &&
+	if ( isset($allowed_array[$config_name]) &&
+		 $allowed_array[$config_name] &&
 		 isset($_POST['submit']) &&
 		 isset($_POST['set']) &&
 		 ($_POST['set'] == "general") &&

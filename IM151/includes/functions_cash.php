@@ -137,78 +137,6 @@ function quoteslash($text,$quotes)
 //
 
 //
-//=============[ BEGIN Back-Compatibility Wrappers ]=========================
-//
-
-function cash_floatval( $value )
-{
-	if ( preversion('4.3') ) 
-	{ 
-		return (float)$value;
-	}
-	else
-	{
-		return floatval($value);
-	}
-}
-
-function cash_array_merge( $array1, $array2 )
-{
-	if ( preversion('4.3') ) 
-	{ 
-		while ( list($k,$v) = each ( $array2 ))
-		{
-			if( is_int($k) && isset($array1[$k]) )
-			{
-				$array1[] = $v;
-			}
-			else
-			{
-				$array1[$k] = $v;
-			}
-		}
-		reset ( $array2 );
-		return $array1;
-	}
-	else
-	{
-		return array_merge($array1,$array2);
-	}
-}
-
-function cash_array_chunk( &$array, $chunk_size )
-{
-	$return_array = array();
-	if ( preversion('4.3') ) 
-	{
-		if ( preversion('4.0') )
-		{
-			for ( $i = 0; $i < count($array); $i++ )
-			{
-				$return_array[floor($i/$chunk_size)][] = $array[$i];
-			}
-			return $return_array;
-		}
-		else
-		{
-			for ( $i = 0; $i < ceil(count($array) / $chunk_size); $i++ )
-			{
-				$return_array[] = array_slice($array,($i*$chunk_size),$chunk_size);
-			}
-			return $return_array;
-		}
-	}
-	else
-	{
-		return array_chunk($array,$chunk_size);
-	}
-}
-
-//
-//=============[ END Back-Compatibility Wrappers ]=========================
-//
-
-//
 //=============[ BEGIN Cash Functions ]=========================
 //
 
@@ -240,7 +168,7 @@ function cash_clause( $clause, $action )
 	else
 	{
 		$action = explode(CASH_LOG_ACTION_DELIMETER,$action);
-		$text = call_user_func_array('sprintf',cash_array_merge(array($clause),$action));
+		$text = call_user_func_array('sprintf',array_merge(array($clause),$action));
 	}
 	$text = str_replace('&quot;','"',$text);
 	return $text;
@@ -259,7 +187,7 @@ function cash_event_unpack($string)
 				$temp = explode(CASH_EVENT_DELIM2,$cash_entries[$i]);
 				if ( isset($temp[0]) && isset($temp[1]) )
 				{
-					$cash_amounts[intval($temp[0])] = cash_floatval($temp[1]);
+					$cash_amounts[intval($temp[0])] = floatval($temp[1]);
 				}
 			}
 		}
@@ -586,7 +514,7 @@ class cash_table
 	var $currencies;
 	var $ordered_list;
 	var $id_list;
-	function cash_table()
+	function __construct()
 	{
 		global $db;
 		$this->currencies = array();
@@ -633,7 +561,7 @@ class cash_table
 		global $db;
 		$bad_ordering = false;
 		$sql = array();
-		for ( $i = 0; $i < count($this->ordered_list); $i++ )
+		for ( $i = 0; !empty($this->ordered_list) && $i < count($this->ordered_list); $i++ )
 		{
 			if ( $this->currencies[$this->ordered_list[$i]]->data('cash_order') != ($i + 1) )
 			{
@@ -667,7 +595,7 @@ class cash_table
 		{
 			$iterater = 0;
 		}
-		if ( empty($this->ordered_list) || !($iterater < count($this->ordered_list)) )
+		if ( empty($this->ordered_list) || $iterater >= count($this->ordered_list))
 		{
 			$iterater = 0;
 			return null;
@@ -743,9 +671,9 @@ class cash_currency
 			}
 		}
 	}
-	function data($identifier)
+	function data($identifier, $default = null)
 	{
-		return $this->currency[$identifier];
+		return isset($this->currency[$identifier]) ? $this->currency[$identifier] : $default;
 	}
 	function id()
 	{
@@ -885,7 +813,7 @@ class cash_groups
 		$mask = false;
 		if ( !$all_entries )
 		{
-			while ( $c_cur = &$cash->currency_next($cm_i,CURRENCY_ENABLED) )
+			while ( $c_cur = $cash->currency_next($cm_i,CURRENCY_ENABLED) )
 			{
 				$currencies_array[] = $c_cur->id();
 			}
@@ -1165,7 +1093,7 @@ class cash_user
 			{
 				$this->usergroups[] = $row['group_id'];
 			}
-			while ( $c_cur = &$cash->currency_next($cm_i) )
+			while ( $c_cur = $cash->currency_next($cm_i) )
 			{
 				$this->cashgroups[$c_cur->id()] = array();
 				$this->cashgroups[$c_cur->id()][] = &$cash->currencies[$c_cur->id()];
@@ -1199,7 +1127,7 @@ class cash_user
 		}
 		$this->get_cashgroups();
 		$clause = array();
-		while ( $c_cur = &$cash->currency_next($cm_i,CURRENCY_ENABLED,$forum_id) )
+		while ( $c_cur = $cash->currency_next($cm_i,CURRENCY_ENABLED,$forum_id) )
 		{
 			$sum = $this->get_setting($c_cur->id(),'cash_postbonus');
 			if ( $sum != 0 )
@@ -1228,7 +1156,7 @@ class cash_user
 		}
 		$this->get_cashgroups();
 		$clause = array();
-		while ( $c_cur = &$cash->currency_next($cm_i,CURRENCY_ENABLED) )
+		while ( $c_cur = $cash->currency_next($cm_i,CURRENCY_ENABLED) )
 		{
 			$sum = $this->get_setting($c_cur->id(),'cash_perpm');
 			if ( $sum != 0 )
@@ -1268,7 +1196,7 @@ class cash_user
 			return;
 		}
 		$sql_update = array();
-		while ( $c_cur = &$cash->currency_next($cm_i) )
+		while ( $c_cur = $cash->currency_next($cm_i) )
 		{
 			if ( isset($id_array[$c_cur->id()]) )
 			{
@@ -1298,7 +1226,7 @@ class cash_user
 			return;
 		}
 		$sql_update = array();
-		while ( $c_cur = &$cash->currency_next($cm_i) )
+		while ( $c_cur = $cash->currency_next($cm_i) )
 		{
 			if ( isset($id_array[$c_cur->id()]) )
 			{
@@ -1328,7 +1256,7 @@ class cash_user
 			return;
 		}
 		$sql_update = array();
-		while ( $c_cur = &$cash->currency_next($cm_i) )
+		while ( $c_cur = $cash->currency_next($cm_i) )
 		{
 			if ( isset($id_array[$c_cur->id()]) )
 			{

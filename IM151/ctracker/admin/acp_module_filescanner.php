@@ -23,7 +23,7 @@ $admin_filescan = new ct_adminfunctions();
 /*
  * Wich action do we have?
  */
-$action = $_GET['action'];
+$action = ( isset($_GET['action']) ? $_GET['action'] : '' );
 
 
 /*

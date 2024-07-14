@@ -297,7 +297,7 @@ if ( defined('CM_MEMBERLIST') )
             {
                 return 'cash_mod';
             }
-            while ( $c_cur = &$cash->currency_next($cm_i,CURRENCY_ENABLED | CURRENCY_VIEWMEMBERLIST) )
+            while ( $c_cur = $cash->currency_next($cm_i,CURRENCY_ENABLED | CURRENCY_VIEWMEMBERLIST) )
             {
                 if ( $mode == 'cash_' . $c_cur->id() )
                 {
@@ -325,7 +325,7 @@ if ( defined('CM_MEMBERLIST') )
             $cash_field = "";
             $count = $cash->currency_count(CURRENCY_ENABLED | CURRENCY_VIEWMEMBERLIST);
             $template->assign_var('NUM_COLUMNS',$count + $num_columns);
-            while ( $c_cur = &$cash->currency_next($cm_i,CURRENCY_ENABLED | CURRENCY_VIEWMEMBERLIST) )
+            while ( $c_cur = $cash->currency_next($cm_i,CURRENCY_ENABLED | CURRENCY_VIEWMEMBERLIST) )
             {
                 $template->assign_block_vars('cashrow',array('NAME' => $c_cur->name()));
                 $cash_field .= $c_cur->db() . ', ';
@@ -344,7 +344,7 @@ if ( defined('CM_MEMBERLIST') )
             {
                 return;
             }
-            while ( $c_cur = &$cash->currency_next($cm_i,CURRENCY_ENABLED | CURRENCY_VIEWMEMBERLIST) )
+            while ( $c_cur = $cash->currency_next($cm_i,CURRENCY_ENABLED | CURRENCY_VIEWMEMBERLIST) )
             {
                 $template->assign_block_vars('memberrow.cashrow', array('CASH_DISPLAY' => $c_cur->display($row[$c_cur->db()])));
             }
@@ -380,7 +380,7 @@ if ( defined('CM_VIEWTOPIC') )
                 return;
             }
             $cash_field = "";
-            while ( $c_cur = &$cash->currency_next($cm_i,CURRENCY_ENABLED | CURRENCY_VIEWTOPIC,$forum_id) )
+            while ( $c_cur = $cash->currency_next($cm_i,CURRENCY_ENABLED | CURRENCY_VIEWTOPIC,$forum_id) )
             {
                 $cash_field .= 'u.' . $c_cur->db() . ', ';
             }
@@ -409,7 +409,7 @@ if ( defined('CM_VIEWTOPIC') )
                 $forum_id = false;
             }
 if ($postdata['user_id'] != -1) {
-            while ( $c_cur = &$cash->currency_next($cm_i,$mask,$forum_id) )
+            while ( $c_cur = $cash->currency_next($cm_i,$mask,$forum_id) )
             {
                 $template->assign_block_vars('cashrow', array(  'CASH_DISPLAY' => $c_cur->display($postdata[$c_cur->db()])));
             }
@@ -466,7 +466,7 @@ if ( defined('CM_VIEWPROFILE') )
             $template->set_filenames(array(
                 'cm_viewprofile' => 'cash_viewprofile.tpl')
             );
-            while ( $c_cur = &$cash->currency_next($cm_i,$mask) )
+            while ( $c_cur = $cash->currency_next($cm_i,$mask) )
             {
                 $template->assign_block_vars('cashrow', array(  'CASH_NAME' => $c_cur->name(),
                                                                 'CASH_AMOUNT' => $profiledata[$c_cur->db()]));

@@ -121,8 +121,8 @@ $download_disable_no = (!$new['settings_disable']) ? ' selected' : '';
 $hotlink_prevent_yes = ($new['hotlink_prevent']) ? ' selected' : '';
 $hotlink_prevent_no = (!$new['hotlink_prevent']) ? ' selected' : '';	
 
-$php_template_yes = ($new['settings_tpl_php']) ? ' selected' : '';
-$php_template_no = (!$new['settings_tpl_php']) ? ' selected' : '';	
+$php_template_yes = !empty($new['settings_tpl_php']) ? ' selected' : '';
+$php_template_no = !empty($new['settings_tpl_php']) ? ' selected' : '';	
 	
 $allow_html_yes = ($new['allow_html']) ? ' selected' : '';
 $allow_html_no = (!$new['allow_html']) ? ' selected' : '';

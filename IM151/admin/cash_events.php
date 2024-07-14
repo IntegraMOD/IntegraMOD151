@@ -70,11 +70,11 @@ switch ( $mode )
 			$event_name = $_POST['event_name'];
 			$updates = array();
 			$updated_data = '';
-			while ( $c_cur = &$cash->currency_next($cm_i) )
+			while ( $c_cur = $cash->currency_next($cm_i) )
 			{
 				if ( isset($_POST['cash'][$c_cur->id()]) )
 				{
-					$entry = cash_floatval($_POST['cash'][$c_cur->id()]);
+					$entry = floatval($_POST['cash'][$c_cur->id()]);
 					if( $entry != 0 )
 					{
 						$updates[] = $c_cur->id() . CASH_EVENT_DELIM2 . $entry;
@@ -144,7 +144,7 @@ switch ( $mode )
 			);
 
 			$i = 0;
-			while ( $c_cur = &$cash->currency_next($cm_i) )
+			while ( $c_cur = $cash->currency_next($cm_i) )
 			{
 				$i++;
 				$template->assign_block_vars('cashrow',array(	"CLASS" => (( !($i % 2) ) ? $theme['td_class1'] : $theme['td_class2']),

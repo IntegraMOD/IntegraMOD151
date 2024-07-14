@@ -29,14 +29,15 @@ $template->set_filenames(array(
 /*
  * Delete entry?
  */
-if ( $_GET['mode'] == 'remove' )
+$mode = ( isset($_GET['mode']) ? $_GET['mode'] : '' );
+if ( $mode == 'remove' )
 {
 	$ctracker_config->delete_from_blocklist($_GET['id']);
 	$template->assign_block_vars('deleted', array(
 			'L_SUCCESSFULLY_DELETED' => $lang['ctracker_ipb_deleted'])
 	);
 }
-else if ( $_GET['mode'] == 'add' )
+else if ( $mode == 'add' )
 {
 	$ctracker_config->save_to_blocklist($_POST['entry']);
 	$template->assign_block_vars('added', array(

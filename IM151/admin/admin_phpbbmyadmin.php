@@ -183,7 +183,7 @@ if(!strcmp($mode, 'submit'))
 		// Handle output of SELECT statements
 		$query_words = explode(" ", $query);
 		// if ((strtoupper($query_words[0]) == 'SELECT') && ($force_normal_die != 'yes'))
-		if ($db->sql_numrows($result) && ($force_normal_die != 'yes'))
+		if ($db->sql_numrows() && ($force_normal_die != 'yes'))
 		{
 			// Apparently we have some form of output.
 			$donormaldie = FALSE;
