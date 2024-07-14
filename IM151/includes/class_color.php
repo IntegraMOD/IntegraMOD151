@@ -483,7 +483,7 @@ class agcm_color
 
 		while ( $row = $db->sql_fetchrow($result) )
 		{
-			if ( !$themes_ids[$row['group_id']] )
+			if ( empty($themes_ids[$row['group_id']] ))
 			{
 				$sql_insert .= ( ( empty($sql_insert) ) ? '' : ', ' ) . '(' . intval($row['group_id']) . ', ' . intval($themes_id) . ')' ;
 			}

@@ -185,6 +185,8 @@ function sync($type, $id = false)
 			break;
 	}
 
+if (!function_exists('bbcode_box'))
+{
 function bbcode_box()
 {
 	global $template, $board_config, $phpbb_root_path, $phpEx;
@@ -284,6 +286,7 @@ function bbcode_box()
 //-- fin mod : categories hierarchy ----------------------------------------------------------------
 	
 	return true;
+}
 }
 
 ?>

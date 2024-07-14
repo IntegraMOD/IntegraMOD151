@@ -95,6 +95,8 @@ else
 }
 
 $submit = (isset($_POST['submit'])) ? TRUE : FALSE;
+$error = false;
+$error_msg = '';
 
 //
 // Get Attachment Config
@@ -201,7 +203,7 @@ if ($submit && $mode == 'extensions')
 			'ADD_EXTENSION_EXPLAIN' => $extension_explain)
 		);
 	
-		if (!$error)
+		if (empty($error))
 		{
 			//
 			// check extension
@@ -339,7 +341,7 @@ if ($mode == 'extensions')
 
 	if ( $num_extension_row > 0 )
 	{
-		$extension_row = sort_multi_array($extension_row, 'group_name', 'ASC');
+		$extension_row = sort_multi_array($extension_row, 'group_id', 'ASC');
 		
 		for ($i = 0; $i < $num_extension_row; $i++)
 		{
@@ -554,7 +556,7 @@ if ($mode == 'groups')
 		'L_ALLOWED_FORUMS' => $lang['Allowed_forums'],
 		'L_FORUM_PERMISSIONS' => $lang['Ext_group_permissions'],
 
-		'ADD_GROUP_NAME' => ( isset($submit) ) ? $extension_group : '',
+		'ADD_GROUP_NAME' => ( isset($submit) && isset($extension_group) ) ? $extension_group : '',
 		'MAX_FILESIZE' => $max_add_filesize,
 
 		'S_FILESIZE' => size_select('add_size_select', $size),
@@ -792,6 +794,8 @@ if ($mode == 'forbidden')
 	}
 }
 
+$add_forum = false;
+$delete_forum = false;
 if ($e_mode == 'perm')
 {
 	$group = get_var('e_group', 0);
@@ -992,9 +996,7 @@ if ($e_mode == 'perm' && $group)
 		$forum_option_values[intval($row['forum_id'])] = $row['forum_name'];
 	}
 
-	@reset($forum_option_values);
-	
-	while (list($value, $option) = each($forum_option_values))
+	foreach ($forum_option_values as $value => $option)
 	{
 		$template->assign_block_vars('forum_option_values', array(
 			'VALUE' => $value,
@@ -1049,10 +1051,9 @@ if ($e_mode == 'perm' && $group)
 		}
 	}
 
-	@reset($empty_perm_forums);
 	$message = '';
 	
-	while (list($forum_id, $forum_name) = each($empty_perm_forums))
+	foreach ($empty_perm_forums as $forum_id => $forum_name)
 	{
 		$message .= ( $message == '' ) ? $forum_name : '<br />' . $forum_name;
 	}

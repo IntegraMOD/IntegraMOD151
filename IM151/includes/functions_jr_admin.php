@@ -11,7 +11,6 @@ if (!function_exists('copyright_nivisec'))
 	*/
 	function copyright_nivisec($name, $year)
 	{
-		printf(COPYRIGHT_NIVISEC_FORMAT, $name, $year);
 	}
 }
 

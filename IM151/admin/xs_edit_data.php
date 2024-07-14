@@ -141,7 +141,7 @@ function xs_get_vars($theme)
 			{
 				$len = 5;
 			}
-			elseif(xs_in_array($var, $vrs_4) || xs_in_array($sub, $vars_4))
+			elseif(xs_in_array($var, $vars_4) || xs_in_array($sub, $vars_4))
 			{
 				$len = 4;
 			}
@@ -293,7 +293,7 @@ if(!empty($_GET['edit']))
 	// show variables
 	$template->assign_vars(array(
 		'U_ACTION'	=> append_sid('xs_edit_data.'.$phpEx),
-		'TPL'		=> htmlspecialchars($item['template-name']),
+		'TPL'		=> htmlspecialchars($item['template_name']),
 		'STYLE'		=> htmlspecialchars($item['style_name']),
 		'ID'		=> $id
 		)

@@ -52,7 +52,7 @@ $template->assign_vars(array(
 // ----------------------------------------
 function items_count($sql,$choice,$type)
 {
-global $affected;
+global $affected, $lang;
 
 	global $db,$template;
 	if ( !($result = $db->sql_query($sql)) )
@@ -60,15 +60,21 @@ global $affected;
 		message_die(GENERAL_ERROR, $lang['Retrieve_error'] . $error, '', __LINE__, __FILE__, $sql);
 	}
 	$row = $db->sql_fetchrow($result);
-	if($row[0] == 0)
+	if(empty($row))
 	{
 		$choice = "";
+		$count = 0;
 	}
-	$affected = $affected + intval($row[0]);
+	else
+	{
+		$keys = array_keys($row);
+		$count = intval($row[ $keys[0] ]);
+	}
+	$affected = $affected + $count;
 	$template->assign_block_vars("admin_clean", array(
         	'CHOICE' => $choice,
         	'TYPE' => $type,
-        	'NUMBER' => $row[0])
+        	'NUMBER' => $count)
 	);
 	$db->sql_freeresult($result);
 }
@@ -79,26 +85,23 @@ global $affected;
 // ----------------------------------------
 function items_delete($sql_select,$sql_delete,$type)
 {
-	global $db,$template;
+	global $db,$template,$lang;
 	if ( !($result = $db->sql_query($sql_select)) )
 	{
 		message_die(GENERAL_ERROR, $lang['Retrieve_error'] . $type, '', __LINE__, __FILE__, $sql);
 	}
-	$i=0;
+	$sql_delete .= '-1';
 	while($row = $db->sql_fetchrow($result)) 
 	{ 
-		if($i!=0)
-		{
-			$sql_delete .= ",";
-		}
+		$sql_delete .= ",";
 		$sql_delete .= $row[0];
-		$i++;
 	}
 	$sql_delete .= ")";
 	$db->sql_freeresult($row);
 	if( ! $db->sql_query($sql_delete) )
 	{
-		message_die(GENERAL_ERROR, $lang['Delete_error'] . $type, "", __LINE__, __FILE__, $sql);
+		debug_print_backtrace();
+		message_die(GENERAL_ERROR, $lang['Delete_error'] . $type, "", __LINE__, __FILE__, $sql_delete);
 	}
 }
 // ----------------------------------------

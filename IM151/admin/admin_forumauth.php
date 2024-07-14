@@ -79,9 +79,8 @@ require('./pagestart.' . $phpEx);
 include( $phpbb_root_path . './includes/def_auth.' . $phpEx );
 
 // build an indexed array on field names
-@reset($field_names);
 $forum_auth_fields = array();
-while ( list($auth_key, $auth_name) = @each($field_names) )
+foreach ($field_names as $auth_key => $auth_name)
 {
 	$forum_auth_fields[] = $auth_key;
 }
@@ -266,8 +265,7 @@ else
 	}
 //-- fin mod : categories hierarchy ----------------------------------------------------------------
 
-	@reset($simple_auth_ary);
-	while( list($key, $auth_levels) = each($simple_auth_ary))
+	foreach ($simple_auth_ary as $key => $auth_levels)
 	{
 		$matched = 1;
 		for($k = 0; $k < count($auth_levels); $k++)
@@ -295,7 +293,7 @@ else
 		$adv = 1;
 	}
 
-	$s_column_span == 0;
+	$s_column_span = 0;
 
 	if ( empty($adv) )
 	{

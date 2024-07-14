@@ -813,7 +813,7 @@ if ($mode == 'shadow')
 
 if ($submit && $mode == 'cats')
 {
-	if (!$error)
+	if (empty($error))
 	{
 		message_die(GENERAL_MESSAGE, $lang['Attach_config_updated'] . '<br /><br />' . sprintf($lang['Click_return_attach_config'], '<a href="' . append_sid("admin_attachments.$phpEx?mode=cats") . '">', '</a>') . '<br /><br />' . sprintf($lang['Click_return_admin_index'], '<a href="' . append_sid("index.$phpEx?pane=right") . '">', '</a>'));
 	}

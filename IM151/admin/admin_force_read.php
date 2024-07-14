@@ -56,7 +56,7 @@ require('pagestart.' . $phpEx);
 include($phpbb_root_path . 'language/lang_' . $board_config['default_lang'] . '/lang_ftr.'.$phpEx);
 
 
-	$update = $_POST['update'];
+	$update = ( isset($_POST['update']) ? $_POST['update'] : '' ) ;
 		
 	if ( $mode == "delete_user" )
 		{

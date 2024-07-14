@@ -148,7 +148,7 @@ if( !isset($_GET['language']) && !isset($_POST['language']) )
 
 	$template->assign_vars(array(
 		'L_LANGUAGE' => $lang['faq_select_language'],
-		'LANGUAGE_SELECT' => language_select($board_config['default_lang'], 'language', $phpbb_realpath.'language'),
+		'LANGUAGE_SELECT' => language_select($board_config['default_lang'], 'language'),
 		'S_ACTION' => append_sid("admin_faq_editor.$phpEx?file=$file"),
 		'L_SUBMIT' => $lang['faq_retrieve'],
 		'L_TITLE' => $lang['faq_editor'],
@@ -531,7 +531,7 @@ if(count($blocks) > 0)
 		$template->assign_block_vars("blockrow", array( 
 			'BLOCK_TITLE' => $blocks[$i],
 			'BLOCK_NUMBER' => "$i",
-			'BLOCK_ANCHOR' => $anchor_code,
+			'BLOCK_ANCHOR' => ( isset($anchor_code) ? $anchor_code : '' ) ,
 
 			'U_BLOCK_EDIT' => append_sid("admin_faq_editor.$phpEx?mode=block_edit&block=$i&file=$file&language=$language"),
 			'U_BLOCK_MOVE_UP' => append_sid("admin_faq_editor.$phpEx?mode=block_up&block=$i&file=$file&language=$language"),

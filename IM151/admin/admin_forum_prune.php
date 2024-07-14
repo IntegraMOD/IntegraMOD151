@@ -82,7 +82,7 @@ if( isset($_GET[POST_FORUM_URL]) || isset($_POST[POST_FORUM_URL]) )
 	$forum_rows = array();
 	for ($i=0; $i < count($tkeys['id']); $i++)
 	{
-		if ($tree['type'][$tkeys['idx'][$i]] == POST_FORUM_URL)
+		if (isset($tree['type'][$tkeys['idx'][$i]]) && $tree['type'][$tkeys['idx'][$i]] == POST_FORUM_URL)
 		{
 			$forum_rows[] = $tree['data'][$tkeys['idx'][$i]];
 		}
