@@ -36,6 +36,9 @@ include($phpbb_root_path.'includes/group_extend_auth.'.$phpEx);
 $start = ( isset($_GET['start']) ) ? intval($_GET['start']) : 0;
 $gid = ( isset($_GET['gid']) ) ? intval($_GET['gid']) : 0;
 $group_page = ( isset($_GET['group_page']) ) ? intval($_GET['group_page']) : 0;
+$mode2 = isset($_GET['mode2']) ? intval($_GET['mode2']) : (isset($_POST['mode2']) ? intval($_POST['mode2']) : 0 );
+$pagination = '';
+$total_members = 0;
 
 if ( $group_page == '1' )
 {
@@ -51,12 +54,13 @@ if ( $group_page == '1' )
 	{
 		message_die(GENERAL_ERROR, 'Could not obtain groups auths', '', __LINE__, __FILE__, $sql);	
 	}
+	$gid_auths = [];
 	while ( $row = $db->sql_fetchrow($result))
 	{
 		$gid_auths[] = $row;
 	}
-	$group_name = $gid_auths[0]['group_name'];
-	$group_desc = $gid_auths[0]['group_description'];
+	$group_name = ( isset($gid_auths[0]['group_name']) ? $gid_auths[0]['group_name'] : '' ) ;
+	$group_desc = ( isset($gid_auths[0]['group_description']) ? $gid_auths[0]['group_description'] : '' ) ;
 
 	for ( $l=0 ; $l < count($gid_auths); $l++)
 	{
@@ -71,7 +75,7 @@ if ( $group_page == '1' )
 		{
 			$template->assign_block_vars('group_page1.groups_auths_view',array(
 				'FORUM_NAME' => $gid_auths[$l]['forum_name'],
-				'FORUM_LINK' => $gid_auths[$l]['cat_title'],
+				'FORUM_LINK' => ( isset($gid_auths[$l]['cat_title']) ? $gid_auths[$l]['cat_title'] : '' ),
 			));
 		}
 	}
@@ -80,7 +84,7 @@ if ( $group_page == '1' )
 		'L_MOD' => $lang['Group_extend_forum_mod'],
 		'L_VIEW' => $lang['Group_extend_forum_private'],
 		'L_FORUM' => $lang['Forum'],
-		'L_CAT' => $lang['Group_extend_cat'],
+		'L_CAT' => ( isset($lang['Group_extend_cat']) ? $lang['Group_extend_cat'] : 'Group_extend_cat' ),
 		'GROUP_NAME' => $group_name,
 		'GROUP_DESC' => $group_desc)
 	);	  
@@ -370,6 +374,7 @@ switch( $mode2 )
 			{
 				message_die(GENERAL_ERROR, 'Could not read groups', '', __LINE__, __FILE__, $ssql);	
 			}
+			$user_groups = [];
 			while ($srow = $db->sql_fetchrow($sresult))
 			{
 				$user_groups[] = $srow;

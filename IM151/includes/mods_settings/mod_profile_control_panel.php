@@ -708,7 +708,8 @@ if (!function_exists('mods_get_email'))
 	function mods_get_email($field, $value)
 	{
 		global $view_userdata, $lang, $board_config, $lang, $is_guest;
-		
+
+		$email = '';
 		if($board_config['require_activation'] != USER_ACTIVATION_NONE){
 			if ($is_guest){
 				if ( $board_config['require_activation'] == USER_ACTIVATION_SELF ){
@@ -1078,31 +1079,31 @@ if (!function_exists('mods_check_password_confirm'))
 
 if (!function_exists('mods_get_user_rules')) 
 { 
-    function mods_get_user_rules($field, $value) 
-    { 
-        global $db, $lang, $is_guest; 
-         
-        $sql = "SELECT * FROM " . RULES_TABLE; 
-    if( !($result = $db->sql_query($sql)) ) { 
-        message_die(GENERAL_ERROR, 'Could not obtain the rules', '', __LINE__, __FILE__, $sql); 
-        } 
-        if ($row=$db->sql_fetchrow($result)) { 
-        $rules = $row["rules"]; 
-      $rules_date = create_date($lang['DATE_FORMAT'], $row['date'], $board_config['board_timezone']); 
-        } 
-        $ret = '('.$rules_date.')<br>'; 
+	function mods_get_user_rules($field, $value) 
+	{ 
+		global $db, $lang, $is_guest, $board_config; 
+
+		$sql = "SELECT * FROM " . RULES_TABLE; 
+		if( !($result = $db->sql_query($sql)) ) { 
+			message_die(GENERAL_ERROR, 'Could not obtain the rules', '', __LINE__, __FILE__, $sql); 
+		} 
+		if ($row=$db->sql_fetchrow($result)) { 
+			$rules = $row["rules"]; 
+			$rules_date = create_date($lang['DATE_FORMAT'], $row['date'], $board_config['board_timezone']); 
+		} 
+		$ret = '('.$rules_date.')<br>'; 
 		$ret .=  $rules;
-        if ( $value > $row['date'] && !$is_guest){ 
-            $ret .= '<input type="hidden" name="'.$field.'" value="'.$value.'" >'; 
-        } else { 
-            $ret .= '<hr />'; 
-            // also send hidden! if not checked it will return "" else it returns the 1 
-            // if not send the check will not execute! 
-            $ret .= '<input type="hidden" name="'.$field.'" value="">'; 
-            $ret .= '<span class="gensmall">'.$lang['Agree_rules'].'</span><br><input type="checkbox" name="'.$field.'" value="1">'; 
-      } 
-        return $ret; 
-    } 
+		if ( $value > $row['date'] && !$is_guest){ 
+			$ret .= '<input type="hidden" name="'.$field.'" value="'.$value.'" >'; 
+		} else { 
+			$ret .= '<hr />'; 
+			// also send hidden! if not checked it will return "" else it returns the 1 
+			// if not send the check will not execute! 
+			$ret .= '<input type="hidden" name="'.$field.'" value="">'; 
+			$ret .= '<span class="gensmall">'.$lang['Agree_rules'].'</span><br><input type="checkbox" name="'.$field.'" value="1">'; 
+		} 
+		return $ret; 
+	} 
 }
 
 if (!function_exists('mods_check_user_rules'))

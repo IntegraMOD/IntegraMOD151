@@ -142,8 +142,7 @@ class emailer
 		$this->msg = preg_replace('#\{([a-z0-9\-_]*?)\}#is', "' . $\\1 . '", $this->msg);
 
 		// Set vars
-		reset ($this->vars);
-		while (list($key, $val) = each($this->vars)) 
+		foreach ($this->vars as $key => $val)
 		{
 			$$key = $val;
 		}
@@ -151,8 +150,7 @@ class emailer
 		eval("\$this->msg = '$this->msg';");
 
 		// Clear vars
-		reset ($this->vars);
-		while (list($key, $val) = each($this->vars)) 
+		foreach ($this->vars as $key => $val)
 		{
 			unset($$key);
 		}
@@ -188,7 +186,7 @@ class emailer
 
 		$to = $this->addresses['to'];
 
-		$cc = (count($this->addresses['cc'])) ? implode(', ', $this->addresses['cc']) : '';
+		$cc = (!empty($this->addresses['cc'])) ? implode(', ', $this->addresses['cc']) : '';
 		$bcc = (count($this->addresses['bcc'])) ? implode(', ', $this->addresses['bcc']) : '';
 
 		// Build header

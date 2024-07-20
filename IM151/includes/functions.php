@@ -2050,9 +2050,6 @@ function is_robot()
 { 
 	global $db, $_SERVER, $table_prefix;
 
-	// define bots table - for the users who are to lazy to edit constants.php hehehe!
-	define('BOTS_TABLE', $table_prefix . "bots");
-
 	// get required user data
 	$user_ip = $_SERVER['REMOTE_ADDR'];
 	$user_agent = $_SERVER['HTTP_USER_AGENT'];

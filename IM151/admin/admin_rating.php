@@ -37,7 +37,7 @@ $use_lang = ( !file_exists($phpbb_root_path . 'language/lang_' . $board_config['
 include($phpbb_root_path . 'language/lang_' . $use_lang . '/lang_rating.' . $phpEx); 
 include (RATING_PATH.'functions_rating.' . $phpEx);
 include (RATING_PATH.'functions_rating_2.' . $phpEx);
-
+$rating_view_only = 0;
 
 if (isset($_POST['rating_form_submitted']))
 {
@@ -47,22 +47,24 @@ if (isset($_POST['rating_form_submitted']))
 		message_die(CRITICAL_ERROR, 'Hacking attempt!');
 	}
 	// FORM SUBMITTED
-	if ($_POST['submit'])
+	if (!empty($_POST['submit']))
 	{
 		// UPDATE GENERAL CONFIGURATION
 
 		// VALIDATE TEXT/NUMBER FIELDS
-		$sql = 'SELECT config_id, label, input_type FROM '.RATING_CONFIG_TABLE.' ORDER BY config_id';
+		$sql = 'SELECT * FROM '.RATING_CONFIG_TABLE.' ORDER BY config_id';
 		if(!$result = $db->sql_query($sql))
 		{
 			message_die(CRITICAL_ERROR, "Could not query rating configuration information", "", __LINE__, __FILE__, $sql);
 		}
 		else
 		{
+			$firstpostonly = null;
 			while( $row = $db->sql_fetchrow($result) )
 			{
 				$val = trim(strip_tags($_POST['config'][$row['config_id']]));
 				$text_fields = array();
+				if ($row['config_id'] == 2) $firstpostonly = $row['num_value'];
 				switch ($row['input_type'])
 				{
 					case 2:
@@ -84,9 +86,9 @@ if (isset($_POST['rating_form_submitted']))
 		}
 
 		// UPDATE DATABASE IF NO ERRORS
-		if (count($r_error)==0)
+		if (empty($r_error))
 		{
-			while (list($id,$val)=each($config))
+			foreach ($config as $id =>$val)
 			{
 				$sql = 'UPDATE '.RATING_CONFIG_TABLE.' SET ';
 				$sql .= ( in_array($id,$text_fields) ) ? 'text_value' : 'num_value';
@@ -133,10 +135,13 @@ if (isset($_POST['rating_form_submitted']))
 			}
 		}	
 	}
-	elseif ($_POST['r_submit'])
+	elseif (!empty($_POST['r_submit']))
 	{
 		// ADD / UPDATE RATING OPTION
-		list($key,$action) = each($_POST['r_submit']);
+		foreach ($_POST['r_submit'] as $key => $action)
+		{
+			break; // Just populate $key/$action
+		}
 
 		// VALIDATE FIELDS
 		$points = intval($_POST['r_option_1'][$key]);
@@ -238,12 +243,18 @@ if (isset($_POST['rating_form_submitted']))
 			}
 		}
 	}
-	elseif ($_POST['r_delete'])
+	elseif (!empty($_POST['r_delete']))
 	{
 		// DELETE RATING OPTION
-		list($key,$action) = each($_POST['r_delete']);
+		foreach ($_POST['r_delete'] as $key => $action)
+		{
+			break; // Just populate $key/$action
+		}
 
-		$used = $_POST['r_option_5'][$key];
+		$used = ( isset($_POST['r_option_5'][$key]) ? $_POST['r_option_5'][$key] : 0 );
+		$postlist = [];
+		$topiclist = [];
+		$userlist = [];
 		if ( $used > 0 )
 		{
 			// OPTION HAS ALREADY BEEN USED, NEED TO CHECK AND UPDATE ALL AFFECTED RATINGS
@@ -323,17 +334,20 @@ if (isset($_POST['rating_form_submitted']))
 		}
 	}
 	// ADDING / UPDATING TOTAL ENTRY
-	elseif ($_POST['t_submit'])
+	elseif (!empty($_POST['t_submit']))
 	{
 		// ADD / UPDATE RATING TOTAL
-		list($key,$action) = each($_POST['t_submit']);
+		foreach ($_POST['t_submit'] as $key => $action)
+		{
+			break; // Just populate $key/$action
+		}
 		// VALIDATE FIELDS
-		$type = intval($_POST['r_total_1'][$key]);
-		$average = intval($_POST['r_total_2'][$key]);
-		$sum = intval($_POST['r_total_3'][$key]);
-		$label = trim(strip_tags($_POST['r_total_4'][$key]));
-		$icon = trim(strip_tags($_POST['r_total_5'][$key]));
-		$urank = intval($_POST['r_total_6'][$key]);
+		$type = isset($_POST['r_total_1'][$key]) ? intval($_POST['r_total_1'][$key]) : 0;
+		$average = isset($_POST['r_total_2'][$key]) ? intval($_POST['r_total_2'][$key]) : 0;
+		$sum = isset($_POST['r_total_3'][$key]) ? intval($_POST['r_total_3'][$key]) : 0;
+		$label = isset($_POST['r_total_4'][$key]) ? trim(strip_tags($_POST['r_total_4'][$key])) : '';
+		$icon = isset($_POST['r_total_5'][$key]) ? trim(strip_tags($_POST['r_total_5'][$key])) : '';
+		$urank = isset($_POST['r_total_6'][$key]) ? intval($_POST['r_total_6'][$key]) : 0;
 		if (!is_numeric($average) || $average < -127 || $average > 128)
 		{
 			$t_error[2] = $lang['Invalid_average_threshold'];
@@ -424,9 +438,19 @@ if (isset($_POST['rating_form_submitted']))
 			}
 		}
 	}
-	elseif ($_POST['t_delete'])
+	elseif (!empty($_POST['t_delete']))
 	{
-		list($key,$action) = each($_POST['t_delete']);
+		foreach ($_POST['t_delete'] as $key => $action)
+		{
+			break; // Just populate $key/$action
+		}
+
+		$type = isset($_POST['r_total_1'][$key]) ? intval($_POST['r_total_1'][$key]) : 0;
+		$average = isset($_POST['r_total_2'][$key]) ? intval($_POST['r_total_2'][$key]) : 0;
+		$sum = isset($_POST['r_total_3'][$key]) ? intval($_POST['r_total_3'][$key]) : 0;
+		$label = isset($_POST['r_total_4'][$key]) ? trim(strip_tags($_POST['r_total_4'][$key])) : '';
+		$icon = isset($_POST['r_total_5'][$key]) ? trim(strip_tags($_POST['r_total_5'][$key])) : '';
+		$urank = isset($_POST['r_total_6'][$key]) ? intval($_POST['r_total_6'][$key]) : 0;
 
 		// NOTE: IF OPTION IN USE, NEED TO CHECK AND UPDATE ALL AFFECTED RATINGS
 		if ( $type == 5 )
@@ -464,7 +488,7 @@ if (isset($_POST['rating_form_submitted']))
 		}
 		elseif ( $type == 3 )
 		{
-			$usql = 'SELECT user_id FROM '.USERS_TABLE.' WHERE user_rank = '.$r_total_6[$key];
+			$usql = 'SELECT user_id FROM '.USERS_TABLE.' WHERE user_rank = '.$urank;
 			if(!$uresult = $db->sql_query($usql))
 			{
 				message_die(CRITICAL_ERROR, 'Could not get user data', '', __LINE__, __FILE__, $usql);
@@ -516,6 +540,7 @@ $template->set_filenames(array(
 	}
 	else
 	{
+		$rowcss = 'row1';
 		while( $row = $db->sql_fetchrow($result) )
 		{
 			$id = $row['config_id'];
@@ -649,9 +674,9 @@ $template->set_filenames(array(
 			$points = $row['points'];
 			$label = $row['label'];
 			$threshold = $row['weighting'];
-			$used = $option_used[$row['option_id']];
+			$used = ( isset($option_used[$row['option_id']]) ? $option_used[$row['option_id']] : 0 );
 			$rowcss = ( $rowcss == 'row1' ) ? 'row2' : 'row1';
-			if ( $rating_view_only == 1 )
+			if ( !empty($rating_view_only) )
 			{
 				$delete = '';
 				$option_submit = '';
@@ -693,20 +718,20 @@ $template->set_filenames(array(
 				);
 			}
 		}
-		$option_submit = ( $rating_view_only == 1 ) ? '' : '<input type="submit" name="r_submit[0]" value="Add">';
+		$option_submit = !empty($rating_view_only) ? '' : '<input type="submit" name="r_submit[0]" value="Add">';
 		// BLANK LINE FOR ADDING RATING OPTION
 		$template->assign_block_vars('option', array(
 			'ID' => 0,
-			'POINTS' => $r_option_1[0],
-			'LABEL' => stripslashes($r_option_2[0]),
-			'THRESHOLD' => $r_option_3[0],
+			'POINTS' => 0,
+			'LABEL' => '',
+			'THRESHOLD' => 0,
 			'SUBMIT' => $option_submit,
 			'ROWCSS' => 'row3'
 			)
 		);
 		foreach ($user_types as $key =>$val)
 		{
-			$selected = ($key == $r_option_4[0]) ? 'SELECTED' : '';
+			$selected = (isset($r_option_4[0]) && $key == $r_option_4[0]) ? 'SELECTED' : '';
 			$template->assign_block_vars('option.who', array(
 				'ID' => $key,
 				'SELECTED' => $selected,
@@ -749,7 +774,7 @@ $template->set_filenames(array(
 			$average = $row['average_threshold'];
 			$sum = $row['sum_threshold'];
 			$rowcss = ($rowcss == 'row1') ? 'row2' : 'row1';
-			if ( $rating_view_only == 1 )
+			if ( !empty($rating_view_only)	)
 			{
 				$delete = '';
 				$total_submit = '';
@@ -790,21 +815,21 @@ $template->set_filenames(array(
 				);
 			}
 		}
-		$total_submit = ( $rating_view_only == 1 ) ? '' : '<input type="submit" name="t_submit[0]" value="'.$lang['Rating_add'].'">';
+		$total_submit = ( !empty($rating_view_only) ) ? '' : '<input type="submit" name="t_submit[0]" value="'.$lang['Rating_add'].'">';
 		// BLANK LINE FOR ADDING RATING TOTAL ENTRY
 		$template->assign_block_vars('total', array(
 			'ID' => 0,
-			'AVERAGE' => $r_total_2[0],
-			'SUM' => $r_total_3[0],
-			'LABEL' => stripslashes($r_total_4[0]),
-			'ICON' => stripslashes($r_total_5[0]),
+			'AVERAGE' => 0,
+			'SUM' => 0,
+			'LABEL' => '',
+			'ICON' => '',
 			'SUBMIT' => $total_submit,
 			'ROWCSS' => 'row3'
 			)
 		);
 		foreach ($total_types as $key =>$val)
 		{
-			$selected = ($key == $r_total_1[0]) ? 'SELECTED' : '';
+			$selected = ''; //($key == $r_total_1[0]) ? 'SELECTED' : '';
 			$template->assign_block_vars('total.type', array(
 				'ID' => $key,
 				'SELECTED' => $selected,
@@ -883,15 +908,15 @@ $template->set_filenames(array(
 		// BLANK LINE FOR ADDING RATING TOTAL ENTRY
 		$template->assign_block_vars('user', array(
 			'ID' => 0,
-			'AVERAGE' => $r_total_2[0],
-			'SUM' => $r_total_3[0],
+			'AVERAGE' => 0,
+			'SUM' => 0,
 			'SUBMIT' => $total_submit,
 			'ROWCSS' => 'row3'
 			)
 		);
 		foreach($user_ranks as $key => $val)
 		{
-			$selected = ($key == $r_total_1[0]) ? 'SELECTED' : '';
+			$selected = ''; //($key == $r_total_1[0]) ? 'SELECTED' : '';
 			$template->assign_block_vars('user.rank', array(
 				'ID' => $key,
 				'SELECTED' => $selected,
@@ -918,11 +943,11 @@ $template->set_filenames(array(
 	$template->assign_vars(array(
 		'FORM_ACTION' => append_sid('admin_rating.'.$phpEx),
 		'CONFIG_SUBMIT' => $config_submit,
-		'ERROR_REPORT' => $error_report,
-		'GENERAL_ERRORS' => $g_errors,
-		'OPTION_ERRORS' => $o_errors,
-		'TOTAL_ERRORS' => $t_errors,
-		'USER_ERRORS' => $u_errors,
+		'ERROR_REPORT' => ( isset($error_report) ? $error_report : '' ),
+		'GENERAL_ERRORS' => ( isset($g_errors) ? $g_errors : '' ),
+		'OPTION_ERRORS' => ( isset($o_errors) ? $o_errors : '' ),
+		'TOTAL_ERRORS' => ( isset($t_errors) ? $t_errors : '' ),
+		'USER_ERRORS' => ( isset($u_errors) ? $u_errors : '' ),
 		'HEADING' => $lang['Rating_admin_page_title'],
 		'L_GENERAL_CONFIGURATION' => $lang['Rating_config_gen'],
 		'L_OVERVIEW_TEXT' => $lang['Rating_overview_text'],

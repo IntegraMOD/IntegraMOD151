@@ -26,12 +26,7 @@ function update_post_rating($method, $postlist='')
 	// IF NOT UPDATING ALL POSTS, ADD POST LIST TO WHERE CLAUSE
 	if ( is_array($postlist) )
 	{
-		list($key,$id) = each($postlist);
-		$in_list = $id;
-		while (list($key,$id) = each($postlist))
-		{
-			$in_list .= ', '.$id;
-		}
+		$in_list = implode(', ', array_values($postlist));
 	}
 
 	// FIRST PASS - SET RANK TO 0 WHERE ALL RATINGS HAVE BEEN DELETED
@@ -113,12 +108,7 @@ function update_topic_rating($method, $topiclist='')
 	// IF NOT UPDATING ALL TOPICS, GENERATE APPROPRIATE SQL
 	if ( is_array($topiclist) )
 	{
-		list($key,$id) = each($topiclist);
-		$in_list = $id;
-		while (list($key,$id) = each($topiclist))
-		{
-			$in_list .= ', '.$id;
-		}
+		$in_list = implode(', ', array_values($postlist));
 	}
 
 	// FIRST PASS - SET RANK TO 0 WHERE ALL RATINGS HAVE BEEN DELETED
@@ -266,12 +256,7 @@ function update_user_rating($method, $userlist='')
 	// IF NOT UPDATING ALL USERS, GENERATE APPROPRIATE SQL
 	if ( is_array($userlist) )
 	{
-		list($key,$id) = each($userlist);
-		$in_list = $id;
-		while (list($key,$id) = each($userlist))
-		{
-			$in_list .= ', '.$id;
-		}
+		$in_list = implode(', ', array_values($userlist));
 	}
 
 	// IGNORE USERS WHO ALREADY HAVE A (NON-RATING) SPECIAL RANK

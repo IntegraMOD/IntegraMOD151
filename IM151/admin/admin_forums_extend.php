@@ -857,7 +857,7 @@ if ( ($mode == 'edit') || ($mode == 'create') || ($mode == 'delete') )
 	}
 
 	// status
-	if ( !isset($forum_status_list[ $item['status'] ]) )
+	if ( !isset($item['status']) || !isset($forum_status_list[ $item['status'] ]) )
 	{
 		foreach ($forum_status_list as $status => $value)
 		{
@@ -1373,17 +1373,17 @@ if ( ($mode == 'edit') || ($mode == 'create') || ($mode == 'delete') )
 			'ICON'				=> $item['icon'],
 			'ICON_IMG'			=> $icon_img,
 
-			'PRUNE_DISPLAY'		=> $item['prune_enable'] ? '' : 'none',
-			'PRUNE_ENABLE_YES'	=> $item['prune_enable'] ? 'checked="checked"' : '',
-			'PRUNE_ENABLE_NO'	=> !$item['prune_enable'] ? 'checked="checked"' : '',
+			'PRUNE_DISPLAY'		=> !empty($item['prune_enable']) ? '' : 'none',
+			'PRUNE_ENABLE_YES'	=> !empty($item['prune_enable']) ? 'checked="checked"' : '',
+			'PRUNE_ENABLE_NO'	=> empty($item['prune_enable']) ? 'checked="checked"' : '',
 			'PRUNE_DAYS'		=> $item['prune_days'],
 			'PRUNE_FREQ'		=> $item['prune_freq'],
-			'FORUM_LINK'		=> $item['link'],
+			'FORUM_LINK'		=> ( isset($item['link']) ? $item['link'] : '' ) ,
 
-			'LINK_INTERNAL_YES'	=> $item['link_internal'] ? 'checked="checked"' : '',
-			'LINK_INTERNAL_NO'	=> !$item['link_internal'] ? 'checked="checked"' : '',
-			'LINK_COUNT_YES'	=> $item['link_hit_count'] ? 'checked="checked"' : '',
-			'LINK_COUNT_NO'		=> !$item['link_hit_count'] ? 'checked="checked"' : '',
+			'LINK_INTERNAL_YES'	=> !empty($item['link_internal']) ? 'checked="checked"' : '',
+			'LINK_INTERNAL_NO'	=> empty($item['link_internal']) ? 'checked="checked"' : '',
+			'LINK_COUNT_YES'	=> !empty($item['link_hit_count']) ? 'checked="checked"' : '',
+			'LINK_COUNT_NO'		=> empty($item['link_hit_count']) ? 'checked="checked"' : '',
 
 			'S_PRESET_OPT'		=> $s_presets,
 			'AUTH_SPAN'			=> ($item['type'] == POST_FORUM_URL) ? 4 : 1,

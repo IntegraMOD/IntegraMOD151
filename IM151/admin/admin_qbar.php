@@ -57,6 +57,7 @@ function select_field($import = false)
     global $qbar_maps;
     global $open_ids, $field_ids;
     global $mode, $s_hidden_fields, $panel_id, $field_id;
+		global $userdata;
 
     // verify if default_tree qbar is present in order to get the increment to display
     $max_level = 0;
@@ -68,8 +69,8 @@ function select_field($import = false)
         if (($panel_id != 0) || isset($open_ids[$i])) {
             if ((($panel_id == 0) || ($panel_id == $i)) && ($qbar_name == 'default_tree')) {
                 $is_default = true;
-                @reset($qbar['fields']);
-                while (list($field_name, $field) = @each($qbar['fields'])) {
+								foreach ($qbar['fields'] as $field_name => $field)
+								{
                     if ($field['level'] > $max_level) {
                         $max_level = $field['level'];
                     }
@@ -158,8 +159,8 @@ function select_field($import = false)
                 'DISPLAY'		=> qbar_get_bool($qbar['display']),
                 'CELLS'			=> $qbar['cells'],
                 'IN_TABLE'		=> qbar_get_bool($qbar['in_table']),
-                'STYLE'			=> qbar_get_style($qbar['style']),
-                'SUB_TEMPLATE'	=> qbar_get_sub_template($qbar['style'], $qbar['sub_template']),
+                'STYLE'			=> !empty($qbar['style']) ? qbar_get_style($qbar['style']) : '',
+                'SUB_TEMPLATE'	=> !empty($qbar['style']) && !empty($qbar['sub_template']) ? qbar_get_sub_template($qbar['style'], $qbar['sub_template']) : '',
 
                 'U_EDIT'		=> append_sid("admin_qbar.$phpEx?panel=$i&mode=edit"),
                 'U_DELETE'		=> append_sid("admin_qbar.$phpEx?panel=$i&mode=delete"),
@@ -203,10 +204,11 @@ function select_field($import = false)
 
             // get the fields
             if (!empty($panel_id) || isset($open_ids[$i])) {
-                @reset($qbar['fields']);
                 $j = 0;
                 $color = false;
-                while (list($field_name, $field) = @each($qbar['fields'])) {
+								$cell = 0;
+								foreach ($qbar['fields'] as $field_name => $field)
+								{
                     $cur_level = ($is_default) ? $field['level'] : $max_level;
                     $j++;
                     $color = !$color;
@@ -226,21 +228,21 @@ function select_field($import = false)
                         'FIELD_CHECKED'		=> $field_checked,
                         'NAME'				=> $field_name,
                         'SHORTCUT'			=> qbar_get_value($field['shortcut']),
-                        'EXPLAIN'			=> qbar_get_value($field['explain']),
-                        'ALTERNATE'			=> qbar_get_value($field['alternate']),
-                        'ICON'				=> qbar_get_icon(qbar_image($field['icon'], $qbar['style'], $qbar['sub_template'])),
+                        'EXPLAIN'			=> qbar_get_value(( isset($field['explain']) ? $field['explain'] : '' )),
+                        'ALTERNATE'			=> !empty($field['alternate']) ? qbar_get_value($field['alternate']) : '',
+                        'ICON'				=> !empty($qbar['style']) ? qbar_get_icon(qbar_image($field['icon'], $qbar['style'], $qbar['sub_template'])) : '',
                         'USE_VALUE'			=> qbar_get_bool($field['use_value']),
-                        'USE_ICON'			=> qbar_get_bool($field['use_icon']),
-                        'INTERNAL'			=> qbar_get_bool($field['internal']),
-                        'WINDOW'			=> qbar_get_bool($field['window']),
-                        'AUTH_LOGGED'		=> qbar_get_auth($field['auth_logged']),
-                        'AUTH_ADMIN'		=> qbar_get_auth($field['auth_admin']),
-                        'AUTH_PM'			=> qbar_get_auth($field['auth_pm'], true),
-                        'TREE_ID'			=> $field['tree_id'],
-                        'TREE_TITLE'		=> qbar_get_tree_title($field['tree_id']),
-                        'PHP_FUNCTION'		=> $field['php_function'],
+                        'USE_ICON'			=> qbar_get_bool(( isset($field['use_icon']) ? $field['use_icon'] : '' )),
+                        'INTERNAL'			=> qbar_get_bool(( isset($field['internal']) ? $field['internal'] : '' )),
+                        'WINDOW'			=> qbar_get_bool(( isset($field['window']) ? $field['window'] : '' )),
+                        'AUTH_LOGGED'		=> qbar_get_auth(( isset($field['auth_logged']) ? $field['auth_logged'] : '' )),
+                        'AUTH_ADMIN'		=> qbar_get_auth(( isset($field['auth_admin']) ? $field['auth_admin'] : '' )),
+                        'AUTH_PM'			=> qbar_get_auth(( isset($field['auth_pm']) ? $field['auth_pm'] : '' ), true),
+                        'TREE_ID'			=> ( isset($field['tree_id']) ? $field['tree_id'] : '' ) ,
+                        'TREE_TITLE'		=> qbar_get_tree_title(( isset($field['tree_id']) ? $field['tree_id'] : '' )),
+                        'PHP_FUNCTION'		=> ( isset($field['php_function']) ? $field['php_function'] : '' ),
 
-                        'U_NAME'			=> $field['internal'] ? append_sid('../' . $field['url']) : $field['url'],
+                        'U_NAME'			=> !empty($field['internal']) ? append_sid('../' . $field['url']) : $field['url'],
                         'U_EDIT'			=> append_sid("admin_qbar.$phpEx?panel=$i&field=$j&mode=edit"),
                         'U_DELETE'			=> append_sid("admin_qbar.$phpEx?panel=$i&field=$j&mode=delete"),
                         'U_MOVEUP'			=> append_sid("admin_qbar.$phpEx?panel=$i&field=$j&mode=up"),
@@ -378,7 +380,10 @@ if (isset($_POST['panel_id']) || isset($_GET['panel'])) {
 // panel while importing
 if (isset($_POST['goto'])) {
     $indexed = $_POST['goto'];
-    list($id, $action) = each($indexed);
+		foreach ($indexed as $id => $action)
+		{
+			break; // Just populate $id/$action
+		}
     $panel_id = intval($id);
 }
 
@@ -395,7 +400,10 @@ if (isset($_POST['create_field'])) {
     $create_field = true;
     $indexed = $_POST['create_field'];
     if (is_array($indexed)) {
-        list($id, $action) = each($indexed);
+				foreach ($indexed as $id => $action)
+				{
+					break; // Just populate $id/$action
+				}
         $panel_id = intval($id);
         $field_names = array();
         $field_names = $_POST['field_name'];
@@ -410,7 +418,10 @@ if (isset($_POST['import_field'])) {
     $import = true;
     $indexed = $_POST['import_field'];
     if (is_array($indexed)) {
-        list($id, $action) = each($indexed);
+				foreach ($indexed as $id => $action)
+				{
+					break; // Just populate $id/$action
+				}
         $panel_id = intval($id);
         $sav_mode = 'main';
     }
@@ -531,10 +542,10 @@ if ($mode == 'delete') {
     } elseif ($submit) {
         // update the table
         if (empty($field_id)) {
-            @reset($qbar_maps);
             $wbar = array();
             $i = 0;
-            while (list($qname, $qdata) = each($qbar_maps)) {
+						foreach ($qbar_maps as $qname => $qdata)
+						{
                 $i++;
                 if ($panel_id != $i) {
                     $wbar[$qname] = $qdata;
@@ -542,10 +553,10 @@ if ($mode == 'delete') {
             }
             $qbar_maps = $wbar;
         } else {
-            @reset($qbar_maps);
             $wfields = array();
             $j = 0;
-            while (list($fname, $fdata) = each($qbar_maps[$qname]['fields'])) {
+						foreach ($qbar_maps[$qname]['fields'] as $fname => $fdata)
+						{
                 $j++;
                 if ($field_id != $j) {
                     $wfields[$fname] = $fdata;
@@ -645,19 +656,19 @@ if (($mode == 'edit') && (!empty($field_id) || $create_field)) {
     if (!empty($field_id)) {
         $field_name			= $fname;
         $field_shortcut		= $qbar_maps[$qname]['fields'][$fname]['shortcut'];
-        $field_alternate	= $qbar_maps[$qname]['fields'][$fname]['alternate'];
+        $field_alternate	= ( isset($qbar_maps[$qname]['fields'][$fname]['alternate']) ? $qbar_maps[$qname]['fields'][$fname]['alternate'] : '' );
         $field_explain		= $qbar_maps[$qname]['fields'][$fname]['explain'];
         $field_icon			= $qbar_maps[$qname]['fields'][$fname]['icon'];
         $field_use_value	= $qbar_maps[$qname]['fields'][$fname]['use_value'];
         $field_use_icon		= $qbar_maps[$qname]['fields'][$fname]['use_icon'];
         $field_url			= $qbar_maps[$qname]['fields'][$fname]['url'];
         $field_internal		= $qbar_maps[$qname]['fields'][$fname]['internal'];
-        $field_window		= $qbar_maps[$qname]['fields'][$fname]['window'];
+        $field_window		= ( isset($qbar_maps[$qname]['fields'][$fname]['window']) ? $qbar_maps[$qname]['fields'][$fname]['window'] : '' );
         $field_auth_logged	= $qbar_maps[$qname]['fields'][$fname]['auth_logged'];
-        $field_auth_admin	= $qbar_maps[$qname]['fields'][$fname]['auth_admin'];
-        $field_auth_pm		= $qbar_maps[$qname]['fields'][$fname]['auth_pm'];
-        $field_tree_id		= $qbar_maps[$qname]['fields'][$fname]['tree_id'];
-        $field_php_function	= $qbar_maps[$qname]['fields'][$fname]['php_function'];
+        $field_auth_admin	= ( isset($qbar_maps[$qname]['fields'][$fname]['auth_admin']) ? $qbar_maps[$qname]['fields'][$fname]['auth_admin'] : '' );
+        $field_auth_pm		= ( isset($qbar_maps[$qname]['fields'][$fname]['auth_pm']) ? $qbar_maps[$qname]['fields'][$fname]['auth_pm'] : '' );
+        $field_tree_id		= ( isset($qbar_maps[$qname]['fields'][$fname]['tree_id']) ? $qbar_maps[$qname]['fields'][$fname]['tree_id'] : '' );
+        $field_php_function	= ( isset($qbar_maps[$qname]['fields'][$fname]['php_function']) ? $qbar_maps[$qname]['fields'][$fname]['php_function'] : '' );
     }
 
     // get data from the formular
@@ -857,8 +868,7 @@ if (($mode == 'edit') && (!empty($field_id) || $create_field)) {
             }
 
             // check if exists
-            $idx = $qbar_maps[$qname]['fields'][$field_name]['idx'];
-            if (!empty($idx) && ($idx != $field_id)) {
+            if (!empty($qbar_maps[$qname]['fields'][$field_name]['idx']) && ($qbar_maps[$qname]['fields'][$field_name]['idx'] != $field_id)) {
                 $error = true;
                 $error_msg .= (($error_msg != '') ? '<br />' : '') . $lang['Qbar_error_field_exists'];
             }
@@ -910,9 +920,9 @@ if (($mode == 'edit') && (!empty($field_id) || $create_field)) {
             $wfield['php_function']	= $field_php_function;
             if (!empty($field_id)) {
                 $wname = $qbar_keys[$panel_id][$field_id];
-                @reset($qbar_maps[$qname]['fields']);
                 $wdata = array();
-                while (list($fname, $fdata) = each($qbar_maps[$qname]['fields'])) {
+								foreach ($qbar_maps[$qname]['fields'] as $fname => $fdata)
+								{
                     if ($fname == $wname) {
                         $wdata[$field_name] = $wfield;
                     } else {
@@ -1180,9 +1190,9 @@ if (($mode == 'edit') && empty($field_id) && !$create_field) {
         if (!empty($panel_id)) {
             $wname = $qbar_keys[$panel_id][0];
             $wmap['fields'] = $qbar_maps[$wname]['fields'];
-            @reset($qbar_maps);
             $wbar = array();
-            while (list($qname, $qdata) = each($qbar_maps)) {
+						foreach ($qbar_maps as $qname => $qdata)
+						{
                 if ($qname == $wname) {
                     $wbar[$panel_name] = $wmap;
                 } else {
@@ -1240,8 +1250,8 @@ if (($mode == 'edit') && empty($field_id) && !$create_field) {
 
         // selection lists
         $s_class = '<select name="panel_class">';
-        reset($classes);
-        while (list($key, $lang_key) = each($classes)) {
+				foreach ($classes as $key => $lang_key)
+				{
             if ($key != 'System') {
                 $selected = ($panel_class == $key) ? ' selected="selected"' : '';
                 $s_class .= '<option value="' . $key . '"' . $selected . '>' . $lang[$lang_key] . '</option>';

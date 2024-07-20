@@ -86,8 +86,8 @@ if( $mode != "" )
 		}
 
 		$template->assign_vars(array(
-			'ACRONYM' => $acronym_info['acronym'],
-			'DESCRIPTION' => $acronym_info['description'],
+			'ACRONYM' => ( isset($acronym_info['acronym']) ? $acronym_info['acronym'] : '' ),
+			'DESCRIPTION' => ( isset($acronym_info['description']) ? $acronym_info['description'] : '' ),
 
 			'L_ACRONYMS_TITLE' => $lang['Acronyms_title'],
 			'L_ACRONYMS_TEXT' => $lang['Acronyms_explain'],

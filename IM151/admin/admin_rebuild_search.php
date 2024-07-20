@@ -43,7 +43,7 @@ else
 //
 include ($phpbb_root_path.'language/lang_' . $board_config['default_lang'] . '/lang_admin_rebuild_search.'.$phpEx);
 
-$page_title = $lang['Page_title'];
+$page_title = '';
 
 if (isset ($_GET['start'])) {
 	function onTime () {

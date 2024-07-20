@@ -59,7 +59,7 @@ else
 	$mode = '';
 }
 
-attachment_quota_settings('group', $_POST['group_update'], $mode);
+attachment_quota_settings('group', ( isset($_POST['group_update']) ? $_POST['group_update'] : NULL ), $mode);
 //-- mod : Loewen Enterprise - PAYPAL IPN REG / SUBSCRIPTION - GROUP -----------------------------------------------------------			
 //-- remove
 //if ( isset($_POST['edit']) || isset($_POST['new']) )
@@ -148,18 +148,18 @@ if ( isset($_POST['edit']) || isset($_GET['edit']) || isset($_POST['new']) )
 	$group_closed = ( $group_info['group_type'] == GROUP_CLOSED ) ? ' checked="checked"' : '';
 	$group_hidden = ( $group_info['group_type'] == GROUP_HIDDEN ) ? ' checked="checked"' : '';
 	$group_payment = ( $group_info['group_type'] == GROUP_PAYMENT ) ? ' checked="checked"' : '';
-	$group_period = intval($group_info['group_period']);
-	$group_period_basis = $group_info['group_period_basis'];
-	$group_first_trial_fee = ($group_info['group_first_trial_fee'] + 0.00);
-	$group_first_trial_period = intval($group_info['group_first_trial_period']);
-	$group_first_trial_period_basis = ($group_info['group_first_trial_period_basis']);
-	$group_second_trial_fee = ($group_info['group_second_trial_fee'] + 0.00);
-	$group_second_trial_period = intval($group_info['group_second_trial_period']);
-	$group_second_trial_period_basis = ($group_info['group_second_trial_period_basis']);
-	$group_sub_recurring = intval($group_info['group_sub_recurring']);
-	$group_sub_recurring_stop = intval($group_info['group_sub_recurring_stop']);
-	$group_sub_recurring_stop_num = intval($group_info['group_sub_recurring_stop_num']);
-	$group_sub_reattempt = intval($group_info['group_sub_reattempt']);
+	$group_period = isset($group_info['group_period']) ? intval($group_info['group_period']) : 0;
+	$group_period_basis = ( isset($group_info['group_period_basis']) ? $group_info['group_period_basis'] : 0 ) ;
+	$group_first_trial_fee = ( isset($group_info['group_first_trial_fee']) ? $group_info['group_first_trial_fee'] : 0 ) + 0.00;
+	$group_first_trial_period = isset($group_info['group_first_trial_period']) ? intval($group_info['group_first_trial_period']) : 0;
+	$group_first_trial_period_basis = isset($group_info['group_first_trial_period_basis']) ? ($group_info['group_first_trial_period_basis']) : 0;
+	$group_second_trial_fee = ( isset($group_info['group_second_trial_fee']) ? $group_info['group_second_trial_fee'] : 0 ) + 0.00;
+	$group_second_trial_period = isset($group_info['group_second_trial_period']) ? intval($group_info['group_second_trial_period']) : 0;
+	$group_second_trial_period_basis = isset($group_info['group_second_trial_period_basis']) ? ($group_info['group_second_trial_period_basis']) : 0;
+	$group_sub_recurring = isset($group_info['group_sub_recurring']) ? intval($group_info['group_sub_recurring']) : 0;
+	$group_sub_recurring_stop = isset($group_info['group_sub_recurring_stop']) ? intval($group_info['group_sub_recurring_stop']) : 0;
+	$group_sub_recurring_stop_num = isset($group_info['group_sub_recurring_stop_num']) ? intval($group_info['group_sub_recurring_stop_num']) : 0;
+	$group_sub_reattempt = isset($group_info['group_sub_reattempt']) ? intval($group_info['group_sub_reattempt']) : 0;
 
 	$grp_billing_circle = '<SELECT name="group_period"><OPTION>--</OPTION>';
 	for($i = 1; $i <= 30; $i++ )
@@ -293,7 +293,7 @@ if ( isset($_POST['edit']) || isset($_GET['edit']) || isset($_POST['new']) )
 		'S_GROUP_CLOSED_CHECKED' => $group_closed,
 		'S_GROUP_HIDDEN_CHECKED' => $group_hidden,
 		'S_GROUP_PAYMENT_CHECKED' => $group_payment,
-		'GROUP_AMOUNT_LW' => $group_info['group_amount'],
+		'GROUP_AMOUNT_LW' => ( isset($group_info['group_amount']) ? $group_info['group_amount'] : 0 ) ,
 		'LW_SUB_RECUR' => '<input type="radio" name="group_sub_recurring" value="1" ' . ($group_sub_recurring == 1 ? 'CHECKED' : '') . ' >Yes&nbsp;&nbsp;<input type="radio" name="group_sub_recurring" value="0" ' . ($group_sub_recurring == 0 ? 'CHECKED' : '') . '>No',
 		'LW_BILLING_CIRCLE_PERIOD' => $grp_billing_circle,
 		'LW_BILLING_PERIOD_BASIS' => $grp_period_basis,
@@ -434,7 +434,7 @@ else if ( isset($_POST['group_update']) )
 
 $group_count = isset($_POST['group_count']) ? intval($_POST['group_count']) : 0;
 $group_count_max = isset($_POST['group_count_max']) ? intval($_POST['group_count_max']) : 0;
-$group_count_enable = isset($_POST['group_count_enable']) ? true : false;
+$group_count_enable = isset($_POST['group_count_enable']) ? 1 : 0;
 $group_count_update = isset($_POST['group_count_update']) ? true : false;
 $group_count_delete = isset($_POST['group_count_delete']) ? true : false;
 
@@ -577,7 +577,7 @@ if ($group_count_delete)
 			// reset the users in this group
 			$agcm_color->set_group_users($group_id);
 //-- fin mod : Advanced Group Color Management ---------------------------------
-			$message = $lang['Updated_group'] .'<br />'.sprintf($lang['group_count_updated'],$group_count_remove,$group_count_added). '<br /><br />' . sprintf($lang['Click_return_groupsadmin'], '<a href="' . append_sid("admin_groups.$phpEx") . '">', '</a>') . '<br /><br />' . sprintf($lang['Click_return_admin_index'], '<a href="' . append_sid("index.$phpEx?pane=right") . '">', '</a>');;
+			$message = $lang['Updated_group'] .'<br />'.sprintf($lang['group_count_updated'], ( isset($group_count_remove) ? $group_count_remove : 0 ) , ( isset($group_count_added) ? $group_count_added : 0 ) ). '<br /><br />' . sprintf($lang['Click_return_groupsadmin'], '<a href="' . append_sid("admin_groups.$phpEx") . '">', '</a>') . '<br /><br />' . sprintf($lang['Click_return_admin_index'], '<a href="' . append_sid("index.$phpEx?pane=right") . '">', '</a>');;
 
 			message_die(GENERAL_MESSAGE, $message);
 		}
@@ -645,7 +645,7 @@ if ($group_count_delete)
 			// Regnerate group color cache
 			$agcm_color->read(true);
 //-- fin mod : Advanced Group Color Management ---------------------------------
-			$message = $lang['Added_new_group'] .'<br />'.sprintf($lang['group_count_updated'],$group_count_remove,$group_count_added). '<br /><br />' . sprintf($lang['Click_return_groupsadmin'], '<a href="' . append_sid("admin_groups.$phpEx") . '">', '</a>') . '<br /><br />' . sprintf($lang['Click_return_admin_index'], '<a href="' . append_sid("index.$phpEx?pane=right") . '">', '</a>');;
+			$message = $lang['Added_new_group'] .'<br />'.sprintf($lang['group_count_updated'], ( isset($group_count_remove) ? $group_count_remove : 0 ) , ( isset($group_count_added) ? $group_count_added : 0 ) ). '<br /><br />' . sprintf($lang['Click_return_groupsadmin'], '<a href="' . append_sid("admin_groups.$phpEx") . '">', '</a>') . '<br /><br />' . sprintf($lang['Click_return_admin_index'], '<a href="' . append_sid("index.$phpEx?pane=right") . '">', '</a>');;
 
 			message_die(GENERAL_MESSAGE, $message);
 

@@ -119,23 +119,26 @@ else
 		if( isset($_POST['submit']) && ($config_name != 'default_style_over'))
 		{
 // Start add - Signatures control MOD
-$new['sig_allow_bold'] = ( htmlspecialchars($_POST['sig_allow_bold']) ) ? 1 : 0;
-$new['sig_allow_italic'] = ( htmlspecialchars($_POST['sig_allow_italic']) ) ? 1 : 0;
-$new['sig_allow_underline'] = ( htmlspecialchars($_POST['sig_allow_underline']) ) ? 1 : 0;
-$new['sig_allow_colors'] = ( htmlspecialchars($_POST['sig_allow_colors']) ) ? 1 : 0;
-$new['sig_allow_quote'] = ( htmlspecialchars($_POST['sig_allow_quote']) ) ? 1 : 0;
-$new['sig_allow_code'] = ( htmlspecialchars($_POST['sig_allow_code']) ) ? 1 : 0;
-$new['sig_allow_list'] = ( htmlspecialchars($_POST['sig_allow_list']) ) ? 1 : 0;
-$new['sig_allow_on_max_img_size_fail'] = ( htmlspecialchars($_POST['sig_allow_on_max_img_size_fail']) ) ? 1 : 0;
+$new['sig_allow_bold'] = ( !empty($_POST['sig_allow_bold']) ) ? 1 : 0;
+$new['sig_allow_italic'] = ( !empty($_POST['sig_allow_italic']) ) ? 1 : 0;
+$new['sig_allow_underline'] = ( !empty($_POST['sig_allow_underline']) ) ? 1 : 0;
+$new['sig_allow_colors'] = ( !empty($_POST['sig_allow_colors']) ) ? 1 : 0;
+$new['sig_allow_quote'] = ( !empty($_POST['sig_allow_quote']) ) ? 1 : 0;
+$new['sig_allow_code'] = ( !empty($_POST['sig_allow_code']) ) ? 1 : 0;
+$new['sig_allow_list'] = ( !empty($_POST['sig_allow_list']) ) ? 1 : 0;
+$new['sig_allow_on_max_img_size_fail'] = ( !empty($_POST['sig_allow_on_max_img_size_fail']) ) ? 1 : 0;
 
-$sig_config_error_list .= ( preg_match("/[^0-9]/", htmlspecialchars($_POST['max_sig_chars'])) ) ? '<br />' . $lang['Max_sig_length'] : '' ;
-$sig_config_error_list .= ( preg_match("/[^0-9]/", htmlspecialchars($_POST['sig_max_lines'])) ) ? '<br />' . $lang['sig_max_lines'] : '' ;
-$sig_config_error_list .= ( preg_match("/[^0-9]/", htmlspecialchars($_POST['sig_wordwrap'])) ) ? '<br />' . $lang['sig_wordwrap'] : '' ;
-$sig_config_error_list .= ( preg_match("/[^0-9]/", htmlspecialchars($_POST['sig_min_font_size'])) || htmlspecialchars($_POST['sig_min_font_size'])>29 || preg_match("/[^0-9]/", htmlspecialchars($_POST['sig_max_font_size'])) || htmlspecialchars($_POST['sig_max_font_size'])>29 ) ? '<br />' . $lang['sig_font_size_limit'] : '' ;
-$sig_config_error_list .= ( preg_match("/[^0-9]/", htmlspecialchars($_POST['sig_max_images'])) ) ? '<br />' . $lang['sig_max_images'] : '' ;
-$sig_config_error_list .= ( preg_match("/[^0-9]/", htmlspecialchars($_POST['sig_max_img_height'])) || preg_match("/[^0-9]/", htmlspecialchars($_POST['sig_max_img_width'])) ) ? '<br />' . $lang['sig_max_img_size'] : '' ;
-$sig_config_error_list .= ( preg_match("/[^0-9]/", htmlspecialchars($_POST['sig_max_img_files_size'])) ) ? '<br />' . $lang['sig_max_img_files_size'] : '' ;
-$sig_config_error_list .= ( preg_match("/[^0-9]/", htmlspecialchars($_POST['sig_max_img_av_files_size'])) ) ? '<br />' . $lang['sig_max_img_av_files_size'] : '' ;
+$sig_config_error_list = '';
+$sig_config_error_list .= isset($_POST['max_sig_chars']) && ( preg_match("/[^0-9]/", ($_POST['max_sig_chars'])) ) ? '<br />' . $lang['Max_sig_length'] : '' ;
+$sig_config_error_list .= isset($_POST['sig_max_lines']) && ( preg_match("/[^0-9]/", ($_POST['sig_max_lines'])) ) ? '<br />' . $lang['sig_max_lines'] : '' ;
+$sig_config_error_list .= isset($_POST['sig_wordwrap']) && ( preg_match("/[^0-9]/", ($_POST['sig_wordwrap'])) ) ? '<br />' . $lang['sig_wordwrap'] : '' ;
+$sig_min_error = isset($_POST['sig_min_font_size']) &&  ( preg_match("/[^0-9]/", ($_POST['sig_min_font_size'])) || intval($_POST['sig_min_font_size'])>29 );
+$sig_max_error = isset($_POST['sig_max_font_size']) && ( preg_match("/[^0-9]/", ($_POST['sig_max_font_size'])) || intval($_POST['sig_max_font_size'])>29 );
+$sig_config_error_list .= $sig_min_error  || $sig_max_error ? '<br />' . $lang['sig_font_size_limit'] : '' ;
+$sig_config_error_list .= ( preg_match("/[^0-9]/", ($_POST['sig_max_images'])) ) ? '<br />' . $lang['sig_max_images'] : '' ;
+$sig_config_error_list .= ( preg_match("/[^0-9]/", ($_POST['sig_max_img_height'])) || preg_match("/[^0-9]/", htmlspecialchars($_POST['sig_max_img_width'])) ) ? '<br />' . $lang['sig_max_img_size'] : '' ;
+$sig_config_error_list .= ( preg_match("/[^0-9]/", ($_POST['sig_max_img_files_size'])) ) ? '<br />' . $lang['sig_max_img_files_size'] : '' ;
+$sig_config_error_list .= ( preg_match("/[^0-9]/", ($_POST['sig_max_img_av_files_size'])) ) ? '<br />' . $lang['sig_max_img_av_files_size'] : '' ;
 
 if ( $sig_config_error_list != '' )
 {
@@ -640,8 +643,8 @@ $template->assign_vars(array(
 	"ACTIVATION_USER_CHECKED" => $activation_user,
 	"ACTIVATION_ADMIN" => USER_ACTIVATION_ADMIN, 
 	"ACTIVATION_ADMIN_CHECKED" => $activation_admin, 
-	"CONFIRM_ENABLE" => $confirm_yes,
-	"CONFIRM_DISABLE" => $confirm_no,
+	"CONFIRM_ENABLE" => ( isset($confirm_yes) ? $confirm_yes : '' ),
+	"CONFIRM_DISABLE" => ( isset($confirm_no) ? $confirm_no : '' ),
 	'ALLOW_AUTOLOGIN_YES' => $allow_autologin_yes,
 	'ALLOW_AUTOLOGIN_NO' => $allow_autologin_no,
 	'AUTOLOGIN_TIME' => (int) $new['max_autologin_time'],
@@ -706,8 +709,8 @@ $template->assign_vars(array(
 'SIG_MAX_LINES' => $new['sig_max_lines'],
 'SIG_WORDWRAP' => $new['sig_wordwrap'],
 'SIG_ALLOW_FONT_SIZES_YES' => $sig_allow_font_sizes_yes,
-'SIG_ALLOW_FONT_SIZES_MAX' => $sig_allow_font_sizes_max,
-'SIG_ALLOW_FONT_SIZES_IMPOSED' => $sig_allow_font_sizes_imposed,
+'SIG_ALLOW_FONT_SIZES_MAX' => ( isset($sig_allow_font_sizes_max) ? $sig_allow_font_sizes_max : '' ),
+'SIG_ALLOW_FONT_SIZES_IMPOSED' => ( isset($sig_allow_font_sizes_imposed) ? $sig_allow_font_sizes_imposed : '' ),
 'SIG_MIN_FONT_SIZE' => $new['sig_min_font_size'],
 'SIG_MAX_FONT_SIZE' => $new['sig_max_font_size'],
 'SIG_ALLOW_BOLD_YES' => $sig_allow_bold_yes,

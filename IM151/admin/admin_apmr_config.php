@@ -110,16 +110,16 @@ if($mode == "main" || !$mode)
 		  WHERE admin_id = '$admin_id'";
 	$r			= $db -> sql_query($q);
 	$row 		= $db -> sql_fetchrow($r);	
-	$admin	 	= $row['admin_id'];
-	$deny		= $row['admin_deny'];
-	$redirect	= $row['admin_redirect_id'];
+	$admin	 	= ( isset($row['admin_id']) ? $row['admin_id'] : NULL );
+	$deny		= ( isset($row['admin_deny']) ? $row['admin_deny'] : NULL );
+	$redirect	= ( isset($row['admin_redirect_id']) ? $row['admin_redirect_id'] : NULL);
 	
 	$q = "SELECT username
 		  FROM ". USERS_TABLE ."
 		  WHERE user_id = '$redirect'";
 	$r			= $db -> sql_query($q);
 	$row 		= $db -> sql_fetchrow($r);	
-	$username2 	= $row['username'];
+	$username2 	= ( isset($row['username']) ? $row['username'] : '' );
 	
 	if($admin < 1)
 		{
@@ -284,9 +284,9 @@ if($mode == "main" || !$mode)
 		  WHERE admin_id = '$who'";
 	$r			= $db -> sql_query($q);
 	$row 		= $db -> sql_fetchrow($r);	
-	$admin	 	= $row['admin_id'];
-	$deny		= $row['admin_deny'];
-	$redirect	= $row['admin_redirect_id'];
+	$admin	 	= ( isset($row['admin_id']) ? $row['admin_id'] : 0 );
+	$deny		= ( isset($row['admin_deny']) ? $row['admin_deny'] : '' );
+	$redirect	= ( isset($row['admin_redirect_id']) ? $row['admin_redirect_id'] : '' );
 			
 			if(($admin) && ($what2) && ($who2))
 				{

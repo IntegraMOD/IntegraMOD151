@@ -301,9 +301,9 @@ else
 					}
 				}
 
-				while( list($forum_id, $value) = @each($_POST['private']) )
+				foreach ($_POST['private'] as $forum_id => $value)
 				{
-					while( list($auth_field, $exists) = @each($forum_auth_level_fields[$forum_id]) )
+					foreach ($forum_auth_level_fields[$forum_id] as $auth_field => $exists)
 					{
 						if ($exists)
 						{
@@ -319,9 +319,12 @@ else
 				{
 					$auth_field = $forum_auth_fields[$j];
 
-					while( list($forum_id, $value) = @each($_POST['private_' . $auth_field]) )
+					if (isset($_POST['private_' . $auth_field]))
 					{
-						$change_acl_list[$forum_id][$auth_field] = $value;
+						foreach ($_POST['private_' . $auth_field] as $forum_id => $value)
+						{
+							$change_acl_list[$forum_id][$auth_field] = $value;
+						}
 					}
 				}
 			}
@@ -352,7 +355,7 @@ else
 			$forum_access = array();
 			for ($i=0; $i < count($keys['id']); $i++)
 			{
-				if ($tree['type'][ $keys['idx'][$i] ] == POST_FORUM_URL)
+				if (isset($tree['type'][ $keys['idx'][$i] ]) && $tree['type'][ $keys['idx'][$i] ] == POST_FORUM_URL)
 				{
 					$forum_access[] = $tree['data'][ $keys['idx'][$i] ];
 				}
@@ -419,7 +422,7 @@ else
 							{
 								$forum_auth_action[$forum_id] = 'delete';
 							}
-							else if ( !isset($auth_access[$forum_id][$auth_field]) && !( $forum_auth_action[$forum_id] == 'delete' && empty($update_acl_status[$forum_id][$auth_field]) ) )
+							else if ( !isset($auth_access[$forum_id][$auth_field]) && !( isset($forum_auth_action[$forum_id]) && $forum_auth_action[$forum_id] == 'delete' && empty($update_acl_status[$forum_id][$auth_field]) ) )
 							{
 								$forum_auth_action[$forum_id] = 'insert';
 							}
@@ -429,7 +432,7 @@ else
 							}
 						}
 						else if ( ( empty($auth_access[$forum_id]['auth_mod']) && 
-							( isset($auth_access[$forum_id][$auth_field]) && $change_acl_list[$forum_id][$auth_field] == $auth_access[$forum_id][$auth_field] ) ) && $forum_auth_action[$forum_id] == 'delete' )
+							( isset($auth_access[$forum_id][$auth_field]) && $change_acl_list[$forum_id][$auth_field] == $auth_access[$forum_id][$auth_field] ) ) && isset($forum_auth_action[$forum_id]) && $forum_auth_action[$forum_id] == 'delete' )
 						{
 							$forum_auth_action[$forum_id] = 'update';
 						}
@@ -441,7 +444,7 @@ else
 			// Checks complete, make updates to DB
 			//
 			$delete_sql = '';
-			while( list($forum_id, $action) = @each($forum_auth_action) )
+			foreach ($forum_auth_action as $forum_id => $action)
 			{
 				if ( $action == 'delete' )
 				{
@@ -453,7 +456,7 @@ else
 					{
 						$sql_field = '';
 						$sql_value = '';
-						while ( list($auth_type, $value) = @each($update_acl_status[$forum_id]) )
+						foreach ($update_acl_status[$forum_id] as $auth_type => $value)
 						{
 							$sql_field .= ( ( $sql_field != '' ) ? ', ' : '' ) . $auth_type;
 							$sql_value .= ( ( $sql_value != '' ) ? ', ' : '' ) . $value;
@@ -467,7 +470,7 @@ else
 					else
 					{
 						$sql_values = '';
-						while ( list($auth_type, $value) = @each($update_acl_status[$forum_id]) )
+						foreach ($update_acl_status[$forum_id] as $auth_type => $value)
 						{
 							$sql_values .= ( ( $sql_values != '' ) ? ', ' : '' ) . $auth_type . ' = ' . $value;
 						}
@@ -749,7 +752,7 @@ else if ( ( $mode == 'user' && ( isset($_POST['username']) || $user_id ) ) || ( 
 	while( $row = $db->sql_fetchrow($result) )
 	{
 		$auth_access[$row['forum_id']][] = $row; 
-		$auth_access_count[$row['forum_id']]++;
+		$auth_access_count[$row['forum_id']] = isset($auth_access_count[$row['forum_id']]) ? $auth_access_count[$row['forum_id']] + 1 : 1;
 	}
 	$db->sql_freeresult($result);
 
@@ -988,7 +991,8 @@ else if ( ( $mode == 'user' && ( isset($_POST['username']) || $user_id ) ) || ( 
 //-- add
 				$template->assign_block_vars('row.forums.aclvalues', array(
 //-- fin mod : categories hierarchy ----------------------------------------------------------------
-					'S_ACL_SELECT' => $optionlist_acl_adv[$forum_id][$j])
+					'S_ACL_SELECT' => ( isset($optionlist_acl_adv[$forum_id][$j]) ? $optionlist_acl_adv[$forum_id][$j] : NULL )
+				)
 				);
 			}
 		}
@@ -1105,7 +1109,7 @@ else if ( ( $mode == 'user' && ( isset($_POST['username']) || $user_id ) ) || ( 
 	}
 
 	$template->assign_vars(array(
-		'L_USER_OR_GROUPNAME' => ( $mode == 'user' ) ? $lang['Username'] : $lang['Group_name'],
+		'L_USER_OR_GROUPNAME' => ( $mode == 'user' ) ? $lang['Username'] : $lang['group_name'],
 
 		'L_AUTH_TITLE' => ( $mode == 'user' ) ? $lang['Auth_Control_User'] : $lang['Auth_Control_Group'],
 		'L_AUTH_EXPLAIN' => ( $mode == 'user' ) ? $lang['User_auth_explain'] : $lang['Group_auth_explain'],
@@ -1167,6 +1171,7 @@ else
 			message_die(GENERAL_ERROR, "Couldn't get group list", "", __LINE__, __FILE__, $sql);
 		}
 
+		$select_list = '';
 		if ( $row = $db->sql_fetchrow($result) )
 		{
 			$select_list = '<select name="' . POST_GROUPS_URL . '">';

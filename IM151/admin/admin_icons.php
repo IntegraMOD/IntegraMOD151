@@ -112,8 +112,7 @@ function icons_write()
 	}
 
 	// process the default values
-	@reset($icon_defined_special);
-	while (list($key, $data) = @each($icon_defined_special))
+	foreach ($icon_defined_special as $key => $data)
 	{
 		$template->assign_block_vars('_outfile_default', array(
 			'NAME'		=> str_replace("''", "\'", $key),
@@ -135,7 +134,6 @@ function icons_write()
 	$f = @fopen($filename, 'w' );
 	$texte  = "<?php\n$res\n?>";
 	@fputs( $f, $texte );
-	@ftruncate( $f );
 	@fclose( $f );
 }
 
@@ -410,8 +408,7 @@ if ($mode == 'edit')
 		$icon_title		= $icones[ $map_icon[$icon] ]['alt'];
 		$icon_url		= $icones[ $map_icon[$icon] ]['img'];
 		$icon_auth		= $icones[ $map_icon[$icon] ]['auth'];
-		@reset($icon_defined_special);
-		while (list($key, $data) = @each($icon_defined_special))
+		foreach ($icon_defined_special as $key => $data)
 		{
 			if (isset($lang[ $data['lang_key'] ]))
 			{
@@ -428,9 +425,9 @@ if ($mode == 'edit')
 	if (isset($_POST['icon_url']))		$icon_url		= trim(str_replace("\'", "''", $_POST['icon_url']));
 	if (isset($_POST['icon_auth']))	$icon_auth		= trim(str_replace("\'", "''", $_POST['icon_auth']));
 
-	if ($refresh || $submit)
+	$icon_ids = [];
+	if ((!empty($refresh) || !empty($submit)) && !empty($_POST['ids']))
 	{
-		$icon_ids = array();
 		$icon_ids = $_POST['ids'];
 	}
 
@@ -487,8 +484,7 @@ if ($mode == 'edit')
 		$icones[$map]['auth'] = $icon_auth;
 
 		// consider the default sets
-		@reset($icon_defined_special);
-		while (list($key, $data) = @each($icon_defined_special))
+		foreach ($icon_defined_special as $key => $data)
 		{
 			if (isset($lang[ $data['lang_key'] ]))
 			{
@@ -544,8 +540,8 @@ if ($mode == 'edit')
 		);
 
 		// get the icon url
-		$url = $icon_url;
-		if (isset($images[$icon_url]))
+		$url = ( isset($icon_url) ? $icon_url : '' );
+		if (isset($images[$url]))
 		{
 			$url = $images[$icon_url];
 		}
@@ -557,10 +553,9 @@ if ($mode == 'edit')
 
 		// prepare auth level list
 		$s_auths = '';
-		@reset($auths);
-		while (list($key, $data) = @each($auths))
+		foreach ($auths as $key => $data)
 		{
-			$selected = ($icon_auth == $key) ? ' selected="selected"' : '';
+			$selected = isset($icon_auth) && ($icon_auth == $key) ? ' selected="selected"' : '';
 			$s_auths .= sprintf('<option value="%s"%s>%s</option>', $key, $selected, $data);
 		}
 		$s_auths = sprintf('<select name="icon_auth">%s</select>', $s_auths);
@@ -568,8 +563,7 @@ if ($mode == 'edit')
 		// images list
 		$s_icons = '<option value="" selected="selected">' . $lang['Image_key_pick_up'] . '</option>';
 		@ksort($images);
-		@reset($images);
-		while ( list($image_key, $image_url) = @each($images) )
+		foreach ($images as $image_key => $image_url)
 		{
 			if ( !is_array($image_url) )
 			{
@@ -581,8 +575,7 @@ if ($mode == 'edit')
 		// lang keys list
 		$s_langs = '<option value="" selected="selected">' . $lang['Lang_key_pick_up'] . '</option>';
 		@ksort($lang);
-		@reset($lang);
-		while ( list($lang_key, $lang_data) = @each($lang) )
+		foreach ($lang as $lang_key => $lang_data)
 		{
 			if ( !is_array($lang_data) )
 			{
@@ -593,10 +586,10 @@ if ($mode == 'edit')
 
 		// vars
 		$template->assign_vars(array(
-			'ICON_TITLE_KEY'	=> $icon_title,
-			'ICON_TITLE'		=> isset($lang[$icon_title]) ? '<br />' . $lang[$icon_title] : '',
+			'ICON_TITLE_KEY'	=> ( isset($icon_title) ? $icon_title : '' ) ,
+			'ICON_TITLE'		=> isset($icon_title) && isset($lang[$icon_title]) ? '<br />' . $lang[$icon_title] : '',
 			'ICON'				=> $pic,
-			'ICON_URL'			=> $icon_url,
+			'ICON_URL'			=> ( isset($icon_url) ? $icon_url : '' ),
 			'S_AUTHS'			=> $s_auths,
 			'S_ICONS'			=> $s_icons,
 			'S_LANGS'			=> $s_langs,
@@ -604,8 +597,7 @@ if ($mode == 'edit')
 		);
 
 		// defaults assignments
-		@reset($icon_defined_special);
-		while (list($key, $data) = @each($icon_defined_special))
+		foreach ($icon_defined_special as $key => $data)
 		{
 			if (isset($lang[ $data['lang_key'] ]))
 			{
@@ -651,7 +643,8 @@ if ($mode == '')
 		$row['post_icon'] = intval($row['post_icon']);
 		if (isset($map_icon[ $row['post_icon'] ]))
 		{
-			$icones[ $map_icon[ $row['post_icon'] ] ]['usage'] = $icones[ $map_icon[ $row['post_icon'] ] ]['usage'] + $row['count'];
+			$cur = isset($icones[ $map_icon[ $row['post_icon'] ] ]['usage']) ? $icones[ $map_icon[ $row['post_icon'] ] ]['usage'] : 0;
+			$icones[ $map_icon[ $row['post_icon'] ] ]['usage'] = $cur + $row['count'];
 		}
 	}
 	if ($total_posts <= 0) $total_posts = 1;
@@ -689,7 +682,7 @@ if ($mode == '')
 			'L_LANG'	=> isset($lang[ $icones[$i]['alt'] ]) ? $lang[ $icones[$i]['alt'] ] : $icones[$i]['alt'],
 			'LANG_KEY'	=> isset($lang[ $icones[$i]['alt'] ]) ? '<br />(' . $icones[$i]['alt'] . ')' : '',
 			'L_AUTH'	=> $auths[ $icones[$i]['auth'] ],
-			'USAGE'		=> (intval($icones[$i]['usage']) > 0) ? $icones[$i]['usage'] . '&nbsp;(' . ( round( ($icones[$i]['usage'] * 100 )/ $total_posts ) ) . '%)' : '',
+			'USAGE'		=> (!empty($icones[$i]['usage'])) ? $icones[$i]['usage'] . '&nbsp;(' . ( round( ($icones[$i]['usage'] * 100 )/ $total_posts ) ) . '%)' : '',
 			'U_EDIT'	=> append_sid("./admin_icons.$phpEx?mode=edit&icon=" . $icones[$i]['ind']),
 			'U_DELETE'	=> append_sid("./admin_icons.$phpEx?mode=del&icon=" . $icones[$i]['ind']),
 			'U_MOVEUP'	=> append_sid("./admin_icons.$phpEx?mode=up&icon=" . $icones[$i]['ind']),
@@ -698,8 +691,7 @@ if ($mode == '')
 		);
 
 		// list of default assignement
-		@reset($icon_defined_special);
-		while (list($key, $data) = @each($icon_defined_special))
+		foreach ($icon_defined_special as $key => $data)
 		{
 			if ( ($data['icon'] == $icones[$i]['ind']) && isset($lang[ $data['lang_key'] ]) )
 			{

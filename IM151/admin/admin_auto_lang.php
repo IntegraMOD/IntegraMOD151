@@ -101,13 +101,12 @@ if (isset ($_POST['edit']) || isset ($_POST['delete']))
 	$auto_lang_check = (isset($_POST['auto_lang_check']) && is_array($_POST['auto_lang_check'])) ? $_POST['auto_lang_check'] : array();
 	$auto_lang_language = (isset($_POST['auto_lang_language']) && is_array($_POST['auto_lang_language'])) ? $_POST['auto_lang_language'] : array();
 
-	reset ($auto_lang_list);
-	while (list($a_list) = each($auto_lang_list))
+	foreach ($auto_lang_list as $a_list)
 	{
 		$a_list = intval($a_list);
-		$lang_check = strtolower(trim($auto_lang_check[$a_list]));
-		if (!empty($lang_check))
+		if (!empty($auto_lang_check[$a_list]))
 		{
+			$lang_check = strtolower(trim($auto_lang_check[$a_list]));
 			if (!arrayKeyExists($lang_check, $language_codes))
 			{
 				message_die (GENERAL_ERROR, sprintf($lang['auto_lang_notexists_lc'], $lang_check), '', __LINE__, __FILE__, '');

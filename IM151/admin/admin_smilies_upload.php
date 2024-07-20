@@ -17,6 +17,8 @@ if( !empty($setmodules) )
 }
 
 $phpbb_root_path = './../';
+define('CT_SECLEVEL', 'MEDIUM');
+$ct_ignorepvar = array('submit');
 require($phpbb_root_path . 'extension.inc');
 require('./pagestart.' . $phpEx);
 
@@ -190,7 +192,7 @@ if( $smilies_count )
 		$template->assign_block_vars('uploaded_row', array());
 		for($jj=$first_smilie; $jj<$last_smilie; $jj++)
 		{
-			if( $smilies_files[$jj] )
+			if( !empty($smilies_files[$jj]) )
 			{
 				$template->assign_block_vars('uploaded_row.uploaded_cell', array(
 					'SMILIES_NAME' => $smilies_files[$jj]
@@ -403,6 +405,6 @@ function error_msg($str)
 	global $lang, $error_msg;
 
 	$error_msg .= ( !empty($error_msg) ) ? '<br />' : '';
-	$error_msg .= ( $lang[$str] ) ? $lang[$str] : $str;
+	$error_msg .= isset( $lang[$str] ) ? $lang[$str] : $str;
 }
 ?>

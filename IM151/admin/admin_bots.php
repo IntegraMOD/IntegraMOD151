@@ -34,9 +34,6 @@ require('./pagestart.' . $phpEx);
 
 include($phpbb_root_path . 'language/lang_' . $board_config['default_lang'] . '/lang_bot_admin.' . $phpEx);
 
-// define bots table - for the users who are to lazy to edit constants.php hehehe!
-define('BOTS_TABLE', $table_prefix . "bots");
-
 // errors - mwhahahaha
 $bot_errors = "";
 
@@ -51,11 +48,11 @@ else
 	$action = '';
 }
 $id = (isset($_GET['id'])) ? $_GET['id'] : 0;
-$mark = (isset($_POST['mark'])) ? $_POST['mark'] : 0;
+$mark = (isset($_POST['mark'])) ? $_POST['mark'] : [];
 if (isset($_POST['add'])) $action = 'add';
 
 // editing and marks don't go well together...
-if ( ( sizeof($mark) != 1 ) && $action == "edit" ) $action = '';
+if ( ( sizeof($mark) > 1 ) && $action == "edit" ) $action = '';
 if ( ((sizeof($mark)) ?  $mark != '' : false ) && $action == "edit" ) 
 {
 	$id = $mark[0];
@@ -356,6 +353,7 @@ if ( !($result = $db->sql_query($sql)) )
 }
 
 // generate table from bot data
+$row_class = $theme['td_class1'];
 while ($row = $db->sql_fetchrow($result))
 {
 

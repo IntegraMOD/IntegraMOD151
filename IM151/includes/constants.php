@@ -69,6 +69,7 @@ define('AUTH_PAID_VIEW', 25);
 
 // ### Data Tables ###
 define('ACCT_HIST_TABLE', $table_prefix.'account_hist');
+define('BOTS_TABLE', $table_prefix . "bots");
 define('ACRONYMS_TABLE', $table_prefix.'acronyms');
 define('ADMIN_PM_TABLE', $table_prefix.'admin_pm');
 define('APPROVE_FORUMS_TABLE', $table_prefix.'approve_forums');

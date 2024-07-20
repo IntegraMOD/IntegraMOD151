@@ -186,7 +186,7 @@ if ( ( isset($_POST['edit']) || isset($_GET['edit']) ) && !empty($style_id ) )
 		'L_TIME' => $lang['AGCM_time'],
 		'L_TIME_EXPLAIN' => $lang['AGCM_time_explain'],
 		'L_CHECK' => $lang['AGCM_check'],
-		'L_CHECK_EXPLAIN' => $lang['AGCM_check_explain'],
+		'L_CHECK_EXPLAIN' => '', //$lang['AGCM_check_explain'],
 		'L_BOLD' => $lang['AGCM_bold'],
 		'L_ITALIC' => $lang['AGCM_italic'],
 		'L_UNDERLINE' => $lang['AGCM_underline'],

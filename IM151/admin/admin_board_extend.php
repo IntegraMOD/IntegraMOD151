@@ -203,7 +203,7 @@ $menu_name = $menu_keys[$menu_id];
 $mod_name = $mod_keys[$menu_id][$mod_id];
 
 // sub name
-$sub_name = $sub_keys[$menu_id][$mod_id][$sub_id];
+$sub_name = ( isset($sub_keys[$menu_id][$mod_id][$sub_id]) ? $sub_keys[$menu_id][$mod_id][$sub_id] : NULL );
 
 // buttons
 $submit = isset($_POST['submit']);
@@ -225,8 +225,7 @@ if ($submit)
 	$error_msg = '';
 
 	// format and verify data
-	@reset($mods[$menu_name]['data'][$mod_name]['data'][$sub_name]['data']);
-	while ( list($field_name, $field) = @each($mods[$menu_name]['data'][$mod_name]['data'][$sub_name]['data']) )
+	foreach ($mods[$menu_name]['data'][$mod_name]['data'][$sub_name]['data'] as $field_name => $field)
 	{
 		if (isset($_POST[$field_name]))
 		{
@@ -278,8 +277,7 @@ if ($submit)
 	}
 
 	// save data
-	@reset($mods[$menu_name]['data'][$mod_name]['data'][$sub_name]['data']);
-	while ( list($field_name, $field) = @each($mods[$menu_name]['data'][$mod_name]['data'][$sub_name]['data']) )
+	foreach ($mods[$menu_name]['data'][$mod_name]['data'][$sub_name]['data'] as $field_name => $field)
 	{
 		if (isset($$field_name))
 		{
@@ -449,7 +447,7 @@ foreach ($mods[$menu_name]['data'][$mod_name]['data'][$sub_name]['data'] as $fie
 			$input = '';
 			if ( !empty($field['get_func']) && function_exists($field['get_func']) )
 			{
-				$input = $field['get_func']($field_name, $config[$field_name]);
+				$input = $field['get_func']($field_name, ( isset($config[$field_name]) ? $config[$field_name] : '' ));
 			}
 			break;
 	}
@@ -467,13 +465,13 @@ foreach ($mods[$menu_name]['data'][$mod_name]['data'][$sub_name]['data'] as $fie
 		}
 		$override = '<hr />' . $lang['Override_user_choices'] . ':&nbsp;'. $override;
 	}
-	if ($field['visibility']){
+	if (!empty($field['visibility'])){
 		if ($field['class'] != 'generic'){ 
-    	$see_field = $classes_fields[$field['class']]['user_field']; 
-      if($board_config[$see_field.'_over']){ 
+    	$see_field = ( isset($classes_fields[$field['class']]['user_field']) ? $classes_fields[$field['class']]['user_field'] : '' );
+      if (!empty($board_config[$see_field.'_over'])) { 
       	$viewed_by = $board_config[$see_field]; 
      	} else { 
-      	$viewed_by = $view_userdata[$see_field]; 
+      	$viewed_by = ( isset($view_userdata[$see_field]) ? $view_userdata[$see_field] : NULL ); 
       } 
     } else { 
     	$viewed_by = YES; 
@@ -488,7 +486,7 @@ foreach ($mods[$menu_name]['data'][$mod_name]['data'][$sub_name]['data'] as $fie
 				}
 				break;
 			case YES:
-				if ($user_field == 'user_email' && $board_config['board_email_form']){
+				if (!empty($user_field) && $user_field == 'user_email' && $board_config['board_email_form']){
 					// special case for email via board... 
 					$viewed = $lang['Visible_board_email_all'];
 				} else {
@@ -508,13 +506,13 @@ foreach ($mods[$menu_name]['data'][$mod_name]['data'][$sub_name]['data'] as $fie
 	}
 	// dump to template
 	$inputstyle = 'field';
-	if($field['inputstyle']){
+	if(!empty($field['inputstyle'])){
 		$inputstyle = $field['inputstyle'];
 	}
 	$template->assign_block_vars($inputstyle, array(
 		'L_NAME'	=> mods_settings_get_lang($field['lang_key']),
 		'L_EXPLAIN'	=> (!empty($field['explain']) ? '<br />' . mods_settings_get_lang($field['explain']) : '').$viewed,
-		'INPUT'		=> $input.($field['required'] ? $lang['Required_field'] : ''),
+		'INPUT'		=> $input.(!empty($field['required']) ? $lang['Required_field'] : ''),
 		'OVERRIDE'	=> $override,
 		)
 	);

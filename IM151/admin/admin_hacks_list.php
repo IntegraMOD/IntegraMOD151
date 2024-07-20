@@ -223,13 +223,9 @@ switch($mode)
 	}
 	case 'add':
 	{
-		if ($mode != 'edit')
-		{
 			$template->assign_vars(array(
-			'S_HIDDEN' => 'add_id_' . $row['hack_id'],
+			'S_HIDDEN' => 'add_id_' ,
 			'S_HACK_HIDE_NO' => 'checked="checked"'));
-		}
-		
 		$template->set_filenames(array('body' => 'admin/admin_hacks_list_add.tpl'));
 		break;
 	}
@@ -243,7 +239,7 @@ switch($mode)
 		{
 			message_die(GENERAL_ERROR, $lang['Error_Hacks_List_Table'], '', __LINE__, __FILE__, $sql);
 		}
-		
+
 		$i = 0;
 		while ($row = $db->sql_fetchrow($result))
 		{
@@ -257,7 +253,7 @@ switch($mode)
 			'HACK_VERSION' => ($row['hack_version'] != '') ? ' v' . stripslashes($row['hack_version']) : '',
 			'S_ACTION_EDIT' => '<a href="' . append_sid(basename(__FILE__) . '?mode=edit&hack_id=' . $row['hack_id']) . '">' . $lang['Edit'] . '</a>',
 			'HACK_DISPLAY' => $lang[$row['hack_hide']],
-			'ADD_DATE' => create_date($lang['DATE_FORMAT'], $row['log_time'], $board_config['board_timezone'])));
+			'ADD_DATE' => create_date($lang['DATE_FORMAT'], $row['hack_file_mtime'], $board_config['board_timezone'])));
 		}
 		
 		if ($i == 0 || !isset($i))

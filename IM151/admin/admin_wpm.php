@@ -31,7 +31,7 @@ require("pagestart.$phpEx");
 include($phpbb_root_path . 'language/lang_' . $board_config['default_lang'] . '/lang_admin_wpm.' . $phpEx);
 
 
-if( $_POST['mode'] == 'update' )
+if( !empty($_POST['mode']) && $_POST['mode'] == 'update' )
 {
 
 	$vars = array('active_wpm');

@@ -160,9 +160,8 @@ function qbar_sub_template_select($style, $select)
 	if (empty($sub_templates)) return $res;
 
 	// get each sub-templates
-	@reset($sub_templates);
 	$subtpl = array();
-	while (list($key, $value) = each($sub_templates))
+	foreach ($sub_templates as $key => $value)
 	{
 		if (!in_array($value['name'], $subtpl))
 		{
@@ -239,9 +238,8 @@ function qbar_fix_sub_template($style, $sub_template)
 	if (empty($sub_templates)) return $res;
 
 	// get each sub-templates
-	@reset($sub_templates);
 	$subtpl = array();
-	while (list($key, $value) = each($sub_templates))
+	foreach ($sub_templates as $key => $value)
 	{
 		if (!in_array($value['name'], $subtpl))
 		{
@@ -278,8 +276,7 @@ function qbar_get_image_style($key, $row, $sub_template)
 			$current_template_path = 'templates/' . $row['style_name'];
 			@include($phpbb_root_path . './' . $current_template_path . '/' . $row['style_name'] . '.cfg');
 			$img_lang = ( file_exists($phpbb_root_path . './' . $current_template_path . '/images/lang_' . $board_config['default_lang']) ) ? $board_config['default_lang'] : 'english';
-			@reset($images);
-			while( list($key, $value) = @each($images) )
+			foreach ($images as $key => $value)
 			{
 				if ( !is_array($value) )
 				{
@@ -293,12 +290,13 @@ function qbar_get_image_style($key, $row, $sub_template)
 			if (count($sub_templates) > 0)
 			{
 				$found = false;
-				while ((list($key, $data) = each($sub_templates)) && !$found)
+				foreach ($sub_templates as $key => $data)
 				{
 					$found = ($data['name'] == $sub_template);
 					if ($found)
 					{
 						$fid = $key;
+						break;
 					}
 				}
 				if ($found)
@@ -307,8 +305,7 @@ function qbar_get_image_style($key, $row, $sub_template)
 					$current_template_path = 'templates/' . $row['style_name'] . '/' . $sub_templates[$fid]['dir'];
 					@include($phpbb_root_path . './' . $current_template_path . '/' . $sub_templates[$fid]['imagefile']);
 					$img_lang = ( file_exists($phpbb_root_path . './' . $current_template_path . '/images/lang_' . $board_config['default_lang']) ) ? $board_config['default_lang'] : 'english';
-					@reset($images);
-					while( list($key, $value) = @each($images) )
+					foreach ($images as $key => $value)
 					{
 						if ( !is_array($value) )
 						{
@@ -428,7 +425,7 @@ function qbar_get_tree_options($select='')
 	$res = '';
 
 	// is categories hierarchy v 2 installed ?
-	$cat_hierarchy = function_exists(get_auth_keys);
+	$cat_hierarchy = function_exists('get_auth_keys');
 
 	if (!$cat_hierarchy)
 	{
@@ -455,18 +452,16 @@ function qbar_sort()
 {
 	global $qbar_maps;
 
-	@reset($qbar_maps);
 	$qbars_order = array();
 	$qbars_names = array();
-	while ( list($qbar_name, $qbar_data) = @each($qbar_maps) )
+	foreach ($qbar_maps as $qbar_name => $qbar_data)
 	{
 		$qbars_order[] = $qbar_data['order'];
 		$qbars_names[] = $qbar_name;
 
-		@reset($qbar_data['fields']);
 		$fields_order = array();
 		$fields_names = array();
-		while (list($field_name, $field_data) = @each($qbar_data['fields']))
+		foreach ($qbar_data['fields'] as $field_name => $field_data)
 		{
 			$fields_order[] = $field_data['order'];
 			$fields_names[] = $field_name;
@@ -529,8 +524,7 @@ function qbar_write()
 	);
 
 	// process qbars
-	@reset($qbar_maps);
-	while ( list($qname, $qdata) = @each($qbar_maps))
+	foreach ($qbar_maps as $qname => $qdata)
 	{
 		if ($qname != 'default_tree')
 		{
@@ -546,8 +540,7 @@ function qbar_write()
 			);
 
 			// process fields
-			@reset($qdata['fields']);
-			while ( list($fname, $fdata) = @each($qdata['fields']))
+			foreach ($qdata['fields'] as $fname => $fdata)
 			{
 				$template->assign_block_vars('_outfile_qbar.fields', array(
 					'NAME'		=> alpha($fname),
@@ -555,12 +548,11 @@ function qbar_write()
 				);
 
 				// dump values
-				reset($map_field);
-				while ( list($key, $type) = each($map_field) )
+				foreach ($map_field as $key => $type)
 				{
-					$val = $fdata[$key];
-					if (!empty($val))
+					if (!empty($fdata[$key]))
 					{
+						$val = $fdata[$key];
 						switch ($type)
 						{
 							case 'alpha'	: $val = alpha($val); break;
@@ -597,7 +589,6 @@ function qbar_write()
 	$f = @fopen($filename, 'w' );
 	$texte  = "<?php\n$res\n?>";
 	@fputs( $f, $texte );
-	@ftruncate( $f );
 	@fclose( $f );
 }
 

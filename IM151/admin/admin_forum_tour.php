@@ -99,7 +99,7 @@ function reorder_pages()
 $page_subject = '';
 $page_text = '';
 $page_bbcode_uid = '';
-$page_sort = '';
+$page_sort = [];
 
 $page_title =  $lang['Forum_tour'];
 
@@ -123,7 +123,7 @@ switch ( $mode  )
 	case 'submit':
 		$subject = stripslashes(trim($_POST['subject']));
 		$message = stripslashes(trim($_POST['message']));
-		$page_access = intval($_POST['page_access']);
+		$page_access = isset($_POST['page_access']) ? intval($_POST['page_access']) : 0;
 
 		$error = FALSE;
 		$error_msg = '';
@@ -160,7 +160,7 @@ switch ( $mode  )
 
 		if ( $id != '' )
 		{
-			$bbcode_uid = trim($_POST['bbcode_uid']);
+			$bbcode_uid = !empty($_POST['bbcode_uid']) ? trim($_POST['bbcode_uid']) : '';
 			$message = make_clickable($message);
 			$message = prepare_message(trim($message), 1, 1, 1, $bbcode_uid);
 
@@ -261,8 +261,7 @@ switch ( $mode  )
 		$page_access = '';
 		$access = '';
 
-		if ( $id != 0 )
-
+		if ( !empty($id) )
 		{
 			$sql = "SELECT * FROM ". FORUM_TOUR_TABLE ."
 				WHERE page_id = $id";
