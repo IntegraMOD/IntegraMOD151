@@ -100,8 +100,8 @@ $display_links_logo_yes = ( $new['display_links_logo'] ) ? "checked=\"checked\""
 $display_links_logo_no = ( !$new['display_links_logo'] ) ? "checked=\"checked\"" : "";
 $email_yes = ( $new['email_notify'] ) ? "checked=\"checked\"" : "";
 $email_no = ( !$new['email_notify'] ) ? "checked=\"checked\"" : "";
-$pm_yes = ( $new['pm_notify'] ) ? "checked=\"checked\"" : "";
-$pm_no = ( !$new['pm_notify'] ) ? "checked=\"checked\"" : "";
+$pm_yes = !empty( $new['pm_notify'] ) ? "checked=\"checked\"" : "";
+$pm_no = empty( $new['pm_notify'] ) ? "checked=\"checked\"" : "";
 
 $template->assign_vars(array(
 	'L_LINK_CONFIG' => $lang['Link_Config'],

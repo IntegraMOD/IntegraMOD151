@@ -21,8 +21,6 @@
 //
 // ********************************************************************************
 
-// Make phpBB files think that they are in the phpBB enviroment.
-define( 'IN_PHPBB', 1 );
 
 // Set up some constants.
 define( 'DEFAULT_NUM_ITEMS', 10 );

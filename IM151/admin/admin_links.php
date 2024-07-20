@@ -52,9 +52,9 @@ $var_cache = new Cache_Lite($options);
 $var_cache->clean('link');
 
 // Check link_id
-$link_id = trim($_GET['link_id']);
-$mode = trim($_GET['mode']); 
-$action = trim($_GET['action']); 
+$link_id = isset($_GET['link_id']) ? trim($_GET['link_id']) : '';
+$mode = isset($_GET['mode']) ? trim($_GET['mode']) : '';
+$action = isset($_GET['action']) ? trim($_GET['action']) : ''; 
 //
 // Set template
 //
@@ -105,6 +105,7 @@ switch ($mode)
 {
 	case 'add':
 		// Link categories dropdown list
+		$link_cat_option = '';
 		foreach($link_categories as $cat_id => $cat_title)
 		{
 			$link_cat_option .= "<option value=\"$cat_id\">$cat_title</option>";
@@ -301,7 +302,7 @@ switch ($mode)
 		switch ($action)
 		{
 			case 'add':
-				if($link_title && $link_desc && $link_category && $link_url)
+				if($link_title && $link_category && $link_url)
 				{
 					$sql = "INSERT INTO " . LINKS_TABLE . " (link_title, link_desc, link_category, link_url, link_logo_src, link_joined, link_active, user_id , user_ip)
 						VALUES ('$link_title', '$link_desc', '$link_category', '$link_url', '$link_logo_src', '$link_joined', '$link_active', '$user_id ', '$user_ip')";
@@ -322,7 +323,7 @@ switch ($mode)
 				}
 				break;
 			case 'modify':
-				if($link_id && $link_title && $link_desc && $link_category && $link_url)
+				if($link_id && $link_title && $link_category && $link_url)
 				{
 
 					$sql = "UPDATE " . LINKS_TABLE . " SET link_title = '$link_title', link_desc = '$link_desc', link_url = '$link_url',
@@ -366,9 +367,9 @@ switch ($mode)
 				break;
 		} // Close Update Switch
 
-		if(!$action_success)
+		if(empty($action_success))
 		{
-			$message .= '<br /><br />' . sprintf($lang['Click_return_lastpage'], '<a href="' . $HTTP_REFERER . '">', '</a>');
+			$message .= '<br /><br />' . sprintf($lang['Click_return_lastpage'], '<a href="' . $_SERVER['HTTP_REFERER'] . '">', '</a>');
 		}
 
 		$message .= '<br /><br />' . sprintf($lang['Click_return_admin_links'], '<a href="' . append_sid("admin_links.$phpEx?mode=view") . '">', '</a>');

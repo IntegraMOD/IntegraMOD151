@@ -196,7 +196,7 @@ if( !isset($_POST['mode']) )
 				message_die(GENERAL_ERROR, 'The requested category is not existed');
 			}
 
-			$select_to = '<select name="target"><option value="0">'. $lang['Delete_all_links'] .'</option>';
+			$select_to = '<select name="target"><option value="0">'. $lang['Delete_all'] .'</option>';
 			for ($i = 0; $i < count($catrow); $i++)
 			{
 				$select_to .= '<option value="'. $catrow[$i]['cat_id'] .'">'. $catrow[$i]['cat_title'] .'</option>';
@@ -329,7 +329,7 @@ else
 	else if( $_POST['mode'] == 'delete' )
 	{
 		$cat_id = intval($_GET['cat_id']);
-		$target = intval($_POST['target']);
+		$target = isset($_POST['target']) ? intval($_POST['target']) : NULL;
 
 		if( $target == 0 ) // Delete All
 		{

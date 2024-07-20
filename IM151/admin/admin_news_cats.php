@@ -55,6 +55,8 @@ else
   $mode = "";
 }
 
+$s_hidden_fields = '';
+
 $dir = @opendir($phpbb_root_path . $board_config['news_path'] );
 
 if( !$dir )
@@ -68,7 +70,7 @@ while($file = @readdir($dir))
   {
     $img_size = @getimagesize($phpbb_root_path . $board_config['news_path'] . '/' . $file);
 
-    if( $img_size[0] && $img_size[1] )
+    if( $img_size && $img_size[0] && $img_size[1] )
     {
       $category_images[] = $file;
     }

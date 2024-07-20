@@ -54,7 +54,7 @@ require('pagestart.' . $phpEx);
 	$mode = "";
 		}
 		
-	$update = $_POST['update'];
+	$update = ( isset($_POST['update']) ? $_POST['update'] : NULL );
 	$start 	= ( isset($_GET['start']) ) ? intval($_GET['start']) : 0;		
 	$limit 	= "50";
 		
@@ -71,7 +71,7 @@ require('pagestart.' . $phpEx);
 	echo "</table>"; 
 	echo "<br><br>";
 	$query 		= $_POST['query'];
-	$wildcard 	= $_POST['wildcard'];
+	$wildcard 	= ( isset($_POST['wildcard']) ? $_POST['wildcard'] : '' ) ;
 	$type 		= $_POST['select_search'];
 	
 	if($wildcard == "1")
@@ -524,12 +524,13 @@ else
 	echo "		</td>";			
 	echo "	</tr>";
 				
-	$q1 = "SELECT *, MAX(time) AS newest
-		   FROM ". $table_prefix ."ip_tracking
-		   GROUP BY username
+	$q1 = "SELECT it.*, it.time as newest
+		   FROM ". $table_prefix ."ip_tracking it
+			 WHERE time = (SELECT MAX(time) FROM {$table_prefix}ip_tracking it2 where it.username = it2.username)
 		   ORDER BY time DESC
 		   LIMIT $start, $limit";
-	$r1	= $db -> sql_query($q1) or die("q1: Error Retrieving Ip Data.".mysql_error());
+	$r1	= $db -> sql_query($q1) or 
+		message_die(GENERAL_ERROR, 'Couldn\'t retrieve IP data', '', __LINE__, __FILE__, $q1);
 	while($row1	= $db -> sql_fetchrow($r1))
 		{
 	$view_ip			= $row1['ip'];

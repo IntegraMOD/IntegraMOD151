@@ -1216,7 +1216,7 @@ function encode_ip($dotquad_ip)
 
 function decode_ip($int_ip)
 {
-	if ($int_ip == "0")
+	if ($int_ip == "0" || $int_ip == "")
 	{ /* V: TODO ipv6 */
 		return "";
 	}

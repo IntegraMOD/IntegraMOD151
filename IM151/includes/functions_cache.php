@@ -232,12 +232,12 @@ function cache_tree_output()
 		$s_user_ids = empty($data['user_id']) ? '' : implode(', ', $data['user_id']);
 		$s_group_ids = empty($data['group_id']) ? '' : implode(', ', $data['group_id']);
 		$s_usernames = '';
-		for ( $j = 0; $j < count($data['username']); $j++ )
+		for ( $j = 0; isset($data['username']) && $j < count($data['username']); $j++ )
 		{
 			$s_usernames .= ( empty($s_usernames) ? '' : ', ' ) . sprintf("'%s'", str_replace("'", "\'", $data['username'][$j]));
 		}
 		$s_group_names = '';
-		for ( $j = 0; $j < count($data['group_name']); $j++ )
+		for ( $j = 0; isset($data['group_name']) && $j < count($data['group_name']); $j++ )
 		{
 			$s_group_names .= ( empty($s_group_names) ? '' : ', ' ) . sprintf("'%s'", str_replace("'", "\'", $data['group_name'][$j]));
 		}
