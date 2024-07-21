@@ -80,7 +80,7 @@ if( !isset($_POST['mode']) )
 			$parent = $cat_id;
 		}
 
-		if (!isset($album_cat_tree['keys'][$parent]))
+		if (!isset($parent) || !isset($album_cat_tree['keys'][$parent]))
 		{
 			$parent = ALBUM_ROOT_CATEGORY;
 		}
@@ -214,6 +214,7 @@ if( !isset($_POST['mode']) )
 				message_die(GENERAL_ERROR, 'Could not query Album Categories information', '', __LINE__, __FILE__, $sql);
 			}
 
+			$catrow = [];
 			$cat_found = false;
 			while( $row = $db->sql_fetchrow($result) )
 			{
@@ -234,7 +235,7 @@ if( !isset($_POST['mode']) )
 
 			album_read_tree();
 			$select_to = '<select name="target">';
-			$select_to .= album_get_tree_option($catrow['cat_parent_id'], ALBUM_AUTH_VIEW, ALBUM_SELECTBOX_ALL);
+			$select_to .= album_get_tree_option(( isset($thiscat['cat_parent_id']) ? $thiscat['cat_parent_id'] : 0 ), ALBUM_AUTH_VIEW, ALBUM_SELECTBOX_ALL);
 			$select_to .= '</select>';
 
 			$template->set_filenames(array(
@@ -273,9 +274,12 @@ else
 {
 	if( $_POST['mode'] == 'new' )
 	{
-		if ( is_array($_POST['addcategory']))
+		if ( isset($_POST['addcategory']) && is_array($_POST['addcategory']))
 		{
-			list($cat_id) = each($_POST['addcategory']);
+			foreach ($_POST['addcategory'] as $cat_id => $dummy)
+			{
+				break; // Just populate $cat_id
+			}
 			$cat_title = stripslashes($_POST['name'][$cat_id]);
 			$cat_parent = $cat_id;
 			$cat_id = -1;
@@ -284,7 +288,7 @@ else
 		if( !isset($_POST['cat_title']) )
 		{
 			album_read_tree();
-			$s_album_cat_list = album_get_tree_option($cat_parent, ALBUM_AUTH_VIEW, ALBUM_SELECTBOX_INCLUDE_ALL);
+			$s_album_cat_list = album_get_tree_option($cat_parent, ALBUM_AUTH_VIEW, ALBUM_SELECTBOX_INCLUDE_ALL | ALBUM_SELECTBOX_PUBLIC_HEADER);
 
 			$template->set_filenames(array(
 				'body' => 'admin/album_cat_new_body.tpl')
@@ -351,7 +355,7 @@ else
 			$edit_level = intval($_POST['cat_edit_level']);
 			$delete_level = intval($_POST['cat_delete_level']);
 			$cat_approval = intval($_POST['cat_approval']);
-			$cat_parent = ($_POST['cat_parent_id'] == ALBUM_ROOT_CATEGORY) ? 0 : intval($_POST['cat_parent_id']);
+			$cat_parent = empty($_POST['cat_parent_id']) || ($_POST['cat_parent_id'] == ALBUM_ROOT_CATEGORY) ? 0 : intval($_POST['cat_parent_id']);
 			$cat_parent = ($cat_parent < 0) ? 0 : $cat_parent;
 
 			// Get the last ordered category
@@ -363,7 +367,7 @@ else
 				message_die(GENERAL_ERROR, 'Could not query Album Categories information', '', __LINE__, __FILE__, $sql);
 			}
 			$row = $db->sql_fetchrow($result);
-			$last_order = $row['cat_order'];
+			$last_order = isset($row['cat_order']) ? $row['cat_order'] : 0;
 			$cat_order = $last_order + 10;
 
 			// Here we insert a new row into the db

@@ -28,8 +28,8 @@ if ( !defined( 'IN_PORTAL' ) )
 	die( "Hacking attempt" );
 }
 
-$category_id = ( isset( $_GET['cat'] ) ) ? intval ( $_GET['cat'] ) : intval ( $_POST['cat'] );
-$article_id = ( isset( $_GET['k'] ) ) ? intval ( $_GET['k'] ) : intval ( $_POST['k'] ); 
+$category_id = ( isset( $_GET['cat'] ) ) ? intval ( $_GET['cat'] ) : ( isset($_POST['cat']) ? intval ( $_POST['cat'] ) : 0 );
+$article_id = ( isset( $_GET['k'] ) ) ? intval ( $_GET['k'] ) : ( isset($_POST['k']) ? intval ( $_POST['k'] ) : 0 ); 
 
 if ( empty( $category_id ) )
 {
@@ -112,7 +112,7 @@ if ( $submit )
 	$author_id = $userdata['user_id'] > 0 ? intval ( $userdata['user_id'] ) : '-1';
 	$type_id = intval ( $_POST['type_id'] );
 	
-	$username = $_POST['username'];
+	$username = ( isset($_POST['username']) ? $_POST['username'] : '' );
 	// Check username
 	if (!empty($username))
 	{
@@ -361,13 +361,13 @@ if ( $kb_post_mode == 'edit' )
 	$kb_row = $db->sql_fetchrow( $result );
 }
 	
-$kb_title = ( isset( $_POST['article_name'] ) ) ? htmlspecialchars( trim( stripslashes( $_POST['article_name'] ) ) ) : $kb_row['article_title'];
-$kb_desc = ( isset( $_POST['article_desc'] ) ) ? htmlspecialchars( trim( stripslashes( $_POST['article_desc'] ) ) ): $kb_row['article_description'];
-$kb_text = ( isset( $_POST['message'] ) ) ? htmlspecialchars( trim( stripslashes( $_POST['message'] ) ) ) : $kb_row['article_body'];
+$kb_title = ( isset( $_POST['article_name'] ) ) ? htmlspecialchars( trim( stripslashes( $_POST['article_name'] ) ) ) : ( isset($kb_row['article_title']) ? $kb_row['article_title'] : '' ) ;
+$kb_desc = ( isset( $_POST['article_desc'] ) ) ? htmlspecialchars( trim( stripslashes( $_POST['article_desc'] ) ) ): ( isset($kb_row['article_description']) ? $kb_row['article_description'] : '' ) ;
+$kb_text = ( isset( $_POST['message'] ) ) ? htmlspecialchars( trim( stripslashes( $_POST['message'] ) ) ) : ( isset($kb_row['article_body']) ? $kb_row['article_body'] : '' ) ;
 
-$type_id = ( isset( $_POST['type_id'] ) ) ? htmlspecialchars( trim( stripslashes( $_POST['type_id'] ) ) ) : $kb_row['article_type'];
-$bbcode_uid = ( isset( $_POST['bbcode_uid'] ) ) ? htmlspecialchars( trim( stripslashes( $_POST['bbcode_uid'] ) ) ) : $kb_row['bbcode_uid'];
-$username = ( isset( $_POST['username'] ) ) ? htmlspecialchars( trim( stripslashes( $_POST['username'] ) ) ) : $kb_row['username'];
+$type_id = ( isset( $_POST['type_id'] ) ) ? htmlspecialchars( trim( stripslashes( $_POST['type_id'] ) ) ) : ( isset($kb_row['article_type']) ? $kb_row['article_type'] : 0 ) ;
+$bbcode_uid = ( isset( $_POST['bbcode_uid'] ) ) ? htmlspecialchars( trim( stripslashes( $_POST['bbcode_uid'] ) ) ) : ( isset($kb_row['bbcode_uid']) ? $kb_row['bbcode_uid'] : '' ) ;
+$username = ( isset( $_POST['username'] ) ) ? htmlspecialchars( trim( stripslashes( $_POST['username'] ) ) ) : ( isset($kb_row['username']) ? $kb_row['username'] : '' ) ;
 
 if ( $preview )
 {
@@ -422,7 +422,7 @@ if ( $preview )
 
 if ( $kb_post_mode == 'edit' )
 {
-	$s_hidden_vars = '<input type="hidden" name="k" value="' . $article_id . '"><input type="hidden" name="bbcode_uid" value="' . $bbcode_uid . '"><input type="hidden" name="author_id" value="' . $author_id . '">';
+	$s_hidden_vars = '<input type="hidden" name="k" value="' . $article_id . '"><input type="hidden" name="bbcode_uid" value="' . $bbcode_uid . '"><input type="hidden" name="author_id" value="' . ( isset($author_id) ? $author_id : '' ) . '">';
 }
 else 
 {
@@ -590,7 +590,7 @@ $template->assign_vars( array(
 		'L_SUBTITLE_FORMAT' => $lang['L_Subtitle_Format'],
 		'L_SUBTITLE_FORMAT_EXPLAIN' => $lang['L_Subtitle_Format_explain'],
 		'L_SUBSUBTITLE_FORMAT' => $lang['L_Subsubtitle_Format'],
-		'L_SUBSUBTITLE_FORMAT_EXPLAIN' => $lang['L_Subsubtitle_Format_explain'],
+		'L_SUBSUBTITLE_FORMAT_EXPLAIN' => $lang['L_Subtitle_Format_explain'],
 
 		'L_OPTIONS' => $lang['L_Options'],
 		'L_FORMATTING' => $lang['L_Formatting'],

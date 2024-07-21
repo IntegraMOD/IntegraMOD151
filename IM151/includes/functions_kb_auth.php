@@ -172,7 +172,7 @@ function kb_auth( $type, $cat_id, $userdata, $f_access = '', $f_access_group = '
 			{
 				case AUTH_ALL:
 					$auth_user[$key] = true;
-					$auth_user[$key . '_type'] = $lang['Auth_Anonymous_users'];
+					$auth_user[$key . '_type'] = $lang['Auth_Anonymous_Users'];
 					break;
 	
 				case AUTH_REG:
@@ -180,10 +180,12 @@ function kb_auth( $type, $cat_id, $userdata, $f_access = '', $f_access_group = '
 					$auth_user[$key . '_type'] = $lang['Auth_Registered_Users'];
 					break;
 	
+					/* V: same comment
 				case AUTH_ANONYMOUS:
 					$auth_user[$key] = ( ! $userdata['session_logged_in'] ) ? true : 0;
 					$auth_user[$key . '_type'] = $lang['Auth_Anonymous_users'];
 					break;
+					 */
 	
 				case AUTH_ACL: // PRIVATE
 					$auth_user[$key] = ( $userdata['session_logged_in'] ) ? mx_is_group_member( $value_groups ) || $is_admin : 0;

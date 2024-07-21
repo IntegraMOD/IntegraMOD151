@@ -75,6 +75,7 @@ define('ALBUM_SELECTBOX_INCLUDE_ALL', 1);
 define('ALBUM_SELECTBOX_INCLUDE_ROOT', 2);
 define('ALBUM_SELECTBOX_DELETING', 4);
 define('ALBUM_SELECTBOX_ALL', 7); // all three options
+define('ALBUM_SELECTBOX_PUBLIC_HEADER', 8);
 define('ALBUM_VIEW_ALL', 'all');
 define('ALBUM_VIEW_ALL_PICS', 'allpics');
 define('ALBUM_VIEW_LIST', 'list');

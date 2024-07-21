@@ -390,7 +390,7 @@ class Stats_template {
 		for ($i = 0; $i < count($text_blocks); $i++)
 		{
 			$trim_check_text = trim($text_blocks[$i]);
-			$trim_check_block = trim($compile_blocks[$i]);
+			$trim_check_block = isset($compile_blocks[$i]) ? trim($compile_blocks[$i]) : '';
 			$template_php .= (!$do_not_echo) ? ((!empty($trim_check_text)) ? 'echo \'' . $text_blocks[$i] . '\';' : '') . ((!empty($compile_blocks[$i])) ? $compile_blocks[$i] : '') : ((!empty($trim_check_text)) ? $text_blocks[$i] . "\n" : '') . ((!empty($compile_blocks[$i])) ? $compile_blocks[$i] . "\n" : '');
 		}
 

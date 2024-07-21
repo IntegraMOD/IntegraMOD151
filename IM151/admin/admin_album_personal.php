@@ -53,6 +53,7 @@ if( !isset($_POST['submit']) )
 		message_die(GENERAL_ERROR, "Couldn't get group list", "", __LINE__, __FILE__, $sql);
 	}
 
+	$groupdata = [];
 	while( $row = $db->sql_fetchrow($result) )
 	{
 		$groupdata[] = $row;
@@ -135,7 +136,7 @@ if( !isset($_POST['submit']) )
 		'L_EDIT' => $lang['Edit'],
 		'L_DELETE' => $lang['Delete'],
 		'L_IS_MODERATOR' => $lang['Is_Moderator'],
-		'L_PRIVATE_ACCESS' => $lang['Private_access'],
+		'L_PRIVATE_ACCESS' => $lang['Private'] ,
 		'S_ALBUM_ACTION' => append_sid('admin_album_personal.'.$phpEx)
 		)
 	);
@@ -147,15 +148,20 @@ if( !isset($_POST['submit']) )
 else
 {
 	// Now we update the datatabase
-	$private_groups = @implode(',', $_POST['private']);
-
-	$view_groups = @implode(',', $_POST['view']);
-	$upload_groups = @implode(',', $_POST['upload']);
-	$rate_groups = @implode(',', $_POST['rate']);
-	$comment_groups = @implode(',', $_POST['comment']);
-	$edit_groups = @implode(',', $_POST['edit']);
-	$delete_groups = @implode(',', $_POST['delete']);
-	$moderator_groups = @implode(',', $_POST['moderator']);
+	$groupvars = ['private', 'view', 'upload', 'rate', 'comment', 'edit', 'delete', 'moderator'];
+	foreach ($groupvars as $groupvar)
+	{
+		$varname = $groupvar . '_groups';
+		$groupvalues = [];
+		if (isset($_POST[$groupvar]))
+		{
+			foreach ($_POST[$groupvar] as $groupvalue)
+			{
+				$groupvalues[] = intval($groupvalue);
+			}
+		}
+		${$varname} = implode(',', $groupvalues);
+	}
 	
 	// album config for non created personal galleries	
 	$sql = "UPDATE ". ALBUM_CONFIG_TABLE ."

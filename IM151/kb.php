@@ -22,133 +22,35 @@
 
 // Switch for making this run as a phpBB MOD or mxBB module
 
-if ( file_exists( './viewtopic.php' ) ) // -------------------------------------------- phpBB MOD MODE
-{
-	define( 'MXBB_MODULE', false ); 
-	define( 'IN_PHPBB', true );
-	define('CT_SECLEVEL', 'MEDIUM');
-	$ct_ignorepvar = array('helpbox');
-	define( 'IN_PORTAL', true );
-	
-	// When run as a phpBB mod these paths are identical ;)
-	$phpbb_root_path = $module_root_path = $mx_root_path = './';
-	
-	include( $phpbb_root_path . 'extension.inc' );
-	include( $phpbb_root_path . 'common.' . $phpEx );
-	
-	if (!defined('PAGE_KB')) define( 'PAGE_KB', -500 ); // If this id generates a conflict with other mods, change it ;)	
-	
-	// Start session management
-	
-	$userdata = session_pagestart( $user_ip, PAGE_KB );
-	init_userprefs( $userdata );
-	
-	// End session management
-	
-	include( $phpbb_root_path . 'includes/functions_post.' . $phpEx );
-	include( $phpbb_root_path . 'includes/kb_constants.' . $phpEx );
-	include( $phpbb_root_path . 'includes/functions_kb.' . $phpEx );
-	include( $phpbb_root_path . 'includes/functions_kb_auth.' . $phpEx );
-	include( $phpbb_root_path . 'includes/functions_kb_field.' . $phpEx );
-	include( $phpbb_root_path . 'includes/functions_kb_mx.' . $phpEx );
-	include_once( $phpbb_root_path . 'includes/bbcode.' . $phpEx );
-	include_once( $phpbb_root_path . 'includes/functions_search.' . $phpEx );	 
-}
-else // --------------------------------------------------------------------------------- mxBB Module MODE
-{
-	define( 'MXBB_MODULE', true ); 
-	
-	if ( !function_exists( 'read_block_config' ) )
-	{
-		define( 'IN_PORTAL', true );
-		$mx_root_path = './../../';
-		include_once( $mx_root_path . 'extension.inc' );
-		include_once( $mx_root_path . 'common.' . $phpEx ); 
-		
-		// Start session management
-		
-		$userdata = session_pagestart( $user_ip, PAGE_INDEX );
-		mx_init_userprefs( $userdata ); 
-		
-		// End session management
+define( 'MXBB_MODULE', false ); 
+define( 'IN_PHPBB', true );
+define('CT_SECLEVEL', 'MEDIUM');
+$ct_ignorepvar = array('helpbox', 'article_name', 'article_desc', 'message');
+define( 'IN_PORTAL', true );
 
-		define( 'MXBB_27x', file_exists( $mx_root_path . 'mx_login.php' ) );
-		
-		if ( !isset( $_GET['print'] ) )
-		{
-			include_once( $module_root_path . 'includes/kb_constants.' . $phpEx );
-			include_once( $module_root_path . 'includes/kb_pages.' . $phpEx );
+// When run as a phpBB mod these paths are identical ;)
+$phpbb_root_path = $module_root_path = $mx_root_path = './';
 
-			$start = ( isset( $_GET['start'] ) ) ? intval( $_GET['start'] ) : 0;
-			
-			$url = '';
-			if ( empty( $article_id ) )
-			{
-				$url = PORTAL_URL . 'index.php?page=' . $kb_pages . '&mode=cat&cat=' . $cat_id;
-			}
-			else if ( !empty( $article_id ) )
-			{
-				$url = PORTAL_URL . 'index.php?page=' . $kb_pages . '&mode=article&k=' . $article_id;
-			}	
-			
-			if ( !empty( $url ) && !$kb_error )
-			{
-				if ( !empty( $db ) )
-				{
-					$db->sql_close();
-				} 
-			
-				if ( @preg_match( '/Microsoft|WebSTAR|Xitami/', getenv( 'SERVER_SOFTWARE' ) ) )
-				{
-					header( 'Refresh: 0; URL=' . $url );
-					echo '<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">' . "\n" . '<html><head>' . "\n" . '<meta http-equiv="Content-Type" content="text/html; charset=utf-8
-">' . "\n" . '<meta http-equiv="refresh" content="0; url=' . $url . '">' . "\n" . '<title>Redirect</title>' . "\n" . '<script language="javascript" type="text/javascript">' . "\n" . '<!--' . "\n" . 'if( document.images ) {' . "\n" . "\t" . 'parent.location.replace("' . $url . '");' . "\n" . '} else {' . "\n" . "\t" . 'parent.location.href = "' . $url . '";' . "\n" . '}' . "\n" . '// -->' . "\n" . '</script>' . "\n" . '</head>' . "\n" . '<body>' . "\n" . '<div align="center">If your browser does not support meta redirection please click ' . '<a href="' . $url . '">HERE</a> to be redirected</div>' . "\n" . '</body></html>';
-					exit;
-				}
-				@header( 'Location: ' . $url );	
-			}
-			else 
-			{
-				if ( MXBB_27x )
-				{
-					mx_message_die(GENERAL_MESSAGE, 'This module does not support standalone usage. In the adminCP, add the kb block to a portal page.');
-				}	
-				else 
-				{			
-					die('no article, no redirect');	
-				}
-			}
-		}
-	}
-	else
-	{ 
-		define( 'MXBB_27x', file_exists( $mx_root_path . 'mx_login.php' ) );
+include( $phpbb_root_path . 'extension.inc' );
+include( $phpbb_root_path . 'common.' . $phpEx );
 
-		// Read block Configuration
-		
-		$block_config = read_block_config( $block_id );
-		$title = !empty( $block_config[$block_id]['block_title'] ) ? $block_config[$block_id]['block_title'] : $lang['KB_title'];
-		$desc = $block_config[$block_id]['block_desc'];
-		$block_size = ( isset( $block_size ) && !empty( $block_size ) ? $block_size : '100%' );
-	
-		$is_block = true;
-		global $images;
-	}	
-	
-	// Extract 'what posts to view info', the cool Array ;)
-	$kb_type_select_data = array();
-	$kb_type_select_temp = $block_config[$block_id][kb_type_select]['parameter_value'];
-	$kb_type_select_temp = stripslashes( $kb_type_select_temp );
-	$kb_type_select_data = eval( "return " . $kb_type_select_temp . ";" );
-	
-	include_once( $phpbb_root_path . 'includes/functions_post.' . $phpEx );
-	include( $module_root_path . 'includes/kb_constants.' . $phpEx );
-	include_once( $module_root_path . 'includes/functions_kb.' . $phpEx );
-	include_once( $module_root_path . 'includes/functions_kb_auth.' . $phpEx );
-	include_once( $module_root_path . 'includes/functions_kb_field.' . $phpEx );
-	include_once( $module_root_path . 'includes/functions_kb_mx.' . $phpEx );
-	include_once( $phpbb_root_path . 'includes/functions_search.' . $phpEx );	
-}
+if (!defined('PAGE_KB')) define( 'PAGE_KB', -500 ); // If this id generates a conflict with other mods, change it ;)	
+
+// Start session management
+
+$userdata = session_pagestart( $user_ip, PAGE_KB );
+init_userprefs( $userdata );
+
+// End session management
+
+include( $phpbb_root_path . 'includes/functions_post.' . $phpEx );
+include( $phpbb_root_path . 'includes/kb_constants.' . $phpEx );
+include( $phpbb_root_path . 'includes/functions_kb.' . $phpEx );
+include( $phpbb_root_path . 'includes/functions_kb_auth.' . $phpEx );
+include( $phpbb_root_path . 'includes/functions_kb_field.' . $phpEx );
+include( $phpbb_root_path . 'includes/functions_kb_mx.' . $phpEx );
+include_once( $phpbb_root_path . 'includes/bbcode.' . $phpEx );
+include_once( $phpbb_root_path . 'includes/functions_search.' . $phpEx );	 
 
 // -------------------------------------------------------------------------------------------------------------------------
 // -------------------------------------------------------------------------------------------------------------------------

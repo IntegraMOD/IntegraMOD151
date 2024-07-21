@@ -410,7 +410,7 @@ function is_in_filtermap($var){
 	global $user_maps;
 	global $filtermap;
 	// find all fields that are NOT in a particulary map
-	if(is_array($user_maps[$filtermap]['fields'][$var])){
+	if(isset($user_maps[$filtermap]['fields'][$var]) && is_array($user_maps[$filtermap]['fields'][$var])){
 		return 1;
 	} else return 0;
 }
@@ -532,7 +532,7 @@ function showfieldinfo(){
 		'L_FIELDNAME'				=> $lang['PCP_field_name'],
 		'FIELDNAME'					=> '<a href="'.wizurl($fieldsmode,'field='.$posted['field']).'">'.$posted['field'].'</a>',
 		'L_DESCRIPTION'			=> $lang['PCP_field_desc'],
-		'DESCRIPTION'				=> $lang[$langkey],
+		'DESCRIPTION'				=> ( isset($lang[$langkey]) ? $lang[$langkey] : '' ),
 		'L_PAGES'						=> $lang['Pages'],
 		//'PAGES'							=> $pages,
 		)
@@ -590,6 +590,7 @@ function set_demouserdata(){
 function get_all_maps_for_field($field){
 	global $user_maps;
 	global $filtermap;
+	$fieldmaps = [];
 	foreach ($user_maps as $map => $data)
 	{
 		$filtermap = $map;
@@ -620,7 +621,7 @@ function preview_input_field($field, $user_field){
 		case 'LIST_RADIO':
 			foreach ($field['values'] as $key => $val)
 			{
-				$selected = ($demouserdata[$user_field] == $val) ? ' checked="checked"' : '';
+				$selected = (isset($demouserdata[$user_field]) && $demouserdata[$user_field] == $val) ? ' checked="checked"' : '';
 				$l_key = mods_settings_get_lang($key);
 				$input .= '<input type="radio" name="' . $user_field . '" value="' . $val . '"' . $selected . ' />' . $l_key . '&nbsp;&nbsp;';
 			}
@@ -663,7 +664,7 @@ function preview_input_field($field, $user_field){
 			break;
 	}
 	// show who can see the info depending on class
-	if ($field['visibility']){
+	if (!empty($field['visibility'])){
 		if ($field['class'] != 'generic'){
 			$see_field = $classes_fields[$field['class']]['user_field'];
 			if($board_config[$see_field.'_over']){
@@ -704,13 +705,13 @@ function preview_input_field($field, $user_field){
 	}
 	// dump to template
 	$inputstyle = 'field';
-	if($field['inputstyle']){
+	if(!empty($field['inputstyle'])){
 		$inputstyle = $field['inputstyle'];
 	}
 	$template->assign_block_vars($inputstyle, array(
 		'L_NAME'	=> mods_settings_get_lang($field['lang_key']),
 		'L_EXPLAIN'	=> (!empty($field['explain']) ? '<br />' . mods_settings_get_lang($field['explain']) : '').$viewed,
-		'INPUT'		=> $input.($field['required'] ? $lang['Required_field'] : ''),
+		'INPUT'		=> $input.(!empty($field['required']) ? $lang['Required_field'] : ''),
 		)
 	);
 	return $inputstyle;
@@ -760,13 +761,14 @@ function build_classes_options($selected=''){
 function setMessage(){
 	global $lang, $template, $user_fields;
 	global $posted;
-	switch ($posted['message']){
+	$text = '';
+	switch (isset($posted['message']) ? $posted['message'] : -1){
 		case 1:
-			if(strlen($posted['map'])){
+			if(!empty($posted['map'])){
 				$text = sprintf($lang['Map_selected'],get_map_title($posted['map']));
-			} elseif(strlen($posted['new'])){
+			} elseif(!empty($posted['new'])){
 				$text = sprintf($lang['Newfield_selected'],$posted['newfield']);
-			} elseif(strlen($posted['field'])){
+			} elseif(!empty($posted['field'])){
 				$text = sprintf($lang['Field_selected'],$lang[$user_fields[$posted['field']]['lang_key']]);
 			} 
 			break;
@@ -1348,13 +1350,13 @@ function fields(){
 		'L_TITLE_EXPLAIN'		=> $lang['Wiz_fields_description'],
 		'L_SELECT_FIELD'		=> $lang['Select_field'],
 		'FIELDSELECT_NAME'	=> 'field',
-		'FIELDOPTIONS'			=> build_allfields_options('',$posted['field']),
-		'HIDDEN_FIELDS'			=> '<input type="hidden" name="orig_field" value="'.(strlen($posted[$new_name])?$posted['newfield']:$posted['field']).'">',
+		'FIELDOPTIONS'			=> build_allfields_options('', ( isset($posted['field']) ? $posted['field'] : NULL ) ),
+		'HIDDEN_FIELDS'			=> '<input type="hidden" name="orig_field" value="'.(!empty($posted[$new_name])? ( isset($posted['newfield']) ? $posted['newfield'] : '' ) : ( isset($posted['field']) ? $posted['field'] : '' ) ).'">',
 		'L_SELECT'					=> $lang['Select'],
 		'SELECT_NAME'				=> $select_name,
 		'L_SELECT_NEW_FIELD'=> $lang['Select_new_field'],
 		'NEWSELECT_NAME'		=> 'newfield',
-		'NEWOPTIONS'				=> build_newfield_options($posted['field']),
+		'NEWOPTIONS'				=> build_newfield_options(( isset($posted['field']) ? $posted['field'] : NULL )),
 		'NEW_NAME'					=> $new_name,
 		'S_ACTION'					=> wizurl($nextmode),
 		'HELP'							=> $lang['Wiz_fields_explain'],
@@ -1365,7 +1367,7 @@ function fields(){
 		'GOTO_NAME'					=> $goto_name,
 		)
 	);
-	if($posted['field']){
+	if(!empty($posted['field'])){
 		$template->assign_block_vars('selected', array());
 	}
 	setMessage();
@@ -1374,12 +1376,12 @@ function fields(){
 	);
 	foreach ($baseparams as $idx => $key)
 	{
-		$value = $user_fields[$posted['field']][$key];
+		$value = ( isset($posted['field']) && isset($user_fields[$posted['field']][$key]) ? $user_fields[$posted['field']][$key] : '' );
 		if(in_array($key,$fieldkeyrequired)){
 			$dbvalue = $lang['Required_field'];
 		} else $dbvalue = '';
 		if($key == 'type'){
-			$sql = "SHOW FIELDS FROM ".USERS_TABLE." LIKE '".$posted['field']."'";
+			$sql = "SHOW FIELDS FROM ".USERS_TABLE." LIKE '". ( isset($posted['field']) ? $posted['field'] : '%' ) ."'";
 			if ( !$result = $db->sql_query($sql) ) {
 				message_die(GENERAL_ERROR, 'Could not get user table definition', '', __LINE__, __FILE__, $sql);	
 			}
@@ -1387,7 +1389,7 @@ function fields(){
 				$dbvalue .= ' <font color=green>'.$row['Type'].'</font>';
 			}
 		}
-		switch($field_def[$key]['type']){
+		switch(isset($field_def[$key]['type']) ? $field_def[$key]['type'] : ''){
 			case 'LIST_TYPE':
 				$input = pcp_input_type($key,$value);
 				// correct the select
@@ -1430,7 +1432,7 @@ function build_newfield_options($selected=''){
 		message_die(GENERAL_ERROR, 'Could not get user table definition', '', __LINE__, __FILE__, $sql);	
 	}
 	while ($row = $db->sql_fetchrow($result) ){
-		if(!is_array($user_fields[$row['Field']])){
+		if(!isset($user_fields[$row['Field']]) || !is_array($user_fields[$row['Field']])){
 			if($row['Field'] == $selected){
 				$extra = "selected";
 			} else $extra = "";

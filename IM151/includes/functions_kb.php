@@ -111,7 +111,7 @@ $sql = "SELECT *
 		}
 		else 
 		{ 
-			$name = $row['username'];
+			$name = ( isset($row['username']) ? $row['username'] : '' ) ;
 		}
 	}
 	else
@@ -195,7 +195,8 @@ function get_kb_nav( $parent )
 	$path_kb_array2 = array_reverse( $path_kb_array );
 
 	$i = 0;
-	while ( $i <= count( $path_kb_array2 ) )
+	$path_kb = '';
+	while ( $i < count( $path_kb_array2 ) )
 	{
 		$path_kb .= $path_kb_array2[$i];
 		$i++;
@@ -225,7 +226,7 @@ function get_kb_articles( $id = false, $approve = false, $block_name = null, $st
 	// $sql .= " tt.topic_id = t.topic_id AND";
 	$sql .= " u.user_id = t.article_author_id";
 
-	if ( !$kb_is_auth['auth_mod'] )
+	if ( empty($kb_is_auth['auth_mod']) )
 	{
 		$sql .= " AND t.approved = " . $approve;
 	} 
@@ -1089,10 +1090,10 @@ function get_kb_cat_subs_admin( $parent, $select = 1, $indent = 0, $ss  = 0)
 		$category2 = '<a href="' . $temp_url . '" class="gen">' . $category_name2 . '</a>';
 
 		$temp_url = append_sid($module_root_path . "admin/admin_kb_cat.$phpEx?mode=edit&amp;cat=$category_id2");
-		$edit2 = '<a class="icon_edit" href="' . $temp_url . '"></a>';
+		$edit2 = '<a class="icon_edit" href="' . $temp_url . '">' . $lang['edit_lofi'] . '</a>';
 
 		$temp_url = append_sid($module_root_path . "admin/admin_kb_cat.$phpEx?mode=delete&amp;cat=$category_id2");
-		$delete2 = '<a class="icon_delete" href="' . $temp_url . '" class="gen"></a>';
+		$delete2 = '<a class="icon_delete" href="' . $temp_url . '" class="gen">delete</a>';
 
 		$temp_url = append_sid($module_root_path . "admin/admin_kb_cat.$phpEx?mode=up&amp;cat=$category_id2");
 		$up2 = '<a href="' . $temp_url . '" class="gen">' . $lang['Move_up'] . '</a>';
@@ -1163,7 +1164,7 @@ function get_kb_cat_subs_list( $auth_type, $parent, $select = 1, $selected = fal
 			$status = '';
 		}
 		
-		if ( ( ns_auth_cat( $category2[$idfield] ) && $kb_is_auth_all[$category2[$idfield]][$auth_type] ) || $is_admin)
+		if ( ( ns_auth_cat( $category2[$idfield] ) && $auth_type && $kb_is_auth_all[$category2[$idfield]][$auth_type] ) || $is_admin)
 		{
 			$catlist .= "<option value=\"$category2[$idfield]\" $status>" . $indent . '--&raquo;'. $category2[$namefield] . "</option>\n";
 			$temp = $indent . '&nbsp;&nbsp;';
@@ -1225,7 +1226,7 @@ function get_kb_cat_list( $auth_type, $id = 0, $select = 1, $selected = false, $
 				$status = '';
 			}
 			
-			if ( ( ns_auth_cat( $category[$idfield] ) && $kb_is_auth_all[$category[$idfield]][$auth_type] ) || $is_admin)
+			if ( ( ns_auth_cat( $category[$idfield] ) && $auth_type && isset($category[$idfield]) && $kb_is_auth_all[$category[$idfield]][$auth_type] ) || $is_admin)
 			{
 				$catlist .= "<option value=\"$category[$idfield]\" $status>" . $category[$namefield] . "</option>\n";
 		
@@ -1478,7 +1479,7 @@ function kb_insert_post(
 	}
 	$row = $db->sql_fetchrow( $result );
 	
-	$orig_post_id = $row[0];
+	$orig_post_id = isset($row[0]) ? $row[0] : 0;
 	
 	$sql = "UPDATE " . TOPICS_TABLE . " SET 
                 topic_title = '$subject'
@@ -1576,6 +1577,7 @@ function this_kb_mxurl_search( $args = '', $force_standalone_mode = false )
 function get_kb_comments( $topic_id = '', $start = -1, $show_num_comments = 0 )
 {
 	global $db, $board_config, $template, $phpbb_root_path, $mx_root_path, $module_root_path, $phpEx, $is_block, $page_id;
+	global $post_time_order, $lang;
 
 	if ( $topic_id == '' )
 	{
@@ -1651,6 +1653,7 @@ function get_kb_comments( $topic_id = '', $start = -1, $show_num_comments = 0 )
 
 		$message = $postrow[$i]['post_text'];
 		$bbcode_uid = $postrow[$i]['bbcode_uid']; 
+		$user_sig = $postrow[$i]['user_sig'];
 		
 		// If the board has HTML off but the post has HTML
 		// on then we process it, else leave it alone

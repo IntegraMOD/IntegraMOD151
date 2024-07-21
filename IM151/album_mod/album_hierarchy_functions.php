@@ -109,7 +109,7 @@ function album_display_admin_index($cur = ALBUM_ROOT_CATEGORY, $level = 0, $max_
 		);
 
 		// get user name of the root category
-		$username = album_get_user_name( $album_data['data'][0]['cat_user_id'] ); //$album_data['data'][0]['username'];
+		$username = !empty($album_data['data']) ? album_get_user_name( $album_data['data'][0]['cat_user_id'] ) : ''; //$album_data['data'][0]['username'];
 
 		if (defined('IN_ADMIN'))
 		{
@@ -184,7 +184,7 @@ function album_display_admin_index($cur = ALBUM_ROOT_CATEGORY, $level = 0, $max_
 	} // if we are above the root level
 
 	// display the sub-level
-	for ($i = 0; $i < count_safe($album_data['sub'][$cur]); $i++)
+	for ($i = 0; isset($album_data['sub'][$cur]) && $i < count($album_data['sub'][$cur]); $i++)
 	{
 		$column_offset = album_display_admin_index($album_data['sub'][$cur][$i], $level + 1, $max_level, $column_offset);
 	}
@@ -879,11 +879,12 @@ function album_get_tree_option($selected_cat_id = ALBUM_ROOT_CATEGORY, $auth_key
 	$all = checkFlag($options, ALBUM_SELECTBOX_INCLUDE_ALL);
 	$include_delete = checkFlag($options, ALBUM_SELECTBOX_DELETING);
 	$include_root = checkFlag($options, ALBUM_SELECTBOX_INCLUDE_ROOT);
+	$force_public_header = checkFlag($options, ALBUM_SELECTBOX_PUBLIC_HEADER);
 
 	//--------------------------------------------------------------------------
 	// check wheter the first gallery is a personal gallery or a public gallery
 	// -------------------------------------------------------------------------
-	$offset = ($album_data['personal'][$selected_cat_id] != 0) ? 1 : 0;
+	$offset = !empty($album_data['personal'][$selected_cat_id]) ? 1 : 0;
 	$user_root_id = album_get_personal_root_id($album_user_id);
 
 	$keys = array();
@@ -943,7 +944,7 @@ function album_get_tree_option($selected_cat_id = ALBUM_ROOT_CATEGORY, $auth_key
 		}
 	}
 
-	if (!empty($public_res))
+	if (!empty($public_res) || $force_public_header)
 	{
 		$public_res = sprintf('<option value="%d">%s</option><option value="%d">------------------------------</option>', ALBUM_JUMPBOX_PUBLIC_GALLERY, $lang['Public_Categories'], ALBUM_JUMPBOX_SEPERATOR) . $public_res;
 	}
@@ -1171,9 +1172,8 @@ function album_build_url_parameters($parameters)
 {
 	$url_prefix = '?';
 	$url_parameters = '';
-	reset($parameters);
 
-	while (list($key, $value) = each($parameters))
+	foreach ($parameters as $key => $value)
 	{
 		$url_parameters .= "$url_prefix$key=$value";
 		$url_prefix = '&';

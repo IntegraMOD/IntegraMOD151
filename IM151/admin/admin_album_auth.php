@@ -41,10 +41,22 @@ $album_root_path = $phpbb_root_path . 'album_mod/';
 require($album_root_path. 'album_common.'.$phpEx);
 $album_user_id = ALBUM_PUBLIC_GALLERY;
 
-if( !isset($_POST['submit']) )
+
+// Get info of this cat
+$cat_id = isset($_GET['cat_id']) ? intval($_GET['cat_id']) : ( isset($_POST['cat_id']) ? intval($_POST['cat_id']) : -1 );
+$sql = "SELECT cat_id, cat_title, cat_view_groups, cat_upload_groups, cat_rate_groups, cat_comment_groups, cat_edit_groups, cat_delete_groups, cat_moderator_groups
+		FROM ". ALBUM_CAT_TABLE ."
+		WHERE cat_id = '$cat_id'";
+if( !$result = $db->sql_query($sql) )
+{
+	message_die(GENERAL_ERROR, 'Could not get Category information', '', __LINE__, __FILE__, $sql);
+}
+
+$thiscat = $db->sql_fetchrow($result);
+if( !isset($_POST['submit']) || !$thiscat )
 {
 	album_read_tree();
-	$s_album_cat_list = album_get_tree_option(ALBUM_ROOT_CATEGORY, ALBUM_AUTH_VIEW, ALBUM_SELECTBOX_INCLUDE_ALL | ALBUM_SELECTBOX_INCLUDE_ROOT);
+	$s_album_cat_list = album_get_tree_option(ALBUM_ROOT_CATEGORY, ALBUM_AUTH_VIEW, ALBUM_SELECTBOX_INCLUDE_ALL | ALBUM_SELECTBOX_PUBLIC_HEADER);
 
 	$template->set_filenames(array(
 		'body' => 'admin/album_cat_select_body.tpl')
@@ -103,21 +115,11 @@ else
 			message_die(GENERAL_ERROR, 'Could not get group list', '', __LINE__, __FILE__, $sql);
 		}
 
+		$groupdata = [];
 		while( $row = $db->sql_fetchrow($result) )
 		{
 			$groupdata[] = $row;
 		}
-
-		// Get info of this cat
-		$sql = "SELECT cat_id, cat_title, cat_view_groups, cat_upload_groups, cat_rate_groups, cat_comment_groups, cat_edit_groups, cat_delete_groups, cat_moderator_groups
-				FROM ". ALBUM_CAT_TABLE ."
-				WHERE cat_id = '$cat_id'";
-		if( !$result = $db->sql_query($sql) )
-		{
-			message_die(GENERAL_ERROR, 'Could not get Category information', '', __LINE__, __FILE__, $sql);
-		}
-
-		$thiscat = $db->sql_fetchrow($result);
 
 		$view_groups = @explode(',', $thiscat['cat_view_groups']);
 		$upload_groups = @explode(',', $thiscat['cat_upload_groups']);
@@ -158,15 +160,21 @@ else
 	else
 	{
 		$cat_id = intval($_GET['cat_id']);
+		$groupvars = ['view', 'upload', 'rate', 'comment', 'edit', 'delete', 'moderator'];
+		foreach ($groupvars as $groupvar)
+		{
+			$varname = $groupvar . '_groups';
+			$groupvalues = [];
+			if (isset($_POST[$groupvar]))
+			{
+				foreach ($_POST[$groupvar] as $groupvalue)
+				{
+					$groupvalues[] = intval($groupvalue);
+				}
+			}
+			${$varname} = implode(',', $groupvalues);
+		}
 
-		$view_groups = @implode(',', $_POST['view']);
-		$upload_groups = @implode(',', $_POST['upload']);
-		$rate_groups = @implode(',', $_POST['rate']);
-		$comment_groups = @implode(',', $_POST['comment']);
-		$edit_groups = @implode(',', $_POST['edit']);
-		$delete_groups = @implode(',', $_POST['delete']);
-
-		$moderator_groups = @implode(',', $_POST['moderator']);
 
 		$sql = "UPDATE ". ALBUM_CAT_TABLE ."
 				SET cat_view_groups = '$view_groups', cat_upload_groups = '$upload_groups', cat_rate_groups = '$rate_groups', cat_comment_groups = '$comment_groups', cat_edit_groups = '$edit_groups', cat_delete_groups = '$delete_groups',	cat_moderator_groups = '$moderator_groups'

@@ -44,14 +44,14 @@ function album_reorder_cat($user_id = ALBUM_PUBLIC_GALLERY)
 {
 	global $album_data , $db;
 
-	if ( count($album_data['data']) == 0 )
+	if ( empty($album_data['data']) )
 	{
 		album_read_tree($user_id);
 	}
 
 	// update with new order
 	$order = 0;
-	for ($i = 0; $i < count($album_data['data']); $i++ )
+	for ($i = 0; isset($album_data['data']) && $i < count($album_data['data']); $i++ )
 	{
 		if ( !empty($album_data['id'][$i]) )
 		{

@@ -164,7 +164,7 @@ switch ( $action )
 
 	case 'delete':
 
-		if ( $_GET['c'] == "yes" )
+		if ( !empty($_GET['c']) && $_GET['c'] == "yes" )
 		{
 			$sql = "SELECT *  
 	 			FROM " . KB_ARTICLES_TABLE . "

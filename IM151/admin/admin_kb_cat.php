@@ -19,61 +19,29 @@
  *    (at your option) any later version.
  */
 
+if ( !empty( $setmodules ) )
+{
+	$file = basename( __FILE__ );
+	$module['KB_title']['Cat_man'] = $file;
+	return;
+}	
+
+
 define('CT_SECLEVEL', 'MEDIUM');
-$ct_ignorepvar = array('new_cat_name', 'catname');
-
-if ( file_exists( './../viewtopic.php' ) )
-{
-	define( 'IN_PHPBB', 1 );
-	define( 'IN_PORTAL', 1 );
-	define( 'MXBB_MODULE', false );
-	
-	if ( !empty( $setmodules ) )
-	{
-		$file = basename( __FILE__ );
-		$module['KB_title']['Cat_man'] = $file;
-		return;
-	}	
-	
-	$phpbb_root_path = $module_root_path = $mx_root_path = "./../";
-	require( $phpbb_root_path . 'extension.inc' );
-	require( './pagestart.' . $phpEx );
-	include( $phpbb_root_path . 'config.'.$phpEx );
-	include( $phpbb_root_path . 'includes/functions_admin.'.$phpEx );
-	include( $phpbb_root_path . 'includes/kb_constants.' . $phpEx );
-	include( $phpbb_root_path . 'includes/functions_kb.' . $phpEx );
-	include( $phpbb_root_path . 'includes/functions_kb_auth.' . $phpEx );	
-	include( $phpbb_root_path . 'includes/functions_kb_field.' . $phpEx );	
-	include( $phpbb_root_path . 'includes/functions_kb_mx.' . $phpEx );	
-	include( $phpbb_root_path . 'includes/functions_search.' . $phpEx );	
-}
-else 
-{
-	define( 'IN_PORTAL', 1 );
-	define( 'MXBB_MODULE', true );
-	
-	if ( !empty( $setmodules ) )
-	{
-		$file = basename( __FILE__ );
-		$module['KB_title']['Cat_man'] = 'modules/mx_kb/admin/' . $file;
-		return;
-	}	
-	
-	$mx_root_path = './../../../';
-	$module_root_path = "./../";
-
-	define( 'MXBB_27x', file_exists( $mx_root_path . 'mx_login.php' ) );
-	
-	require( $mx_root_path . 'extension.inc' );
-	require( $mx_root_path . '/admin/pagestart.' . $phpEx );
-	include( $module_root_path . 'includes/kb_constants.' . $phpEx );
-	include( $module_root_path . 'includes/functions_kb.' . $phpEx );
-	include( $module_root_path . 'includes/functions_kb_auth.' . $phpEx );
-	include( $module_root_path . 'includes/functions_kb_field.' . $phpEx );
-	include( $module_root_path . 'includes/functions_kb_mx.' . $phpEx );
-	include( $phpbb_root_path . 'includes/functions_search.' . $phpEx );
-	include_once( $mx_root_path . 'admin/page_header_admin.' . $phpEx );
-}
+$ct_ignorepvar = array('new_cat_name', 'catname', 'submit');
+define( 'IN_PHPBB', 1 );
+define( 'IN_PORTAL', 1 );
+define( 'MXBB_MODULE', false );
+$phpbb_root_path = $module_root_path = $mx_root_path = "./../";
+require( $phpbb_root_path . 'extension.inc' );
+require( './pagestart.' . $phpEx );
+include( $phpbb_root_path . 'includes/functions_admin.'.$phpEx );
+include( $phpbb_root_path . 'includes/kb_constants.' . $phpEx );
+include( $phpbb_root_path . 'includes/functions_kb.' . $phpEx );
+include( $phpbb_root_path . 'includes/functions_kb_auth.' . $phpEx );	
+include( $phpbb_root_path . 'includes/functions_kb_field.' . $phpEx );	
+include( $phpbb_root_path . 'includes/functions_kb_mx.' . $phpEx );	
+include( $phpbb_root_path . 'includes/functions_search.' . $phpEx );	
 
 function get_forums( $sel_id = 0 )
 {
@@ -87,35 +55,17 @@ function get_forums( $sel_id = 0 )
 }
 
 
+$mode = '';
 if ( isset( $_POST['mode'] ) || isset( $_GET['mode'] ) )
 {
 	$mode = ( isset( $_POST['mode'] ) ) ? $_POST['mode'] : $_GET['mode'];
-}
-else
-{
-	if ( $create )
-	{
-		$mode = 'create';
-	}
-	else if ( $edit )
-	{
-		$mode = 'edit';
-	}
-	else if ( $delete )
-	{
-		$mode = 'delete';
-	}
-	else
-	{
-		$mode = '';
-	}
 }
 
 switch ( $mode )
 {
 	case ( 'create' ):
 
-		if ( !$_POST['submit'] )
+		if ( empty($_POST['submit']) )
 		{
 			$new_cat_name = stripslashes( $_POST['new_cat_name'] ); 
 			
@@ -136,7 +86,7 @@ switch ( $mode )
 					'L_PARENT' => $lang['Parent'],
 					'L_NONE' => $lang['None'],
 
-					'PARENT_LIST' => get_kb_cat_list( '', 0, 1, 0, 0, true, $cat_id),
+					'PARENT_LIST' => get_kb_cat_list( '', 0, 1, 0, 0, true),
 
 					'L_FORUM_ID' => $lang['Forum_id'],
 					'L_FORUM_ID_EXPLAIN' => $lang['Forum_id_explain'],
@@ -238,7 +188,7 @@ switch ( $mode )
 
 	case ( 'edit' ):
 
-		if ( !$_POST['submit'] )
+		if ( empty($_POST['submit']) )
 		{
 			$cat_id = intval( $_GET['cat'] );
 
@@ -402,7 +352,7 @@ switch ( $mode )
 
 	case ( 'delete' ):
 
-		if ( !$_POST['submit'] )
+		if ( empty($_POST['submit'] ))
 		{
 			$cat_id = $_GET['cat'];
 
@@ -429,7 +379,7 @@ switch ( $mode )
 					'L_CAT_DELETE' => $lang['Cat_delete_title'],
 					'L_DELETE_ARTICLES' => $lang['Delete_all_articles'],
 
-					'L_CAT_NAME' => $lang['Article_category'],
+					'L_CAT_NAME' => $lang['Category_Title'],
 					'L_MOVE_CONTENTS' => $lang['Move_contents'],
 					'L_DELETE' => $lang['Move_and_Delete'],
 
@@ -603,7 +553,7 @@ switch ( $mode )
 
 				'L_CREATE_CAT' => $lang['Create_cat'],
 				'L_CREATE' => $lang['Create'],
-				'L_CATEGORY' => $lang['Article_category'],
+				'L_CATEGORY' => $lang['Category_Title'],
 				'L_ACTION' => $lang['Art_action'],
 				'L_ARTICLES' => $lang['Articles'],
 				'L_ORDER' => $lang['Update_order'],
@@ -635,7 +585,7 @@ switch ( $mode )
 			$edit = '<a class="icon_edit" href="' . $temp_url . '"><span>' . $lang['edit_lofi'] . '</span></a>';
 
 			$temp_url = append_sid( $module_root_path . "admin/admin_kb_cat.$phpEx?mode=delete&amp;cat=$category_id" );
-			$delete = '<a class="icon_delete" href="' . $temp_url . '" class="gen"></a>';
+			$delete = '<a class="icon_delete" href="' . $temp_url . '" class="gen">delete</a>';
 
 			$temp_url = append_sid( $module_root_path . "admin/admin_kb_cat.$phpEx?mode=up&amp;cat=$category_id" );
 			$up = '<a href="' . $temp_url . '" class="gen">' . $lang['Move_up'] . '</a>';

@@ -358,7 +358,10 @@ if ($mode == 'mod_edit')
 		}
 	}
 
-	$added_groups = array();
+	$added_groups = array(
+		'group_id' => [],
+		'group_name' => [],
+	);
 
 	for ($i = 0; $i < $num_rows; $i++)
 	{

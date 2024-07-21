@@ -682,12 +682,14 @@ function update_post_stats(&$mode, &$post_data, &$forum_id, &$topic_id, &$post_i
     if (!($result = $db->sql_query($sql))) {
         message_die(GENERAL_ERROR, 'Error in fetching topic posts data', '', __LINE__, __FILE__, $sql);
     }
+
     if ($row = $db->sql_fetchrow($result)) {
         $replies = $row['replies'];
         $firstpost = $row['firstpost'];
         $lastpost = $row['lastpost'];
     }
     // extra's only for poll delete
+		$extra = '';
     if ($mode == 'poll_delete'){
         $extra = ', topic_vote = 0';
     }

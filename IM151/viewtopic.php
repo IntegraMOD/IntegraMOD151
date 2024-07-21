@@ -2338,12 +2338,12 @@ if ( $userdata['user_allowsignature'] != 2 && $board_config['sig_allow_font_size
 
 		if ($user_sig != '')
 		{
-			$user_sig = str_replace('\"', '"', substr(preg_replace_callback('#(\>(((? >([^><]+|(?R)))*)\<))#s', function ($matches) use ($orig_word, $replacement_word) {
+			$user_sig = str_replace('\"', '"', substr(preg_replace_callback('#(\>(((:?\s>([^><]+|(?R)))*)\<))#s', function ($matches) use ($orig_word, $replacement_word) {
 				return preg_replace($orig_word, $replacement_word, $matches[0]);
 			}, '>' . $user_sig . '<'), 1, -1));
 		}
 
-		$message = str_replace('\"', '"', substr(preg_replace_callback('#(\>(((? >([^><]+|(?R)))*)\<))#s', function ($matches) use ($orig_word, $replacement_word) {
+		$message = str_replace('\"', '"', substr(preg_replace_callback('#(\>(((:?\s>([^><]+|(?R)))*)\<))#s', function ($matches) use ($orig_word, $replacement_word) {
 			return preg_replace($orig_word, $replacement_word, $matches[0]);
 		}, '>' . $message . '<'), 1, -1));
 	}

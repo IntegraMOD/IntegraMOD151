@@ -10,7 +10,7 @@
   </tr>
 <!-- BEGIN field_row -->
 	<tr>
-	 <td width="3%" class="row1" align="center" valign="middle"><input type="radio" name="field_id" value="{field_row.FIELD_ID}" /></td>
+	 <td width="3%" class="row1" align="center" valign="middle"><input type="radio" name="field_id" value="{field_row.FIELD_ID}" {field_row.SELECTED} /></td>
 	 <td width="97%" class="row1"><b>{field_row.FIELD_NAME}</b><br /><span class="gensmall">{field_row.FIELD_DESC}</span></td></tr>
 <!-- END field_row -->
  	<td align="center" class="cat" colspan="2">

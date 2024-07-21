@@ -10,58 +10,29 @@
  *    $Id: admin_kb_custom.php,v 1.7 2005/04/20 19:30:17 jonohlsson Exp $
  */
 
-if ( file_exists( './../viewtopic.php' ) )
-{
-	define( 'IN_PHPBB', 1 );
-	define( 'IN_PORTAL', 1 );
-	define( 'MXBB_MODULE', false );
-	
-	if ( !empty( $setmodules ) )
-	{
-		$file = basename( __FILE__ );
-		$module['KB_title']['Custom Field'] = $file;
-		return;
-	}	
-	
-	$phpbb_root_path = $module_root_path = $mx_root_path = "./../";
-	require( $phpbb_root_path . 'extension.inc' );
-	require( './pagestart.' . $phpEx );
-	include( $phpbb_root_path . 'config.'.$phpEx );
-	include( $phpbb_root_path . 'includes/functions_admin.'.$phpEx );
-	include( $phpbb_root_path . 'includes/kb_constants.' . $phpEx );
-	include( $phpbb_root_path . 'includes/functions_kb.' . $phpEx );
-	include( $phpbb_root_path . 'includes/functions_kb_auth.' . $phpEx );	
-	include( $phpbb_root_path . 'includes/functions_kb_field.' . $phpEx );	
-	include( $phpbb_root_path . 'includes/functions_kb_mx.' . $phpEx );	
-	include( $phpbb_root_path . 'includes/functions_search.' . $phpEx );	
-}
-else 
-{
-	define( 'IN_PORTAL', 1 );
-	define( 'MXBB_MODULE', true );
-	
-	if ( !empty( $setmodules ) )
-	{
-		$file = basename( __FILE__ );
-		$module['KB_title']['Custom Field'] = "modules/mx_kb/admin/" . "$file";
-		return;
-	}	
-	
-	$mx_root_path = './../../../';
-	$module_root_path = "./../";
 
-	define( 'MXBB_27x', file_exists( $mx_root_path . 'mx_login.php' ) );
-	
-	require( $mx_root_path . 'extension.inc' );
-	require( $mx_root_path . '/admin/pagestart.' . $phpEx );
-	include( $module_root_path . 'includes/kb_constants.' . $phpEx );
-	include( $module_root_path . 'includes/functions_kb.' . $phpEx );
-	include( $module_root_path . 'includes/functions_kb_auth.' . $phpEx );
-	include( $module_root_path . 'includes/functions_kb_field.' . $phpEx );
-	include( $module_root_path . 'includes/functions_kb_mx.' . $phpEx );
-	include( $phpbb_root_path . 'includes/functions_search.' . $phpEx );
-	include_once( $mx_root_path . 'admin/page_header_admin.' . $phpEx );
-}
+if ( !empty( $setmodules ) )
+{
+	$file = basename( __FILE__ );
+	$module['KB_title']['Custom Field'] = $file;
+	return;
+}	
+
+define( 'IN_PHPBB', 1 );
+define( 'IN_PORTAL', 1 );
+define( 'MXBB_MODULE', false );
+define('CT_SECLEVEL', 'MEDIUM');
+$ct_ignorepvar = array('field_name', 'field_desc', 'regex');
+$phpbb_root_path = $module_root_path = $mx_root_path = "./../";
+require( $phpbb_root_path . 'extension.inc' );
+require( './pagestart.' . $phpEx );
+include( $phpbb_root_path . 'includes/functions_admin.'.$phpEx );
+include( $phpbb_root_path . 'includes/kb_constants.' . $phpEx );
+include( $phpbb_root_path . 'includes/functions_kb.' . $phpEx );
+include( $phpbb_root_path . 'includes/functions_kb_auth.' . $phpEx );	
+include( $phpbb_root_path . 'includes/functions_kb_field.' . $phpEx );	
+include( $phpbb_root_path . 'includes/functions_kb_mx.' . $phpEx );	
+include( $phpbb_root_path . 'includes/functions_search.' . $phpEx );	
 
 // ===================================================
 // addslashes to vars if magic_quotes_gpc is off
@@ -80,41 +51,19 @@ if ( !@function_exists( 'slash_input_data' ) )
 		return $data;
 	}
 }
-// ===================================================
-// to make it work with php version under 4.1 and other stuff
-// ===================================================
-if ( @phpversion() < '4.1' )
-{
-	$_GET = &$_GET;
-	$_POST = &$_POST;
-	$_COOKIE = &$HTTP_COOKIE_VARS;
-	$_SERVER = &$_SERVER;
-	$_ENV = &$_ENV;
-	$_FILES = &$_FILES;
-	$_SESSION = &$_SESSION;
-}
-
 if ( !isset( $_REQUEST ) )
 {
 	$_REQUEST = array_merge( $_GET, $_POST, $_COOKIE );
 }
-
-if ( !get_magic_quotes_gpc() )
-{
-	$_GET = slash_input_data( $_GET );
-	$_POST = slash_input_data( $_POST );
-	$_COOKIE = slash_input_data( $_COOKIE );
-	$_REQUEST = slash_input_data( $_REQUEST );
-}
-
 $kb_custom_field = new kb_custom_field();
 $kb_custom_field->init();
 
 $mode = ( isset( $_REQUEST['mode'] ) ) ? htmlspecialchars( $_REQUEST['mode'] ) : 'select';
 $field_id = ( isset( $_REQUEST['field_id'] ) ) ? intval( $_REQUEST['field_id'] ) : 0;
-$field_type = ( isset( $_REQUEST['field_type'] ) ) ? intval( $_REQUEST['field_type'] ) : $kb_custom_field->field_rowset[$field_id]['field_type'];
+$field_type = ( isset( $_REQUEST['field_type'] ) ) ? intval( $_REQUEST['field_type'] ) : ( isset($kb_custom_field->field_rowset[$field_id]['field_type']) ? $kb_custom_field->field_rowset[$field_id]['field_type'] : '' ) ;
 $field_ids = ( isset( $_REQUEST['field_ids'] ) ) ? $_REQUEST['field_ids'] : '';
 $submit = ( isset( $_POST['submit'] ) ) ? true : false;
+$s_hidden_fields = '';
 
 switch ( $mode )
 {
@@ -238,11 +187,11 @@ if ( $mode == 'addfield' || $mode == 'editfield')
 			//'REGEX' => ( $field_type == INPUT || $field_type == TEXTAREA ) ? true : false,
 			//'ORDER' => ( $field_id ) ? true : false,
 
-			'FIELD_NAME' => $data['custom_name'],
-			'FIELD_DESC' => $data['custom_description'],
-			'FIELD_DATA' => $data['data'],
-			'FIELD_REGEX' => $data['regex'],
-			'FIELD_ORDER' => $data['field_order'] ) 
+			'FIELD_NAME' => ( isset($data['custom_name']) ? $data['custom_name'] : '' ) ,
+			'FIELD_DESC' => ( isset($data['custom_description']) ? $data['custom_description'] : '' ) ,
+			'FIELD_DATA' => ( isset($data['data']) ? $data['data'] : '' ) ,
+			'FIELD_REGEX' => ( isset($data['regex']) ? $data['regex'] : '' ) ,
+			'FIELD_ORDER' => ( isset($data['field_order']) ? $data['field_order'] : 0 ) ) 
 		);
 		
 		if ( $field_type != INPUT && $field_type != TEXTAREA )
@@ -274,13 +223,16 @@ elseif ( $mode == 'add' )
 }
 elseif ( $mode == 'edit' || $mode == 'delete' || $mode == 'select' )
 {
+	$selected = true;
 	foreach( $kb_custom_field->field_rowset as $field_id => $field_data )
 	{
 		$template->assign_block_vars( 'field_row', array( 
 				'FIELD_ID' => $field_id,
 				'FIELD_NAME' => $field_data['custom_name'],
-				'FIELD_DESC' => $field_data['custom_description'] ) 
-			);
+				'FIELD_DESC' => $field_data['custom_description'],
+				'SELECTED' => $selected ? ' checked="checked" selected="selected"' : '',
+		)	);
+		$selected = false;
 	}
 }
 

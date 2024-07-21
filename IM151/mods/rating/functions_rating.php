@@ -52,7 +52,7 @@ function get_rating_config($idlist='')
 
 function get_rating_ranks()
 {
-	global $db, $topic_rank_set;
+	global $db, $topic_rank_set, $config_set;
 	// BUILD ARRAYS OF OVERALL RATING CAPTIONS
 	$sql = 'SELECT rating_rank_id, type, average_threshold, sum_threshold, label, icon FROM '.RATING_RANK_TABLE;
 	if( !($result = $db->sql_query($sql)) )
@@ -70,21 +70,21 @@ function get_rating_ranks()
 		if ( $row['type'] == 1 || $row['type'] == 2 || $row['type'] == 5 )
 		{
 			// THIS RANK APPLIES TO POSTS
-			$p_rank = ( $config_set[8] == 1 ) ? $row['sum_threshold'].'+' : $row['average_threshold'];
+			$p_rank = ( !empty($config_set[8]) ) ? $row['sum_threshold'].'+' : $row['average_threshold'];
 			$p_caption = ( !empty($caption) ) ? $caption : $p_rank;
 			$post_rank_set[$id] = $p_caption;
 		}
 		if ( $row['type'] == 1 || $row['type'] == 2 || $row['type'] == 4)
 		{
 			// THIS RANK APPLIES TO TOPICS
-			$t_rank = ( $config_set[9] == 1 ) ? $row['sum_threshold'].'+' : $row['average_threshold'];
+			$t_rank = ( !empty($config_set[9])) ? $row['sum_threshold'].'+' : $row['average_threshold'];
 			$t_caption = ( !empty($caption) ) ? $caption : $t_rank;
 			$topic_rank_set[$id] = $t_caption;
 		}
 		if ( $row['type'] == 1 || $row['type'] == 3)
 		{
 			// THIS RANK APPLIES TO USERS
-			$u_rank = ( $config_set[10] == 1 ) ? $row['sum_threshold'].'+' : $row['average_threshold'];
+			$u_rank = ( !empty($config_set[10]) ) ? $row['sum_threshold'].'+' : $row['average_threshold'];
 			$u_caption = ( !empty($caption) ) ? $caption : $u_rank;
 			$user_rank_set[$id] = $u_caption;
 		}

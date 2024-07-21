@@ -13,59 +13,27 @@
 
 $start_time = time ();
 
-if ( file_exists( './../viewtopic.php' ) )
-{
-	define( 'IN_PHPBB', 1 );
-	define( 'IN_PORTAL', 1 );
-	define( 'MXBB_MODULE', false );
-	
-	if ( !empty( $setmodules ) )
-	{
-		$file = basename( __FILE__ );
-		$module['KB_title']['Optimize tables'] = $file;
-		return;
-	}	
-	
-	$phpbb_root_path = $module_root_path = $mx_root_path = "./../";
-	require( $phpbb_root_path . 'extension.inc' );
-	require( './pagestart.' . $phpEx );
-	include( $phpbb_root_path . 'config.'.$phpEx );
-	include( $phpbb_root_path . 'includes/functions_admin.'.$phpEx );
-	include( $phpbb_root_path . 'includes/kb_constants.' . $phpEx );
-	include( $phpbb_root_path . 'includes/functions_kb.' . $phpEx );
-	include( $phpbb_root_path . 'includes/functions_kb_auth.' . $phpEx );	
-	include( $phpbb_root_path . 'includes/functions_kb_field.' . $phpEx );	
-	include( $phpbb_root_path . 'includes/functions_kb_mx.' . $phpEx );	
-	include( $phpbb_root_path . 'includes/functions_search.' . $phpEx );	
-}
-else 
-{
-	define( 'IN_PORTAL', 1 );
-	define( 'MXBB_MODULE', true );
-	
-	if ( !empty( $setmodules ) )
-	{
-		$file = basename( __FILE__ );
-		$module['KB_title']['Optimize tables'] = 'modules/mx_kb/admin/' . $file;
-		return;
-	}	
-	
-	$mx_root_path = './../../../';
-	$module_root_path = "./../";
 
-	define( 'MXBB_27x', file_exists( $mx_root_path . 'mx_login.php' ) );
-	
-	require( $mx_root_path . 'extension.inc' );
-	require( $mx_root_path . '/admin/pagestart.' . $phpEx );
-	include( $module_root_path . 'includes/kb_constants.' . $phpEx );
-	include( $module_root_path . 'includes/functions_kb.' . $phpEx );
-	include( $module_root_path . 'includes/functions_kb_auth.' . $phpEx );
-	include( $module_root_path . 'includes/functions_kb_field.' . $phpEx );
-	include( $module_root_path . 'includes/functions_kb_mx.' . $phpEx );
-	include( $phpbb_root_path . 'includes/functions_search.' . $phpEx );
-	include_once( $mx_root_path . 'admin/page_header_admin.' . $phpEx );
-}
+if ( !empty( $setmodules ) )
+{
+	$file = basename( __FILE__ );
+	$module['KB_title']['Optimize tables'] = $file;
+	return;
+}	
 
+define( 'IN_PHPBB', 1 );
+define( 'IN_PORTAL', 1 );
+define( 'MXBB_MODULE', false );
+$phpbb_root_path = $module_root_path = $mx_root_path = "./../";
+require( $phpbb_root_path . 'extension.inc' );
+require( './pagestart.' . $phpEx );
+include( $phpbb_root_path . 'includes/functions_admin.'.$phpEx );
+include( $phpbb_root_path . 'includes/kb_constants.' . $phpEx );
+include( $phpbb_root_path . 'includes/functions_kb.' . $phpEx );
+include( $phpbb_root_path . 'includes/functions_kb_auth.' . $phpEx );	
+include( $phpbb_root_path . 'includes/functions_kb_field.' . $phpEx );	
+include( $phpbb_root_path . 'includes/functions_kb_mx.' . $phpEx );	
+include( $phpbb_root_path . 'includes/functions_search.' . $phpEx );	
 
 // **********************************************************************
 // Read language definition
@@ -79,7 +47,6 @@ else
 	include ($module_root_path.'language/lang_' . $board_config['default_lang'] . '/lang_admin_rebuild_search.'.$phpEx);
 } 
 
-$page_title = $lang['Page_title'];
 
 if (isset ($_GET['start'])) {
 	function onTime () {
@@ -146,7 +113,7 @@ if (isset ($_GET['start'])) {
 	}
 	
 	$template->assign_vars (array (
-		'PERCENT' => round ((($start + $num_rows) / $total_num_rows) * 100),
+		'PERCENT' => $total_num_rows == 0 ? 100 : round ((($start + $num_rows) / $total_num_rows) * 100),
 		'L_NEXT' => $next,
 		'START' => $start + $num_rows,
 		'TOTAL_NUM_ROWS' => $total_num_rows,

@@ -23,8 +23,8 @@ require_once($phpbb_root_path . 'language/lang_' . $board_config['default_lang']
 $album_config_tabs[] =  array(
 	'order' => 6,
 	'selection' => 'clown',
-	'title' => 'CLowN SP', //$lang['Extra_Settings'],
-	'detail' => $lang['SP_Album_clown_config_explain'],
+	'title' => 'Extra', //$lang['Extra_Settings'],
+	'detail' => ( isset($lang['SP_Album_clown_config_explain']) ? $lang['SP_Album_clown_config_explain'] : 'Extra' ),
 	'sub_config' => array(
 		0 => array(
 			'order' => 0,

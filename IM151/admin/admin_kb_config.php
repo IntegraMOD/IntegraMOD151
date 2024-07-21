@@ -19,60 +19,29 @@
  *    (at your option) any later version.
  */
 
-if ( file_exists( './../viewtopic.php' ) )
+if ( !empty( $setmodules ) )
 {
-	define( 'IN_PHPBB', 1 );
-	define( 'IN_PORTAL', 1 );
-	define( 'MXBB_MODULE', false );
-	define('CT_SECLEVEL', 'MEDIUM');
-	$ct_ignorepvar = array('pt_body','wysiwyg_path');
+	$file = basename( __FILE__ );
+	$module['KB_title']['Configuration'] = $file;
+	return;
+}	
 
-	if ( !empty( $setmodules ) )
-	{
-		$file = basename( __FILE__ );
-		$module['KB_title']['Configuration'] = $file;
-		return;
-	}	
-	
-	$phpbb_root_path = $module_root_path = $mx_root_path = "./../";
-	require( $phpbb_root_path . 'extension.inc' );
-	require( './pagestart.' . $phpEx );
-	include( $phpbb_root_path . 'config.'.$phpEx );
-	include( $phpbb_root_path . 'includes/functions_admin.'.$phpEx );
-	include( $phpbb_root_path . 'includes/kb_constants.' . $phpEx );
-	include( $phpbb_root_path . 'includes/functions_kb.' . $phpEx );
-	include( $phpbb_root_path . 'includes/functions_kb_auth.' . $phpEx );	
-	include( $phpbb_root_path . 'includes/functions_kb_field.' . $phpEx );	
-	include( $phpbb_root_path . 'includes/functions_kb_mx.' . $phpEx );	
-	include( $phpbb_root_path . 'includes/functions_search.' . $phpEx );	
-}
-else 
-{
-	define( 'IN_PORTAL', 1 );
-	define( 'MXBB_MODULE', true );
-	
-	if ( !empty( $setmodules ) )
-	{
-		$file = basename( __FILE__ );
-		$module['KB_title']['Configuration'] = 'modules/mx_kb/admin/' . $file . '?mode=config';
-		return;
-	}	
-	
-	$mx_root_path = './../../../';
-	$module_root_path = "./../";
+define( 'IN_PHPBB', 1 );
+define( 'IN_PORTAL', 1 );
+define( 'MXBB_MODULE', false );
+define('CT_SECLEVEL', 'MEDIUM');
+$ct_ignorepvar = array('pt_body','wysiwyg_path');
 
-	define( 'MXBB_27x', file_exists( $mx_root_path . 'mx_login.php' ) );
-	
-	require( $mx_root_path . 'extension.inc' );
-	require( $mx_root_path . '/admin/pagestart.' . $phpEx );
-	include( $module_root_path . 'includes/kb_constants.' . $phpEx );
-	include( $module_root_path . 'includes/functions_kb.' . $phpEx );
-	include( $module_root_path . 'includes/functions_kb_auth.' . $phpEx );
-	include( $module_root_path . 'includes/functions_kb_field.' . $phpEx );
-	include( $module_root_path . 'includes/functions_kb_mx.' . $phpEx );
-	include( $phpbb_root_path . 'includes/functions_search.' . $phpEx );
-	include_once( $mx_root_path . 'admin/page_header_admin.' . $phpEx );
-}
+$phpbb_root_path = $module_root_path = $mx_root_path = "./../";
+require( $phpbb_root_path . 'extension.inc' );
+require( './pagestart.' . $phpEx );
+include( $phpbb_root_path . 'includes/functions_admin.'.$phpEx );
+include( $phpbb_root_path . 'includes/kb_constants.' . $phpEx );
+include( $phpbb_root_path . 'includes/functions_kb.' . $phpEx );
+include( $phpbb_root_path . 'includes/functions_kb_auth.' . $phpEx );	
+include( $phpbb_root_path . 'includes/functions_kb_field.' . $phpEx );	
+include( $phpbb_root_path . 'includes/functions_kb_mx.' . $phpEx );	
+include( $phpbb_root_path . 'includes/functions_search.' . $phpEx );	
 
 // Pull all config data
 
@@ -292,17 +261,17 @@ $template->assign_vars( array( 'S_ACTION' => append_sid( "admin_kb_config.$phpEx
 		'WYSIWYG_PATH' => $wysiwyg_path,		
 		
 		'L_ALLOW_HTML' => $lang['Allow_HTML'],
-		'L_ALLOW_HTML_EXPLAIN' => $lang['Allow_html_explain'],
+		'L_ALLOW_HTML_EXPLAIN' => '', //$lang['Allow_html_explain'],
 		'S_ALLOW_HTML_YES' => $allow_html_yes,
 		'S_ALLOW_HTML_NO' => $allow_html_no,	
 
 		'L_ALLOW_BBCODE' => $lang['Allow_BBCode'],
-		'L_ALLOW_BBCODE_EXPLAIN' => $lang['Allow_bbcode_explain'],
+		'L_ALLOW_BBCODE_EXPLAIN' => '', //$lang['Allow_bbcode_explain'],
 		'S_ALLOW_BBCODE_YES' => $allow_bbcode_yes,
 		'S_ALLOW_BBCODE_NO' => $allow_bbcode_no,
 
 		'L_ALLOW_SMILIES' => $lang['Allow_smilies'],
-		'L_ALLOW_SMILIES_EXPLAIN' => $lang['Allow_smilies_explain'],
+		'L_ALLOW_SMILIES_EXPLAIN' => '', //$lang['Allow_smilies_explain'],
 		'S_ALLOW_SMILIES_YES' => $allow_smilies_yes,
 		'S_ALLOW_SMILIES_NO' => $allow_smilies_no,
 
@@ -320,10 +289,10 @@ $template->assign_vars( array( 'S_ACTION' => append_sid( "admin_kb_config.$phpEx
 		'S_HEADER_BANNER_YES' => $header_banner_yes,
 		'S_HEADER_BANNER_NO' => $header_banner_no,
 
-		'L_ANON_NAME' => $lang['Allow_anon_name'],
-		'L_ANON_EXPLAIN' => $lang['Allow_anon_explain'],
-		'S_ANON_YES' => $anon_yes,
-		'S_ANON_NO' => $anon_no,
+		//'L_ANON_NAME' => $lang['Allow_anon_name'],
+		//'L_ANON_EXPLAIN' => $lang['Allow_anon_explain'],
+		//'S_ANON_YES' => $anon_yes,
+		//'S_ANON_NO' => $anon_no,
 
 		'L_USE_RATINGS' => $lang['Use_ratings'],
 		'L_USE_RATINGS_EXPLAIN' => $lang['Use_ratings_explain'],

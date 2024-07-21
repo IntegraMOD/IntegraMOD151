@@ -273,7 +273,7 @@ if (is_array($valid_tab_selections) && count($valid_tab_selections) > 0)
 			$tmp_array[$element] = $key;
 		}
 		*/
-		$selected_subtab = $tmp_array[0];
+		$selected_subtab = ( isset($tmp_array[0]) ? $tmp_array[0] : '' );
 
 	}
 }
@@ -317,7 +317,7 @@ for ($outer = 0; $outer < count($album_config_tabs); $outer++)
 			//------------------------------------------------------------------------
 			// sort the sub tabs according to the order key in the array
 			//------------------------------------------------------------------------
-			usort($album_config_tabs[$outer]['sub_config'],sort_cmp);
+			usort($album_config_tabs[$outer]['sub_config'],'sort_cmp');
 
 			//------------------------------------------------------------------------
 			// did we find the selected sub tab ?
@@ -345,7 +345,7 @@ if (empty($selected_tab_data['config_table_name']))
 //------------------------------------------------------------------------
 // save the data from the requested tab (or tab that we are 'leaving')
 //------------------------------------------------------------------------
-if( strcmp($_POST['save_config'], 'true') == 0 )
+if( isset($_POST['save_config']) && strcmp($_POST['save_config'], 'true') == 0 )
 {
 	if (empty($config_table))
 	{
@@ -461,7 +461,7 @@ $template->assign_vars(array(
 	'L_ALBUM_CONFIG_EXPLAIN' => $lang['Album_config_explain'],
 	'L_ALBUM_CONFIG_EXPLAIN_DETAIL' => $selected_tab_data['detail'],
 
-	'L_SETTINGS_SAVED' => $saved_info_message,
+	'L_SETTINGS_SAVED' => ( isset($saved_info_message) ? $saved_info_message : '' ),
 
 	'L_SUBMIT' => $lang['Submit'],
 	'L_RESET' => $lang['Reset'])

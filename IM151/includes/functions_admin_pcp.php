@@ -749,11 +749,11 @@ function pcp_output_fields($values_list, $tables_linked, $classes_fields, $user_
 		// name, func and table def.
 		$template->assign_block_vars('values', array(
 			'NAME'	=> str_replace( "''", "\'", $value_name),
-			'FUNC'	=> str_replace( "''", "\'", $value_data['func']),
-			'MAIN'	=> str_replace( "''", "\'", $value_data['table']['main']),
-			'KEY'	=> str_replace( "''", "\'", $value_data['table']['key']),
-			'TXT'	=> str_replace( "''", "\'", $value_data['table']['txt']),
-			'IMG'	=> str_replace( "''", "\'", $value_data['table']['img']),
+			'FUNC'	=> isset($value_data['func']) ? str_replace( "''", "\'", $value_data['func']) : '',
+			'MAIN'	=> isset($value_data['table']['main']) ? str_replace( "''", "\'", $value_data['table']['main']) : '',
+			'KEY'	=> isset($value_data['table']['key']) ? str_replace( "''", "\'", $value_data['table']['key']) : '',
+			'TXT'	=> isset($value_data['table']['txt']) ? str_replace( "''", "\'", $value_data['table']['txt']) : '',
+			'IMG'	=> isset($value_data['table']['img']) ? str_replace( "''", "\'", $value_data['table']['img']) : '',
 			)
 		);
 		// determines which kind of list it is
@@ -863,7 +863,7 @@ function pcp_output_fields($values_list, $tables_linked, $classes_fields, $user_
 			}
 			if ( !empty($data) )
 			{
-				if ($field_def[$def_key]['type'] == 'BOOLEAN')
+				if (isset($field_def[$def_key]['type']) && $field_def[$def_key]['type'] == 'BOOLEAN')
 				{
 					$pres = '%s';
 					$data = $data ? 'true' : 'false';

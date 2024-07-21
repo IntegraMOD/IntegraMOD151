@@ -41,8 +41,9 @@ if ( !( $result = $db->sql_query( $sql ) ) )
 }
 
 $kb_row = $db->sql_fetchrow( $result );
+// TODO message_die() is !$kb_row
 
-if ( count($kb_row) > 0 )
+if ( !empty($kb_row) )
 {
 	$article_title = $kb_row['article_title'] ;
 	//
@@ -138,7 +139,7 @@ if ( count($kb_row) > 0 )
 	}
 }
 
-if ( $page_num == 0 )
+if ( $page_num == 0 && isset($new_views) )
 {
 	$sql = "UPDATE " . KB_ARTICLES_TABLE . " SET
 		    views = '" . $new_views . "'
@@ -182,7 +183,7 @@ if ( !$html_on )
 
 // Parse message
 
-$bbcode_uid = $kb_row['bbcode_uid'];
+$bbcode_uid = ( isset($kb_row['bbcode_uid']) ? $kb_row['bbcode_uid'] : '' ) ;
 
 if ( $bbcode_on )
 {
@@ -192,7 +193,7 @@ if ( $bbcode_on )
 	}
 }
 
-$article = make_clickable( $article ); 
+$article = make_clickable( ( isset($article) ? $article : '' ) ); 
 
 // Parse smilies
 
@@ -209,18 +210,18 @@ if ($highlight_match)
 {
 	// This was shamelessly 'borrowed' from volker at multiartstudio dot de
 	// via php.net's annotated manual
-	$article = str_replace('\"', '"', substr(preg_replace_callback('#(\>(((? >([^><]+|(?R)))*)\<))#s', function ($matches) use ($highlight_match, $theme) {
+	$article = str_replace('\"', '"', substr(preg_replace_callback('#(\>(((:?\s>([^><]+|(?R)))*)\<))#s', function ($matches) use ($highlight_match, $theme) {
 		return preg_replace('#\b(' . $highlight_match . ')\b#i', '<span style="color:#"' . $theme['fontcolor3'] . '"><b>\\1</b></span>', $matches[0]);
 	}, '>' . $article . '<'), 1, -1));
 } 
 
 // Replace naughty words
 
-if ( count( $orig_word ) )
+if ( !empty( $orig_word ) )
 {
 	$article_title = preg_replace( $orig_word, $replacement_word, $article_title );
 
-	$article = str_replace('\"', '"', substr(preg_replace_callback('#(\>(((? >([^><]+|(?R)))*)\<))#s', function ($matches) use ($orig_word, $replacement_word) {
+	$article = str_replace('\"', '"', substr(preg_replace_callback('#(\>(((:?\s\>([^><]+|(?R)))*)\<))#s', function ($matches) use ($orig_word, $replacement_word) {
 		return preg_replace($orig_word, $replacement_word, $matches[0]);
 	}, '>' . $article . '<'), 1, -1));
 } 
@@ -280,7 +281,7 @@ if ( !$print_version && !$reader_mode )
 if ( ( $userdata['user_id'] == $author_id && $kb_is_auth['auth_edit'] ) || $kb_is_auth['auth_mod'] )
 {
 	$temp_url = append_sid( this_kb_mxurl( "mode=edit&amp;k=" . $article_id ) );
-	$edit_img = '<a href="' . $temp_url . '"><img src="' . $phpbb_root_path . $images['icon_edit'] . '" alt="' . $lang['Edit_delete_post'] . '" title="' . $lang['Edit_delete_post'] . '" border="0" /></a>';
+	$edit_img = '<a href="' . $temp_url . '"><img src="' . $phpbb_root_path . $images['icon_edit'] . '" alt="' . $lang['Edit_delete_post'] . '" title="' . $lang['Edit_delete_post'] . '" border="0" />' . $lang['Edit_delete_post'] . '</a>';
 	$edit = '<a href="' . $temp_url . '">' . $lang['Edit_delete_post'] . '</a>';
 }
 else
@@ -340,17 +341,18 @@ else
 			mx_message_die(GENERAL_ERROR, 'Could not obtain forums information', '', __LINE__, __FILE__, $sql);
 		}
 	}
-	
+
 	//
 	// If the query doesn't return any rows this isn't a valid topic. Set to null.
 	//
-	if ( !($topic_row = $db->sql_fetchrow($result)) )
+	$topic_row = $db->sql_fetchrow($result);
+	if ( empty($topic_row) )
 	{
 		$topic_id = 0;
 	}	
-			
+
 	// If no phpbb topic id is created, create on ;)
-	if ( !$topic_id && $approved && $kb_config['use_comments'] && $kb_comment['category_forum_id'] > 0)
+	if ( !$topic_row && $approved && $kb_config['use_comments'] && $kb_comment['category_forum_id'] > 0)
 	{ 
 		// Post
 		$topic_data = kb_insert_post( $kb_message, $subject, $kb_comment['category_forum_id'], $kb_comment['article_editor_id'], $kb_comment['article_editor'], $kb_comment['article_editor_sig'], $kb_comment['topic_id'], $kb_update_message );

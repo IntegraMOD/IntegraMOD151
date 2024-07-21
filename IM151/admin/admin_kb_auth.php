@@ -18,58 +18,27 @@
  *    (at your option) any later version.
  */
 
-if ( file_exists( './../viewtopic.php' ) )
+
+if ( !empty( $setmodules ) )
 {
-	define( 'IN_PHPBB', 1 );
-	define( 'IN_PORTAL', 1 );
-	define( 'MXBB_MODULE', false );
-	
-	if ( !empty( $setmodules ) )
-	{
-		$file = basename( __FILE__ );
-		$module['KB_title']['Permissions'] = $file;
-		return;
-	}	
-	
-	$phpbb_root_path = $module_root_path = $mx_root_path = "./../";
-	require( $phpbb_root_path . 'extension.inc' );
-	require( './pagestart.' . $phpEx );
-	include( $phpbb_root_path . 'config.'.$phpEx );
-	include( $phpbb_root_path . 'includes/functions_admin.'.$phpEx );
-	include( $phpbb_root_path . 'includes/kb_constants.' . $phpEx );
-	include( $phpbb_root_path . 'includes/functions_kb.' . $phpEx );
-	include( $phpbb_root_path . 'includes/functions_kb_auth.' . $phpEx );	
-	include( $phpbb_root_path . 'includes/functions_kb_field.' . $phpEx );	
-	include( $phpbb_root_path . 'includes/functions_kb_mx.' . $phpEx );	
-	include( $phpbb_root_path . 'includes/functions_search.' . $phpEx );	
-}
-else 
-{
-	define( 'IN_PORTAL', 1 );
-	define( 'MXBB_MODULE', true );
-	
-	if ( !empty( $setmodules ) )
-	{
-		$file = basename( __FILE__ );
-		$module['KB_title']['Permissions'] = "modules/mx_kb/admin/" . $file;
-		return;
-	}	
-	
-	$mx_root_path = './../../../';
-	$module_root_path = "./../";
-	
-	define( 'MXBB_27x', file_exists( $mx_root_path . 'mx_login.php' ) );
-	
-	require( $mx_root_path . 'extension.inc' );
-	require( $mx_root_path . '/admin/pagestart.' . $phpEx );
-	include( $module_root_path . 'includes/kb_constants.' . $phpEx );
-	include( $module_root_path . 'includes/functions_kb.' . $phpEx );
-	include( $module_root_path . 'includes/functions_kb_auth.' . $phpEx );
-	include( $module_root_path . 'includes/functions_kb_field.' . $phpEx );
-	include( $module_root_path . 'includes/functions_kb_mx.' . $phpEx );
-	include( $phpbb_root_path . 'includes/functions_search.' . $phpEx );
-	include_once( $mx_root_path . 'admin/page_header_admin.' . $phpEx );
-}
+	$file = basename( __FILE__ );
+	$module['KB_title']['Permissions'] = $file;
+	return;
+}	
+define( 'IN_PHPBB', 1 );
+define( 'IN_PORTAL', 1 );
+define( 'MXBB_MODULE', false );
+
+$phpbb_root_path = $module_root_path = $mx_root_path = "./../";
+require( $phpbb_root_path . 'extension.inc' );
+require( './pagestart.' . $phpEx );
+include( $phpbb_root_path . 'includes/functions_admin.'.$phpEx );
+include( $phpbb_root_path . 'includes/kb_constants.' . $phpEx );
+include( $phpbb_root_path . 'includes/functions_kb.' . $phpEx );
+include( $phpbb_root_path . 'includes/functions_kb_auth.' . $phpEx );	
+include( $phpbb_root_path . 'includes/functions_kb_field.' . $phpEx );	
+include( $phpbb_root_path . 'includes/functions_kb_mx.' . $phpEx );	
+include( $phpbb_root_path . 'includes/functions_search.' . $phpEx );	
 
 if ( !isset( $_POST['submit'] ) )
 {
@@ -98,8 +67,7 @@ else
 		$template->set_filenames( array( 'body' => 'admin/kb_cat_auth_body.tpl' ) 
 			);
 
-		$template->assign_vars( array( 'L_ALBUM_AUTH_TITLE' => $lang['Album_Auth_Title'],
-				'L_ALBUM_AUTH_EXPLAIN' => $lang['Album_Auth_Explain'],
+		$template->assign_vars( array( 
 				'L_SUBMIT' => $lang['Submit'],
 				'L_RESET' => $lang['Reset'],
 
@@ -186,17 +154,21 @@ else
 	else
 	{
 		$cat_id = intval( $_GET['cat_id'] );
+		$groupvars = ['view', 'post', 'rate', 'comment', 'edit', 'delete', 'moderator', 'approval', 'approval_edit'];
+		foreach ($groupvars as $groupvar)
+		{
+			$varname = $groupvar . '_groups';
+			$groupvalues = [];
+			if (isset($_POST[$groupvar]))
+			{
+				foreach ($_POST[$groupvar] as $groupvalue)
+				{
+					$groupvalues[] = intval($groupvalue);
+				}
+			}
+			${$varname} = implode(',', $groupvalues);
+		}
 
-		$view_groups = @implode( ',', $_POST['view'] );
-		$post_groups = @implode( ',', $_POST['post'] );
-		$rate_groups = @implode( ',', $_POST['rate'] );
-		$comment_groups = @implode( ',', $_POST['comment'] );
-		$edit_groups = @implode( ',', $_POST['edit'] );
-		$delete_groups = @implode( ',', $_POST['delete'] );
-		// $approval_groups = @implode( ',', $_POST['approval'] );
-		// $approval_edit_groups = @implode( ',', $_POST['approval_edit'] );
-
-		$moderator_groups = @implode( ',', $_POST['moderator'] );
 
 		$sql = "UPDATE " . KB_CATEGORIES_TABLE . "
 				SET auth_view_groups = '$view_groups', auth_post_groups = '$post_groups', auth_rate_groups = '$rate_groups', auth_comment_groups = '$comment_groups', auth_edit_groups = '$edit_groups', auth_delete_groups = '$delete_groups', auth_approval_groups = '$approval_groups', auth_approval_edit_groups = '$approval_edit_groups',	auth_moderator_groups = '$moderator_groups'

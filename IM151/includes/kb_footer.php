@@ -58,7 +58,7 @@ $template->assign_vars( array(
 		
 		'L_QUICK_NAV' => $lang['Quick_nav'],
 		'L_QUICK_JUMP' => $lang['Quick_jump'],
-		'QUICK_NAV' => $kb_quick_nav,
+		'QUICK_NAV' => ( isset($kb_quick_nav) ? $kb_quick_nav : '' ) ,
 		
 		'S_AUTH_LIST' => ( isset($kb_auth_can) ? $kb_auth_can : '' ),
 		
