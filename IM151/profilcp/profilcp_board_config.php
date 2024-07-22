@@ -42,7 +42,7 @@ if ( !empty($setmodules) )
   foreach ($user_maps as $map_name => $map_data)
 	{
 		$map_tree = explode('.', $map_name);
-		if ( ($map_tree[0] == 'PCP') && !empty($map_data['custom']) )
+		if ( ($map_tree[0] == 'PCP') && isset($map_data['custom']) && $map_data['custom'] == 1)
 		{
 			// get this map
 			$map_tree = explode('.', $map_name);
@@ -628,11 +628,7 @@ if ($submit)
 	}
 
 	// send items
-	$items_to_send = [];
-	if (isset($mods[$menu_name]['data'][$mod_name]['data'][$sub_name]['data']))
-	{
-		$items_to_send = $mods[$menu_name]['data'][$mod_name]['data'][$sub_name]['data'];
-	}
+	$items_to_send = $mods[$menu_name]['data'][$mod_name]['data'][$sub_name]['data'];
   foreach ($items_to_send as $field_name => $field)
 	{
 		// process only not overwritten fields from users table and system fields
@@ -685,13 +681,16 @@ if ($submit)
 					$input = '';
 					if ( !empty($field['get_func']) && function_exists($field['get_func']) )
 					{
-						$input = $field['get_func']($user_field, $view_userdata[$user_field]);
+						$input = $field['get_func']($user_field, ( isset($view_userdata[$user_field]) ? $view_userdata[$user_field] : '' ) );
 					}
 					break;
 			}
 			// show who can see the info depending on class
-			if ($field['visibility']){
-				if ($field['class'] != 'generic'){ 
+			if (!empty($field['visibility'])){
+				// V: should system just hide?
+				if ($field['class'] == 'system') {
+					$viewed_by = NO;
+				} else if ($field['class'] != 'generic'){ 
 					$see_field = $classes_fields[$field['class']]['user_field']; 
 					if($board_config[$see_field.'_over']){ 
 						$viewed_by = $board_config[$see_field]; 
@@ -731,13 +730,13 @@ if ($submit)
 			}
 			// dump to template
 			$inputstyle = 'field';
-			if($field['inputstyle']){
+			if(!empty($field['inputstyle'])){
 				$inputstyle = $field['inputstyle'];
 			}
 			$template->assign_block_vars($inputstyle, array(
 				'L_NAME'	=> mods_settings_get_lang($field['lang_key']),
 				'L_EXPLAIN'	=> (!empty($field['explain']) ? '<br />' . mods_settings_get_lang($field['explain']) : '').$viewed,
-				'INPUT'		=> $input.($field['required'] ? $lang['Required_field'] : ''),
+				'INPUT'		=> $input.(!empty($field['required']) ? $lang['Required_field'] : ''),
 				)
 			);
 		}

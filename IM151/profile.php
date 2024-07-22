@@ -204,7 +204,6 @@ for ($i=0; ( ($i < count($module['mode'])) && ($curopt < 0) ); $i++ )
 	if ($mode == $module['mode'][$i])
 	{
 		$curopt = $i;
-		break;
 	}
 }
 
@@ -222,7 +221,6 @@ for ($i=0; ( ($i < $mode_count) && ($cur_subopt < 0) ); $i++ )
 	if ($sub == $module['sub'][$curopt]['mode'][$i])
 	{
 		$cur_subopt = $i;
-		break;
 	}
 }
 if ( ($cur_subopt < 0) && (count($module['sub'][$curopt]) > 0) )

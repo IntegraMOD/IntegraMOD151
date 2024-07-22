@@ -924,9 +924,9 @@ function pcp_user_photo_upload($photo_mode, &$current_photo, &$current_type, &$e
 		$module['shortcut'][$idx]		= empty($module['shortcut'][$idx]) ? $lang[$shortcut] : $module['shortcut'][$idx];
 		$module['page_title'][$idx]		= empty($module['page_title'][$idx]) ? $lang[$page_title] : $module['page_title'][$idx];
 
-		if ( isset($user_maps['PCP.' . $mode]['order']) )
+		if ( isset($user_maps['PCP.' . $mode]) )
 		{
-			$module['sort'][$idx] = $user_maps['PCP.' . $mode]['order'];
+			$module['sort'][$idx] = isset($user_maps['PCP.' . $mode]['order']) ? $user_maps['PCP.' . $mode]['order'] : 0;
 		}
 
 		return $idx;
@@ -970,9 +970,9 @@ function pcp_user_photo_upload($photo_mode, &$current_photo, &$current_type, &$e
 		$module['sub'][$idx]['shortcut'][$sub_idx]		= empty($module['sub'][$idx]['shortcut'][$sub_idx]) ? $lang[$sub_shortcut] : $module['sub'][$idx]['shortcut'][$sub_idx];
 		$module['sub'][$idx]['page_title'][$sub_idx]	= empty($module['sub'][$idx]['page_title'][$sub_idx]) ? $lang[$sub_page_title] : $module['sub'][$idx]['page_title'][$sub_idx];
 
-		if ( isset($user_maps['PCP.' . $mode . '.' . $sub_mode]['order']) )
+		if ( isset($user_maps['PCP.' . $mode . '.' . $sub_mode]) )
 		{
-			$module['sub'][$idx]['sort'][$sub_idx] = $user_maps['PCP.' . $mode . '.' . $sub_mode]['order'];
+			$module['sub'][$idx]['sort'][$sub_idx] = isset($user_maps['PCP.' . $mode . '.' . $sub_mode]['order']) ? $user_maps['PCP.' . $mode . '.' . $sub_mode]['order'] : 0;
 		}
 	}
 

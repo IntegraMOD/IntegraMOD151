@@ -71,7 +71,7 @@ $limit_sql = ($start == 0) ? $pics_per_page : $start .','. $pics_per_page;
 $list_sql = '';
 $count_sql = '';
 //$album_view_type = ALBUM_LISTTYPE_PICTURES;
-switch (strtolower($album_view_type))
+switch (isset($album_view_type) ? strtolower($album_view_type) : '')
 {
 	case ALBUM_LISTTYPE_RATINGS:
 		$album_view_type = ALBUM_LISTTYPE_RATINGS;

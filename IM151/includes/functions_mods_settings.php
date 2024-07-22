@@ -130,7 +130,7 @@ function init_board_config($mod_name, $config_fields, $sub_name='', $sub_sort=0,
 		if (!isset($config_data['default']))
 		{ // V: some keys (...like "username") have no default. Prevent warnings here.
 		  // Really, they ought *not* to be created as board config keys...
-			$config_data['default'] = 0;
+			$config_data['default'] = NULL;
 		}
 		if (!isset($config_data['user_only']) || !$config_data['user_only'])
 		{

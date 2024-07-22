@@ -2816,6 +2816,8 @@ function pm_track_all_history($id_for_pm_track, $pm_pass_id = 0, $pass = 0)
 
 		if ( ( $counter_list_row > $pass ) && ( $pm_track_id != 0 ) )
 		{
+			$row_color = $theme['td_color1'];
+			$row_class = $theme['td_class1'];
 			for ($i = 0; $i < $counter_list_row; $i++)
 			{
 				$is_current = ($list_row[$i]['privmsgs_id'] == $pm_pass_id);
@@ -2924,7 +2926,7 @@ function pm_track_all_history($id_for_pm_track, $pm_pass_id = 0, $pass = 0)
 			}
 		}
 	}
-	if ( ( $counter_list_row > $pass ) && ( $pm_track_id != 0 ) )
+	if ( isset($counter_list_row) && ( $counter_list_row > $pass ) && ( $pm_track_id != 0 ) )
 	{
 		$template->assign_var_from_handle('TOPIC_REVIEW_BOX', 'pm_tracker');
 	}

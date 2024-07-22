@@ -646,10 +646,8 @@ if (empty($gen_simple_header))
 	
 	if ($report_general && $report_general->auth_check('auth_write'))
 	{
-		$template->assign_block_vars('switch_report_general', array(
-			'HAS_SEPARATOR' => $report_list != '', // todo $images['menu_delimeter']?
-		));
-		
+		$template->assign_block_vars('switch_report_general', array());
+
 		$template->assign_vars(array(
 			'U_WRITE_REPORT' => append_sid("report.$phpEx?mode=" . $report_general->mode),
 			'L_WRITE_REPORT' => $report_general->lang['Write_report'])

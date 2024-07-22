@@ -547,7 +547,7 @@ class ct_userfunctions
 		global $db, $lang, $ctracker_config;
 
 		// Build expire date
-		define(SECONDS_OF_THE_DAY, 86400);
+		define('SECONDS_OF_THE_DAY', 86400);
 		$exp_time_stamp = time() + intval($ctracker_config->settings['pwreset_time']) * SECONDS_OF_THE_DAY;
 
 		// Ensure $user_id is integer

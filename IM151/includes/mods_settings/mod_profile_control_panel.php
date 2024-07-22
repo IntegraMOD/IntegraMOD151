@@ -858,6 +858,7 @@ if (!function_exists('mods_get_confirm_code'))
 			$code = str_replace('0', '', $code); // NB 0 (zero) could get confused with O (the letter) so we remove it
 			$code = substr($code, 2, $code_length);
 
+			$user_ip = $_SERVER['REMOTE_ADDR'];
 			$confirm_id = md5(uniqid($user_ip));
 
 			$sql = 'INSERT INTO ' . CONFIRM_TABLE . " (confirm_id, session_id, code)
@@ -945,6 +946,7 @@ if (!function_exists('mods_get_password'))
     { 
         global $is_guest, $lang; 
         // only show extra info if not guest 
+				$pass = '';
         if(strtolower($field) == 'user_password' && !$is_guest){ 
             $pass = '<i><span class="gensmall">'.$lang['password_if_changed'].'</span></i><br>'; 
         } else if (strtolower($field) == 'user_password_confirm' && !$is_guest){ 

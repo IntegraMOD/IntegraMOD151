@@ -72,7 +72,7 @@ if($portal_config['cache_enabled'])
 	$layout_row=$var_cache->get('lr' . strval($layout), 86400, 'layout');	
 if(!$layout_row)
 {
-	$sql = "SELECT template, forum_wide, view, groups, pagetitle FROM " . LAYOUT_TABLE . " WHERE lid = '" . $layout . "'";
+	$sql = "SELECT template, forum_wide, view, pgroup, pagetitle FROM " . LAYOUT_TABLE . " WHERE lid = '" . $layout . "'";
 	if( !($layout_result = $db->sql_query($sql)) )
 	{
 		message_die(CRITICAL_ERROR, "Could not query portal layout information", "", __LINE__, __FILE__, $sql);

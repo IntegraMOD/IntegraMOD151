@@ -28,6 +28,7 @@ function setDefaultUserdata(&$data,$setalways=false){
 	if ( !$result = $db->sql_query($sql) ) {
 		message_die(GENERAL_ERROR, 'Could not get user table definition', '', __LINE__, __FILE__, $sql);
 	}
+
 	$userfields = array();
 	$defaults = array();
 	while ($row = $db->sql_fetchrow($result) ){

@@ -486,11 +486,11 @@ if ( $mode == 'read' )
 	$my_buddys = $db->sql_fetchrow($result);
 
 	$privmsg['user_friend']		= isset($buddys['buddy_ignore']) ? !$buddys['buddy_ignore'] : false;
-	$privmsg['user_ignore']		= $buddys['buddy_ignore'];
-	$privmsg['user_visible']	= $buddys['buddy_visible'];
+	$privmsg['user_ignore']		= !empty($buddys['buddy_ignore']);
+	$privmsg['user_visible']	= !empty($buddys['buddy_visible']);
 	$privmsg['user_my_friend']	= isset($my_buddys['buddy_ignore']) ? !$my_buddys['buddy_ignore'] :false;
-	$privmsg['user_my_ignore']	= $my_buddys['buddy_ignore'];
-	$privmsg['user_visible']	= $my_buddys['buddy_visible'];
+	$privmsg['user_my_ignore']	= !empty($my_buddys['buddy_ignore']);
+	$privmsg['user_visible']	= !empty($my_buddys['buddy_visible']);
 
 	// get user_to values
   foreach ($user_to as $key => $value)
@@ -530,11 +530,11 @@ if ( $mode == 'read' )
 	$my_buddys = $db->sql_fetchrow($result);
 
 	$privmsg['user_friend']		= isset($buddys['buddy_ignore']) ? !$buddys['buddy_ignore'] : false;
-	$privmsg['user_ignore']		= $buddys['buddy_ignore'];
-	$privmsg['user_visible']	= $buddys['buddy_visible'];
+	$privmsg['user_ignore']		= !empty($buddys['buddy_ignore']);
+	$privmsg['user_visible']	= !empty($buddys['buddy_visible']);
 	$privmsg['user_my_friend']	= isset($my_buddys['buddy_ignore']) ? !$my_buddys['buddy_ignore'] :false;
-	$privmsg['user_my_ignore']	= $my_buddys['buddy_ignore'];
-	$privmsg['user_visible']	= $my_buddys['buddy_visible'];
+	$privmsg['user_my_ignore']	= !empty($my_buddys['buddy_ignore']);
+	$privmsg['user_visible']	= !empty($my_buddys['buddy_visible']);
 
 	// get user_from values
   foreach ($user_from as $key => $value)
@@ -2166,6 +2166,7 @@ else
 	}
 	else
 	{
+		$limit_msg_time_total = '';
 		$limit_msg_time = '';
 		$post_days = 0;
 	}
@@ -2207,7 +2208,7 @@ else
 	$select_msg_days = '';
 	for($i = 0; $i < count($previous_days); $i++)
 	{
-		$selected = ( $msg_days == $previous_days[$i] ) ? ' selected="selected"' : '';
+		$selected = ( isset($msg_days) && $msg_days == $previous_days[$i] ) ? ' selected="selected"' : '';
 		$select_msg_days .= '<option value="' . $previous_days[$i] . '"' . $selected . '>' . $previous_days_text[$i] . '</option>';
 	}
 
@@ -2302,8 +2303,8 @@ else
 		'S_POST_NEW_MSG' => $post_new_mesg_url,
 		'S_SELECT_MSG_DAYS' => $select_msg_days,
 
-		'U_POST_NEW_TOPIC' => $post_new_topic_url)
-	);
+		'U_POST_NEW_TOPIC' => ( isset($post_new_topic_url) ? $post_new_topic_url : '' )
+	));
 
 	if (!in_array($folder, array('savebox', 'outbox')))
 	{

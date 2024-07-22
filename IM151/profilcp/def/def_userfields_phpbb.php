@@ -152,7 +152,7 @@ $phpbb_user_fields = array(
 	'user_emailtime' => array(
 		'type'		=> 'INT',
 		'length'	=> 11,
-		'default'	=> NULL,
+		'default'	=> 0,
 	),
 	'user_viewemail' => array(
 		'type'		=> 'TINYINT',

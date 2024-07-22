@@ -443,7 +443,7 @@ if ($foreground_lattice_x)
 }
 
 // Font debug
-if ($font_debug && !$rnd_font)
+if (!empty($font_debug) && !$rnd_font)
 {
 	imagestring($image, 4, 2, 0, ($font + 1).'/'.count($fonts).': '.$fonts[$font], $white);
 	imagestring($image, 4, 5, 0, ($font + 1).'/'.count($fonts).': '.$fonts[$font], $white);
@@ -452,7 +452,7 @@ if ($font_debug && !$rnd_font)
 	imagestring($image, 4, 3, 1, ($font + 1).'/'.count($fonts).': '.$fonts[$font], $black);
 }
 // Bg-image debug
-if ($bg_img_debug && $bg_image_active)
+if (!empty($bg_img_debug) && $bg_image_active)
 {
 	$lang['AVC_bg-error'][0] = ($bg_img + 1).'/'.count($bg_imgs).': '.$bg_imgs[$bg_img];
 	$lang['AVC_bg-error'][1] = 'No picture available';

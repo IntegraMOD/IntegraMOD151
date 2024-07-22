@@ -33,6 +33,11 @@ if ( !defined('IN_PHPBB') )
 	die('Hacking attempt');
 }
 
+if (defined('PAGE_ALBUM'))
+{
+	return;
+}
+
 define('PAGE_ALBUM', -50);	// for Session Handling
 define('PAGE_ALBUM_PERSONAL', -51);
 define('PAGE_ALBUM_PICTURE', -52);

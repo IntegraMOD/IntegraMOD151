@@ -175,9 +175,8 @@ else
 
 	'U_ALL_IMAGES_BY_USER' => append_sid("album.$phpEx?user_id=" . $view_userdata['user_id'] . "&mode=" . ALBUM_VIEW_LIST),
 	'L_ALL_IMAGES_BY_USER' => sprintf($lang['Picture_List_Of_User'], $view_userdata['username']),
-	'L_PROFILE_ALBUM' => $lang['Your_Profile_Album'],
+	'L_PROFILE_ALBUM' => $lang['Your_Personal_Gallery'],
 
-	'L_PROFILE_ALBUM' => $lang['Your_Profile_Gallery'],
 	'L_PERSONAL_ALBUM' => $lang['Your_Personal_Gallery'],
 	'L_PIC_TITLE' => $lang['Pic_Image'],
 	'L_POSTER' => $lang['Pic_Poster'],
@@ -221,7 +220,7 @@ foreach ($user_maps as $map_name => $map_data)
 	if ( (substr($map_name, 0, strlen($map_base)) == $map_base) && ( !empty($map_data['title']) || !empty($map_data['fields']) ) )
 	{
 		$maps[] = $map_name;
-		$map_orders[] = $user_maps[$map_name]['order'];
+		$map_orders[] = ( isset($user_maps[$map_name]['order']) ? $user_maps[$map_name]['order'] : 0 ) ;
 	}
 }
 array_multisort($map_orders, $maps);
@@ -230,7 +229,7 @@ array_multisort($map_orders, $maps);
 $col = 1;
 for ($i=0; $i < count($maps); $i++)
 {
-	if ( ($i != 0) && $user_maps[ $maps[$i] ]['split'] )
+	if ( ($i != 0) && isset($user_maps[ $maps[$i] ]['split']) && $user_maps[ $maps[$i] ]['split'] )
 	{
 		$col++;
 	}
@@ -251,7 +250,7 @@ $template->assign_vars(array(
 for ($i = 0; $i < count($maps); $i++ )
 {
 	$split = false;
-	if ( $user_maps[ $maps[$i] ]['split'] )
+	if ( !empty($user_maps[ $maps[$i] ]['split'] ) )
 	{
 		$split = true;
 		$template->assign_block_vars('col', array());
@@ -261,7 +260,7 @@ for ($i = 0; $i < count($maps); $i++ )
 	$col = 1;
   foreach ( $user_maps[ $maps[$i] ]['fields']  as $field_name => $field_data)
 	{
-		if ( $field_data['leg'] && ($field_data['img'] || $field_data['txt']) )
+		if ( !empty($field_data['leg']) && (!empty($field_data['img']) || !empty($field_data['txt'])) )
 		{
 			$col++;
 			$col++;

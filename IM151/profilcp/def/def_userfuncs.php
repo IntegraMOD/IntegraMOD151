@@ -319,9 +319,9 @@ function pcp_output($field_name, &$view_userdata, $map_name='', $legend_only=fal
 		$lnk = ( isset($field_data['link']) ? $field_data['link'] : '' );
 		$res = '';
 		$constant_link = $lnk && !isset($view_userdata[$field_name]) && ( ($field_data['txt'] && !empty($field_data['title'])) || ($field_data['img'] && !empty($field_data['image'])) );
-		if  ( $view_userdata['user_id'] != ANONYMOUS && ( !empty($view_userdata[$field_name]) || (!empty($field_data['leg']) && !$field_data['txt'] && !$field_data['img']) || $constant_link ) )
+		if  ( $view_userdata['user_id'] != ANONYMOUS && ( !empty($view_userdata[$field_name]) || (!empty($field_data['leg']) && empty($field_data['txt']) && empty($field_data['img'])) || $constant_link ) )
 		{
-			$title = isset($field_data['title']) ? mods_settings_get_lang($field_data['title']) : $view_userdata[$field_name];
+			$title = isset($field_data['title']) ? mods_settings_get_lang($field_data['title']) : ( isset($view_userdata[$field_name]) ? $view_userdata[$field_name] : '' ) ;
 			$alt = mods_settings_get_lang($field_data['lang_key']);
 
 			switch ($field_data['type'])
@@ -344,7 +344,7 @@ function pcp_output($field_name, &$view_userdata, $map_name='', $legend_only=fal
 					}
 					break;
 				default:
-					$txt = $view_userdata[$field_name];
+					$txt = ( isset($view_userdata[$field_name]) ? $view_userdata[$field_name] : '' ) ;
 					if ( $lnk && !isset($view_userdata[$field_name]) )
 					{
 						$txt = $title;
@@ -670,9 +670,9 @@ function pcp_get_mods_setting_menu( $menu_id, $map_name='' )
 	global $values_list, $tables_linked, $classes_fields, $user_maps, $user_fields;
 
 	$res = array();
-	if ( !empty($map_name) && isset($user_maps[$map_name])  && isset($user_maps[$map_name][$menu_id]))
+	if ( !empty($map_name) && isset($user_maps[$map_name]) )
 	{
-		$res = $user_maps[$map_name][$menu_id];
+		$res = ( isset($user_maps[$map_name][$menu_id]) ? $user_maps[$map_name][$menu_id] : NULL ) ;
 	}
 
 	return $res;
@@ -744,7 +744,7 @@ function display_field($userfield, &$viewdata){
     if ($userdata['user_id'] == ANONYMOUS) { 
         // guest user logged in ==> hide 
         $display = false; 
-    } else if ($viewdata['viewed_by_admin']) { 
+    } else if (!empty($viewdata['viewed_by_admin'])) { 
         // 3) show + override the view_user value 
         $display = true; 
         if($override){ 
