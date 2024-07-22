@@ -210,12 +210,12 @@ function get_kb_nav( $parent )
 function get_kb_articles( $id = false, $approve = false, $block_name = null, $start = -1, $articles_in_cat = 0, $kb_is_auth = '' )
 {
 	global $db, $template, $images, $phpEx, $module_root_path, $phpbb_root_path, $mx_root_path, $board_config, $lang, $is_block, $page_id, $is_admin, $userdata;
-	global $kb_news_sort_method_extra, $kb_news_sort_method, $kb_news_sort_par, $kb_config, $kb_is_auth; 
+	global $kb_news_sort_method_extra, $kb_news_sort_method, $kb_news_sort_par, $kb_config, $kb_is_auth, $agcm_color; 
 	
    /*$sql = "SELECT t.*, u.user_id, u.user_rank, u.user_sig, u.user_sig_bbcode_uid, u.user_allowsmile
          FROM " . KB_ARTICLES_TABLE . " t, " . USERS_TABLE . " u
          WHERE ";*/
-   $sql = "SELECT t.article_id, t.article_category_id, t.article_title, t.article_description, t.article_date, t.article_author_id, t.username, t.article_type, t.approved, t.views, t.article_rating, t.article_totalvotes, u.user_id, u.user_rank, u.user_sig, u.user_sig_bbcode_uid, u.user_allowsmile
+   $sql = "SELECT t.article_id, t.article_category_id, t.article_title, t.article_description, t.article_date, t.article_author_id, t.username, t.article_type, t.approved, t.views, t.article_rating, t.article_totalvotes, u.user_id, u.user_rank, u.user_sig, u.user_sig_bbcode_uid, u.user_allowsmile, u.user_group_id, u.user_session_time, u.username
          FROM " . KB_ARTICLES_TABLE . " t, " . USERS_TABLE . " u
          WHERE ";
 
@@ -276,10 +276,8 @@ function get_kb_articles( $id = false, $approve = false, $block_name = null, $st
 		}
 		else
 		{
-			$author_name = get_kb_author( $author_id );
-
 			$temp_url = append_sid( $phpbb_root_path . "profile.$phpEx?mode=viewprofile&amp;" . POST_USERS_URL . "=$author_id" );
-			$author = '<a href="' . $temp_url . '" class="gen">' . $author_name . '</a>';
+			$author = '<a href="' . $temp_url . '" class="gen">' . $agcm_color->get_user_color($article['user_group_id'], $article['user_session_time'], $article['username']) . '</a>';
 		}
 
 		$article_id = $article['article_id'];
@@ -1577,7 +1575,7 @@ function this_kb_mxurl_search( $args = '', $force_standalone_mode = false )
 function get_kb_comments( $topic_id = '', $start = -1, $show_num_comments = 0 )
 {
 	global $db, $board_config, $template, $phpbb_root_path, $mx_root_path, $module_root_path, $phpEx, $is_block, $page_id;
-	global $post_time_order, $lang;
+	global $post_time_order, $lang, $agcm_color;
 
 	if ( $topic_id == '' )
 	{
@@ -1589,7 +1587,7 @@ function get_kb_comments( $topic_id = '', $start = -1, $show_num_comments = 0 )
 	
 	// Go ahead and pull all data for this topic
 	
-	$sql = "SELECT u.username, u.user_id, u.user_posts, u.user_from, u.user_website, u.user_email, u.user_icq, u.user_aim, u.user_yim, u.user_regdate, u.user_msnm, u.user_viewemail, u.user_rank, u.user_sig, u.user_sig_bbcode_uid, u.user_avatar, u.user_avatar_type, u.user_allowavatar, u.user_allowsmile, p.*,  pt.post_text, pt.post_subject, pt.bbcode_uid
+	$sql = "SELECT u.username, u.user_id, u.user_posts, u.user_from, u.user_website, u.user_group_id, u.user_session_time, u.user_email, u.user_icq, u.user_aim, u.user_yim, u.user_regdate, u.user_msnm, u.user_viewemail, u.user_rank, u.user_sig, u.user_sig_bbcode_uid, u.user_avatar, u.user_avatar_type, u.user_allowavatar, u.user_allowsmile, p.*,  pt.post_text, pt.post_subject, pt.bbcode_uid
 		FROM " . POSTS_TABLE . " p, " . USERS_TABLE . " u, " . POSTS_TEXT_TABLE . " pt
 		WHERE p.topic_id = $topic_id
 			AND pt.post_id = p.post_id
@@ -1632,7 +1630,7 @@ function get_kb_comments( $topic_id = '', $start = -1, $show_num_comments = 0 )
 	for( $i = $i_init; $i < $total_posts; $i++ )
 	{
 		$poster_id = $postrow[$i]['user_id'];
-		$poster = ( $poster_id == ANONYMOUS ) ? $lang['Guest'] : $postrow[$i]['username'];
+		$poster = ( $poster_id == ANONYMOUS ) ? $lang['Guest'] : $agcm_color->get_user_color($postrow[$i]['user_group_id'], $postrow[$i]['user_session_time'], $postrow[$i]['username']);
 
 		$post_date = create_date( $board_config['default_dateformat'], $postrow[$i]['post_time'], $board_config['board_timezone'] );
 

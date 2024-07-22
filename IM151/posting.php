@@ -236,7 +236,7 @@ if ($forum_id) {
 } else { 
     message_die(GENERAL_ERROR, 'Could not fetch forum id for setting up security', '', __LINE__, __FILE__, $sql); 
 } 
-$is_auth = $tree['auth'][POST_FORUM_URL . $auth_forum]; 
+$is_auth = $forum_id >= 0 ? $tree['auth'][POST_FORUM_URL . $auth_forum] : NULL; 
 //-- mod : calendar --------------------------------------------------------------------------------
 //-- add
 $is_auth_type = '';

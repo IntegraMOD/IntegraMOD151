@@ -89,7 +89,7 @@ for ($i = 0; $i < $user_count; $i++)
 	$total_posts_thisweek += intval($user_data[$i]['user_posts']);
 }
 
-$content->init_math('user_posts', $user_data[0]['user_posts'], $total_posts_thisweek);
+$content->init_math('user_posts', ( isset($user_data[0]['user_posts']) ? $user_data[0]['user_posts'] : 0 ) , $total_posts_thisweek);
 $core->set_data($user_data);
 
 $core->make_global(array('$agcm_color'));

@@ -169,7 +169,7 @@ function pcp_output_session_page($field_name, $view_userdata, $map_name='')
     } else { 
         $txt = $location; 
     } 
-    $res = pcp_output_format($field_name, $txt, $img, $map_name); 
+    $res = pcp_output_format($field_name, $txt, '', $map_name); 
     return $res; 
 } 
 
@@ -186,7 +186,7 @@ function pcp_output_session_time($field_name, $view_userdata, $map_name='')
     } else { 
         $txt = create_date('H:i:s', $view_userdata[$field_name], $board_config['board_timezone']); 
     } 
-    $res = pcp_output_format($field_name, $txt, $img, $map_name); 
+    $res = pcp_output_format($field_name, $txt, '', $map_name); 
     return $res; 
 }
 ?>

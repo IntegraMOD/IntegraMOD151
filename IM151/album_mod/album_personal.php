@@ -38,12 +38,13 @@ if ( !defined('IN_PHPBB') )
 // Get the name of this user
 // ------------------------------------------------------------------------
 $username = album_get_user_name($album_user_id);
+$username_colored = album_get_user_name_colored($album_user_id);
 if (empty($username))
 {
 	message_die(GENERAL_MESSAGE, $lang['No_user_id_specified']);
 }
 
-$moderators_list =  empty($moderators_list) ? $username : ',' . $username;
+$moderators_list =  empty($moderators_list) ? $username_colored : ',' . $username_colored;
 
 // check if personal gallery root category exists
 if (ALBUM_ROOT_CATEGORY == ($check_cat_id = album_get_personal_root_id($album_user_id)))

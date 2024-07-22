@@ -97,6 +97,7 @@ else
 	message_die(GENERAL_ERROR, 'No categories specified');
 }
 
+$album_view_mode = '';
 if (isset ($_POST['mode']))
 {
 	$album_view_mode = strtolower($_POST['mode']);
@@ -469,7 +470,7 @@ if ($album_user_id == ALBUM_PUBLIC_GALLERY)
 		// ------------------------------------
 		// Build Recent Public Pics
 		// ------------------------------------
-		if ($has_sub_cats && $album_config['show_recent_instead_of_nopics'] == 1)
+		if (!empty($has_sub_cats) && $album_config['show_recent_instead_of_nopics'] == 1)
 		{
 			album_build_recent_pics($allowed_cat);
 		}

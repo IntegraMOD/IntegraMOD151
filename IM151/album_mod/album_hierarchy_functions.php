@@ -272,7 +272,7 @@ function album_build_index($user_id, &$keys, $cur_cat_id = ALBUM_ROOT_CATEGORY, 
 		album_get_sub_cat_ids($cat_id, $cats, ALBUM_AUTH_VIEW, ALBUM_INCLUDE_PARENT_ID);
 
 		// we got the cat_id, we now need to get the value for the next sub category for this category
-		for ($j = 0; $j < count($album_data['sub'][$cur_cat_id]); $j++)
+		for ($j = 0; isset($album_data['sub'][$cur_cat_id]) && $j < count($album_data['sub'][$cur_cat_id]); $j++)
 		{
 			$link = '';
 
@@ -404,7 +404,7 @@ function album_build_index($user_id, &$keys, $cur_cat_id = ALBUM_ROOT_CATEGORY, 
 		}
 
 		// Mighty Gorgon - Slideshow - BEGIN
-		$new_images = ((intval(($newestpic[$cur_cat_id])) != 0 ) || $new_images_flag) ? true : false;
+		$new_images = ((!empty(($newestpic[$cur_cat_id])) ) || !empty($new_images_flag));
 		if ( (album_get_total_pic_cat($cur_cat_id) > 0) && ($album_config['show_slideshow'] == 1) )
 		{
 			$first_pic_id = album_get_first_pic_id($cur_cat_id);
@@ -442,7 +442,7 @@ function album_build_index($user_id, &$keys, $cur_cat_id = ALBUM_ROOT_CATEGORY, 
 			)
 		);
 
-		if ( intval(($newestpic[ $cur_cat_id ])) != 0 )
+		if ( !empty(($newestpic[ $cur_cat_id ]))  )
 		{
 			$new_text = ($newestpic[ $cur_cat_id ] > 1) ? sprintf($lang['Multiple_new_pictures'], $newestpic[ $cur_cat_id ]) : sprintf($lang['One_new_picture'], $newestpic[ $cur_cat_id ]);
 			$new_images = (intval(($newestpic[ $cur_cat_id ])) != 0) ? true : false;
@@ -745,7 +745,7 @@ function album_get_sub_cat_ids($cur_cat_id = ALBUM_ROOT_CATEGORY, &$cats = [], $
 	}
 
 	// get all the sub category id for current sub category
-	for ($j=0; $j < count($album_data['sub'][$cur_cat_id]); $j++)
+	for ($j=0; isset($album_data['sub'][$cur_cat_id]) && $j < count($album_data['sub'][$cur_cat_id]); $j++)
 	{
 		$subcur = $album_data['sub'][$cur_cat_id][$j];
 		$subthis = $album_data['keys'][$subcur];
@@ -761,7 +761,7 @@ function album_get_sub_cat_ids($cur_cat_id = ALBUM_ROOT_CATEGORY, &$cats = [], $
 	}
 
 	// do this for each sub category... recursive
-	for ($i=0; $i < count($album_data['sub'][$cur_cat_id]); $i++)
+	for ($i=0; isset($album_data['sub'][$cur_cat_id]) && $i < count($album_data['sub'][$cur_cat_id]); $i++)
 	{
 		album_get_sub_cat_ids($album_data['sub'][$cur_cat_id][$i], $cats);
 	}

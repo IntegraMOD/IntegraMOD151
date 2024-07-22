@@ -12,7 +12,7 @@ class pafiledb_user_upload extends pafiledb_public
 {
 	function main($action)
 	{
-		global $_REQUEST, $_POST, $pafiledb_config, $phpbb_root_path;
+		global $_REQUEST, $_POST, $pafiledb_config, $phpbb_root_path, $board_config;
 		global $pafiledb_template, $db, $lang, $userdata, $user_ip, $phpEx, $pafiledb_functions;
 		
 		// =======================================================
@@ -88,6 +88,7 @@ class pafiledb_user_upload extends pafiledb_public
 			}
 		}
 
+		$s_hidden_fields = '';
 		// =======================================================
 		// IF submit then upload the file and update the sql for it
 		// =======================================================

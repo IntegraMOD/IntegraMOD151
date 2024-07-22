@@ -49,6 +49,7 @@ include($phpbb_root_path . 'pafiledb/pafiledb_common.'.$phpEx);
 //===================================================
 
 $action = ( isset($_REQUEST['action']) ) ? htmlspecialchars($_REQUEST['action']) : 'main';
+$s_hidden_fields = '';
 
 //===================================================
 // if the database disabled give them a nice message

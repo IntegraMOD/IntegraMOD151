@@ -2416,7 +2416,7 @@ if ( $userdata['user_allowsignature'] != 2 && $board_config['sig_allow_font_size
 				{
 					$approve_mod['posts_awaiting'] = true;
 				}  
-			} 
+			}
 			$approve_mod['moderators'] = explode('|', get_moderators_user_id_of_forum($forum_id));
 			
 			if ( in_array($userdata['user_id'], $approve_mod['moderators']) || $is_auth['auth_mod'] )

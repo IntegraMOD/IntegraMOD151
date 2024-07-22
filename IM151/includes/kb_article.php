@@ -103,9 +103,9 @@ if ( !empty($kb_row) )
 	}
 	else
 	{
-		$author_name = get_kb_author( $author_id );
+		$author_row = get_kb_author( $author_id, true );
 		$temp_url = append_sid( $phpbb_root_path . "profile.$phpEx?mode=viewprofile&amp;" . POST_USERS_URL . "=$author_id" );
-		$author_kb_art = '<a href="' . $temp_url . '" class="gensmall">' . $author_name . '</a>';
+		$author_kb_art = '<a href="' . $temp_url . '" class="gensmall">' . $agcm_color->get_user_color($author_row['user_group_id'], $author_row['user_session_time'], $author_row['username']) . '</a>';
 	}
 
 	$art_pages = explode( '[page]', stripslashes( $kb_row['article_body'] ) );

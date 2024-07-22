@@ -4,7 +4,7 @@
 <script src="language/{LANG}/calendar.js"></script>
 <script src="templates/_js/calendar-setup.js"></script>
 <!-- END switch_load_calendar -->
-<script">
+<script>
   is_delayed_allowed = 1;
 </script>
 <tr>

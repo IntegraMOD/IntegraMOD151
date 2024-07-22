@@ -91,6 +91,7 @@ else
 		)
 	);
 }
+$template->assign_var('S_DISPLAY_SEARCH', true);
 
 //-- mod : profile cp ------------------------------------------------------------------------------
 //-- add

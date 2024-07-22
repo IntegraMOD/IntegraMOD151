@@ -714,6 +714,34 @@ function album_get_user_name($user_id)
 }
 
 // ------------------------------------------------------------------------
+// Returns the colored name of an user
+// ------------------------------------------------------------------------
+function album_get_user_name_colored($user_id)
+{
+	global $db, $agcm_color;
+
+	if ($user_id == ALBUM_PUBLIC_GALLERY)
+	{
+		return "";
+	}
+
+	$sql = "SELECT username, user_group_id, user_session_time
+			FROM ". USERS_TABLE ."
+			WHERE user_id = $user_id
+			LIMIT 1";
+
+	if( !($result = $db->sql_query($sql)) )
+	{
+		message_die(GENERAL_ERROR, 'Could not get the username of this category owner', '', __LINE__, __FILE__, $sql);
+	}
+
+	$row = $db->sql_fetchrow($result);
+	$db->sql_freeresult($result);
+
+	return $agcm_color->get_user_color($row['user_group_id'], $row['user_session_time'], $row['username']);
+}
+
+// ------------------------------------------------------------------------
 // Get last picture info from database in the specified categories ($cats)
 // Functions is based on the SP mod by CLowN
 // ------------------------------------------------------------------------
@@ -1437,7 +1465,7 @@ function album_build_highest_rated_pics($cats)
 				}
 			}
 		}
-		elseif ($rated_images == 0)
+		elseif (empty($rated_images))
 		{
 			// No Pics Found
 			$template->assign_block_vars('highest_pics_block.no_pics', array());

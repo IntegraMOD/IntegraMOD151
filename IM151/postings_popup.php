@@ -99,7 +99,7 @@ for($i = 0; $i < $total_rows; $i++)
 	{
 		$flag = '*&nbsp;';
 	}
-	$sql = "SELECT u.username 
+	$sql = "SELECT u.username, u.user_group_id, u.user_session_time
 		FROM " . USERS_TABLE . " u
 		WHERE user_id = $poster_id"; 
 	if ( !($result = $db->sql_query($sql)) )
@@ -119,7 +119,7 @@ for($i = 0; $i < $total_rows; $i++)
 	}
 
 	$template->assign_block_vars('topicrow', array(
-		'POSTER' => $poster,
+		'POSTER' => $agcm_color->get_user_color($row['user_group_id'], $row['user_session_time'], $poster),
 		'FLAG' => $flag,
 		'POSTS' => $posts,
 		'POSTER_URL' => $poster_url,
