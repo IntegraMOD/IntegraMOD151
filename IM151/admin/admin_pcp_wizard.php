@@ -149,16 +149,14 @@ function buddylist(){
 }
 
 function find_buddy_fields($var){
-	if($var['ind'] || $var['dft'] || $var['rqd'] || $var['hidden']){ 
-		return 1;
-	} else return 0;
+	return !empty($var['ind']) || !empty($var['dft']) || !empty($var['rqd']) || !empty($var['hidden']);
 }
 
 function sortfields($array,$sortkey){
 	// make a new array to sort on...
 	foreach ($array as $key => $data)
 	{
-		$sort[] = $data[$sortkey];
+		$sort[] = ( isset($data[$sortkey]) ? $data[$sortkey] : '' );
 	}
 	array_multisort($sort,SORT_ASC,SORT_NUMERIC,$array);
 	return $array;
@@ -182,7 +180,11 @@ function buddyupdate(){
 					break;
 				case 'rqd':
 					$user_fields[$name]['rqd'] = 1;
-					unset($user_fields[$name]['dft'],$user_fields[$name]['hidden']);
+					unset($user_fields[$name]['dft']);
+					if (isset($user_fields[$name]['hidden']))
+					{
+						unset($user_fields[$name]['hidden']);
+					}
 					break;
 				case 'hidden':
 					$user_fields[$name]['hidden'] = 1;
@@ -224,7 +226,7 @@ function setBuddyInd($buddyfields){
 	foreach ($buddyfields as $key => $data)
 	{
 		// only ind when not hidden!
-		if($data['hidden']){
+		if(!empty($data['hidden'])){
 			unset($user_fields[$key]['ind']);
 		} else {
 			$user_fields[$key]['ind'] = $ind;
@@ -1845,17 +1847,18 @@ function backups(){
 	);
 	setMessage();
 	$dir = @opendir($defdir);
+	$fcolor=$pcolor=true;
 	while( $file = @readdir($dir) )
 	{
 		$restore = wizurl($restoremode,'file='.$file);
 		$delete = wizurl($deletemode,'file='.$file);
 		$view = $defdir.'/'.$file;
 		$afile = explode('.',$file);
-		$name = $afile[1];
-		$time = mktime(substr($name,8,2), substr($name,10,2), substr($name,12,2), substr($name,4,2), substr($name,6,2), substr($name,0,4));
-		$name = create_date($board_config['default_dateformat'], $time, $board_config['board_timezone']);
+		$name = ( isset($afile[1]) ? $afile[1] : '' ) ;
 		if( preg_match("/^def_userfields\.[0-9].*?$/", $file) ) {
 			$fcolor = !$fcolor;
+			$time = mktime(substr($name,8,2), substr($name,10,2), substr($name,12,2), substr($name,4,2), substr($name,6,2), substr($name,0,4));
+			$name = create_date($board_config['default_dateformat'], $time, $board_config['board_timezone']);
 			$template->assign_block_vars('fields', array(
 					'COLOR'			=> $fcolor ? 'row1' : 'row2',
 					'name'			=> $name,
@@ -1954,9 +1957,7 @@ function correctrequired(){
 }
 
 function find_required_fields($var){
-	if($var['required']){ 
-		return 1;
-	} else return 0;
+	return !empty($var['required']);
 }
 
 //---------------------------------

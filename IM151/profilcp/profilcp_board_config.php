@@ -42,7 +42,7 @@ if ( !empty($setmodules) )
   foreach ($user_maps as $map_name => $map_data)
 	{
 		$map_tree = explode('.', $map_name);
-		if ( ($map_tree[0] = 'PCP') && !empty($map_data['custom']) )
+		if ( ($map_tree[0] == 'PCP') && !empty($map_data['custom']) )
 		{
 			// get this map
 			$map_tree = explode('.', $map_name);
@@ -96,7 +96,7 @@ if ( !empty($setmodules) )
 			}
 		}
 	}
-	
+
 	// process the maps found
   foreach ($res_maps as $main => $main_data)
 	{
@@ -131,6 +131,7 @@ foreach ($view_userdata as $key => $data)
 $is_prior = ( $level_prior[get_user_level($userdata)] > $level_prior[get_user_level($view_userdata)] ) || (get_user_level($userdata) == ADMIN_FOUNDER);
 $is_admin = ( is_admin($userdata) && $is_prior );
 $is_board_admin = $is_admin && ($userdata['user_level'] == ADMIN);
+$is_guest = 0;
 if($userdata['user_id'] == -1){
 	$is_guest = 1;
 } 
@@ -179,7 +180,7 @@ $mod_sort = array();
 $sub_keys = array();
 $sub_sort = array();
 
-foreach ($mods[$menu_name]['data'] as $mod_name => $mod)
+foreach (( isset($mods[$menu_name]['data']) ? $mods[$menu_name]['data'] : [] ) as $mod_name => $mod)
 {
 	// check if there is some users fields
 	$found = false;
@@ -245,7 +246,7 @@ if ( $sub_id >= ( isset($sub_keys[$mod_id]) ? count($sub_keys[$mod_id]) : 0 ) )
 }
 
 // mod name
-$mod_name = $mod_keys[$mod_id];
+$mod_name = ( isset($mod_keys[$mod_id]) ? $mod_keys[$mod_id] : '' ) ;
 
 // sub name
 $sub_name = isset($sub_keys[$mod_id][$sub_id]) ? $sub_keys[$mod_id][$sub_id] : '';
@@ -382,6 +383,8 @@ if ($submit)
 		// get the defaults... 
 		setDefaultUserdata($values);
 		// get the fields and values
+		$sql_key = '';
+		$sql_val = '';
     foreach ($values as $key => $value)
     {
 			$sql_key .= ( empty($sql_key) ? '' : ', ') . $key;
@@ -625,7 +628,12 @@ if ($submit)
 	}
 
 	// send items
-  foreach ($mods[$menu_name]['data'][$mod_name]['data'][$sub_name]['data'] as $field_name => $field)
+	$items_to_send = [];
+	if (isset($mods[$menu_name]['data'][$mod_name]['data'][$sub_name]['data']))
+	{
+		$items_to_send = $mods[$menu_name]['data'][$mod_name]['data'][$sub_name]['data'];
+	}
+  foreach ($items_to_send as $field_name => $field)
 	{
 		// process only not overwritten fields from users table and system fields
 		$user_field = $field['user'];

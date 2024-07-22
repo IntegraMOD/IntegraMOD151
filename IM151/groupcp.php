@@ -658,7 +658,7 @@ else if ( $group_id )
 								}
 								while ( $row = $db->sql_fetchrow($result) );
 
-								while( list($user_id, $group_list) = @each($group_check) )
+								foreach ($group_check as $user_id => $group_list)
 								{
 									if ( count($group_list) == 1 )
 									{
@@ -1021,12 +1021,11 @@ if ( $modgroup_pending_count )
 	$user_id = $group_moderator['user_id'];
 	
 	// set the column names and the moderator!
-	@reset($user_maps['PHPBB.groupcp']['fields']);
 	$rowcount = count($user_maps['PHPBB.groupcp']['fields'])+1;
 	$width = 100/$rowcount;
 	$width .= '%';
 	preProcessUserConfig($group_moderator);
-	while (list($field_name, $field_data) = @each($user_maps['PHPBB.groupcp']['fields']) )
+	foreach ($user_maps['PHPBB.groupcp']['fields'] as $field_name => $field_data)
 	{
 		$leg = pcp_output($field_name, $group_moderator, 'PHPBB.groupcp' ,true);
 		$val = pcp_output($field_name, $group_moderator, 'PHPBB.groupcp');
@@ -1094,7 +1093,7 @@ if ( $modgroup_pending_count )
 		'GROUP_DESC' => $group_info['group_description'],
 		'GROUP_DETAILS' => $group_details,
 		'MOD_ROW_CLASS' => $theme['td_class1'],
-		'MOD_PANEL' => $panel,
+		'MOD_PANEL' => ( isset($panel) ? $panel : '' ) ,
 
 		'U_SEARCH_USER' => append_sid("search.$phpEx?mode=searchuser"), 
 
@@ -1143,9 +1142,8 @@ if ( $modgroup_pending_count )
 				)
 			);
 			
-			@reset($user_maps['PHPBB.groupcp']['fields']);
 			preProcessUserConfig($group_members[$i]);
-			while (list($field_name, $field_data) = @each($user_maps['PHPBB.groupcp']['fields']) )
+			foreach ($user_maps['PHPBB.groupcp']['fields'] as $field_name => $field_data)
 			{
 				$val = pcp_output($field_name, $group_members[$i], 'PHPBB.groupcp');
 				if(!$val){
@@ -1225,9 +1223,8 @@ if ( $modgroup_pending_count )
 					)
 				);
 				
-				@reset($user_maps['PHPBB.groupcp']['fields']);
 				preProcessUserConfig($modgroup_pending_list[$i]);
-				while (list($field_name, $field_data) = @each($user_maps['PHPBB.groupcp']['fields']) )
+				foreach ($user_maps['PHPBB.groupcp']['fields'] as $field_name => $field_data)
 				{
 					$val = pcp_output($field_name, $modgroup_pending_list[$i], 'PHPBB.groupcp');
 					if(!$val){

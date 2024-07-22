@@ -12,7 +12,6 @@
 <td class="cat" colspan="5">{TOTAL_REGISTERED_USERS_ONLINE}</td>
 </tr>
 <tr>
-<th>{L_AVATAR}</th>
 <th >{L_USERNAME}</th>
 <th >{L_LAST_UPDATE}</th>
 <th>{L_FORUM_LOCATION}</th>

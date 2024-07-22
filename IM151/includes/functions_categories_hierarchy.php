@@ -560,9 +560,9 @@ function set_tree_user_auth()
 		// grant the main level
 		if ($main != 'Root')
 		{
-			if ( (empty($tree['data'][$i]['tree.topic_last_post_id']) && !empty($tree['data'][$i]['topic_last_post_id'])) || (isset($tree['data'][$i]['post_time']) && $tree['data'][$i]['post_time'] > $tree['data'][$i]['tree.post_time']) )
+			if ( ( (empty($tree['data'][$i]['tree.topic_last_post_id']) && !empty($tree['data'][$i]['topic_last_post_id'])) || (isset($tree['data'][$i]['post_time']) && $tree['data'][$i]['post_time'] > $tree['data'][$i]['tree.post_time']) ) && isset($tree['data'][$i]['tree.post_time']) )
 			{
-				$tree['data'][$main_idx]['tree.topic_last_post_id']	= $tree['data'][$i]['tree.topic_last_post_id'];
+				$tree['data'][$main_idx]['tree.topic_last_post_id']	= $tree['data'][$i]['tree.topic_last_post_id'] ;
 				$tree['data'][$main_idx]['tree.post_time']			= $tree['data'][$i]['tree.post_time'];
 				$tree['data'][$main_idx]['tree.post_user_id']		= $tree['data'][$i]['tree.post_user_id'];
 				$tree['data'][$main_idx]['tree.post_username']		= $tree['data'][$i]['tree.post_username'];

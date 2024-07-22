@@ -471,7 +471,10 @@ if ( $mode == 'edit' )
 			// fill the result
 			foreach ($field_def as $def_key => $def_data)
 			{
-				$fields[$def_key][] = $field[$def_key];
+				if (isset($field[$def_key]))
+				{
+					$fields[$def_key][] = $field[$def_key];
+				}
 			}
 		}
 	}
@@ -580,13 +583,13 @@ if ( $mode == 'edit' )
 	}
 	for ( $i = 0; $i < $nb_fields; $i++ )
 	{
-		if ( substr($fields['field_name'][$i], 0, 4) == '[lf]' )
+		if ( isset($fields['field_name'][$i]) && substr($fields['field_name'][$i], 0, 4) == '[lf]' )
 		{
 			$lf_count++;
 		}
 		foreach ($field_def as $def_key => $def_data)
 		{
-			$fields[$def_key][$i] = isset($_POST['field_' . $def_key . '_' . $i]) ? $_POST['field_' . $def_key . '_' . $i] : $sav_fields[$def_key][$i];
+			$fields[$def_key][$i] = isset($_POST['field_' . $def_key . '_' . $i]) ? $_POST['field_' . $def_key . '_' . $i] : ( isset($sav_fields[$def_key][$i]) ? $sav_fields[$def_key][$i] : '' ) ;
 		}
 		if ( isset($_POST['edit_field_' . $i]) )
 		{
@@ -677,7 +680,7 @@ if ( $mode == 'edit' )
 			}
 
 			// get values from form
-			$field_det[$def_key] = isset($_POST['field_det_' . $def_key]) ? $_POST['field_det_' . $def_key] : $field_det[$def_key];
+			$field_det[$def_key] = isset($_POST['field_det_' . $def_key]) ? $_POST['field_det_' . $def_key] : ( isset($field_det[$def_key]) ? $field_det[$def_key] : '' ) ;
 		}
 		
 		/* PCP Extra :: REMOVED
@@ -813,24 +816,24 @@ if ( $mode == 'edit' )
 			}
 
 			// is the field name ok ?
-			if ( empty($field_det['field_name']) || !ereg("^[a-z0-9_\[]+", $field_det['field_name']) )
+			if ( empty($field_det['field_name']) || !preg_match("#^[a-z0-9_]+#", $field_det['field_name']) )
 			{
 				$error = true;
 				$error_msg .= ( empty($error_msg) ? '' : '<br />' ) . $lang['PCP_err_field_name_not_valid'];
 			}
 
 			// funcs
-			if ( !empty($field_det['dsp_func']) && !ereg("^[a-zA-Z0-9_]+", $field_det['dsp_func']) )
+			if ( !empty($field_det['dsp_func']) && !preg_match("#^[a-zA-Z0-9_]+#", $field_det['dsp_func']) )
 			{
 				$error = true;
 				$error_msg .= ( empty($error_msg) ? '' : '<br />' ) . $lang['PCP_err_field_dsp_func_not_valid'];
 			}
-			if ( !empty($field_det['get_func']) && !ereg("^[a-zA-Z0-9_]+", $field_det['get_func']) )
+			if ( !empty($field_det['get_func']) && !preg_match("#^[a-zA-Z0-9_]+#", $field_det['get_func']) )
 			{
 				$error = true;
 				$error_msg .= ( empty($error_msg) ? '' : '<br />' ) . $lang['PCP_err_field_get_func_not_valid'];
 			}
-			if ( !empty($field_det['chk_func']) && !ereg("^[a-zA-Z0-9_]+", $field_det['chk_func']) )
+			if ( !empty($field_det['chk_func']) && !preg_match("#^[a-zA-Z0-9_]+#", $field_det['chk_func']) )
 			{
 				$error = true;
 				$error_msg .= ( empty($error_msg) ? '' : '<br />' ) . $lang['PCP_err_field_chk_func_not_valid'];
@@ -951,7 +954,7 @@ if ( $mode == 'edit' )
 			$sav_cat = '';
 			foreach ($field_def as $def_key => $def_data)
 			{
-				$def_type = $def_data['type'];
+				$def_type = ( isset($def_data['type']) ? $def_data['type'] : '' ) ;
 				$def_name = 'field_det_' . $def_key;
 				$def_value = $field_det[$def_key];
 				if ($field_def[$def_key]['cat'] == $cur_cat)
@@ -1395,7 +1398,7 @@ if ( $mode == 'edit' )
 				);
 			}
 			$color = false;
-			for ( $i = 0; $i < count($fields['field_name']); $i++ )
+			for ( $i = 0; isset($fields['field_name']) && $i < count($fields['field_name']); $i++ )
 			{
 				$color = !$color;
 				$template->assign_block_vars('block.multi.row', array(
@@ -1405,15 +1408,17 @@ if ( $mode == 'edit' )
 				);
 				for ( $j = 0; $j < count($list_field); $j++ )
 				{
+					$cur_field = $list_field[$j];
+					$style = ( isset($field_def[$cur_field]['style']) ? $field_def[$cur_field]['style'] : '' ) ;
 					$template->assign_block_vars('block.multi.row.col', array(
-						'ALIGN'	=> empty($types_list[ $field_def[ $list_field[$j] ]['type'] ]['align']) ? 'left' : $types_list[ $field_def[ $list_field[$j] ]['type'] ]['align'],
-						'VALUE'	=> pcp_format_output( $field_def[ $list_field[$j] ]['type'], $fields[ $list_field[$j] ][$i], $field_def[ $list_field[$j] ]['style'] ),
+						'ALIGN'	=> empty($types_list[ $field_def[$cur_field]['type'] ]['align']) ? 'left' : $types_list[ $field_def[$cur_field]['type'] ]['align'],
+						'VALUE'	=> pcp_format_output( $field_def[$cur_field]['type'], $fields[$cur_field][$i], $style ),
 						)
 					);
 				}
 			}
 			// empty
-			if ( count($fields['field_name']) == 0 )
+			if ( empty($fields['field_name']) )
 			{
 				$template->assign_block_vars('block.multi.none', array());
 			}

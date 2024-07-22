@@ -360,7 +360,7 @@ if ( $mode == 'edit' )
 		@ksort($userdata);
 		$s_viewed_user = '<option value="" selected="selected">' . $lang['None'] . '</option>';
 		$s_acting_user = '<option value="" selected="selected">' . $lang['None'] . '</option>';
-		while ( list($field, $value) = @each($userdata) )
+		foreach ($userdata as $field => $value)
 		{
 			$n_field = intval($field);
 			if ($field != "$n_field")

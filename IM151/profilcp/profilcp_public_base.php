@@ -32,7 +32,7 @@ if ( !empty($setmodules) )
   foreach ($user_maps as $map_name => $map_data)
 	{
 		$map_tree = explode('.', $map_name);
-		if ( ($map_tree[0] = 'PCP') && isset($map_data['custom']) && ($map_data['custom'] == 2) )
+		if ( ($map_tree[0] == 'PCP') && isset($map_data['custom']) && ($map_data['custom'] == 2) )
 		{
 			// build 
 			$map_root = '';

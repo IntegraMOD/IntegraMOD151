@@ -273,7 +273,7 @@ if ($submit || $remove || $adduser || $no_header || $save || $confirm)
 		include( $phpbb_root_path . './profilcp/' . $module['sub'][$curopt]['url'][$cur_subopt] );
 	}
 	
-	if (!$error && !$no_header)
+	if (empty($error) && !$no_header)
 	{
 		$ret_link = append_sid("./profile.$phpEx?mode=$mode" . (($cur_subopt < 0) ? '' : "&sub=$sub") . "&" . POST_USERS_URL . "=$view_user_id" );
 		$template->assign_vars(array(
@@ -408,11 +408,11 @@ else
 	// module
 	if ( !empty($module['url'][$curopt]) && empty($module['sub'][$curopt]['url'][$cur_subopt]) )
 	{
-		@include( $phpbb_root_path . './profilcp/' . $module['url'][$curopt] );
+		include( $phpbb_root_path . './profilcp/' . $module['url'][$curopt] );
 	}
 	if ( !empty($module['sub'][$curopt]['url'][$cur_subopt]) )
 	{
-		@include( $phpbb_root_path . './profilcp/' . $module['sub'][$curopt]['url'][$cur_subopt] );
+		include( $phpbb_root_path . './profilcp/' . $module['sub'][$curopt]['url'][$cur_subopt] );
 	}
 	
 	// footer

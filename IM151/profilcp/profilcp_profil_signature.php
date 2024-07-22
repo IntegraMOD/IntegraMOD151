@@ -92,7 +92,7 @@ if ($submit || $preview)
 		$bbcode_error_list .= ( !$board_config['sig_allow_images'] && substr_count(strtolower($signature), '[/img]') > 0 ) ? '[img]' : '';
 
 		$exotic_bbcodes_list = explode(",", $board_config['sig_exotic_bbcodes_disallowed']);
-		while ( list($bbckey, $exotic_bbcode) = @each($exotic_bbcodes_list) )
+		foreach ($exotic_bbcodes_list as $bbckey => $exotic_bbcode)
 		{
 			$exotic_bbcode = trim(strtolower($exotic_bbcode));
 			if ( $exotic_bbcode != '' )
@@ -123,6 +123,7 @@ if ($submit || $preview)
 			$signature_no_bbcode = preg_replace("#\[img\].*?\[/img\]|\[\/?(size.*?|b|i|u|color.*?|quote.*?|code|list.*?|url.*?)\]#si", "", $signature);
 			$signature_splited = preg_split("/[\s,]+/", $signature_no_bbcode);
 
+			$words = [];
 			foreach($signature_splited as $key => $word)
 			{
 				$length = strlen($word);
@@ -161,11 +162,11 @@ if ($submit || $preview)
 		$total_image_files_size = 0;
 
 		if( 
-		$board_config['sig_allow_images'] && preg_match_all("#\[img\]((http|ftp|https|ftps)://)([^\r\n\t<\"]*?)\[/img\]#sie", $signature, $sig_images_list) ||
-		$board_config['sig_allow_images'] && preg_match_all("#\[img=left\]((http|ftp|https|ftps)://)([^\r\n\t<\"]*?)\[/img\]#sie", $signature, $sig_images_list) ||
-		$board_config['sig_allow_images'] && preg_match_all("#\[img=right\]((http|ftp|https|ftps)://)([^\r\n\t<\"]*?)\[/img\]#sie", $signature, $sig_images_list) ||
-		$board_config['sig_allow_images'] && preg_match_all("#\[img=center\]((http|ftp|https|ftps)://)([^\r\n\t<\"]*?)\[/img\]#sie", $signature, $sig_images_list) ||
-		$board_config['sig_allow_images'] && preg_match_all("#\[img=justify\]((http|ftp|https|ftps)://)([^\r\n\t<\"]*?)\[/img\]#sie", $signature, $sig_images_list)
+		$board_config['sig_allow_images'] && preg_match_all("#\[img\]((http|ftp|https|ftps)://)([^\r\n\t<\"]*?)\[/img\]#si", $signature, $sig_images_list) ||
+		$board_config['sig_allow_images'] && preg_match_all("#\[img=left\]((http|ftp|https|ftps)://)([^\r\n\t<\"]*?)\[/img\]#si", $signature, $sig_images_list) ||
+		$board_config['sig_allow_images'] && preg_match_all("#\[img=right\]((http|ftp|https|ftps)://)([^\r\n\t<\"]*?)\[/img\]#si", $signature, $sig_images_list) ||
+		$board_config['sig_allow_images'] && preg_match_all("#\[img=center\]((http|ftp|https|ftps)://)([^\r\n\t<\"]*?)\[/img\]#si", $signature, $sig_images_list) ||
+		$board_config['sig_allow_images'] && preg_match_all("#\[img=justify\]((http|ftp|https|ftps)://)([^\r\n\t<\"]*?)\[/img\]#si", $signature, $sig_images_list)
 		)
 		{
 			if( count($sig_images_list[0]) > $board_config['sig_max_images'] && $board_config['sig_max_images'] != 0 )
@@ -414,17 +415,17 @@ if ($submit || $preview)
 		}
 	}
 
-	if ( $error == TRUE && $sig_error_list )
+	if ( !empty($error) && $sig_error_list )
 	{
 		$error_msg .= ( ( isset($error_msg) ) ? '<br />' : '' ) . $lang['sig_error'] . '<br />' . $sig_error_list;
 	}
 	// End add - Signatures control MOD
 
-	if ( $error )
+	if ( !empty($error) )
 	{
 		message_die(GENERAL_ERROR, $error_msg);
 	}
-	if (!$error && !$preview)
+	if (empty($error) && !$preview)
 	{
 		// Start add - Signatures control MOD
 		if ( $board_config['allow_sig'] && $userdata['user_allowsignature'] != 0 )

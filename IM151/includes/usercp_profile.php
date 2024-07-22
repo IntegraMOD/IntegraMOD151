@@ -29,8 +29,10 @@ function setDefaultUserdata(&$data,$setalways=false){
 		message_die(GENERAL_ERROR, 'Could not get user table definition', '', __LINE__, __FILE__, $sql);
 	}
 	$userfields = array();
+	$defaults = array();
 	while ($row = $db->sql_fetchrow($result) ){
 		$userfields[] = $row['Field'];
+		$defaults[] = $row['Default'];
 	}
 	// fetch all fields and set the default to the value in configuration+
 	foreach ($mods as $k1 => $d1)
@@ -71,20 +73,19 @@ function setDefaultUserdata(&$data,$setalways=false){
 		message_die(GENERAL_ERROR, 'Could not get user table definition', '', __LINE__, __FILE__, $sql);
 	}
 	while ($row = $db->sql_fetchrow($result) ){*/
-	reset($userfields);
-	foreach ($userfields as $field) {
+	foreach ($userfields as $i => $field) {
 		$defaultfield = 'default_'.str_replace('user_','',$field);
 		$defaultfield_over =  $defaultfield.'_over';
-		if($board_config[$defaultfield_over]){
+		if(!empty($board_config[$defaultfield_over])){
 			// always set board config! default over is prior to configuration+ over
 			$data[$field] = $board_config[$defaultfield];
 		} else if(!isset($data[$field])){
-			if($board_config[$defaultfield] != ''){
+			if(!empty($board_config[$defaultfield])){
 				// set value as default
 				$data[$field] = $board_config[$defaultfield];
 			} else {
 				// set value as defined in table
-				$data[$field] = $row['Default'];
+				$data[$field] = $defaults[$i];
 			}
 		}
 	}

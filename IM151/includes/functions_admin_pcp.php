@@ -947,9 +947,9 @@ function pcp_output_maps($user_maps)
 		// map header
 		$template->assign_block_vars('map', array(
 			'NAME'			=> str_replace( "''", "\'", $map_name),
-			'ORDER'			=> str_replace( "''", "\'", $map_data['order']),
-			'SPLIT'			=> $map_data['split'] ? 'true' : 'false',
-			'CUSTOM'		=> intval($map_data['custom']),
+			'ORDER'			=> isset($map_data['order']) ? str_replace( "''", "\'", $map_data['order']) : '',
+			'SPLIT'			=> !empty($map_data['split']) ? 'true' : 'false',
+			'CUSTOM'		=> isset($map_data['custom']) ? intval($map_data['custom']) : 0,
 			'TITLE_SINGLE'	=> is_string($map_data['title']) ? str_replace( "''", "\'", $map_data['title']) : '',
 			)
 		);
@@ -957,7 +957,7 @@ function pcp_output_maps($user_maps)
 		{
 			$template->assign_block_vars('map.order', array());
 		}
-		if ( $map_data['split'] )
+		if ( !empty($map_data['split']) )
 		{
 			$template->assign_block_vars('map.split', array());
 		}
@@ -985,7 +985,9 @@ function pcp_output_maps($user_maps)
 				);
 				foreach ($field_def as $def_key => $def_value)
 				{
-					if ( ($def_key != 'field_name') && ($field_data[$def_key] != $user_fields[$field_name][$def_key]) && ( !empty($field_data[$def_key]) || ( empty($field_data[$def_key]) && !is_string($field_data[$def_key]) && ($field_data[$def_key] == "0") ) ) )
+					// V: I removed "empty($field_data[$def_key])", not sure if that's correct
+
+					if ( ($def_key != 'field_name') && ( ( !empty($field_data[$def_key]) && !is_string($field_data[$def_key]) && ($field_data[$def_key] == "0") && ($field_data[$def_key] != $user_fields[$field_name][$def_key]) ) ) )
 					{
 						$value = $field_data[$def_key];
 						if ( is_string($value) || ( empty($value) && ($value != "0") ) )
@@ -1024,7 +1026,7 @@ function pcp_output_maps($user_maps)
 				foreach ($field_def as $def_key => $def_value)
 				{
 					// use array_key_exists here, because we want to allow an empty value
-					if ( ($def_key != 'field_name') && ($field_data[$def_key] != $user_fields[$field_name][$def_key]) && array_key_exists($def_key, $field_data) )
+					if ( ($def_key != 'field_name') && array_key_exists($def_key, $field_data) && (!isset($user_fields[$field_name][$def_key]) || $field_data[$def_key] != $user_fields[$field_name][$def_key]) )
 					{
 						$data = $field_data[$def_key];
 						$pres = "'%s'";
@@ -1042,7 +1044,7 @@ function pcp_output_maps($user_maps)
 								break;
 						}
 						// do NOT check if data is set here, we know we have data if we arrived here after the if
-						if ($def_value['type'] == 'BOOLEAN')
+						if (isset($def_value['type']) && $def_value['type'] == 'BOOLEAN')
 						{
 							$data = $data ? 'true' : 'false';
 							$pres = '%s';
