@@ -106,10 +106,10 @@ if ($userdata['user_id'] == ANONYMOUS)
 }
 
 $not_group_allowed = FALSE;
-if(!empty($layout_row['groups']))
+if(!empty($layout_row['pgroup']))
 {
 	$not_group_allowed = TRUE;
-	$group_content = explode(",",$layout_row['groups']);
+	$group_content = explode(",",$layout_row['pgroup']);
 	for ($i = 0; $i < count($group_content); $i++)
 	{
 		if(in_array(intval($group_content[$i]), portal_groups($userdata['user_id'])))
