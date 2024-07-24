@@ -35,26 +35,24 @@
 		  <div class="p-0 flex-fill"><img src="{FORUM_LOCKED_IMG}" alt="{L_FORUM_LOCKED}" title="{L_FORUM_LOCKED}"/>{L_NO_NEW_POSTS}</div>
 		</div>
 	  </div>
-
-	  <div class="container-fluid mx-0 py-2 px-0">
-	    <div class="row mx-0 px-0">
-	      <div class="col-5">
-		  {MINI_CAL_OUTPUT}
-	      </div>
-		  <!-- BEGIN switch_user_logged_in -->
-		  <!-- Start add - Fully integrated shoutbox MOD -->
- 	  	  <div class="col forumline">
-		    <div class="row th">
-		      <div class="col cattitle pt-1"><a href="{U_SHOUTBOX_MAX}">{L_SHOUTBOX}</a></div>
-		    </div>
-		    <div class="row row2">
-		      <iframe src="{U_SHOUTBOX}" scrolling="NO" width="100%" height="210" frameborder="0" marginheight="0" marginwidth="0" allowtransparency="true"></iframe> 
-		    </div>
-		  </div>
-		  <!-- End add - Fully integrated shoutbox MOD -->
-		  <!-- END switch_user_logged_in -->
+ 
+    <div class="row mx-0 my-4">
+      <div class="col-3 d-inline forumline mx-0" style="min-width:250px">
+	    {MINI_CAL_OUTPUT}
+	  </div>
+	  <!-- BEGIN switch_user_logged_in -->
+	  <!-- Start add - Fully integrated shoutbox MOD -->
+	  <div class=" col row1 forumline ms-2 px-0">
+	    <div class="row th mx-0"> 
+		  <div class="col cattitle pt-2"><a href="{U_SHOUTBOX_MAX}">{L_SHOUTBOX}</a></div>
+	    </div>
+		<div class="row px-0">
+		  <div class="col mx-0"><iframe src="{U_SHOUTBOX}" scrolling="NO" width="100%" height="210" frameborder="0" marginheight="0" marginwidth="0" allowtransparency="true"></iframe></div>
 		</div>
 	  </div>
+	  <!-- End add - Fully integrated shoutbox MOD -->
+	  <!-- END switch_user_logged_in -->
+	</div>
 		  
 		  
 		  
