@@ -1,41 +1,29 @@
-<script type="text/javascript">
-<!--
-function checked_switch(form)
-{
-	var elements = document.forms[form].elements['reports[]'];
-	var count = elements.length;
-
-	if (count)
-	{
-		for (var i = 0; i < count; i++)
-		{
-			elements[i].checked = (elements[i].checked) ? false : true;
-		}
-	}
-	else
-	{
-		elements.checked = (elements.checked) ? false : true;
-	}
+<script>
+function checked_switch(form) {
+    var elements = document.forms[form].elements['reports[]'];
+    var count = elements.length;
+ 
+    if (count) {
+        for (var i = 0; i < count; i++) {
+            elements[i].checked = !elements[i].checked;
+        }
+    } else {
+        elements.checked = !elements.checked;
+    }
 }
-
-function checked_toggle(form, status)
-{
-	var elements = document.forms[form].elements['reports[]'];
-	var count = elements.length;
-
-	if (count)
-	{
-		for (var i = 0; i < count; i++)
-		{
-			elements[i].checked = status;
-		}
-	}
-	else
-	{
-		elements.checked = status;
-	}
+ 
+function checked_toggle(form, status) {
+    var elements = document.forms[form].elements['reports[]'];
+    var count = elements.length;
+ 
+    if (count) {
+        for (var i = 0; i < count; i++) {
+            elements[i].checked = status;
+        }
+    } else {
+        elements.checked = status;
+    }
 }
--->
 </script>
 
 <table cellpadding="2" cellspacing="2" border="0" width="80%" align="center">

@@ -1,4 +1,4 @@
-<script src="templates/_js/post_message.js"></script>
+<script src="templates/assets/js/post_message.js"></script>
 <script>
 <!--
 function checkForm1() { 

@@ -1,34 +1,29 @@
-
 <table width="100%" cellpadding="3" cellspacing="1" class="forumline">
   <tr>
 	<th class="thCornerL">{L_AUTHOR}</th>
 	<th class="thCornerR">{L_COMMENTS}</th>
   </tr>
-<!-- IF NO_COMMENTS -->
+  <!-- IF NO_COMMENTS -->
   <tr>
 	<td colspan="2" class="row1" align="center"><span class="genmed">{L_NO_COMMENTS}</span></td>
   </tr>
-<!-- ENDIF -->
-<!-- BEGIN text -->
+  <!-- ENDIF -->
+  <!-- BEGIN text -->
   <tr>
 	<td width="150" align="left" valign="top" class="row1"><span class="name"><b>{text.POSTER}</b></span><br /><span class="postdetails">{text.POSTER_RANK}<br />{text.RANK_IMAGE}{text.POSTER_AVATAR}<br /><br />{text.POSTER_JOINED}<br />{text.POSTER_POSTS}<br />{text.POSTER_FROM}</span><br />&nbsp;</td>
 	<td class="row1" height="28" valign="top">
-		<table width="100%" border="0" cellspacing="0" cellpadding="0">
-			<tr>
-				<td width="100%" valign="middle"><span class="postdetails"><img src="{text.ICON_MINIPOST_IMG}" width="12" height="9" border="0" />{L_POSTED}: {text.TIME}<span class="gen">&nbsp;</span>&nbsp; &nbsp;{L_COMMENT_SUBJECT}: {text.TITLE}</span></td>
-				<td align="right">
-				<!-- IF text.AUTH_COMMENT_DELETE -->
-				<a href="{text.U_COMMENT_DELETE}"><img src="{text.DELETE_IMG}" alt="{L_COMMENT_DELETE}" title="{L_COMMENT_DELETE}" border="0"></a>
-				<!-- ENDIF -->
-				</td>
-			</tr>
-			<tr> 
-				<td colspan="2"><hr /></td>
-			</tr>
-			<tr>
-				<td colspan="2"valign="top"><span class="postbody">{text.TEXT}</span></td>
-			</tr>
-		</table>
+	  <table width="100%" border="0" cellspacing="0" cellpadding="0">
+		<tr>
+		  <td width="100%" valign="middle"><span class="postdetails"><img src="{text.ICON_MINIPOST_IMG}" width="12" height="9" border="0" />{L_POSTED}: {text.TIME}<span class="gen">&nbsp;</span>&nbsp; &nbsp;{L_COMMENT_SUBJECT}: {text.TITLE}</span></td>
+		  <td align="right"><!-- IF text.AUTH_COMMENT_DELETE --><a href="{text.U_COMMENT_DELETE}"><img src="{text.DELETE_IMG}" alt="{L_COMMENT_DELETE}" title="{L_COMMENT_DELETE}" border="0"></a><!-- ENDIF --></td>
+		</tr>
+		<tr> 
+		  <td colspan="2"><hr /></td>
+		</tr>
+		<tr>
+		  <td colspan="2"valign="top"><span class="postbody">{text.TEXT}</span></td>
+		</tr>
+	  </table>
 	</td>
   </tr>
   <tr>
@@ -49,9 +44,5 @@
 	<td><a class="button_reply" href="{U_COMMENT_DO}"><span>{L_COMMENT_ADD}</span></a></td>
   </tr>
 </table>
-<br clear="all" />
+<br>
 <!-- ENDIF -->
-
-
-
-

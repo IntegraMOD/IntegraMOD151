@@ -1,8 +1,8 @@
 <!-- BEGIN switch_load_calendar -->
 <style type="text/css">@import url({TEMPLATE_PATH}calendar.css);</style>
-<script type="text/javascript" src="templates/_js/calendar.js"></script>
+<script type="text/javascript" src="templates/assets/js/calendar.js"></script>
 <script type="text/javascript" src="language/{LANG}/calendar.js"></script>
-<script type="text/javascript" src="templates/_js/calendar-setup.js"></script>
+<script type="text/javascript" src="templates/assets/js/calendar-setup.js"></script>
 <!-- END switch_load_calendar -->
 <script language="JavaScript" type="text/javascript">
   is_delayed_allowed = 1;

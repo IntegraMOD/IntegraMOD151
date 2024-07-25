@@ -6,7 +6,7 @@
 {META}
 {NAV_LINKS}
 <title>{SITENAME} :: {PAGE_TITLE}</title>
-<link rel="stylesheet" href="templates/_js/print_version.css" type="text/css" >
+<link rel="stylesheet" href="templates/assets/js/print_version.css" type="text/css" >
 </head>
 
 <body bgcolor="{T_BODY_BGCOLOR}" text="{T_BODY_TEXT}" link="{T_BODY_LINK}" vlink="{T_BODY_VLINK}" />

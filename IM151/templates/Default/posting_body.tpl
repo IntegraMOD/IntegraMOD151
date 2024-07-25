@@ -1,4 +1,4 @@
-<script src="templates/_js/post_message.js"></script>
+<script src="templates/assets/js/post_message.js"></script>
 {JAVASCRIPT_BBCODE_BOX}
 <script language='javascript' src='spelling/spellmessage.js'></script>
 <script>
@@ -415,9 +415,9 @@ if (formErrors) {
 <!-- END switch_unlock_topic -->
 <!-- BEGIN switch_type_cal -->
 <style type="text/css">@import url({TEMPLATE_PATH}calendar.css);</style>
-<script src="templates/_js/calendar.js"></script>
+<script src="templates/assets/js/calendar.js"></script>
 <script src="language/{LANG}/calendar.js"></script>
-<script src="templates/_js/calendar-setup.js"></script>
+<script src="templates/assets/js/calendar-setup.js"></script>
 <script>
   is_event_allowed = 1;
 </script>

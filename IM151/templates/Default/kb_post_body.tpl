@@ -1,4 +1,4 @@
-<script src="templates/_js/post_message.js"></script>
+<script src="templates/assets/js/post_message.js"></script>
 <script src="mods/bbcode_box/bbcode_box.js"></script>
 <script language='javascript' src='spelling/spellmessage.js'></script>
 

@@ -1,4 +1,4 @@
-<script src="templates/_js/post_message.js"></script>
+<script src="templates/assets/js/post_message.js"></script>
 {JAVASCRIPT_BBCODE_BOX}
 <script language='javascript' src='spelling/spellmessage.js'></script>
 <style type="text/css">

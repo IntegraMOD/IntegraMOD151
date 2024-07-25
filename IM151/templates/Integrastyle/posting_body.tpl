@@ -1,4 +1,4 @@
-<script language="JavaScript" type="text/javascript" src="templates/_js/post_message.js"></script>
+<script language="JavaScript" type="text/javascript" src="templates/assets/js/post_message.js"></script>
 <script language="javascript" type="text/javascript" src="mods/bbcode_box/bbcode_box.js"></script>
 
 <script language='javascript' src='spelling/spellmessage.js'></script>
@@ -410,9 +410,9 @@ if (formErrors) {
 <!-- END switch_unlock_topic -->
 <!-- BEGIN switch_type_cal -->
 <style type="text/css">@import url({TEMPLATE_PATH}calendar.css);</style>
-<script type="text/javascript" src="templates/_js/calendar.js"></script>
+<script type="text/javascript" src="templates/assets/js/calendar.js"></script>
 <script type="text/javascript" src="language/{LANG}/calendar.js"></script>
-<script type="text/javascript" src="templates/_js/calendar-setup.js"></script>
+<script type="text/javascript" src="templates/assets/js/calendar-setup.js"></script>
 <script language="JavaScript" type="text/javascript">
   is_event_allowed = 1;
 </script>

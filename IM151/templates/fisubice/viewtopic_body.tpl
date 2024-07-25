@@ -11,7 +11,7 @@ function open_postreview(ref)
 
 // ]]>
 </script>
-<script src="templates/_js/no_thread_stretch.js"></script>
+<script src="templates/assets/js/no_thread_stretch.js"></script>
 <script>
 // <![CDATA[
 function NewWindow(mypage,myname)

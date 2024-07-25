@@ -2,51 +2,52 @@
 <!-- 
 	function mpFoto(img)
 	{
-		foto1= new Image(); 
-		foto1.src=(img); 
+		const foto1 = new Image(); 
+		foto1.src = img; 
 		mpControl(img); 
 	}
-
+ 
 	function mpControl(img)
 	{ 
-		if((foto1.width!=0)&&(foto1.height!=0))
+		const foto1 = new Image(); // Ensure foto1 is defined here
+		if ((foto1.width !== 0) && (foto1.height !== 0))
 		{ 
 			viewFoto(img);
 		}
 		else
 		{ 
-			mpFunc="mpControl('"+img+"')"; 
-			intervallo=setTimeout(mpFunc,20); 
+			const mpFunc = "mpControl('" + img + "')"; 
+			const intervallo = setTimeout(mpFunc, 20); 
 		} 
 	} 
-
+ 
 	function viewFoto(img)
 	{ 
-		largh=foto1.width+20; 
-		altez=foto1.height+20; 
-		string="width="+largh+",height="+altez; 
-		finestra=window.open(img,"",string); 
+		const largh = foto1.width + 20; 
+		const altez = foto1.height + 20; 
+		const string = "width=" + largh + ",height=" + altez; 
+		const finestra = window.open(img, "", string); 
 	}
 	
-	function MM_jumpMenu(targ,selObj,restore)
+	function jumpMenu(targ, selObj, restore)
 	{ 
-		//v3.0
-		eval(targ+".location='"+selObj.options[selObj.selectedIndex].value+"'");
+		const selectedValue = selObj.options[selObj.selectedIndex].value;
+		window.open(selectedValue, "_self");
 		if (restore)
 		{
-			selObj.selectedIndex=0;
+			selObj.selectedIndex = 0;
 		}
 	}
-
+ 
     function delete_file(theURL) 
 	{
        if (confirm('Are you sure you want to delete this file??')) 
 	   {
-          window.location.href=theURL;
+          window.location.href = theURL;
        }
        else
 	   {
-          alert ('No Action has been taken.');
+          alert('No Action has been taken.');
        } 
     }
 		
@@ -56,10 +57,9 @@
 <table width="100%" height="99%" cellpadding="2" cellspacing="0">
   <tr>
 	<td align="center" width="100%" height="100%" valign="top">
-
-	<table cellpadding="3" cellspacing="1">
+	  <table cellpadding="3" cellspacing="1">
   		<tr>
-			<td>	
+		  <td>	
 			<!-- IF IS_AUTH_SEARCH -->		
 			<a class="icon_search" href="{U_PASEARCH}"><span>{L_SEARCH}</span></a>
 			<!-- ENDIF -->
@@ -78,12 +78,13 @@
 			<!-- IF IS_AUTH_MCP -->	
 			<a class="icon_mod" href="{U_MCP}"><span>{L_MCP_LINK}</span></a>	
 			<!-- ENDIF -->	
-			</td>
+		  </td>
   		</tr>
-	</table>
-
-
-
-<table width="100%" height="30" border="0" cellpadding="2" cellspacing="0" class="table" align="center">
+	  </table>
+	</td>
+  </tr>
   <tr>
-	<td width="100%" valign="top" colspan="2">
+	<td>
+      <table width="100%" height="30" border="0" cellpadding="2" cellspacing="0" class="table" align="center">
+        <tr>
+	      <td width="100%" valign="top" colspan="2">

@@ -1,30 +1,24 @@
 <script>
-<!--
 function checkForm(formObj) {
-
-	formErrors = false;    
-
-	if (formObj.message.value.length < 2) {
-		formErrors = "{L_EMPTY_MESSAGE_EMAIL}";
-	}
-	else if ( formObj.subject.value.length < 2)
-	{
-		formErrors = "{L_EMPTY_SUBJECT_EMAIL}";
-	}
-
-	if (formErrors) {
-		alert(formErrors);
-		return false;
-	}
+    let formErrors = false;    
+ 
+    if (formObj.message.value.length < 2) {
+        formErrors = "{L_EMPTY_MESSAGE_EMAIL}";
+    }
+    else if (formObj.subject.value.length < 2) {
+        formErrors = "{L_EMPTY_SUBJECT_EMAIL}";
+    }
+ 
+    if (formErrors) {
+        alert(formErrors);
+        return false;
+    }
 }
-//-->
 </script>
 <!-- INCLUDE pa_header.tpl -->
 <table width="100%" cellpadding="2" cellspacing="2">
   <tr>
-	<td valign="bottom">
-		<span class="nav"><a href="{U_INDEX}" class="nav">{L_INDEX}</a> -> <a href="{U_DOWNLOAD_HOME}" class="nav">{DOWNLOAD}</a><!-- BEGIN navlinks --> -> <a href="{navlinks.U_VIEW_CAT}" class="nav">{navlinks.CAT_NAME}</a><!-- END navlinks --> -> <a href="{U_FILE_NAME}" class="nav">{FILE_NAME}</a> -> {L_EMAIL}</span>
-	</td>
+	<td valign="bottom"><span class="nav"><a href="{U_INDEX}" class="nav">{L_INDEX}</a> -> <a href="{U_DOWNLOAD_HOME}" class="nav">{DOWNLOAD}</a><!-- BEGIN navlinks --> -> <a href="{navlinks.U_VIEW_CAT}" class="nav">{navlinks.CAT_NAME}</a><!-- END navlinks --> -> <a href="{U_FILE_NAME}" class="nav">{FILE_NAME}</a> -> {L_EMAIL}</span></td>
   </tr>
 </table>
 

@@ -1,27 +1,18 @@
 <!-- INCLUDE pa_header.tpl -->
 <script>
-<!--
 function checkRateForm() {
-	if (document.rateform.rating.value == -1)
-	{
-		return false;
-	}
-	else
-	{
-		return true;
-	}
+    if (document.rateform.rating.value == -1) {
+        return false;
+    } else {
+        return true;
+    }
 }
-// -->
 </script>
-
 <table width="100%" cellpadding="2" cellspacing="2">
   <tr>
-	<td valign="bottom">
-		<span class="nav"><a href="{U_INDEX}" class="nav">{L_INDEX}</a> -> <a href="{U_DOWNLOAD_HOME}" class="nav">{DOWNLOAD}</a><!-- BEGIN navlinks --> -> <a href="{navlinks.U_VIEW_CAT}" class="nav">{navlinks.CAT_NAME}</a><!-- END navlinks --> -> <a href="{U_FILE_NAME}" class="nav">{FILE_NAME}</a> -> {L_RATE}</span>
-	</td>
+	<td valign="bottom"><span class="nav"><a href="{U_INDEX}" class="nav">{L_INDEX}</a> -> <a href="{U_DOWNLOAD_HOME}" class="nav">{DOWNLOAD}</a><!-- BEGIN navlinks --> -> <a href="{navlinks.U_VIEW_CAT}" class="nav">{navlinks.CAT_NAME}</a><!-- END navlinks --> -> <a href="{U_FILE_NAME}" class="nav">{FILE_NAME}</a> -> {L_RATE}</span></td>
   </tr>
 </table>
-
 <table width="100%" cellpadding="3" cellspacing="1" class="forumline">
   <tr> 
 	<th colspan="2" class="thHead">{L_RATE}</th>
@@ -45,13 +36,11 @@ function checkRateForm() {
 		<input type="hidden" name="action" value="rate">
 		<input type="hidden" name="file_id" value="{ID}">
 		</select>
+	  </form>
 	</td>
   </tr>
   <tr> 
-	<td colspan="2" class="cat" align="center"><input class="liteoption" type="submit" value="{L_RATE}" name="submit">
-
-&nbsp;</td>
+	<td colspan="2" class="cat" align="center"><input class="liteoption" type="submit" value="{L_RATE}" name="submit">&nbsp;</td>
   </tr>
 </table>
-</form>
 <!-- INCLUDE pa_footer.tpl -->

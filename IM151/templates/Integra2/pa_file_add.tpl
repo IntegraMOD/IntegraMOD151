@@ -1,6 +1,5 @@
 <!-- INCLUDE pa_header.tpl -->
-<script>
-<!--
+	<script>
 	var error_msg = "";
 	function checkAddForm() 
 	{
@@ -9,7 +8,7 @@
 		{
 			error_msg = "You can't add file to category that does not allow files on it";
 		}
-
+ 
 		if(document.form.name.value == "")
 		{
 			if(error_msg != "")
@@ -25,10 +24,9 @@
 			{
 				error_msg += "\n";
 			}
-			error_msg += "Please fill the file long descritpion field";
+			error_msg += "Please fill the file long description field";
 		}
-
-		<!-- IF MODE eq 'ADD' -->
+ 
 		if(document.form.userfile.value == "" && document.form.download_url.value == "")
 		{
 			if(error_msg != "")
@@ -37,7 +35,6 @@
 			}
 			error_msg += "Please fill the file url field or click browse to upload file from your machine";
 		}
-		<!-- ENDIF -->
 		
 		if(error_msg != "")
 		{
@@ -50,16 +47,13 @@
 			return true;
 		}
 	}
-// -->
 </script>
 
 <form enctype="multipart/form-data" action="{S_ADD_FILE_ACTION}" method="post" name="form" onsubmit="return checkAddForm();">
 
 <table width="100%" cellpadding="2" cellspacing="2">
   <tr>
-	<td valign="bottom">
-		<span class="nav"><a href="{U_INDEX}" class="nav">{L_INDEX}</a> -> <a href="{U_DOWNLOAD}" class="nav">{DOWNLOAD}</a> -> {L_UPLOAD}</span>
-	</td>
+	<td valign="bottom"><span class="nav"><a href="{U_INDEX}" class="nav">{L_INDEX}</a> -> <a href="{U_DOWNLOAD}" class="nav">{DOWNLOAD}</a> -> {L_UPLOAD}</span></td>
   </tr>
 </table>
 
@@ -91,7 +85,6 @@
 	<td class="row1"><span class="genmed">{L_FILE_WEBSITE}</span><br><span class="gensmall">{L_FILE_WEBSITE_INFO}</span></td>
 	<td class="row2"><input type="text" class="post" size="50" name="website" value="{FILE_WEBSITE}" /></td>
   </tr>
-
   <tr>
 	<td class="row1"><span class="genmed">{L_FILE_POSTICONS}</span><br><span class="gensmall">{L_FILE_POSTICONS_INFO}</span></td>
 	<td class="row2">{S_POSTICONS}</td>
@@ -99,25 +92,25 @@
   <tr>
 	<td class="row1"><span class="genmed">{L_FILE_CAT}</span><br><span class="gensmall">{L_FILE_CAT_INFO}</span></td>
 	<td class="row2">
-		<select name="cat_id" class="post">
-		{S_CAT_LIST}
-		</select>
+	  <select name="cat_id" class="post">
+	  {S_CAT_LIST}
+	  </select>
 	</td>
   </tr>
   <tr>
 	<td class="row1"><span class="genmed">{L_FILE_LICENSE}</span><br><span class="gensmall">{L_FILE_LICENSE_INFO}</span></td>
 	<td class="row2">
-		<select name="license" class="post">
-		{S_LICENSE_LIST}
-		</select>
+	  <select name="license" class="post">
+	  {S_LICENSE_LIST}
+	  </select>
 	</td>
   </tr>
-<!-- IF IS_ADMIN or IS_MOD --> 
+  <!-- IF IS_ADMIN or IS_MOD --> 
   <tr>
 	<td class="row1"><span class="genmed">{L_FILE_PINNED}</span><br><span class="gensmall">{L_FILE_PINNED_INFO}</span></td>
 	<td class="row2">
-		<input type="radio" name="pin" value="1"{PIN_CHECKED_YES} /><span class="genmed">{L_YES}</span>&nbsp;
-		<input type="radio" name="pin" value="0"{PIN_CHECKED_NO} /><span class="genmed">{L_NO}</span>&nbsp;
+      <input type="radio" name="pin" value="1"{PIN_CHECKED_YES} /><span class="genmed">{L_YES}</span>&nbsp;
+      <input type="radio" name="pin" value="0"{PIN_CHECKED_NO} /><span class="genmed">{L_NO}</span>&nbsp;
 	</td>
   </tr>
   <tr>
@@ -161,23 +154,18 @@
   </tr>  
   <tr>
 	<td class="row1"><span class="genmed">{L_FILE_UPLOAD}</span><br><span class="gensmall">{L_FILEINFO_UPLOAD}</span></td>
-	<td class="row2">
-		<input type="file" size="50" name="userfile" maxlength="{FILESIZE}" class="post" />
-	</td>
+	<td class="row2"><input type="file" size="50" name="userfile" maxlength="{FILESIZE}" class="post" /></td>
   </tr>  
   <tr>
 	<td class="row1"><span class="genmed">{L_FILE_URL}</span><br><span class="gensmall">{L_FILE_URL_INFO}</span></td>
-	<td class="row2">
-		<input type="text" class="post" size="50" name="download_url" value="{FILE_DLURL}">
-	</td>
+	<td class="row2"><input type="text" class="post" size="50" name="download_url" value="{FILE_DLURL}"></td>
   </tr>
-<!-- IF CUSTOM_EXIST -->
+  <!-- IF CUSTOM_EXIST -->
   <tr>
 	<td class="cat" colspan="2" align="center"><span class="cattitle">{L_ADDTIONAL_FIELD}</span></td>
   </tr>
-<!-- ENDIF -->
-
-<!-- INCLUDE pa_custom_field.tpl -->
+  <!-- ENDIF -->
+  <!-- INCLUDE pa_custom_field.tpl -->
   <tr>
 	<td align="center" class="cat" colspan="2">{S_HIDDEN_FIELDS}<input class="mainoption" type="submit" value="{L_FILE_TITLE}" name="submit"></td>
   </tr>

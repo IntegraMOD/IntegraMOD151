@@ -7,25 +7,25 @@
 <!-- BEGIN listitem --><li><!-- END listitem -->
 
 <!-- BEGIN quote_username_post_open -->
-<script type="text/javascript" src="templates/_js/fi_divexpand.js"></script><table width="95%" cellspacing="1" cellpadding="3" border="0" align="center">
+<script type="text/javascript" src="templates/assets/js/fi_divexpand.js"></script><table width="95%" cellspacing="1" cellpadding="3" border="0" align="center">
 <tr>
 <td><div class="quotetitle">{USERNAME} {L_WROTE} ({U_VIEW_POST}): &#8250; 
 <script type="text/javascript">docWrite("quote")</script>
 <!-- END quote_username_post_open -->
 <!-- BEGIN quote_post_open -->
-<script type="text/javascript" src="templates/_js/fi_divexpand.js"></script><table width="95%" cellspacing="1" cellpadding="3" border="0" align="center">
+<script type="text/javascript" src="templates/assets/js/fi_divexpand.js"></script><table width="95%" cellspacing="1" cellpadding="3" border="0" align="center">
 <tr>
 <td><div class="quotetitle">{L_QUOTE} ({U_VIEW_POST}): &#8250; 
 <script type="text/javascript">docWrite("quote")</script>
 <!-- END quote_post_open -->
 <!-- BEGIN quote_username_open -->
-<script type="text/javascript" src="templates/_js/fi_divexpand.js"></script><table width="95%" cellspacing="1" cellpadding="3" border="0" align="center">
+<script type="text/javascript" src="templates/assets/js/fi_divexpand.js"></script><table width="95%" cellspacing="1" cellpadding="3" border="0" align="center">
 <tr>
 <td><div class="quotetitle">{USERNAME} {L_WROTE}: &#8250; 
 <script type="text/javascript">docWrite("quote")</script>
 <!-- END quote_username_open -->
 <!-- BEGIN quote_open -->
-<script type="text/javascript" src="templates/_js/fi_divexpand.js"></script><table width="95%" cellspacing="1" cellpadding="3" border="0" align="center">
+<script type="text/javascript" src="templates/assets/js/fi_divexpand.js"></script><table width="95%" cellspacing="1" cellpadding="3" border="0" align="center">
 <tr>
 <td><div class="quotetitle">{L_QUOTE}: &#8250; 
 <script type="text/javascript">docWrite("quote")</script>
@@ -34,7 +34,7 @@
 </div></td></tr></table>
 <!-- END quote_close -->
 
-<!-- BEGIN php_open --><script type="text/javascript" src="templates/_js/fi_divexpand.js"></script><table width="95%" cellspacing="1" cellpadding="3" border="0" align="center">
+<!-- BEGIN php_open --><script type="text/javascript" src="templates/assets/js/fi_divexpand.js"></script><table width="95%" cellspacing="1" cellpadding="3" border="0" align="center">
 <tr>
 <td><div class="phptitle">{L_PHP}: &#8250; 
 <script type="text/javascript">docWrite("php")</script>
@@ -44,7 +44,7 @@
 <!-- END php_close -->
 
 
-<!-- BEGIN code_open --><script type="text/javascript" src="templates/_js/fi_divexpand.js"></script><table width="95%" cellspacing="1" cellpadding="3" border="0" align="center">
+<!-- BEGIN code_open --><script type="text/javascript" src="templates/assets/js/fi_divexpand.js"></script><table width="95%" cellspacing="1" cellpadding="3" border="0" align="center">
 <tr>
 <td><div class="codetitle">{L_CODE}: &#8250; 
 <script type="text/javascript">docWrite("code")</script>

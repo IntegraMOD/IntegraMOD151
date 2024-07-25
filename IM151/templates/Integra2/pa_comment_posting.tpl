@@ -1,7 +1,6 @@
 <!-- INCLUDE pa_header.tpl -->
-<script src="templates/_js/post_message.js"></script>
+<script src="templates/assets/js/post_message.js"></script>
 <script src="mods/bbcode_box/bbcode_box.js"></script>
-<script src="spelling/spellmessage.js"></script>
 <script> 
 <!-- 
 	var postmaxchars = {MESSAGE_LENGTH}; 
@@ -57,31 +56,31 @@
 		  </tr>
 		  <tr> 
 			<td valign="middle" align="center"> <br />
-<table width="100" border="0" cellspacing="0" cellpadding="5">
-<tr align="center">
-<td colspan="{S_SMILIES_COLSPAN}" class="gensmall"><span class="explaintitle">{L_EMOTICONS}</span></td>
-</tr>
-<!-- BEGIN smilies_row -->
-<tr align="center">
-<!-- BEGIN smilies_col -->
-<td><img src="{smilies_row.smilies_col.SMILEY_IMG}" border="0" onclick="emoticon('{smilies_row.smilies_col.SMILEY_CODE}');" alt="{smilies_row.smilies_col.SMILEY_DESC}" title="{smilies_row.smilies_col.SMILEY_DESC}" /></a></td>
-<!-- END smilies_col -->
-</tr>
-<!-- END smilies_row -->
-<!-- BEGIN switch_smilies_extra -->
-<tr align="center">
-<td colspan="{S_SMILIES_COLSPAN}" class="nav"><a href="{U_MORE_SMILIES}" onclick="window.open('{U_MORE_SMILIES}', '_phpbbsmilies', 'HEIGHT=250,resizable=yes,scrollbars=yes,WIDTH=300');return false;" target="_phpbbsmilies">{L_MORE_SMILIES}</a></td>
-</tr>
-<!-- END switch_smilies_extra -->
-</table>
-</td>
-</tr>
-</table>
-</td>
-<td class="row2" valign="top">
-<table id="posttable" cellspacing="0" cellpadding="0" border="0" width="450" style="border-collapse: collapse;">
-	<tr>
-		<td>
+				<table width="100" border="0" cellspacing="0" cellpadding="5">
+					<tr align="center">
+						<td colspan="{S_SMILIES_COLSPAN}" class="gensmall"><span class="explaintitle">{L_EMOTICONS}</span></td>
+					</tr>
+					<!-- BEGIN smilies_row -->
+					<tr align="center">
+					<!-- BEGIN smilies_col -->
+						<td><img src="{smilies_row.smilies_col.SMILEY_IMG}" border="0" onclick="emoticon('{smilies_row.smilies_col.SMILEY_CODE}');" alt="{smilies_row.smilies_col.SMILEY_DESC}" title="{smilies_row.smilies_col.SMILEY_DESC}" /></a></td>
+					<!-- END smilies_col -->
+					</tr>
+					<!-- END smilies_row -->
+					<!-- BEGIN switch_smilies_extra -->
+					<tr align="center">
+						<td colspan="{S_SMILIES_COLSPAN}" class="nav"><a href="{U_MORE_SMILIES}" onclick="window.open('{U_MORE_SMILIES}', '_phpbbsmilies', 'HEIGHT=250,resizable=yes,scrollbars=yes,WIDTH=300');return false;" target="_phpbbsmilies">{L_MORE_SMILIES}</a></td>
+					</tr>
+				<!-- END switch_smilies_extra -->
+				</table>
+		    </td>
+		  </tr>
+		</table>
+      </td>
+      <td class="row2" valign="top">
+        <table id="posttable" cellspacing="0" cellpadding="0" border="0" width="450" style="border-collapse: collapse;">
+	      <tr>
+		    <td>
 			<table cellspacing="0" cellpadding="0" border="0" width="450" style="border-collapse: collapse;">
 				<tr>
 					<td width="7"><img src="mods/bbcode_box/images/bar-left.gif" width="7" height="25" border="0" alt="" /></td>
@@ -237,31 +236,18 @@
 					<td colspan="3"><textarea name="message" rows="15" cols="35" style="width:450px" tabindex="3" class="post" onselect="storeCaret(this);" onclick="storeCaret(this);" onkeyup="storeCaret(this); typeQuietly(this, event);">{COMMENT}</textarea></td>
 				</tr>
 			</table>
-		</td>
-	</tr>
-</table>
-        </td>
+		    </td>
+	      </tr>
+        </table>
+      </td>
 	</tr>
 	<tr>
-		<td class="row1"><span class="gen"><B>{L_OPTIONS}</b></span><br /><span class="gensmall">{HTML_STATUS}<br />{BBCODE_STATUS}<br />{SMILIES_STATUS}<br />{LINKS_STATUS}<br />{IMAGES_STATUS}</span></td>
-		<td class="row2"><span class="gen">{L_COMMENT_EXPLAIN}<br /><a href="javascript:checklength(document.post);">{L_CHECK_MSG_LENGTH}</a></span></td>
+	  <td class="row1"><span class="gen"><B>{L_OPTIONS}</b></span><br /><span class="gensmall">{HTML_STATUS}<br />{BBCODE_STATUS}<br />{SMILIES_STATUS}<br />{LINKS_STATUS}<br />{IMAGES_STATUS}</span></td>
+	  <td class="row2"><span class="gen">{L_COMMENT_EXPLAIN}<br /><a href="javascript:checklength(document.post);">{L_CHECK_MSG_LENGTH}</a></span></td>
 	</tr>
 	<tr> 
 	  <td class="cat" colspan="2" align="center" height="28"> {S_HIDDEN_FORM_FIELDS}<input type="submit" tabindex="5" name="preview" class="mainoption" value="{L_PREVIEW}" />&nbsp;<input type="submit" accesskey="s" tabindex="6" name="submit" class="mainoption" value="{L_SUBMIT}" /></td>
-  </form>
-	</tr>
-  </table>
-
+  </tr>
+</table>
+</form>
 <!-- INCLUDE pa_footer.tpl -->
-
-
-
-
-
-
-
-
-
-
-
-

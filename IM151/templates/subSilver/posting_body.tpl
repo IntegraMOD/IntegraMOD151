@@ -1,4 +1,4 @@
-<script src="templates/_js/post_message.js"></script>
+<script src="templates/assets/js/post_message.js"></script>
 {JAVASCRIPT_BBCODE_BOX}
 <script src='spelling/spellmessage.js'></script>
 <script>
@@ -422,7 +422,7 @@ if (formErrors) {
 </table>
 <!-- BEGIN switch_type_cal -->
 <style type="text/css">@import url({TEMPLATE}calendar.css);</style>
-<script type="text/javascript" src="templates/_js/calendar.js"></script>
+<script type="text/javascript" src="templates/assets/js/calendar.js"></script>
 <script type="text/javascript" src="language/{LANG}/calendar.js"></script>
 <script type="text/javascript" src="templates/calendar-setup.js"></script>
 <script language="JavaScript" type="text/javascript">

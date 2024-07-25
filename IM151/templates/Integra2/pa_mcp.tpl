@@ -1,90 +1,82 @@
-<script language='javascript'>
-    <!--
-	var add_file = false;
-	var deletefile = false;
-	
-	function set_add_file(status)
-	{
-		add_file = status;
-	}
-	
-	function set_delete_file(status)
-	{
-		deletefile = status;
-	}
-	
-	
-    function delete_file(theURL) 
-	{
-       if (confirm('Are you sure you want to delete this file??')) 
-	   {
-          window.location.href=theURL;
-       }
-       else
-	   {
-          alert ('No Action has been taken.');
-       } 
+	<script>
+    var add_file = false;
+    var deletefile = false;
+    
+    function set_add_file(status)
+    {
+        add_file = status;
     }
-	
-	function disable_cat_list()
-	{
-		if(document.form.mode_js.options[document.form.mode_js.selectedIndex].value != 'file_cat')
-		{
-			document.form.cat_js_id.disabled = true;
-		}
-		if(document.form.mode_js.options[document.form.mode_js.selectedIndex].value == 'file_cat')
-		{
-			document.form.cat_js_id.disabled = false;
-		}
-	}
-	
-	//
-	// Taking from the Attachment MOD of Acyd Burn
-	//
-	function select(status)
-	{
-		for (i = 0; i < document.file_ids.length; i++)
-		{
-			document.file_ids.elements[i].checked = status;
-		}
-	}
-
-	function check()
-	{
-		if(add_file)
-		{
-			return true;
-		}
-
-		for (i = 0; i < document.file_ids.length; i++)
-		{
-			if(document.file_ids.elements[i].checked == true)
-			{
-				if(deletefile)
-				{
-			       if (confirm('Are you sure you want to delete these files??')) 
-				   {
-				   		return true;
-				   }
-				   else
-				   {
-						return false;
-				   }
-				}
-				return true;
-			}
-		}
-		alert('Please Select at least one file.');
-		return false;
-	}
-	-->
+    
+    function set_delete_file(status)
+    {
+        deletefile = status;
+    }
+    
+    function delete_file(theURL) 
+    {
+        if (confirm('Are you sure you want to delete this file??')) 
+        {
+            window.location.href = theURL;
+        }
+        else
+        {
+            alert('No Action has been taken.');
+        } 
+    }
+    
+    function disable_cat_list()
+    {
+        if (document.form.mode_js.options[document.form.mode_js.selectedIndex].value != 'file_cat')
+        {
+            document.form.cat_js_id.disabled = true;
+        }
+        if (document.form.mode_js.options[document.form.mode_js.selectedIndex].value == 'file_cat')
+        {
+            document.form.cat_js_id.disabled = false;
+        }
+    }
+    
+    function select(status)
+    {
+        for (var i = 0; i < document.file_ids.length; i++)
+        {
+            document.file_ids.elements[i].checked = status;
+        }
+    }
+ 
+    function check()
+    {
+        if (add_file)
+        {
+            return true;
+        }
+ 
+        for (var i = 0; i < document.file_ids.length; i++)
+        {
+            if (document.file_ids.elements[i].checked == true)
+            {
+                if (deletefile)
+                {
+                    if (confirm('Are you sure you want to delete these files??')) 
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                }
+                return true;
+            }
+        }
+        alert('Please Select at least one file.');
+        return false;
+    }
 </script>
 <!-- INCLUDE pa_header.tpl -->
 <table width="100%" cellpadding="2" cellspacing="2">
   <tr>
-	<td valign="bottom">
-		<span class="nav"><a href="{U_INDEX}" class="nav">{L_INDEX}</a> -> <a href="{U_DOWNLOAD}" class="nav">{DOWNLOAD}</a> -> {L_MCP_TITLE}</span>
-	</td>
+	<td valign="bottom"><span class="nav"><a href="{U_INDEX}" class="nav">{L_INDEX}</a> -> <a href="{U_DOWNLOAD}" class="nav">{DOWNLOAD}</a> -> {L_MCP_TITLE}</span></td>
   </tr>
 </table>
 <p>{L_MCP_EXPLAIN}</p>
@@ -113,12 +105,12 @@
 	<td class="row1" align="center" width="20%"><span class="gen"><a href="{file_mode.file_row.U_FILE_APPROVE}">{file_mode.file_row.L_APPROVE}</a></span></td>
 	<td class="row1" align="center" width="5%"><span class="genmed"><input type="checkbox" name="file_ids[]" value="{file_mode.file_row.FILE_ID}" /></span></td>
   </tr>
-   <!-- END file_row -->
-   <!-- ELSE -->
+  <!-- END file_row -->
+  <!-- ELSE -->
   <tr>
-	  <td class="row1" align="center"><span class="gen">{L_NO_FILES}</span></td>
+    <td class="row1" align="center"><span class="gen">{L_NO_FILES}</span></td>
   </tr>
-   <!-- ENDIF -->
+  <!-- ENDIF -->
 </table>
 <br />
 <!-- END file_mode -->

@@ -7,11 +7,11 @@
 <title>{SITENAME} - {PAGE_TITLE}</title>{META_TAGS}
 {META}
 {NAV_LINKS}
-<!--[if gte IE 5]><![if lt IE 7]><script src="templates/_js/pngfix.js"></script><![endif]><![endif]--> 
+<!--[if gte IE 5]><![if lt IE 7]><script src="templates/assets/js/pngfix.js"></script><![endif]><![endif]--> 
 <link rel="shortcut icon" href="./favicon.ico">
 <link rel="stylesheet" href="{TEMPLATE}{T_HEAD_STYLESHEET}" type="text/css" />
-<script src="templates/_js/toggle_display.js"></script>
-<script src="templates/_js/importal.js"></script>
+<script src="templates/assets/js/toggle_display.js"></script>
+<script src="templates/assets/js/importal.js"></script>
 
 <!-- BEGIN switch_enable_pm_popup -->
 <script>
@@ -110,7 +110,7 @@ window.open("tour.php", "_tour", "width=800,height=600,scrollbars,resizable=yes"
 } 
 //--> 
 </script>
-<script src="templates/_js/mouseover.js"></script>
+<script src="templates/assets/js/mouseover.js"></script>
 <!-- Prillian - Begin Code Additions -->
 <!-- BEGIN switch_user_logged_in -->
 <script>
@@ -136,15 +136,15 @@ window.open('{buddy_alert.U_BUDDY_ALERT}', '_buddyalert', 'HEIGHT=225,resizable=
 </script>
 <!-- END buddy_alert -->
 <!-- Prillian - End Code Additions -->
-<script src="templates/_js/jquery-1.12.0.min.js"></script>
-<script src="templates/_js/jquery.easing.min.js"></script>
-<script src="templates/_js/jquery.toggle.js"></script>
-<script src="templates/_js/jQuery.mobTabMenu.js"></script>
-<script src="templates/_js/immenu.js"></script>
+<script src="templates/assets/js/jquery-1.12.0.min.js"></script>
+<script src="templates/assets/js/jquery.easing.min.js"></script>
+<script src="templates/assets/js/jquery.toggle.js"></script>
+<script src="templates/assets/js/jQuery.mobTabMenu.js"></script>
+<script src="templates/assets/js/immenu.js"></script>
 <link rel="stylesheet" type="text/css" href="{TEMPLATE}/report_hack.css" />
 {COLOR_CSS}
 
-<script type="text/javascript" src="templates/_js/fi_newsfader_user.js"></script>
+<script type="text/javascript" src="templates/assets/js/fi_newsfader_user.js"></script>
 <style type="text/css">
 <!--
    .finews {
@@ -264,7 +264,7 @@ jQuery(document).ready(function(){
 <td width="5"><img src="{TEMPLATE}images/spacer.gif" alt="" width="5" height="4" /></td>
 <td width="100%" align="center">
   <div class="finews" id="finewsdisplay">
-  <script type="text/javascript" src="templates/_js/fi_newsfader.js"></script>
+  <script type="text/javascript" src="templates/assets/js/fi_newsfader.js"></script>
   </div>
 </td>
 <td width="5"><img src="{TEMPLATE}images/spacer.gif" alt="" width="5" height="4" /></td>

@@ -1,4 +1,4 @@
-<script  src="templates/_js/no_thread_stretch.js"></script>
+<script  src="templates/assets/js/no_thread_stretch.js"></script>
 <script>
 no_thread_stretch({BLOCK_WIDTH}+240);
 </script>

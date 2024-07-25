@@ -6,7 +6,7 @@
 <title>{SITENAME} - {PAGE_TITLE}</title>{META_TAGS}
 {META}
 {NAV_LINKS}
-<!--[if gte IE 5]><![if lt IE 7]><script  src="templates/_js/pngfix.js"></script><![endif]><![endif]--> 
+<!--[if gte IE 5]><![if lt IE 7]><script  src="templates/assets/js/pngfix.js"></script><![endif]><![endif]--> 
 <link rel="stylesheet" href="{TEMPLATE}{T_HEAD_STYLESHEET}" type="text/css" />
 </head>
 <body>

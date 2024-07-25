@@ -18,6 +18,14 @@ div.gensmall, .gensmall { font-size : 0.846em !important; }
 a:link,a:active,a:visited,a.postlink{text-decoration:none;}
 a:hover{text-decoration:none;}
 
+/* The register, login, search etc links at the top of the page */
+.mainmenu, a.mainmenu, a.mainmenu:link, a.mainmenu:active, a.mainmenu:visited {
+    display: inline ;
+	white-space: nowrap;
+	padding-top: 11px;
+	padding-bottom: 11px;
+}
+
 /* titles for the topics:could specify viewed link color too */
 .topictitle{font-size:0.91em;font-weight:bold;}
 

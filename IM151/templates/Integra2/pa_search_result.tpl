@@ -4,15 +4,11 @@
 	<td align="left" valign="bottom"><span class="maintitle">{L_SEARCH_MATCHES}</span><br /></td>
   </tr>
 </table>
-
 <table width="100%" cellpadding="2" cellspacing="2">
   <tr>
-	<td valign="bottom">
-		<span class="nav"><a href="{U_INDEX}" class="nav">{L_INDEX}</a> -> <a href="{U_DOWNLOAD}" class="nav">{DOWNLOAD}</a> -> {L_SEARCH}</span>
-	</td>
+	<td valign="bottom"><span class="nav"><a href="{U_INDEX}" class="nav">{L_INDEX}</a> -> <a href="{U_DOWNLOAD}" class="nav">{DOWNLOAD}</a> -> {L_SEARCH}</span></td>
   </tr>
 </table>
-
 <table width="100%" cellpadding="3" cellspacing="1" class="forumline">
   <tr> 
 	<th width="4%" height="25" class="thCornerL" nowrap="nowrap">&nbsp;</th>
@@ -23,8 +19,7 @@
 	<th class="thTop" nowrap="nowrap">&nbsp;{L_DOWNLOADS}&nbsp;</th>
 	<th class="thCornerR" nowrap="nowrap">&nbsp;{L_RATE}&nbsp;</th>
   </tr>
-
- <!-- BEGIN searchresults -->
+  <!-- BEGIN searchresults -->
   <tr> 
 	<td class="row1" align="center" valign="middle"><a href="{searchresults.U_FILE}" class="topictitle">{searchresults.PIN_IMAGE}</a></td>
 	<td class="row1"><span class="forumlink"><a href="{searchresults.U_CAT}" class="forumlink">{searchresults.CAT_NAME}</a></span></td>
@@ -34,7 +29,7 @@
 	<td class="row1" align="center" valign="middle"><span class="postdetails">{searchresults.DOWNLOADS}</span></td>
 	<td class="row2" align="center" valign="middle" nowrap="nowrap"><span class="postdetails">{searchresults.RATING}</span></td>
   </tr> 
- <!-- END searchresults -->
+  <!-- END searchresults -->
   <tr> 
 	<td class="cat" colspan="7">&nbsp;</td>
   </tr>
