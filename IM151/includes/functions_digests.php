@@ -592,7 +592,7 @@ function auth_read($userdata)
 		{
 			$f_forum_id = $f_access[$k]['forum_id'];
 
-			$auth_user[$f_forum_id]['auth_mod'] = auth_check_user(AUTH_MOD, 'auth_mod', $u_access[$f_forum_id], $is_admin);
+			$auth_user[$f_forum_id]['auth_mod'] = auth_check_user(AUTH_MOD, 'auth_mod', ( isset($u_access[$f_forum_id]) ? $u_access[$f_forum_id] : NULL ) , $is_admin);
 		}
 	}
 

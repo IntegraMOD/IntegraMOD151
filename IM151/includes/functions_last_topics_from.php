@@ -28,7 +28,7 @@ if (!defined('IN_PHPBB'))
 
 function last_topics_from($view_userdata, $last_started_box='', $last_replied_box='', $last_ended_box='')
 {
-	global $db, $template, $board_config, $userdata, $phpEx, $lang, $images, $_COOKIE;
+	global $db, $template, $board_config, $userdata, $phpEx, $lang, $images, $phpbb_root_path, $is_auth;
 	global $tree;
 
 	include_once($phpbb_root_path . './includes/functions_topics_list.' . $phpEx);
@@ -68,34 +68,21 @@ function last_topics_from($view_userdata, $last_started_box='', $last_replied_bo
 	if ($sum <= 0) return false;
 
 	// read the forums authorized
-	$cat_hierarchy = function_exists('get_auth_keys');
 	$forum_ids = array();
-	if (!$cat_hierarchy)
+	// compliency with categories hierarchy v2 mod
+	// get auth key
+	$keys = array();
+	$keys = get_auth_keys('Root', true, -1, -1, 'auth_read');
+	$allowed_delayedpost_ids = array();
+	for ($i=1; $i < count($keys['id']); $i++)
 	{
-		// standard read
-		$is_auth = array();
-		$is_auth = auth(AUTH_ALL, AUTH_LIST_ALL, $userdata);
-
-		// get the list of authorized forums
-		while (list($forum_id, $forum_auth) = each($is_auth))
+		if ( ($tree['type'][$keys['idx'][$i]] == POST_FORUM_URL) && ($tree['auth'][ $keys['id'][$i] ]['auth_read']) )
 		{
-			if ( $forum_auth['auth_read'])
+			$forum_ids[] = $tree['id'][ $keys['idx'][$i] ];
+			// V: also compute forums where the user is allowed to see delayed posts
+			if ($tree['auth'][ $keys['id'][$i] ]['auth_delayedpost'])
 			{
-				$forum_ids[] = $forum_id;
-			}
-		}
-	}
-	else
-	{
-		// compliency with categories hierarchy v2 mod
-		// get auth key
-		$keys = array();
-		$keys = get_auth_keys('Root', true, -1, -1, 'auth_read');
-		for ($i=1; $i < count($keys['id']); $i++)
-		{
-			if ( ($tree['type'][$keys['idx'][$i]] == POST_FORUM_URL) && ($tree['auth'][ $keys['id'][$i] ]['auth_read']) )
-			{
-				$forum_ids[] = $tree['id'][$keys['idx'][$i]];
+				$allowed_delayedpost_ids[] = $tree['id'][ $keys['idx'][$i] ];
 			}
 		}
 	}
@@ -158,15 +145,31 @@ function last_topics_from($view_userdata, $last_started_box='', $last_replied_bo
 				break;
 		} // end switch
 
-		if (($userdata['user_level'] != ADMIN && $userdata['user_level'] != MOD) || !$is_auth['auth_delayedpost'])
+		// V: consider that a user
+		if (($userdata['user_level'] != ADMIN && $userdata['user_level'] != MOD) )
 		{
 			$current_time = time();
-			$limit_topics_time = " AND (t.topic_time <= $current_time OR t.topic_poster = " . $userdata['user_id'] . ")";
+			$limit_topics_time = " AND ((t.topic_time <= $current_time OR t.topic_poster = " . $userdata['user_id'] . ")";
+			// V: also allow authorized forums
+			if (!empty($allowed_delayedpost_ids))
+			{
+				$limit_topics_time .= " OR f.forum_id IN (" . implode(', ', $allowed_delayedpost_ids) . ")";
+			}
+			$limit_topics_time .= ")";
+		}
+		else
+		{
+			$limit_topics_time = "";
 		}
 
 		// get topics data
 		$topic_rowset = array();
-		$sql = "SELECT t.*, u.username, u.user_id, u2.username as user2, u2.user_id as id2, p.post_time, p.post_username, f.forum_name
+		$sql = "SELECT t.*,
+							u.username,
+							u.user_id, u.user_group_id, u.user_session_time,
+							u2.username as user2, u2.user_id as id2, u2.user_group_id as user_group_id_2, u2.user_session_time as user_session_time_2,
+							p.post_time, p.post_username,
+							f.forum_name
 				FROM " . TOPICS_TABLE . " t, " . USERS_TABLE . " u, " . POSTS_TABLE . " p, " . USERS_TABLE . " u2, " . FORUMS_TABLE . " f
 				WHERE 
 					$sql_forums

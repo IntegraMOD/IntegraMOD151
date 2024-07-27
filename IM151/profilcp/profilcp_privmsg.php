@@ -1945,15 +1945,15 @@ if(isset($_GET['p']))
 		'S_TIMEZONE' => '',
 		'L_USERNAME' => $lang['Username'],
 
-		'SUBJECT' => preg_replace($html_entities_match, $html_entities_replace, $privmsg_subject), 
+		'SUBJECT' => preg_replace($html_entities_match, $html_entities_replace, ( isset($privmsg_subject) ? $privmsg_subject : '' ) ), 
 		'USERNAME' => preg_replace($html_entities_match, $html_entities_replace, $to_username),
-		'MESSAGE' => $privmsg_message,
+		'MESSAGE' => ( isset($privmsg_message) ? $privmsg_message : '' ) ,
 		'HTML_STATUS' => $html_status, 
 		'SMILIES_STATUS' => $smilies_status, 
 		'BBCODE_STATUS' => sprintf($bbcode_status, '<a href="' . append_sid("faq.$phpEx?mode=bbcode") . '" target="_phpbbcode">', '</a>'), 
 		'FORUM_NAME' => $lang['Private_Message'],
 		
-		'BOX_NAME' => $l_box_name, 
+		'BOX_NAME' => ( isset($l_box_name) ? $l_box_name : '' ) , 
 
 		'L_SUBJECT' => $lang['Subject'],
 		'L_MESSAGE_BODY' => $lang['Message_body'],

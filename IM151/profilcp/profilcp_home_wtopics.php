@@ -113,7 +113,7 @@ if ($process == 'pre')
 
 		// get forums list
 		$is_auth = array();
-		$is_auth = auth(AUTH_READ, AUTH_LIST_ALL, $userdata, $forum_row);
+		$is_auth = auth(AUTH_READ, AUTH_LIST_ALL, $userdata, ( isset($forum_row) ? $forum_row : NULL ) );
 		$s_forum_ids = '';
     foreach ($is_auth as $key => $data)
 		{
@@ -127,7 +127,7 @@ if ($process == 'pre')
 		$topics_watched_total = 0;
 		if ( !empty($s_forum_ids) )
 		{
-			if (($userdata['user_level'] != ADMIN && $userdata['user_level'] != MOD) || !$is_auth['auth_delayedpost'])
+			if (($userdata['user_level'] != ADMIN && $userdata['user_level'] != MOD) || empty($is_auth['auth_delayedpost']))
 			{
 				$current_time = time();
 				$limit_topics_time = " AND (t.topic_time <= $current_time OR t.topic_poster = " . $userdata['user_id'] . ")";

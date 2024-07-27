@@ -110,9 +110,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
 	$template->assign_vars(array(
 		'L_DIGEST_FREQUENCY' => $lang['digest_frequency'],
 		'L_DIGEST_FREQUENCY_DESC' => $lang['digest_frequency_desc'],
-		'L_NONE' => $lang['digest_none'],
-		'L_DAILY' => $lang['digest_daily'],
-		'L_WEEKLY' => $lang['digest_weekly'],
 		'L_FORMAT' => $lang['digest_format'],
 		'L_FORMAT_DESC' => $lang['digest_format_desc'],
 		'L_HTML' => $lang['digest_html'],
@@ -124,8 +121,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
 		'L_NEW_ONLY' => $lang['digest_new_only'],
 		'L_NEW_ONLY_DESC' => $lang['digest_new_only_desc'],
 		'L_SEND_ON_NO_MESSAGES' => $lang['digest_send_empty'],
-		'L_SEND_HOUR' => $lang['digest_send'],
-		'L_SEND_HOUR_DESC' => $lang['digest_send_desc'],
 		'L_TEXT_LENGTH' => $lang['digest_message_size'],
 		'L_TEXT_LENGTH_DESC' => $lang['digest_size_desc'],
 		'L_FORUM_SELECTION' => $lang['digest_select_forums'],
@@ -256,7 +251,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
 	}
 	// global setting
 	$template->assign_vars(array(
-		'S_FORM_ENCTYPE' => $form_enctype,
 		'S_HIDDEN_FIELDS' => $s_hidden_fields,
 		'S_PROFILCP_ACTION' => append_sid("profile.$phpEx"),
 		)

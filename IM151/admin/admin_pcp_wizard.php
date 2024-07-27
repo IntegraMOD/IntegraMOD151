@@ -359,8 +359,7 @@ function get_map_title($map,$type=1){
 	for($imap=0; $imap < count($mapitems); $imap++){
 		$extra = "";
 		$tmpname = ($tmpname) ? $tmpname.'.'.$mapitems[$imap] : $mapitems[$imap];
-		// add @ as sometimes the title is an array... ignore
-		@$tmptitle = $lang[$user_maps[$tmpname]['title']];
+		$tmptitle = isset($user_maps[$tmpname]['title']) && !is_array($user_maps[$tmpname]['title']) && array_key_exists($user_maps[$tmpname]['title'], $lang) ? $lang[$user_maps[$tmpname]['title']] : '';
 		if($tmptitle){
 			$newtitle = $tmptitle;
 		} else if (is_array($user_maps[$tmpname]['title'])){
@@ -805,7 +804,7 @@ function setMessage(){
 function outputlist(){
 	global $user_maps, $user_fields, $lang, $template;
 	global $output_maps, $wiznav, $nextmode, $posted, $demouserdata, $select_name, $submit_name, $goto_name, $fieldsmode;
-	if(!$posted['map']){
+	if(empty($posted['map'])){
 		// set default map
 		get_output_maps();
 		$posted['map'] = $output_maps[0];
@@ -844,9 +843,10 @@ function outputlist(){
 	);
 	setMessage();
 	$map = $user_maps[$posted['map']]['fields'];
+	$color = true;
 	foreach ($map as $fieldname =>$data)
 	{
-		if($data['dsp_func']){
+		if(!empty($data['dsp_func'])){
 			$dspfunct = $data['dsp_func'];
 		} else $dspfunct = $user_fields[$fieldname]['dsp_func'];
 		$example = pcp_output($fieldname, $demouserdata, $posted['map']);
@@ -858,15 +858,15 @@ function outputlist(){
 			'name'						=> '<a href="'.wizurl($fieldsmode,'field='.$fieldname).'" onclick="return selectMap();">'.$fieldname.'</a>',
 			'explain'					=> $lang[$user_fields[$fieldname]['lang_key']],
 			'legendname' 			=> 'leg_'.$fieldname,
-			'legendchecked' 	=> ($data['leg'])?'checked':'',
+			'legendchecked' 	=> !empty($data['leg'])?'checked':'',
 			'textname' 				=> 'txt_'.$fieldname,
-			'textchecked' 		=> ($data['txt'])?'checked':'',
+			'textchecked' 		=> !empty($data['txt'])?'checked':'',
 			'imagename' 			=> 'img_'.$fieldname,
-			'imagechecked' 		=> ($data['img'])?'checked':'',
+			'imagechecked' 		=> !empty($data['img'])?'checked':'',
 			'nextlinename' 		=> 'crlf_'.$fieldname,
-			'nextlinechecked' => ($data['crlf'])?'checked':'',
+			'nextlinechecked' => !empty($data['crlf'])?'checked':'',
 			'spanname' 				=> 'style_'.$fieldname,
-			'spanvalue' 			=> $data['style'],
+			'spanvalue' 			=> ( isset($data['style']) ? $data['style'] : '' ) ,
 			'dspfunctname'		=> 'dsp_func_'.$fieldname,
 			'dspfunctoptions' => build_dspfunct_options($dspfunct),
 			'displayname'			=> 'class_'.$fieldname,
