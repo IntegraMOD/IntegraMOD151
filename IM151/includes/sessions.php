@@ -298,10 +298,7 @@ $sql = "TRUNCATE TABLE " . SESSIONS_TABLE . "";
 	}
 
 	$userdata['session_id'] = $session_id;
-	if (!empty($priv_session_id))
-	{
-		$userdata['priv_session_id'] = $priv_session_id;
-	}
+	$userdata['priv_session_id'] = isset($priv_session_id) ? $priv_session_id:null;
 	$userdata['session_ip'] = $user_ip;
 	$userdata['session_user_id'] = $user_id;
 	$userdata['session_logged_in'] = $login;

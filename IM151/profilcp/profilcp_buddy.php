@@ -349,7 +349,7 @@ else
 	$last_ind = 0;
   foreach ($user_maps[$map_name]['fields'] as $field_name => $map_field_data)
 	{
-		if ( !$map_field_data['hidden'] && ($map_field_data['ind'] > $last_ind) )
+		if ( empty($map_field_data['hidden']) && ($map_field_data['ind'] > $last_ind) )
 		{
 			$last_ind = $map_field_data['ind'];
 		}
@@ -447,7 +447,7 @@ else
 	$ord_fields = array();
   foreach ($user_maps[$map_name]['fields'] as $field_name => $map_field_data)
 	{
-		if ( !$map_field_data['hidden'] )
+		if ( empty($map_field_data['hidden']) )
 		{
 			$ord_fields[] = $field_name;
 		}
@@ -508,7 +508,7 @@ else
 	// header & sort icons
   foreach ($user_maps[$map_name]['fields'] as $field_name => $map_field_data)
 	{
-		if ( isset($field_ids[ $map_field_data['ind'] ]) )
+		if ( isset($map_field_data['ind']) && isset($field_ids[ $map_field_data['ind'] ]) )
 		{
 			// sort/order options
 			$icon_sort = '';
@@ -616,7 +616,7 @@ else
   foreach ($user_maps[$map_name]['fields'] as $field_name => $map_field_data)
 	{
 		$field_data = $user_fields[$field_name];
-		if ( isset($field_ids[ $map_field_data['ind'] ]) || $map_field_data['hidden'] )
+		if ( ( isset($map_field_data['ind']) && isset($field_ids[ $map_field_data['ind'] ]) ) || !empty($map_field_data['hidden']) )
 		{
 			// get field class
 			$class_def = '';
@@ -634,7 +634,7 @@ else
 			}
 
 			// get table source
-			$sql_def = $field_data['sql_def'];
+			$sql_def = ( isset($field_data['sql_def']) ? $field_data['sql_def'] : '' );
 			if ( empty($sql_def) )
 			{
 				$sql_def = '[USERS].' . $field_name;
@@ -703,9 +703,12 @@ else
 		}
 
 		// get the tables used by this class
-    foreach ( $tables_used_class[$class_name]  as $table_name => $used)
+		if (isset($tables_used_class[$class_name]))
 		{
-			$tables_used[$table_name] = true;
+			foreach ( $tables_used_class[$class_name]  as $table_name => $used)
+			{
+				$tables_used[$table_name] = true;
+			}
 		}
 	}
 
@@ -943,7 +946,7 @@ else
 		);
     foreach ($user_maps[$map_name]['fields'] as $field_name => $map_field_data)
 		{
-			if ($field_ids[ $map_field_data['ind'] ] )
+			if (isset($map_field_data['ind']) && array_key_exists($map_field_data['ind'], $field_ids) && $field_ids[ $map_field_data['ind'] ] )
 			{
 				preProcessUserConfig($users[$i]);
 				$template->assign_block_vars('userrow.user_list', array(

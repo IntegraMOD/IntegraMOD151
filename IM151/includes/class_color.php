@@ -361,18 +361,19 @@ $data = %s;
 	{
 		global $template, $phpEx, $phpbb_root_path;
 
-		if ( !empty($this->data) && count($this->data) != 0 )
+		$prefixes = ['disable_viewonline.', '']; // V: our block is nested
+		for ($i = 0; $i < count($this->data); $i++)
 		{
-			for ($i = 0; $i < count($this->data); $i++)
+			foreach ($prefixes as $prefix)
 			{
-				$template->assign_block_vars('legend', array(
+				$template->assign_block_vars($prefix . 'legend', array(
 					"U_GROUP" => in_array($this->data[$i]['group_id'], array_keys($this->group_ids)) ? append_sid($phpbb_root_path . "memberlist.". $phpEx) : append_sid($phpbb_root_path . "groupcp.". $phpEx ."?" . POST_GROUPS_URL . "=". $this->data[$i]['group_id']),
 					"GROUP_DESCRIPTION" => _lang_check($this->data[$i]['group_description']),
 					"GROUP_NAME" => _lang_check($this->data[$i]['group_name']),
 					"GROUP_COLOR" =>  $this->get_user_color($this->data[$i]['group_id']),
 				));
 
-				$template->assign_block_vars('legend.color', array(
+				$template->assign_block_vars($prefix . 'legend.color', array(
 					"L_COMMA" => '[&nbsp;',
 					"L_COMMA2" => '&nbsp;]&nbsp;',
 				));

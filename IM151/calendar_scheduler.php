@@ -55,8 +55,8 @@ if ($date == 0)
 }
 
 // date per jumpbox
-$start_month = intval($_POST['start_month']);
-$start_year = intval($_POST['start_year']);
+$start_month = isset($_POST['start_month']) ? intval($_POST['start_month']) : 0;
+$start_year = isset($_POST['start_year']) ? intval($_POST['start_year']) : 0;
 if ( !empty($start_month) && !empty($start_year) )
 {
 	$day = 01;
@@ -259,15 +259,7 @@ for ($i=1971; $i < 2070; $i++)
 $s_year .= '</select>';
 
 // build a forum select list
-$cat_hierarchy = function_exists(get_auth_keys);
-if (!$cat_hierarchy)
-{
-	$s_forum_list = '<select name="selected_id" onchange="forms[\'_calendar_scheduler\'].submit();">' . calendar_get_tree_option($fid) . '</select>';
-}
-else
-{
-	$s_forum_list = '<select name="selected_id" onchange="forms[\'_calendar_scheduler\'].submit();">' . get_tree_option($fid) . '</select>';
-}
+$s_forum_list = '<select name="selected_id" onchange="forms[\'_calendar_scheduler\'].submit();">' . get_tree_option($fid) . '</select>';
 
 // send header
 $k = $first_day_of_week;
@@ -327,7 +319,7 @@ for ($j=0; $j < $nb_rows; $j++)
 		{
 			$class = 'genmed';
 		}
-		if ($days[$cur])
+		if (array_key_exists($cur, $days))
 		{
 			$url = append_sid("./calendar_scheduler.$phpEx?d=$offset&fid=$fid");
 			$cur = sprintf('<a href="%s" class="gen"><b>%s</b></a>', $url, $cur);

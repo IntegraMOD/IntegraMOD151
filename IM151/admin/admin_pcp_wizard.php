@@ -181,7 +181,7 @@ function buddyupdate(){
 				case 'rqd':
 					$user_fields[$name]['rqd'] = 1;
 					unset($user_fields[$name]['dft']);
-					if (isset($user_fields[$name]['hidden']))
+					if (array_key_exists('hidden', $user_fields[$name]))
 					{
 						unset($user_fields[$name]['hidden']);
 					}
@@ -1378,7 +1378,7 @@ function fields(){
 	);
 	foreach ($baseparams as $idx => $key)
 	{
-		$value = ( isset($posted['field']) && isset($user_fields[$posted['field']][$key]) ? $user_fields[$posted['field']][$key] : '' );
+		$value = ( isset($posted['field']) && array_key_exists($posted['field'], $user_fields) && array_key_exists($key, $user_fields[$posted['field']]) ? $user_fields[$posted['field']][$key] : '' );
 		if(in_array($key,$fieldkeyrequired)){
 			$dbvalue = $lang['Required_field'];
 		} else $dbvalue = '';

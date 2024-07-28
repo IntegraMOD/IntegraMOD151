@@ -143,32 +143,6 @@ if ( $is_called == FALSE )
 		return in_array(get_user_level($userdata),$admin_level);
 	}
 
-	// Integramod-specific function
-	function get_user_level_class($user_level, $default='gen', $user=array())
-	{
-		$ret = $default;
-		if (!empty($user) && empty($user_level)) $user_level = get_user_level($user);
-		switch( $user_level )
-		{
-				case ADMIN_FOUNDER:
-					$ret = 'foundercolor';
-					break;
-				case ADMIN:
-					$ret = 'admincolor';
-					break;
-				case JADMIN:
-					$ret = 'jadmincolor';
-					break;
-				case MOD:
-					$ret = 'modcolor';
-					break;
-				default:
-					$ret = 'usercolor';
-					break;
-		}
-		return $ret;
-	}
-
 	//-------------------------------------------
 	//
 	//	ranks management

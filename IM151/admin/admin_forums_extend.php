@@ -438,6 +438,7 @@ function reorder_tree()
 	// re-read the tree
 	cache_tree(true);
 	board_stats();
+	$db->clear_cache('');
 }
 
 //--------------------------------
@@ -1716,5 +1717,4 @@ if ( $mode == '' )
 // dump
 $template->pparse('body');
 include('./page_footer_admin.'.$phpEx);
-
-?>
+$var_cache->clean('forum');

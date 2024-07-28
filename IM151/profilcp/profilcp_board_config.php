@@ -482,7 +482,7 @@ if ($submit)
 	}else{
 		// username changed? 
 		// Do this before updating usertable! as the view_userdata will be altered accordingly
-		if ($username_changed){
+		if (!empty($username_changed)){
 			$sql = "UPDATE " . GROUPS_TABLE . " 
 								 SET group_name = '" . str_replace("\'", "''", $values['username']) . "'
 							 WHERE group_name = '" . str_replace("\'", "''", $view_userdata['username'] ) . "'";

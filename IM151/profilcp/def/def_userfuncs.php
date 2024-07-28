@@ -633,13 +633,13 @@ function pcp_get_field( $field_cfg, $map_name='', $field_name='' )
 					break;
 				}
 			}
-			if ( !$found && !empty($field_data['values'][0]))
+			if ( !$found && count($field_data['values']))
 			{
-        $first = $field_data['values'][0];
-        foreach ($field_data['values'] as $first_value => $first_key)
+        foreach ($field_data['values'] as $first_key => $first_value)
         {
           break; // Just populate $first_value / $first_key
         }
+				$field_data['default'] = $first_value;
 			}
 		}
 	}
@@ -672,7 +672,7 @@ function pcp_get_mods_setting_menu( $menu_id, $map_name='' )
 	$res = array();
 	if ( !empty($map_name) && isset($user_maps[$map_name]) )
 	{
-		$res = ( isset($user_maps[$map_name][$menu_id]) ? $user_maps[$map_name][$menu_id] : NULL ) ;
+		$res = ( array_key_exists($menu_id, $user_maps[$map_name]) ? $user_maps[$map_name][$menu_id] : NULL ) ;
 	}
 
 	return $res;

@@ -2359,7 +2359,7 @@ else
 		$row_class = ( !($i % 2) ) ? 'row1' : 'row2';
 
 		$template->assign_block_vars('listrow', array(
-			'CLASS_NAME' => get_user_level_class($row['user_level'], 'name', $row),
+			'CLASS_NAME' => $agcm_color->get_user_color($row['user_group_id'], $row['user_session_time']),
 			'ROW_CLASS' => $row_class,
 			'FROM' => $msg_username,
 			'SUBJECT' => $msg_subject,

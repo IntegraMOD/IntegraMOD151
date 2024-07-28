@@ -230,7 +230,7 @@ function pcp_output_username($field_name, $view_userdata, $map_name='')
 	$username = $agcm_color->get_user_color($view_userdata['user_group_id'], $view_userdata['user_session_time'], $username);
 
     // txt 
-    $txt = '<span class="' . get_user_level_class($view_userdata['user_level'], 'gen', $view_userdata) . '">' . $username . '</span>'; 
+    $txt = $username;
 
 	// img
 	/* Hide Buttons :: Altered
@@ -273,7 +273,7 @@ function pcp_output_username_linked($field_name, $view_userdata, $map_name='')
 		$txt = '<span class="' . get_user_level_class($view_userdata['user_level'], 'gen', $view_userdata) . '">' . $username . '</span>';
 	}*/
     if($userdata['user_id'] == ANONYMOUS || $view_userdata['user_id'] == ANONYMOUS )    { 
-        $txt = '<span class="' . get_user_level_class($view_userdata['user_level'], 'gen', $view_userdata) . '">' . $username . '</span>'; 
+        $txt = '<span class="' . $agcm_color->get_user_color($view_userdata['user_group_id'], $view_userdata['user_session_time']) . '">' . $username . '</span>'; 
     } else { 
         $temp_url = append_sid("./profile.$phpEx?mode=viewprofile&amp;" . POST_USERS_URL . '=' . $view_userdata['user_id']); 
         $txt = '<a href="' . $temp_url . '" title="' . $lang['Read_profile'] . '">' . $username . '</a>'; 

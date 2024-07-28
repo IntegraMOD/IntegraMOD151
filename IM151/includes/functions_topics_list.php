@@ -160,7 +160,6 @@ function topic_list($box, $tpl='', $topic_rowset=[], $list_title='', $split_type
 	if (!$cat_hierarchy)
 	{
 		// standard read
-		$is_auth = array();
 		$is_auth = auth(AUTH_ALL, AUTH_LIST_ALL, $userdata);
 	}
 
@@ -853,7 +852,7 @@ $approve_mod['moderators'] = explode('|', get_moderators_user_id_of_forum($forum
 			'REPLIES'				=> $replies,
 			'NEWEST_POST_IMG'		=> $newest_post_img,
 			'ICON'					=> $icon,
-			'TOPIC_ATTACHMENT_IMG'  => topic_attachment_image($topic_rowset[$i]['topic_attachment']),
+			'TOPIC_ATTACHMENT_IMG'  => topic_attachment_image($topic_rowset[$i]['topic_attachment'], $tree['auth'][POST_FORUM_URL . $topic_rowset[$i]['forum_id']]),
 			'TOPIC_TITLE'			=> $topic_title,
 			'TOPIC_ANNOUNCES_DATES'	=> $topic_announces_dates,
 			'TOPIC_CALENDAR_DATES'	=> $topic_calendar_dates,

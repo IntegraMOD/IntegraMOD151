@@ -182,7 +182,7 @@ function get_calendar_title_date($calendar_start, $calendar_duration)
 
 	// apply it to dates
 	$date_start		= date_dsp($fmt_start, $calendar_start);
-	$date_end		= date_dsp($fmt_end, $calendar_start + $calendar_duration);
+	$date_end		= date_dsp($fmt_end, $calendar_start + intval($calendar_duration));
 
 	// add period to the title
 	$calendar_icon	= '<a href="' . append_sid( $phpbb_root_path . "./calendar.$phpEx?start=" . date( 'Ymd', $calendar_start)). '"><img src="' . $images['icon_calendar'] . '" hspace="3" border="0" align="top" alt="' . $lang['Calendar_event'] . '" /></a>';
@@ -641,7 +641,7 @@ function get_event_PCP_birthday(&$events, &$number, $start_date, $end_date, $lim
 			{
 				// user info
 				$user_id		= $row['user_id'];
-				$username		= $agcm_color->get_user_color($row['user_group_id'], $row['user_session_time'], $row['username']);
+				$username		= $row['username'];
 				$user_birthday	= $row['user_birthday'];
 
 				// get user relational status
@@ -660,7 +660,7 @@ function get_event_PCP_birthday(&$events, &$number, $start_date, $end_date, $lim
 
 				if ($real_display)
 				{
-					$txt_class = get_user_level_class($row['user_level'], 'genmed', $row);
+					$txt_class = $agcm_color->get_user_color($row['user_group_id'], $row['user_session_time']);
 					if ($row['user_allow_viewonline'] != YES)
 					{
 						$username = '<i>' . $username . '</i>';

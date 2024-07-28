@@ -115,11 +115,17 @@ if ($process == 'pre')
 		$is_auth = array();
 		$is_auth = auth(AUTH_READ, AUTH_LIST_ALL, $userdata, ( isset($forum_row) ? $forum_row : NULL ) );
 		$s_forum_ids = '';
+		// V: also compute forums where the user is allowed to see delayed posts
+		$allowed_delayedpost_ids = array();
     foreach ($is_auth as $key => $data)
 		{
 			if ( $data['auth_read'] )
 			{
 				$s_forum_ids .= ( empty($s_forum_ids) ? '' : ', ' ) . $key;
+				if ($data['auth_delayedpost'])
+				{
+					$allowed_delayedpost_ids[] = $key;
+				}
 			}
 		}
 
@@ -127,10 +133,15 @@ if ($process == 'pre')
 		$topics_watched_total = 0;
 		if ( !empty($s_forum_ids) )
 		{
-			if (($userdata['user_level'] != ADMIN && $userdata['user_level'] != MOD) || empty($is_auth['auth_delayedpost']))
+			if (($userdata['user_level'] != ADMIN && $userdata['user_level'] != MOD))
 			{
 				$current_time = time();
-				$limit_topics_time = " AND (t.topic_time <= $current_time OR t.topic_poster = " . $userdata['user_id'] . ")";
+				$limit_topics_time = " AND ((t.topic_time <= $current_time OR t.topic_poster = " . $userdata['user_id'] . ")";
+				if (!empty($allowed_delayedpost_ids))
+				{
+					$allowed_delayedpost_ids .= " OR f.forum_id IN (" . implode(", ", $allowed_delayedpost_ids) . ")";
+				}
+				$limit_topics_time .= ")";
 			}
 
 			$sql = "SELECT t.*, u.username, u.user_id, u2.username as user2, u2.user_id as id2, p.post_username, p2.post_username AS post_username2, p2.post_time, f.forum_name

@@ -1313,7 +1313,7 @@ if ( $userdata['session_logged_in'] )
 if (!function_exists("get_birthday_list")) {
 function get_birthday_list( $time )
 {
-	global $db, $phpbb_root_path, $phpEx, $userdata, $admin_level, $level_prior;
+	global $db, $phpbb_root_path, $phpEx, $userdata, $admin_level, $level_prior, $agcm_color;
 
 	$res = '';
 
@@ -1350,7 +1350,7 @@ function get_birthday_list( $time )
 
 		if ($real_display)
 		{
-			$txtclass = get_user_level_class($row['user_level'], 'genmed', $row);
+			$txtclass = $agcm_color->get_user_color($row['user_group_id'], $row['user_session_time']);
 			if ($row['user_allow_viewonline'] != YES) $row['username'] = '<i>' . $row['username'] . '</i>';
 			$temp_url = append_sid("profile.$phpEx?mode=viewprofile&" . POST_USERS_URL . "=" . $row['user_id']);
 			$row['username'] = '<a href="' . $temp_url . '" class="' . $txtclass . '">' . $row['username'] . '</a>';

@@ -1448,7 +1448,7 @@ CREATE TABLE phpbb_module_info (
 CREATE TABLE phpbb_modules (
   module_id mediumint(8) unsigned NOT NULL auto_increment,
   short_name varchar(100) default NULL,
-  update_time mediumint(8) NOT NULL default '0',
+  update_time int(50) NOT NULL default '0',
   module_order mediumint(8) NOT NULL default '0',
   active tinyint(2) NOT NULL default '0',
   perm_all tinyint(2) unsigned NOT NULL default '1',
@@ -2155,8 +2155,8 @@ CREATE TABLE phpbb_stats_smilies_index (
 
 CREATE TABLE phpbb_stats_smilies_info (
   last_post_id mediumint(8) NOT NULL default '0',
-  last_update_time int(12) NOT NULL default '0',
-  update_time mediumint(8) NOT NULL default '10080'
+  last_update_time int(50) NOT NULL default '0',
+  update_time int(50) NOT NULL default '10080'
 );
 
 # --------------------------------------------------------

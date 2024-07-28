@@ -471,10 +471,7 @@ if ( $mode == 'edit' )
 			// fill the result
 			foreach ($field_def as $def_key => $def_data)
 			{
-				if (isset($field[$def_key]))
-				{
-					$fields[$def_key][] = $field[$def_key];
-				}
+				$fields[$def_key][] = ( isset($field[$def_key]) ? $field[$def_key] : NULL ) ;
 			}
 		}
 	}

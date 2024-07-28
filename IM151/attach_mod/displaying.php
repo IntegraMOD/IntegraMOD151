@@ -140,18 +140,17 @@ function init_display_template($template_var, $replacement, $filename = 'viewtop
 //
 // Returns the image-tag for the topic image icon
 //
-function topic_attachment_image($switch_attachment)
+function topic_attachment_image($switch_attachment, $auth = null)
 {
 	global $attach_config, $is_auth;
+	if (!$auth) $auth = $is_auth;
 
-	if (intval($switch_attachment) == 0 || (!($is_auth['auth_download'] && $is_auth['auth_view'])) || intval($attach_config['disable_mod']) || $attach_config['topic_icon'] == '')
+	if (intval($switch_attachment) == 0 || (!($auth['auth_download'] && $auth['auth_view'])) || intval($attach_config['disable_mod']) || $attach_config['topic_icon'] == '')
 	{
 		return '';
 	}
 
-	$image = '<img src="' . $attach_config['topic_icon'] . '" alt="" border="0" /> ';
-
-	return $image;
+	return '<img src="' . $attach_config['topic_icon'] . '" alt="" border="0" /> ';
 }
 
 //

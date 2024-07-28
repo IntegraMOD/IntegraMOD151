@@ -127,7 +127,7 @@ if ( ($process == 'post') && ($privmsgs_page_size > 0) )
 				'TITLE'			=> $privmsgs_rowset[$i]['privmsgs_subject'],
 				'U_TITLE'		=> append_sid("./privmsg.$phpEx?folder=inbox&mode=read&" . POST_POST_URL . "=" . $privmsgs_rowset[$i]['privmsgs_id']),
 				'CLASS'			=> ( $class ) ? 'row1' : 'row2',
-				'CLASS_NAME'	=> get_user_level_class( $privmsgs_rowset[$i]['user_level'], 'name', $privmsgs_rowset[$i] ),
+				'CLASS_NAME'	=> $agcm_color->get_user_color( $privmsgs_rowset[$i]['user_group_id'], $privmsgs_rowset[$i]['user_session_time'] ),
 				'USERNAME'		=> $privmsgs_rowset[$i]['username'],
 				'U_AUTHOR'		=> append_sid("./profile.$phpEx?mode=viewprofile&" . POST_USERS_URL . "=" . $privmsgs_rowset[$i]['user_id'] ),
 				'DATE'			=> create_date( $board_config['default_dateformat'], $privmsgs_rowset[$i]['privmsgs_date'], $board_config['board_timezone'] ),

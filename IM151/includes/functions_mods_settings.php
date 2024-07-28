@@ -127,7 +127,7 @@ function init_board_config($mod_name, $config_fields, $sub_name='', $sub_sort=0,
 
   foreach ($config_fields as $config_key => $config_data)
 	{
-		if (!isset($config_data['default']))
+		if (!array_key_exists('default', $config_data))
 		{ // V: some keys (...like "username") have no default. Prevent warnings here.
 		  // Really, they ought *not* to be created as board config keys...
 			$config_data['default'] = NULL;

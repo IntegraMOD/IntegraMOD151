@@ -91,8 +91,7 @@ if ($process == 'pre')
 		}
 
 		// get forums list
-		$is_auth = array();
-		$is_auth = auth(AUTH_READ, AUTH_LIST_ALL, $userdata, isset($forum_row) ? $forum_row : '');
+		$is_auth = auth(AUTH_ALL, AUTH_LIST_ALL, $userdata, isset($forum_row) ? $forum_row : '');
 		$s_forum_ids = '';
     foreach ($is_auth as $key => $data)
 		{
