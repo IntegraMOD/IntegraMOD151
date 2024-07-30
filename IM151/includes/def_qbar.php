@@ -150,7 +150,7 @@ $qbar_maps = array(
 	
 	'QsubMenu' => array(
 		'class'			=> 'Bar',
-		'display'		=> true,
+		'display'		=> false,
 		'cells'			=> 10,
 		'in_table'		=> false,
 		'style'			=> 0,
@@ -266,7 +266,7 @@ $qbar_maps = array(
 	
 	'QRMenu' => array(
 		'class'			=> 'QRMenu',
-		'display'		=> true,
+		'display'		=> false,
 		'cells'			=> 10,
 		'in_table'		=> false,
 		'style'			=> 0,
