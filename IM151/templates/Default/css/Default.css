@@ -648,3 +648,23 @@ body.resp div#mobile-bar { position: absolute; }
 	body.resp div#mobile-bar { display: block; }
 	body.resp p.custom-links { display: block; }
 }
+
+@media screen and (max-width: 900px){
+	.idx { 
+		display:block;
+		margin-top: 10px;
+ 	}
+}	
+
+@media only screen and (max-width: 767px) {
+    html { 
+        -webkit-text-size-adjust: 100%;
+    }
+	.topics, .posts, .views, .replies, .searchbar, .space {
+	  display: none;
+	}
+}
+
+@media only screen and (max-width: 400px) {
+	.author, .lastpost {display: none;}
+}

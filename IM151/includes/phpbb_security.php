@@ -500,12 +500,14 @@
 			  FROM ". BANLIST_TABLE;
 		$result = $db->sql_query($sql, false, 'banlist_table');
 		$my_ip = encode_ip(phpBBSecurity_IP());
-		while ($row = $db->sql_fetchrow($result))
+	    while ($row = $db->sql_fetchrow($result)) 
 		{
-			if ($row['ban_ip'] == $my_ip)
-				return phpBBSecurity_Error('banned', 0);
-		}
-		$db->sql_freeresult($result);
+            if (isset($row['ban_ip']) && $row['ban_ip'] == $my_ip) 
+			{
+                return phpBBSecurity_Error('banned', 0);
+            }
+        }
+        $db->sql_freeresult($result);
 		 	
 		#==== DDoS Prevention Help
 		#==== Since i once made a DDoS attacker, and made prevention help for it, it helps here.

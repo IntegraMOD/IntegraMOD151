@@ -535,50 +535,70 @@ div.resp-add {
   display: hidden;
 }
 
-   	@media only screen and (max-width: 736px) {
+@media only screen and (max-width: 736px) {
 	div.iresp { display:none;}
 
 }
-   	@media only screen and (max-width: 475px) {
+@media only screen and (max-width: 475px) {
 	div.resp { display:none;}
 	div.respnav { display:block !important;}
 }
-   	@media only screen and (min-device-width: 375px) and (max-device-height: 667px) and (-webkit-device-pixel-ratio: 2) and (orientation : portrait) {
+@media only screen and (min-device-width: 375px) and (max-device-height: 667px) and (-webkit-device-pixel-ratio: 2) and (orientation : portrait) {
 	div.resp { display:none;}
 	div.respnav { display:block !important;}
 }
 
-   	@media only screen and (min-device-width: 414px) and (max-device-height: 736px) and (-webkit-device-pixel-ratio: 3) and (orientation : portrait) {
+@media only screen and (min-device-width: 414px) and (max-device-height: 736px) and (-webkit-device-pixel-ratio: 3) and (orientation : portrait) {
 	div.resp {display:none;}
 	div.respnav { display:block !important;}
 }
 
-	@media only screen and (min-device-width: 320px) and (max-device-height: 640px) and (orientation : landscape) and (-webkit-device-pixel-ratio: 2) and (orientation : portrait) {
+@media only screen and (min-device-width: 320px) and (max-device-height: 640px) and (orientation : landscape) and (-webkit-device-pixel-ratio: 2) and (orientation : portrait) {
 	div.resp {display:none;}
 	div.respnav { display:block !important;}
 }
 
-	@media only screen and (min-device-width: 320px) and (max-device-height: 640px) and (orientation : portrait) and (-webkit-device-pixel-ratio: 2) and (orientation : portrait) {
+@media only screen and (min-device-width: 320px) and (max-device-height: 640px) and (orientation : portrait) and (-webkit-device-pixel-ratio: 2) and (orientation : portrait) {
 	div.resp {display:none;}
 	div.respnav { display:block !important;}
 }
 
-	@media only screen and (min-device-width: 320px) and (max-device-height: 640px) and (orientation : landscape) and (-webkit-device-pixel-ratio: 3) and (orientation : portrait) {
+@media only screen and (min-device-width: 320px) and (max-device-height: 640px) and (orientation : landscape) and (-webkit-device-pixel-ratio: 3) and (orientation : portrait) {
 	div.resp {display:none;}
 	div.respnav { display:block !important;}
 }
 
-	@media only screen and (min-device-width: 320px) and (max-device-height: 640px) and (orientation : portrait) and (-webkit-device-pixel-ratio: 3) and (orientation : portrait) {
+@media only screen and (min-device-width: 320px) and (max-device-height: 640px) and (orientation : portrait) and (-webkit-device-pixel-ratio: 3) and (orientation : portrait) {
 	div.resp {display:none;}
 	div.respnav { display:block !important;}
 }
 
-	@media only screen and (min-device-width: 360px) and (max-device-height: 640px) and (orientation : landscape) and (-webkit-device-pixel-ratio: 3) and (orientation : portrait) {
+@media only screen and (min-device-width: 360px) and (max-device-height: 640px) and (orientation : landscape) and (-webkit-device-pixel-ratio: 3) and (orientation : portrait) {
 	div.resp {display:none;}
 	div.respnav { display:block !important;}
 }
 
-	@media only screen and (min-device-width: 360px) and (max-device-height: 640px) and (orientation : portrait) and (-webkit-device-pixel-ratio: 3) and (orientation : portrait) {
+@media only screen and (min-device-width: 360px) and (max-device-height: 640px) and (orientation : portrait) and (-webkit-device-pixel-ratio: 3) and (orientation : portrait) {
 	div.resp {display:none;}
 	div.respnav { display:block !important;}
+}
+
+@media screen and (max-width: 900px){
+	.idx { 
+		display:block;
+		margin-top: 10px;
+ 	}
+}	
+
+@media only screen and (max-width: 767px) {
+    html { 
+        -webkit-text-size-adjust: 100%;
+    }
+	.topics, .posts, .views, .replies, .searchbar, .space {
+	  display: none;
+	}
+}
+
+@media only screen and (max-width: 400px) {
+	.author, .lastpost {display: none;}
 }
