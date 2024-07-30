@@ -245,6 +245,7 @@ window.open('{buddy_alert.U_BUDDY_ALERT}', '_buddyalert', 'HEIGHT=225,resizable=
 			<li><a href="{U_SEARCH_SELF}">{L_SEARCH_SELF}</a></li>
 		  </ul>	
 		</li>
+                <!-- BEGIN switch_user_logged_in -->
 		<li><a class="dropdown-arrow username uname" href="#">&nbsp;{U_THISUSER}&nbsp;</a>
 		  <ul class="sub-menus">
 			<li><a href="{U_PROFILE}"><i class="fa-solid fa-user-gear"></i> {L_PROFILE}</a></li>
@@ -256,6 +257,7 @@ window.open('{buddy_alert.U_BUDDY_ALERT}', '_buddyalert', 'HEIGHT=225,resizable=
 			<li><a href="{U_LOGIN_LOGOUT}"><i class="fa-solid fa-power-off"></i> {L_LOGIN_LOGOUT}</a></li>		
 		  </ul>
 		</li>
+                <!-- END switch_user_logged_in -->
 		<li class="menu-item genarrow arrows right-arrow me-0"><a href="#bottom" title="{L_BOTTOM}"><i class="fa-solid fa-arrow-down"></i></a></li>
 	  </ul>
 	</nav>
