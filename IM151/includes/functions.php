@@ -883,9 +883,9 @@ function init_userprefs($userdata)
 	// BEGIN Style Select MOD
 	
 	// Security update 02 September 2006 B starts// 
-	if ( (int)isset($_POST['STYLE_URL']) || (int)isset($_GET['STYLE_URL']) ) 
+        if ( (int)isset($_POST['STYLE_URL']) || (int)isset($_GET['STYLE_URL']) ) 
 	{
-		(int)$style = urldecode( (isset($_POST[STYLE_URL])) ? $_POST[STYLE_URL] : (int)$_GET[STYLE_URL] );
+		$style = urldecode( (isset($_POST['STYLE_URL'])) ? $_POST['STYLE_URL'] : (int)$_GET['STYLE_URL'] );
 		if($style == 0) { die('Hacking attempt'); }
 		if ( $theme = setup_style((int)$style) )
 		{
