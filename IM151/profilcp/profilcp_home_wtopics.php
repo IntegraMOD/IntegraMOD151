@@ -122,7 +122,7 @@ if ($process == 'pre')
 			if ( $data['auth_read'] )
 			{
 				$s_forum_ids .= ( empty($s_forum_ids) ? '' : ', ' ) . $key;
-				if ($data['auth_delayedpost'])
+				if ($data['auth_delayedpost'] ?? null)
 				{
 					$allowed_delayedpost_ids[] = $key;
 				}
