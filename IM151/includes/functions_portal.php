@@ -161,6 +161,7 @@ function portal_parse_blocks($layout, $forum_wide = FALSE, $type='')
 			{
 				message_die(CRITICAL_ERROR, "Could not query portal blocks position", "", __LINE__, __FILE__, $sql);
 			}
+			$layout_pos = array();
 			while ($block_pos_row = $db->sql_fetchrow($block_pos_result))
 			{
 				$layout_pos[$block_pos_row['bposition']] = $block_pos_row['pkey'];

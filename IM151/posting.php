@@ -724,7 +724,7 @@ if ( $mode == 'newtopic' || $mode == 'reply' || $mode == 'editpost' || $mode == 
 		$approve_mod['enabled'] = false;
 	}
 	
-	if ( $approve_mod['enabled'] )
+	if ( !empty($approve_mod['enabled']) )
 	{
 		if ( $approve_mod['forum_hide_unapproved_posts'] )
 		{
@@ -2341,7 +2341,7 @@ generate_smilies('inline', PAGE_POSTING);
 //
 // Begin Aprove_Mod Block : 7
 //
-if ( $approve_mod['enabled'] )
+if ( !empty($approve_mod['enabled']) )
 {
 	if ( $mode != 'newtopic' && !($mode == 'editpost'  && $post_data['first_post']) )
 	{	

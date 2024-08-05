@@ -32,7 +32,7 @@ header("Content-type: text/xml");
 //
 // Start session management
 //
-$userdata = session_pagestart( $user_ip, PAGE_INDEX, $session_length );
+$userdata = session_pagestart( $user_ip, PAGE_INDEX );
 init_userprefs( $userdata );
 
 //

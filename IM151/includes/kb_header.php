@@ -73,7 +73,7 @@ else
 $template->assign_vars( array( 'U_PORTAL' => $mx_root_path,
 		'L_PORTAL' => "<<",
 		'L_KB_TITLE' => $block_title,
-		'L_ADD_ARTICLE' => $add_article,
+		'L_ADD_ARTICLE' => ( isset($add_article) ? $add_article : '' ) ,
 		'L_SEARCH' => $search,
 		'U_TOPRATED' => append_sid( this_kb_mxurl( "mode=stats&amp;stats=toprated" ) ),
 		'L_TOPRATED' => $lang['Top_toprated'],

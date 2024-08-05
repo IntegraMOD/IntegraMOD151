@@ -320,7 +320,7 @@ else if ( $search_keywords != '' || $search_author != '' || $search_id )
 			{
 				if ( $userdata['session_logged_in'] )
 				{
-					$sql = "SELECT post_id 
+					$sql = "SELECT post_id, topic_id, forum_id, post_time
 						FROM " . POSTS_TABLE . " 
 						WHERE poster_id = " . $userdata['user_id'];
 				}
@@ -337,7 +337,7 @@ else if ( $search_keywords != '' || $search_author != '' || $search_id )
             {
                 $nix_tomorrow  = mktime (0,0,0,date("m", $search_date), date("d", $search_date)+1,date("Y", $search_date)); 
                 
-                $sql = "SELECT post_id 
+                $sql = "SELECT post_id, topic_id, forum_id, post_time
                     FROM " . POSTS_TABLE . " 
                     WHERE post_time >= $search_date and post_time < $nix_tomorrow"; 
                
@@ -391,14 +391,14 @@ else if ( $search_keywords != '' || $search_author != '' || $search_id )
 
 				if ($search_topic !='')
 				{
-					$sql = "SELECT post_id 
+					$sql = "SELECT post_id, topic_id, forum_id, post_time
 						FROM " . POSTS_TABLE . " 
 						WHERE poster_id IN ($matching_userids)
 						AND topic_id = $search_topic";
 				}
 				else
 				{
-					$sql = "SELECT post_id 
+					$sql = "SELECT post_id, topic_id, forum_id, post_time
 						FROM " . POSTS_TABLE . " 
 						WHERE poster_id IN ($matching_userids)";
 				}
@@ -1028,7 +1028,7 @@ else if ( $search_keywords != '' || $search_author != '' || $search_id )
 		else
 		{
 //-- mod : Advanced Group Color Management -------------------------------------
-      $sql = "SELECT u.user_group_id, u.user_session_time, t.*, f.forum_id, f.forum_name, u.username, u.user_id, u2.username as user2, u2.user_id as id2, p.post_username, p2.post_username AS post_username2, p2.post_time,
+      $sql = "SELECT u.user_group_id, u.user_session_time, t.*, f.forum_id, f.forum_name, u.username, u.user_id, u2.username as user2, u2.user_id as id2, p.post_username, p2.post_username AS post_username2, p2.post_time, p.post_id,
         u.user_group_id as user_group_id_1, u.user_session_time as user_session_time_1,
         u2.user_group_id as user_group_id_2, u2.user_session_time as user_session_time_2
 				FROM " . TOPICS_TABLE . " t, " . FORUMS_TABLE . " f, " . USERS_TABLE . " u, " . POSTS_TABLE . " p, " . POSTS_TABLE . " p2, " . USERS_TABLE . " u2
@@ -1166,7 +1166,7 @@ else if ( $search_keywords != '' || $search_author != '' || $search_id )
 
 		$highlight_active = '';
 		$highlight_match = array();
-		for($j = 0; $j < count($split_search); $j++ )
+		for($j = 0; isset($split_search) && $j < count($split_search); $j++ )
 		{
 			$split_word = $split_search[$j];
 
@@ -1214,7 +1214,8 @@ else if ( $search_keywords != '' || $search_author != '' || $search_id )
 			$post_date = create_date_day($board_config['default_dateformat'], $searchset[$i]['post_time'], $board_config['board_timezone']); 
 //-- end mod : today at   yesterday at ------------------------------------------------------------------------ 
 
-			$message = $searchset[$i]['post_text'];
+			// V: set only if show_results=='posts'
+			$message = ( isset($searchset[$i]['post_text']) ? $searchset[$i]['post_text'] : '' ) ;
 			$topic_title = $searchset[$i]['topic_title'];
 
 			$forum_id = $searchset[$i]['forum_id'];
@@ -1671,7 +1672,7 @@ else if ( $search_keywords != '' || $search_author != '' || $search_id )
 					$forum_id = $searchset[$i]['forum_id'];
 
 					// have we got a last visit time for this topic
-					$topic_last_read = intval($board_config['tracking_unreads'][$topic_id]);
+					$topic_last_read = isset($board_config['tracking_unreads'][$topic_id]) ? intval($board_config['tracking_unreads'][$topic_id]) : 0;
 					if ( !empty($board_config['tracking_all']) && ($board_config['tracking_all'] > $topic_last_read) )
 					{
 						$topic_last_read = $board_config['tracking_all'];
@@ -1789,7 +1790,7 @@ else if ( $search_keywords != '' || $search_author != '' || $search_id )
 						$approve_mod['enabled'] = true;
 					}
 				}
-				if ( $approve_mod['enabled'] ) 
+				if ( !empty($approve_mod['enabled']) ) 
 				{ 
 					$approve_mod['moderators'] = explode('|', get_moderators_user_id_of_forum($searchset[$i]['forum_id']));
 					if ( $approve_forum_id != $searchset[$i]['forum_id'] )
@@ -1884,7 +1885,7 @@ else if ( $search_keywords != '' || $search_author != '' || $search_id )
 					'LAST_POST_TIME' => $last_post_time,
 					'LAST_POST_AUTHOR' => $last_post_author,
 					'LAST_POST_IMG' => $last_post_url,
-					'MINICLOCK' => $searchset[$i]['miniclock'],
+					'MINICLOCK' => ( isset($searchset[$i]['miniclock']) ? $searchset[$i]['miniclock'] : '' ) , // V: ???
 
 					'L_TOPIC_FOLDER_ALT' => $folder_alt, 
 					'U_POSTINGS_POPUP' => append_sid("postings_popup.$phpEx?t=$topic_id"),

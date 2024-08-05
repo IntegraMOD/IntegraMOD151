@@ -217,16 +217,16 @@ if ((isset($_POST['start']) || isset($_GET['start'])) && !$submit)
 	if ( $is_auth['auth_post'] )
 	{
 		$template->assign_block_vars('switch_auth_post', array());
+		if ($bbcode_on)
+		{
+			$template->assign_block_vars('switch_auth_post.switch_bbcode', array());
+		}
 	}	
 	else
 	{	
 		$template->assign_block_vars('switch_auth_no_post', array());
 	}
 
-	if ($bbcode_on)
-	{
-		$template->assign_block_vars('switch_auth_post.switch_bbcode', array());
-	}
 	$template->set_filenames(array( 
      		'body' => 'shoutbox_body.tpl'));
 

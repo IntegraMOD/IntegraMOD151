@@ -78,7 +78,7 @@ function pcp_output_cashtp($field_name, $view_userdata, $map_name='')
 				{
 					$temp_url = append_sid('cash.'.$phpEx.'?mode=donate&amp;ref=viewtopic&'.POST_USERS_URL.'='.$view_userdata['user_id'].'&amp;'.POST_POST_URL.'='.$view_userdata['post_id']);
                     $txt .= '<a href="' . $temp_url . '">' . $lang['Donate'] . '</a>';  
-                    $img = '<a href="' . $temp_url . '"><img src="' . $images['icon_donate'] . '" alt="' . $lang['Donate'] . '" border="0" /></a>';
+                    $img = '<a href="' . $temp_url . '"><img src="' . ( isset($images['icon_donate']) ? $images['icon_donate'] : '' ) . '" alt="' . $lang['Donate'] . '" border="0" /></a>';
 				}
 			}
         }

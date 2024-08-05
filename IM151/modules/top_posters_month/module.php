@@ -84,7 +84,7 @@ for ($i = 0; $i < $user_count; $i++)
 	$total_posts_thismonth += $user_data[$i]['user_posts'];
 }
 
-$content->init_math('user_posts', $user_data[0]['user_posts'], $total_posts_thismonth);
+$content->init_math('user_posts', !empty($user_data) ? $user_data[0]['user_posts'] : 0, $total_posts_thismonth);
 $core->set_data($user_data);
 
 $core->make_global(array('$agcm_color'));

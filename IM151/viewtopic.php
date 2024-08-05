@@ -1303,7 +1303,7 @@ $template->assign_vars(array(
 	'S_AUTH_LIST' => $s_auth_can,
 	'S_TOPIC_ADMIN' => $topic_mod,
 	'S_WATCH_TOPIC' => $s_watching_topic,
-	'S_WATCH_TOPIC_IMG' => $s_watching_topic_img,
+	'S_WATCH_TOPIC_IMG' => ( isset($s_watching_topic_img) ? $s_watching_topic_img : '' ) ,
 
 	'U_VIEW_TOPIC' => append_sid("viewtopic.$phpEx?" . POST_TOPIC_URL . "=$topic_id&amp;start=$start&amp;postdays=$post_days&amp;postorder=$post_order&amp;highlight=$highlight"),
 	'U_VIEW_FORUM' => $view_forum_url,
@@ -2559,7 +2559,7 @@ if ( $userdata['user_allowsignature'] != 2 && $board_config['sig_allow_font_size
 //-- add
 		'POST_ID' => $postrow[$i]['post_id'],
 		'AUTHOR_PANEL'	=> !empty($postrow[$i]['user_my_ignore']) ? $ignore_panel : ( isset($auto_approve) ? $auto_approve : '') .$author_panel,
-		'BUTTONS_PANEL'	=> $buttons_panel,
+		'BUTTONS_PANEL'	=> ( isset($buttons_panel) ? $buttons_panel : '' ) ,
 		'IGNORE_IMG'	=> $ignore_buttons,
 //-- fin mod : profile cp --------------------------------------------------------------------------
 		'ROW_COLOR' => '#' . $row_color,
@@ -2586,7 +2586,7 @@ if ( $userdata['user_allowsignature'] != 2 && $board_config['sig_allow_font_size
 		'REPORT_IMG' => ( isset($report_img) ? $report_img : '' ),
 		'REPORT' => ( isset($report) ? $report : '' ),
 		'USER_WARNINGS' => ( isset($user_warnings) ? $user_warnings : '' ),
-		'CARD_IMG' => $card_img,
+		'CARD_IMG' => ( isset($card_img) ? $card_img : '' ) ,
 		'CARD_HIDDEN_FIELDS' => $card_hidden,
 		'CARD_EXTRA_SPACE' => ($r_card_img || $y_card_img || $g_card_img || $b_card_img) ? ' ' : '',
 

@@ -1122,7 +1122,7 @@ if ( ($mode == 'edit') || ($mode == 'create') || ($mode == 'delete') )
 		// get an order
 		$item['order'] = 0;
 		if ( !empty($item['position']) && ($item['position'] != 'Root') )
-		{
+		{ // V: check me
 			$order_idx = $tree['keys'][ $item['position'] ];
 			$item['order'] = ($tree['type'][$order_idx] == POST_CAT_URL) ? $tree['data'][$order_idx]['cat_order'] : $tree['data'][$order_idx]['forum_order'];
 		}

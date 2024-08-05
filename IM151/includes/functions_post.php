@@ -33,7 +33,7 @@ $unhtml_specialchars_replace = array('>', '<', '"', '&');
 // start wpm mod by Duvelske (http://www.vitrax.vze.com)
 function wpm_send_pm($user_to_id, $wpm_subject, $wpm_message, $send_email)
 {
-	global $board_config, $swpm_config, $lang, $db, $phpbb_root_path, $phpEx;
+	global $board_config, $swpm_config, $lang, $db, $phpbb_root_path, $phpEx, $user_ip;
 
 	$sql = "SELECT *
 		FROM " . USERS_TABLE . " 
@@ -88,6 +88,7 @@ function wpm_send_pm($user_to_id, $wpm_subject, $wpm_message, $send_email)
 		}
 	}
 
+	if (empty($user_ip)) $user_ip = '';
 	$sql_info = "INSERT INTO " . PRIVMSGS_TABLE . " (privmsgs_type, privmsgs_subject, privmsgs_from_userid, privmsgs_to_userid, privmsgs_date, privmsgs_ip, privmsgs_enable_html, privmsgs_enable_bbcode, privmsgs_enable_smilies, privmsgs_attach_sig)
 		VALUES (" . PRIVMSGS_NEW_MAIL . ", '" . str_replace("\'", "''", $wpm_subject) . "', " . $swpm_config['wpm_userid'] . ", " . $usertodata['user_id'] . ", $msg_time, '$user_ip', 0, 1, 1, 1)";
 
@@ -108,7 +109,7 @@ function wpm_send_pm($user_to_id, $wpm_subject, $wpm_message, $send_email)
 
 	// Add to the users new pm counter
 	$sql = "UPDATE " . USERS_TABLE . "
-		SET user_new_privmsg = user_new_privmsg + 1, user_last_privmsg = '9999999999'
+		SET user_new_privmsg = user_new_privmsg + 1, user_last_privmsg = '99999999'
 		WHERE user_id = " . $usertodata['user_id']; 
 	if ( !$status = $db->sql_query($sql) )
 	{

@@ -388,6 +388,8 @@ else
 	else
 	{
 		$comments = '';
+		$num_of_replies = 0;
+		$comments_img = '';
 	}
 
 	if ( $kb_config['comments_show'] && $topic_id )

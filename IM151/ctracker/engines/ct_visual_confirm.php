@@ -173,6 +173,7 @@ else
 	unset($code);
 
 	$confirm_image 	  = '<img src="' . append_sid("profile.$phpEx?mode=confirm&amp;id=$confirm_id") . '" alt="" title="" />';
+	if (!isset($s_hidden_fields)) $s_hidden_fields = '';
 	$s_hidden_fields .= '<input type="hidden" name="confirm_id" value="' . $confirm_id . '" />';
 }
 

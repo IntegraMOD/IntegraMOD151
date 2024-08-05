@@ -100,7 +100,7 @@ function pcp_output_my_friend($field_name, $view_userdata, $map_name='')
 		{
 			$from = '&from=privmsg&' . POST_POST_URL . '=' . $view_userdata['privmsgs_id'];
 		}
-		if ( $view_userdata['user_my_friend'] )
+		if ( !empty($view_userdata['user_my_friend']) )
 		{
 			$temp_url = append_sid("./profile.$phpEx?mode=buddy&sub=friend&b=" . $view_userdata['user_id'] . "&set=remove" . $from);
 			$title = $lang['Remove_from_friend_list'];
@@ -108,7 +108,7 @@ function pcp_output_my_friend($field_name, $view_userdata, $map_name='')
 			$txt = '<a href="' . $temp_url . '">' . $title . '</a>';
 			$img = '<a class="icon_friend" href="' . $temp_url . ' "title="' . $lang['Remove_from_friend_list'] . '"><span>' . $lang['Remove_friend'] . '</span></a>';
 		}
-		else if ( !$view_userdata['user_my_ignore'] )
+		else if ( empty($view_userdata['user_my_ignore']) )
 		{
 			$temp_url = append_sid("./profile.$phpEx?mode=buddy&sub=friend&b=" . $view_userdata['user_id'] . "&set=add" . $from);
 			$title = $lang['Add_to_friend_list'];
@@ -190,7 +190,7 @@ function pcp_output_my_ignore($field_name, $view_userdata, $map_name='')
 		{
 			$from = '&from=privmsg&' . POST_POST_URL . '=' . $view_userdata['privmsgs_id'];
 		}
-		if ( $view_userdata['user_my_ignore'] )
+		if ( !empty($view_userdata['user_my_ignore']) )
 		{
 			$temp_url = append_sid("./profile.$phpEx?mode=buddy&sub=ignore&b=" . $view_userdata['user_id'] . "&set=remove" . $from);
 			$title = $lang['Remove_from_ignore_list'];

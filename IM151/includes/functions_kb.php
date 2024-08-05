@@ -646,7 +646,7 @@ function kb_insert_pm(
 
    if ( !empty($message) )
    {
-      if ( !$error )
+      if ( empty($error) )
       {
          if ( $bbcode_on )
          {

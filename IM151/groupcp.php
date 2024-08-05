@@ -1381,7 +1381,7 @@ else
 			'L_SUBSCRIBE' => $lang['Subscribe'],
 			'L_UNSUBSCRIBE' => $lang['Unsubscribe'],
 			'L_VIEW_INFORMATION' => $lang['View_Information'], 
-			'L_GROUP_PAYMENT' => $lang['group_payment'],
+			'L_GROUP_PAYMENT' => $lang['Group_payment'],
 			'S_USERGROUP_ACTION' => append_sid("groupcp.$phpEx"), 
 			'S_HIDDEN_FIELDS' => $s_hidden_fields, 
 

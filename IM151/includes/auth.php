@@ -218,7 +218,7 @@ function auth($type, $forum_id, $userdata, $f_access = '')
 		{
 			if ( $forum_id != AUTH_LIST_ALL)
 			{
-				$u_access[] = $userdata['user_forums_auth'][$forum_id];
+				$u_access[] = ( isset($userdata['user_forums_auth'][$forum_id]) ? $userdata['user_forums_auth'][$forum_id] : NULL ) ;
 			}
 			else
 			{
@@ -453,7 +453,8 @@ function auth_check_user($type, $key, $u_access, $is_admin)
 					$result = $u_access[$j][$key];
 
 				case AUTH_MOD:
-					$result = $result || $u_access[$j]['auth_mod'];
+					// V: this is probably hiding an auth bug earlier
+					$result = $result || !empty($u_access[$j]['auth_mod']);
 
 				case AUTH_ADMIN:
 					$result = $result || $is_admin;

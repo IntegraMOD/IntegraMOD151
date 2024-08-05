@@ -772,9 +772,9 @@ function display_field($userfield, &$viewdata){
                 if(!isset($viewdata['user_ignore']) || !isset($viewdata['user_friend'])){ 
                     getBuddyStatus($viewdata); 
                 } 
-                if ($viewdata['user_ignore']){ 
+                if (!empty($viewdata['user_ignore'])){ 
                     $display = false; 
-                } else if ($viewdata['user_friend']){ 
+                } else if (!empty($viewdata['user_friend'])){ 
                     $display = true; 
                 } else { 
                     $display = false; 

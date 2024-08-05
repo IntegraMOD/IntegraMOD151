@@ -39,7 +39,7 @@ require($phpbb_root_path . 'language/lang_' . $board_config['default_lang'] . '/
 //
 // Count and forwrad
 //
-if($_GET['action'] == "go" && $_GET['link_id'])
+if(isset($_GET['action']) && $_GET['action'] == "go" && !empty($_GET['link_id']))
 {
 	$link_id = $_GET['link_id'];
 	// Secure check
@@ -135,8 +135,8 @@ while( $row = $db->sql_fetchrow($result) )
 	$link_config_name = $row['config_name'];
 	$link_config_value = $row['config_value'];
 	$link_config[$link_config_name] = $link_config_value;
-	$linkspp=$link_config['linkspp'];
 }
+$linkspp=$link_config['linkspp'];
 
 if($link_config['lock_submit_site'] == 0)
 {
@@ -488,6 +488,7 @@ if ($t=='sub_pages')
 	//
 	// Link categories dropdown list
 	//
+	$link_cat_option = '';
 	foreach($link_categories as $cat_id => $cat_title)
 	{
 		$link_cat_option .= "<option value=\"$cat_id\">$cat_title</option>";
@@ -685,6 +686,7 @@ if ( $row = $db->sql_fetchrow($result) )
 //
 // Link categories dropdown list
 //
+$link_cat_option = '';
 foreach($link_categories as $cat_id => $cat_title)
 {
 	$link_cat_option .= "<option value=\"$cat_id\">$cat_title</option>";
