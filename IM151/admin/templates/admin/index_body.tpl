@@ -93,7 +93,7 @@
 	<div class="col py-2">&nbsp;<a href="{reg_user_row.U_WHOIS_IP}" target="_phpbbwhois">{reg_user_row.IP_ADDRESS}</a>&nbsp;</div>
   </div>
 <!-- END reg_user_row -->
-  <div class="row"><div class="col py-2">&nbsp;</div>
+  <div class="row"><div class="col py-2">&nbsp;</div></div>
 <!-- BEGIN guest_user_row -->
   <div class="row text-start row1 st"> 
 	<div class="col py-2">&nbsp;<span class="genmed">{guest_user_row.USERNAME}</span>&nbsp;</div>
@@ -103,7 +103,7 @@
 	<div class="col py-2">&nbsp;<a href="{guest_user_row.U_WHOIS_IP}" target="_phpbbwhois">{guest_user_row.IP_ADDRESS}</a>&nbsp;</div>
   </div>
 <!-- END guest_user_row -->
-</div>
+
 
 
 {JR_ADMIN_INFO_TABLE}
