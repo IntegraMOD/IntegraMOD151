@@ -91,7 +91,15 @@ if( isset($_POST['submit']) )
 	{
 		foreach($_POST[$cat_auth_fields[$i]] as $temp_cat_id => $value)
 		{
-			$temp_sql[$temp_cat_id] .= ( ( $temp_sql[$temp_cat_id] != '' ) ? ', ' : '' ) .$cat_auth_fields[$i] . ' = ' . $value;
+			if (!isset($temp_sql[$temp_cat_id]))
+			{
+				$temp_sql[$temp_cat_id] = '';
+			}
+			else
+			{
+				$temp_sql[$temp_cat_id] .= ', ';
+			}
+			$temp_sql[$temp_cat_id] .= $cat_auth_fields[$i] . ' = ' . $value;
 		}
 	}
 	

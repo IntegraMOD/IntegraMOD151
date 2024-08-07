@@ -44,7 +44,7 @@ $album_user_id = ALBUM_PUBLIC_GALLERY;
 
 // Get info of this cat
 $cat_id = isset($_GET['cat_id']) ? intval($_GET['cat_id']) : ( isset($_POST['cat_id']) ? intval($_POST['cat_id']) : -1 );
-$sql = "SELECT cat_id, cat_title, cat_view_groups, cat_upload_groups, cat_rate_groups, cat_comment_groups, cat_edit_groups, cat_delete_groups, cat_moderator_groups
+$sql = "SELECT *
 		FROM ". ALBUM_CAT_TABLE ."
 		WHERE cat_id = '$cat_id'";
 if( !$result = $db->sql_query($sql) )
@@ -119,6 +119,13 @@ else
 		while( $row = $db->sql_fetchrow($result) )
 		{
 			$groupdata[] = $row;
+		}
+		// V: compute which field is PRIVATE and should be shown
+		$auth_keys = array('view', 'upload', 'rate', 'comment', 'edit', 'delete');
+		foreach ($auth_keys as $auth_key)
+		{
+			$show_checkbox = $thiscat['cat_' . $auth_key . '_level'] == ALBUM_PRIVATE;
+			$template->assign_var('SHOW_CHECKBOX_'.strtoupper($auth_key), $show_checkbox);
 		}
 
 		$view_groups = @explode(',', $thiscat['cat_view_groups']);

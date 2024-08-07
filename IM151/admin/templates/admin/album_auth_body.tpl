@@ -18,22 +18,34 @@
 	<tr>
 		<td class="row1" align="center" height="28"><span class="gen">{grouprow.GROUP_NAME}</span></td>
 		<td class="row2" align="center">
+		<!-- IF SHOW_CHECKBOX_VIEW -->
 		<input name="view[]" type="checkbox" {grouprow.VIEW_CHECKED} value="{grouprow.GROUP_ID}" />
+		<!-- ENDIF -->
 		</td>
 		<td class="row2" align="center">
+		<!-- IF SHOW_CHECKBOX_UPLOAD -->
 		<input name="upload[]" type="checkbox" {grouprow.UPLOAD_CHECKED} value="{grouprow.GROUP_ID}" />
+		<!-- ENDIF -->
 		</td>
 		<td class="row2" align="center">
+		<!-- IF SHOW_CHECKBOX_RATE -->
 		<input name="rate[]" type="checkbox" {grouprow.RATE_CHECKED} value="{grouprow.GROUP_ID}" />
+		<!-- ENDIF -->
 		</td>
 		<td class="row2" align="center">
+		<!-- IF SHOW_CHECKBOX_COMMENT -->
 		<input name="comment[]" type="checkbox" {grouprow.COMMENT_CHECKED} value="{grouprow.GROUP_ID}" />
+		<!-- ENDIF -->
 		</td>
 		<td class="row2" align="center">
+		<!-- IF SHOW_CHECKBOX_EDIT -->
 		<input name="edit[]" type="checkbox" {grouprow.EDIT_CHECKED} value="{grouprow.GROUP_ID}" />
+		<!-- ENDIF -->
 		</td>
 		<td class="row2" align="center">
+		<!-- IF SHOW_CHECKBOX_DELETE -->
 		<input name="delete[]" type="checkbox" {grouprow.DELETE_CHECKED} value="{grouprow.GROUP_ID}" />
+		<!-- ENDIF -->
 		</td>
 		<td class="row2" align="center">
 		<input name="moderator[]" type="checkbox" {grouprow.MODERATOR_CHECKED} value="{grouprow.GROUP_ID}" />

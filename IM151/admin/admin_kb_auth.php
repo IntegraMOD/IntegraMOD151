@@ -101,7 +101,7 @@ else
 			$groupdata[] = $kb_row;
 		} 
 		// Get info of this cat
-		$sql = "SELECT category_id, category_name, auth_view_groups, auth_post_groups, auth_rate_groups, auth_comment_groups, auth_edit_groups, auth_delete_groups, auth_approval_groups, auth_approval_edit_groups, auth_moderator_groups
+		$sql = "SELECT *
 				FROM " . KB_CATEGORIES_TABLE . "
 				WHERE category_id = '$cat_id'";
 		if ( !$result = $db->sql_query( $sql ) )
@@ -110,6 +110,14 @@ else
 		}
 
 		$thiscat = $db->sql_fetchrow( $result );
+
+		// V: compute which field is PRIVATE and should be shown
+		$auth_keys = array('view', 'post', 'rate', 'comment', 'edit', 'delete');
+		foreach ($auth_keys as $auth_key)
+		{
+			$show_checkbox = $thiscat['auth_' . $auth_key] == AUTH_ACL;
+			$template->assign_var('SHOW_CHECKBOX_'.strtoupper($auth_key), $show_checkbox);
+		}
 
 		$view_groups = @explode( ',', $thiscat['auth_view_groups'] );
 		$post_groups = @explode( ',', $thiscat['auth_post_groups'] );

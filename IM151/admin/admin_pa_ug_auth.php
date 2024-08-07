@@ -63,8 +63,8 @@ if (!function_exists('admin_display_cat_auth')) {
 				for($j = 0; $j < count($cat_auth_fields); $j++)
 				{
 					$pafiledb_template->assign_block_vars('cat_row.aclvalues', array(
-						'S_ACL_SELECT' => $optionlist_acl_adv[$sub_cat_id][$j])
-					);
+						'S_ACL_SELECT' => ( isset($optionlist_acl_adv[$sub_cat_id][$j]) ? $optionlist_acl_adv[$sub_cat_id][$j] : false )
+					));
 				}
 				admin_display_cat_auth($sub_cat_id, $depth + 1);
 			}
@@ -138,6 +138,7 @@ foreach($params as $var => $param)
 }
 $user_id = intval($user_id);
 $group_id = intval($group_id);
+include($phpbb_root_path . 'language/lang_' . $board_config['default_lang'] . '/lang_groupcp.' . $phpEx);
 
 // MX Addon
 $cat_auth_fields = array('auth_view', 'auth_read', 'auth_view_file', 'auth_edit_file', 'auth_delete_file', 'auth_upload', 'auth_download', 'auth_rate', 'auth_email', 'auth_view_comment', 'auth_post_comment', 'auth_edit_comment', 'auth_delete_comment');
@@ -653,6 +654,7 @@ elseif ( ( $mode == 'user' && ( isset($_POST['username']) || $user_id ) ) || ( $
 		$t_usergroup_list = $lang['None'];
 	}
 
+	$s_column_span = 0;
 	for($i = 0; $i < count($cat_auth_fields); $i++)
 	{
 		$cell_title = $field_names[$cat_auth_fields[$i]];
