@@ -1,11 +1,11 @@
 <?php
 /***************************************************************************
- *                           blocks_imp_links.php
+ *                           blocks_select_style.php
  *                            -------------------
  *   begin                : Saturday, March 20, 2004
- *   copyright            : (C) 2004 dnL - Jason Maloney
- *   website              : http://www.ejdude.com
- *   email                : TheWizard101[at]SBCGlobal[dot]net
+ *   copyright            : (C) 2004 IntegraTeam
+ *   website              : https://www.integramod.com
+ *   email                : 
  *
  *   note: removing the original copyright is illegal even you have modified
  *         the code.  Just append yours if you have modified it.
@@ -139,40 +139,39 @@ if(!function_exists('imp_style_select_block_func'))
 		}
 		$db->sql_freeresult($result);
 		$select_theme .= "</select>\n";
-		$template->assign_vars(array(
+		$template->assign_vars([
 			'L_STYLE_SITENAME' => $board_config['sitename'],
-			'S_SELECT_STYLE' => $select_theme)
+			'S_SELECT_STYLE' => $select_theme]
 		);
-		//$template->assign_vars(array('S_SELECT_STYLE' => $select_theme));
+//		$template->assign_vars(['S_SELECT_STYLE' => $select_theme]);
 
 		if ( $style_author )
 		{
-			$template->assign_block_vars('switch_style_author', array());
-			$template->assign_vars(array('L_STYLE_AUTHOR' => $lang['Style_select_author'] . $style_author));
+			$template->assign_block_vars('switch_style_author', []);
+			$template->assign_vars(['L_STYLE_AUTHOR' => $lang['Style_select_author'] . $style_author]);
 		}
 		if ( $style_dlurl )
 		{
-			$template->assign_block_vars('switch_style_dlurl', array());
-			$template->assign_vars(array('L_STYLE_DLURL' => "<a href=select_style.$phpEx?".DL_STYLE."=". $style ." target=\"_blank\">".$lang['Style_select_dlurl']."</a>:&nbsp;".$style_dls));
+			$template->assign_block_vars('switch_style_dlurl', []);
+			$template->assign_vars(['L_STYLE_DLURL' => "<a href=select_style.$phpEx?".DL_STYLE."=". $style ." target=\"_blank\">".$lang['Style_select_dlurl']."</a>:&nbsp;".$style_dls]);
 		}
 		if ( $style_loaclurl )
 		{
-			$template->assign_block_vars('switch_style_loaclurl', array());
-			$template->assign_vars(array('L_STYLE_LOCALURL' => $select_style_localurl));
+			$template->assign_block_vars('switch_style_loaclurl', []);
+			$template->assign_vars(['L_STYLE_LOCALURL' => $select_style_localurl]);
 		}
 		if ( $style_version )
 		{
-			$template->assign_block_vars('switch_style_version', array());
-			$template->assign_vars(array('L_STYLE_VERSION' => $lang['Style_select_version'] . $style_version));
+			$template->assign_block_vars('switch_style_version', []);
+			$template->assign_vars(['L_STYLE_VERSION' => $lang['Style_select_version'] . $style_version]);
 		}
 		if ( !empty($style_views) )
 		{
-			$template->assign_block_vars('switch_style_views', array());
-			$template->assign_vars(array('L_STYLE_VIEWINGS' => $lang['Style_select_viewings'] . $style_views));
+			$template->assign_block_vars('switch_style_views', []);
+			$template->assign_vars(['L_STYLE_VIEWINGS' => $lang['Style_select_viewings'] . $style_views]);
 		}
 		// END Style Select MOD
 	}
 }
 
 imp_style_select_block_func();
-?>
