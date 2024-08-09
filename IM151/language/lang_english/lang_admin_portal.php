@@ -38,7 +38,6 @@ $lang['Click_return_bpadmin'] = 'Click %sHere%s to return to Blocks Position Adm
 $lang['BP_removed'] = 'Block position removed';
 $lang['Portal_wide'] = 'Portal Wide';
 
-$lang['B_OPENCLOSE'] = 'Collapsible';
 
 $lang['No_layout_selected'] = 'No portal page selected for editing';
 $lang['Layout_Title'] = 'Portal Page';
@@ -50,6 +49,7 @@ $lang['Layout_Edit'] = 'Edit portal page';
 $lang['Layout_Page'] = 'Page ID';
 $lang['Layout_View'] = 'View by';
 $lang['Layout_Forum_wide'] = 'Forum-wide blocks?';
+$lang['Layout_Collapse'] = 'Collapsible Layout?';
 $lang['Must_enter_layout'] = 'You must enter a name and a template file';
 $lang['Layout_updated'] = 'Portal Page Updated';
 $lang['Click_return_layoutadmin'] = 'Click %sHere%s to return to Portal Page Administration';
@@ -73,6 +73,8 @@ $lang['B_BBCode'] = 'BBCode';
 $lang['B_Type'] = 'Type';
 $lang['B_Border'] = 'Show Border';
 $lang['B_Titlebar'] = 'Show Titlebar';
+$lang['B_Openclose'] = 'Collapsible Block?';
+$lang['B_OPENCLOSE'] = 'Collapsible';
 $lang['B_Background'] = 'Show BG';
 $lang['B_Local'] = 'Localize Titlebar';
 $lang['B_Cache'] = 'Cache?';
@@ -141,6 +143,8 @@ $lang['Portal_Tail'] = 'Enable system-wide portal footer';
 $lang['Portal_Tail_Explain'] = 'Always show the right block panel';
 $lang['Confirm_delete_item'] = 'Are you sure you want to delete this item?';
 $lang['Cache_cleared'] = 'Cache files removed';
+$lang['Collapse_Enabled'] = 'Enable layout collapse';
+$lang['Collapse_Enabled_Explain'] = 'Show buttons that allow the layout to collapse';
 
 $lang['bbcode_b_help'] = 'Bold text: [b]text[/b]  (alt+b)';
 $lang['bbcode_i_help'] = 'Italic text: [i]text[/i]  (alt+i)';
