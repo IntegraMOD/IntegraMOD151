@@ -49,6 +49,7 @@ $lang['TRANSLATION_INFO'] = '';
 // Common, these terms are used
 // extensively on several pages
 //
+$lang['Admin_short'] = 'Administration';
 $lang['Forum'] = 'Forum';
 $lang['Category'] = 'Category';
 $lang['Topic'] = 'Topic';

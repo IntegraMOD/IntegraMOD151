@@ -48,6 +48,7 @@ $lang['TRANSLATION_INFO'] = '';
 // Common, these terms are used
 // extensively on several pages
 //
+$lang['Admin_short'] = 'оƒрд»м';
 $lang['Forum'] = 'фешен';
 $lang['Category'] = 'чивешйд';
 $lang['Topic'] = 'реща';
@@ -1408,5 +1409,3 @@ $lang['CFI_Collapse_all'] = "Collapse All";
 //
 // That's all, Folks!
 // -------------------------------------------------
-
-?>

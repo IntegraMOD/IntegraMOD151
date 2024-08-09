@@ -54,6 +54,7 @@ $lang['TRANSLATION_INFO'] = ' <br /><font style="font-size: 10px; color: #ec7600
 // Common, these terms are used
 // extensively on several pages
 //
+$lang['Admin_short'] = 'Administratie';
 $lang['Forum'] = 'Forums';
 $lang['Category'] = 'Categorie';
 $lang['Topic'] = 'Onderwerp';
@@ -1487,5 +1488,3 @@ $lang['new_pm_lofi'] = 'Send a PM';
 //
 // That's all, Folks!
 // -------------------------------------------------
-
-?>

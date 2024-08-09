@@ -50,6 +50,7 @@ $lang['TRANSLATION_INFO'] = 'Traduction par : <a href="http://www.phpbb-fr.com/"
 // Common, these terms are used
 // extensively on several pages
 //
+$lang['Admin_short'] = 'Administration';
 $lang['Forum'] = 'Forum';
 $lang['Category'] = 'Catégorie';
 $lang['Topic'] = 'Sujet';
@@ -1597,5 +1598,3 @@ $lang['FILTER_BY_USER'] = 'Filtered by user:';//
 //
 // That's all Folks!
 // -------------------------------------------------
-
-?>

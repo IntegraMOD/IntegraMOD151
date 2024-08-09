@@ -58,6 +58,7 @@ $lang['TRANSLATION_INFO'] = '';
 // Common, these terms are used
 // extensively on several pages
 //
+$lang['Admin_short'] = 'Verwaltung';
 $lang['Forum'] = 'Forum';
 $lang['Category'] = 'Kategorie';
 $lang['Topic'] = 'Thema';
@@ -1618,4 +1619,3 @@ $lang['FILTER_BY_USER'] = 'Filtered by user:';//
 // That's all, Folks!
 // -------------------------------------------------
 //
-?>
