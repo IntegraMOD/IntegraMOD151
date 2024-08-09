@@ -637,7 +637,7 @@ if ( $smilies_on && $shout != '' && $shout_row['enable_smilies'])
 $shout = bbencode_second_pass($shout,$shout_row['shout_bbcode_uid']);
 $shout = str_replace("\n", "\n<br />\n", $shout);
 
-if ( $is_auth['auth_mod'] && $is_auth['auth_delete'])
+if ( !empty($is_auth['auth_mod']) && !empty($is_auth['auth_delete']))
 {
 	$temp_url = append_sid("shoutbox_max.$phpEx?mode=ip&amp;" . POST_POST_URL . "=" . $shout_row['shout_id']);
 	$ip_img = '<a href="' . $temp_url . '"><img src="' . $images['icon_ip'] . '" alt="' . $lang['View_IP'] . '" title="' . $lang['View_IP'] . '" border="0" /></a>';
