@@ -141,7 +141,6 @@ window.open('{buddy_alert.U_BUDDY_ALERT}', '_buddyalert', 'HEIGHT=225,resizable=
 <script src="templates/assets/js/jquery.toggle.js"></script>
 <script src="templates/assets/js/jQuery.mobTabMenu.js"></script>
 <script src="templates/assets/js/immenu.js"></script>
-<link rel="stylesheet" type="text/css" href="{TEMPLATE}/report_hack.css" />
 <script>
 jQuery.noConflict();
 jQuery(document).ready(function(){

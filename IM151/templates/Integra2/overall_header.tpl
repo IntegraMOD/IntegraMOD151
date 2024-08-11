@@ -10,6 +10,7 @@
 <!--[if gte IE 5]><![if lt IE 7]><script src="templates/assets/js/pngfix.js"></script><![endif]><![endif]--> 
 <link rel="shortcut icon" href="./favicon.ico">
 <link rel="stylesheet" href="{TEMPLATE}{T_HEAD_STYLESHEET}" type="text/css" />
+<link rel="stylesheet" type="text/css" href="{TEMPLATE}/css/report_hack.css" />
 <script src="templates/assets/js/toggle_display.js"></script>
 <script src="templates/assets/js/importal.js"></script>
 
@@ -141,7 +142,6 @@ window.open('{buddy_alert.U_BUDDY_ALERT}', '_buddyalert', 'HEIGHT=225,resizable=
 <script src="templates/assets/js/jquery.toggle.js"></script>
 <script src="templates/assets/js/jQuery.mobTabMenu.js"></script>
 <script src="templates/assets/js/immenu.js"></script>
-<link rel="stylesheet" type="text/css" href="{TEMPLATE}/report_hack.css" />
 {COLOR_CSS}
 </head>
 <body>

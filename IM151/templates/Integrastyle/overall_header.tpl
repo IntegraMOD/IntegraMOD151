@@ -141,7 +141,6 @@ window.open('{buddy_alert.U_BUDDY_ALERT}', '_buddyalert', 'HEIGHT=225,resizable=
 <script src="templates/assets/js/jquery.toggle.js"></script>
 <script src="templates/assets/js/jQuery.mobTabMenu.js"></script>
 <script src="templates/assets/js/immenu.js"></script>
-<link rel="stylesheet" type="text/css" href="{TEMPLATE}/report_hack.css" />
 {COLOR_CSS}
 
 <script type="text/javascript" src="templates/assets/js/fi_newsfader_user.js"></script>
