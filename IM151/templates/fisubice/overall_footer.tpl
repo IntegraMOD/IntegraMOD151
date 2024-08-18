@@ -42,6 +42,7 @@ masterdavid : 2004
 	<div class="container-fluid px-0">
       <div class="row py-2">
 		<div class="col text-center copyright">
+		{ADMIN_LINK}
 		<a href="https://www.integramod.com/" target="_phpbb">IntegraMOD</a> <a href="hacks_list.php" title="Modifications" target="_phpbb">{INTEGRAMOD_VERSION}</a> &#169; 2004 - 2023 <a href="https://www.integramod.com/forum/memberlist.php?mode=leaders" target="_phpbb">The Integramod Group</a><br />
 		Powered by <a href="http://www.phpbb.com/" target="_phpbb">phpBB</a>{PHPBB_VERSION}&reg; Forum Software &copy; phpBB Group<br /> 
 		{S_TIMEZONE}&nbsp;&bull;&nbsp;{COOKIES_LINK}
@@ -99,14 +100,12 @@ masterdavid : 2004
 <div id="preloader"></div>
 
 <!-- Vendor JS Files -->
-<script src="templates/fisubice/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-<script src="templates/fisubice/vendor/aos/aos.js"></script>
-<script src="templates/fisubice/vendor/glightbox/js/glightbox.min.js"></script>
-<script src="templates/fisubice/vendor/swiper/swiper-bundle.min.js"></script>
-<script src="templates/fisubice/vendor/imagesloaded/imagesloaded.pkgd.min.js"></script>
-<script src="templates/fisubice/vendor/isotope-layout/isotope.pkgd.min.js"></script>
-
-<!-- Main JS File -->
-<script src="templates/fisubice/vendor/js/main.js"></script>
+<script src="templates/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="templates/assets/vendor/aos/aos.js"></script>
+<script src="templates/assets/vendor/glightbox/js/glightbox.min.js"></script>
+<script src="templates/assets/vendor/swiper/swiper-bundle.min.js"></script>
+<script src="templates/assets/vendor/imagesloaded/imagesloaded.pkgd.min.js"></script>
+<script src="templates/assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
+<script src="templates/assets/vendor/js/main.js"></script>
 </body>
 </html>

@@ -24,23 +24,24 @@ masterdavid : 2004
 	    </td>
       </tr>
       <tr>
-	    <td colspan ="10">
-		  <table border="0" cellpadding="0" cellspacing="0" width="100%">
-	  	    <tr>
-			  <td class="btm"><a href="#top" title="{L_TOPIC_UP_IMAGE}"><span>&nbsp;</span></a></td>
-			  <td align="center" width="100%" class="qb">{QMENUS}</td>
-			  <td class="btm"><a href="#top" title="{L_TOPIC_UP_IMAGE}"><span>&nbsp;</span></a></td>
-	  	    </tr>
-		  </table>
+	    <td colspan="10">
+			<nav class="container-fluid menu nav mx-auto px-0">
+			  <input type="checkbox" class="responsive-menu" onclick="updatemenu()"><label></label>
+			  <ul class="text-nowrap">
+				<li class="menu-item genarrow arrows float-start ms-0"><a href="#top" title="{L_TOPIC_UP_IMAGE}"><i class="fa-solid fa-arrow-up"></i></a></li>
+				{QMENUS}
+				<li class="menu-item genarrow arrows right-arrow me-0"><a href="#top" title="{L_TOPIC_UP_IMAGE}"><i class="fa-solid fa-arrow-up"></i></a></li>
+			  </ul>
+			</nav>
 	    </td>
       </tr>
 	</table>
 	</td>
   </tr>
 </table>
-
-<div align="center" class="copyright">
 <br />
+<div align="center" class="copyright">
+<h3>{ADMIN_LINK}</h3>
 <a href="https://www.integramod.com/" target="_phpbb">IntegraMOD</a> <a href="hacks_list.php" target="_phpbb">{INTEGRAMOD_VERSION}</a> © 2004 - 2023 <a href="https://www.integramod.com/forum/memberlist.php?mode=leaders" target="_phpbb">The Integramod Group</a><br />
 Powered by <a href="http://www.phpbb.com/" target="_phpbb">phpBB</a>{PHPBB_VERSION}&reg; Forum Software &copy; phpBB Group<br /> 
 {S_TIMEZONE}&nbsp;&bull;&nbsp;{COOKIES_LINK}<!-- Begin Lo-Fi Mod -->&nbsp;&bull;&nbsp;{LOFI}<!-- End Lo-Fi Mod -->
@@ -87,5 +88,22 @@ Powered by <a href="http://www.phpbb.com/" target="_phpbb">phpBB</a>{PHPBB_VERSI
 </table>
 <!-- End Banners -->
 <!-- End add - Complete banner MOD -->
+
+<!-- Preloader -->
+<div id="preloader"></div>
+
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="templates/assets/js/toggle_display.js"></script>
+<script src="templates/assets/js/importal.js"></script>
+<script src="templates/assets/js/jquery.toggle.js"></script>
+<script src="templates/assets/js/css-menu.js"></script>
+<!-- Vendor JS Files -->
+<script src="templates/assets/vendor/aos/aos.js"></script>
+<script src="templates/assets/vendor/glightbox/js/glightbox.min.js"></script>
+<script src="templates/assets/vendor/swiper/swiper-bundle.min.js"></script>
+<script src="templates/assets/vendor/imagesloaded/imagesloaded.pkgd.min.js"></script>
+<script src="templates/assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
+<script src="templates/assets/vendor/js/main.js"></script>
+
 </body>
 </html>

@@ -16,7 +16,14 @@ font,th,td,p{font:12px Verdana,Arial,Helvetica,sans-serif}
 .bodyline{background:#f7f8fc;border:1px solid #98aab1}
 
 /* This is the outline round the main forum tables */
-.forumline{background:#ffffff;border:1px solid #486386}
+.forumline{
+border-radius: 5px!important;
+border: solid 1px #8CA3B7;
+background: #EAEDF4 none repeat-x 0 0;
+margin-bottom: 4px;
+padding: 5px!important;
+clear: both;
+}
 
 /* Table Header cells */
 th{background:#c6d3e4 url(../images/cellpic3.gif);color:#516a88;font-size:11px;

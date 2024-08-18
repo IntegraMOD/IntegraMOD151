@@ -2,21 +2,21 @@
 <html xmlns="http://www.w3.org/1999/xhtml" dir="{S_CONTENT_DIRECTION}" lang="en" xml:lang="en">
 <head>
 <meta charset="{S_CONTENT_ENCODING}" />
+<meta http-equiv="Content-Style-Type" content="text/css">{META_HTTP_EQUIV_TAGS}
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<meta name="copyright" content="2001, 2005 phpBB Group" />
+<meta name="copyright" content="2001, 2024 Integramod Team" />
 
 <!-- Vendor CSS Files -->
-<link href="templates/fisubice/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-<link href="templates/fisubice/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
-<link href="templates/fisubice/vendor/aos/aos.css" rel="stylesheet">
-<link href="templates/fisubice/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
-<link href="templates/fisubice/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+<link href="templates/assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+<link href="templates/assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+<link href="templates/assets/vendor/aos/aos.css" rel="stylesheet">
+<link href="templates/assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
+<link href="templates/assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
 
-{META_HTTP_EQUIV_TAGS}
 <title>{SITENAME} - {PAGE_TITLE}</title>{META_TAGS}
 {META}
 {NAV_LINKS}
@@ -234,20 +234,20 @@ window.open('{buddy_alert.U_BUDDY_ALERT}', '_buddyalert', 'HEIGHT=225,resizable=
 	  <input type="checkbox" class="responsive-menu" onclick="updatemenu()"><label></label>
 	  <ul class="text-nowrap">
 		<li class="menu-item genarrow arrows float-start ms-0"><a href="#bottom" title="{L_BOTTOM}"><i class="fa-solid fa-arrow-down"></i></a></li>
-		{QMENUS}
-		<li><a class="dropdown-arrow" href="#"><i class="fa-solid fa-magnifying-glass"></i> {L_SEARCH} </a>
+		{QMENUS}&nbsp;&bull;&nbsp;
+		<li><a class="dropdown-arrow" href="#"> {L_SEARCH} </a>
 		  <ul class="sub-menus">
-			<li><a href="{U_SEARCH}"> {L_SEARCH} </a></li>
-			<!-- BEGIN switch_user_logged_in -->
-			<li><a href="{U_SEARCH_NEW}">{L_SEARCH_NEW}</a></li>
+			<li><a href="{U_SEARCH}">{L_SEARCH}</a></li>
 			<li><a href="{U_SEARCH_UNANSWERED}">{L_SEARCH_UNANSWERED}</a></li>
+ 	        <!-- BEGIN switch_user_logged_in -->
+			<li><a href="{U_SEARCH_NEW}">{L_SEARCH_NEW}</a></li>
 			<li><a href="{U_SEARCH_UNREAD}">{L_SEARCH_UNREAD}</a></li>
 			<li><a href="{U_SEARCH_ACTIVE_TOPICS}">{L_SEARCH_ACTIVE_TOPICS}</a></li>
 			<li><a href="{U_SEARCH_SELF}">{L_SEARCH_SELF}</a></li>
-			<!-- END switch_user_logged_in -->
+ 	        <!-- END switch_user_logged_in -->
 		  </ul>	
 		</li>
-        <!-- BEGIN switch_user_logged_in -->
+ 	    <!-- BEGIN switch_user_logged_in -->
 		<li><a class="dropdown-arrow username uname" href="#">&nbsp;{U_THISUSER}&nbsp;</a>
 		  <ul class="sub-menus">
 			<li><a href="{U_PROFILE}"><i class="fa-solid fa-user-gear"></i> {L_PROFILE}</a></li>
@@ -259,7 +259,7 @@ window.open('{buddy_alert.U_BUDDY_ALERT}', '_buddyalert', 'HEIGHT=225,resizable=
 			<li><a href="{U_LOGIN_LOGOUT}"><i class="fa-solid fa-power-off"></i> {L_LOGIN_LOGOUT}</a></li>		
 		  </ul>
 		</li>
-        <!-- END switch_user_logged_in -->
+ 	    <!-- END switch_user_logged_in -->
 		<li class="menu-item genarrow arrows right-arrow me-0"><a href="#bottom" title="{L_BOTTOM}"><i class="fa-solid fa-arrow-down"></i></a></li>
 	  </ul>
 	</nav>
@@ -304,6 +304,7 @@ window.open('{buddy_alert.U_BUDDY_ALERT}', '_buddyalert', 'HEIGHT=225,resizable=
 	</div>
 	<!-- END switch_banner_16 -->
 
+  
 <table width="100%" border="0" cellspacing="0" cellpadding="6">
   <tr> 
   {PORTAL_HEADER}
