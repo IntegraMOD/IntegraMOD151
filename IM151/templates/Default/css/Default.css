@@ -586,7 +586,7 @@ a.kb:hover span {
 ul.lft{padding:0px;margin:0px;list-style-type: none;display: inline-block;}
 li.pcpvt {display: inline-block;vertical-align: bottom;}
 
-.bdr {border: 1px solid black !important;}
+.bdr {border: 2px solid red !important;}
 
 div.nw, span.nw {
   white-space: nowrap !important;
@@ -623,7 +623,7 @@ div.menu ul.menu li.menu-item.active > .submenu {
 .menu a {
 	display: block;
 	line-height: 25px;
-	padding: 0 14px;
+	padding: 0 14px 0 14px;
 	text-decoration: none;
 	font-size: 13px;
 	color: #FFFFFF;
@@ -651,7 +651,7 @@ div.menu ul.menu li.menu-item.active > .submenu {
 	line-height: 25px;
 	text-align: center;
 	position: absolute;
-	left: 35px
+	left: 0px
 }
 .menu label:before {
 	font-size: 1.1em;
@@ -690,6 +690,9 @@ div.menu ul.menu li.menu-item.active > .submenu {
 	float: right;
 }	
 
+.left-arrow {
+	float: left;
+}
 @media screen and (max-width: 800px){
 	.menu ul {background:#CCCCCC;}
 	.menu input:checked + label {color:#FFFFFF}

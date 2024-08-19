@@ -28,7 +28,7 @@ masterdavid : 2004
 			<nav class="container-fluid menu nav mx-auto px-0">
 			  <input type="checkbox" class="responsive-menu" onclick="updatemenu()"><label></label>
 			  <ul class="text-nowrap">
-				<li class="menu-item genarrow arrows float-start ms-0"><a href="#top" title="{L_TOPIC_UP_IMAGE}"><i class="fa-solid fa-arrow-up"></i></a></li>
+				<li class="menu-item genarrow arrows left-arrow ms-0"><a href="#top" title="{L_TOPIC_UP_IMAGE}"><i class="fa-solid fa-arrow-up"></i></a></li>
 				{QMENUS}
 				<li class="menu-item genarrow arrows right-arrow me-0"><a href="#top" title="{L_TOPIC_UP_IMAGE}"><i class="fa-solid fa-arrow-up"></i></a></li>
 			  </ul>

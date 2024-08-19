@@ -17,6 +17,7 @@
 <link href="templates/assets/vendor/aos/aos.css" rel="stylesheet">
 <link href="templates/assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
 <link href="templates/assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+<link href="templates/assets/css/responsive.css" rel="stylesheet">
 
 <!-- BEGIN switch_enable_pm_popup -->
 <script>
@@ -202,39 +203,39 @@ window.open('{buddy_alert.U_BUDDY_ALERT}', '_buddyalert', 'HEIGHT=225,resizable=
 	  <tr>
 	    <td>
 
-	<nav class="container-fluid menu nav mx-auto px-0">
-	  <input type="checkbox" class="responsive-menu" onclick="updatemenu()"><label></label>
-	  <ul class="text-nowrap">
-		<li class="menu-item genarrow arrows float-start ms-0"><a href="#bottom" title="{L_BOTTOM}"><i class="fa-solid fa-arrow-down"></i></a></li>
-		{QMENUS}
-		<li><a class="dropdown-arrow" href="#"> {L_SEARCH} </a>
-		  <ul class="sub-menus">
-			<li><a href="{U_SEARCH}">{L_SEARCH}</a></li>
-			<li><a href="{U_SEARCH_UNANSWERED}">{L_SEARCH_UNANSWERED}</a></li>
- 	        <!-- BEGIN switch_user_logged_in -->
-			<li><a href="{U_SEARCH_NEW}">{L_SEARCH_NEW}</a></li>
-			<li><a href="{U_SEARCH_UNREAD}">{L_SEARCH_UNREAD}</a></li>
-			<li><a href="{U_SEARCH_ACTIVE_TOPICS}">{L_SEARCH_ACTIVE_TOPICS}</a></li>
-			<li><a href="{U_SEARCH_SELF}">{L_SEARCH_SELF}</a></li>
- 	        <!-- END switch_user_logged_in -->
-		  </ul>	
-		</li>
- 	    <!-- BEGIN switch_user_logged_in -->
-		<li><a class="dropdown-arrow username uname" href="#">&nbsp;{U_THISUSER}&nbsp;</a>
-		  <ul class="sub-menus">
-			<li><a href="{U_PROFILE}"><i class="fa-solid fa-user-gear"></i> {L_PROFILE}</a></li>
-			<li><a href="{U_USER_PROFILE}" title="{L_READ_PROFILE}"><i class="fa-solid fa-address-card"></i> {L_READ_PROFILE}</a></li>
-			<!-- IF S_DISPLAY_SEARCH -->
-			<li><a href="{U_SEARCH_SELF}"><i class="fa-solid fa-magnifying-glass"></i> {L_SEARCH_SELF}</a></li>
-			<!-- ENDIF -->
-			<li>{ADMIN_SHORT_LINK}</li>
-			<li><a href="{U_LOGIN_LOGOUT}"><i class="fa-solid fa-power-off"></i> {L_LOGIN_LOGOUT}</a></li>		
-		  </ul>
-		</li>
- 	    <!-- END switch_user_logged_in -->
-		<li class="menu-item genarrow arrows right-arrow me-0"><a href="#bottom" title="{L_BOTTOM}"><i class="fa-solid fa-arrow-down"></i></a></li>
-	  </ul>
-	</nav>
+			<nav class="menu container-fluid nav mx-auto px-0">
+			  <input type="checkbox" class="responsive-menu" onclick="updatemenu()"><label></label>
+			  <ul class="text-nowrap">
+				<li class="menu-item left-arrow ms-0"><a href="#bottom" title="{L_BOTTOM}"><i class="fa-solid fa-arrow-down"></i></a></li>
+				{QMENUS}
+				<li><a class="dropdown-arrow" href="#"> {L_SEARCH} </a>
+				  <ul class="sub-menus">
+					<li><a href="{U_SEARCH}">{L_SEARCH}</a></li>
+					<li><a href="{U_SEARCH_UNANSWERED}">{L_SEARCH_UNANSWERED}</a></li>
+					<!-- BEGIN switch_user_logged_in -->
+					<li><a href="{U_SEARCH_NEW}">{L_SEARCH_NEW}</a></li>
+					<li><a href="{U_SEARCH_UNREAD}">{L_SEARCH_UNREAD}</a></li>
+					<li><a href="{U_SEARCH_ACTIVE_TOPICS}">{L_SEARCH_ACTIVE_TOPICS}</a></li>
+					<li><a href="{U_SEARCH_SELF}">{L_SEARCH_SELF}</a></li>
+					<!-- END switch_user_logged_in -->
+				  </ul>	
+				</li>
+				<!-- BEGIN switch_user_logged_in -->
+				<li><a class="dropdown-arrow username uname" href="#">&nbsp;{U_THISUSER}&nbsp;</a>
+				  <ul class="sub-menus">
+					<li><a href="{U_PROFILE}"><i class="fa-solid fa-user-gear"></i> {L_PROFILE}</a></li>
+					<li><a href="{U_USER_PROFILE}" title="{L_READ_PROFILE}"><i class="fa-solid fa-address-card"></i> {L_READ_PROFILE}</a></li>
+					<!-- IF S_DISPLAY_SEARCH -->
+					<li><a href="{U_SEARCH_SELF}"><i class="fa-solid fa-magnifying-glass"></i> {L_SEARCH_SELF}</a></li>
+					<!-- ENDIF -->
+					<li>{ADMIN_SHORT_LINK}</li>
+					<li><a href="{U_LOGIN_LOGOUT}"><i class="fa-solid fa-power-off"></i> {L_LOGIN_LOGOUT}</a></li>		
+				  </ul>
+				</li>
+				<!-- END switch_user_logged_in -->
+				<li class="menu-item arrows right-arrow me-0"><a href="#bottom" title="{L_BOTTOM}"><i class="fa-solid fa-arrow-down"></i></a></li>
+			  </ul>
+			</nav>
 
 		  <table class="topbkg" width="100%" cellspacing="0" cellpadding="0" border="0">
 		    <tr> 
