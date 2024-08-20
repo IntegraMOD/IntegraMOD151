@@ -36,9 +36,9 @@ class pafiledb_main extends pafiledb_public
 		$menu->new_tree_menu('menu');
 		
 		$menu_output = implode('', file($phpbb_root_path . 'pafiledb/lib/layersmenu-browser_detection.js'));
-		$menu_output .= '<script language="JavaScript" type="text/javascript" src="' . $phpbb_root_path . 'pafiledb/lib/layersmenu-library.js"></script>
-									   <script language="JavaScript" type="text/javascript" src="' . $phpbb_root_path . 'pafiledb/lib/layersmenu.js"></script>
-									   <script language="JavaScript" type="text/javascript" src="' . $phpbb_root_path . 'pafiledb/lib/layerstreemenu-cookies.js"></script>';
+		$menu_output .= '<script src="' . $phpbb_root_path . 'pafiledb/lib/layersmenu-library.js"></script>
+									   <script src="' . $phpbb_root_path . 'pafiledb/lib/layersmenu.js"></script>
+									   <script src="' . $phpbb_root_path . 'pafiledb/lib/layerstreemenu-cookies.js"></script>';
 		$menu_output .= $menu->get_tree_menu('menu');*/
 		
 		$pafiledb_template->assign_vars(array(

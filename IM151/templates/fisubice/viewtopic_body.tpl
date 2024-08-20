@@ -105,6 +105,9 @@ jQuery(document).ready(function(){
       <div class="col d-inline text-end">
 	    <ul class="genbtn uct gen pt-2 align-middle">
 		  <a href="{U_VIEW_OLDER_TOPIC}"><li class="fa-solid fa-arrow-left fa-2x" title="{L_VIEW_PREVIOUS_TOPIC}"></li></a>
+		  <!-- IF S_REPORT_TOPIC -->
+		  <li><span class="">{S_REPORT_TOPIC}</span></li>
+		  <!-- ENDIF -->
 		  <a href="{U_PRINTER_TOPIC}"><li class="fa-solid fa-print fa-2x" title="{L_PRINTER_TOPIC}"></li></a>
 		  <!-- BEGIN switch_logged_in -->
 		  <a href="tellafriend.php?topic={TOPIC_TITLE2}&link={TELL_LINK}"><li class="fa-regular fa-envelope fa-2x" title="{L_TELL_FRIEND}"></li></a>
@@ -309,6 +312,9 @@ jQuery(document).ready(function(){
 		  <div class="col d-inline text-end">
 			<ul class="genbtn uct gen pt-2 align-middle">
 			  <a href="{U_VIEW_OLDER_TOPIC}"><li class="fa-solid fa-arrow-left fa-2x" title="{L_VIEW_PREVIOUS_TOPIC}"></li></a>
+			  <!-- IF S_REPORT_TOPIC -->
+			  <li><span class="">{S_REPORT_TOPIC}</span></li>
+			  <!-- ENDIF -->
 			  <a href="{U_PRINTER_TOPIC}"><li class="fa-solid fa-print fa-2x" title="{L_PRINTER_TOPIC}"></li></a>
 			  <!-- BEGIN switch_logged_in -->
 			  <a href="tellafriend.php?topic={TOPIC_TITLE2}&link={TELL_LINK}"><li class="fa-regular fa-envelope fa-2x" title="{L_TELL_FRIEND}"></li></a>

@@ -45,19 +45,19 @@ class pafiledb_Template
 	// --> $this->_tpldata[block.][iteration#][child.][iteration#][child2.][iteration#][variablename] == value
 	// if it's a root-level variable, it'll be like this:
 	// --> $this->_tpldata[.][0][varname] == value
-	var $_tpldata = array();
+	var $_tpldata = [];
 
 	// Root dir and hash of filenames for each template handle.
 	var $root = '';
 	var $cache_root = 'pafiledb/cache/templates/';
-	var $files = array();
+	var $files = [];
 
 	// this will hash handle names to the compiled/uncompiled code for that handle.
-	var $compiled_code = array();
+	var $compiled_code = [];
 
 	// Various counters and storage arrays
-	var $block_names = array();
-	var $block_else_level = array();
+	var $block_names = [];
+	var $block_else_level = [];
 	var $block_nesting_level = 0;
 
 	var $static_lang;
@@ -126,7 +126,7 @@ class pafiledb_Template
 	// Destroy template data set
 	function destroy()
 	{
-		$this->_tpldata = array();
+		$this->_tpldata = [];
 	}
 
 
@@ -302,7 +302,7 @@ class pafiledb_Template
 			$this->compile_var_tags($text_blocks[$i]);
 		}
 
-		$compile_blocks = array();
+		$compile_blocks = [];
 
 		for ($curr_tb = 0; $curr_tb < count($text_blocks) && $curr_tb < count($blocks[1]); $curr_tb++)
 		{
@@ -388,7 +388,7 @@ class pafiledb_Template
 	function compile_var_tags(&$text_blocks)
 	{
 		// change template varrefs into PHP varrefs
-		$varrefs = array();
+		$varrefs = [];
 
 		// This one will handle varrefs WITH namespaces
 		preg_match_all('#\{(([a-z0-9\-_]+?\.)+?)([a-z0-9\-_]+?)\}#is', $text_blocks, $varrefs);
@@ -482,7 +482,7 @@ class pafiledb_Template
                          [^\s(),]+)/x', $tag_args, $match);
 
         $tokens = $match[0];
-        $is_arg_stack = array();
+        $is_arg_stack = [];
 
         for ($i = 0; $i < count($tokens); $i++)
 		{
@@ -746,7 +746,7 @@ class pafiledb_Template
 	{
 		global $phpbb_root_path;
 
-		$template_list = array();
+		$template_list = [];
 
 		if (!$template)
 		{
