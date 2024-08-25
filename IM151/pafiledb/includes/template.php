@@ -340,7 +340,7 @@ class pafiledb_Template
 					break;
 
 				case 'INCLUDE':
-          $temp = array_pop($include_blocks);
+          $temp = array_shift($include_blocks);
 					$compile_blocks[] = '<?php ' . $this->compile_tag_include($temp) . ' ?>';
 					$this->_tpl_include($temp, false);
 					break;
@@ -348,7 +348,7 @@ class pafiledb_Template
 				case 'INCLUDEPHP':
 					if ($pafiledb_config['tpl_php'])
 					{
-            $temp = array_pop($includephp_blocks);
+            $temp = array_shift($includephp_blocks);
 						$compile_blocks[] = '<?php ' . $this->compile_tag_include_php($temp) . ' ?>';
 					}
 					break;
@@ -356,7 +356,7 @@ class pafiledb_Template
 				case 'PHP':
 					if ($pafiledb_config['tpl_php'])
 					{
-            $temp = array_pop($php_blocks);
+            $temp = array_shift($php_blocks);
 						$compile_blocks[] = '<?php ' . $temp . ' ?>';
 					}
 					break;

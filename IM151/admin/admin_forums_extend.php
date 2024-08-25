@@ -131,7 +131,7 @@ if ( $db->sql_query($sql) )
 
 // some compliancy
 $sql = "SELECT forum_display_sort, forum_display_order FROM " . FORUMS_TABLE . " LIMIT 0, 1";
-if ( $db->sql_query($sql) && function_exists(get_forum_display_sort_option) )
+if ( $db->sql_query($sql) && function_exists('get_forum_display_sort_option') )
 {
 	define('TOPIC_DISPLAY_ORDER', true);
 	$forums_fields_list['forum_display_sort'] = 'forum_display_sort';
