@@ -11,6 +11,7 @@
 <link rel="shortcut icon" href="./favicon.ico">
 <link rel="stylesheet" href="{TEMPLATE}{T_HEAD_STYLESHEET}" type="text/css" />
 <link rel="stylesheet" type="text/css" href="{TEMPLATE}/css/report_hack.css" />
+<link rel="stylesheet" type="text/css" href="{TEMPLATE}/css/responsive.css" />
 <script src="templates/assets/js/toggle_display.js"></script>
 <script src="templates/assets/js/importal.js"></script>
 

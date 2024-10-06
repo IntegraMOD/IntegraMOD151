@@ -401,13 +401,15 @@ li.pcpvt {display: inline-block;vertical-align: bottom;}
 
 @media only screen and (max-width: 767px) {
     html { 
-        -webkit-text-size-adjust: 100%;
+    -webkit-text-size-adjust: 100%;
     }
-	.topics, .posts, .views, .replies, .searchbar, .space {
-	  display: none;
+	.topics, .posts, .views, .replies, .searchbar {
+	  display: none !important;
 	}
 }
 
 @media only screen and (max-width: 400px) {
-	.author, .lastpost {display: none;}
+	.author, .topics, .posts, .views, .replies, .searchbar {
+		display: none !important;
+	}
 }

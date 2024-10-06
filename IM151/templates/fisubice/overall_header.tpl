@@ -234,7 +234,7 @@ window.open('{buddy_alert.U_BUDDY_ALERT}', '_buddyalert', 'HEIGHT=225,resizable=
 	  <input type="checkbox" class="responsive-menu" onclick="updatemenu()"><label></label>
 	  <ul class="text-nowrap">
 		<li class="menu-item genarrow arrows float-start ms-0"><a href="#bottom" title="{L_BOTTOM}"><i class="fa-solid fa-arrow-down"></i></a></li>
-		{QMENUS}&nbsp;&bull;&nbsp;
+		{QMENUS}
 		<li><a class="dropdown-arrow" href="#"> {L_SEARCH} </a>
 		  <ul class="sub-menus">
 			<li><a href="{U_SEARCH}">{L_SEARCH}</a></li>

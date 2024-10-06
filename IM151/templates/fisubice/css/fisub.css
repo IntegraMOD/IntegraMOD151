@@ -421,12 +421,12 @@ div.menu ul.menu li.menu-item.active > .submenu {
     -webkit-text-size-adjust: 100%;
     }
 	.topics, .posts, .views, .replies, .searchbar {
-	  display: none;
+	  display: none !important;
 	}
 }
 
 @media only screen and (max-width: 400px) {
-	.author {
-		display: none;
+	.author, .topics, .posts, .views, .replies, .searchbar {
+		display: none !important;
 	}
 }
