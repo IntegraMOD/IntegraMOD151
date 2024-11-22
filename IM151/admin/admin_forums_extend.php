@@ -130,14 +130,28 @@ if ( $db->sql_query($sql) )
 }
 
 // some compliancy
-$sql = "SELECT forum_display_sort, forum_display_order FROM " . FORUMS_TABLE . " LIMIT 0, 1";
-if ( $db->sql_query($sql) && function_exists('get_forum_display_sort_option') )
-{
-	define('TOPIC_DISPLAY_ORDER', true);
-	$forums_fields_list['forum_display_sort'] = 'forum_display_sort';
-	$forums_fields_list['forum_display_order'] = 'forum_display_order';
-	$fields_type['forum_display_sort'] = 'INTEGER';
-	$fields_type['forum_display_order'] = 'INTEGER';
+$check_columns_sql = "SHOW COLUMNS FROM " . FORUMS_TABLE . " LIKE 'forum_display_%'";
+$result = $db->sql_query($check_columns_sql);
+$existing_columns = array();
+ 
+while ($row = $db->sql_fetchrow($result)) {
+    $existing_columns[] = $row['Field'];
+}
+ 
+$db->sql_freeresult($result);
+ 
+$select_columns = array_intersect(['forum_display_sort', 'forum_display_order'], $existing_columns);
+ 
+if (!empty($select_columns)) {
+    $sql = "SELECT " . implode(', ', $select_columns) . " FROM " . FORUMS_TABLE . " LIMIT 0, 1";
+    if ($db->sql_query($sql) && function_exists('get_forum_display_sort_option'))
+    {
+        define('TOPIC_DISPLAY_ORDER', true);
+        foreach ($select_columns as $column) {
+            $forums_fields_list[$column] = $column;
+            $fields_type[$column] = 'INTEGER';
+        }
+    }
 }
 
 // prune functions
