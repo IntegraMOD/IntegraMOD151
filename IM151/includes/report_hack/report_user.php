@@ -5,6 +5,11 @@ class report_user extends report_module
 	var $mode = 'reportuser';
 	var $duplicates = true;
 	
+    // Declare properties explicitly
+    public $id;
+    public $data;
+    public $lang;
+	
 	//
 	// Constructor
 	//

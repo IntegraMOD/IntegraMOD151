@@ -5,6 +5,11 @@ class report_privmsg extends report_module
 	var $mode = 'reportprivmsg';
 	var $duplicates = false;
 	
+    // Declare properties explicitly
+    public $id;
+    public $data;
+    public $lang;
+	
 	//
 	// Constructor
 	//

@@ -192,22 +192,26 @@ function cache_tree_output()
 	);
 
 	// data
-	for ($i = 0; $i < count($tree['data']); $i++ )
+	for ($i = 0; $i < count($tree['data']); $i++)
 	{
-		$template->assign_block_vars('data', array());
-
-    foreach ($tree['data'][$i] as $key => $value)
-		{
-			$nkey = intval($key);
-			if ( $key != "$nkey" )
-			{
-				$template->assign_block_vars('data.field', array(
-					'FIELD_NAME'	=> $key,
-					'FIELD_VALUE'	=> str_replace("\n", "' . \"\\n\" . '", str_replace("\r\n", "' . \"\\r\\n\" . '", str_replace("'", "\'", $value))),
-					)
-				);
-			}
-		}
+	    $template->assign_block_vars('data', array());
+	 
+	    foreach ($tree['data'][$i] as $key => $value)
+	    {
+	        $nkey = intval($key);
+	        if ($key != "$nkey")
+	        {
+	            $template->assign_block_vars('data.field', array(
+	                'FIELD_NAME'    => $key,
+	                'FIELD_VALUE'   => str_replace(
+	                    array("\n", "\r\n", "'"),
+	                    array("' . \"\\n\" . '", "' . \"\\r\\n\" . '", "\\'"),
+	                    (string)$value
+	                ),
+	                )
+	            );
+	        }
+	    }
 	}
 
 	// subs

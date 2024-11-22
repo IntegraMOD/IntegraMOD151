@@ -6,6 +6,11 @@ class report_topic extends report_module
 	var $duplicates = false;
 	var $subject_auth = array();
 	
+    // Declare properties explicitly
+    public $id;
+    public $data;
+    public $lang;
+	
 	//
 	// Constructor
 	//
