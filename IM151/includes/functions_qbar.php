@@ -672,7 +672,7 @@ function qbar_display_qbars($display=false)
 				$pointer = -1;
 				for ($j = 0; $j < count($options); $j++)
 				{
-					$inc = ($obj == 1) ? $images['menu_delimeter'] : '';
+                    $inc = ($obj == 1) ? (isset($images['menu_delimeter']) ? $images['menu_delimeter'] : '') : '';
 					$pointer++;
 					if ((($pointer % $cells) == 0) || ($in_table))
 					{

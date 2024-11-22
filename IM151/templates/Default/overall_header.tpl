@@ -117,6 +117,8 @@ window.open("tour.php", "_tour", "width=800,height=600,scrollbars,resizable=yes"
 // ]]> 
 </script>
 <script src="templates/assets/js/mouseover.js"></script>
+<script src="templates/assets/js/importal.js"></script>
+
 <!-- Prillian - Begin Code Additions -->
 <!-- BEGIN switch_user_logged_in -->
 <script>

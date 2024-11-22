@@ -1,5 +1,37 @@
-/* Based on the original Style Sheet for the integrastyle v2 Theme for phpBB version 2+
-Edited by Daz  - http://www.forumimages.com - last updated 26-06-03 */
+/* Fonts */
+:root {
+  --default-font: "Roboto",  system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  --heading-font: "Source Sans Pro",  sans-serif;
+  --nav-font: "Poppins",  sans-serif;
+}
+
+/* Global Colors - The following color variables are used throughout the website. Updating them here will change the color scheme of the entire website */
+:root { 
+  --background-color: #ffffff; /* Background color for the entire website, including individual sections */
+  --default-color: #1a1f24; /* Default color used for the majority of the text content across the entire website */
+  --heading-color: #485664; /* Color for headings, subheadings and title throughout the website */
+  --accent-color: #11C0DF; /* Accent color that represents your brand on the website. It's used for buttons, links, and other elements that need to stand out */
+  --contrast-color: #ffffff; /* The contrast color is used for elements when the background color is one of the heading, accent, or default colors. Its purpose is to ensure proper contrast and readability when placed over these more dominant colors */
+}
+
+/* Nav Menu Colors - The following color variables are used specifically for the navigation menu. They are separate from the global colors to allow for more customization options */
+:root {
+  --nav-color: #32475f;  /* The default color of the main navmenu links */
+  --nav-hover-color: #839fbc; /* Applied to main navmenu links when they are hovered over or active */
+  --nav-dropdown-background-color: #ffffff; /* Used as the background color for dropdown items that appear when hovering over primary navigation items */
+  --nav-dropdown-color: #485664; /* Used for navigation links of the dropdown items in the navigation menu. */
+  --nav-dropdown-hover-color: #11C0DF; /* Similar to --nav-hover-color, this color is applied to dropdown navigation links when they are hovered over. */
+}
+
+/* Template Custom Colors */
+:root {
+  --footer-background-color: #3a4753;
+}
+
+/* Smooth scroll */
+:root {
+  scroll-behavior: smooth;
+}
 
 /* The content of the posts (body of text) */
 body{background:#ecf0f6;color:#000000;font:12px Verdana,Arial,Helvetica,sans-serif;margin:6px;padding:0;
@@ -392,24 +424,157 @@ a.kb:hover span {
 ul.lft{padding:0px;margin:0px;list-style-type: none;display: inline-block;}
 li.pcpvt {display: inline-block;vertical-align: bottom;}
 
-@media screen and (max-width: 900px){
-	.idx { 
-		display:block;
-		margin-top: 10px;
- 	}
+.bdr {border: 2px solid red !important;}
+
+div.nw, span.nw {
+  white-space: nowrap !important;
+} 
+
+div.resp-add {
+  display: hidden;
+}
+
+/* nav menu */
+div.menu ul.menu li.menu-item.active > .submenu {
+	display: block;
+}
+
+.menu {
+    background: #d1d7dc url(../images/cellpic_nav.gif) top center repeat-x; 
+	height: 25px; 
+	width:100%;	
+}
+
+.menu ul, .menu li {
+	margin: 0 auto;
+	padding: 0;
+	list-style: none
+}
+.menu ul {
+	width: 100%;
+	text-align: center;
+}
+.menu li {
+	display: inline-block;
+	position: relative;
+}
+.menu a {
+	display: block;
+	line-height: 25px;
+	padding: 0 14px 0 14px;
+	text-decoration: none;
+	font-size: 13px;
+	color: #FFFFFF;
+}
+.menu a.dropdown-arrow:after {
+	content: "\25BF";
+	margin-left: 5px;
+}
+
+.menu li a:hover {
+	color: #FFFF00;
+}
+
+.menu input {
+	display: none;
+	margin: 0;
+	padding: 0;
+	height: 25px;
+	width: 100%;
+	opacity: 0;
+	cursor: pointer
+}
+.menu label {
+	display: none;
+	line-height: 25px;
+	text-align: center;
+	position: absolute;
+	left: 0px
+}
+.menu label:before {
+	font-size: 1.1em;
+	content: "\2261"; 
+	margin-left: 20px;
+	color: #FFFFFF;
+}
+.menu ul.sub-menus{
+	height: auto;
+	overflow: hidden;
+	width: 230px;
+	position: absolute;
+	z-index: 99;
+	display: none;
+	background: #DCE5EE;
+}
+.menu ul.sub-menus li {
+	display: block;
+	text-align: left;
+	width: 100%;
+}
+.menu ul.sub-menus a {
+	font-size: 13px;
+	color: #444444;
+}
+.menu ul.sub-menus a:hover{
+	background: #5A5A5A;
+	color: #FFFFFF;
+}
+
+.menu li:hover ul.sub-menus {
+	display: block
+}
+
+.right-arrow, .style {
+	float: right;
 }	
+
+.left-arrow {
+	float: left;
+}
+
+@media screen and (max-width: 800px){
+	.menu ul {background:#CCCCCC;}
+	.menu input:checked + label {color:#FFFFFF}
+	.menu input:checked + label:before {content:"\00d7"}
+}
+
+@media only screen and (min-width: 360px) and (max-width: 800px) {
+	.sm-right-arrow, .sm-style {display: inline-block; position: relative; float: right !important;}
+	li.arrows, .style {display: none !important;}
+    .menu .responsive-menu {width:70%}
+	.menu {position:relative}
+	.menu ul {position:absolute;top:100%;right:0;left:0;z-index:3;height:auto;display:none;text-align:left;}
+	.menu ul.sub-menus {width:100%;position:static;}
+	.menu ul.sub-menus a {padding-left:30px;}
+	.menu li {display:block;float:none;width:auto;}
+	.menu input, .menu label {position:absolute;top:0;left:0;display:block}
+	.menu input {z-index:4}
+	.menu input:checked + label:before {content:"\00d7"}
+	.menu input:checked ~ ul {display:block}
+}
+@media only screen and (min-width: 800px) {
+    .sm-right-arrow, div.sm-style {display: none !important;}
+
+}
+.img-span {
+    width: 100%;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+
 
 @media only screen and (max-width: 767px) {
     html { 
     -webkit-text-size-adjust: 100%;
     }
 	.topics, .posts, .views, .replies, .searchbar {
-	  display: none !important;
+	  display: none;
 	}
 }
 
 @media only screen and (max-width: 400px) {
-	.author, .topics, .posts, .views, .replies, .searchbar {
-		display: none !important;
+	.author {
+		display: none;
 	}
 }

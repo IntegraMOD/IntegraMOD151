@@ -8,7 +8,7 @@
 	Copyright © 2004 - 2011 The Integramod Group ( http://www.integramod.com/ )
     --------------------------------------------------------------
 */
-
+@import url("responsive.css");
 @import url("Integrastyle.css");
 @import url("buttons.css");
 @import url("report_hack.css");

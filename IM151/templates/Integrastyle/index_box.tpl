@@ -3,9 +3,9 @@
 <table width="100%" cellpadding="2" cellspacing="1" border="0" class="forumline">
 <tr> 
 	<th colspan="{catrow.tablehead.INC_SPAN}" width="100%" nowrap="nowrap">&nbsp;{catrow.tablehead.L_FORUM}&nbsp;</th>
-	<th width="50" nowrap="nowrap" class="topics">&nbsp;{L_TOPICS}&nbsp;</th>
-	<th width="50" nowrap="nowrap" class="posts">&nbsp;{L_POSTS}&nbsp;</th>
-	<th width="150" nowrap="nowrap" class="lastpost">&nbsp;{L_LASTPOST}&nbsp;</th>
+	<th width="50" nowrap="nowrap">&nbsp;{L_TOPICS}&nbsp;</th>
+	<th width="50" nowrap="nowrap">&nbsp;{L_POSTS}&nbsp;</th>
+	<th width="150" nowrap="nowrap">&nbsp;{L_LASTPOST}&nbsp;</th>
 </tr>
 <!-- END tablehead -->
 <!-- BEGIN cat -->
@@ -40,9 +40,9 @@
 		<!-- END forum_icon -->
 	</td>
 	<!-- BEGIN forum_link_no -->
-	<td class="row1 topics" onMouseOver="this.className='row2'" onMouseOut="this.className='row1'" align="center" valign="middle" height="50"><span class="gensmall">{catrow.forumrow.TOPICS}</span></td>
-	<td class="row1 posts" onMouseOver="this.className='row2'" onMouseOut="this.className='row1'" align="center" valign="middle" height="50"><span class="gensmall">{catrow.forumrow.POSTS}</span></td>
-	<td class="row1 lastpost" onMouseOver="this.className='row2'" onMouseOut="this.className='row1'" align="center" valign="middle" height="50" nowrap="nowrap"> <span class="gensmall">{catrow.forumrow.LAST_POST}</span></td>
+	<td class="row1" onMouseOver="this.className='row2'" onMouseOut="this.className='row1'" align="center" valign="middle" height="50"><span class="gensmall">{catrow.forumrow.TOPICS}</span></td>
+	<td class="row1" onMouseOver="this.className='row2'" onMouseOut="this.className='row1'" align="center" valign="middle" height="50"><span class="gensmall">{catrow.forumrow.POSTS}</span></td>
+	<td class="row1" onMouseOver="this.className='row2'" onMouseOut="this.className='row1'" align="center" valign="middle" height="50" nowrap="nowrap"> <span class="gensmall">{catrow.forumrow.LAST_POST}</span></td>
 	<!-- END forum_link_no -->
 	<!-- BEGIN forum_link -->
 	<td class="row1" onMouseOver="this.className='row2'" onMouseOut="this.className='row1'" align="center" valign="middle" height="50" colspan="3"><span class="gensmall">{catrow.forumrow.forum_link.HIT_COUNT}</span></td>
@@ -59,6 +59,7 @@
 <!-- END catfoot -->
 <!-- BEGIN tablefoot -->
 </table>
+<table border="0" cellpadding="0" cellspacing="0" class="tbl"><tr><td class="tbll"><img src="{TEMPLATE}images/spacer.gif" alt="" width="8" height="4" /></td><td class="tblbot"><img src="{TEMPLATE}images/spacer.gif" alt="" width="8" height="4" /></td><td class="tblr"><img src="{TEMPLATE}images/spacer.gif" alt="" width="8" height="4" /></td></tr></table>
 <br class="gensmall" />
 <!-- END tablefoot -->
 <!-- END catrow -->
