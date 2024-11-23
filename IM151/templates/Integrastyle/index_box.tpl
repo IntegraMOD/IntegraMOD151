@@ -1,6 +1,6 @@
 <!-- BEGIN catrow -->
 <!-- BEGIN tablehead -->
-<table width="100%" cellpadding="2" cellspacing="1" border="0" class="forumline">
+<table width="100%" cellpadding="0" cellspacing="1" border="0" class="forumline">
 <tr> 
 	<th colspan="{catrow.tablehead.INC_SPAN}" width="100%" nowrap="nowrap">&nbsp;{catrow.tablehead.L_FORUM}&nbsp;</th>
 	<th width="50" nowrap="nowrap">&nbsp;{L_TOPICS}&nbsp;</th>
@@ -54,7 +54,7 @@
 	<!-- BEGIN inc -->
 	<td width="46" class="{catrow.catfoot.inc.INC_CLASS}"><img src="{SPACER}" width="46" height="0" /></td>
 	<!-- END inc -->
-	<td colspan="{catrow.catfoot.INC_SPAN}" height="1" class="spaceRow"><img src="{SPACER}" alt="" width="1" height="1" /></td>
+	<td colspan="{catrow.catfoot.INC_SPAN}" height="1" class="catBottom"><img src="{SPACER}" alt="" width="1" height="1" /></td>
 </tr>
 <!-- END catfoot -->
 <!-- BEGIN tablefoot -->

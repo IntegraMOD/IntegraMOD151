@@ -65,14 +65,25 @@ a.topictitle:hover{color:#dd6900}
 hr{border: 0px solid #ffffff;border-top-width:1px;height:0px}
 
 /* Category gradients*/
-td.cat{font-weight:bold;letter-spacing:1px;background:#d9e2ec url(../images/cellpic1.gif);
-height:29px;text-indent:4px}
+td.cat{font-weight:bold;letter-spacing:1px;background:#247CD3 url(../images/cellpic1.gif);
+height:29px;text-indent:4px;}
+
+/* Category gradients*/
+td.catBottom {
+	height: 6px;
+	color:#516a88;
+	background: #CAD9EA; /* Old browsers */
+	background: -moz-linear-gradient(top, #CAD9EA 0%, #dbe3ee 100%); /* FF3.6-15 */
+	background: -webkit-linear-gradient(top, #CAD9EA 0%,#dbe3ee 100%); /* Chrome10-25,Safari5.1-6 */
+	background: linear-gradient(to bottom, #CAD9EA 0%,#dbe3ee 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#CAD9EA', endColorstr='#dbe3ee',GradientType=0 ); /* IE6-9 */
+}
 
 /* Main table cell colours and backgrounds */
-.row1{background:#eaedf4}
-.row2,.helpline{background:#d9e2ec}
-.row3{background:#cedcec}
-td.spacerow{background:#cad9ea}
+.row1{background:#eaedf4;}
+.row2,.helpline{background:#d9e2ec;}
+.row3{background:#cedcec;}
+td.spacerow{background:#cad9ea;}
 
 /* This is for the table cell above the Topics,Post & Last posts on the index.php */
 td.rowpic{background:url(../images/cellpic2.jpg) #ffffff repeat-y}

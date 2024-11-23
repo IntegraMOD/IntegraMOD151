@@ -104,7 +104,7 @@
 <!-- BEGIN disable_viewonline -->
 <tr><td>&nbsp;</td></tr>
 <tr><td>
-<table width="100%" cellpadding="2" cellspacing="1" border="0" class="forumline">
+<table width="100%" cellpadding="0" cellspacing="1" border="0" class="forumline">
 <tr>
 <th align="center" colspan="2" nowrap="nowrap" class="cat"><span class="cattitle"><a href="{U_VIEWONLINE}">{L_WHO_IS_ONLINE}</a></span></th>
 </tr>
