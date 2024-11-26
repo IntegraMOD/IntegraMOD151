@@ -89,6 +89,7 @@ if(!function_exists('imp_online_users2_block_func'))
 					if ( $row['user_allow_viewonline'] )
 					{
 						$user_online_link = '<a href="' . append_sid("profile.$phpEx?mode=viewprofile&amp;" . POST_USERS_URL . "=" . $row['user_id']) . '"><span class="'.$style_color.'">' . $row['username'] . '</span></a>';
+						$logged_visible_online = 0;
 						$logged_visible_online++;
 					}
 					else
@@ -97,10 +98,14 @@ if(!function_exists('imp_online_users2_block_func'))
 						$logged_hidden_online++;
 					}
 
+					$online_userlist = '';
+					 
 					if ( $row['user_allow_viewonline'] || $userdata['user_level'] == ADMIN )
-					{
-						$online_userlist .= ( $online_userlist != '' ) ? ', ' . $user_online_link : $user_online_link;
-					}
+	                {
+	                    $online_userlist .= (PHP_VERSION_ID >= 70000)
+	                        ? ($online_userlist !== '' ? ', ' . $user_online_link : $user_online_link)
+	                        : (!empty($online_userlist) ? ', ' . $user_online_link : $user_online_link);
+	                }
 				}
 
 				$prev_user_id = $row['user_id'];
@@ -122,9 +127,8 @@ if(!function_exists('imp_online_users2_block_func'))
 			$online_userlist = $lang['None'];
 		}
 		$online_userlist = $lang['Registered_users'] . ' ' . $online_userlist;
-
-		$total_online_users = $logged_visible_online + $logged_hidden_online + $guests_online;
-
+	    $logged_hidden_online = 0;
+        $total_online_users = $logged_visible_online + (isset($logged_hidden_online) ? $logged_hidden_online : 0) + (isset($guests_online) ? $guests_online : 0);
 		if ( $total_online_users > $board_config['record_online_users'])
 		{
 			$board_config['record_online_users'] = $total_online_users;
@@ -186,10 +190,11 @@ if(!function_exists('imp_online_users2_block_func'))
 			$l_h_user_s = $lang['Hidden_users_total'];
 		}
 
+		$guests_online = isset($guests_online) ? $guests_online : 0;
 		if ( $guests_online == 0 )
-		{
-			$l_g_user_s = $lang['Guest_users_zero_total'];
-		}
+	    {
+	        $l_g_user_s = $lang['Guest_users_zero_total'];
+	    }
 		else if ( $guests_online == 1 )
 		{
 			$l_g_user_s = $lang['Guest_user_total'];
