@@ -31,13 +31,32 @@ masterdavid : 2004
           </td>
         </tr>
       </table>
-		  <table border="0" cellpadding="0" cellspacing="0">
-	  	    <tr>
-			  <td class="btm"><a href="#top" title="{L_TOPIC_UP_IMAGE}"><span>&nbsp;</span></a></td>
-			  <td align="center" width="100%" class="qb">{QMENUS}</td>
-			  <td class="btm"><a href="#top" title="{L_TOPIC_UP_IMAGE}"><span>&nbsp;</span></a></td>
-	  	    </tr>
-		  </table>
+      <table width="100%" border="0" cellpadding="0" cellspacing="0">
+      	<tr>
+            <td width="100%"> 
+            	<nav class="menu container-fluid nav mx-auto px-0">
+            	  <input type="checkbox" class="responsive-menu" onclick="updatemenu()"><label></label>
+            	  <ul id="rep" class="text-nowrap">
+                    <li class="menu-item left-arrow ms-0"><a href="#top" title="{L_TOP}"><i class="fa-solid fa-arrow-up"></i></a></li>
+                    {QMENUS}
+                    <li><a class="dropdown-arrow" href="#"> {L_SEARCH} </a>
+                      <ul class="sub-menus">
+						<li><a href="{U_SEARCH}">{L_SEARCH}</a></li>
+						<li><a href="{U_SEARCH_UNANSWERED}">{L_SEARCH_UNANSWERED}</a></li>
+						<!-- BEGIN switch_user_logged_in -->
+						<li><a href="{U_SEARCH_NEW}">{L_SEARCH_NEW}</a></li>
+						<li><a href="{U_SEARCH_UNREAD}">{L_SEARCH_UNREAD}</a></li>
+						<li><a href="{U_SEARCH_ACTIVE_TOPICS}">{L_SEARCH_ACTIVE_TOPICS}</a></li>
+						<li><a href="{U_SEARCH_SELF}">{L_SEARCH_SELF}</a></li>
+						<!-- END switch_user_logged_in -->
+                      </ul>	
+                    </li>
+                    <li class="menu-item arrows right-arrow me-0"><a href="#top" title="{L_TOP}"><i class="fa-solid fa-arrow-up"></i></a></li>
+            	  </ul>
+            	</nav>
+            </td>
+      	</tr>
+      </table>
     </td>
   </tr>
 </table>

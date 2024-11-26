@@ -1,6 +1,5 @@
 <script language="JavaScript" type="text/javascript" src="templates/assets/js/post_message.js"></script>
 <script language="javascript" type="text/javascript" src="mods/bbcode_box/bbcode_box.js"></script>
-<script language='javascript' src='spelling/spellmessage.js'></script>
 
 <table width="100%" cellspacing="0" cellpadding="2" border="0" align="center"><tr> 
 <td align="left" valign="bottom"><span class="gensmall"> 
