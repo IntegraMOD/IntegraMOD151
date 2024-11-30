@@ -113,9 +113,9 @@ if(!function_exists('imp_online_users2_block_func'))
 			else
 			{
 				// Skip multiple sessions for one user
-				if ( $row['session_ip'] != $prev_session_ip )
+				if (isset($row['session_ip']) && isset($prev_session_ip) && $row['session_ip'] !== $prev_session_ip) 
 				{
-					$guests_online++;
+					$guests_online = isset($guests_online) ? $guests_online + 1 : 1;
 				}
 			}
 
