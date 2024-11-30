@@ -9,7 +9,7 @@
  *   $Id: template.php,v 1.43 2003/05/02 15:50:05 psotfx Exp $
  *
  ***************************************************************************/
-
+ 
 /***************************************************************************
  *
  *   This program is free software; you can redistribute it and/or modify
@@ -18,77 +18,78 @@
  *   (at your option) any later version.
  *
  ***************************************************************************/
-
+ 
 /*
-	Template class.
-
-	Nathan Codding - Original version design and implementation
-	Crimsonbane - Initial caching proposal and work
-	psoTFX - Completion of file caching, decompilation routines and implementation of
-	conditionals/keywords and associated changes
-
-	The interface was inspired by PHPLib templates,  and the template file (formats are
-	quite similar)
-
-	The keyword/conditional implementation is currently based on sections of code from
-	the Smarty templating engine (c) 2001 ispi of Lincoln, Inc. which is released
-	(on its own and in whole) under the LGPL. Section 3 of the LGPL states that any code
-	derived from an LGPL application may be relicenced under the GPL, this applies
-	to this source
+    Template class.
+ 
+    Nathan Codding - Original version design and implementation
+    Crimsonbane - Initial caching proposal and work
+    psoTFX - Completion of file caching, decompilation routines and implementation of
+    conditionals/keywords and associated changes
+ 
+    The interface was inspired by PHPLib templates,  and the template file (formats are
+    quite similar)
+ 
+    The keyword/conditional implementation is currently based on sections of code from
+    the Smarty templating engine (c) 2001 ispi of Lincoln, Inc. which is released
+    (on its own and in whole) under the LGPL. Section 3 of the LGPL states that any code
+    derived from an LGPL application may be relicenced under the GPL, this applies
+    to this source
 */
-
+ 
 class pafiledb_Template
 {
-
-	// variable that holds all the data we'll be substituting into
-	// the compiled templates. Takes form:
-	// --> $this->_tpldata[block.][iteration#][child.][iteration#][child2.][iteration#][variablename] == value
-	// if it's a root-level variable, it'll be like this:
-	// --> $this->_tpldata[.][0][varname] == value
-	var $_tpldata = [];
-
-	// Root dir and hash of filenames for each template handle.
-	var $root = '';
-	var $cache_root = 'pafiledb/cache/templates/';
-	var $files = [];
-
-	// this will hash handle names to the compiled/uncompiled code for that handle.
-	var $compiled_code = [];
-
-	// Various counters and storage arrays
-	var $block_names = [];
-	var $block_else_level = [];
-	var $block_nesting_level = 0;
-
-	var $static_lang;
-	var $force_recompile;
-
-
-	function set_template($template = '', $static_lang = false, $force_recompile = false)
-	{
-		global $phpbb_root_path;
-
-		if (defined('IN_ADMIN'))
-		{
-			$this->root = $phpbb_root_path . 'admin/templates/';
-		}
-		else
-		{
-			$this->root = $phpbb_root_path . 'templates/' . $template;
-		}
-		$this->cachedir = $phpbb_root_path . $this->cache_root . $template . '/';
-
-		$this->static_lang = $static_lang;
-		$this->force_recompile = $force_recompile;
-
-		if (!file_exists($this->cachedir))
-		{
-			@umask(0);
-			mkdir($this->cachedir, 0777);
-		}
-
-		return true;
-	}
+    // variable that holds all the data we'll be substituting into
+    // the compiled templates. Takes form:
+    // --> $this->_tpldata[block.][iteration#][child.][iteration#][child2.][iteration#][variablename] == value
+    // if it's a root-level variable, it'll be like this:
+    // --> $this->_tpldata[.][0][varname] == value
+    protected $_tpldata = [];
+ 
+    // Root dir and hash of filenames for each template handle.
+    public $root = '';
+    protected $cache_root = 'pafiledb/cache/templates/';
+    public $cachedir;
+    protected $files = [];
+ 
+    // this will hash handle names to the compiled/uncompiled code for that handle.
+    protected $compiled_code = [];
+ 
+    // Various counters and storage arrays
+    protected $block_names = [];
+    protected $block_else_level = [];
+    protected $block_nesting_level = 0;
+    public $static_lang;
+    public $force_recompile;
+ 
+    public function __construct()
+    {
+        $this->cache_root = 'cache/tpl_';
+    }
+ 
+    public function set_template($template = '', $static_lang = false, $force_recompile = false)
+    {
+        global $phpbb_root_path;
+ 
+        if (defined('IN_ADMIN')) {
+            $this->root = $phpbb_root_path . 'admin/templates/';
+        } else {
+            $this->root = $phpbb_root_path . 'templates/' . $template;
+        }
+        $this->cachedir = $phpbb_root_path . $this->cache_root . $template . '/';
+ 
+        $this->static_lang = $static_lang;
+        $this->force_recompile = $force_recompile;
+ 
+        if (!file_exists($this->cachedir)) {
+            @umask(0);
+            if (!mkdir($this->cachedir, 0777) && !is_dir($this->cachedir)) {
+                throw new \RuntimeException(sprintf('Directory "%s" was not created', $this->cachedir));
+            }
+        }
+ 
+        return true;
+    }
 
 	// Sets the template filenames for handles. $filename_array
 	// should be a hash of handle => filename pairs.
@@ -234,7 +235,7 @@ class pafiledb_Template
 
 		return true;
 	}
-	
+
 
 	// Include a seperate template
 	function _tpl_include($filename, $include = true)
@@ -312,7 +313,6 @@ class pafiledb_Template
 					$this->block_else_level[] = false;
 					$compile_blocks[] = '<?php ' . $this->compile_tag_block($blocks[2][$curr_tb]) . ' ?>';
 					break;
-
 				case 'BEGINELSE':
 					$this->block_else_level[count($this->block_else_level) - 1] = true;
 					$compile_blocks[] = '<?php }} else { ?>';
@@ -322,11 +322,9 @@ class pafiledb_Template
 					array_pop($this->block_names);
 					$compile_blocks[] = '<?php ' . ((array_pop($this->block_else_level)) ? '}' : '}}') . ' ?>';
 					break;
-
 				case 'IF':
 					$compile_blocks[] = '<?php ' . $this->compile_tag_if($blocks[2][$curr_tb], false) . ' ?>';
 					break;
-
 				case 'ELSE':
 					$compile_blocks[] = '<?php } else { ?>';
 					break;
@@ -334,7 +332,6 @@ class pafiledb_Template
 				case 'ELSEIF':
 					$compile_blocks[] = '<?php ' . $this->compile_tag_if($blocks[2][$curr_tb], true) . ' ?>';
 					break;
-
 				case 'ENDIF':
 					$compile_blocks[] = '<?php } ?>';
 					break;
@@ -344,7 +341,6 @@ class pafiledb_Template
 					$compile_blocks[] = '<?php ' . $this->compile_tag_include($temp) . ' ?>';
 					$this->_tpl_include($temp, false);
 					break;
-
 				case 'INCLUDEPHP':
 					if ($pafiledb_config['tpl_php'])
 					{
@@ -352,7 +348,6 @@ class pafiledb_Template
 						$compile_blocks[] = '<?php ' . $this->compile_tag_include_php($temp) . ' ?>';
 					}
 					break;
-
 				case 'PHP':
 					if ($pafiledb_config['tpl_php'])
 					{
@@ -360,7 +355,6 @@ class pafiledb_Template
 						$compile_blocks[] = '<?php ' . $temp . ' ?>';
 					}
 					break;
-
 				default:
 					$this->compile_var_tags($blocks[0][$curr_tb]);
 					$trim_check = trim($blocks[0][$curr_tb]);
@@ -368,7 +362,6 @@ class pafiledb_Template
 					break;
 			}
 		}
-
 		$template_php = '';
 		for ($i = 0; $i < count($text_blocks); $i++)
 		{
@@ -376,7 +369,6 @@ class pafiledb_Template
 			$trim_check_block = !empty($compile_blocks[$i]) ? trim($compile_blocks[$i]) : '';
 			$template_php .= (!$no_echo) ? ((!empty($trim_check_text)) ? $text_blocks[$i] : '') . ((!empty($compile_blocks[$i])) ? $compile_blocks[$i] : '') : ((!empty($trim_check_text)) ? $text_blocks[$i] : '') . ((!empty($compile_blocks[$i])) ? $compile_blocks[$i] : '');
 		}
-
 		// There will be a number of occassions where we switch into and out of
 		// PHP mode instantaneously. Rather than "burden" the parser with this
 		// we'll strip out such occurences, minimising such switching
@@ -517,7 +509,7 @@ class pafiledb_Template
 				case '/':
 				case '@':
 					break;	
-				
+
 				case 'eq':
 					$token = '==';
 					break;

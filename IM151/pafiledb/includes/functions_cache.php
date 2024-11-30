@@ -19,17 +19,18 @@
  *
  ***************************************************************************/
 
-class acm
+	class acm
 {
-	var $vars = '';
-	var $vars_ts = array();
-	var $modified = FALSE;
-
-	function __construct()
-	{
-		global $phpbb_root_path;
-		$this->cache_dir = $phpbb_root_path . 'pafiledb/cache/';
-	}
+    var $vars = '';
+    var $vars_ts = array();
+    var $modified = FALSE;
+    protected $cache_dir; // Declare the property here
+ 
+    function __construct()
+    {
+        global $phpbb_root_path;
+        $this->cache_dir = $phpbb_root_path . 'pafiledb/cache/';
+    }
 
 	function load()
 	{
