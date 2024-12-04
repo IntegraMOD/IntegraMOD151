@@ -278,7 +278,6 @@ span.folder:hover {color:#9FB4D1; text-decoration: none !important;}
 	background: -webkit-linear-gradient(top, #e2e9f1 0%,#becde0 75%); /* Chrome10-25,Safari5.1-6 */
 	background: linear-gradient(to bottom, #e2e9f1 0%,#becde0 75%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
 	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#e2e9f1', endColorstr='#becde0',GradientType=0 ); /* IE6-9 */border-color:#91a0ae;
-
 }
 
 .menu a {
