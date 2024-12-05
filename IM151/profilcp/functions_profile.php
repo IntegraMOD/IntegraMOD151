@@ -87,18 +87,18 @@ if ( $is_called == FALSE )
 				message_die(GENERAL_ERROR, 'Could not obtain junior admin status', '', __LINE__, __FILE__, $sql);
 			}
 
-			while( $row = $db->sql_fetchrow($result) )
-			{
-				$jadmin_ary[] = $row['user_id'];
-			}
-			if($db->sql_fetchrow($result) == 0)
-			{
-				$jadmin_ary[] = -10;
-			}
-			if($portal_config['cache_enabled'])
-			{
-				$var_cache->save($jadmin_ary, 'jadmin', 'jadmin');
-			}
+	        while( $db->sql_fetchrow($result) !== false )
+	        {
+	            $jadmin_ary[] = $row['user_id'];
+	        }
+	        if($db->sql_numrows($result) == 0)
+	        {
+	            $jadmin_ary[] = -10;
+	        }
+	        if($portal_config['cache_enabled'])
+	        {
+	            $var_cache->save($jadmin_ary, 'jadmin', 'jadmin');
+	        }
 		}
 
 		$res = USER;
