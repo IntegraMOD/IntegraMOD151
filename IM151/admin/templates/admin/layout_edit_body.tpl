@@ -37,6 +37,13 @@
 </tr>
 
 <tr> 
+<td align="right" class="row1">{L_LAYOUT_COLLAPSE}:</td>
+<td class="row2"> 
+<input type="radio" name="page_collapse" value="1" {PAGE_COLLAPSE} /> {L_YES}&nbsp;&nbsp;
+<input type="radio" name="page_collapse" value="0" {NOT_PAGE_COLLAPSE} /> {L_NO}</td>
+</tr>
+
+<tr> 
 <td align="right" class="row1">{L_LAYOUT_VIEW}:</td>
 <td class="row2"> 
 <select name="view" class="post">{VIEW}</select>

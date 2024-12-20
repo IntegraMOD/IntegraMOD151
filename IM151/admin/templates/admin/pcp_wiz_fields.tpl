@@ -1,4 +1,4 @@
-<script language="javascript">
+<script>
 	formupdated = false;
 	function selectMap(){
 		if (validateform()){

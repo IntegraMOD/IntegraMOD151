@@ -201,7 +201,7 @@ if (!empty($sort_order))
 $delete = ( isset($_POST['delete']) ) ? TRUE : FALSE; 
 $delete_id_list = ( isset($_POST['delete_id_list']) ) ?  $_POST['delete_id_list'] : array(); 
 
-$confirm = ( $_POST['confirm'] ) ? TRUE : FALSE; 
+   $confirm = isset($_POST['confirm']) ? (bool)$_POST['confirm'] : FALSE; 
 
 if ( ($confirm) && (count($delete_id_list) > 0) ) 
 { 

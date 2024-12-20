@@ -632,9 +632,9 @@ if ($submit)
   foreach ($items_to_send as $field_name => $field)
 	{
 		// process only not overwritten fields from users table and system fields
-		$user_field = $field['user'];
-		$is_auth = auth_field($field);
-		if ( ( ( !empty($user_field) && isset($view_userdata[$user_field]) && !$board_config[ $field_name . '_over'] ) || $field['system'] ) && $is_auth )
+	    $user_field = isset($field['user']) ? $field['user'] : '';
+	    $is_auth = auth_field($field);
+	    if ( ( ( !empty($user_field) && isset($view_userdata[$user_field]) && isset($board_config[$field_name . '_over']) && !$board_config[$field_name . '_over'] ) || (isset($field['system']) && $field['system']) ) && $is_auth )
 		{
 			// get the field input statement
 			$input = '';

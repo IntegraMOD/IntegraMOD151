@@ -42,20 +42,20 @@ $list_yes_no_friend = array('Yes' => 1, 'No' => 0, 'Friend_only' => 2);
 //-------------------------------------------
 // first pass : get main maps
 $w_maps = array();
-foreach ($user_maps as $map_name => $map_data)
+foreach ((array)$user_maps as $map_name => $map_data)
 {
-	$map_tree = explode('.', $map_name);
-	if ( ($map_tree[0] == 'PCP') && !empty($map_data['custom']) && ($map_data['custom'] == 1) )
-	{
-		// get this map
-		$map_tree = explode('.', $map_name);
-		$w_maps['name'][] = $map_name;
-		$w_maps['depth'][] = count($map_tree)-1;
-	}
+    $map_tree = explode('.', $map_name);
+    if ( ($map_tree[0] == 'PCP') && !empty($map_data['custom']) && ($map_data['custom'] == 1) )
+    {
+        // get this map
+        $map_tree = explode('.', $map_name);
+        $w_maps['name'][] = $map_name;
+        $w_maps['depth'][] = count($map_tree)-1;
+    }
 }
 
 // second pass : get sub maps
-foreach ($user_maps as $map_name => $map_data)
+foreach ((array)$user_maps as $map_name => $map_data)
 {
 	for ( $i=0; $i < count($w_maps['name']); $i++ )
 	{
@@ -764,10 +764,13 @@ if (!function_exists('mods_get_email_confirm'))
 		global $view_userdata, $config;
 
 		// build the html select statement
-		if(defined('IN_ADMIN')){
-			$value = $config['user_email'];
-		} else {
-		$value = $view_userdata['user_email'];
+	    if(defined('IN_ADMIN'))
+	    {
+	        $value = isset($config['user_email']) ? $config['user_email'] : null;
+	    } 
+		else 
+		{
+		    $value = $view_userdata['user_email'];
 		}
 		$confirm = '<input type="text" maxlength="255" size="45" class="post" name="'.$field.'" value="'.$value.'">';
 

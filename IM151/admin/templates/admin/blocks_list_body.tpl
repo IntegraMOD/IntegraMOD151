@@ -5,20 +5,8 @@
 {L_B_LAYOUT}: [ <b>{LAYOUT_NAME}</b> ]
 &nbsp;&nbsp;
 {L_B_PAGE}: [ <b>{PAGE}</b> ]
-&nbsp;&nbsp;
-{L_IMPORTAL_PAGE_TEMPLATE}: [ <b>{TEMPLATE_FILE}</b> ]
 <br />
 <br />
-
-<!-- IF BLOCKS_PREVIEW -->
-<h1>{L_IMPORTAL_BLOCKS_PREVIEW}</h1>
-{BLOCKS_PREVIEW}
-
-<br />
-<br />
-<!-- ENDIF -->
-
-<h1>{L_IMPORTAL_BLOCKS_LIST}</h1>
 <form method="post" action="{S_BLOCKS_ACTION}">
 <table cellspacing="1" cellpadding="3" border="0" align="center" class="forumline">
 <tr> 
@@ -39,12 +27,11 @@
 <th nowrap="nowrap">{L_B_GROUPS}</th>
 </tr>
 <!-- BEGIN blocks -->
-
 <tr> 
-<td nowrap="nowrap" class="{blocks.ROW_CLASS}" align="center"><a href="{blocks.U_MOVE_UP}"><img src="{TEMPLATE}images/p_up.png" alt="{L_MOVE_UP}" title="{L_MOVE_UP}" width="30" height="30" /></a></td>
-<td nowrap="nowrap" class="{blocks.ROW_CLASS}" align="center"><a href="{blocks.U_MOVE_DOWN}"><img src="{TEMPLATE}images/p_down.png" alt="{L_MOVE_DOWN}" title="{L_MOVE_DOWN}" width="30" height="30" /></a></td>
-<td nowrap="nowrap" class="{blocks.ROW_CLASS}" align="center"><a href="{blocks.U_EDIT}"><img src="{TEMPLATE}images/p_edit.png" alt="{L_EDIT} {L_BLOCK}" title="{L_EDIT}" width="30" height="30" /></a></td>
-<td nowrap="nowrap" class="{blocks.ROW_CLASS}" align="center"><a href="{blocks.U_DELETE}"><img src="{TEMPLATE}images/p_delete.png" alt="{L_DELETE}" title="{L_DELETE}" width="30" height="30" /></a></td>
+<td nowrap="nowrap" class="{blocks.ROW_CLASS}" align="center"><a href="{blocks.U_MOVE_UP}">{L_MOVE_UP}</a></td>
+<td nowrap="nowrap" class="{blocks.ROW_CLASS}" align="center"><a href="{blocks.U_MOVE_DOWN}">{L_MOVE_DOWN}</a></td>
+<td nowrap="nowrap" class="{blocks.ROW_CLASS}" align="center"><a href="{blocks.U_EDIT}">{L_EDIT}</a></td>
+<td nowrap="nowrap" class="{blocks.ROW_CLASS}" align="center"><a href="{blocks.U_DELETE}">{L_DELETE}</a></td>
 <td nowrap="nowrap" class="{blocks.ROW_CLASS}" align="center">{blocks.TITLE}</td>
 <td nowrap="nowrap" class="{blocks.ROW_CLASS}" align="center">{blocks.POSITION}</td>
 <td nowrap="nowrap" class="{blocks.ROW_CLASS}" align="center">{blocks.ACTIVE}</td>

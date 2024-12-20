@@ -1,4 +1,4 @@
-<script language="javascript">
+<script>
 	formupdated = false;
 	function selectMap(){
 		if (validateform()){
@@ -56,7 +56,8 @@
 <table width="99%" cellpadding="4" cellspacing="1" border="0" align="center" class="forumline">
 <tr>
 	<td class="row1" align="left" colspan="4" nowrap>
-		{L_SELECT_MAP}<br><select name="{MAPSELECT_NAME}" id="{MAPSELECT_NAME}" class="post">{MAPOPTIONS}</select> <input type="submit" name="{SELECT_NAME}" value="{L_SELECT}" class="mainoption" onclick="return selectMap();"/> <input type="submit" name="{GOTO_NAME}" value="{L_GOTO}" class="mainoption" onclick="return selectMap();"/></td>
+		{L_SELECT_MAP}<br><select name="{MAPSELECT_NAME}" id="{MAPSELECT_NAME}" class="post">{MAPOPTIONS}</select> <input type="submit" name="{SELECT_NAME}" value="{L_SELECT}" class="mainoption" onclick="return selectMap();"/> <input type="submit" name="{GOTO_NAME}" value="{L_GOTO}" class="mainoption" onclick="return selectMap();"/>
+	</td>
 </tr>
 <!-- BEGIN message -->
 <tr>

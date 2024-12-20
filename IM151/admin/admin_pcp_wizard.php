@@ -124,26 +124,27 @@ function buddylist(){
 		)
 	);
 	setMessage();
+	
+	$color = false; // Initialize $color before the loop
 	foreach ($buddyfields as $key => $data)
 	{
-
-		$color = !$color;
-		$template->assign_block_vars('fields', array(
-			'COLOR'						=> $color ? 'row1' : 'row2',
-			'name'						=> '<a href="'.wizurl($fieldsmode,'field='.$key).'">'.$key.'</a>',
-			'explain'					=> $lang[$data['lang_key']],
-			'ordername'				=> 'ind_'.$key,
-			'ordervalue' 			=> $data['ind'],
-			'optionname'			=> 'opt_'.$key,
-			'defaultchecked' 	=> ($data['dft']) ? ' checked ' : '',
-			'defaultvalue'		=> 'dft',
-			'forcechecked' 		=> ($data['rqd']) ? ' checked ' : '',
-			'forcevalue'			=> 'rqd',
-			'selectchecked' 	=> (!$data['rqd'] && !$data['dft'] && !$data['hidden']) ? ' checked ' : '',
-			'selectvalue'			=> 'sel',
-			'hiddenchecked' 	=> ($data['hidden']) ? ' checked ' : '',
-			'hiddenvalue'			=> 'hidden',
-		));
+	    $color = !$color;
+	    $template->assign_block_vars('fields', array(
+	        'COLOR'                     => $color ? 'row1' : 'row2',
+	        'name'                      => '<a href="'.wizurl($fieldsmode,'field='.$key).'">'.$key.'</a>',
+	        'explain'                   => isset($lang[$data['lang_key']]) ? $lang[$data['lang_key']] : '',
+	        'ordername'             => 'ind_'.$key,
+	        'ordervalue'            => isset($data['ind']) ? $data['ind'] : '',
+	        'optionname'            => 'opt_'.$key,
+	        'defaultchecked'    => (isset($data['dft']) && $data['dft']) ? ' checked ' : '',
+	        'defaultvalue'      => 'dft',
+	        'forcechecked'      => (isset($data['rqd']) && $data['rqd']) ? ' checked ' : '',
+	        'forcevalue'            => 'rqd',
+	        'selectchecked'     => (!isset($data['rqd']) || !$data['rqd']) && (!isset($data['dft']) || !$data['dft']) && (!isset($data['hidden']) || !$data['hidden']) ? ' checked ' : '',
+	        'selectvalue'           => 'sel',
+	        'hiddenchecked'     => (isset($data['hidden']) && $data['hidden']) ? ' checked ' : '',
+	        'hiddenvalue'           => 'hidden',
+	    ));
 	}
 	$template->pparse('body');
 }
@@ -277,17 +278,20 @@ function is_output_map($var){
 	global $profil_map, $register_map, $ignore_map_string;
 	// remove ignore
 	if (substr($var,0,strlen($profil_map)) != $profil_map && substr($var,0,strlen($register_map)) != $register_map && substr($var,-strlen($ignore_map_string)) != $ignore_map_string){
-		if (!empty($user_maps[$var]['fields']) && count_safe($user_maps[$var]['fields'])){
+		if (!empty($user_maps[$var]['fields']) && count_safe($user_maps[$var]['fields']))
+		{
 			return 1;
 		}
 	}
 	return 0;
 }
 
-function get_input_maps(){
+function get_input_maps()
+{
 	global $user_maps;
 	global $input_maps;
-	if(!count($input_maps)){
+	if(!count($input_maps))
+	{
 		$input_maps = rebuild_array(array_filter(array_keys($user_maps),"is_input_map"));
 	}
 }
@@ -295,18 +299,25 @@ function get_input_maps(){
 function get_output_maps(){
 	global $user_maps;
 	global $output_maps;
-	if(!count($output_maps)){
-		$output_maps = rebuild_array(array_filter(array_keys($user_maps),"is_output_map"));
+	if (!is_array($user_maps) || empty($user_maps)) 
+	{
+	    $user_maps = [];
+	}
+	 
+	if (empty($output_maps)) 
+	{
+	    $output_maps = rebuild_array(array_filter(array_keys($user_maps), "is_output_map"));
 	}
 }
 
 function rebuild_array($array){
-	// filtered arrays don't have [1],[2],... but [21],[55],...
-	foreach ($array as $value)
-	{
-		$new[] = $value;
-	}
-	return $new;
+    // filtered arrays don't have [1],[2],... but [21],[55],...
+    $new = array(); // Initialize $new as an empty array
+    foreach ($array as $value)
+    {
+        $new[] = $value;
+    }
+    return $new;
 }
 
 function get_all_maps(){
@@ -387,185 +398,187 @@ function get_map_title($map,$type=1){
 }
 
 function build_field_options($map){
-	global $user_maps;
-	$fields = array_keys($user_maps[$map]['fields']);
-	$options = '';
-	// do not sort... keep the order... sort($fields);
-	foreach ($fields as $idx =>$fieldname)
-	{
-		$options .= '<option value="'.$fieldname.'">'.$fieldname.'</option>';
-	}
-	return $options; 
+    global $user_maps;
+    $fields = array_keys(isset($user_maps[$map]['fields']) ? $user_maps[$map]['fields'] : array());
+    $options = '';
+    // do not sort... keep the order... sort($fields);
+    foreach ($fields as $idx =>$fieldname)
+    {
+        $options .= '<option value="'.$fieldname.'">'.$fieldname.'</option>';
+    }
+    return $options; 
 }
-
+ 
 function is_not_in_filtermap($var){
-	global $user_maps;
-	global $filtermap;
-	// find all fields that are NOT in a particulary map
-	if(is_array($user_maps[$filtermap]['fields'][$var])){
-		return 0;
-	} else return 1;
+    global $user_maps;
+    global $filtermap;
+    // find all fields that are NOT in a particulary map
+    if(isset($user_maps[$filtermap]['fields'][$var]) && is_array($user_maps[$filtermap]['fields'][$var])){
+        return 0;
+    } else return 1;
 }
-
+ 
 function is_in_filtermap($var){
-	global $user_maps;
-	global $filtermap;
-	// find all fields that are NOT in a particulary map
-	if(isset($user_maps[$filtermap]['fields'][$var]) && is_array($user_maps[$filtermap]['fields'][$var])){
-		return 1;
-	} else return 0;
+    global $user_maps;
+    global $filtermap;
+    // find all fields that are NOT in a particulary map
+    if(isset($user_maps[$filtermap]['fields'][$var]) && is_array($user_maps[$filtermap]['fields'][$var])){
+        return 1;
+    } else return 0;
 }
-
+ 
 function build_allfields_options($excludemap='',$selected=''){
-	global $user_fields, $filtermap;
-	if(strlen($excludemap)){
-		// only fields not in current selected map
-		$filtermap = $excludemap; // to be able to grab it in the filterfunction!
-		$fields = array_filter(array_keys($user_fields),"is_not_in_filtermap");
-	} else {
-		$fields = array_keys($user_fields);
-	}
-	$options = '';
-	sort($fields); // sort for easy finding
-	foreach ($fields as $idx =>$fieldname)
-	{
-		if($fieldname == $selected){
-			$extra = "selected";
-		} else $extra = "";
-		$options .= '<option value="'.$fieldname.'" '.$extra.'>'.$fieldname.'</option>';
-	}
-	return $options; 
+    global $user_fields, $filtermap;
+    if(strlen($excludemap)){
+        // only fields not in current selected map
+        $filtermap = $excludemap; // to be able to grab it in the filterfunction!
+        $fields = array_filter(array_keys($user_fields),"is_not_in_filtermap");
+    } else {
+        $fields = array_keys($user_fields);
+    }
+    $options = '';
+    sort($fields); // sort for easy finding
+    foreach ($fields as $idx =>$fieldname)
+    {
+        if($fieldname == $selected){
+            $extra = "selected";
+        } else $extra = "";
+        $options .= '<option value="'.$fieldname.'" '.$extra.'>'.$fieldname.'</option>';
+    }
+    return $options; 
 }
-
+ 
 function addremovefields(){
-	global $lang, $template;
-	global $wiznav, $nextmode, $posted, $all_maps, $helpmode, $demouserdata, $select_name, $submit_name, $goto_name;
-	if(!$posted['map']){
-		// set default map
-		get_all_maps();
-		$posted['map'] = $all_maps[0];
-	}
-	$template->set_filenames(array(
-		'body' => 'admin/pcp_wiz_addremovefields.tpl')
-	);
-	$template->assign_vars(array(
-		'L_TITLE'						=> $wiznav.'&raquo; '.$lang['Wiz_addremovefields'],
-		'L_TITLE_EXPLAIN'		=> $lang['Wiz_addremovefields_description'],
-		'L_SELECT_MAP'			=> $lang['Select_page'],
-		'MAPSELECT_NAME'		=> 'map',
-		'MAPOPTIONS'				=> build_map_options(3,$posted['map']),
-		'HIDDEN_FIELDS'			=> '<input type="hidden" name="orig_map" value="'.$posted['map'].'">',
-		'L_SELECT'					=> $lang['Select'],
-		'SELECT_NAME'				=> $select_name,
-		'L_GOTO'						=> is_input_map($posted['map'])?$lang['Wiz_inputlist']:$lang['Wiz_outputlist'],
-		'GOTO_NAME'					=> $goto_name,
-		'L_AVAILABLE'				=> $lang['Available_fields'],
-		'L_ACTION'					=> $lang['Action'],
-		'L_SELECTED'				=> $lang['Selected_fields'],
-		'AVAILABLENAME'			=> 'fields',
-		'AVAILABLEOPTIONS'	=> build_allfields_options($posted['map']),
-		'SELECTEDNAME'			=> 'selected[]',
-		'SELECTEDOPTIONS'		=> build_field_options($posted['map']),
-		'L_MOVE_UP'					=> $lang['Move_up'],
-		'L_MOVE_DOWN'				=> $lang['Move_down'],
-		'S_ACTION'					=> wizurl($nextmode),
-		'HELP'							=> $lang['Wiz_addremovefields_explain'],
-		'S_HELP'						=> wizurl($helpmode),
-		'L_SUBMIT'					=> $lang['Submit'],
-		'SUBMIT_NAME'				=> $submit_name,
-		'CONFIRM_MESSAGE'		=> $lang['Confirm_message'],
-		)
-	);
-	setMessage();
-	$template->pparse('body');
+    global $lang, $template;
+    global $wiznav, $nextmode, $posted, $all_maps, $helpmode, $demouserdata, $select_name, $submit_name, $goto_name;
+    if(!isset($posted['map']) || !$posted['map']){
+        // set default map
+        get_all_maps();
+        $posted['map'] = isset($all_maps[0]) ? $all_maps[0] : '';
+    }
+    $template->set_filenames(array(
+        'body' => 'admin/pcp_wiz_addremovefields.tpl')
+    );
+    $template->assign_vars(array(
+        'L_TITLE'                       => $wiznav.'&raquo; '.(isset($lang['Wiz_addremovefields']) ? $lang['Wiz_addremovefields'] : ''),
+        'L_TITLE_EXPLAIN'       => isset($lang['Wiz_addremovefields_description']) ? $lang['Wiz_addremovefields_description'] : '',
+        'L_SELECT_MAP'          => isset($lang['Select_page']) ? $lang['Select_page'] : '',
+        'MAPSELECT_NAME'        => 'map',
+        'MAPOPTIONS'                => build_map_options(3,$posted['map']),
+        'HIDDEN_FIELDS'         => '<input type="hidden" name="orig_map" value="'.$posted['map'].'">',
+        'L_SELECT'                  => isset($lang['Select']) ? $lang['Select'] : '',
+        'SELECT_NAME'               => $select_name,
+        'L_GOTO'                        => is_input_map($posted['map']) ? (isset($lang['Wiz_inputlist']) ? $lang['Wiz_inputlist'] : '') : (isset($lang['Wiz_outputlist']) ? $lang['Wiz_outputlist'] : ''),
+        'GOTO_NAME'                 => $goto_name,
+        'L_AVAILABLE'               => isset($lang['Available_fields']) ? $lang['Available_fields'] : '',
+        'L_ACTION'                  => isset($lang['Action']) ? $lang['Action'] : '',
+        'L_SELECTED'                => isset($lang['Selected_fields']) ? $lang['Selected_fields'] : '',
+        'AVAILABLENAME'         => 'fields',
+        'AVAILABLEOPTIONS'  => build_allfields_options($posted['map']),
+        'SELECTEDNAME'          => 'selected[]',
+        'SELECTEDOPTIONS'       => build_field_options($posted['map']),
+        'L_MOVE_UP'                 => isset($lang['Move_up']) ? $lang['Move_up'] : '',
+        'L_MOVE_DOWN'               => isset($lang['Move_down']) ? $lang['Move_down'] : '',
+        'S_ACTION'                  => wizurl($nextmode),
+        'HELP'                          => isset($lang['Wiz_addremovefields_explain']) ? $lang['Wiz_addremovefields_explain'] : '',
+        'S_HELP'                        => wizurl($helpmode),
+        'L_SUBMIT'                  => isset($lang['Submit']) ? $lang['Submit'] : '',
+        'SUBMIT_NAME'               => $submit_name,
+        'CONFIRM_MESSAGE'       => isset($lang['Confirm_message']) ? $lang['Confirm_message'] : '',
+        )
+    );
+    setMessage();
+    $template->pparse('body');
 }
-
+ 
 function addremovefieldsupdate($buddy){
-	global $values_list, $tables_linked, $classes_fields, $user_fields, $user_maps;
-	global $nextmode, $posted;
-	// correct the map...
-	$posted['map'] = $posted['orig_map'];
-	// fix the fields so thay are more like in the maps...
-	foreach ($posted['selected'] as $idx => $fieldname)
-	{
-		$sorted[$fieldname] = array();
-	}
-	if($buddy){
-		// set old user_fields value, set ind and rewrite fields
-		$buddyfields = array_filter($user_fields,"find_buddy_fields");
-		// make tmp var for user fields... sorted needs to go to the maps!
-		$tmp = $sorted;
-		foreach ($buddyfields as $key => $data)
-		{
-			if(is_array($tmp[$key])) $tmp[$key] = $data;
-		}
-		// corret with new ind marker and remove removed fields
-		setBuddyInd($tmp);
-		// write the def_userfields file
-		pcp_output_fields($values_list, $tables_linked, $classes_fields, NULL, $user_fields);
-		// when buddy is changed user_list_option should be nulled
-		update_user_list_option();
-	}
-	// write the new map
-	reorder_mapfields($sorted,$posted['map']);
-	if(is_input_map($posted['map'])){
-		// correct required fields
-		correctrequired();
-		// write the file
-		pcp_output_fields($values_list, $tables_linked, $classes_fields, NULL, $user_fields);
-	}
-	wizredirect($nextmode,'map='.$posted['map']);
+    global $values_list, $tables_linked, $classes_fields, $user_fields, $user_maps;
+    global $nextmode, $posted;
+    // correct the map...
+    $posted['map'] = isset($posted['orig_map']) ? $posted['orig_map'] : '';
+    // fix the fields so thay are more like in the maps...
+    $sorted = array();
+    if (isset($posted['selected']) && is_array($posted['selected'])) {
+        foreach ($posted['selected'] as $idx => $fieldname)
+        {
+            $sorted[$fieldname] = array();
+        }
+    }
+    if($buddy){
+        // set old user_fields value, set ind and rewrite fields
+        $buddyfields = array_filter($user_fields,"find_buddy_fields");
+        // make tmp var for user fields... sorted needs to go to the maps!
+        $tmp = $sorted;
+        foreach ($buddyfields as $key => $data)
+        {
+            if(isset($tmp[$key]) && is_array($tmp[$key])) $tmp[$key] = $data;
+        }
+        // corret with new ind marker and remove removed fields
+        setBuddyInd($tmp);
+        // write the def_userfields file
+        pcp_output_fields($values_list, $tables_linked, $classes_fields, NULL, $user_fields);
+        // when buddy is changed user_list_option should be nulled
+        update_user_list_option();
+    }
+    // write the new map
+    reorder_mapfields($sorted,$posted['map']);
+    if(is_input_map($posted['map'])){
+        // correct required fields
+        correctrequired();
+        // write the file
+        pcp_output_fields($values_list, $tables_linked, $classes_fields, NULL, $user_fields);
+    }
+    wizredirect($nextmode,'map='.$posted['map']);
 }
-
+ 
 function showfieldinfo(){
-	global $user_fields, $lang, $template;
-	global $posted, $wiznav, $ignore_map_string, $demouserdata, $nextinputmode, $nextoutputmode, $fieldsmode;
-	$langkey = $user_fields[$posted['field']]['lang_key'];
-	$fieldmaps = get_all_maps_for_field($posted['field']);
-	set_demouserdata();
-	$template->set_filenames(array(
-		'body' => 'admin/pcp_wiz_showfieldinfo.tpl')
-	);
-	$template->assign_vars(array(
-		'L_TITLE'						=> $wiznav.'&raquo; '.$lang['Wiz_showfieldinfo'],
-		'L_TITLE_EXPLAIN'		=> $lang['Wiz_showfieldinfo_description'],
-		'HELP'							=> $lang['Wiz_showfieldinfo_explain'],
-		'L_FIELDNAME'				=> $lang['PCP_field_name'],
-		'FIELDNAME'					=> '<a href="'.wizurl($fieldsmode,'field='.$posted['field']).'">'.$posted['field'].'</a>',
-		'L_DESCRIPTION'			=> $lang['PCP_field_desc'],
-		'DESCRIPTION'				=> ( isset($lang[$langkey]) ? $lang[$langkey] : '' ),
-		'L_PAGES'						=> $lang['Pages'],
-		//'PAGES'							=> $pages,
-		)
-	);
-	foreach ($fieldmaps as $idx => $map)
-	{
-		// do not use the ignore...
-		if(substr($map,-strlen($ignore_map_string)) != $ignore_map_string){
-			if(is_input_map($map)){ 
-				$template->set_filenames(array(
-					'input' => 'admin/pcp_wiz_inputexample.tpl')
-				);
-				$inputstyle = preview_input_field($user_fields[$posted['field']],$posted['field']);
-				$template->assign_var_from_handle('example', 'input');
-				$example = $template->vars['example'];
-				$nextmode = $nextinputmode;
-			} else {
-				$example = pcp_output($posted['field'], $demouserdata, $map);
-				$example = '<table>'.$example.'</table>'; // put it in a table to ensure the display is correct!
-				$nextmode = $nextoutputmode;
-			}
-			$example = correctimages($example);
-			$page = '<a href="'.wizurl($nextmode,"map=$map").'">'.get_map_title($map,2).'</a>';	
-			$template->assign_block_vars('fieldinpages', array(
-				'page'						=> $page,
-				'example'					=> $example,)
-			);
-		}
-	}
-	$template->pparse('body');
+    global $user_fields, $lang, $template;
+    global $posted, $wiznav, $ignore_map_string, $demouserdata, $nextinputmode, $nextoutputmode, $fieldsmode;
+    $langkey = isset($user_fields[$posted['field']]['lang_key']) ? $user_fields[$posted['field']]['lang_key'] : '';
+    $fieldmaps = get_all_maps_for_field($posted['field']);
+    set_demouserdata();
+    $template->set_filenames(array(
+        'body' => 'admin/pcp_wiz_showfieldinfo.tpl')
+    );
+    $template->assign_vars(array(
+        'L_TITLE'                       => $wiznav.'&raquo; '.(isset($lang['Wiz_showfieldinfo']) ? $lang['Wiz_showfieldinfo'] : ''),
+        'L_TITLE_EXPLAIN'       => isset($lang['Wiz_showfieldinfo_description']) ? $lang['Wiz_showfieldinfo_description'] : '',
+        'HELP'                          => isset($lang['Wiz_showfieldinfo_explain']) ? $lang['Wiz_showfieldinfo_explain'] : '',
+        'L_FIELDNAME'               => isset($lang['PCP_field_name']) ? $lang['PCP_field_name'] : '',
+        'FIELDNAME'                 => '<a href="'.wizurl($fieldsmode,'field='.$posted['field']).'">'.$posted['field'].'</a>',
+        'L_DESCRIPTION'         => isset($lang['PCP_field_desc']) ? $lang['PCP_field_desc'] : '',
+        'DESCRIPTION'               => ( isset($lang[$langkey]) ? $lang[$langkey] : '' ),
+        'L_PAGES'                       => isset($lang['Pages']) ? $lang['Pages'] : '',
+        //'PAGES'                           => $pages,
+        )
+    );
+    foreach ($fieldmaps as $idx => $map)
+    {
+        // do not use the ignore...
+        if(substr($map,-strlen($ignore_map_string)) != $ignore_map_string){
+            if(is_input_map($map)){ 
+                $template->set_filenames(array(
+                    'input' => 'admin/pcp_wiz_inputexample.tpl')
+                );
+                $inputstyle = preview_input_field($user_fields[$posted['field']],$posted['field']);
+                $template->assign_var_from_handle('example', 'input');
+                $example = isset($template->vars['example']) ? $template->vars['example'] : '';
+                $nextmode = $nextinputmode;
+            } else {
+                $example = pcp_output($posted['field'], $demouserdata, $map);
+                $example = '<table>'.$example.'</table>'; // put it in a table to ensure the display is correct!
+                $nextmode = $nextoutputmode;
+            }
+            $example = correctimages($example);
+            $page = '<a href="'.wizurl($nextmode,"map=$map").'">'.get_map_title($map,2).'</a>'; 
+            $template->assign_block_vars('fieldinpages', array(
+                'page'                      => $page,
+                'example'                   => $example,)
+            );
+        }
+    }
+    $template->pparse('body');
 }
-
 function correctimages($text){
 	$text = str_replace('src="','src="../', $text); 
 	$text = str_replace("src = '","src='../", $text); 
@@ -606,18 +619,26 @@ function preview_input_field($field, $user_field){
 	global $demouserdata;
 	global $template, $board_config, $classes_fields, $lang, $values_list;
 	$input = '';
-	if ($field['values']){
-		$fieldvaluelist = $field['values'];
-		$field['values'] = array();
-		foreach ($values_list[$fieldvaluelist]['values'] as $key => $data)
-		{
-			$field['values'][$data['txt']] = $key;
-		}
+	if (isset($field['values']) && $field['values'])
+	{
+	    $fieldvaluelist = $field['values'];
+	    $field['values'] = array();
+	    if (isset($values_list[$fieldvaluelist]['values']) && is_array($values_list[$fieldvaluelist]['values']))
+	    {
+	        foreach ($values_list[$fieldvaluelist]['values'] as $key => $data)
+	        {
+	            if (isset($data['txt']))
+	            {
+	                $field['values'][$data['txt']] = $key;
+	            }
+	        }
+	    }
 	}
-	if(!$field['get_mode'] && !$field['get_func']){
-		$field['get_mode'] = $field['type'];
+	if(!isset($field['get_mode']) && !isset($field['get_func']))
+	{
+	    $field['get_mode'] = isset($field['type']) ? $field['type'] : '';
 	}
-	switch ($field['get_mode'])
+	switch (isset($field['get_mode']) ? $field['get_mode'] : null)
 	{
 		case 'LIST_RADIO':
 			foreach ($field['values'] as $key => $val)
@@ -657,23 +678,29 @@ function preview_input_field($field, $user_field){
 			$input = '<textarea rows="5" cols="45" wrap="virtual" name="' . $user_field . '" class="post">' . $demouserdata[$user_field] . '</textarea>';
 			break;
 		default:
-			$input = '';
-			if ( !empty($field['get_func']) && function_exists($field['get_func']) )
-			{
-				$input = $field['get_func']($user_field, $demouserdata[$user_field]);
-			}
+	        $input = '';
+	        if ( !empty($field['get_func']) && function_exists($field['get_func']) )
+	        {
+	            $input = $field['get_func']($user_field, isset($demouserdata[$user_field]) ? $demouserdata[$user_field] : null);
+	        }
 			break;
 	}
 	// show who can see the info depending on class
 	if (!empty($field['visibility'])){
-		if ($field['class'] != 'generic'){
-			$see_field = $classes_fields[$field['class']]['user_field'];
-			if($board_config[$see_field.'_over']){
+		if ($field['class'] != 'generic')
+		{
+			$see_field = isset($classes_fields[$field['class']]['user_field']) ? $classes_fields[$field['class']]['user_field'] : null;
+			if(array_key_exists($see_field.'_over', $board_config) && $board_config[$see_field.'_over'])
+			{
 				$viewed_by = $board_config[$see_field];
-			} else {
-				$viewed_by = $demouserdata[$see_field];
+			} 
+			else 
+			{
+				$viewed_by = isset($demouserdata[$see_field]) ? $demouserdata[$see_field] : '';
 			}
-		} else {
+		} 
+		else 
+		{
 			$viewed_by = YES;
 		}
 		switch ($viewed_by) {
@@ -804,10 +831,11 @@ function setMessage(){
 function outputlist(){
 	global $user_maps, $user_fields, $lang, $template;
 	global $output_maps, $wiznav, $nextmode, $posted, $demouserdata, $select_name, $submit_name, $goto_name, $fieldsmode;
-	if(empty($posted['map'])){
-		// set default map
-		get_output_maps();
-		$posted['map'] = $output_maps[0];
+	if(!isset($posted['map']) || empty($posted['map']))
+	{
+	    // set default map
+	    get_output_maps();
+	    $posted['map'] = $output_maps[0] ?? null;
 	}
 	set_demouserdata();
 	$template->set_filenames(array(
@@ -842,37 +870,42 @@ function outputlist(){
 		)
 	);
 	setMessage();
-	$map = $user_maps[$posted['map']]['fields'];
+    $map = isset($user_maps[$posted['map']]['fields']) ? $user_maps[$posted['map']]['fields'] : null;
 	$color = true;
-	foreach ($map as $fieldname =>$data)
+	foreach ((is_array($map) || is_object($map) ? $map : array()) as $fieldname => $data)
 	{
-		if(!empty($data['dsp_func'])){
-			$dspfunct = $data['dsp_func'];
-		} else $dspfunct = $user_fields[$fieldname]['dsp_func'];
-		$example = pcp_output($fieldname, $demouserdata, $posted['map']);
-		$example = correctimages($example);
-		$example = '<table>'.$example.'</table>'; // put it in a table to ensure the display is correct!
-		$color = !$color;
-		$template->assign_block_vars('fields', array(
-			'COLOR'						=> $color ? 'row1' : 'row2',
-			'name'						=> '<a href="'.wizurl($fieldsmode,'field='.$fieldname).'" onclick="return selectMap();">'.$fieldname.'</a>',
-			'explain'					=> $lang[$user_fields[$fieldname]['lang_key']],
-			'legendname' 			=> 'leg_'.$fieldname,
-			'legendchecked' 	=> !empty($data['leg'])?'checked':'',
-			'textname' 				=> 'txt_'.$fieldname,
-			'textchecked' 		=> !empty($data['txt'])?'checked':'',
-			'imagename' 			=> 'img_'.$fieldname,
-			'imagechecked' 		=> !empty($data['img'])?'checked':'',
-			'nextlinename' 		=> 'crlf_'.$fieldname,
-			'nextlinechecked' => !empty($data['crlf'])?'checked':'',
-			'spanname' 				=> 'style_'.$fieldname,
-			'spanvalue' 			=> ( isset($data['style']) ? $data['style'] : '' ) ,
-			'dspfunctname'		=> 'dsp_func_'.$fieldname,
-			'dspfunctoptions' => build_dspfunct_options($dspfunct),
-			'displayname'			=> 'class_'.$fieldname,
-			'displayoptions'	=> build_classes_options($user_fields[$fieldname]['class']),
-			'example'					=> $example,
-		));
+	    if(!empty($data['dsp_func']))
+	    {
+	        $dspfunct = $data['dsp_func'];
+	    } 
+	    else 
+	    {
+	        $dspfunct = isset($user_fields[$fieldname]['dsp_func']) ? $user_fields[$fieldname]['dsp_func'] : '';
+	    }
+	    $example = pcp_output($fieldname, $demouserdata, $posted['map']);
+	    $example = correctimages($example);
+	    $example = '<table>'.$example.'</table>'; // put it in a table to ensure the display is correct!
+	    $color = !isset($color) ? true : !$color;
+	    $template->assign_block_vars('fields', array(
+	        'COLOR'             => $color ? 'row1' : 'row2',
+	        'name'              => '<a href="'.wizurl($fieldsmode,'field='.$fieldname).'" onclick="return selectMap();">'.$fieldname.'</a>',
+	        'explain'           => isset($user_fields[$fieldname]['lang_key']) && isset($lang[$user_fields[$fieldname]['lang_key']]) ? $lang[$user_fields[$fieldname]['lang_key']] : '',
+	        'legendname'        => 'leg_'.$fieldname,
+	        'legendchecked'     => !empty($data['leg']) ? 'checked' : '',
+	        'textname'          => 'txt_'.$fieldname,
+	        'textchecked'       => !empty($data['txt']) ? 'checked' : '',
+	        'imagename'         => 'img_'.$fieldname,
+	        'imagechecked'      => !empty($data['img']) ? 'checked' : '',
+	        'nextlinename'      => 'crlf_'.$fieldname,
+	        'nextlinechecked'   => !empty($data['crlf']) ? 'checked' : '',
+	        'spanname'          => 'style_'.$fieldname,
+	        'spanvalue'         => isset($data['style']) ? $data['style'] : '',
+	        'dspfunctname'      => 'dsp_func_'.$fieldname,
+	        'dspfunctoptions'   => build_dspfunct_options($dspfunct),
+	        'displayname'       => 'class_'.$fieldname,
+	        'displayoptions'    => build_classes_options(isset($user_fields[$fieldname]['class']) ? $user_fields[$fieldname]['class'] : ''),
+	        'example'           => $example,
+	    ));
 	}
 	$template->pparse('body');
 }
@@ -885,7 +918,7 @@ function outputlistupdate(){
 	// CAUTION :: set orig_map to map...
 	$posted['map'] = $posted['orig_map'];
 	// get original fields...
-	$fields = array_keys($user_maps[$posted['map']]['fields']);
+	$fields = isset($user_maps[$posted['map']]['fields']) ? array_keys($user_maps[$posted['map']]['fields']) : array();
 	foreach ($fields as $idx =>$field)
 	{
 		// keep old values
@@ -893,12 +926,12 @@ function outputlistupdate(){
 		// destroy the field
 		$user_maps[$posted['map']]['fields'][$field] = array(); 
 		// reset old value
-		for($i=0; $i<count($keynotupdated); $i++){
-			$key = $keynotupdated[$i];
-			if(strlen($oldfield[$key])){
-				$user_maps[$posted['map']]['fields'][$field][$key] = $oldfield[$key];
-			}
-		}
+	    for ($i = 0; $i < count($keynotupdated); $i++) {
+	        $key = $keynotupdated[$i];
+	        if (isset($oldfield[$key]) && strlen($oldfield[$key])) {
+	            $user_maps[$posted['map']]['fields'][$field][$key] = $oldfield[$key];
+	        }
+	    }
 		$fieldparams = rebuild_array(array_filter(array_keys($posted),"is_param_of_field"));
 		foreach ($fieldparams as $x =>$paramname)
 		{
@@ -941,94 +974,103 @@ function is_param_of_field($var){
 function inputlist(){
 	global $user_maps, $user_fields, $lang, $template;
 	global $input_maps, $wiznav, $nextmode, $posted, $demouserdata, $select_name, $submit_name, $goto_name, $fieldsmode;
-	if(!$posted['map']){
-		// set default map
-		get_input_maps();
-		$posted['map'] = $input_maps[0];
+	if(!isset($posted['map']) || empty($posted['map']))
+	{
+	    // set default map
+	    get_input_maps();
+	    $posted['map'] = isset($input_maps[0]) ? $input_maps[0] : '';
 	}
 	set_demouserdata();
 	$template->set_filenames(array(
 		'body' => 'admin/pcp_wiz_inputlist.tpl')
 	);
 	$template->assign_vars(array(
-		'L_TITLE'						=> $wiznav.'&raquo; '.$lang['Wiz_inputlist'],
-		'L_TITLE_EXPLAIN'		=> $lang['Wiz_inputlist_description'],
-		'L_SELECT_MAP'			=> $lang['Select_page'],
-		'MAPSELECT_NAME'		=> 'map',
-		'MAPOPTIONS'				=> build_map_options(1,$posted['map']),
-		'HIDDEN_FIELDS'			=> '<input type="hidden" name="orig_map" value="'.$posted['map'].'">',
-		'L_SELECT'					=> $lang['Select'],
-		'SELECT_NAME'				=> $select_name,
-		'L_GOTO'						=> $lang['Wiz_addremovefields'],
-		'GOTO_NAME'					=> $goto_name,
-		'L_FIELD'						=> $lang['PCP_field_name_short'],
-		'L_TYPE'						=> $lang['PCP_field_type'],
-		'L_EXTRA'						=> $lang['Extra'],
-		'L_STYLE'						=> $lang['Tpl_style'],
-		'L_AUTH'						=> $lang['PCP_field_auth'],
-		'L_EXAMPLE'					=> $lang['Example'],
-		'S_ACTION'					=> wizurl($nextmode),
-		'HELP'							=> $lang['Wiz_inputlist_explain'],
-		'L_SUBMIT'					=> $lang['Submit'],
-		'SUBMIT_NAME'				=> $submit_name,
-		'CONFIRM_MESSAGE'		=> $lang['Confirm_message'],
-		'L_REQUIRED'				=> $lang['PCP_field_required'],
-		'L_VISIBILITY'			=> $lang['PCP_field_visibility'],
-		'L_GETFUNCT'				=> $lang['PCP_field_get_func'],
-		'L_CHECKFUNCT'			=> $lang['PCP_field_chk_func'],
-		'L_VALUES'					=> $lang['PCP_field_values_list'],
+		'L_TITLE'               => $wiznav.'&raquo; '.(isset($lang['Wiz_inputlist']) ? $lang['Wiz_inputlist'] : ''),
+		'L_TITLE_EXPLAIN'       => isset($lang['Wiz_inputlist_description']) ? $lang['Wiz_inputlist_description'] : '',
+		'L_SELECT_MAP'          => isset($lang['Select_page']) ? $lang['Select_page'] : '',
+		'MAPSELECT_NAME'        => 'map',
+		'MAPOPTIONS'            => build_map_options(1, isset($posted['map']) ? $posted['map'] : ''),
+		'HIDDEN_FIELDS'         => '<input type="hidden" name="orig_map" value="'.(isset($posted['map']) ? $posted['map'] : '').'">',
+		'L_SELECT'              => isset($lang['Select']) ? $lang['Select'] : '',
+		'SELECT_NAME'           => isset($select_name) ? $select_name : '',
+		'L_GOTO'                => isset($lang['Wiz_addremovefields']) ? $lang['Wiz_addremovefields'] : '',
+		'GOTO_NAME'             => isset($goto_name) ? $goto_name : '',
+		'L_FIELD'               => isset($lang['PCP_field_name_short']) ? $lang['PCP_field_name_short'] : '',
+		'L_TYPE'                => isset($lang['PCP_field_type']) ? $lang['PCP_field_type'] : '',
+		'L_EXTRA'               => isset($lang['Extra']) ? $lang['Extra'] : '',
+		'L_STYLE'               => isset($lang['Tpl_style']) ? $lang['Tpl_style'] : '',
+		'L_AUTH'                => isset($lang['PCP_field_auth']) ? $lang['PCP_field_auth'] : '',
+		'L_EXAMPLE'             => isset($lang['Example']) ? $lang['Example'] : '',
+		'S_ACTION'              => wizurl(isset($nextmode) ? $nextmode : ''),
+		'HELP'                  => isset($lang['Wiz_inputlist_explain']) ? $lang['Wiz_inputlist_explain'] : '',
+		'L_SUBMIT'              => isset($lang['Submit']) ? $lang['Submit'] : '',
+		'SUBMIT_NAME'           => isset($submit_name) ? $submit_name : '',
+		'CONFIRM_MESSAGE'       => isset($lang['Confirm_message']) ? $lang['Confirm_message'] : '',
+		'L_REQUIRED'            => isset($lang['PCP_field_required']) ? $lang['PCP_field_required'] : '',
+		'L_VISIBILITY'          => isset($lang['PCP_field_visibility']) ? $lang['PCP_field_visibility'] : '',
+		'L_GETFUNCT'            => isset($lang['PCP_field_get_func']) ? $lang['PCP_field_get_func'] : '',
+		'L_CHECKFUNCT'          => isset($lang['PCP_field_chk_func']) ? $lang['PCP_field_chk_func'] : '',
+		'L_VALUES'              => isset($lang['PCP_field_values_list']) ? $lang['PCP_field_values_list'] : '',
 		)
 	);
 	setMessage();
 	$map = $user_maps[$posted['map']]['fields'];
 	$template->set_filenames(array(
-					'input' => 'admin/pcp_wiz_inputexample.tpl'));
+		'input' => 'admin/pcp_wiz_inputexample.tpl'
+		));
+		
+	$color = false;
 	foreach ($map as $fieldname =>$data)
 	{
 		$inputstyle = preview_input_field($user_fields[$fieldname],$fieldname);
 		$template->assign_var_from_handle('example', 'input');
 		$color = !$color;
 		// only get_mode when its different then type!
-		if($user_fields[$fieldname]['get_mode']){
+		if (isset($user_fields[$fieldname]) && isset($user_fields[$fieldname]['get_mode']) && $user_fields[$fieldname]['get_mode'])
+		{
 			$getmode = $user_fields[$fieldname]['get_mode'];
-		} elseif (strlen($user_fields[$fieldname]['get_func']) || strlen($user_fields[$fieldname]['chk_func'])){
-			$getmode = 'funct';	
-		} else {
+		} 
+		elseif (!empty($user_fields[$fieldname]['get_func']) || !empty($user_fields[$fieldname]['chk_func']))
+		{
+			$getmode = 'funct';    
+		} 
+		else 
+		{
 			$getmode = '';
 		}
-		$template->assign_block_vars('fields', array(
-			'COLOR'							=> $color ? 'row1' : 'row2',
-			'namelink'					=> '<a href="'.wizurl($fieldsmode,'field='.$fieldname).'" onclick="return selectMap();">'.$fieldname.'</a>',
-			'name'							=> $fieldname,
-			'explain'						=> $lang[$user_fields[$fieldname]['lang_key']],
-			'requiredname' 			=> 'required_'.$fieldname,
-			'requiredchecked'		=> ($user_fields[$fieldname]['required'])?'checked':'',
-			'visibilityname' 		=> 'visibility_'.$fieldname,
-			'visibilitychecked' => ($user_fields[$fieldname]['visibility'])?'checked':'',
-			'get_modename'			=> 'get_mode_'.$fieldname,
-			'textmodechecked' 	=> ($getmode == '')?'checked':'',
-			'textmodevalue'			=> 'TEXT',
-			'L_TEXTMODE'				=> $lang['Textmode'],
-			'dropmodechecked' 	=> ($getmode == 'LIST_DROP')?'checked':'',
-			'dropmodevalue'  		=> 'LIST_DROP',
-			'L_DROPMODE'				=> $lang['Dropmode'],
-			'radiomodechecked' 	=> ($getmode == 'LIST_RADIO')?'checked':'',
-			'radiomodevalue'  	=> 'LIST_RADIO',
-			'L_RADIOMODE'				=> $lang['Radiomode'],
-			'functmodechecked' 	=> ($getmode == 'funct')?'checked':'',
-			'functmodevalue'  	=> 'FUNCT',
-			'L_FUNCTMODE'				=> $lang['Functmode'],
-			'getfuncname' 			=> 'get_func_'.$fieldname,
-			'getfuncoptions'		=> build_getfunct_options($user_fields[$fieldname]['get_func']),
-			'chkfuncname' 			=> 'chk_func_'.$fieldname,
-			'chkfuncoptions' 		=>  build_chkfunct_options($user_fields[$fieldname]['chk_func']),
-			'valuesname'				=> 'values_'.$fieldname,
-			'valuesoptions' 		=> build_values_options($user_fields[$fieldname]['values']),
-			'inputstylename' 		=> 'inputstyle_'.$fieldname,
-			'inputstylevalue' 	=> $user_fields[$fieldname]['inputstyle'],
-			'authname'					=> 'auth_'.$fieldname,
-			'authoptions' 			=> build_auth_options($user_fields[$fieldname]['auth']),
-		));
+	    $template->assign_block_vars('fields', array(
+	        'COLOR'             => $color ? 'row1' : 'row2',
+	        'namelink'          => '<a href="'.wizurl($fieldsmode,'field='.$fieldname).'" onclick="return selectMap();">'.$fieldname.'</a>',
+	        'name'              => $fieldname,
+	        'explain'           => isset($lang[$user_fields[$fieldname]['lang_key']]) ? $lang[$user_fields[$fieldname]['lang_key']] : '',
+	        'requiredname'      => 'required_'.$fieldname,
+	        'requiredchecked'   => (isset($user_fields[$fieldname]['required']) && $user_fields[$fieldname]['required']) ? 'checked' : '',
+	        'visibilityname'    => 'visibility_'.$fieldname,
+	        'visibilitychecked' => (isset($user_fields[$fieldname]['visibility']) && $user_fields[$fieldname]['visibility']) ? 'checked' : '',
+	        'get_modename'      => 'get_mode_'.$fieldname,
+	        'textmodechecked'   => ($getmode == '') ? 'checked' : '',
+	        'textmodevalue'     => 'TEXT',
+	        'L_TEXTMODE'        => isset($lang['Textmode']) ? $lang['Textmode'] : '',
+	        'dropmodechecked'   => ($getmode == 'LIST_DROP') ? 'checked' : '',
+	        'dropmodevalue'     => 'LIST_DROP',
+	        'L_DROPMODE'        => isset($lang['Dropmode']) ? $lang['Dropmode'] : '',
+	        'radiomodechecked'  => ($getmode == 'LIST_RADIO') ? 'checked' : '',
+	        'radiomodevalue'    => 'LIST_RADIO',
+	        'L_RADIOMODE'       => isset($lang['Radiomode']) ? $lang['Radiomode'] : '',
+	        'functmodechecked'  => ($getmode == 'funct') ? 'checked' : '',
+	        'functmodevalue'    => 'FUNCT',
+	        'L_FUNCTMODE'       => isset($lang['Functmode']) ? $lang['Functmode'] : '',
+	        'getfuncname'       => 'get_func_'.$fieldname,
+	        'getfuncoptions'    => build_getfunct_options(isset($user_fields[$fieldname]['get_func']) ? $user_fields[$fieldname]['get_func'] : ''),
+	        'chkfuncname'       => 'chk_func_'.$fieldname,
+	        'chkfuncoptions'    => build_chkfunct_options(isset($user_fields[$fieldname]['chk_func']) ? $user_fields[$fieldname]['chk_func'] : ''),
+	        'valuesname'        => 'values_'.$fieldname,
+	        'valuesoptions'     => build_values_options(isset($user_fields[$fieldname]['values']) ? $user_fields[$fieldname]['values'] : ''),
+	        'inputstylename'    => 'inputstyle_'.$fieldname,
+	        'inputstylevalue'   => isset($user_fields[$fieldname]['inputstyle']) ? $user_fields[$fieldname]['inputstyle'] : '',
+	        'authname'          => 'auth_'.$fieldname,
+	        'authoptions'       => build_auth_options(isset($user_fields[$fieldname]['auth']) ? $user_fields[$fieldname]['auth'] : ''),
+	    ));
 	}
 	$example = $template->vars['example'];
 	$example = correctimages($example);
@@ -1036,7 +1078,9 @@ function inputlist(){
 	$template->pparse('body');
 }
 
-function build_getfunct_options($selected=''){
+function build_getfunct_options($selected='')
+{
+	global $options;
 	$arrFuncs = get_defined_functions();
 	$arrFuncs = array_filter($arrFuncs['user'],"is_get_function");
 	sort($arrFuncs); // sort for easy finding
@@ -1047,7 +1091,8 @@ function build_getfunct_options($selected=''){
 	return $options; 
 }
 
-function is_get_function($var){
+function is_get_function($var)
+{
 	global $getfunction;
 	foreach ($getfunction as $idx =>$funct)
 	{
@@ -1056,7 +1101,9 @@ function is_get_function($var){
 	return 0;
 }
 
-function build_chkfunct_options($selected=''){
+function build_chkfunct_options($selected='')
+{
+	global $options;
 	$arrFuncs = get_defined_functions();
 	$arrFuncs = array_filter($arrFuncs['user'],"is_check_function");
 	sort($arrFuncs); // sort for easy finding
@@ -1077,7 +1124,7 @@ function is_check_function($var){
 }
 
 function build_auth_options($selected=''){
-	global $auth_list;
+	global $auth_list, $options;
 	foreach ($auth_list as $auth_level => $auth_name)
 	{
 		$options .= '<option value="'.$auth_level.'"'.(($selected == $auth_level)?'selected':'').'>'.pcp_format_lang('Auth_' . $auth_name).'</option>';
@@ -1086,7 +1133,7 @@ function build_auth_options($selected=''){
 }
 
 function build_values_options($selected=''){
-	global $values_list;
+	global $values_list, $options;
 	foreach ($values_list as $values_list_name => $values_list_data)
 	{
 		$options .= '<option value="'.$values_list_name.'"'.(($selected == $values_list_name)?'selected':'').'>'.pcp_format_lang($values_list_name).'</option>';
@@ -1272,6 +1319,7 @@ function validate($autocorrect=false){
 		'L_MOVE'						=> $lang['Move2map'],
 	));
 	$template->assign_block_vars('type.page', array());
+	$color = false;
 	foreach ($user_fields as $field => $data)
 	{
 		$color = !$color;
@@ -1489,6 +1537,7 @@ function fieldimport(){
 		)
 	);
 	setMessage();
+	$color = false;
 	foreach ($fieldimports as $idx =>$fieldimport)
 	{
 		$color = !$color;
@@ -1602,9 +1651,10 @@ function pageimport(){
 		)
 	);
 	setMessage();
+	$color = false;	
 	foreach ($pageimports as $idx =>$pageimport)
 	{
-		$color = !$color;
+		$color = !(isset($color) ? $color : false);
 		$template->assign_block_vars('type', array(
 			'COLOR'						=> $color ? 'row1' : 'row2',
 			'title'						=> $lang['Type_'.$pageimport.'_title'],
