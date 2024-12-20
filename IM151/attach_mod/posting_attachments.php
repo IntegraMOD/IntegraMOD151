@@ -32,22 +32,28 @@ if ( !defined('IN_PHPBB') )
 class attach_parent
 {
 
-	var $post_attach = FALSE;
-	var $attach_filename = '';
-	var $filename = '';
-	var $type = '';
-	var $extension = '';
-	var $file_comment = '';
-	var $num_attachments = 0; // number of attachments in message
-	var $filesize = 0;
-	var $filetime = 0;
-	var $thumbnail = 0;
-	var $page = 0; // On which page we are on ? This should be filled by child classes.
-
-	// Switches
-	var $add_attachment_body = 0;
-	var $posted_attachments_body = 0;
-
+	protected $post_attach = FALSE;
+	protected $add_attachment_body = 0;
+	protected $posted_attachments_body = 0;
+	protected $file_comment = '';
+	protected $filename = '';
+	protected $attach_filename = '';
+	protected $type = '';
+	protected $extension = '';
+	protected $num_attachments = 0; // number of attachments in message
+	protected $filesize = 0;
+	protected $filetime = 0;
+	protected $thumbnail = 0;
+	protected $page = 0; // On which page we are on ? This should be filled by child classes.
+	protected $attachment_list = [];
+	protected $attachment_comment_list = [];
+    protected $attachment_filename_list = [];
+    protected $attachment_extension_list = [];
+    protected $attachment_mimetype_list = [];
+    protected $attachment_filesize_list = [];
+    protected $attachment_filetime_list = [];
+    protected $attachment_id_list = [];
+    protected $attachment_thumbnail_list = [];
 	//
 	// Constructor
 	//
@@ -1679,5 +1685,3 @@ function execute_posting_attachment_handling()
 	$attachment_mod['posting'] = new attach_posting();
 	$attachment_mod['posting']->posting_attachment_mod();
 }
-
-?>

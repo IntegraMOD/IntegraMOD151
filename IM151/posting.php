@@ -2666,12 +2666,13 @@ if( ( $mode == 'newtopic' || ( $mode == 'editpost' && $post_data['edit_poll']) )
 		'L_POLL_LENGTH_EXPLAIN' => $lang['Poll_for_explain'], 
 		'L_POLL_DELETE' => $lang['Delete_poll'],
 		
-		'POLL_TITLE' => $poll_title,
-		'HIDE_VOTE' => ( $hide_vote ) ? 'checked="checked"' : '',
-		'TOTHIDE_VOTE' => ( $tothide_vote ) ? 'checked="checked"' : '',
-		'POLL_LENGTH_H' => isset($poll_length_h) ? $poll_length_h : 0,
-		'MAX_VOTE' => $max_vote,
-		'POLL_LENGTH' => $poll_length)
+	    'POLL_TITLE' => isset($poll_title) ? $poll_title : '',
+	    'HIDE_VOTE' => (!empty($hide_vote)) ? 'checked="checked"' : '',
+	    'TOTHIDE_VOTE' => (!empty($tothide_vote)) ? 'checked="checked"' : '',
+	    'POLL_LENGTH_H' => isset($poll_length_h) ? $poll_length_h : 0,
+	    'MAX_VOTE' => isset($max_vote) ? $max_vote : 0,
+	    'POLL_LENGTH' => isset($poll_length) ? $poll_length : 0
+		)
 	);
 
 	if( $mode == 'editpost' && $post_data['edit_poll'] && $post_data['has_poll'])
