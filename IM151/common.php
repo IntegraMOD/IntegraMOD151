@@ -31,10 +31,10 @@ $mtime = explode(" ",$mtime);
 $mtime = $mtime[1] + $mtime[0];
 $starttime = $mtime;
 
-ini_set('display_startup_errors',0); 
-ini_set('display_errors',0);
-error_reporting(-0);
-//error_reporting (E_ERROR | E_WARNING | E_PARSE); // This will NOT report uninitialized variables
+//ini_set('display_startup_errors',1); 
+//ini_set('display_errors',1);
+//error_reporting (E_ALL); // This report all errors
+error_reporting  (E_ERROR | E_WARNING | E_PARSE); // This will NOT report uninitialized variables
 
 //if (function_exists('set_magic_quotes_runtime'))
 //{
