@@ -18,7 +18,7 @@ if ( !defined('IN_PHPBB') )
 
 // CONSTANTS - BEGIN
 define('IN_CONTACT_LIST', true);
-define('CURRENT_LANG_PATH', $phpbb_root_path . 'language/lang_' . $board_config['default_lang'] . '/');
+//define('CURRENT_LANG_PATH', $phpbb_root_path . 'language/lang_' . $board_config['default_lang'] . '/');
 // CONSTANTS - END
 
 
