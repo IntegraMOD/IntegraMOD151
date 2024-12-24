@@ -598,43 +598,44 @@ function bbencode_second_pass($text, $uid)
 	$text = preg_replace($patterns, $replacements, $text);
 
 	// [align=left/center/right/justify]Formatted Code[/align] code..
-	$text = preg_replace("/\[align=(left|right|center|justify):$uid\]/si", $bbcode_tpl['align_open'], $text);
-	$text = str_replace("[/align:$uid]", $bbcode_tpl['align_close'], $text);
-
-	 // [marquee=left/right/up/down]Marquee Code[/marquee] code..
-	$text = preg_replace("/\[marq=(left|right|up|down):$uid\]/si", $bbcode_tpl['marq_open'], $text);
-	$text = str_replace("[/marq:$uid]", $bbcode_tpl['marq_close'], $text);
-
+	$text = preg_replace("/\[align=(left|right|center|justify):$uid\]/si", isset($bbcode_tpl['align_open']) ? $bbcode_tpl['align_open'] : '', $text);
+	$text = str_replace("[/align:$uid]", isset($bbcode_tpl['align_close']) ? $bbcode_tpl['align_close'] : '', $text);
+	 
+	// [marquee=left/right/up/down]Marquee Code[/marquee] code..
+	$text = preg_replace("/\[marq=(left|right|up|down):$uid\]/si", isset($bbcode_tpl['marq_open']) ? $bbcode_tpl['marq_open'] : '', $text);
+	$text = str_replace("[/marq:$uid]", isset($bbcode_tpl['marq_close']) ? $bbcode_tpl['marq_close'] : '', $text);
+	 
 	// [table=blah]Table[/table] code..
-	$text = preg_replace("/\[table=(.*?):$uid\]/si", $bbcode_tpl['table_open'], $text);
-	$text = str_replace("[/table:$uid]", $bbcode_tpl['table_close'], $text);
-
+	$text = preg_replace("/\[table=(.*?):$uid\]/si", isset($bbcode_tpl['table_open']) ? $bbcode_tpl['table_open'] : '', $text);
+	$text = str_replace("[/table:$uid]", isset($bbcode_tpl['table_close']) ? $bbcode_tpl['table_close'] : '', $text);
+	 
 	// [cell=blah]Cell[/table] code..
-	$text = preg_replace("/\[cell=(.*?):$uid\]/si", $bbcode_tpl['cell_open'], $text);
-	$text = str_replace("[/cell:$uid]", $bbcode_tpl['cell_close'], $text);
-
+	$text = preg_replace("/\[cell=(.*?):$uid\]/si", isset($bbcode_tpl['cell_open']) ? $bbcode_tpl['cell_open'] : '', $text);
+	$text = str_replace("[/cell:$uid]", isset($bbcode_tpl['cell_close']) ? $bbcode_tpl['cell_close'] : '', $text);
+	 
 	// [font=fonttype]text[/font] code..
-	$text = preg_replace("/\[font=(.*?):$uid\]/si", $bbcode_tpl['font_open'], $text);
-	$text = str_replace("[/font:$uid]", $bbcode_tpl['font_close'], $text);
-
+	$text = preg_replace("/\[font=(.*?):$uid\]/si", isset($bbcode_tpl['font_open']) ? $bbcode_tpl['font_open'] : '', $text);
+	$text = str_replace("[/font:$uid]", isset($bbcode_tpl['font_close']) ? $bbcode_tpl['font_close'] : '', $text);
+	 
 	// [hr]
-	$text = str_replace("[hr:$uid]", $bbcode_tpl['hr'], $text);
-
+	$text = str_replace("[hr:$uid]", isset($bbcode_tpl['hr']) ? $bbcode_tpl['hr'] : '', $text);
+	 
 	// [sub]Subscrip[/sub] code..
 	$text = str_replace("[sub:$uid]", '<sub>', $text);
 	$text = str_replace("[/sub:$uid]", '</sub>', $text);
-
+	 
 	// [sup]Superscript[/sup] code..
 	$text = str_replace("[sup:$uid]", '<sup>', $text);
 	$text = str_replace("[/sup:$uid]", '</sup>', $text);
-
+	 
 	// [strike]Strikethrough[/strike] code..
 	$text = str_replace("[s:$uid]", '<strike>', $text);
 	$text = str_replace("[/s:$uid]", '</strike>', $text);
-
+	 
 	// [spoil]Spoiler[/spoil] code..
-	$text = str_replace("[spoil:$uid]", $bbcode_tpl['spoil_open'], $text);
-	$text = str_replace("[/spoil:$uid]", $bbcode_tpl['spoil_close'], $text);
+	$text = str_replace("[spoil:$uid]", isset($bbcode_tpl['spoil_open']) ? $bbcode_tpl['spoil_open'] : '', $text);
+	$text = str_replace("[/spoil:$uid]", isset($bbcode_tpl['spoil_close']) ? $bbcode_tpl['spoil_close'] : '', $text);
+	
 //====
 //==== Author: Disturbed One [http://hvmdesign.com] =================== |
 //==== End Advanced BBCode Box MOD ==================================== |
