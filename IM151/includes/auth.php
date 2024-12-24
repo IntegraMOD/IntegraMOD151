@@ -450,7 +450,7 @@ function auth_check_user($type, $key, $u_access, $is_admin)
 			switch($type)
 			{
 				case AUTH_ACL:
-					$result = $u_access[$j][$key];
+					$result = isset($u_access[$j][$key]) ? $u_access[$j][$key] : null;
 
 				case AUTH_MOD:
 					// V: this is probably hiding an auth bug earlier

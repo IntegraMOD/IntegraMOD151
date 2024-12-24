@@ -35,6 +35,7 @@ include($phpbb_root_path . 'common.'.$phpEx);
 //
 // Start session management
 //
+$forum_id = isset($_GET['forum_id']) ? $_GET['forum_id'] : 0;
 $userdata = session_pagestart($user_ip, $forum_id);
 init_userprefs($userdata);
 //
@@ -75,7 +76,7 @@ else
 	$topic_id = '';
 }
 
-$confirm = ( $_POST['confirm'] ) ? TRUE : 0;
+$confirm = isset($_POST['confirm']) ? TRUE : 0;
 //-- mod : categories hierarchy --------------------------------------------------------------------
 //-- add
 if (isset($_GET['selected_id']) || isset($_POST['selected_id']))
@@ -205,7 +206,7 @@ else if ( !empty($forum_id) )
 //-- delete
 //	$forum_name = $topic_row['forum_name'];
 //-- add
-	$forum_name = get_object_lang(POST_FORUM_URL . $topic_row['forum_id'], 'name');
+    $forum_name = get_object_lang(POST_FORUM_URL . (isset($topic_row['forum_id']) ? $topic_row['forum_id'] : ''), 'name');
 //-- fin mod : categories hierarchy ----------------------------------------------------------------
 }
 else

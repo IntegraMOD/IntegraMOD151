@@ -89,8 +89,8 @@ function get_object_lang($cur, $field, $all=false)
 	}
 	else
 	{
-		$this_key	= $tree['keys'][$cur];
-		$type	= $tree['type'][$this_key];
+		$this_key    = isset($tree['keys'][$cur]) ? $tree['keys'][$cur] : null;
+		$type = isset($tree['type'][$this_key]) ? $tree['type'][$this_key] : null;
 		switch($field)
 		{
 			case 'name':
@@ -100,7 +100,7 @@ function get_object_lang($cur, $field, $all=false)
 				$field = ($type == POST_CAT_URL) ? 'cat_desc' : 'forum_desc';
 				break;
 		}
-		$res = ($tree['auth'][$cur]['auth_view'] || $all) ? $tree['data'][$this_key][$field] : '';
+		$res = (isset($tree['auth'][$cur]['auth_view']) && $tree['auth'][$cur]['auth_view'] || $all) ? (isset($tree['data'][$this_key][$field]) ? $tree['data'][$this_key][$field] : '') : '';
 		if (isset($lang[$res])) $res = $lang[$res];
 	}
 	return $res;

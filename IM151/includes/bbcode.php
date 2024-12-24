@@ -69,68 +69,67 @@ function prepare_bbcode_template($bbcode_tpl)
 {
 	global $lang, $current_template_path;
 
-	$bbcode_tpl['olist_open'] = str_replace('{LIST_TYPE}', '\\1', $bbcode_tpl['olist_open']);
-
-	$bbcode_tpl['color_open'] = str_replace('{COLOR}', '\\1', $bbcode_tpl['color_open']);
-
-	$bbcode_tpl['size_open'] = str_replace('{SIZE}', '\\1', $bbcode_tpl['size_open']);
-
-	$bbcode_tpl['quote_open'] = str_replace('{L_QUOTE}', $lang['Quote'], $bbcode_tpl['quote_open']);
-
-	$bbcode_tpl['quote_username_open'] = str_replace('{L_QUOTE}', $lang['Quote'], $bbcode_tpl['quote_username_open']);
-	$bbcode_tpl['quote_username_open'] = str_replace('{L_WROTE}', $lang['wrote'], $bbcode_tpl['quote_username_open']);
+	$bbcode_tpl['olist_open'] = str_replace('{LIST_TYPE}', '\\1', isset($bbcode_tpl['olist_open']) ? $bbcode_tpl['olist_open'] : '');
+	 
+	$bbcode_tpl['color_open'] = str_replace('{COLOR}', '\\1', isset($bbcode_tpl['color_open']) ? $bbcode_tpl['color_open'] : '');
+	 
+	$bbcode_tpl['size_open'] = str_replace('{SIZE}', '\\1', isset($bbcode_tpl['size_open']) ? $bbcode_tpl['size_open'] : '');
+	 
+	$bbcode_tpl['quote_open'] = str_replace('{L_QUOTE}', isset($lang['Quote']) ? $lang['Quote'] : 'Quote', isset($bbcode_tpl['quote_open']) ? $bbcode_tpl['quote_open'] : '');
+	 
+	$bbcode_tpl['quote_username_open'] = str_replace('{L_QUOTE}', isset($lang['Quote']) ? $lang['Quote'] : 'Quote', isset($bbcode_tpl['quote_username_open']) ? $bbcode_tpl['quote_username_open'] : '');
+	$bbcode_tpl['quote_username_open'] = str_replace('{L_WROTE}', isset($lang['wrote']) ? $lang['wrote'] : 'wrote', $bbcode_tpl['quote_username_open']);
 	$bbcode_tpl['quote_username_open'] = str_replace('{USERNAME}', '\\1', $bbcode_tpl['quote_username_open']);
-
-	$bbcode_tpl['quote_post_open'] = str_replace('{L_QUOTE}', $lang['Quote'], $bbcode_tpl['quote_post_open']);
+	 
+	$bbcode_tpl['quote_post_open'] = str_replace('{L_QUOTE}', isset($lang['Quote']) ? $lang['Quote'] : 'Quote', isset($bbcode_tpl['quote_post_open']) ? $bbcode_tpl['quote_post_open'] : '');
 	$temp_url = append_sid('show_post.php?p=\\1');
-	$bbcode_tpl['quote_post_open'] = str_replace('{U_VIEW_POST}', '<a href="#_somewhat" onClick="javascript:open_postreview( \'' . $temp_url . '\' );" class="genmed">' . $lang['View_post'] . '</a>', $bbcode_tpl['quote_post_open']);
-
-	$bbcode_tpl['quote_username_post_open'] = str_replace('{L_QUOTE}', $lang['Quote'], $bbcode_tpl['quote_username_post_open']);
-	$bbcode_tpl['quote_username_post_open'] = str_replace('{L_WROTE}', $lang['wrote'], $bbcode_tpl['quote_username_post_open']);
-	$bbcode_tpl['quote_username_post_open'] = str_replace('{USERNAME}', '\\1', $bbcode_tpl['quote_username_post_open']);
+	$bbcode_tpl['quote_post_open'] = str_replace('{U_VIEW_POST}', '<a href="#_somewhat" onClick="javascript:open_postreview( \'' . $temp_url . '\' );" class="genmed">' . (isset($lang['View_post']) ? $lang['View_post'] : 'View post') . '</a>', isset($bbcode_tpl['quote_post_open']) ? $bbcode_tpl['quote_post_open'] : '');
+	$bbcode_tpl['quote_username_post_open'] = str_replace('{L_QUOTE}', isset($lang['Quote']) ? $lang['Quote'] : 'Quote', isset($bbcode_tpl['quote_username_post_open']) ? $bbcode_tpl['quote_username_post_open'] : '');
+	$bbcode_tpl['quote_username_post_open'] = str_replace('{L_WROTE}', isset($lang['wrote']) ? $lang['wrote'] : 'wrote', isset($bbcode_tpl['quote_username_post_open']) ? $bbcode_tpl['quote_username_post_open'] : '');
+	$bbcode_tpl['quote_username_post_open'] = str_replace('{USERNAME}', '\\1', isset($bbcode_tpl['quote_username_post_open']) ? $bbcode_tpl['quote_username_post_open'] : '');
 	$temp_url = append_sid('show_post.php?p=\\2');
-	$bbcode_tpl['quote_username_post_open'] = str_replace('{U_VIEW_POST}', '<a href="#_somewhat" onClick="javascript:open_postreview( \'' . $temp_url . '\' );" class="genmed">' . $lang['View_post'] . '</a>', $bbcode_tpl['quote_username_post_open']);
-
-	$bbcode_tpl['code_open'] = str_replace('{L_CODE}', $lang['Code'], $bbcode_tpl['code_open']);
-	$bbcode_tpl['php_open'] = str_replace('{L_PHP}', $lang['PHPCode'], $bbcode_tpl['php_open']); // PHP MOD
-
-	$bbcode_tpl['img'] = str_replace('{URL}', '\\1', get_image_tag_replacement($bbcode_tpl));
-	$bbcode_tpl['imgrel'] = str_replace('{URL}', '\\1', $bbcode_tpl['imgrel']);
-	$bbcode_tpl['theme'] =  str_replace('{URL}', $current_template_path . '/\\1', $bbcode_tpl['theme']);
-
+	$bbcode_tpl['quote_username_post_open'] = str_replace('{U_VIEW_POST}', '<a href="#_somewhat" onClick="javascript:open_postreview( \'' . $temp_url . '\' );" class="genmed">' . (isset($lang['View_post']) ? $lang['View_post'] : 'View post') . '</a>', isset($bbcode_tpl['quote_username_post_open']) ? $bbcode_tpl['quote_username_post_open'] : '');
+	 
+	$bbcode_tpl['code_open'] = str_replace('{L_CODE}', isset($lang['Code']) ? $lang['Code'] : 'Code', isset($bbcode_tpl['code_open']) ? $bbcode_tpl['code_open'] : '');
+	$bbcode_tpl['php_open'] = str_replace('{L_PHP}', isset($lang['PHPCode']) ? $lang['PHPCode'] : 'PHP Code', isset($bbcode_tpl['php_open']) ? $bbcode_tpl['php_open'] : ''); // PHP MOD
+	 
+	$bbcode_tpl['img'] = str_replace('{URL}', '\\1', get_image_tag_replacement(isset($bbcode_tpl['img']) ? $bbcode_tpl['img'] : ''));
+	$bbcode_tpl['imgrel'] = str_replace('{URL}', '\\1', isset($bbcode_tpl['imgrel']) ? $bbcode_tpl['imgrel'] : '');
+	$bbcode_tpl['theme'] =  str_replace('{URL}', $current_template_path . '/\\1', isset($bbcode_tpl['theme']) ? $bbcode_tpl['theme'] : '');
+	 
 	//BBCode Search Mod
-	$bbcode_tpl['search'] = str_replace('{KEYWORD}', '\\1', $bbcode_tpl['search']);
-
-// LEFT-RIGHT-start
-	$bbcode_tpl['left'] = str_replace('{URL}', '\\1', $bbcode_tpl['left']);
-	$bbcode_tpl['right'] = str_replace('{URL}', '\\1', $bbcode_tpl['right']);
-	$bbcode_tpl['center'] = str_replace('{URL}', '\\1', $bbcode_tpl['center']);
-	$bbcode_tpl['themeleft'] = str_replace('{URL}', $current_template_path . '/\\1', $bbcode_tpl['themeleft']);
-	$bbcode_tpl['themeright'] = str_replace('{URL}', $current_template_path . '/\\1', $bbcode_tpl['themeright']);
-	$bbcode_tpl['relleft'] = str_replace('{URL}', '\\1', $bbcode_tpl['relleft']);
-	$bbcode_tpl['relright'] = str_replace('{URL}', '\\1', $bbcode_tpl['relright']);
-// LEFT-RIGHT-end
+	$bbcode_tpl['search'] = str_replace('{KEYWORD}', '\\1', isset($bbcode_tpl['search']) ? $bbcode_tpl['search'] : '');
+	 
+	// LEFT-RIGHT-start
+	$bbcode_tpl['left'] = str_replace('{URL}', '\\1', isset($bbcode_tpl['left']) ? $bbcode_tpl['left'] : '');
+	$bbcode_tpl['right'] = str_replace('{URL}', '\\1', isset($bbcode_tpl['right']) ? $bbcode_tpl['right'] : '');
+	$bbcode_tpl['center'] = str_replace('{URL}', '\\1', isset($bbcode_tpl['center']) ? $bbcode_tpl['center'] : '');
+	$bbcode_tpl['themeleft'] = str_replace('{URL}', $current_template_path . '/\\1', isset($bbcode_tpl['themeleft']) ? $bbcode_tpl['themeleft'] : '');
+	$bbcode_tpl['themeright'] = str_replace('{URL}', $current_template_path . '/\\1', isset($bbcode_tpl['themeright']) ? $bbcode_tpl['themeright'] : '');
+	$bbcode_tpl['relleft'] = str_replace('{URL}', '\\1', isset($bbcode_tpl['relleft']) ? $bbcode_tpl['relleft'] : '');
+	$bbcode_tpl['relright'] = str_replace('{URL}', '\\1', isset($bbcode_tpl['relright']) ? $bbcode_tpl['relright'] : '');
+	// LEFT-RIGHT-end
 
 	// We do URLs in several different ways..
-	$bbcode_tpl['url1'] = str_replace('{URL}', '\\1', $bbcode_tpl['url']);
+	$bbcode_tpl['url1'] = isset($bbcode_tpl['url']) ? str_replace('{URL}', '\\1', $bbcode_tpl['url']) : '';
 	$bbcode_tpl['url1'] = str_replace('{DESCRIPTION}', '\\1', $bbcode_tpl['url1']);
-
-	$bbcode_tpl['url2'] = str_replace('{URL}', 'http://\\1', $bbcode_tpl['url']);
+	 
+	$bbcode_tpl['url2'] = isset($bbcode_tpl['url']) ? str_replace('{URL}', 'http://\\1', $bbcode_tpl['url']) : '';
 	$bbcode_tpl['url2'] = str_replace('{DESCRIPTION}', '\\1', $bbcode_tpl['url2']);
-
-	$bbcode_tpl['url3'] = str_replace('{URL}', '\\1', $bbcode_tpl['url']);
+	 
+	$bbcode_tpl['url3'] = isset($bbcode_tpl['url']) ? str_replace('{URL}', '\\1', $bbcode_tpl['url']) : '';
 	$bbcode_tpl['url3'] = str_replace('{DESCRIPTION}', '\\2', $bbcode_tpl['url3']);
-
-	$bbcode_tpl['url4'] = str_replace('{URL}', 'http://\\1', $bbcode_tpl['url']);
+	 
+	$bbcode_tpl['url4'] = isset($bbcode_tpl['url']) ? str_replace('{URL}', 'http://\\1', $bbcode_tpl['url']) : '';
 	$bbcode_tpl['url4'] = str_replace('{DESCRIPTION}', '\\3', $bbcode_tpl['url4']);
-
-// Mighty Gorgon - Full Album Pack - BEGIN
+	 
+	// Mighty Gorgon - Full Album Pack - BEGIN
 	// Get Album PIC based on ID
-	$bbcode_tpl['fullalbumimg'] = str_replace('{IMG_NUM}', '\\1', $bbcode_tpl['fullalbumimg']);
-	$bbcode_tpl['fullalbumimgl'] = str_replace('{IMG_NUM}', '\\1', $bbcode_tpl['fullalbumimgl']);
-	$bbcode_tpl['fullalbumimgr'] = str_replace('{IMG_NUM}', '\\1', $bbcode_tpl['fullalbumimgr']);
-	$bbcode_tpl['fullalbumimgc'] = str_replace('{IMG_NUM}', '\\1', $bbcode_tpl['fullalbumimgc']);
-	$bbcode_tpl['albumimg'] = str_replace('{IMG_NUM}', '\\1', $bbcode_tpl['albumimg']);
+	$bbcode_tpl['fullalbumimg'] = isset($bbcode_tpl['fullalbumimg']) ? str_replace('{IMG_NUM}', '\\1', $bbcode_tpl['fullalbumimg']) : '';
+	$bbcode_tpl['fullalbumimgl'] = isset($bbcode_tpl['fullalbumimgl']) ? str_replace('{IMG_NUM}', '\\1', $bbcode_tpl['fullalbumimgl']) : '';
+	$bbcode_tpl['fullalbumimgr'] = isset($bbcode_tpl['fullalbumimgr']) ? str_replace('{IMG_NUM}', '\\1', $bbcode_tpl['fullalbumimgr']) : '';
+	$bbcode_tpl['fullalbumimgc'] = isset($bbcode_tpl['fullalbumimgc']) ? str_replace('{IMG_NUM}', '\\1', $bbcode_tpl['fullalbumimgc']) : '';
+	$bbcode_tpl['albumimg'] = isset($bbcode_tpl['albumimg']) ? str_replace('{IMG_NUM}', '\\1', $bbcode_tpl['albumimg']) : '';
 	if (!empty($bbcode_tpl['albumimgl']))
 	{ // V: TODO check why these are empty
 		$bbcode_tpl['albumimgl'] = str_replace('{IMG_NUM}', '\\1', $bbcode_tpl['albumimgl']);
@@ -145,81 +144,85 @@ function prepare_bbcode_template($bbcode_tpl)
 	}
 // Mighty Gorgon - Full Album Pack - END
 
-	$bbcode_tpl['email'] = str_replace('{EMAIL}', '\\1', $bbcode_tpl['email']);
-	$bbcode_tpl['youtube'] = str_replace('{YOUTUBEID}', '\\3', $bbcode_tpl['youtube']);
+    $bbcode_tpl['email'] = str_replace('{EMAIL}', '\\1', isset($bbcode_tpl['email']) ? $bbcode_tpl['email'] : '');
+	$bbcode_tpl['youtube'] = str_replace('{YOUTUBEID}', '\\3', isset($bbcode_tpl['youtube']) ? $bbcode_tpl['youtube'] : '');
 	if (!empty($bbcode_tpl['youtube']))
 	{
-		$bbcode_tpl['youtube'] = str_replace('{YOUTUBELINK}', ( isset($lang['youtube_link']) ? $lang['youtube_link'] : 'YouTube' ) , $bbcode_tpl['youtube']); 
+	    $bbcode_tpl['youtube'] = str_replace('{YOUTUBELINK}', (isset($lang['youtube_link']) ? $lang['youtube_link'] : 'YouTube'), $bbcode_tpl['youtube']); 
 	}
-
-	$bbcode_tpl['acronym_open'] = str_replace('{DESCRIPTION}', '\\1', $bbcode_tpl['acronym_open']);
-
-	$google_tpl = $bbcode_tpl['google'];
+	 
+	$bbcode_tpl['acronym_open'] = str_replace('{DESCRIPTION}', '\\1', isset($bbcode_tpl['acronym_open']) ? $bbcode_tpl['acronym_open'] : '');
+	 
+	$google_tpl = isset($bbcode_tpl['google']) ? $bbcode_tpl['google'] : '';
 	$bbcode_tpl['google'] = function ($matches) use ($google_tpl) {
-		return strtr($google_tpl, array(
-			'{STRING}' => str_replace('\\\"', '\"', $matches[1]),
-			'{QUERY}' => urlencode(str_replace('\\\"', '\"', $matches[1])),
-		));
+	    return strtr($google_tpl, array(
+	        '{STRING}' => str_replace('\\\"', '\"', isset($matches[1]) ? $matches[1] : ''),
+	        '{QUERY}' => urlencode(str_replace('\\\"', '\"', isset($matches[1]) ? $matches[1] : '')),
+	    ));
 	};
 
 	global $userdata;
-	$bbcode_tpl['you'] = str_replace('{YOU}', $userdata['username'], $bbcode_tpl['you']);
-
+	$bbcode_tpl['you'] = str_replace('{YOU}', isset($userdata['username']) ? $userdata['username'] : '', isset($bbcode_tpl['you']) ? $bbcode_tpl['you'] : '');
+	 
 	// Anchor
+	$bbcode_tpl = isset($bbcode_tpl) ? $bbcode_tpl : array();
+	$bbcode_tpl['anchor'] = isset($bbcode_tpl['anchor']) ? $bbcode_tpl['anchor'] : '';
 	$bbcode_tpl['anchor'] = str_replace('{URL}', '%s_\\1', $bbcode_tpl['anchor']);
-
+	 
 	// Gotopost
 	global $phpEx;
-	$bbcode_tpl['gotopost_open_1'] = str_replace('{URL}', append_sid("viewtopic.$phpEx?p=" . '\\1') . '#\\1', $bbcode_tpl['gotopost_open']);
-	$bbcode_tpl['gotopost_open_2'] = str_replace('{URL}', append_sid("viewtopic.$phpEx?p=" . '\\1') . '#\\1_\\2', $bbcode_tpl['gotopost_open']);
-	$bbcode_tpl['gotopost_open_3'] = str_replace('{URL}', '#%s_\\1', $bbcode_tpl['gotopost_open']);
+	$bbcode_tpl['gotopost_open_1'] = str_replace('{URL}', append_sid("viewtopic.$phpEx?p=" . '\\1') . '#\\1', isset($bbcode_tpl['gotopost_open']) ? $bbcode_tpl['gotopost_open'] : '');
+	$bbcode_tpl['gotopost_open_2'] = str_replace('{URL}', append_sid("viewtopic.$phpEx?p=" . '\\1') . '#\\1_\\2', isset($bbcode_tpl['gotopost_open']) ? $bbcode_tpl['gotopost_open'] : '');
+	$bbcode_tpl['gotopost_open_3'] = str_replace('{URL}', '#%s_\\1', isset($bbcode_tpl['gotopost_open']) ? $bbcode_tpl['gotopost_open'] : '');
+	 
+	$bbcode_tpl['table_mainrow_color'] = str_replace('{TABMRCOLOR}', '\\1', isset($bbcode_tpl['table_mainrow_color']) ? $bbcode_tpl['table_mainrow_color'] : '');
+	$bbcode_tpl['table_mainrow_size'] = str_replace('{TABMRSIZE}', '\\1', isset($bbcode_tpl['table_mainrow_size']) ? $bbcode_tpl['table_mainrow_size'] : '');
+	$bbcode_tpl['table_mainrow_cs1'] = str_replace('{TABMRCSCOLOR}', '\\1', isset($bbcode_tpl['table_mainrow_cs']) ? $bbcode_tpl['table_mainrow_cs'] : '');
+	$bbcode_tpl['table_mainrow_cs1'] = str_replace('{TABMRCSSIZE}', '\\2', isset($bbcode_tpl['table_mainrow_cs1']) ? $bbcode_tpl['table_mainrow_cs1'] : '');
+	$bbcode_tpl['table_maincol_color'] = str_replace('{TABMCCOLOR}', '\\1', isset($bbcode_tpl['table_maincol_color']) ? $bbcode_tpl['table_maincol_color'] : '');
+	$bbcode_tpl['table_maincol_size'] = str_replace('{TABMCSIZE}', '\\1', isset($bbcode_tpl['table_maincol_size']) ? $bbcode_tpl['table_maincol_size'] : '');
+	$bbcode_tpl['table_maincol_cs1'] = str_replace('{TABMCCSCOLOR}', '\\1', isset($bbcode_tpl['table_maincol_cs']) ? $bbcode_tpl['table_maincol_cs'] : '');
+	$bbcode_tpl['table_maincol_cs1'] = str_replace('{TABMCCSSIZE}', '\\2', isset($bbcode_tpl['table_maincol_cs1']) ? $bbcode_tpl['table_maincol_cs1'] : '');
+	$bbcode_tpl['table_row_color'] = str_replace('{TABRCOLOR}', '\\1', isset($bbcode_tpl['table_row_color']) ? $bbcode_tpl['table_row_color'] : '');
+	$bbcode_tpl['table_row_size'] = str_replace('{TABRSIZE}', '\\1', isset($bbcode_tpl['table_row_size']) ? $bbcode_tpl['table_row_size'] : '');
+	$bbcode_tpl['table_row_cs1'] = str_replace('{TABRCSCOLOR}', '\\1', isset($bbcode_tpl['table_row_cs']) ? $bbcode_tpl['table_row_cs'] : '');
+	$bbcode_tpl['table_row_cs1'] = str_replace('{TABRCSSIZE}', '\\2', isset($bbcode_tpl['table_row_cs1']) ? $bbcode_tpl['table_row_cs1'] : '');
+	$bbcode_tpl['table_col_color'] = str_replace('{TABCCOLOR}', '\\1', isset($bbcode_tpl['table_col_color']) ? $bbcode_tpl['table_col_color'] : '');
+	$bbcode_tpl['table_col_size'] = str_replace('{TABCSIZE}', '\\1', isset($bbcode_tpl['table_col_size']) ? $bbcode_tpl['table_col_size'] : '');
+	$bbcode_tpl['table_col_cs1'] = str_replace('{TABCCSCOLOR}', '\\1', isset($bbcode_tpl['table_col_cs']) ? $bbcode_tpl['table_col_cs'] : '');
+	$bbcode_tpl['table_col_cs1'] = str_replace('{TABCCSSIZE}', '\\2', isset($bbcode_tpl['table_col_cs1']) ? $bbcode_tpl['table_col_cs1'] : '');
+	$bbcode_tpl['table_size'] = str_replace('{TABSIZE}', '\\1', isset($bbcode_tpl['table_size']) ? $bbcode_tpl['table_size'] : '');
+	$bbcode_tpl['table_color'] = str_replace('{TABCOLOR}', '\\1', isset($bbcode_tpl['table_color']) ? $bbcode_tpl['table_color'] : '');
+	$bbcode_tpl['table_cs1'] = str_replace('{TABCSCOLOR}', '\\1', isset($bbcode_tpl['table_cs']) ? $bbcode_tpl['table_cs'] : '');
+	$bbcode_tpl['table_cs1'] = str_replace('{TABCSSIZE}', '\\2', isset($bbcode_tpl['table_cs1']) ? $bbcode_tpl['table_cs1'] : '');
+	 
+	//====================================================================== |
+	//==== Start Advanced BBCode Box MOD =================================== |
+	//==== v5.0.0 ========================================================== |
+	//====
+	$bbcode_tpl = isset($bbcode_tpl) ? $bbcode_tpl : array();
+	$bbcode_tpl['spoil_open'] = isset($bbcode_tpl['spoil_open']) ? $bbcode_tpl['spoil_open'] : '';
+	$bbcode_tpl['spoil_open'] = str_replace('{L_BBCODEBOX_HIDDEN}', (isset($lang['BBCode_box_hidden']) ? $lang['BBCode_box_hidden'] : ''), $bbcode_tpl['spoil_open']);
+	$bbcode_tpl['spoil_open'] = str_replace('{L_BBCODEBOX_VIEW}', (isset($lang['BBcode_box_view']) ? $lang['BBcode_box_view'] : ''), $bbcode_tpl['spoil_open']);
+	$bbcode_tpl['spoil_open'] = str_replace('{L_BBCODEBOX_HIDE}', (isset($lang['BBcode_box_hide']) ? $lang['BBcode_box_hide'] : ''), $bbcode_tpl['spoil_open']);
+	$bbcode_tpl['align_open'] = isset($bbcode_tpl['align_open']) ? str_replace('{ALIGN}', '$1', $bbcode_tpl['align_open']) : '';
+	$bbcode_tpl['stream'] = isset($bbcode_tpl['stream']) ? str_replace('{URL}', '$1', $bbcode_tpl['stream']) : '';
+	$bbcode_tpl['ram'] = isset($bbcode_tpl['ram']) ? str_replace('{URL}', '$1', $bbcode_tpl['ram']) : '';
+	$bbcode_tpl['marq_open'] = isset($bbcode_tpl['marq_open']) ? str_replace('{MARQ}', '$1', $bbcode_tpl['marq_open']) : '';
+	$bbcode_tpl['table_open'] = isset($bbcode_tpl['table_open']) ? str_replace('{TABLE}', '$1', $bbcode_tpl['table_open']) : '';
+	$bbcode_tpl['cell_open'] = isset($bbcode_tpl['cell_open']) ? str_replace('{CELL}', '$1', $bbcode_tpl['cell_open']) : '';
+	$bbcode_tpl['web'] = isset($bbcode_tpl['web']) ? str_replace('{URL}', '$1', $bbcode_tpl['web']) : '';	
+	$bbcode_tpl['flexiweb'] = isset($bbcode_tpl['flexiweb']) ? str_replace('{URL}', '$2', $bbcode_tpl['flexiweb']) : '';
+	$bbcode_tpl['flexiweb'] = isset($bbcode_tpl['flexiweb']) ? str_replace('{HEIGHT}', '$1', $bbcode_tpl['flexiweb']) : '';
+	$bbcode_tpl['flash'] = isset($bbcode_tpl['flash']) ? str_replace('{WIDTH}', '$1', $bbcode_tpl['flash']) : '';
+	$bbcode_tpl['flash'] = isset($bbcode_tpl['flash']) ? str_replace('{HEIGHT}', '$2', $bbcode_tpl['flash']) : '';
+	$bbcode_tpl['flash'] = isset($bbcode_tpl['flash']) ? str_replace('{URL}', '$3', $bbcode_tpl['flash']) : '';
+	$bbcode_tpl['video'] = isset($bbcode_tpl['video']) ? str_replace('{URL}', '$3', $bbcode_tpl['video']) : '';
+	$bbcode_tpl['video'] = isset($bbcode_tpl['video']) ? str_replace('{WIDTH}', '$1', $bbcode_tpl['video']) : '';
+	$bbcode_tpl['video'] = isset($bbcode_tpl['video']) ? str_replace('{HEIGHT}', '$2', $bbcode_tpl['video']) : '';
+	$bbcode_tpl['font_open'] = isset($bbcode_tpl['font_open']) ? str_replace('{FONT}', '$1', $bbcode_tpl['font_open']) : '';
+	$bbcode_tpl['poet_open'] = isset($bbcode_tpl['poet_open']) ? str_replace('{POET}', '$1', $bbcode_tpl['poet_open']) : '';
 
-	$bbcode_tpl['table_mainrow_color'] = str_replace('{TABMRCOLOR}', '\\1', $bbcode_tpl['table_mainrow_color']);
-	$bbcode_tpl['table_mainrow_size'] = str_replace('{TABMRSIZE}', '\\1', $bbcode_tpl['table_mainrow_size']);
-	$bbcode_tpl['table_mainrow_cs1'] = str_replace('{TABMRCSCOLOR}', '\\1', $bbcode_tpl['table_mainrow_cs']);
-	$bbcode_tpl['table_mainrow_cs1'] = str_replace('{TABMRCSSIZE}', '\\2', $bbcode_tpl['table_mainrow_cs1']);
-	$bbcode_tpl['table_maincol_color'] = str_replace('{TABMCCOLOR}', '\\1', $bbcode_tpl['table_maincol_color']);
-	$bbcode_tpl['table_maincol_size'] = str_replace('{TABMCSIZE}', '\\1', $bbcode_tpl['table_maincol_size']);
-	$bbcode_tpl['table_maincol_cs1'] = str_replace('{TABMCCSCOLOR}', '\\1', $bbcode_tpl['table_maincol_cs']);
-	$bbcode_tpl['table_maincol_cs1'] = str_replace('{TABMCCSSIZE}', '\\2', $bbcode_tpl['table_maincol_cs1']);
-	$bbcode_tpl['table_row_color'] = str_replace('{TABRCOLOR}', '\\1', $bbcode_tpl['table_row_color']);
-	$bbcode_tpl['table_row_size'] = str_replace('{TABRSIZE}', '\\1', $bbcode_tpl['table_row_size']);
-	$bbcode_tpl['table_row_cs1'] = str_replace('{TABRCSCOLOR}', '\\1', $bbcode_tpl['table_row_cs']);
-	$bbcode_tpl['table_row_cs1'] = str_replace('{TABRCSSIZE}', '\\2', $bbcode_tpl['table_row_cs1']);
-	$bbcode_tpl['table_col_color'] = str_replace('{TABCCOLOR}', '\\1', $bbcode_tpl['table_col_color']);
-	$bbcode_tpl['table_col_size'] = str_replace('{TABCSIZE}', '\\1', $bbcode_tpl['table_col_size']);
-	$bbcode_tpl['table_col_cs1'] = str_replace('{TABCCSCOLOR}', '\\1', $bbcode_tpl['table_col_cs']);
-	$bbcode_tpl['table_col_cs1'] = str_replace('{TABCCSSIZE}', '\\2', $bbcode_tpl['table_col_cs1']);
-	$bbcode_tpl['table_size'] = str_replace('{TABSIZE}', '\\1', $bbcode_tpl['table_size']);
-	$bbcode_tpl['table_color'] = str_replace('{TABCOLOR}', '\\1', $bbcode_tpl['table_color']);
-	$bbcode_tpl['table_cs1'] = str_replace('{TABCSCOLOR}', '\\1', $bbcode_tpl['table_cs']);
-	$bbcode_tpl['table_cs1'] = str_replace('{TABCSSIZE}', '\\2', $bbcode_tpl['table_cs1']);
-
-//====================================================================== |
-//==== Start Advanced BBCode Box MOD =================================== |
-//==== v5.0.0 ========================================================== |
-//====
-	$bbcode_tpl['spoil_open'] = str_replace('{L_BBCODEBOX_HIDDEN}', $lang['BBCode_box_hidden'], $bbcode_tpl['spoil_open']);
-	$bbcode_tpl['spoil_open'] = str_replace('{L_BBCODEBOX_VIEW}', $lang['BBcode_box_view'], $bbcode_tpl['spoil_open']);
-	$bbcode_tpl['spoil_open'] = str_replace('{L_BBCODEBOX_HIDE}', $lang['BBcode_box_hide'], $bbcode_tpl['spoil_open']);
-	$bbcode_tpl['align_open'] = str_replace('{ALIGN}', '\\1', $bbcode_tpl['align_open']);
-	$bbcode_tpl['stream'] = str_replace('{URL}', '\\1', $bbcode_tpl['stream']);
-	$bbcode_tpl['ram'] = str_replace('{URL}', '\\1', $bbcode_tpl['ram']);
-	$bbcode_tpl['marq_open'] = str_replace('{MARQ}', '\\1', $bbcode_tpl['marq_open']);
-    $bbcode_tpl['table_open'] = str_replace('{TABLE}', '\\1', $bbcode_tpl['table_open']);
-    $bbcode_tpl['cell_open'] = str_replace('{CELL}', '\\1', $bbcode_tpl['cell_open']);
-	$bbcode_tpl['web'] = str_replace('{URL}', '\\1', $bbcode_tpl['web']);
-	$bbcode_tpl['flexiweb'] = str_replace('{URL}', '\\2', $bbcode_tpl['flexiweb']);
-	$bbcode_tpl['flexiweb'] = str_replace('{HEIGHT}', '\\1', $bbcode_tpl['flexiweb']);
-	$bbcode_tpl['flash'] = str_replace('{WIDTH}', '\\1', $bbcode_tpl['flash']);
-	$bbcode_tpl['flash'] = str_replace('{HEIGHT}', '\\2', $bbcode_tpl['flash']);
-	$bbcode_tpl['flash'] = str_replace('{URL}', '\\3', $bbcode_tpl['flash']);
-	$bbcode_tpl['video'] = str_replace('{URL}', '\\3', $bbcode_tpl['video']);
-	$bbcode_tpl['video'] = str_replace('{WIDTH}', '\\1', $bbcode_tpl['video']);
-	$bbcode_tpl['video'] = str_replace('{HEIGHT}', '\\2', $bbcode_tpl['video']);
-	$bbcode_tpl['font_open'] = str_replace('{FONT}', '\\1', $bbcode_tpl['font_open']);
-	$bbcode_tpl['poet_open'] = str_replace('{POET}', '\\1', $bbcode_tpl['poet_open']);
-//====
 //==== Author: Disturbed One [http://hvmdesign.com] =================== |
 //==== End Advanced BBCode Box MOD ==================================== |
 //===================================================================== |
@@ -248,7 +251,7 @@ function get_image_tag_replacement($bbcode_tpl)
 	}
 	else
 	{
-		$bb_tmpl = $bbcode_tpl['img'];
+		$bb_tmpl = isset($bbcode_tpl['img']) ? $bbcode_tpl['img'] : '';
 	}
 	return $bb_tmpl;
 }
@@ -292,67 +295,67 @@ function bbencode_second_pass($text, $uid)
 	// PHP MOD
 	// [PHP] and [/PHP] for posting PHP code in your posts.
 	$text = bbencode_second_pass_php($text, $uid, $bbcode_tpl);
-
+	 
 	// [QUOTE] and [/QUOTE] for posting replies with quote, or just for quoting stuff.
-	$text = str_replace("[quote:$uid]", $bbcode_tpl['quote_open'], $text);
-	$text = str_replace("[/quote:$uid]", $bbcode_tpl['quote_close'], $text);
-
+	$text = str_replace("[quote:$uid]", isset($bbcode_tpl['quote_open']) ? $bbcode_tpl['quote_open'] : '', $text);
+	$text = str_replace("[/quote:$uid]", isset($bbcode_tpl['quote_close']) ? $bbcode_tpl['quote_close'] : '', $text);
+	 
 	// opening a quote with an pre-defined post entry
-	$text = preg_replace("/\[quote:$uid=p=\"([0-9]+)\"\]/si", $bbcode_tpl['quote_post_open'], $text);
-
+	$text = preg_replace("/\[quote:$uid=p=\"([0-9]+)\"\]/si", isset($bbcode_tpl['quote_post_open']) ? $bbcode_tpl['quote_post_open'] : '', $text);
+	 
 	// opening a username quote with an pre-defined post entry
-	$text = preg_replace("/\[quote:$uid=(?:\"?([^\"]*)\"?);p=(?:\"?([0-9]+)\"?)\]/si", $bbcode_tpl['quote_username_post_open'], $text);
-
+	$text = preg_replace("/\[quote:$uid=(?:\"?([^\"]*)\"?);p=(?:\"?([0-9]+)\"?)\]/si", isset($bbcode_tpl['quote_username_post_open']) ? $bbcode_tpl['quote_username_post_open'] : '', $text);
+	 
 	// New one liner to deal with opening quotes with usernames...
 	// replaces the two line version that I had here before..
-	$text = preg_replace("/\[quote:$uid=\"(.*?)\"\]/si", $bbcode_tpl['quote_username_open'], $text);
-
+	$text = preg_replace("/\[quote:$uid=\"(.*?)\"\]/si", isset($bbcode_tpl['quote_username_open']) ? $bbcode_tpl['quote_username_open'] : '', $text);
+	 
 	// acronym
-	$text = preg_replace("/\[acronym:$uid=\"(.*?)\"\]/si", $bbcode_tpl['acronym_open'], $text);
-	$text = str_replace("[/acronym:$uid]", $bbcode_tpl['acronym_close'], $text);
-
+	$text = preg_replace("/\[acronym:$uid=\"(.*?)\"\]/si", isset($bbcode_tpl['acronym_open']) ? $bbcode_tpl['acronym_open'] : '', $text);
+	$text = str_replace("[/acronym:$uid]", isset($bbcode_tpl['acronym_close']) ? $bbcode_tpl['acronym_close'] : '', $text);
+	 
 	// [list] and [list=x] for (un)ordered lists.
 	// unordered lists
-	$text = str_replace("[list:$uid]", $bbcode_tpl['ulist_open'], $text);
+	$text = str_replace("[list:$uid]", isset($bbcode_tpl['ulist_open']) ? $bbcode_tpl['ulist_open'] : '', $text);
 	// li tags
-	$text = str_replace("[*:$uid]", $bbcode_tpl['listitem'], $text);
+	$text = str_replace("[*:$uid]", isset($bbcode_tpl['listitem']) ? $bbcode_tpl['listitem'] : '', $text);
 	// ending tags
-	$text = str_replace("[/list:u:$uid]", $bbcode_tpl['ulist_close'], $text);
-	$text = str_replace("[/list:o:$uid]", $bbcode_tpl['olist_close'], $text);
+	$text = str_replace("[/list:u:$uid]", isset($bbcode_tpl['ulist_close']) ? $bbcode_tpl['ulist_close'] : '', $text);
+	$text = str_replace("[/list:o:$uid]", isset($bbcode_tpl['olist_close']) ? $bbcode_tpl['olist_close'] : '', $text);
 	// Ordered lists
-	$text = preg_replace("/\[list=([a1]):$uid\]/si", $bbcode_tpl['olist_open'], $text);
-
+	$text = preg_replace("/\[list=([a1]):$uid\]/si", isset($bbcode_tpl['olist_open']) ? $bbcode_tpl['olist_open'] : '', $text);
+	 
 	// colors
-	$text = preg_replace("/\[color=(\#[0-9A-F]{6}|[a-z]+):$uid\]/si", $bbcode_tpl['color_open'], $text);
-	$text = str_replace("[/color:$uid]", $bbcode_tpl['color_close'], $text);
-
+	$text = preg_replace("/\[color=(\#[0-9A-F]{6}|[a-z]+):$uid\]/si", isset($bbcode_tpl['color_open']) ? $bbcode_tpl['color_open'] : '', $text);
+	$text = str_replace("[/color:$uid]", isset($bbcode_tpl['color_close']) ? $bbcode_tpl['color_close'] : '', $text);
+	 
 	// size
-	$text = preg_replace("/\[size=([1-2]?[0-9]):$uid\]/si", $bbcode_tpl['size_open'], $text);
-	$text = str_replace("[/size:$uid]", $bbcode_tpl['size_close'], $text);
-
+	$text = preg_replace("/\[size=([1-2]?[0-9]):$uid\]/si", isset($bbcode_tpl['size_open']) ? $bbcode_tpl['size_open'] : '', $text);
+	$text = str_replace("[/size:$uid]", isset($bbcode_tpl['size_close']) ? $bbcode_tpl['size_close'] : '', $text);
+	 
 	// [b] and [/b] for bolding text.
-	$text = str_replace("[b:$uid]", $bbcode_tpl['b_open'], $text);
-	$text = str_replace("[/b:$uid]", $bbcode_tpl['b_close'], $text);
-
+	$text = str_replace("[b:$uid]", isset($bbcode_tpl['b_open']) ? $bbcode_tpl['b_open'] : '', $text);
+	$text = str_replace("[/b:$uid]", isset($bbcode_tpl['b_close']) ? $bbcode_tpl['b_close'] : '', $text);
+	 
 	// [sup] and [/sup] pour les textes en exposant.
-	$text = str_replace("[sup:$uid]", $bbcode_tpl['sup_open'], $text);
-	$text = str_replace("[/sup:$uid]", $bbcode_tpl['sup_close'], $text);
-
+	$text = str_replace("[sup:$uid]", isset($bbcode_tpl['sup_open']) ? $bbcode_tpl['sup_open'] : '', $text);
+	$text = str_replace("[/sup:$uid]", isset($bbcode_tpl['sup_close']) ? $bbcode_tpl['sup_close'] : '', $text);
+	 
 	// [sub] and [/sub] pour les textes en indice.
-	$text = str_replace("[sub:$uid]", $bbcode_tpl['sub_open'], $text);
-	$text = str_replace("[/sub:$uid]", $bbcode_tpl['sub_close'], $text);
-
+	$text = str_replace("[sub:$uid]", isset($bbcode_tpl['sub_open']) ? $bbcode_tpl['sub_open'] : '', $text);
+	$text = str_replace("[/sub:$uid]", isset($bbcode_tpl['sub_close']) ? $bbcode_tpl['sub_close'] : '', $text);
+	 
 	// [strike] and [/strike] for barring text.
-    $text = str_replace("[strike:$uid]", $bbcode_tpl['strike_open'], $text);
-    $text = str_replace("[/strike:$uid]", $bbcode_tpl['strike_close'], $text);
-
+	$text = str_replace("[strike:$uid]", isset($bbcode_tpl['strike_open']) ? $bbcode_tpl['strike_open'] : '', $text);
+	$text = str_replace("[/strike:$uid]", isset($bbcode_tpl['strike_close']) ? $bbcode_tpl['strike_close'] : '', $text);
+	 
 	// [u] and [/u] for underlining text.
-	$text = str_replace("[u:$uid]", $bbcode_tpl['u_open'], $text);
-	$text = str_replace("[/u:$uid]", $bbcode_tpl['u_close'], $text);
-
+	$text = str_replace("[u:$uid]", isset($bbcode_tpl['u_open']) ? $bbcode_tpl['u_open'] : '', $text);
+	$text = str_replace("[/u:$uid]", isset($bbcode_tpl['u_close']) ? $bbcode_tpl['u_close'] : '', $text);
+	 
 	// [i] and [/i] for italicizing text.
-	$text = str_replace("[i:$uid]", $bbcode_tpl['i_open'], $text);
-	$text = str_replace("[/i:$uid]", $bbcode_tpl['i_close'], $text);
+	$text = str_replace("[i:$uid]", isset($bbcode_tpl['i_open']) ? $bbcode_tpl['i_open'] : '', $text);
+	$text = str_replace("[/i:$uid]", isset($bbcode_tpl['i_close']) ? $bbcode_tpl['i_close'] : '', $text);
 
 	// Patterns and replacements for URL and email tags..
 	$patterns = array();
@@ -368,21 +371,25 @@ function bbencode_second_pass($text, $uid)
 //-- add
 	global $userdata;
 
-	if (!$userdata['user_viewimg'])
+	if (!isset($userdata['user_viewimg']) || !$userdata['user_viewimg'])
 	{
-		$text = str_replace("[img:$uid]", "", $text);
-		$text = str_replace("[/img:$uid]", "", $text);
-		$text = str_replace("[img=left:$uid]", "", $text);
-		$text = str_replace("[img=right:$uid]", "", $text);
-		$text = str_replace("[img=center:$uid]", "", $text);
-		$text = str_replace("[imgrel:$uid]", "", $text);
-		$text = str_replace("[/imgrel:$uid]", "", $text);
-		$text = str_replace("[imgrel=left:$uid]", "", $text);
-		$text = str_replace("[imgrel=right:$uid]", "", $text);
-		$text = str_replace("[theme:$uid]", "", $text);
-		$text = str_replace("[theme=left:$uid]", "", $text);
-		$text = str_replace("[theme=right:$uid]", "", $text);
-		$text = str_replace("[/theme:$uid]", "", $text);
+	    $search = array(
+	        "[img:$uid]",
+	        "[/img:$uid]",
+	        "[img=left:$uid]",
+	        "[img=right:$uid]",
+	        "[img=center:$uid]",
+	        "[imgrel:$uid]",
+	        "[/imgrel:$uid]",
+	        "[imgrel=left:$uid]",
+	        "[imgrel=right:$uid]",
+	        "[theme:$uid]",
+	        "[theme=left:$uid]",
+	        "[theme=right:$uid]",
+	        "[/theme:$uid]"
+	    );
+	 
+	    $text = str_replace($search, '', $text);
 	}
 //-- fin mod : profile cp --------------------------------------------------------------------------
 
@@ -505,13 +512,13 @@ function bbencode_second_pass($text, $uid)
 
 	// [you] - inserts the name of the person viewing the post
 	$patterns[] = "#\[you\]#is";
-	$replacements[] = $bbcode_tpl['you'];
-
+	$replacements[] = isset($bbcode_tpl['you']) ? $bbcode_tpl['you'] : '';
+	 
 	// [nbsp]
-	$text = str_replace("[nbsp:$uid]", $bbcode_tpl['nbsp'], $text);
-
+	$text = str_replace("[nbsp:" . $uid . "]", isset($bbcode_tpl['nbsp']) ? $bbcode_tpl['nbsp'] : '', $text);
+	 
 	// [tab]
-	$text = str_replace("[tab:$uid]", $bbcode_tpl['tab'], $text);
+	$text = str_replace("[tab:" . $uid . "]", isset($bbcode_tpl['tab']) ? $bbcode_tpl['tab'] : '', $text);
 
 	// anchor
 	$post_id = ( isset($GLOBALS['postrow'][$GLOBALS['i']]['post_id']) ) ? $GLOBALS['postrow'][$GLOBALS['i']]['post_id'] : ( ( isset($GLOBALS['post_id']) ) ? $GLOBALS['post_id'] : 0 );
@@ -521,7 +528,7 @@ function bbencode_second_pass($text, $uid)
 	$text = preg_replace("/\[gotopost=([\d]+?):$uid\]/si", $bbcode_tpl['gotopost_open_1'], $text);
 	$text = preg_replace("/\[gotopost=([\d]+?),([a-zA-Z]\w*?):$uid\]/si", $bbcode_tpl['gotopost_open_2'], $text);
 	$text = preg_replace("/\[gotopost=([a-zA-Z]\w*?):$uid\]/si", sprintf($bbcode_tpl['gotopost_open_3'],$post_id), $text);
-	$text = str_replace("[/gotopost:$uid]", $bbcode_tpl['gotopost_close'], $text);
+    $text = str_replace("[/gotopost:$uid]", isset($bbcode_tpl['gotopost_close']) ? $bbcode_tpl['gotopost_close'] : '', $text);
 
 	// [table] and [/table] for making tables.
 	// beginning code [table], along with attributes
@@ -530,35 +537,40 @@ function bbencode_second_pass($text, $uid)
 	$text = preg_replace("/\[table fontsize=([1-2]?[0-9]):$uid\]/si", $bbcode_tpl['table_size'], $text);
 	$text = preg_replace("/\[table color=(\#[0-9A-F]{6}|[a-z]+) fontsize=([1-2]?[0-9]):$uid\]/si", $bbcode_tpl['table_cs1'], $text);
 	// mainrow tag [mrow], along with attributes
-	$text = str_replace("[mrow:$uid]", $bbcode_tpl['table_mainrow'], $text);
-	$text = preg_replace("/\[mrow color=(\#[0-9A-F]{6}|[a-z]+):$uid\]/si", $bbcode_tpl['table_mainrow_color'], $text);
+    $text = str_replace("[mrow:$uid]", isset($bbcode_tpl['table_mainrow']) ? $bbcode_tpl['table_mainrow'] : '', $text);	$text = preg_replace("/\[mrow color=(\#[0-9A-F]{6}|[a-z]+):$uid\]/si", $bbcode_tpl['table_mainrow_color'], $text);
 	$text = preg_replace("/\[mrow fontsize=([1-2]?[0-9]):$uid\]/si", $bbcode_tpl['table_mainrow_size'], $text);
 	$text = preg_replace("/\[mrow color=(\#[0-9A-F]{6}|[a-z]+) fontsize=([1-2]?[0-9]):$uid\]/si", $bbcode_tpl['table_mainrow_cs1'], $text);
 	// maincol tag [mcol], along with attributes
-	$text = str_replace("[mcol:$uid]", $bbcode_tpl['table_maincol'], $text);
+	$text = str_replace("[mcol:$uid]", isset($bbcode_tpl['table_maincol']) ? $bbcode_tpl['table_maincol'] : '', $text);
 	$text = preg_replace("/\[mcol color=(\#[0-9A-F]{6}|[a-z]+):$uid\]/si", $bbcode_tpl['table_maincol_color'], $text);
 	$text = preg_replace("/\[mcol fontsize=([1-2]?[0-9]):$uid\]/si", $bbcode_tpl['table_maincol_size'], $text);
 	$text = preg_replace("/\[mcol color=(\#[0-9A-F]{6}|[a-z]+) fontsize=([1-2]?[0-9]):$uid\]/si", $bbcode_tpl['table_maincol_cs1'], $text);
 	// row tag [row], along with attributes
-	$text = str_replace("[row:$uid]", $bbcode_tpl['table_row'], $text);
+	$text = str_replace("[row:$uid]", isset($bbcode_tpl['table_row']) ? $bbcode_tpl['table_row'] : '', $text);
 	$text = preg_replace("/\[row color=(\#[0-9A-F]{6}|[a-z]+):$uid\]/si", $bbcode_tpl['table_row_color'], $text);
 	$text = preg_replace("/\[row fontsize=([1-2]?[0-9]):$uid\]/si", $bbcode_tpl['table_row_size'], $text);
 	$text = preg_replace("/\[row color=(\#[0-9A-F]{6}|[a-z]+) fontsize=([1-2]?[0-9]):$uid\]/si", $bbcode_tpl['table_row_cs1'], $text);
 	// column tag [col], along with attributes
-	$text = str_replace("[col:$uid]", $bbcode_tpl['table_col'], $text);
+	$text = str_replace("[col:$uid]", isset($bbcode_tpl['table_col']) ? $bbcode_tpl['table_col'] : '', $text);
 	$text = preg_replace("/\[col color=(\#[0-9A-F]{6}|[a-z]+):$uid\]/si", $bbcode_tpl['table_col_color'], $text);
 	$text = preg_replace("/\[col fontsize=([1-2]?[0-9]):$uid\]/si", $bbcode_tpl['table_col_size'], $text);
 	$text = preg_replace("/\[col color=(\#[0-9A-F]{6}|[a-z]+) fontsize=([1-2]?[0-9]):$uid\]/si", $bbcode_tpl['table_col_cs1'], $text);
 	// ending tag [/table]
-	$text = str_replace("[/table:$uid]", $bbcode_tpl['table_close'], $text);
+	$text = str_replace("[/table:$uid]", isset($bbcode_tpl['table_close']) ? $bbcode_tpl['table_close'] : '', $text);
 
 //====================================================================== |
 //==== Start Advanced BBCode Box MOD =================================== |
 //==== v5.0.0 ========================================================== |
 //====
 	// [fade]Faded Text[/fade] code..
-	$text = str_replace("[fade:$uid]", $bbcode_tpl['fade_open'], $text);
-	$text = str_replace("[/fade:$uid]", $bbcode_tpl['fade_close'], $text);
+	$text = str_replace(
+	    array("[fade:$uid]", "[/fade:$uid]"),
+	    array(
+	        isset($bbcode_tpl['fade_open']) ? $bbcode_tpl['fade_open'] : '',
+	        isset($bbcode_tpl['fade_close']) ? $bbcode_tpl['fade_close'] : ''
+	    ),
+	    $text
+	);
 
 	// [ram]Ram URL[/ram] code..
 	$patterns[] = "#\[ram:$uid\](.*?)\[/ram:$uid\]#si";
@@ -1193,8 +1205,8 @@ function bbencode_second_pass_code($text, $uid, $bbcode_tpl)
  */
 function bbencode_second_pass_php($text, $uid, $bbcode_tpl)
 {
-	$code_start_html = $bbcode_tpl['php_open'];
-	$code_end_html =  $bbcode_tpl['php_close'];
+	$code_start_html = isset($bbcode_tpl['php_open']) ? $bbcode_tpl['php_open'] : '';
+	$code_end_html = isset($bbcode_tpl['php_close']) ? $bbcode_tpl['php_close'] : '';
 
 	// First, do all the 1st-level matches. These need an htmlspecialchars() run,
 	// so they have to be handled differently.
@@ -1569,4 +1581,3 @@ function acronym_sort($a, $b)
 
 	return ( strlen($a['acronym']) > strlen($b['acronym']) ) ? -1 : 1;
 }
-?>
