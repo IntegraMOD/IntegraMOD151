@@ -78,28 +78,27 @@ if ( $is_called == FALSE )
 			$jadmin_ary=$var_cache->get('jadmin', 200000, 'jadmin');
 		}
 		
-		if($jadmin_ary === FALSE)
-		{
-			$sql = "SELECT user_id FROM " . JR_ADMIN_TABLE . "
-					WHERE user_jr_admin <> ''";
-			if ( !$result = $db->sql_query($sql) )
-			{
-				message_die(GENERAL_ERROR, 'Could not obtain junior admin status', '', __LINE__, __FILE__, $sql);
-			}
-
-	        while( $db->sql_fetchrow($result) !== false )
-	        {
+	    if ($jadmin_ary === FALSE) {
+	        $sql = "SELECT user_id FROM " . JR_ADMIN_TABLE . "
+	                WHERE user_jr_admin <> ''";
+	        if (!$result = $db->sql_query($sql)) {
+	            message_die(GENERAL_ERROR, 'Could not obtain junior admin status', '', __LINE__, __FILE__, $sql);
+	        }
+	     
+	        $jadmin_ary = array(); // Initialize the array
+	     
+	        while ($row = $db->sql_fetchrow($result)) {
 	            $jadmin_ary[] = $row['user_id'];
 	        }
-	        if($db->sql_numrows($result) == 0)
-	        {
+	     
+	        if ($db->sql_numrows($result) == 0) {
 	            $jadmin_ary[] = -10;
 	        }
-	        if($portal_config['cache_enabled'])
-	        {
+	     
+	        if (isset($portal_config['cache_enabled']) && $portal_config['cache_enabled']) {
 	            $var_cache->save($jadmin_ary, 'jadmin', 'jadmin');
 	        }
-		}
+	    }
 
 		$res = USER;
 		if ( ($userdata['user_level'] == ADMIN) && ($userdata['user_id'] == 2) )
@@ -895,8 +894,9 @@ function pcp_user_photo_upload($photo_mode, &$current_photo, &$current_type, &$e
 		$module['mode'][$idx]			= $mode;
 		$module['sort'][$idx]			= empty($module['sort'][$idx]) ? $sort : $module['sort'][$idx];
 		$module['url'][$idx]			= empty($module['url'][$idx]) ? basename($url) : $module['url'][$idx];
-		$module['shortcut'][$idx]		= empty($module['shortcut'][$idx]) ? $lang[$shortcut] : $module['shortcut'][$idx];
-		$module['page_title'][$idx]		= empty($module['page_title'][$idx]) ? $lang[$page_title] : $module['page_title'][$idx];
+		$module['shortcut'][$idx] = isset($module['shortcut'][$idx]) && !empty($module['shortcut'][$idx]) ? $module['shortcut'][$idx] : (isset($lang[$shortcut]) ? $lang[$shortcut] : '');
+        $module['page_title'][$idx] = isset($module['page_title'][$idx]) && !empty($module['page_title'][$idx]) ? $module['page_title'][$idx] : ($lang[$page_title] ?? '');
+
 
 		if ( isset($user_maps['PCP.' . $mode]) )
 		{
@@ -1040,4 +1040,3 @@ function pcp_user_photo_upload($photo_mode, &$current_photo, &$current_type, &$e
     }
 
 }
-?>
