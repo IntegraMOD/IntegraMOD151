@@ -17,17 +17,17 @@ function override_im_settings(&$im_data)
 {
 	global $db, $prill_config;
 
-	if( $prill_config['override_frames'] )
+	if( isset($prill_config['override_frames']) && $prill_config['override_frames'] )
 	{
-		$im_data['use_frames'] = $prill_config['use_frames'];
+	    $im_data['use_frames'] = $prill_config['use_frames'] ?? null;
+	}
+	 
+	if( isset($prill_config['allow_mode_switch']) && !$prill_config['allow_mode_switch'] )
+	{
+	    $im_data['current_mode'] = $prill_config['default_mode'] ?? null;
 	}
 
-	if( !$prill_config['allow_mode_switch'] )
-	{
-		$im_data['current_mode'] = $prill_config['default_mode'];
-	}
-
-	if( $prill_config['override_users'] || $im_data['user_override'] )
+	if( (isset($prill_config['override_users']) && $prill_config['override_users']) || (isset($im_data['user_override']) && $im_data['user_override']) )
 	{
 		$im_data['user_allow_ims'] = $prill_config['allow_ims'];
 		$im_data['user_allow_shout'] = $prill_config['allow_shout'];
@@ -697,7 +697,12 @@ function auto_prill_check()
 	global $db, $board_config, $phpEx, $im_userdata;
 
 	// Does the user have the auto launch feature and IMs enabled?
-	if( !$im_userdata['auto_launch'] || !$im_userdata['user_allow_ims'] || !$im_userdata['admin_allow_ims'] )
+	// Does the user have the auto launch feature and IMs enabled?
+	if (
+	    (!isset($im_userdata['auto_launch']) || !$im_userdata['auto_launch']) ||
+	    (!isset($im_userdata['user_allow_ims']) || !$im_userdata['user_allow_ims']) ||
+	    (!isset($im_userdata['admin_allow_ims']) || !$im_userdata['admin_allow_ims'])
+	)
 	{
 		return 0;
 	}
@@ -735,7 +740,7 @@ function auto_prill_check()
 	}
 
 	$row = $db->sql_fetchrow($result);
-	if( !$row['session_popup'] )
+	if (is_array($row) && array_key_exists('session_popup', $row) && !$row['session_popup'])
 	{
 		$sql = 'UPDATE ' . IM_SESSIONS_TABLE . ' SET session_popup=1 WHERE session_user_id=' . $im_userdata['user_id'];
 		if( !$result = $db->sql_query($sql) )
@@ -848,4 +853,3 @@ function exit_the_network($msg = '', $sql ='')
 	die($full_die_string);
 
 }
-?>
