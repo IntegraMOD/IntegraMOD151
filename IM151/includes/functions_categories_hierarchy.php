@@ -139,10 +139,14 @@ function read_tree($force=false)
 
 	// try the cache
 	$use_cache_file = false;
+  $tree = array();
 	if ( defined('CACHE_TREE') && CACHE_TREE )
 	{
 		$cache_file = $phpbb_root_path . 'includes/def_tree.' . $phpEx;
-		@include($cache_file);
+    if (!$force)
+    {
+      @include($cache_file);
+    }
 		if ( empty($tree) || $force)
 		{
 			cache_tree(true);
