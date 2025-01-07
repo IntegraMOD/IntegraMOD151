@@ -74,16 +74,16 @@
 				    <div class="row row1 ms-1">
 			          <div class="col ps-1"><span class="gensmall">{TOTAL_USERS_ONLINE} &nbsp; [ {L_WHOSONLINE_ADMIN} ] &nbsp; [ {L_WHOSONLINE_MOD} ]<br />{RECORD_USERS}<br />{LOGGED_IN_USER_LIST}</span></div>
 				    </div>
-				    <div class="row row1 ms-1">
-			           <div class="col ps-1 gensmall font-weight-bold">{L_GROUP_LEGEND}</div>
+        <div class="d-inline-flex gap-2 ps-1">
+				    <div class="ps-1">
+			           <div class="col gensmall font-weight-bold">{L_GROUP_LEGEND}</div>
 				    </div>
 					<!-- BEGIN legend -->
 					<!-- BEGIN color -->  
-				    <div class="row row1 ms-1">
-			          <div class="col ps-1 gensmall font-weight-bold">{legend.color.L_COMMA}<a href="{legend.U_GROUP}" title="{legend.GROUP_DESCRIPTION}" class="{legend.GROUP_COLOR}">{legend.GROUP_NAME}</a>{legend.color.L_COMMA2}</div>
-				    </div>
+            <div class="gensmall font-weight-bold">{legend.color.L_COMMA}<a href="{legend.U_GROUP}" title="{legend.GROUP_DESCRIPTION}" class="{legend.GROUP_COLOR}">{legend.GROUP_NAME}</a>{legend.color.L_COMMA2}</div>
 					<!-- END color -->
 					<!-- END legend -->
+          </div>
 				    <div class="row row1 ms-1">
 			          <div class="col ps-1 gensmall">{L_ONLINE_EXPLAIN}</div>
 				    </div>
