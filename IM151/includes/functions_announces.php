@@ -253,19 +253,19 @@ function announces_from_forums($cur='Root', $force_prune=false)
 	$allow_split_type = (intval($board_config['announcement_split']) == 1);
 	$display_nav_tree = (intval($board_config['announcement_forum']) == 1);
 	$inbox = false;
-	    if(!count($topic_rank_set)){ 
-        if(!$RATING_PATH){ 
-            define('RATING_PATH', $phpbb_root_path.'mods/rating/'); 
-        } 
-        include_once(RATING_PATH.'functions_rating.'.$phpEx); 
-        if(!$rating_config){ 
-            $rating_config = get_rating_config('1'); 
-        } 
-        if ( $rating_config[1] == 1 ) { 
-            $topic_rank_set = array(); 
-            get_rating_ranks(); 
-        } 
+  if(empty($topic_rank_set)){ 
+    if(!defined('RATING_PATH')) {
+      define('RATING_PATH', $phpbb_root_path.'mods/rating/'); 
     } 
+    include_once(RATING_PATH.'functions_rating.'.$phpEx); 
+    if(!$rating_config){ 
+      $rating_config = get_rating_config('1'); 
+    } 
+    if ( $rating_config[1] == 1 ) { 
+      $topic_rank_set = array(); 
+      get_rating_ranks(); 
+    } 
+  } 
     topic_list('BOARD_ANNOUNCES', 'topics_list_box', $topic_rowset, $lang['Board_announcement'], $allow_split_type, $display_nav_tree, $footer, $inbox, '', 0, '', array(), $topic_rank_set);
 }
 

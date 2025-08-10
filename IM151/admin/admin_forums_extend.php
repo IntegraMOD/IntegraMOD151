@@ -418,10 +418,7 @@ function delete_item( $old, $new='', $topic_dest='' )
 
 function reorder_tree()
 {
-	global $tree, $db;
-
-	// read the tree
-	read_tree(true);
+	global $tree, $db, $var_cache;
 
 	// update with new order
 	$order = 0;
@@ -453,6 +450,7 @@ function reorder_tree()
 	cache_tree(true);
 	board_stats();
 	$db->clear_cache('');
+  $var_cache->clean('forum');
 }
 
 //--------------------------------
@@ -627,6 +625,7 @@ if ( ($mode == 'moveup') || ($mode == 'movedw') )
 	}
 
 	// reorder
+  cache_tree();
 	reorder_tree();
 
 	// add topics count and various informations
@@ -1274,6 +1273,7 @@ if ( ($mode == 'edit') || ($mode == 'create') || ($mode == 'delete') )
 
 		// reorder
 		reorder_tree();
+    $var_cache->clean('forum');
 
 		// end message
 		$selected_id = $item['main'];
@@ -1730,5 +1730,5 @@ if ( $mode == '' )
 
 // dump
 $template->pparse('body');
-include('./page_footer_admin.'.$phpEx);
 $var_cache->clean('forum');
+include('./page_footer_admin.'.$phpEx);

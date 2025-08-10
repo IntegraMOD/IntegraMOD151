@@ -312,7 +312,7 @@ function cache_tree_level($main, &$parents, &$cats, &$forums, $level=-1)
 	}
 
 	// sort the level
-	@array_multisort($tree_level['sort'], $tree_level['type'], $tree_level['id'], $tree_level['data']);
+	array_multisort($tree_level['sort'], $tree_level['type'], $tree_level['id'], $tree_level['data']);
 
 	// add the tree_level to the tree
 	$order = 0;
