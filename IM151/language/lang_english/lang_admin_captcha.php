@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 /***************************************************************************
  *							lang_admin_captcha.php (english)
  *                         ------------------------
@@ -9,6 +9,8 @@
 
 $lang['VC_Captcha_Config'] = 'CAPTCHA Config';
 $lang['captcha_config_explain'] = 'Here you can change the appearance of the picture, which represents the registration code on activated visual confirmation.';
+
+$lang['captcha_config_updated'] = 'CAPTCHA Config Updated';
 $lang['VC_active'] = 'Visual Confirmation is active!';
 $lang['VC_inactive'] = 'Visual Confirmation is not active!';
 $lang['background_configs'] = 'Background';
@@ -33,7 +35,7 @@ $lang['trans_letters_explain'] = '(Only takes effect if a background picture is 
 $lang['back_image'] = 'Background image';
 $lang['back_image_explain'] = 'A picture used as background.<br /> (Supported image formats: %s)';
 $lang['bg_transition'] = 'Transparency';
-$lang['bg_transition_explain'] = 'Changes the transparency of the background image.<br / > 0% - Completely Transparent<br /> 100% - Completely Opaque';
+$lang['bg_transition_explain'] = 'Changes the transparency of the background image(in percent).';
 $lang['back_chess'] = 'Chess sample';
 $lang['back_chess_explain'] = 'Fill the complete background with 16 rectangles.';
 $lang['back_ellipses'] = 'Ellipses';
