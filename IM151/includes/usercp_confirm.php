@@ -82,7 +82,7 @@ mt_srand($sec * $usec);
 $char_widths = array();
 for ($i = 0; $i < strlen($code); $i++)
 {
-	$char = $code{$i};
+	$char = $code[$i];
 
 	$width = mt_rand(0, 4);
 	$char_widths[] = $width;
@@ -109,7 +109,7 @@ for ($i = 0; $i < $total_height; $i++)
 
 		for ($k = 0; $k < strlen($code); $k++)
 		{
-			$char = $code{$k};
+			$char = $code[$k];
 
 			if (empty($hold_chars[$char]))
 			{
@@ -160,7 +160,7 @@ function randomise($scanline, $width)
 
 	for ($i = $start; $i < $end; $i++)
 	{
-		$pixel = ord($scanline{$i});
+		$pixel = ord($scanline[$i]);
 
 		if ($pixel < 190)
 		{
@@ -172,7 +172,7 @@ function randomise($scanline, $width)
 		}
 		else
 		{
-			$new_line .= $scanline{$i};
+			$new_line .= $scanline[$i];
 		}
 	}
 
