@@ -470,6 +470,4 @@ if (!empty($_GET['lofi']) || !empty($_COOKIE['lofi']))
 {
 	$lofi = 1;
 }
-//End Lo-Fi Mod
-
-?>
+//End Lo-Fi Mod 

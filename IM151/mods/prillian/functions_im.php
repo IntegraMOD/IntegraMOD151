@@ -17,15 +17,21 @@ function override_im_settings(&$im_data)
 {
 	global $db, $prill_config;
 
-	if( isset($prill_config['override_frames']) && $prill_config['override_frames'] )
-	{
-	    $im_data['use_frames'] = $prill_config['use_frames'] ?? null;
-	}
-	 
-	if( isset($prill_config['allow_mode_switch']) && !$prill_config['allow_mode_switch'] )
-	{
-	    $im_data['current_mode'] = $prill_config['default_mode'] ?? null;
-	}
+    if (isset($prill_config['override_frames']) && $prill_config['override_frames'])
+    {
+        $im_data['use_frames'] =
+            isset($prill_config['use_frames'])
+                ? $prill_config['use_frames']
+                : null;
+    }
+    
+    if (isset($prill_config['allow_mode_switch']) && !$prill_config['allow_mode_switch'])
+    {
+        $im_data['current_mode'] =
+            isset($prill_config['default_mode'])
+                ? $prill_config['default_mode']
+                : null;
+    }
 
 	if( (isset($prill_config['override_users']) && $prill_config['override_users']) || (isset($im_data['user_override']) && $im_data['user_override']) )
 	{

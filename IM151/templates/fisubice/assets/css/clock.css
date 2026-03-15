@@ -216,7 +216,7 @@ a {
   position: absolute;
   background-color: var(--text-color);
   width: .25rem;
-  height: 4rem;
+  height: 2rem;        /* was 4rem */
   border-radius: .75rem;
   z-index: var(--z-normal);
 }
@@ -231,7 +231,7 @@ a {
   position: absolute;
   background-color: var(--first-color);
   width: .125rem;
-  height: 4rem;
+  height: 2.5rem;      /* was 4rem */
   border-radius: .50rem;
   z-index: var(--z-normal);
 }

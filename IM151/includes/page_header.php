@@ -39,8 +39,7 @@ if($board_config['gzip_compress']){
 
 define('HEADER_INC', TRUE);
 
-$admin_short_link = ( $userdata['user_level'] == ADMIN ) ? '<a class="adm" href="admin/index.' . $phpEx . '?sid=' . $userdata['session_id'] . '&amp;p_sid=' . $userdata['priv_session_id'] . '"><span><i class="fa-solid fa-gears"></i>&nbsp;' . ($lang['Admin_short'] ?? null) . '</span></a>' : '';
-
+$admin_short_link = ($userdata['user_level'] == ADMIN) ? '<a class="adm" href="admin/index.' . $phpEx . '?sid=' . $userdata['session_id'] . '&amp;p_sid=' . $userdata['priv_session_id'] . '"><span><i class="fa-solid fa-gears"></i>&nbsp;' . (isset($lang['Admin_short']) ? $lang['Admin_short'] : '') . '</span></a>' : '';
 //--------------------------------------------------------------------------------
 // Prillian - Begin Code Addition
 //
