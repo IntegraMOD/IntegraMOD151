@@ -1115,6 +1115,8 @@ if ( $is_auth['auth_mod'] )
 //
 include_once($phpbb_root_path . "includes/functions_report.$phpEx");
 $report_topic = report_modules('name', 'report_topic');
+ 
+$template->assign_var('S_REPORT_TOPIC', '');
 
 if ($report_topic && $report_topic->auth_check('auth_write'))
 {
