@@ -30,6 +30,42 @@ include_once($phpbb_root_path .'extension.inc');
 include_once('pagestart.'. $phpEx);
 include_once($phpbb_root_path .'includes/phpbb_security.'. $phpEx);
 	
+// List of all static phpBBSecurity config keys used in this file
+$security_keys = array(
+	'phpBBSecurity_backup_on',
+	'phpBBSecurity_backup_folder',
+	'phpBBSecurity_backup_filename',
+	'phpBBSecurity_guest_matches',
+	'phpBBSecurity_per_page',
+	'phpBBSecurity_DDoS_level',
+	'phpBBSecurity_Clike_Ban',
+	'phpBBSecurity_Union_Ban',
+	'phpBBSecurity_SQL_Ban',
+	'phpBBSecurity_DDoS_Ban',
+	'phpBBSecurity_File_Ban',
+	'phpBBSecurity_Perl_Ban',
+	'phpBBSecurity_Encoded_Ban',
+	'phpBBSecurity_Cback_Ban'
+);
+
+// Normalize static keys
+foreach ($security_keys as $k)
+{
+	if (!isset($board_config[$k]))
+	{
+$board_config[$k] = 0;
+	}
+}
+
+// Normalize dynamic keys
+$admin_key = phpBBSecurity_AdminConfigName();
+$mod_key   = phpBBSecurity_ModConfigName();
+$use_key   = phpBBSecurity_UseSpecial();
+
+if (!isset($board_config[$admin_key])) $board_config[$admin_key] = 0;
+if (!isset($board_config[$mod_key]))   $board_config[$mod_key]   = 0;
+if (!isset($board_config[$use_key]))   $board_config[$use_key]   = 0;
+
 	$action = (isset($_POST['action'])) ? $_POST['action'] : ( isset($_GET['action']) ? $_GET['action'] : '' );
 	$mode 	= (isset($_POST['mode'])) ? $_POST['mode'] : ( isset($_GET['mode']) ? $_GET['mode'] : '' );
 	
