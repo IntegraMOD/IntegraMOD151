@@ -652,24 +652,43 @@ if (($mode == 'edit') && (!empty($field_id) || $create_field)) {
     $field_auth_pm		= 0;
     $field_tree_id		= '';
 
-    // get data from the table
-    if (!empty($field_id)) {
-        $field_name			= $fname;
-        $field_shortcut		= $qbar_maps[$qname]['fields'][$fname]['shortcut'];
-        $field_alternate	= ( isset($qbar_maps[$qname]['fields'][$fname]['alternate']) ? $qbar_maps[$qname]['fields'][$fname]['alternate'] : '' );
-        $field_explain		= $qbar_maps[$qname]['fields'][$fname]['explain'];
-        $field_icon			= $qbar_maps[$qname]['fields'][$fname]['icon'];
-        $field_use_value	= $qbar_maps[$qname]['fields'][$fname]['use_value'];
-        $field_use_icon		= $qbar_maps[$qname]['fields'][$fname]['use_icon'];
-        $field_url			= $qbar_maps[$qname]['fields'][$fname]['url'];
-        $field_internal		= $qbar_maps[$qname]['fields'][$fname]['internal'];
-        $field_window		= ( isset($qbar_maps[$qname]['fields'][$fname]['window']) ? $qbar_maps[$qname]['fields'][$fname]['window'] : '' );
-        $field_auth_logged	= $qbar_maps[$qname]['fields'][$fname]['auth_logged'];
-        $field_auth_admin	= ( isset($qbar_maps[$qname]['fields'][$fname]['auth_admin']) ? $qbar_maps[$qname]['fields'][$fname]['auth_admin'] : '' );
-        $field_auth_pm		= ( isset($qbar_maps[$qname]['fields'][$fname]['auth_pm']) ? $qbar_maps[$qname]['fields'][$fname]['auth_pm'] : '' );
-        $field_tree_id		= ( isset($qbar_maps[$qname]['fields'][$fname]['tree_id']) ? $qbar_maps[$qname]['fields'][$fname]['tree_id'] : '' );
-        $field_php_function	= ( isset($qbar_maps[$qname]['fields'][$fname]['php_function']) ? $qbar_maps[$qname]['fields'][$fname]['php_function'] : '' );
-    }
+	// get data from the table
+	if (!empty($field_id)) {
+
+		$field_name = $fname;
+
+		// IM151 qbar field definitions
+		$keys = array(
+			'shortcut',
+			'alternate',
+			'explain',
+			'icon',
+			'use_value',
+			'use_icon',
+			'url',
+			'internal',
+			'window',
+			'auth_logged',
+			'auth_admin',
+			'auth_pm',
+			'tree_id',
+			'php_function',
+		);
+
+		// initialize all IM151 field vars to ''
+		foreach ($keys as $k) {
+			${'field_' . $k} = '';
+		}
+
+		// assign values only if they exist in the IM151 qbar map
+		if (isset($qbar_maps[$qname]['fields'][$fname])) {
+			foreach ($keys as $k) {
+				if (isset($qbar_maps[$qname]['fields'][$fname][$k])) {
+					${'field_' . $k} = $qbar_maps[$qname]['fields'][$fname][$k];
+				}
+			}
+		}
+	}
 
     // get data from the formular
     if (isset($_POST['name'])) {
@@ -1250,13 +1269,23 @@ if (($mode == 'edit') && empty($field_id) && !$create_field) {
 
         // selection lists
         $s_class = '<select name="panel_class">';
-				foreach ($classes as $key => $lang_key)
-				{
-            if ($key != 'System') {
-                $selected = ($panel_class == $key) ? ' selected="selected"' : '';
-                $s_class .= '<option value="' . $key . '"' . $selected . '>' . $lang[$lang_key] . '</option>';
+			foreach ($classes as $key => $lang_key)
+			{
+                if ($key != 'System') {
+                
+                    // IM151 language key format
+                    $lang_key = 'QBAR_' . strtoupper($key);
+                
+                    // fallback if language entry is missing
+                    $label = isset($lang[$lang_key]) ? $lang[$lang_key] : $key;
+                
+                    $selected = ($panel_class == $key) ? ' selected="selected"' : '';
+                
+                    $s_class .= '<option value="' . htmlspecialchars($key) . '"' . $selected . '>'
+                              . htmlspecialchars($label)
+                              . '</option>';
+                }
             }
-        }
         $s_class .= '</select>';
 
         // switches
