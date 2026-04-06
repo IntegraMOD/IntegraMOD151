@@ -1,0 +1,121 @@
+body
+{
+	margin: 0px;
+	text-align: center;
+}
+
+.forumline
+{
+	margin-left: 3px;
+	margin-right: 3px;
+	margin-bottom: 7px;
+	width: 97%;
+	border-width: 1px;
+}
+
+.prill_widelogo
+{
+	width: 97%;
+	text-align: left;
+	border: 1px #006699 solid;
+	padding: 2px;
+	background-color: #D1D7DC;
+	font-weight: bold;
+	margin: 3px;
+	margin-bottom: 5px;
+	font-size: 18px;
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	text-transform: uppercase;
+}
+
+.prill_widelogo a
+{
+	text-decoration: none;
+	letter-spacing: 0.2em;
+}
+
+.prill_mainlogo
+{
+	width: 95%;
+	text-align: center;
+	border: 1px #006699 solid;
+	padding: 0px;
+	padding-top: 2px;
+	background-color: #D1D7DC;
+	font-weight: bold;
+	margin: 3px;
+	margin-bottom: 5px;
+	font-size: 12px;
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	text-transform: uppercase;
+}
+
+.prill_mainlogo a
+{
+	text-decoration: none;
+	letter-spacing: 0.2em;
+}
+
+.prill_widefooter
+{
+	width: 97%;
+	text-align: left;
+	border: 1px #006699 solid;
+	padding: 2px;
+	background-color: #D1D7DC;
+	margin-bottom: 5px;
+	margin-left: 3px;
+	font-size: 11px;
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+}
+
+.prill_widectrlimg
+{
+	float: right;
+	width: 50%;
+	text-align: right;
+	vertical-align: middle;
+	height: 100%;
+}
+
+.prill_mainctrlimg
+{
+	text-align: center;
+	vertical-align: middle;
+	margin: 0px;
+	padding: 0px;
+	margin-top: 2px;
+	font-size: 9px;
+	font-weight: normal;
+}
+
+.prill_header
+{
+	margin-left: 3px;
+	text-align: center;
+	padding: 3px;
+	padding-top: 7px;
+	padding-bottom: 7px;
+	color: #FFA34F;
+	width: 96%;
+	background-color: #006699;
+	background-image: url(../images/cellpic3.gif);
+	font-weight: bold;
+	border: none;
+	font-size: 12px;
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+}
+
+.prill_catbottom
+{
+	margin-left: 3px;
+	text-align: center;
+	padding: 3px;
+	width: 96%;
+	background-color: #D1D7DC;
+	background-image: url(../images/cellpic1.gif);
+	font-weight: bold;
+	border: 1px #006699 solid;
+	font-size: 12px;
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+}
