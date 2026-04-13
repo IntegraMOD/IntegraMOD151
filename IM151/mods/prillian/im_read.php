@@ -133,8 +133,7 @@ if( $mark_read && $im_msg['privmsgs_type'] != IM_READ_MAIL && !$sent_mark )
 
 	if ( !$db->sql_query($update_sql) )
 	{
-		$msg = 'Could not update instant message read number for user' . $append_msg;
-		message_die(GENERAL_ERROR, $msg, '', __LINE__, __FILE__, $sql);
+    // V: do nothing, doesn't matter if the counter wasn't updated properly
 	}
 }
 

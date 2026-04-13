@@ -72,8 +72,8 @@ function override_im_settings(&$im_data)
 
 }
 
-function init_imprefs($id, $style_setup = false, $get_default = false)
 // Gets user IM preferences from the database.
+function init_imprefs($id, $style_setup = false, $get_default = false)
 {
 	global $db, $prill_config, $lang, $append_msg, $theme, $template, $images;
 
@@ -694,11 +694,11 @@ function print_controls($mode_append = '', $client_mode = FRAMES_MODE, $client_m
 }
 
 
-function auto_prill_check()
 // Checks various factors to see if the auto popup of the IM Client should
 // be used. It would be better to accomplish it with JavaScript, but that
 // doesn't seem to work even when I copy stuff straight from a tutorial.
 // Returns either 1 (trigger the popup) or 0 (don't)
+function auto_prill_check()
 {
 	global $db, $board_config, $phpEx, $im_userdata;
 

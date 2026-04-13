@@ -9,6 +9,8 @@
 
 define('IN_PHPBB', true);
 $phpbb_root_path = './';
+define('CT_SECLEVEL', 'MEDIUM');
+$ct_ignorepvar = array('savereply');
 include_once($phpbb_root_path . 'extension.inc');
 include_once($phpbb_root_path . 'common.' . $phpEx);
 
@@ -30,7 +32,6 @@ if ( !$prill_config['allow_ims'] )
 }
 
 // Get user's IM Preferences
-$im_userdata = array();
 $im_userdata = init_imprefs($userdata['user_id'], true);
 
 // mode check
