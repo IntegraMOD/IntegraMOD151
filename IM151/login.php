@@ -54,7 +54,7 @@ include_once($phpbb_root_path .'includes/phpbb_security.'. $phpEx);
 // Prillian - Begin Code Addition
 //
 
-if (defined('PRILLIAN_INSTALLED') && !file_exists('prill_install'))
+if (defined('PRILLIAN_INSTALLED') && (!file_exists('prill_install') || defined('DEV_MODE')))
 {
 	include_once(PRILL_PATH . 'prill_common.' . $phpEx);
 }

@@ -44,7 +44,7 @@ $admin_short_link = ($userdata['user_level'] == ADMIN) ? '<a class="adm" href="a
 // Prillian - Begin Code Addition
 //
 
-if (defined('PRILLIAN_INSTALLED') && !file_exists('prill_install'))
+if (defined('PRILLIAN_INSTALLED') && ( !file_exists('prill_install') || defined('DEV_MODE') ))
 {
 	include_once(PRILL_PATH . 'prill_common.' . $phpEx);
 }
@@ -738,7 +738,7 @@ if (!empty($_SERVER['HTTP_REFERER']) && false === stripos($_SERVER['HTTP_REFERER
 // Prillian - Begin Code Addition
 //
 
-if( ($userdata['user_id'] != ANONYMOUS) && (defined('PRILLIAN_INSTALLED') && !file_exists('prill_install')) && $userdata['user_id'] != NULL )
+if( ($userdata['user_id'] != ANONYMOUS) && defined('PRILLIAN_INSTALLED') && $userdata['user_id'] != NULL )
 {
 	$template->assign_block_vars('switch_prillian_installed', array());
 	if( defined('IN_CONTACT_LIST') && defined('SHOW_ONLINE') )
@@ -762,7 +762,7 @@ if( ($userdata['user_id'] != ANONYMOUS) && (defined('PRILLIAN_INSTALLED') && !fi
 	}
 
 	$template->assign_vars(array(
-		'IM_AUTO_POPUP' => $im_auto_popup,
+		'IM_AUTO_POPUP' => $im_auto_popup ? 'true' : 'false',
 		'IM_HEIGHT' => $im_userdata['mode_height'],
 		'IM_WIDTH' => $im_userdata['mode_width'],
 		'U_IM_LAUNCH' => append_sid(PRILL_URL . $im_userdata['mode_string']),
