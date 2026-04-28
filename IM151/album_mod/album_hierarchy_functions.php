@@ -738,7 +738,7 @@ function album_get_sub_cat_ids($cur_cat_id = ALBUM_ROOT_CATEGORY, &$cats = [], $
 
 	if ($include_cur_cat_id == true)
 	{
-		if (album_check_permission($album_data['auth'][$cur_cat_id], $auth_key))
+		if ($auth_key == null || album_check_permission($album_data['auth'][$cur_cat_id], $auth_key))
 		{
 			$cats[] = $cur_cat_id;
 		}
@@ -754,17 +754,20 @@ function album_get_sub_cat_ids($cur_cat_id = ALBUM_ROOT_CATEGORY, &$cats = [], $
 		// add the category id
 		//if ($album_data['auth'][$cur][$auth_key] == 1)
 		//if (album_check_permission($wdata['cat_id'], $auth_key))
-		if (album_check_permission($album_data['auth'][$subcur], $auth_key))
+		if ($auth_key == null || album_check_permission($album_data['auth'][$subcur], $auth_key))
 		{
-			$cats[] = $subdata['cat_id'];
+			$cats[] = intval($subdata['cat_id']);
 		}
 	}
 
 	// do this for each sub category... recursive
-	for ($i=0; isset($album_data['sub'][$cur_cat_id]) && $i < count($album_data['sub'][$cur_cat_id]); $i++)
-	{
-		album_get_sub_cat_ids($album_data['sub'][$cur_cat_id][$i], $cats);
-	}
+  if (isset($album_data['sub'][$cur_cat_id]))
+  {
+    foreach ($album_data['sub'][$cur_cat_id] as $sub_cat)
+    {
+      album_get_sub_cat_ids($sub_cat, $cats, $auth_key, false);
+    }
+  }
 }
 
 //-----------------------------------------------
