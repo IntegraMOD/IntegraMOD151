@@ -399,9 +399,14 @@ else
 		$cat_parent = ($_POST['cat_parent_id'] == ALBUM_ROOT_CATEGORY) ? 0 : intval($_POST['cat_parent_id']);
 		$cat_parent = ($cat_parent < 0) ? 0 : $cat_parent;
 		
-		if ( ($cat_id == $cat_parent) && (album_get_personal_root_id($album_user_id) != $cat_id) )
+		if ( (album_get_personal_root_id($album_user_id) != $cat_id) )
 		{
-			showResultMessage($lang['No_Self_Refering_Cat']);
+			if (empty($album_data))
+				album_read_tree();
+			$sub_cats = array();
+			album_get_sub_cat_ids($cat_id, $sub_cats, /* auth */ null, /* include_cur_cat_id  */ true);
+			if (in_array($cat_parent, $sub_cats))
+				showResultMessage($lang['No_Self_Refering_Cat']);
 		}
 		
 		if ( (album_get_personal_root_id($album_user_id) == $cat_id) && ($cat_parent != 0) )
