@@ -2068,6 +2068,7 @@ CREATE TABLE phpbb_sessions (
   priv_session_id char(32) NOT NULL DEFAULT '',
   PRIMARY KEY  (session_id),
   KEY session_user_id (session_user_id),
+  KEY session_user_id_ip (session_user_id, session_ip),
   KEY session_id_ip_user_id (session_id,session_ip,session_user_id)
 );
 
