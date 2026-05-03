@@ -2066,11 +2066,12 @@ CREATE TABLE phpbb_sessions (
   session_robot varchar(32) default NULL,
   session_admin tinyint(2) DEFAULT '0' NOT NULL,
   priv_session_id char(32) NOT NULL DEFAULT '',
-  PRIMARY KEY  (session_id),
-  KEY session_user_id (session_user_id),
+  PRIMARY KEY (session_id),
+  KEY session_user_time (session_user_id, session_time),
   KEY session_user_id_ip (session_user_id, session_ip),
-  KEY session_id_ip_user_id (session_id,session_ip,session_user_id)
+  KEY session_user_id (session_user_id)
 );
+
 
 # --------------------------------------------------------
 
