@@ -1980,11 +1980,13 @@ class Template {
 				case 'false':
 					$match[5] = strtoupper($match[5]);
 					break;
-				case '.';
-					$match[5] = doubleval($match[5]);
+
+				case '.':
+					$match[5] = (float) $match[5];
 					break;
+
 				default:
-					$match[5] = intval($match[5]);
+					$match[5] = (int) $match[5];
 					break;
 			}
 		}
