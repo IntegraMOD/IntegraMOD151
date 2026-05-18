@@ -393,12 +393,19 @@ switch($mode)
 		include_once(PRILL_PATH . 'functions_im.' . $phpEx);
 		$prill_config = get_prillian_config(true);
 
-		if( $prill_config['version'] >= $current_version && !$act_level )
+		if (
+			!empty($prill_config['version']) &&
+			version_compare($prill_config['version'], $current_version, '>=') &&
+			!$act_level
+		)
 		{
-			$message = '<div class="mainbody"><span class="err_msg">'.sprintf($lang['Already_installed'],$echo_name).'</span></div>';
+			$message = '<div class="mainbody"><span class="err_msg">' .
+				sprintf($lang['Already_installed'], $echo_name) .
+				'</span></div>';
+
 			echo $message;
 		}
-		else
+				else
 		{
 			new_install();
 		}

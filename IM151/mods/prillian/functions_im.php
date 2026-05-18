@@ -815,24 +815,45 @@ function delete_read_ims($user_id)
 
 function get_prillian_config($no_err = false)
 {
-	global $db, $lang;
+	global $db, $lang, $table_prefix;
+
+	$table_name = $table_prefix . 'im_config';
+
+	// Prevent fatal errors if table does not exist yet durring install
+	$sql = "SHOW TABLES LIKE '" . $table_name . "'";
+	$result = $db->sql_query($sql);
+
+	if (!$result || !$db->sql_numrows($result))
+	{
+		if ($result)
+		{
+			$db->sql_freeresult($result);
+		}
+
+		return array();
+	}
+
+	$db->sql_freeresult($result);
 
 	$sql = 'SELECT * FROM ' . IM_CONFIG_TABLE;
 	$result = $db->sql_query($sql, false, 'prillian_config');
-	if( !$result && !$no_err )
+
+	if (!$result && !$no_err)
 	{
 		message_die(CRITICAL_ERROR, $lang['No_prill_config'], '', __LINE__, __FILE__, $sql);
 	}
-	elseif( !$result )
+	elseif (!$result)
 	{
 		return array();
 	}
 
 	$temp = array();
-	while ( $row = $db->sql_fetchrow($result) )
+
+	while ($row = $db->sql_fetchrow($result))
 	{
 		$temp[$row['config_name']] = $row['config_value'];
 	}
+
 	$db->sql_freeresult($result);
 
 	return $temp;
