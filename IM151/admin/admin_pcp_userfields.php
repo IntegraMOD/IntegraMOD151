@@ -271,15 +271,17 @@ function pcp_get_sql_map($field, $field_data=array())
 			{
 				if ($row['Field'] == $field)
 				{
-					$type = $field_data['type'];
-					$length = $field_data['length'];
-					$decimal = $field_data['decimal'];
-					$unsigned = $field_data['unsigned'];
-					$not_null = $field_data['not_null'];
-					$default = $field_data['default'];
-					@reset($row);
-					while ( list($key, $value) = @each($row) )
+					$type     = (isset($field_data['type']))     ? $field_data['type']     : '';
+					$length   = (isset($field_data['length']))   ? $field_data['length']   : '';
+					$decimal  = (isset($field_data['decimal']))  ? $field_data['decimal']  : '';
+					$unsigned = (isset($field_data['unsigned'])) ? $field_data['unsigned'] : '';
+					$not_null = (isset($field_data['not_null'])) ? $field_data['not_null'] : '';
+					$default  = (isset($field_data['default']))  ? $field_data['default']  : '';
+					reset($row);
+					while (($key = key($row)) !== null)
 					{
+						$value = $row[$key];
+
 						$n_key = intval($key);
 						if ($key != "$n_key")
 						{
@@ -289,16 +291,16 @@ function pcp_get_sql_map($field, $field_data=array())
 									$value = trim(strtoupper($value));
 
 									// unsigned
-									$unsigned = ( strpos($value, 'UNSIGNED') != false );
+									$unsigned = (strpos($value, 'UNSIGNED') != false);
 									$value = trim(str_replace('UNSIGNED', '', $value));
 
 									// length & decimal
 									$regs = array();
-									if ( ereg('\((.*)\)', $value, $regs) )
+									if (ereg('\((.*)\)', $value, $regs))
 									{
 										$parts = explode(',', $regs[1]);
 										$length = intval($parts[0]);
-										if ( count($parts) > 1 )
+										if (count($parts) > 1)
 										{
 											$decimal = intval($parts[1]);
 										}
@@ -307,19 +309,24 @@ function pcp_get_sql_map($field, $field_data=array())
 									{
 										$length = 0;
 									}
-									$value = ereg_replace( '(\(.*\))', '', $value );
+
+									$value = ereg_replace('(\(.*\))', '', $value);
 
 									// type
 									$type = $value;
 									break;
+
 								case 'Null':
 									$not_null = ($value != 'YES');
 									break;
+
 								case 'Default':
 									$default = $value;
 									break;
 							}
 						}
+
+						next($row);
 					}
 					$field_data['type'] = $type;
 					$field_data['length'] = $length;
@@ -639,6 +646,10 @@ if ( ($mode == 'sqlcreate') || ($mode == 'sqledit') )
 	$not_null		= isset($_POST['not_null']) ? $_POST['not_null'] : $not_null;
 	$default		= isset($_POST['default']) ? $_POST['default'] : $default;
 	$default_null	= isset($_POST['default_null']) ? true : (isset($_POST['default']) ? false : $default_null);
+
+	$cancel = (isset($cancel)) ? $cancel : false;
+	$submit = (isset($submit)) ? $submit : false;
+	$old    = (isset($old))    ? $old    : '';
 
 	if ($cancel)
 	{

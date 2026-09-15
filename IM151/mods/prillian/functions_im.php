@@ -17,15 +17,21 @@ function override_im_settings(&$im_data)
 {
 	global $db, $prill_config;
 
-	if( isset($prill_config['override_frames']) && $prill_config['override_frames'] )
-	{
-	    $im_data['use_frames'] = $prill_config['use_frames'] ?? null;
-	}
-	 
-	if( isset($prill_config['allow_mode_switch']) && !$prill_config['allow_mode_switch'] )
-	{
-	    $im_data['current_mode'] = $prill_config['default_mode'] ?? null;
-	}
+    if (isset($prill_config['override_frames']) && $prill_config['override_frames'])
+    {
+        $im_data['use_frames'] =
+            isset($prill_config['use_frames'])
+                ? $prill_config['use_frames']
+                : null;
+    }
+    
+    if (isset($prill_config['allow_mode_switch']) && !$prill_config['allow_mode_switch'])
+    {
+        $im_data['current_mode'] =
+            isset($prill_config['default_mode'])
+                ? $prill_config['default_mode']
+                : null;
+    }
 
 	if( (isset($prill_config['override_users']) && $prill_config['override_users']) || (isset($im_data['user_override']) && $im_data['user_override']) )
 	{
@@ -66,8 +72,8 @@ function override_im_settings(&$im_data)
 
 }
 
-function init_imprefs($id, $style_setup = false, $get_default = false)
 // Gets user IM preferences from the database.
+function init_imprefs($id, $style_setup = false, $get_default = false)
 {
 	global $db, $prill_config, $lang, $append_msg, $theme, $template, $images;
 
@@ -688,11 +694,11 @@ function print_controls($mode_append = '', $client_mode = FRAMES_MODE, $client_m
 }
 
 
-function auto_prill_check()
 // Checks various factors to see if the auto popup of the IM Client should
 // be used. It would be better to accomplish it with JavaScript, but that
 // doesn't seem to work even when I copy stuff straight from a tutorial.
 // Returns either 1 (trigger the popup) or 0 (don't)
+function auto_prill_check()
 {
 	global $db, $board_config, $phpEx, $im_userdata;
 
@@ -809,24 +815,45 @@ function delete_read_ims($user_id)
 
 function get_prillian_config($no_err = false)
 {
-	global $db, $lang;
+	global $db, $lang, $table_prefix;
+
+	$table_name = $table_prefix . 'im_config';
+
+	// Prevent fatal errors if table does not exist yet durring install
+	$sql = "SHOW TABLES LIKE '" . $table_name . "'";
+	$result = $db->sql_query($sql);
+
+	if (!$result || !$db->sql_numrows($result))
+	{
+		if ($result)
+		{
+			$db->sql_freeresult($result);
+		}
+
+		return array();
+	}
+
+	$db->sql_freeresult($result);
 
 	$sql = 'SELECT * FROM ' . IM_CONFIG_TABLE;
 	$result = $db->sql_query($sql, false, 'prillian_config');
-	if( !$result && !$no_err )
+
+	if (!$result && !$no_err)
 	{
 		message_die(CRITICAL_ERROR, $lang['No_prill_config'], '', __LINE__, __FILE__, $sql);
 	}
-	elseif( !$result )
+	elseif (!$result)
 	{
 		return array();
 	}
 
 	$temp = array();
-	while ( $row = $db->sql_fetchrow($result) )
+
+	while ($row = $db->sql_fetchrow($result))
 	{
 		$temp[$row['config_name']] = $row['config_value'];
 	}
+
 	$db->sql_freeresult($result);
 
 	return $temp;

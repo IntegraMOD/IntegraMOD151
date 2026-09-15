@@ -105,18 +105,24 @@ while( $file = @readdir($dir) )
 
 @ksort($avatar_images);
 @reset($avatar_images);
-if( empty($category) ) list($category, ) = each($avatar_images);
+if (empty($category) && !empty($avatar_images)) {
+    reset($avatar_images);
+    $category = key($avatar_images);
+}
 
 @reset($avatar_images);
 $s_categories = '<select name="avatarcategory">';
-while( list($key) = each($avatar_images) )
+reset($avatar_images);
+while (($key = key($avatar_images)) !== null)
 {
-	$selected = ( $key == $category ) ? ' selected="selected"' : '';
-	if( count($avatar_images[$key]) )
-	{
-		$s_categories .= '<option value="' . $key . '"' . $selected . '>' . ucfirst($key) . '</option>';
-	}
+    $selected = ( $key == $category ) ? ' selected="selected"' : '';
+    if (count($avatar_images[$key]))
+    {
+        $s_categories .= '<option value="' . $key . '"' . $selected . '>' . ucfirst($key) . '</option>';
+    }
+    next($avatar_images);
 }
+
 $s_categories .= '</select>';
 
 $s_colspan = 0;
@@ -133,6 +139,26 @@ for($i = 0; $i < count($avatar_images[$category]); $i++)
 			)
 		);
 	}
+}
+
+if (empty($session_id))
+{
+    if (!empty($userdata['session_id']))
+    {
+        $session_id = $userdata['session_id'];
+    }
+    else if (!empty($_GET['sid']))
+    {
+        $session_id = $_GET['sid'];
+    }
+    else if (!empty($_POST['sid']))
+    {
+        $session_id = $_POST['sid'];
+    }
+    else
+    {
+        $session_id = '';
+    }
 }
 
 $s_hidden_vars = '<input type="hidden" name="sid" value="' . $session_id . '" /><input type="hidden" name="avatarcatname" value="' . $category . '" />';

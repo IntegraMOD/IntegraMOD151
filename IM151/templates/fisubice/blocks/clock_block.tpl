@@ -36,8 +36,6 @@
                 <a href="https://www.integramod.com" target="_blank" class="clock__logo">IntegraMOD</a>
             </div>
         </section>
-        </div>
-        <!--==================== MAIN JS ====================-->
-        <script src="{TEMPLATE}assets/js/clock.js"></script>
-    </body>
-</html>
+    </div>
+    <!--==================== MAIN JS ====================-->
+    <script src="{TEMPLATE}assets/js/clock.js"></script>

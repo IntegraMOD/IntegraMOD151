@@ -891,12 +891,27 @@ function pcp_user_photo_upload($photo_mode, &$current_photo, &$current_type, &$e
 		}
 
 		// add it
-		$module['mode'][$idx]			= $mode;
-		$module['sort'][$idx]			= empty($module['sort'][$idx]) ? $sort : $module['sort'][$idx];
-		$module['url'][$idx]			= empty($module['url'][$idx]) ? basename($url) : $module['url'][$idx];
-		$module['shortcut'][$idx] = isset($module['shortcut'][$idx]) && !empty($module['shortcut'][$idx]) ? $module['shortcut'][$idx] : (isset($lang[$shortcut]) ? $lang[$shortcut] : '');
-        $module['page_title'][$idx] = isset($module['page_title'][$idx]) && !empty($module['page_title'][$idx]) ? $module['page_title'][$idx] : ($lang[$page_title] ?? '');
-
+        $module['mode'][$idx] = $mode;
+        
+        $module['sort'][$idx] =
+            empty($module['sort'][$idx])
+                ? $sort
+                : $module['sort'][$idx];
+        
+        $module['url'][$idx] =
+            empty($module['url'][$idx])
+                ? basename($url)
+                : $module['url'][$idx];
+        
+        $module['shortcut'][$idx] =
+            (isset($module['shortcut'][$idx]) && !empty($module['shortcut'][$idx]))
+                ? $module['shortcut'][$idx]
+                : (isset($lang[$shortcut]) ? $lang[$shortcut] : '');
+        
+        $module['page_title'][$idx] =
+            (isset($module['page_title'][$idx]) && !empty($module['page_title'][$idx]))
+                ? $module['page_title'][$idx]
+                : (isset($lang[$page_title]) ? $lang[$page_title] : '');
 
 		if ( isset($user_maps['PCP.' . $mode]) )
 		{

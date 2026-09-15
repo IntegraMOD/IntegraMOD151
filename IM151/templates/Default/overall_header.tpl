@@ -125,13 +125,15 @@ window.open("tour.php", "_tour", "width=800,height=600,scrollbars,resizable=yes"
 // <![CDATA[
 function prill_launch(url, w, h)
 {
-window.name = 'phpbbmain';
-prillian = window.open(url, 'prillian', 'height=' + h + ', width=' + w + ', innerWidth=' + w + ', innerHeight=' + h + ', resizable, scrollbars');
+    window.name = 'phpbbmain';
+    var prillian = window.open(url, 'prillian',
+        'height=' + h + ', width=' + w + ', innerWidth=' + w + ', innerHeight=' + h + ', resizable, scrollbars');
 }
-if ( {IM_AUTO_POPUP} ) 
-{ 
-prill_launch('{U_IM_LAUNCH}', '{IM_WIDTH}', '{IM_HEIGHT}');
-} 
+
+if ({IM_AUTO_POPUP} == 1)
+{
+    prill_launch('{U_IM_LAUNCH}', '{IM_WIDTH}', '{IM_HEIGHT}');
+}
 // ]]>
 </script>
 <!-- END switch_user_logged_in -->
@@ -139,14 +141,16 @@ prill_launch('{U_IM_LAUNCH}', '{IM_WIDTH}', '{IM_HEIGHT}');
 <!-- BEGIN buddy_alert -->
 <script>
 // <![CDATA[
-if ( {buddy_alert.BUDDY_ALERT} )
+if ({buddy_alert.BUDDY_ALERT} == 1)
 {
-window.open('{buddy_alert.U_BUDDY_ALERT}', '_buddyalert', 'HEIGHT=225,resizable=yes,WIDTH=400');
+    window.open('{buddy_alert.U_BUDDY_ALERT}', '_buddyalert',
+        'HEIGHT=225,resizable=yes,WIDTH=400');
 }
 // ]]>
 </script>
 <!-- END buddy_alert -->
 <!-- Prillian - End Code Additions -->
+
 {COLOR_CSS}
 </head>
 <body>

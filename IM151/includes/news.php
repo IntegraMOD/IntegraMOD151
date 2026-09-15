@@ -444,14 +444,14 @@ class NewsModule
   {
     global $CFG;
 
-	  if(!$_GET['topic_id'])
-	  {
-		  $news_items = $this->config['news_item_num'];
-	  }
-	  else
-	  {
-	 	  $news_items = DEFAULT_NUM_ITEMS;
-	  }
+	if (!isset($_GET['topic_id']))
+	{
+	  $news_items = $this->config['news_item_num'];
+	}
+	else
+	{
+	  $news_items = DEFAULT_NUM_ITEMS;
+	}
 
 
     if( $this->item_count > $news_items )

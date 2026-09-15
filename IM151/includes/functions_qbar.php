@@ -429,8 +429,8 @@ function qbar_display_qbars($display=false)
 					}
 
 					// icon
-					$icon = !empty($fdata['icon']) ? $fdata['icon'] : null;
-					$icon = (isset($images[ $icon ])) ? $images[ $icon ] : $icon;
+					$icon = !empty($fdata['icon']) ? $fdata['icon'] : '';
+					$icon = (isset($images[$icon])) ? $images[$icon] : $icon;
 
 					// store the option
 					$options['icon'][]			= !empty($fdata['use_icon']) ? $icon : '';
