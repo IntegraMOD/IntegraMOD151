@@ -217,6 +217,10 @@ if ( isset($_POST['cancel']) )
 // What auth type do we need to check?
 //
 $is_auth = array();
+$sql = '';
+$post_id = intval($post_id);
+$topic_id = intval($topic_id);
+$forum_id = intval($forum_id);
 if($post_id){ 
     $sql = "SELECT forum_id    FROM " . POSTS_TABLE." where post_id=$post_id"; 
 } else if ( $topic_id ){ 
@@ -228,14 +232,18 @@ if ($forum_id) {
     // post_id or topic_id 
     if ($result = $db->sql_query($sql) ) { 
         $info = $db->sql_fetchrow($result); 
-        $auth_forum = $info['forum_id']; 
+        $auth_forum = (is_array($info) && isset($info['forum_id'])) ? intval($info['forum_id']) : 0; 
         $db->sql_freeresult($result); 
+        if (!$auth_forum)
+        {
+            message_die(GENERAL_MESSAGE, 'Forum_not_exist');
+        }
     } else { 
         message_die(GENERAL_ERROR, 'Could not query table', '', __LINE__, __FILE__, $sql); 
     } 
 } else { 
-    message_die(GENERAL_ERROR, 'Could not fetch forum id for setting up security', '', __LINE__, __FILE__, $sql); 
-} 
+    message_die(GENERAL_MESSAGE, 'Forum_not_exist'); 
+}
 $is_auth = $auth_forum >= 0 ? $tree['auth'][POST_FORUM_URL . $auth_forum] : array(); 
 //-- mod : calendar --------------------------------------------------------------------------------
 //-- add

@@ -92,6 +92,25 @@ if(!function_exists('spliti'))
 	function spliti($pattern, $subject, $limit = -1) { return preg_split('/'.$pattern.'/i', $subject, $limit); } 
 }
 
+if (!function_exists('each'))
+{
+	function each(&$arr)
+	{
+		if (!is_array($arr))
+		{
+			return false;
+		}
+		$key = key($arr);
+		if ($key === null)
+		{
+			return false;
+		}
+		$val = current($arr);
+		next($arr);
+		return array(1 => $val, 'value' => $val, 0 => $key, 'key' => $key);
+	}
+}
+
 // CrackerTracker v5.x
 include($phpbb_root_path . 'ctracker/engines/ct_security.' . $phpEx);
 
@@ -146,65 +165,45 @@ if (@ini_get('register_globals') == '1' || strtolower(@ini_get('register_globals
 // this is a security precaution to prevent someone
 // trying to break out of a SQL statement.
 //
+if (!function_exists('im_addslashes_deep'))
+{
+	function im_addslashes_deep($value)
+	{
+		if (is_array($value))
+		{
+			foreach ($value as $k => $v)
+			{
+				$value[$k] = im_addslashes_deep($v);
+			}
+			return $value;
+		}
+
+		if (is_string($value))
+		{
+			return addslashes($value);
+		}
+
+		return $value;
+	}
+}
+
 if( !function_exists('get_magic_quotes_gpc') || !get_magic_quotes_gpc() )
 {
 	if( is_array($_GET) )
 	{
-    foreach ($_GET as $k => $v)
-		{
-			if( is_array($_GET[$k]) )
-			{
-        foreach ($_GET[$k] as $k2 => $v2)
-				{
-					$_GET[$k][$k2] = addslashes($v2);
-				}
-				@reset($_GET[$k]);
-			}
-			else
-			{
-				$_GET[$k] = addslashes($v);
-			}
-		}
+		$_GET = im_addslashes_deep($_GET);
 		@reset($_GET);
 	}
 
 	if( is_array($_POST) )
 	{
-    foreach ($_POST as $k => $v)
-		{
-			if( is_array($_POST[$k]) )
-			{
-        foreach ($_POST[$k] as $k2 => $v2)
-				{
-					$_POST[$k][$k2] = addslashes($v2);
-				}
-				@reset($_POST[$k]);
-			}
-			else
-			{
-				$_POST[$k] = addslashes($v);
-			}
-		}
+		$_POST = im_addslashes_deep($_POST);
 		@reset($_POST);
 	}
 
 	if( is_array($_COOKIE) )
 	{
-    foreach ($_COOKIE as $k => $v)
-		{
-			if( is_array($_COOKIE[$k]) )
-			{
-        foreach ($_COOKIE[$k] as $k2 => $v2)
-				{
-					$_COOKIE[$k][$k2] = addslashes($v2);
-				}
-				@reset($_COOKIE[$k]);
-			}
-			else
-			{
-				$_COOKIE[$k] = addslashes($v);
-			}
-		}
+		$_COOKIE = im_addslashes_deep($_COOKIE);
 		@reset($_COOKIE);
 	}
 }

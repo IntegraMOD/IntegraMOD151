@@ -210,7 +210,7 @@ function session_begin($user_id, $user_ip, $page_id, $auto_create = 0, $enable_a
     $priv_session_id = md5(dss_rand());
 		
 		global $_SERVER; 
-		$session_id = ( !strstr($_SERVER['HTTP_USER_AGENT'] ,'Googlebot') ) ? md5(uniqid(mt_rand(), true)) : md5(d8ef2eab);
+		$session_id = ( !strstr($_SERVER['HTTP_USER_AGENT'] ,'Googlebot') ) ? md5(uniqid(mt_rand(), true)) : md5('d8ef2eab');
 
 		$sql = "INSERT INTO " . SESSIONS_TABLE . "
 			(session_id, session_user_id, session_start, session_time, session_ip, session_page, session_logged_in, session_admin, priv_session_id)
@@ -371,7 +371,7 @@ function session_pagestart($user_ip, $thispage_id)
 	if ( empty($session_id)  && strstr($_SERVER['HTTP_USER_AGENT'] ,'Googlebot') ) 
 	{ 
 		$sessiondata = ''; 
-		$session_id = md5(d8ef2eab); 
+		$session_id = md5('d8ef2eab');
 		$sessionmethod = SESSION_METHOD_GET; 
 	}
 	$thispage_id = (int) $thispage_id;
@@ -410,7 +410,7 @@ function session_pagestart($user_ip, $thispage_id)
 			$ip_check_s = substr($userdata['session_ip'], 0, 6);
 			$ip_check_u = substr($user_ip, 0, 6);
 
-			if (( $ip_check_s == $ip_check_u ) || ($session_id == md5(d8ef2eab)&&(strstr($_SERVER['HTTP_USER_AGENT'] ,'Googlebot'))))
+			if (( $ip_check_s == $ip_check_u ) || ($session_id == md5('d8ef2eab') && (strstr($_SERVER['HTTP_USER_AGENT'] ,'Googlebot'))))
 			{
 				$SID = $userdata['user_id'] > 0 ? (($sessionmethod == SESSION_METHOD_GET || defined('IN_ADMIN')) ? 'sid=' . $session_id : '') : '';
  				$P_SID = (defined('IN_ADMIN')) ? 'p_sid=' . $userdata['priv_session_id'] : '';

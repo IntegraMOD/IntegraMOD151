@@ -99,7 +99,7 @@ if(isset($_GET['printertopic']))
 	{
 		$finish = intval($_GET['finish_rel']);
 	}
-	if(($finish >= 0) && (($finish - $start) <=0))
+	if(isset($finish) && ($finish >= 0) && (($finish - $start) <=0))
 	{
 	unset($finish);
 	}
@@ -2308,7 +2308,7 @@ if ( $userdata['user_allowsignature'] != 2 && $board_config['sig_allow_font_size
 	// Parse smilies
 	//
 	//Begin Lo-Fi Mod
-	if ( $board_config['allow_smilies'] && !$lofi )
+	if ( $board_config['allow_smilies'] && empty($lofi) )
 	//End Lo-Fi Mod 
 	{
 		if ( $postrow[$i]['user_allowsmile'] && $user_sig != '' && $board_config['sig_allow_smilies'] != 0 )
@@ -2702,11 +2702,11 @@ else
 }
 
 $block_width = 0;
-if($portal_config['portal_header'])
+if (!empty($portal_config['portal_header']) && isset($portal_config['header_width']))
 {
 	$block_width = $block_width + $portal_config['header_width'];
 }
-if($portal_config['portal_tail'])
+if (!empty($portal_config['portal_tail']) && isset($portal_config['footer_width']))
 {
 	$block_width = $block_width + $portal_config['footer_width'];
 }

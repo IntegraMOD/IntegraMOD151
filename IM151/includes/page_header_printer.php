@@ -84,9 +84,9 @@ $template->assign_vars(array(
     'L_REGISTER' => $lang['Register'],
     'L_PROFILE' => $lang['Profile'],
     'L_SEARCH' => $lang['Search'],
-    'L_PRIVATEMSGS' => $lang['Private_msgs'],
+    'L_PRIVATEMSGS' => isset($lang['Private_msgs']) ? $lang['Private_msgs'] : (isset($lang['Private_Messaging']) ? $lang['Private_Messaging'] : ''),
     'L_MEMBERLIST' => $lang['Memberlist'],
-    'L_HELP' => $lang['Help'],
+    'L_HELP' => isset($lang['Help']) ? $lang['Help'] : (isset($lang['FAQ']) ? $lang['FAQ'] : ''),
     'L_FAQ' => $lang['FAQ'],
     'L_USERGROUPS' => $lang['Usergroups'],
     'L_FORUM' => $lang['Forum'],
@@ -102,8 +102,8 @@ $template->assign_vars(array(
     'L_JOINED' => $lang['Joined'],
     'L_AUTHOR' => $lang['Author'],
     'L_MESSAGE' => $lang['Message'],
-	'L_SHOW' => $lang['printertopic_Show'],
-    'L_BY' => $lang['by'],
+	'L_SHOW' => isset($lang['printertopic_Show']) ? $lang['printertopic_Show'] : '',
+	'L_BY' => isset($lang['by']) ? $lang['by'] : (isset($lang['By']) ? $lang['By'] : ''),
 
     'U_INDEX' => append_sid('index.'.$phpEx),
 
