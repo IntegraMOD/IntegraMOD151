@@ -88,7 +88,7 @@ switch ( $mode )
 					}
 				}
 			}
-			if ( count($update_clause) )
+			if ( count_safe($update_clause) )
 			{
 				$group_type = intval($_POST['group_type']);
 				$group_id = intval($_POST['group_id']);
@@ -132,15 +132,15 @@ switch ( $mode )
 						{
 							$users[] = $row['user_id'];
 						}
-						if ( count($users) > 20 )
+						if ( count_safe($users) > 20 )
 						{
 							$group = array_chunk($users,15);
-							for ( $i = 0; $i < count($group); $i++ )
+							for ( $i = 0; $i < count_safe($group); $i++ )
 							{
 								$where_clause[] = 'WHERE user_id = ' . implode(' OR user_id = ',$group[$i]);
 							}
 						}
-						else if ( count($users) )
+						else if ( count_safe($users) )
 						{
 							$where_clause[] = 'WHERE user_id = ' . implode(' OR user_id = ',$users);
 						}
@@ -148,11 +148,11 @@ switch ( $mode )
 					default:
 						break;
 				}
-				if ( count($where_clause) )
+				if ( count_safe($where_clause) )
 				{
 					$clause = "UPDATE " . USERS_TABLE . "
 								SET " . implode(',',$update_clause) . " ";
-					for ( $i = 0; $i < count($where_clause); $i++ )
+					for ( $i = 0; $i < count_safe($where_clause); $i++ )
 					{
 						$sql = $clause . $where_clause[$i];
 						if ( !($db->sql_query($sql)) )
@@ -225,7 +225,7 @@ switch ( $mode )
 						}
 					}
 					reset ( $update_set );
-					if ( count($updates) > 0 )
+					if ( count_safe($updates) > 0 )
 					{
 						if ( $delete_this )
 						{
@@ -439,7 +439,7 @@ switch ( $mode )
 		//
 		// load up info for each group
 		//
-		for( $i = 0; $i < count($groups); $i++ )
+		for( $i = 0; $i < count_safe($groups); $i++ )
 		{
 			$groups[$i]->load();
 		}
@@ -473,18 +473,18 @@ switch ( $mode )
 			"L_REMOVE" => $lang['Remove'],
 			"L_SET" => $lang['Set'],
 
-			"NUM_COLUMNS" => (count($cash_indices) + 2),
-			"NUM_CURRENCIES" => count($cash_indices))
+			"NUM_COLUMNS" => (count_safe($cash_indices) + 2),
+			"NUM_CURRENCIES" => count_safe($cash_indices))
 		);
 
-		for ( $i = 0; $i < count($groups); $i++ )
+		for ( $i = 0; $i < count_safe($groups); $i++ )
 		{
 			$hidden_fields = '<input type="hidden" name="group_type" value="' . $groups[$i]->group_type . '" />';
 			$hidden_fields .= '<input type="hidden" name="group_id" value="' . $groups[$i]->group_id . '" />';
 			$hidden_fields .= '<input type="hidden" name="group_name" value="' . $groups[$i]->group_name . '" />';
 			$hidden_fields .= '<input type="hidden" name="group_description" value="' . $groups[$i]->group_description . '" />';
-			$cell_width = floor(100/(count($cash_indices)+1));
-			$remainder_width = 100 - ($cell_width * count($cash_indices));
+			$cell_width = floor(100/(count_safe($cash_indices)+1));
+			$remainder_width = 100 - ($cell_width * count_safe($cash_indices));
 			$merge_width = 100 - $remainder_width;
 			$template->assign_block_vars('entryrow',array(	"NAME" => $groups[$i]->group_name,
 															"DESCRIPTION" => $groups[$i]->group_description,
@@ -505,7 +505,7 @@ switch ( $mode )
 				$template->assign_block_vars('entryrow.switch_displayoff',array());
 			}
 
-			for ( $j = 0; $j < count($cash_indices); $j++ )
+			for ( $j = 0; $j < count_safe($cash_indices); $j++ )
 			{
 				$template->assign_block_vars('entryrow.cashrow',array(	"NAME" => $cash_names[$j],
 																		"S_TYPE_FIELD" => 'update_type[' . $cash_indices[$j] . ']',

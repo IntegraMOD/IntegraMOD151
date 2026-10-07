@@ -191,14 +191,14 @@ class pafiledb_stats extends pafiledb_public
 		$row_downloads = $db->sql_fetchrowset($result);
 		$db->sql_freeresult($result);
 
-		for($i = 0; $i < count($row_downloads); $i++)
+		for($i = 0; $i < count_safe($row_downloads); $i++)
 		{
 			$os_point[$row_downloads[$i]['downloader_os']]++;
 			$agent_point[$row_downloads[$i]['downloader_browser']]++;
 		}
 
 		$os_graphic = 0;
-		$os_graphic_max = count($images['voting_graphic']);
+		$os_graphic_max = count_safe($images['voting_graphic']);
 
 		foreach($os_point as $index => $point)
 		{
@@ -216,7 +216,7 @@ class pafiledb_stats extends pafiledb_public
 		}
 
 		$b_graphic = 0;
-		$b_graphic_max = count($images['voting_graphic']);
+		$b_graphic_max = count_safe($images['voting_graphic']);
 
 		foreach($agent_point as $index => $point)
 		{
@@ -247,14 +247,14 @@ class pafiledb_stats extends pafiledb_public
 		$row_ratings = $db->sql_fetchrowset($result);
 		$db->sql_freeresult($result);
 
-		for($i = 0; $i < count($row_ratings); $i++)
+		for($i = 0; $i < count_safe($row_ratings); $i++)
 		{
 			$os_point[$row_ratings[$i]['voter_os']]++;
 			$agent_point[$row_ratings[$i]['voter_browser']]++;
 		}
 
 		$os_graphic = 0;
-		$os_graphic_max = count($images['voting_graphic']);
+		$os_graphic_max = count_safe($images['voting_graphic']);
 
 		foreach($os_point as $index => $point)
 		{
@@ -273,7 +273,7 @@ class pafiledb_stats extends pafiledb_public
 
 
 		$b_graphic = 0;
-		$b_graphic_max = count($images['voting_graphic']);
+		$b_graphic_max = count_safe($images['voting_graphic']);
 
 		foreach($agent_point as $index => $point)
 		{

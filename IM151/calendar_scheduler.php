@@ -142,7 +142,7 @@ get_recurring_events($events, $number, $month_start, $month_end, false, 0, -1, $
 
 // get the days with events
 $days = array();
-for ($i=0; $i < count($events); $i++)
+for ($i=0; $i < count_safe($events); $i++)
 {
 	// set the event on the month viewed
 	$calendar_start = $events[$i]['event_calendar_time'];
@@ -166,7 +166,7 @@ $events = array();
 $birthdays_count = 0;
 $remaining = $board_config['topics_per_page'];
 get_event_PCP_birthday($events, $birthdays_count, $start_date, $end_date, true, $start, $remaining);
-$displayed = count($events)-1;
+$displayed = count_safe($events)-1;
 if ($displayed < 0) $displayed = 0;
 
 // topics
@@ -241,7 +241,7 @@ $first_day_of_week = isset($board_config['board_fdow']) ? intval($board_config['
 
 // buid select list for month
 $s_month = '';
-for ($i=0; $i < count($set_of_months); $i++)
+for ($i=0; $i < count_safe($set_of_months); $i++)
 {
 	$selected = ($month == $i+1) ? ' selected="selected"' : '';
 	$s_month .= '<option value="' . ($i+1) . '"' . $selected . '>' . $lang['datetime'][ $set_of_months[$i] ] . '</option>';
@@ -339,7 +339,7 @@ $title = get_calendar_title_date($start_date, $period);
 
 // move events to topic_rowset format
 $topic_rowset = array();
-for ($i = 0; $i < count($events); $i++)
+for ($i = 0; $i < count_safe($events); $i++)
 {
 	$row['topic_id']				= $events[$i]['event_id'];
 	$row['topic_title']				= $events[$i]['event_title'];

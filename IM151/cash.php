@@ -541,7 +541,7 @@ switch( $mode )
 		$max_columns_per_row = 3;
 		$columnwidth = intval(floor(100/$max_columns_per_row));
 		$bresenham = 0;
-		$numrows = intval(ceil(count($indices)/$max_columns_per_row));
+		$numrows = intval(ceil(count_safe($indices)/$max_columns_per_row));
 		$i = 0;
 		while ( $c_cur = &$cash->currency_next($cm_i,CURRENCY_ENABLED | CURRENCY_EXCHANGEABLE) )
 		{
@@ -562,7 +562,7 @@ switch( $mode )
 																	'NO_EXCHANGE' => sprintf($lang['Cannot_exchange'],$c_cur->name()))
 										);
 			$exchangecount = 0;
-			if ( isset($exchange_data[$c_cur->id()]) && count($exchange_data[$c_cur->id()]) )
+			if ( isset($exchange_data[$c_cur->id()]) && count_safe($exchange_data[$c_cur->id()]) )
 			{
 				$template->assign_block_vars("rowrow.cashtable.switch_exon",array());
 				while ( $c_cur_j = &$cash->currency_next($cm_j,CURRENCY_ENABLED | CURRENCY_EXCHANGEABLE) )

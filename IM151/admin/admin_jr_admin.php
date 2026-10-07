@@ -95,7 +95,7 @@ function jr_admin_make_rank_list($user_id, $user_rank)
 	$rank_list = '<select name="user_rank_list_"'.$user_id.'" class="post" size="1">';
 	$selected = (0 == $user_rank) ? 'selected="selected"' : '';
 	$rank_list .= '<option value="0" '.$selected.'>'.$lang['No_assigned_rank'].'</option>\n';
-	for($i = 0; $i < count($rowset); $i++)
+	for($i = 0; $i < count_safe($rowset); $i++)
 	{
 	$selected = ($rowset[$i]['rank_id'] == $user_rank) ? ' selected="selected"' : '';
 	$rank_list .= '<option value="'.$rowset[$i]['rank_id'].'"'.$selected.'>'.$rowset[$i]['rank_title'].'</option>\n';
@@ -222,7 +222,7 @@ foreach($params as $var => $default)
 //*******************************************************************************************
 /** Check for edit user
 /******************************************************************************************/
-if (count($_POST))
+if (count_safe($_POST))
 {
 	foreach ($_POST as $key => $val)
 	{
@@ -421,7 +421,7 @@ else
 		}
 		
 		$jr_admin_row = jr_admin_get_user_info($row['user_id']);
-		$module_count = (!empty($jr_admin_row['user_jr_admin'])) ? count(explode(EXPLODE_SEPERATOR_CHAR, $jr_admin_row['user_jr_admin'])) : 0;
+		$module_count = (!empty($jr_admin_row['user_jr_admin'])) ? count_safe(explode(EXPLODE_SEPERATOR_CHAR, $jr_admin_row['user_jr_admin'])) : 0;
 		$block_text = 'userrow';
 		
 		$template->assign_block_vars($block_text, array(

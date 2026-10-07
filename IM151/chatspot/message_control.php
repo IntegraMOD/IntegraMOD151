@@ -232,7 +232,7 @@ function show_msgs( $room_id, $messages, $initialize_flag )
 
 	$display_own_messages = $initialize_flag;
 	
-	for( $i = 0; $i < count( $messages ); $i++ )
+	for( $i = 0; $i < count_safe( $messages ); $i++ )
 	{
 		$msg = $messages[ $i ];
 		

@@ -195,8 +195,8 @@ class digest_emailer
 
 		$to = $this->addresses['to'];
 
-		$cc = (count($this->addresses['cc'])) ? implode(', ', $this->addresses['cc']) : '';
-		$bcc = (count($this->addresses['bcc'])) ? implode(', ', $this->addresses['bcc']) : '';
+		$cc = (count_safe($this->addresses['cc'])) ? implode(', ', $this->addresses['cc']) : '';
+		$bcc = (count_safe($this->addresses['bcc'])) ? implode(', ', $this->addresses['bcc']) : '';
 
 		// Build header
 		// This is the one line of code modified from emailer.php so mail_digests.php can send HTML
@@ -497,7 +497,7 @@ function auth_read($userdata)
 	$is_admin = ( $userdata['user_level'] == ADMIN ) ? TRUE : 0;
 
 	$auth_user = array();
-	for($i = 0; $i < count($auth_fields); $i++)
+	for($i = 0; $i < count_safe($auth_fields); $i++)
 	{
 		$key = $auth_fields[$i];
 
@@ -539,7 +539,7 @@ function auth_read($userdata)
 		}
 		else
 		{
-			for($k = 0; $k < count($f_access); $k++)
+			for($k = 0; $k < count_safe($f_access); $k++)
 			{
 				$value = $f_access[$k][$key];
 				$f_forum_id = $f_access[$k]['forum_id'];
@@ -588,7 +588,7 @@ function auth_read($userdata)
 	}
 	else
 	{
-		for($k = 0; $k < count($f_access); $k++)
+		for($k = 0; $k < count_safe($f_access); $k++)
 		{
 			$f_forum_id = $f_access[$k]['forum_id'];
 
@@ -629,12 +629,12 @@ function digest_smilies_pass($message, $siteURL)
      		        }
      		        $smilies = $db->sql_fetchrowset($result);
 
-     		        if (count($smilies))
+     		        if (count_safe($smilies))
      		        {
      			        usort($smilies, 'smiley_sort');
                         }
 
-		        for ($i = 0; $i < count($smilies); $i++)
+		        for ($i = 0; $i < count_safe($smilies); $i++)
 		        {
 			        $orig[] = "/(?<=.\W|\W.|^\W)" . phpbb_preg_quote($smilies[$i]['code'], "/") . "(?=.\W|\W.|\W$)/";
 			        $repl[] = '<img src="' . $siteURL . '/' . $board_config['smilies_path'] . '/' . $smilies[$i]['smile_url'] . '" alt="' . $smilies[$i]['emoticon'] . '" border="0" />';
@@ -648,7 +648,7 @@ function digest_smilies_pass($message, $siteURL)
                 }
 	}
 
-	if (count($orig))
+	if (count_safe($orig))
 	{
 		$message = preg_replace($orig, $repl, ' ' . $message . ' ');
 		$message = substr($message, 1, -1);

@@ -69,13 +69,13 @@ while ( $c_cur = $cash->currency_next($cm_i) )
 	$exchange[] = array('id' => $c_cur->id(), 'name' => $c_cur->name(), 'exchange' => $exval);
 }
 
-for ( $i1 = 0; $i1 < count($exchange); $i1++ )
+for ( $i1 = 0; $i1 < count_safe($exchange); $i1++ )
 {
 	$i = $exchange[$i1]['id'];
 	$varname = 'exchange_' . $i;
 	if ( isset($_POST[$varname]) && is_array($_POST[$varname]) )
 	{
-		for ( $i2 = 0; $i2 < count($exchange); $i2++ )
+		for ( $i2 = 0; $i2 < count_safe($exchange); $i2++ )
 		{
 			$j = $exchange[$i2]['id'];
 			if ( isset($_POST[$varname][$j]) && ($i != $j) )
@@ -133,10 +133,10 @@ $template->assign_vars(array(
 	'CORNER_CLASS' => $theme['td_class1'],
 	'SIDE_CLASS' => 'row3',
 
-	'NUM_COLUMNS' => count($exchange))
+	'NUM_COLUMNS' => count_safe($exchange))
 );
 
-for ($i = 0; $i < count($exchange); $i++ )
+for ($i = 0; $i < count_safe($exchange); $i++ )
 {
 	$template->assign_block_vars("cashrow",array(	"ROW_CLASS" => (( !(($i - 1) % 3) ) ? $theme['td_class2'] : $theme['td_class1']),
 													"CURRENCY_ID" => $exchange[$i]['id'],
@@ -146,7 +146,7 @@ for ($i = 0; $i < count($exchange); $i++ )
 								);
 }
 
-for ($i = 0; $i < count($exchange); $i++ )
+for ($i = 0; $i < count_safe($exchange); $i++ )
 {
 	$template->assign_block_vars("siderow",array(	"ROW_CLASS" => (( !(($i - 1) % 3) ) ? $theme['td_class2'] : $theme['td_class1']),
 													"CURRENCY_NAME" => $exchange[$i]['name']
@@ -157,7 +157,7 @@ for ($i = 0; $i < count($exchange); $i++ )
 		$template->assign_block_vars("siderow.switch_first",array());
 	}
 
-	for ( $j = 0; $j < count($exchange); $j++ )
+	for ( $j = 0; $j < count_safe($exchange); $j++ )
 	{
 		$node = ($i != $j);
 		$row_class = ((( !(($j - 1) % 3) ) || ( !(($i - 1) % 3) )) ? $theme['td_class2'] : $theme['td_class1']);

@@ -82,7 +82,7 @@ else if ( $mode == 'view' || $mode == 'downloaddebug' )
 	$a		   = 0;
 	$lastclean = 0;
 
-	for ( $i = count($filename) - 1; $i >= 0; $i-- )
+	for ( $i = count_safe($filename) - 1; $i >= 0; $i-- )
 	{
 		define('SPLIT', '|||');		// File Token
 		$line = explode(SPLIT, $filename[$i]);

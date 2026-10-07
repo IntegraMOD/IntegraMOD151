@@ -232,28 +232,28 @@ if ( $mode == 'edit' )
 			$error = true;
 			$error_msg .= ( empty($error_msg) ? '' : '<br /><br />') . $lang['PCP_err_classesfields_already_exists'];
 		}
-		if ( empty($name) || !ereg("^[a-zA-Z0-9_]+", $name) )
+		if ( empty($name) || !preg_match('~^[a-zA-Z0-9_]+~D', $name) )
 		{
 			$error = true;
 			$error_msg .= ( empty($error_msg) ? '' : '<br /><br />') . $lang['PCP_err_classesfields_name_not_valid'];
 		}
 
 		// config field
-		if ( !empty($config_field) && !ereg("^[a-z0-9_]+", $config_field) )
+		if ( !empty($config_field) && !preg_match('~^[a-z0-9_]+~D', $config_field) )
 		{
 			$error = true;
 			$error_msg .= ( empty($error_msg) ? '' : '<br /><br />') . $lang['PCP_err_classesfields_config_field_not_valid'];
 		}
 
 		// admin field
-		if ( !empty($admin_field) && !ereg("^[a-z0-9_]+", $admin_field) )
+		if ( !empty($admin_field) && !preg_match('~^[a-z0-9_]+~D', $admin_field) )
 		{
 			$error = true;
 			$error_msg .= ( empty($error_msg) ? '' : '<br /><br />') . $lang['PCP_err_classesfields_admin_field_not_valid'];
 		}
 
 		// user field
-		if ( !empty($user_field) && !ereg("^[a-z0-9_]+", $user_field) )
+		if ( !empty($user_field) && !preg_match('~^[a-z0-9_]+~D', $user_field) )
 		{
 			$error = true;
 			$error_msg .= ( empty($error_msg) ? '' : '<br /><br />') . $lang['PCP_err_classesfields_user_field_not_valid'];

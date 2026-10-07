@@ -65,7 +65,7 @@ $guest_counter = 0;
 $prev_user = 0;
 $prev_ip = '';
 
-for ($i=0; $i < count($connected); $i++)
+for ($i=0; $i < count_safe($connected); $i++)
 {	
 	$row = $connected[$i];
 	$view_online = false;

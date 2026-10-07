@@ -71,7 +71,7 @@ while( $file = @readdir($dir) )
 unset($setmodules);
 //
 // sort
-for ($i=0; $i < count($module['sub']); $i++)
+for ($i=0; $i < count_safe($module['sub']); $i++)
 {
 	if ( !empty($module['sub'][$i]) )
 	{
@@ -199,7 +199,7 @@ if (!$user_row = $db->sql_fetchrow($result) )
 
 // get curopt
 $curopt = -1;
-for ($i=0; ( ($i < count($module['mode'])) && ($curopt < 0) ); $i++ )
+for ($i=0; ( ($i < count_safe($module['mode'])) && ($curopt < 0) ); $i++ )
 {
 	if ($mode == $module['mode'][$i])
 	{
@@ -223,7 +223,7 @@ for ($i=0; ( ($i < $mode_count) && ($cur_subopt < 0) ); $i++ )
 		$cur_subopt = $i;
 	}
 }
-if ( ($cur_subopt < 0) && (count($module['sub'][$curopt]) > 0) )
+if ( ($cur_subopt < 0) && (count_safe($module['sub'][$curopt]) > 0) )
 {
 	$cur_subopt = 0;
 	$sub = $module['sub'][$curopt]['mode'][0];
@@ -300,10 +300,10 @@ else
 	);
 	//
 	// menu
-	$nb_opt = count($module['shortcut']);
+	$nb_opt = count_safe($module['shortcut']);
 	if ( $nb_opt < 8 ) $nb_opt = 8;
 	$width = intval(120 / $nb_opt) +1;
-	$filler_width = 120 - $width * count($module['shortcut']);
+	$filler_width = 120 - $width * count_safe($module['shortcut']);
 	if ($filler_width < 0) $filler_width = 0;
 	$template->assign_vars(array(
 		'NBOPT'			=> $nb_opt,
@@ -311,12 +311,12 @@ else
 		'FILLER_WIDTH'	=> $filler_width,
 		)
 	);
-	if ( $nb_opt > count($module['shortcut']) )
+	if ( $nb_opt > count_safe($module['shortcut']) )
 	{
 		$template->assign_block_vars('filleropt', array() );	
 	}
 
-	for ($i=0; $i < count($module['shortcut']); $i++)
+	for ($i=0; $i < count_safe($module['shortcut']); $i++)
 	{
 		$switch = ($curopt==$i) ? 'curopt' : ( ($userdata['session_logged_in'] && ( ($userdata['user_id'] == $view_user_id) || (is_admin($userdata) && ($level_prior[get_user_level($userdata)] > $level_prior[get_user_level($view_userdata)])))) ? 'otheropt' : 'inactopt' );
 		$template->assign_block_vars('opt', array());
@@ -334,12 +334,12 @@ else
 	}
 	//
 	// sub-menu
-	if ( ($cur_subopt >= 0) && (count($module['sub'][$curopt]['mode']) > 1) )
+	if ( ($cur_subopt >= 0) && (count_safe($module['sub'][$curopt]['mode']) > 1) )
 	{
-		$nb_opt = count($module['sub'][$curopt]['shortcut']);
+		$nb_opt = count_safe($module['sub'][$curopt]['shortcut']);
 		if ( $nb_opt < 8 ) $nb_opt = 8;
 		$width = intval(100 / $nb_opt) +1;
-		$filler_width = 100 - $width * count($module['sub'][$curopt]['shortcut']);
+		$filler_width = 100 - $width * count_safe($module['sub'][$curopt]['shortcut']);
 		if ($filler_width < 0) $filler_width = 0;
 
 		$template->assign_block_vars('sub_menu', array(
@@ -351,16 +351,16 @@ else
 			)
 		);
 
-		if ( $nb_opt > count($module['sub'][$curopt]['shortcut']) )
+		if ( $nb_opt > count_safe($module['sub'][$curopt]['shortcut']) )
 		{
 			$template->assign_block_vars('sub_menu.filleropt', array() );
 		}
 
-		for ($i=0; $i < count($module['sub'][$curopt]['shortcut']); $i++)
+		for ($i=0; $i < count_safe($module['sub'][$curopt]['shortcut']); $i++)
 		{
 			$switch = ($cur_subopt==$i) ? 'curopt' : ( ($userdata['session_logged_in'] && ( ($mode=='viewprofile') || ($userdata['user_id'] == $view_user_id) || (is_admin($userdata) && ($level_prior[get_user_level($userdata)] > $level_prior[get_user_level($view_userdata)])))) ? 'otheropt' : 'inactopt' );
 			$template->assign_block_vars('sub_menu.opt', array());
-			if ($i < count($module['sub'][$curopt]['shortcut']))
+			if ($i < count_safe($module['sub'][$curopt]['shortcut']))
 			{
 				$template->assign_block_vars('sub_menu.opt.' . $switch, array(
 					'SHORTCUT'		=> $module['sub'][$curopt]['shortcut'][$i],

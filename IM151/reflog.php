@@ -25,7 +25,7 @@ if (($ref) and (!strstr($ref, $mydomain)))
 		if ($ref <> $rfile[0]) 
 		{		
 			
-			if (count($rfile) == $maxref)
+			if (count_safe($rfile) == $maxref)
 				array_pop($rfile); 
 			array_unshift($rfile, $ref); 
 			$r = join("", $rfile); 

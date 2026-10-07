@@ -66,7 +66,7 @@ function auth($type, $forum_id, $userdata, $f_access = '')
 		}
 		else
 		{
-			for ( $i = 0; $i < count($tree['data']); $i++ )
+			for ( $i = 0; $i < count_safe($tree['data']); $i++ )
 			{
 				if ( $tree['type'][$i] == POST_FORUM_URL )
 				{
@@ -268,7 +268,7 @@ function auth($type, $forum_id, $userdata, $f_access = '')
 	$is_admin = ( $userdata['user_level'] == ADMIN && $userdata['session_logged_in'] ) ? TRUE : 0;
 
 	$auth_user = array();
-	for($i = 0; $i < count($auth_fields); $i++)
+	for($i = 0; $i < count_safe($auth_fields); $i++)
 	{
 		$key = $auth_fields[$i];
 
@@ -321,7 +321,7 @@ function auth($type, $forum_id, $userdata, $f_access = '')
 		}
 		else
 		{
-			for($k = 0; $k < count($f_access); $k++)
+			for($k = 0; $k < count_safe($f_access); $k++)
 			{
 				$value = $f_access[$k][$key];
 				$f_forum_id = $f_access[$k]['forum_id'];
@@ -406,7 +406,7 @@ function auth($type, $forum_id, $userdata, $f_access = '')
 	}
 	else
 	{
-		for($k = 0; $k < count($f_access); $k++)
+		for($k = 0; $k < count_safe($f_access); $k++)
 		{
 			$f_forum_id = $f_access[$k]['forum_id'];
 			
@@ -437,14 +437,14 @@ function auth_check_user($type, $key, $u_access, $is_admin)
 	// V: this is when we pass in a single access record
 	//    instead of an array thereof
   if ($u_access === null) $u_access = [];
-	if (count($u_access) && !isset($u_access[0]))
+	if (count_safe($u_access) && !isset($u_access[0]))
 	{
 		$u_access = array($u_access);
 	}
 
-	if ( count($u_access) )
+	if ( count_safe($u_access) )
 	{
-		for($j = 0; $j < count($u_access); $j++)
+		for($j = 0; $j < count_safe($u_access); $j++)
 		{
 			$result = 0;
 			switch($type)
@@ -490,8 +490,8 @@ function get_moderators_user_id_of_forum($forum_id){
                 message_die(GENERAL_ERROR, 'Error getting group information', '', __LINE__, __FILE__, $sql); 
         } 
         $user_rows =  $db->sql_fetchrowset($result); 
-        for ($i = 0; $i < count($user_rows); $i++) { 
-            if ($i == 0 && !count($tree['mods'][$idx]['user_id'])) { 
+        for ($i = 0; $i < count_safe($user_rows); $i++) { 
+            if ($i == 0 && !count_safe($tree['mods'][$idx]['user_id'])) { 
                 // no users in list yet so don't append a | 
                 $users = $user_rows[$i]['user_id']; 
             } else { 

@@ -78,7 +78,7 @@ class attach_pm extends attach_parent
 			$this->do_insert_attachment('attach_list', 'pm', $a_privmsgs_id);
 			$this->do_insert_attachment('last_attachment', 'pm', $a_privmsgs_id);
 
-			if ((count($this->attachment_list) > 0 || $this->post_attach) && !isset($_POST['update_attachment']))
+			if ((count_safe($this->attachment_list) > 0 || $this->post_attach) && !isset($_POST['update_attachment']))
 			{
 				$sql = "UPDATE " . PRIVMSGS_TABLE . "
 					SET privmsgs_attachment = 1
@@ -145,10 +145,10 @@ class attach_pm extends attach_parent
 	{
 		global $confirm, $delete_all;
 
-		if (count($mark_list))
+		if (count_safe($mark_list))
 		{
 			$delete_sql_id = '';
-			for ($i = 0; $i < count($mark_list); $i++)
+			for ($i = 0; $i < count_safe($mark_list); $i++)
 			{
 				$delete_sql_id .= (($delete_sql_id != '') ? ', ' : '') . intval($mark_list[$i]);
 			}
@@ -233,7 +233,7 @@ class attach_pm extends attach_parent
 
 		$mark_list = ( !empty($_POST['mark']) ) ? $_POST['mark'] : array();
 
-		if ( ( (($this->pm_delete_attachments) || ($delete)) && (count($mark_list)) ) )
+		if ( ( (($this->pm_delete_attachments) || ($delete)) && (count_safe($mark_list)) ) )
 		{
 			if ( !$userdata['session_logged_in'] )
 			{
@@ -242,10 +242,10 @@ class attach_pm extends attach_parent
 				exit;
 			}
 			
-			if (count($mark_list))
+			if (count_safe($mark_list))
 			{
 				$delete_sql_id = '';
-				for ($i = 0; $i < count($mark_list); $i++)
+				for ($i = 0; $i < count_safe($mark_list); $i++)
 				{
 					$delete_sql_id .= (($delete_sql_id != '') ? ', ' : '') . intval($mark_list[$i]);
 				}

@@ -176,7 +176,7 @@ while( $config_file = @readdir($dir) )
 			// now find all the valid sub tabs for this valid tab
 			// (anyone knowing what I'm talking about?)
 			//------------------------------------------------------------------------
-			for ($i = 0; $i < count($album_config_tabs[$config_tabs_index]['sub_config']); $i++ )
+			for ($i = 0; $i < count_safe($album_config_tabs[$config_tabs_index]['sub_config']); $i++ )
 			{
 				if ( array_key_exists('selection', $album_config_tabs[$config_tabs_index]['sub_config'][$i]) )
 				{
@@ -258,7 +258,7 @@ if ( @!array_key_exists($selected_tab,$valid_tab_selections) )
 //------------------------------------------------------------------------
 // check if a valid sub tab selection has been made
 //------------------------------------------------------------------------
-if (is_array($valid_tab_selections) && count($valid_tab_selections) > 0)
+if (is_array($valid_tab_selections) && count_safe($valid_tab_selections) > 0)
 {
 	if ( @!array_key_exists($selected_subtab,$valid_tab_selections[$selected_tab]) )
 	{
@@ -293,7 +293,7 @@ $template->set_filenames(array(
 //------------------------------------------------------------------------
 $selected_tab_data = array();
 $selected_subtab_data = array();
-for ($outer = 0; $outer < count($album_config_tabs); $outer++)
+for ($outer = 0; $outer < count_safe($album_config_tabs); $outer++)
 {
 	$template->assign_block_vars('header_row', array(
 			'TAB_SELECT_NAME' => $album_config_tabs[$outer]['selection'],
@@ -312,7 +312,7 @@ for ($outer = 0; $outer < count($album_config_tabs); $outer++)
 		// now find the selected sub tab..if there are any sub tabs at all
 		// and get the data for it; template file etc....
 		//------------------------------------------------------------------------
-		for ($inner = 0; $inner < count($album_config_tabs[$outer]['sub_config']); $inner++)
+		for ($inner = 0; $inner < count_safe($album_config_tabs[$outer]['sub_config']); $inner++)
 		{
 			//------------------------------------------------------------------------
 			// sort the sub tabs according to the order key in the array
@@ -444,7 +444,7 @@ build_config_box($selected_tab_data);
 //  build the standard/common config page
 //------------------------------------------------------------------------
 $template->assign_vars(array(
-	'HEADER_COL_SPAN' => count($album_config_tabs)+1,
+	'HEADER_COL_SPAN' => count_safe($album_config_tabs)+1,
 
 	'L_ASK_SAVE_CHANGES' => $lang['acp_ask_save_changes'],
 	'L_NOTHING_TO_SAVE' => $lang['acp_nothing_to_save'],

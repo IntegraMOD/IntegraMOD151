@@ -63,7 +63,7 @@ if ( isset($_POST['submit']) )
 	{
 		$ip_list_temp = explode(',', $_POST['ban_ip']);
 
-		for($i = 0; $i < count($ip_list_temp); $i++)
+		for($i = 0; $i < count_safe($ip_list_temp); $i++)
 		{
 			if ( preg_match('/^([0-9]{1,3})\.([0-9]{1,3})\.([0-9]{1,3})\.([0-9]{1,3})[ ]*\-[ ]*([0-9]{1,3})\.([0-9]{1,3})\.([0-9]{1,3})\.([0-9]{1,3})$/', trim($ip_list_temp[$i]), $ip_range_explode) )
 			{
@@ -128,7 +128,7 @@ if ( isset($_POST['submit']) )
 			{
 				$ip = gethostbynamel(trim($ip_list_temp[$i]));
 
-				for($j = 0; $j < count($ip); $j++)
+				for($j = 0; $j < count_safe($ip); $j++)
 				{
 					if ( !empty($ip[$j]) )
 					{
@@ -163,7 +163,7 @@ if ( isset($_POST['submit']) )
 		}
 		$email_list_temp = explode(',', $_POST['ban_email']);
 
-		for($i = 0; $i < count($email_list_temp); $i++)
+		for($i = 0; $i < count_safe($email_list_temp); $i++)
 		{
 			//
 			// This ereg match is based on one by php@unreelpro.com
@@ -188,10 +188,10 @@ if ( isset($_POST['submit']) )
 	$db->sql_freeresult($result);
 
 	$kill_session_sql = '';
-	for($i = 0; $i < count($user_list); $i++)
+	for($i = 0; $i < count_safe($user_list); $i++)
 	{
 		$in_banlist = false;
-		for($j = 0; $j < count($current_banlist); $j++)
+		for($j = 0; $j < count_safe($current_banlist); $j++)
 		{
 			if ( $user_list[$i] == $current_banlist[$j]['ban_userid'] )
 			{
@@ -219,10 +219,10 @@ if ( isset($_POST['submit']) )
 		}
 	}
 
-	for($i = 0; $i < count($ip_list); $i++)
+	for($i = 0; $i < count_safe($ip_list); $i++)
 	{
 		$in_banlist = false;
-		for($j = 0; $j < count($current_banlist); $j++)
+		for($j = 0; $j < count_safe($current_banlist); $j++)
 		{
 			if ( $ip_list[$i] == $current_banlist[$j]['ban_ip'] )
 			{
@@ -267,10 +267,10 @@ if ( isset($_POST['submit']) )
 		}
 	}
 
-	for($i = 0; $i < count($email_list); $i++)
+	for($i = 0; $i < count_safe($email_list); $i++)
 	{
 		$in_banlist = false;
-		for($j = 0; $j < count($current_banlist); $j++)
+		for($j = 0; $j < count_safe($current_banlist); $j++)
 		{
 			if ( $email_list[$i] == $current_banlist[$j]['ban_email'] )
 			{
@@ -295,7 +295,7 @@ if ( isset($_POST['submit']) )
 	{
 		$user_list = $_POST['unban_user'];
 
-		for($i = 0; $i < count($user_list); $i++)
+		for($i = 0; $i < count_safe($user_list); $i++)
 		{
 			if ( $user_list[$i] != -1 )
 			{
@@ -328,7 +328,7 @@ if ( isset($_POST['submit']) )
 	{
 		$ip_list = $_POST['unban_ip'];
 
-		for($i = 0; $i < count($ip_list); $i++)
+		for($i = 0; $i < count_safe($ip_list); $i++)
 		{
 			if ( $ip_list[$i] != -1 )
 			{
@@ -341,7 +341,7 @@ if ( isset($_POST['submit']) )
 	{
 		$email_list = $_POST['unban_email'];
 
-		for($i = 0; $i < count($email_list); $i++)
+		for($i = 0; $i < count_safe($email_list); $i++)
 		{
 			if ( $email_list[$i] != -1 )
 			{
@@ -411,7 +411,7 @@ else
 	$db->sql_freeresult($result);
 
 	$select_userlist = '';
-	for($i = 0; $i < count($user_list); $i++)
+	for($i = 0; $i < count_safe($user_list); $i++)
 	{
 		$select_userlist .= '<option value="' . $user_list[$i]['ban_id'] . '">' . $user_list[$i]['username'] . '</option>';
 		$userban_count++;
@@ -437,7 +437,7 @@ else
 	$select_iplist = '';
 	$select_emaillist = '';
 
-	for($i = 0; $i < count($banlist); $i++)
+	for($i = 0; $i < count_safe($banlist); $i++)
 	{
 		$ban_id = $banlist[$i]['ban_id'];
 

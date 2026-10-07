@@ -252,7 +252,7 @@ if ( $row = $db->sql_fetchrow($result) )
 		}
 		else if ( $row['user_rank'] )
 		{
-			for($j = 0; $j < count($ranksrow); $j++)
+			for($j = 0; $j < count_safe($ranksrow); $j++)
 			{
 				if ( $row['user_rank'] == $ranksrow[$j]['rank_id'] && $ranksrow[$j]['rank_special'] )
 				{
@@ -266,7 +266,7 @@ if ( $row = $db->sql_fetchrow($result) )
 		}
 		else
 		{
-			for($j = 0; $j < count($ranksrow); $j++)
+			for($j = 0; $j < count_safe($ranksrow); $j++)
 			{
 				if ( $row['user_posts'] >= $ranksrow[$j]['rank_min'] && !$ranksrow[$j]['rank_special'] )
 				{
@@ -419,7 +419,7 @@ if ( $row = $db->sql_fetchrow($result) )
 		//
 		// Replace naughty words
 		//
-		if ( count($orig_word) )
+		if ( count_safe($orig_word) )
 		{
 			if ( $user_sig != '' )
 			{

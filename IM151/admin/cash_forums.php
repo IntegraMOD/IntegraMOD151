@@ -76,7 +76,7 @@ if ( isset($_POST['submit']) )
 			 is_array($_POST[$varname]) )
 		{
 			$activated = array(array(),array());
-			for ( $i = 0; $i < count($cash_forums); $i++ )
+			for ( $i = 0; $i < count_safe($cash_forums); $i++ )
 			{
 				if ( isset($_POST[$varname][$cash_forums[$i]]) )
 				{
@@ -85,7 +85,7 @@ if ( isset($_POST['submit']) )
 			}
 			$sql_list = "";
 			$settings = $c_cur->data('cash_settings');
-			if ( count($activated[0]) > count($activated[1]) )
+			if ( count_safe($activated[0]) > count_safe($activated[1]) )
 			{
 				$sql_list = implode(",",$activated[1]);
 				$settings &= ~CURRENCY_FORUMLISTTYPE;

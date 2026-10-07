@@ -47,7 +47,7 @@ if ( !empty($setmodules) )
 			// get this map
 			$map_tree = explode('.', $map_name);
 			$w_maps['name'][] = $map_name;
-			$w_maps['depth'][] = count($map_tree)-1;
+			$w_maps['depth'][] = count_safe($map_tree)-1;
 		}
 	}
 
@@ -55,13 +55,13 @@ if ( !empty($setmodules) )
 	$res_maps = array();
   foreach ($user_maps as $map_name => $map_data)
 	{
-		for ( $i=0; $i < count($w_maps['name']); $i++ )
+		for ( $i=0; $i < count_safe($w_maps['name']); $i++ )
 		{
 			if ( substr($map_name, 0, strlen($w_maps['name'][$i])) == $w_maps['name'][$i] )
 			{
 				// we must stay within 3 sub levels
 				$map_tree = explode('.', $map_name);
-				if ( ( (count($map_tree) - 1 - $w_maps['depth'][$i]) < 3 ) && ( (count($map_tree) - 1 - $w_maps['depth'][$i]) > 0 ) )
+				if ( ( (count_safe($map_tree) - 1 - $w_maps['depth'][$i]) < 3 ) && ( (count_safe($map_tree) - 1 - $w_maps['depth'][$i]) > 0 ) )
 				{
 					// map name
 					$start = $w_maps['depth'][$i];
@@ -76,7 +76,7 @@ if ( !empty($setmodules) )
 
 					// main menu
 					$pgm = '';
-					if ( (count($map_tree)-$start) == 0 )
+					if ( (count_safe($map_tree)-$start) == 0 )
 					{
 						$pgm = __FILE__;
 					}
@@ -198,7 +198,7 @@ foreach (( isset($mods[$menu_name]['data']) ? $mods[$menu_name]['data'] : [] ) a
 	}
 	if ($found)
 	{
-		$i = count($mod_keys);
+		$i = count_safe($mod_keys);
 		$mod_keys[$i] = $mod_name;
 		$mod_sort[$i] = $mod['sort'];
 
@@ -236,11 +236,11 @@ foreach (( isset($mods[$menu_name]['data']) ? $mods[$menu_name]['data'] : [] ) a
 @array_multisort($mod_sort, $mod_keys, $sub_sort, $sub_keys);
 
 // fix mod id
-if ( $mod_id >= count($mod_keys) )
+if ( $mod_id >= count_safe($mod_keys) )
 {
 	$mod_id = 0;
 }
-if ( $sub_id >= ( isset($sub_keys[$mod_id]) ? count($sub_keys[$mod_id]) : 0 ) )
+if ( $sub_id >= ( isset($sub_keys[$mod_id]) ? count_safe($sub_keys[$mod_id]) : 0 ) )
 {
 	$sub_id = 0;
 }
@@ -591,16 +591,16 @@ if ($submit)
 	);
 
 	// send menu
-	for ($i=0; $i < count($mod_keys); $i++)
+	for ($i=0; $i < count_safe($mod_keys); $i++)
 	{
 		$l_mod = $mod_keys[$i];
-		if ( count($sub_keys[$i]) == 1 )
+		if ( count_safe($sub_keys[$i]) == 1 )
 		{
 			$l_mod = $sub_keys[$i][0];
 		}
 		$template->assign_block_vars('mod', array(
 			'CLASS'	=> ($mod_id == $i) ? 'row1' : 'row2',
-			'ALIGN'	=> ( ($mod_id == $i) && (count($sub_keys[$i]) > 1) ) ? 'left' : 'center',
+			'ALIGN'	=> ( ($mod_id == $i) && (count_safe($sub_keys[$i]) > 1) ) ? 'left' : 'center',
 			'U_MOD'	=> append_sid("./profile.$phpEx?mode=$mode&sub=$sub&mod=$i&" . POST_USERS_URL . "=$view_user_id"),
 			'L_MOD'	=> sprintf( (($mod_id == $i) ? '<b>%s</b>' : '%s'), mods_settings_get_lang($l_mod) ),
 			)
@@ -611,10 +611,10 @@ if ($submit)
 		}
 		if ($mod_id == $i)
 		{
-			if ( count($sub_keys[$i]) > 1 )
+			if ( count_safe($sub_keys[$i]) > 1 )
 			{
 				$template->assign_block_vars('mod.sub', array());
-				for ($j=0; $j < count($sub_keys[$i]); $j++)
+				for ($j=0; $j < count_safe($sub_keys[$i]); $j++)
 				{
 					$template->assign_block_vars('mod.sub.row', array(
 						'CLASS'	=> ($sub_id == $j) ? 'row1' : 'row1',

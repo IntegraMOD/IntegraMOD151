@@ -161,7 +161,7 @@ function cache_tree_output()
 
 	// types
 	$cells = array();
-	for ( $i = 0; $i < count($tree['type']); $i++ )
+	for ( $i = 0; $i < count_safe($tree['type']); $i++ )
 	{
 		$cells[] = sprintf("'%s'", $tree['type'][$i]);
 	}
@@ -169,7 +169,7 @@ function cache_tree_output()
 
 	// ids
 	$cells = array();
-	for ( $i = 0; $i < count($tree['id']); $i++ )
+	for ( $i = 0; $i < count_safe($tree['id']); $i++ )
 	{
 		$cells[] = sprintf("'%s'", $tree['id'][$i]);
 	}
@@ -177,7 +177,7 @@ function cache_tree_output()
 
 	// mains
 	$cells = array();
-	for ( $i = 0; $i < count($tree['main']); $i++ )
+	for ( $i = 0; $i < count_safe($tree['main']); $i++ )
 	{
 		$cells[] = sprintf("'%s'", $tree['main'][$i]);
 	}
@@ -192,7 +192,7 @@ function cache_tree_output()
 	);
 
 	// data
-	for ($i = 0; $i < count($tree['data']); $i++)
+	for ($i = 0; $i < count_safe($tree['data']); $i++)
 	{
 	    $template->assign_block_vars('data', array());
 	 
@@ -218,7 +218,7 @@ function cache_tree_output()
   foreach ($tree['sub'] as $main => $data)
 	{
 		$cells = array();
-		for ( $i = 0; $i < count($data); $i++ )
+		for ( $i = 0; $i < count_safe($data); $i++ )
 		{
 			$cells[] = sprintf("'%s'", $data[$i]);
 		}
@@ -236,12 +236,12 @@ function cache_tree_output()
 		$s_user_ids = empty($data['user_id']) ? '' : implode(', ', $data['user_id']);
 		$s_group_ids = empty($data['group_id']) ? '' : implode(', ', $data['group_id']);
 		$s_usernames = '';
-		for ( $j = 0; isset($data['username']) && $j < count($data['username']); $j++ )
+		for ( $j = 0; isset($data['username']) && $j < count_safe($data['username']); $j++ )
 		{
 			$s_usernames .= ( empty($s_usernames) ? '' : ', ' ) . sprintf("'%s'", str_replace("'", "\'", $data['username'][$j]));
 		}
 		$s_group_names = '';
-		for ( $j = 0; isset($data['group_name']) && $j < count($data['group_name']); $j++ )
+		for ( $j = 0; isset($data['group_name']) && $j < count_safe($data['group_name']); $j++ )
 		{
 			$s_group_names .= ( empty($s_group_names) ? '' : ', ' ) . sprintf("'%s'", str_replace("'", "\'", $data['group_name'][$j]));
 		}
@@ -370,7 +370,7 @@ function cache_tree($write=false)
 			$row['cat_order'] = $row['cat_order'] + 9000000;
 		}
 		$row['main'] = ($row['cat_main'] == 0) ? 'Root' : $row['cat_main_type'] . $row['cat_main'];
-		$idx = count($cats);
+		$idx = count_safe($cats);
 		$cats[$idx] = $row;
 		$parents[POST_CAT_URL][ $row['main'] ][] = $idx;
 	}

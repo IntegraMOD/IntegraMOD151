@@ -36,7 +36,7 @@ if ( !empty($setmodules) )
 		{
 			// build 
 			$map_root = '';
-			for ( $i=0; $i < count($map_tree); $i++ )
+			for ( $i=0; $i < count_safe($map_tree); $i++ )
 			{
 				$map_root .= ( empty($map_root) ? '' : '.' ) . $map_tree[$i];
 
@@ -45,7 +45,7 @@ if ( !empty($setmodules) )
 				{
 					// create it as main menu
 					$pgm = '';
-					if ( $i == (count($map_tree)-1) )
+					if ( $i == (count_safe($map_tree)-1) )
 					{
 						$pgm = __FILE__;
 					}
@@ -57,7 +57,7 @@ if ( !empty($setmodules) )
 				if ( $i > 1 )
 				{
 					$pgm = '';
-					if ( $i == (count($map_tree)-1) )
+					if ( $i == (count_safe($map_tree)-1) )
 					{
 						$pgm = __FILE__;
 					}
@@ -116,7 +116,7 @@ while($row = $db->sql_fetchrow($result))
 	$recentrow[] = $row;
 }
 
-$totalpicrow = count($recentrow);
+$totalpicrow = count_safe($recentrow);
 
 $db->sql_freeresult($result);
 
@@ -227,7 +227,7 @@ array_multisort($map_orders, $maps);
 
 // count cols
 $col = 1;
-for ($i=0; $i < count($maps); $i++)
+for ($i=0; $i < count_safe($maps); $i++)
 {
 	if ( ($i != 0) && isset($user_maps[ $maps[$i] ]['split']) && $user_maps[ $maps[$i] ]['split'] )
 	{
@@ -247,7 +247,7 @@ $template->assign_vars(array(
 );
 
 // process the panels
-for ($i = 0; $i < count($maps); $i++ )
+for ($i = 0; $i < count_safe($maps); $i++ )
 {
 	$split = false;
 	if ( !empty($user_maps[ $maps[$i] ]['split'] ) )

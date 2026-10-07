@@ -66,7 +66,7 @@ if(!function_exists('imp_recent_topics_block_func'))
 			$except_forum_id = $portal_config['md_except_forum_id'];
 		}
 
-		for ($i = 0; $i < count($forum_data); $i++)
+		for ($i = 0; $i < count_safe($forum_data); $i++)
 		{
 			if ((!$is_auth_ary[$forum_data[$i]['forum_id']]['auth_read']) or (!$is_auth_ary[$forum_data[$i]['forum_id']]['auth_view']))
 			{

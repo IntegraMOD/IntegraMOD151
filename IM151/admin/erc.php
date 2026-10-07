@@ -32,7 +32,7 @@ ini_set('display_errors','Off');
 // this is a security precaution to prevent someone
 // trying to break out of a SQL statement.
 //
-if( !get_magic_quotes_gpc() )
+if( !function_exists('get_magic_quotes_gpc') || !get_magic_quotes_gpc() )
 {
 	if( is_array($_GET) )
 	{
@@ -177,7 +177,7 @@ if ($lg == '')
 		}
 	}
 	closedir($dir);
-	if (count($lang_list) == 1)
+	if (count_safe($lang_list) == 1)
 	{
 		$lg = $lang_list[0];
 		include($phpbb_root_path . 'language/lang_' . $lg . '/lang_dbmtnc.' . $phpEx);
@@ -759,7 +759,7 @@ switch($mode)
 	<p><?php echo $lang['Repairing_tables'] ?>:</p>
 	<ul>
 <?php
-					for($i = 0; $i < count($tables); $i++)
+					for($i = 0; $i < count_safe($tables); $i++)
 					{
 						$tablename = $table_prefix . $tables[$i];
 						$sql = "REPAIR TABLE $tablename";

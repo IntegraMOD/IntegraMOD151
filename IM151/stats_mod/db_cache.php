@@ -142,7 +142,7 @@ class StatisticsDB
 							while ($row = mysql_fetch_assoc($result))
 							{
 								$extra = array_pop($row);
-								if (!$html_table && count($row))
+								if (!$html_table && count_safe($row))
 								{
 									$html_table = TRUE;
 									$this->sql_report .= "<table width=100% border=1 cellpadding=2 cellspacing=1>\n";

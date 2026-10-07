@@ -51,7 +51,7 @@ function album_reorder_cat($user_id = ALBUM_PUBLIC_GALLERY)
 
 	// update with new order
 	$order = 0;
-	for ($i = 0; isset($album_data['data']) && $i < count($album_data['data']); $i++ )
+	for ($i = 0; isset($album_data['data']) && $i < count_safe($album_data['data']); $i++ )
 	{
 		if ( !empty($album_data['id'][$i]) )
 		{
@@ -155,7 +155,7 @@ function album_read_tree($user_id = ALBUM_PUBLIC_GALLERY, $options = ALBUM_AUTH_
 		}
 		// store the parent id for this category in the row array
 		$row['parent'] = ($row['cat_parent'] == 0) ? $parent_root_id : $row['cat_parent'];
-		$idx = count($cats);
+		$idx = count_safe($cats);
 		$cats[$idx] = $row;
 		$parents[$row['parent']][] = $idx;
 	}
@@ -179,10 +179,10 @@ function album_read_tree($user_id = ALBUM_PUBLIC_GALLERY, $options = ALBUM_AUTH_
 		// where the authentication rights fits the one that was specified in the
 		// function call (album_read_tree)
 		// ------------------------------------------------------------------------
-		if (!empty($album_data['auth']) || count($album_data['auth']) > 0 )
+		if (!empty($album_data['auth']) || count_safe($album_data['auth']) > 0 )
 		{
 			$cats = array(); // re-create an array
-			for ($idx = 0; $idx < count($album_data['auth']); $idx++)
+			for ($idx = 0; $idx < count_safe($album_data['auth']); $idx++)
 			{
 				$cat_id = $album_data['id'][$idx];
 
@@ -240,7 +240,7 @@ function album_init_personal_gallery($user_id)
 
 	// store the parent id for this category in the row array
 	$row['parent'] = empty($row['cat_parent']) ? $parent_root_id : $row['cat_parent'];
-	$idx = count($cats);
+	$idx = count_safe($cats);
 	$cats[$idx] = $row;
 	$parents[$row['parent']][] = $idx;
 
@@ -269,7 +269,7 @@ function album_get_personal_root_id($user_id)
 	}
 
 	//if ( is_array($album_data ) && count($album_data['data']) > 0)
-	if ( $userdata['user_id'] == $user_id && !empty($album_data ) && count($album_data['data']) > 0 && $album_data['personal'][$album_data['id'][0]] == 1)
+	if ( $userdata['user_id'] == $user_id && !empty($album_data ) && count_safe($album_data['data']) > 0 && $album_data['personal'][$album_data['id'][0]] == 1)
 	{
 		return $album_data['id'][0]; // the first array index is always root
 	}
@@ -467,7 +467,7 @@ function album_move_tree($cat_id, $move, $user_id = ALBUM_PUBLIC_GALLERY)
 
 	// if the album_tree is NOT filled then reload the data
 	// this will ensure that the album IS populated with data
-	if ( count($album_data['data']) == 0)
+	if ( count_safe($album_data['data']) == 0)
 	{
 		album_read_tree($user_id);
 	}
@@ -484,7 +484,7 @@ function album_move_tree($cat_id, $move, $user_id = ALBUM_PUBLIC_GALLERY)
 	$parents = array();
 
 	// for the nuber of rows read/categories do this loop
-	for ($i=0; $i < count($album_data['data']); $i++)
+	for ($i=0; $i < count_safe($album_data['data']); $i++)
 	{
 		// ------------------------------------------------------------------------
 		// if the current itetorated parent id is equal to the selected category's parent id then
@@ -504,7 +504,7 @@ function album_move_tree($cat_id, $move, $user_id = ALBUM_PUBLIC_GALLERY)
 		// fill these arrays which are going to be need in building the tree
 		// (see album_read_tree for similiar code)
 		// ------------------------------------------------------------------------
-		$idx = count($cats);
+		$idx = count_safe($cats);
 		$cats[$idx] = $album_data['data'][$i];
 		$parents[ $album_data['parent'][$i] ][] = $idx;
 	}
@@ -518,7 +518,7 @@ function album_move_tree($cat_id, $move, $user_id = ALBUM_PUBLIC_GALLERY)
 	// is really the same things as the reorder_cat in admin/album_cat.php
 	// ------------------------------------------------------------------------
 	$order = 0;
-	for ($i=0; $i < count($album_data['data']); $i++)
+	for ($i=0; $i < count_safe($album_data['data']); $i++)
 	{
 		$order = $order + 10;
 		$sql = "UPDATE " . ALBUM_CAT_TABLE . " SET cat_order=$order WHERE cat_id=" . $album_data['id'][$i];
@@ -753,7 +753,7 @@ function album_get_last_pic_info($cats, &$last_pic_id)
 	// and correct album picture url
 	$album_pic_url = 'album_showpage.'.$phpEx;
 
-	$where_sql = is_array($cats) && count($cats) ? "p.pic_cat_id IN (" . implode(",", $cats)  .")" : "p.pic_cat_id = ".(int)$cats;
+	$where_sql = is_array($cats) && count_safe($cats) ? "p.pic_cat_id IN (" . implode(",", $cats)  .")" : "p.pic_cat_id = ".(int)$cats;
 
 	$AH_this = isset($album_data['keys'][$cats[0]]) ? $album_data['keys'][$cats[0]] : ALBUM_ROOT_CATEGORY;
 	$cat = $album_data['data'][$AH_this];
@@ -986,9 +986,9 @@ function album_get_moderator_info($cat) {
 
 	$db->sql_freeresult($result);
 
-	if (count($grouprows) > 0)
+	if (count_safe($grouprows) > 0)
 	{
-		for ($j = 0; $j < count($grouprows); $j++)
+		for ($j = 0; $j < count_safe($grouprows); $j++)
 		{
 			$group_link = '<a href="' . append_sid("groupcp.$phpEx?" . POST_GROUPS_URL . '=' . $grouprows[$j]['group_id']) . '">' . $agcm_color->get_group_color($grouprows[$j]['group_id'], $grouprows[$j]['group_name']) . 'DEBUG HERE</a>';
 			$moderators .= ($moderators == '') ? $group_link : ', ' . $group_link;
@@ -1005,7 +1005,7 @@ function album_get_comment_count($cat)
 {
 	global $db;
 
-	if (is_array($cat) && count($cat))
+	if (is_array($cat) && count_safe($cat))
 	{
 		$sql_where = " WHERE pic_cat_id IN (". implode(",", $cat) .")";
 	}
@@ -1035,7 +1035,7 @@ function album_get_total_pics($cats)
 {
 	global $db;
 
-	$sql_where = " WHERE c.cat_id " . ( (is_array($cats) && count($cats)) ? "IN (". implode(",", $cats) .")" : "= " . (int)$cats);
+	$sql_where = " WHERE c.cat_id " . ( (is_array($cats) && count_safe($cats)) ? "IN (". implode(",", $cats) .")" : "= " . (int)$cats);
 
 	$sql = "SELECT COUNT(p.pic_id) AS count
 			FROM " . ALBUM_CAT_TABLE . " AS c
@@ -1122,13 +1122,13 @@ function album_build_picture_table($user_id, $cat_ids, $AH_thiscat, $auth_data, 
 
 	$template->assign_block_vars('index_pics_block', array());
 
-	for ($i = 0; $i < count($picrow); $i += $album_config['cols_per_page'])
+	for ($i = 0; $i < count_safe($picrow); $i += $album_config['cols_per_page'])
 	{
 		$template->assign_block_vars('index_pics_block.picrow', array());
 
 		for ($j = $i; $j < ($i + $album_config['cols_per_page']); $j++)
 		{
-			if( $j >= count($picrow) )
+			if( $j >= count_safe($picrow) )
 			{
 				$template->assign_block_vars('index_pics_block.picrow.nopiccol', array());
 				$template->assign_block_vars('index_pics_block.picrow.picnodetail', array());
@@ -1295,15 +1295,15 @@ function album_build_recent_pics($cats)
 
 		$template->assign_block_vars('recent_pics_block', array());
 
-		if (count($recentrow) > 0)
+		if (count_safe($recentrow) > 0)
 		{
-			for ($i = 0; $i < count($recentrow); $i += $cols_per_page)
+			for ($i = 0; $i < count_safe($recentrow); $i += $cols_per_page)
 			{
 				$template->assign_block_vars('recent_pics_block.recent_pics', array());
 
 				for ($j = $i; $j < ($i + $cols_per_page); $j++)
 				{
-					if( $j >= count($recentrow) )
+					if( $j >= count_safe($recentrow) )
 					{
 						break;
 					}
@@ -1405,16 +1405,16 @@ function album_build_highest_rated_pics($cats)
 
 		$template->assign_block_vars('highest_pics_block', array());
 
-		if (count($highestrow) > 0)
+		if (count_safe($highestrow) > 0)
 		{
 			$rated_images = 0;
-			for ($i = 0; $i < count($highestrow); $i += $cols_per_page)
+			for ($i = 0; $i < count_safe($highestrow); $i += $cols_per_page)
 			{
 				$template->assign_block_vars('highest_pics_block.highest_pics', array());
 
 				for ($j = $i; $j < ($i + $cols_per_page); $j++)
 				{
-					if( $j >= count($highestrow) )
+					if( $j >= count_safe($highestrow) )
 					{
 						break;
 					}
@@ -1528,15 +1528,15 @@ function album_build_most_viewed_pics($cats)
 
 		$template->assign_block_vars('mostviewed_pics_block', array());
 
-		if (count($mostviewed) > 0)
+		if (count_safe($mostviewed) > 0)
 		{
-			for ($i = 0; $i < count($mostviewed); $i += $cols_per_page)
+			for ($i = 0; $i < count_safe($mostviewed); $i += $cols_per_page)
 			{
 				$template->assign_block_vars('mostviewed_pics_block.mostviewed_pics', array());
 
 				for ($j = $i; $j < ($i + $cols_per_page); $j++)
 				{
-					if( $j >= count($mostviewed) )
+					if( $j >= count_safe($mostviewed) )
 					{
 						break;
 					}
@@ -1639,15 +1639,15 @@ function album_build_random_pics($cats)
 
 		$template->assign_block_vars('random_pics_block', array());
 
-		if (count($randrow) > 0)
+		if (count_safe($randrow) > 0)
 		{
-			for ($i = 0; $i < count($randrow); $i += $cols_per_page)
+			for ($i = 0; $i < count_safe($randrow); $i += $cols_per_page)
 			{
 				$template->assign_block_vars('random_pics_block.rand_pics', array());
 
 				for ($j = $i; $j < ($i + $cols_per_page); $j++)
 				{
-					if( $j >= count($randrow) )
+					if( $j >= count_safe($randrow) )
 					{
 						break;
 					}

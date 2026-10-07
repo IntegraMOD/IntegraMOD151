@@ -134,14 +134,14 @@ function display_line($command, $body)
 
 	// print the command body
 	$line = '';
-	for ($i=0; $i<count($body); $i++)
+	for ($i=0; $i<count_safe($body); $i++)
 	{
 //		$line .= htmlspecialchars($body[$i]) . "<br />\n";
 		$line .= htmlspecialchars($body[$i]);
 	}
 
 	// make sure there is a body to print!
-	if (count($body) > 0)
+	if (count_safe($body) > 0)
 	{
 		$template->assign_block_vars('processed', array(
 			'ROW_CLASS' => $theme['td_class1'],
@@ -165,7 +165,7 @@ function display_unprocessed_line($command, $body)
 
 	// print the command body
 	$line = '';
-	for ($i=0; $i<count($body); $i++)
+	for ($i=0; $i<count_safe($body); $i++)
 	{
 //		$line .= htmlspecialchars($body[$i]) . "<br />\n";
 		$line .= htmlspecialchars($body[$i]);
@@ -336,7 +336,7 @@ function get_mod_properties($file, &$mod_title, &$mod_author_handle, &$mod_autho
 				$pos_name = '';
 
 				// looking for the element that has no http without any spaces; that will be our URL
-				for ($url=0; $url<count($url_array); $url++)
+				for ($url=0; $url<count_safe($url_array); $url++)
 				{
 					// found our proper url
 					if (strstr($url_array[$url], 'http:'))
@@ -434,7 +434,7 @@ function strip_whitespace($body, $single_line=true)
 	$have_line = false;
 
 	// rebuild the array and drop the whitespace lines
-	for ($i=0; $i<count($body); $i++)
+	for ($i=0; $i<count_safe($body); $i++)
 	{
 		// if we already have line and are only looking for one, then skip this line
 		if (($have_line) && ($single_line))
@@ -470,7 +470,7 @@ function handle_error( $result, &$file_list, $line, $close_files=false, $find_ar
 	if (($close_files) && ($result == FIND_FAIL_CRITICAL))
 	{
 		// if we failed on an IN-LINE command be sure to write the find_array
-		if (count($find_array) > 0)
+		if (count_safe($find_array) > 0)
 		{
 			write_find_array( $find_array, $file_list);
 		}
@@ -486,7 +486,7 @@ function handle_error( $result, &$file_list, $line, $close_files=false, $find_ar
 	{
 		// loop through all files; print errors; and remove file from our file array
 		$new_list = array();
-		for ($err=0; $err<count($file_list); $err++)
+		for ($err=0; $err<count_safe($file_list); $err++)
 		{
 			// if there was an error associated with this file, then get down to biz
 			if ($file_list[$err]->err_msg != '')
@@ -498,7 +498,7 @@ function handle_error( $result, &$file_list, $line, $close_files=false, $find_ar
 					$temp_array[] = $file_list[$err];
 
 					// if we failed on an IN-LINE command be sure to write the find_array
-					if (count($find_array) > 0)
+					if (count_safe($find_array) > 0)
 					{
 						write_find_array( $find_array, $temp_array);
 					}
@@ -673,7 +673,7 @@ if (isset($_GET['mode']))
 				'TITLE' => $paragraphs[0],
 				'NAME' => $name
 			));
-			for( $i = 1; $i < count($paragraphs); $i++ )
+			for( $i = 1; $i < count_safe($paragraphs); $i++ )
 			{
 				$template->assign_block_vars('helpitem.paragraph', array(
 					'TEXT' => $paragraphs[$i]
@@ -835,8 +835,8 @@ if (($mode == 'download_file') || ($mode == 'download_backup'))
 	}
 
 	// set up the redirects so we will download a file, the contents of which we will echo out
-	header('Content-Type: text/x-delimtext; name="' . $split[count($split)-1] . '"');
-	header('Content-disposition: attachment; filename="' . $split[count($split)-1] . '"');
+	header('Content-Type: text/x-delimtext; name="' . $split[count_safe($split)-1] . '"');
+	header('Content-disposition: attachment; filename="' . $split[count_safe($split)-1] . '"');
 }
 
 // writing to screen, get set up
@@ -1119,7 +1119,7 @@ else if ($mode == 'history')
 	   message_die(GENERAL_ERROR, $lang['EM_err_em_info'], '', __LINE__, __FILE__, $sql);
 	}
 	$distinct_rows = $db->sql_fetchrowset($result);
-	$distinct_count = count($distinct_rows);
+	$distinct_count = count_safe($distinct_rows);
 
 	$distinct_files = array();
 	for( $i = 0; $i < $distinct_count; $i++ )
@@ -1132,7 +1132,7 @@ else if ($mode == 'history')
 	}
 	sort($distinct_files);
 	$filter_select_options = '<option value="">' . htmlspecialchars($lang['EM_All_mods']) . '</option>';
-	for( $i = 0; $i < count($distinct_files); $i++ )
+	for( $i = 0; $i < count_safe($distinct_files); $i++ )
 	{
 		$selected = $distinct_files[$i] == $filter_option ? ' selected="selected"' : '';
 		$filter_select_options .= '<option value="' . htmlspecialchars($distinct_files[$i]) . '"' . $selected . '>' . htmlspecialchars($distinct_files[$i]) . '</option>';
@@ -1155,7 +1155,7 @@ else if ($mode == 'history')
 		{
 			$mod_id_list[] = $row['mod_id'];
 		}
-		if( count($mod_id_list) <= 0 )
+		if( count_safe($mod_id_list) <= 0 )
 		{
 			$mod_id_list[] = -1;
 		}
@@ -1329,7 +1329,7 @@ else if ( $mode == 'history_details' || (isset($_POST['cancel']) && in_array($mo
 	   message_die(GENERAL_ERROR, $lang['EM_err_em_info'], '', __LINE__, __FILE__, $sql);
 	}
 	$epf_rows = $db->sql_fetchrowset($result);
-	$epf_count = count($epf_rows);
+	$epf_count = count_safe($epf_rows);
 	$epf_list = '';
 	for( $i = 0; $i < $epf_count; $i++ )
 	{
@@ -1470,7 +1470,7 @@ else if ( $mode == 'restore_backups' && !isset($_POST['confirm']) )
 		message_die(GENERAL_ERROR, $lang['EM_err_em_info'], '', __LINE__, __FILE__, $sql);
 	}
 	$epf_rows = $db->sql_fetchrowset($result);
-	$epf_count = count($epf_rows);
+	$epf_count = count_safe($epf_rows);
 
 	// build the command array for the restore backups job
 	$mod_file = './mods/' . $mod_row['mod_file'];
@@ -1482,7 +1482,7 @@ else if ( $mode == 'restore_backups' && !isset($_POST['confirm']) )
 		$command_ary[] = array('backups/' . $mod_processed_file . '.txt', '../../../' . $mod_processed_file);
 	}
 
-	if( ($num_command_steps = count($command_ary)) <= 0 )
+	if( ($num_command_steps = count_safe($command_ary)) <= 0 )
 	{
 		message_die(GENERAL_ERROR, $lang['EM_err_no_step']);
 	}
@@ -1780,7 +1780,7 @@ else if ($preview)
 
 
 	// load in the filename and link info
-	for ($i=0; $i<count($files); $i++)
+	for ($i=0; $i<count_safe($files); $i++)
 	{
 		$link = append_sid('admin_easymod.' . $phpEx . '?mode=display_file&amp;file=../../../' . $files[$i] . "&amp;password=$password&amp;install_file=$install_file&amp;install_path=$install_path");
 
@@ -1791,7 +1791,7 @@ else if ($preview)
 	}
 
 	// if there are no files to be modified, then display the message
-	if ( count($files) == 0)
+	if ( count_safe($files) == 0)
 	{
 		$template->assign_block_vars('nofiles', array(
 			'L_NO_FILES' => $lang['EM_preview_nofile'])
@@ -1980,7 +1980,7 @@ else if (($mode == 'process' ) || ($mode == 'display_file') || ($mode == 'downlo
 								$commands[] = array('command' => 'FIND', 'line' => 0);
 
 								$temp = explode("\n", $actions['edit'][$i]['find']);
-								for ($j = 0; $j < count($temp); $j++)
+								for ($j = 0; $j < count_safe($temp); $j++)
 								{
 									$temp[$j].= "\n";
 								}
@@ -2226,7 +2226,7 @@ else if (($mode == 'process' ) || ($mode == 'display_file') || ($mode == 'downlo
 						{
 							$commands[] = array( 'command' => $current_command, 'line' => $line_num);
 							$body[] = array();
-							$body[ count($body)-1 ][] = $buffer;
+							$body[ count_safe($body)-1 ][] = $buffer;
 							$found_file = true;
 						}
 					}
@@ -2240,7 +2240,7 @@ else if (($mode == 'process' ) || ($mode == 'display_file') || ($mode == 'downlo
 					// this command relates to the file we are looking for, so go ahead
 					else
 					{
-						$body[ count($body)-1 ][] = $buffer;
+						$body[ count_safe($body)-1 ][] = $buffer;
 					}
 					$in_header = false;
 				}
@@ -2249,7 +2249,7 @@ else if (($mode == 'process' ) || ($mode == 'display_file') || ($mode == 'downlo
 				else
 				{
 					$in_header = false;
-					$body[ count($body)-1 ][] = $buffer;
+					$body[ count_safe($body)-1 ][] = $buffer;
 				}
 			}
 		}
@@ -2304,7 +2304,7 @@ else if (($mode == 'process' ) || ($mode == 'display_file') || ($mode == 'downlo
 	//
 
 	// loop through the command and knock 'em out ;-)
-	for ($i=0; $i<count($commands); $i++)
+	for ($i=0; $i<count_safe($commands); $i++)
 	{
 		// a catch all at the end will switch to false if we fail to process
 		$processed = true;
@@ -2313,7 +2313,7 @@ else if (($mode == 'process' ) || ($mode == 'display_file') || ($mode == 'downlo
 		// protect against malformed script that didn't perform a FIND first; this acts as a gatekeeper to ensure
 		//   that the find_array is being managed correctly; OPEN and FIND write out any remenants of find_array; AFTER
 		//   and REPLACE destroy the array while BEFORE and the IN-LINE's preserve it to be used again
-		if (count($find_array) == 0)
+		if (count_safe($find_array) == 0)
 		{
 			$error = false;
 			switch ($commands[$i]['command'])
@@ -2358,7 +2358,7 @@ else if (($mode == 'process' ) || ($mode == 'display_file') || ($mode == 'downlo
 			if (!complete_file_reproduction($file_list))
 			{
 				// close failed; throw errors and halt
-				for ($errs=0; $errs<count($file_list); $errs++)
+				for ($errs=0; $errs<count_safe($file_list); $errs++)
 				{
 					display_error('<b>' . $lang['EM_err_critical_error'] . "</b><br /><br />\n" . $file_list[$errs]->err_msg . "<br />\n" . $lang['EM_line_num'] . $commands[$i]['line']);
 				}
@@ -2371,7 +2371,7 @@ else if (($mode == 'process' ) || ($mode == 'display_file') || ($mode == 'downlo
 			$body[$i] = strip_whitespace($body[$i], true);
 
 			// if there is not exactly 1 line then throw a critical error
-			if ( count($body[$i]) != 1)
+			if ( count_safe($body[$i]) != 1)
 			{
 				display_error('<b>' . $lang['EM_err_critical_error'] . "</b><br /><br />\n" . $lang['EM_err_comm_open'] . "<br />\n" . $lang['EM_line_num'] . $commands[$i]['line']);
 				break;
@@ -2379,11 +2379,11 @@ else if (($mode == 'process' ) || ($mode == 'display_file') || ($mode == 'downlo
 
 			// strip off the path and get the file name
 			$splitarray = explode('/', trim($body[$i][0]));
-			$filename = $splitarray[count($splitarray)-1];
+			$filename = $splitarray[count_safe($splitarray)-1];
 
 			// now get the path
 			$path = '';
-			for ($k=0; $k<count($splitarray)-1; $k++)
+			for ($k=0; $k<count_safe($splitarray)-1; $k++)
 			{
 				$path .= $splitarray[$k] . '/';
 			}
@@ -2400,7 +2400,7 @@ else if (($mode == 'process' ) || ($mode == 'display_file') || ($mode == 'downlo
 			}
 
 			// increment our count
-			$files_edited += count($file_list);
+			$files_edited += count_safe($file_list);
 		}
 
 		//
@@ -2423,7 +2423,7 @@ else if (($mode == 'process' ) || ($mode == 'display_file') || ($mode == 'downlo
 
 			// make sure we have something to search for; throw a warning if not
 			$search_array = $body[$i];
-			if ( count($search_array) == 0 )
+			if ( count_safe($search_array) == 0 )
 			{
 				display_error('<b>' . $lang['EM_err_critical_error'] . "</b><br /><br />\n" . $lang['EM_err_comm_find'] . "<br />\n" . $lang['EM_line_num'] . $commands[$i]['line']);
 				break;
@@ -2446,7 +2446,7 @@ else if (($mode == 'process' ) || ($mode == 'display_file') || ($mode == 'downlo
 		else if ($commands[$i]['command'] == 'AFTERADD')
 		{
 			$insert_string = '';
-			for ($j=0; $j<count($body[$i]); $j++)
+			for ($j=0; $j<count_safe($body[$i]); $j++)
 			{
 				$insert_string .= $body[$i][$j];
 			}
@@ -2473,7 +2473,7 @@ else if (($mode == 'process' ) || ($mode == 'display_file') || ($mode == 'downlo
 		else if ($commands[$i]['command'] == 'BEFOREADD')
 		{
 			$insert_string = '';
-			for ($j=0; $j<count($body[$i]); $j++)
+			for ($j=0; $j<count_safe($body[$i]); $j++)
 			{
 				$insert_string .= $body[$i][$j];
 			}
@@ -2499,7 +2499,7 @@ else if (($mode == 'process' ) || ($mode == 'display_file') || ($mode == 'downlo
 			//   mod will never be able to work again if it needs to FIND what we just replaced	
 
 			// write the replace lines and notice how we never will write the find_array lines
-			for ($j=0; $j<count($body[$i]); $j++)
+			for ($j=0; $j<count_safe($body[$i]); $j++)
 			{
 				// if we are preview mode, then mark these effect lines as special
 				if ($mode == 'display_file')
@@ -2522,7 +2522,7 @@ else if (($mode == 'process' ) || ($mode == 'display_file') || ($mode == 'downlo
 			$body[$i] = strip_whitespace($body[$i], true);
 
 			// if there is not exactly 1 line then throw a critical error
-			if (count($body[$i]) != 1)
+			if (count_safe($body[$i]) != 1)
 			{
 				display_error('<b>' . $lang['EM_err_critical_error'] . "</b><br /><br />\n" . $commands[$i]['command'] . $lang['EM_err_increment_body'] . "<br />\n" . $lang['EM_line_num'] . $commands[$i]['line']);
 				break;
@@ -2540,9 +2540,9 @@ else if (($mode == 'process' ) || ($mode == 'display_file') || ($mode == 'downlo
 
 			// perform the increment / throw an error as appropriate
 			$err_level = FIND_OK;
-			for ( $file_count = 0; $file_count < count($file_list); $file_count++ )
+			for ( $file_count = 0; $file_count < count_safe($file_list); $file_count++ )
 			{
-				for ( $j = 0; $j < count($find_array[$file_count]); $j++ )
+				for ( $j = 0; $j < count_safe($find_array[$file_count]); $j++ )
 				{
 					$increment_search = ($search_fragment != '') ? $search_fragment : $search_array[$j];
 					$result = increment_wildcard($inc_data[1], $inc_data[2], $increment_search, $find_array[$file_count][$j]);
@@ -2552,7 +2552,7 @@ else if (($mode == 'process' ) || ($mode == 'display_file') || ($mode == 'downlo
 						break;
 					}
 				}
-				if ($j == count($find_array[$file_count]))
+				if ($j == count_safe($find_array[$file_count]))
 				{
 					// halt if this is an english lang file
 					if (strstr($file_list[$file_count]->path, 'language/lang_english'))
@@ -2613,7 +2613,7 @@ else if (($mode == 'process' ) || ($mode == 'display_file') || ($mode == 'downlo
 			if ($commands[$i]['command'] == 'IN-LINE REPLACE')
 			{
 				// IN-LINE FINDs can be blank or contain actual, at most, one line.
-				if (count($body[$i]) > 1)
+				if (count_safe($body[$i]) > 1)
 				{
 					display_error('<b>' . $lang['EM_err_critical_error'] . "</b><br /><br />\n" . $commands[$i]['command'] . $lang['EM_err_inline_body'] . "<br />\n" . $lang['EM_line_num'] . $commands[$i]['line']);
 					break;
@@ -2622,7 +2622,7 @@ else if (($mode == 'process' ) || ($mode == 'display_file') || ($mode == 'downlo
 			else
 			{
 				// if there is not exactly 1 line then throw a critical error
-				if (count($body[$i]) != 1)
+				if (count_safe($body[$i]) != 1)
 				{
 					display_error('<b>' . $lang['EM_err_critical_error'] . "</b><br /><br />\n" . $commands[$i]['command'] . $lang['EM_err_inline_body'] . "<br />\n" . $lang['EM_line_num'] . $commands[$i]['line']);
 					break;
@@ -2756,7 +2756,7 @@ copy ind*.php to sav*.?u?					// the heck??
 			// first pass : split qualified copies from masked copies
 			//
 			$bad_copy = false;
-			for ( $j = 0; $j < count($body[$i]); $j++ )
+			for ( $j = 0; $j < count_safe($body[$i]); $j++ )
 			{
 				$split_line = array();
 				// make sure the command is in proper format "copy x to y"
@@ -2815,7 +2815,7 @@ copy ind*.php to sav*.?u?					// the heck??
 			//
 			// second pass : get the relevant files with the mask
 			//
-			for ( $j = 0; $j < count($tmp_mult['from_path']); $j++ )
+			for ( $j = 0; $j < count_safe($tmp_mult['from_path']); $j++ )
 			{
 				if ($bad_copy)
 				{
@@ -2884,7 +2884,7 @@ copy ind*.php to sav*.?u?					// the heck??
 							continue;
 						}
 						// check if relevant name
-						else if ( !$tmp_all && !ereg($tmp_from_mask, $tmp_file) )
+						else if ( !$tmp_all && !preg_match(im160_posix_pattern($tmp_from_mask, false), $tmp_file) )
 						{
 							continue;
 						}
@@ -2922,7 +2922,7 @@ copy ind*.php to sav*.?u?					// the heck??
 						{
 							$final = array();
 							$final = final_formatting($tmp_to_dir, $tmp_to_file, $tmp_from_dir, $tmp_file);
-							for ($x=0; $x<count($final); $x++)
+							for ($x=0; $x<count_safe($final); $x++)
 							{
 								//$command_file->modio_mkdirs_copy( $final[$x]['to_path']);
 								$command_file->afile[] = 'copy ' . $final[$x]['from_path'] . $final[$x]['from_file'] . ' ../../../' . $final[$x]['to_path'] . $final[$x]['to_file'];
@@ -2949,7 +2949,7 @@ copy ind*.php to sav*.?u?					// the heck??
 		else if ($commands[$i]['command'] == 'CLOSE')
 		{
 			// if we haven't dumped the find_array, then do it now
-			if (count($find_array) != 0)
+			if (count_safe($find_array) != 0)
 			{
 				//   also, see if we need to write the lines in preview format
 				$do_preview = ((strstr($commands[$i-1]['command'], 'IN-LINE') || $commands[$i-1]['command'] == 'INCREMENT') && ($preview)) ? true : false;
@@ -2961,7 +2961,7 @@ copy ind*.php to sav*.?u?					// the heck??
 			if (!complete_file_reproduction( $file_list))
 			{
 				// close failed; throw errors and halt
-				for ($errs=0; $errs<count($file_list); $errs++)
+				for ($errs=0; $errs<count_safe($file_list); $errs++)
 				{
 					display_error('<b>' . $lang['EM_err_critical_error'] . "</b><br /><br />\n" . $file_list[$errs]->err_msg . "<br />\n" . $lang['EM_line_num'] . $commands[$i]['line']);
 				}
@@ -3013,7 +3013,7 @@ copy ind*.php to sav*.?u?					// the heck??
 		if (!$exec_close)
 		{
 			// if we haven't dumped the find_array, then do it now
-			if (count($find_array) != 0)
+			if (count_safe($find_array) != 0)
 			{
 				//   also, see if we need to write the lines in preview format
 				$do_preview = ((strstr($commands[$i-1]['command'], 'IN-LINE') || $commands[$i-1]['command'] == 'INCREMENT') && ($preview)) ? true : false;
@@ -3025,7 +3025,7 @@ copy ind*.php to sav*.?u?					// the heck??
 		}
 
 		// make sure we have the right file
-		for ($file=0; $file<count($file_list); $file++)
+		for ($file=0; $file<count_safe($file_list); $file++)
 		{
 			// make sure this is what we are looking for, otherwise keep looking
 			if ($orig_file != ($file_list[$file]->path . $file_list[$file]->filename))
@@ -3035,7 +3035,7 @@ copy ind*.php to sav*.?u?					// the heck??
 
 			// write out the lines
 			$preview_display = false;
-			$preview_count = count($file_list[$file]->afile);
+			$preview_count = count_safe($file_list[$file]->afile);
 			for ($i=0; $i<$preview_count; $i++)
 			{
 				// writing to file, so do NOT use htmlspecial chars
@@ -3169,17 +3169,17 @@ copy ind*.php to sav*.?u?					// the heck??
 	{
 		// we'll want to remember the command file steps, so pass them along
 		$hidden = '';
-		for ($i=0; $i<count( $command_file->afile); $i++)
+		for ($i=0; $i<count_safe( $command_file->afile); $i++)
 		{
 			$hidden .= '<input type="hidden" name="command_step'.$i.'" value="' . $command_file->afile[$i] . "\" />\n";
 		}
 		$hidden .= '<input type="hidden" name="num_command_steps" value="' . $i . "\" />\n";
 
 		// load up any SQL commands into hidden fields as well
-		for ($i=0; $i<count($sql); $i++)
+		for ($i=0; $i<count_safe($sql); $i++)
 		{
 			$line = '';
-			for ($j=0; $j<count($sql[$i]); $j++)
+			for ($j=0; $j<count_safe($sql[$i]); $j++)
 			{
 				$line .= $sql[$i][$j];
 			}
@@ -3188,10 +3188,10 @@ copy ind*.php to sav*.?u?					// the heck??
 		$hidden .= '<input type="hidden" name="num_sql_steps" value="' . $i . "\" />\n";
 
 		// put DIY INSTRUCTIONS in hidden fields
-		for($i = 0; $i < count($diy); $i++ )
+		for($i = 0; $i < count_safe($diy); $i++ )
 		{
 			$line = '';
-			for ($j=0; $j<count($diy[$i]); $j++)
+			for ($j=0; $j<count_safe($diy[$i]); $j++)
 			{
 				$line .= $diy[$i][$j];
 			}
@@ -3252,7 +3252,7 @@ else if (($mode == 'SQL_view') && (!$preview))
 	$hidden .= '<input type="hidden" name="num_command_steps" value="' . $i . "\" />\n";
 
 	// put DIY instructions in hidden vars
-	for( $i = 0; $i < count($diy); $i++ )
+	for( $i = 0; $i < count_safe($diy); $i++ )
 	{
 		$hidden .= '<input type="hidden" name="diy_array[]" value="' . stripslashes(htmlspecialchars($diy[$i])) . "\" />\n";
 	}
@@ -3281,14 +3281,14 @@ else if (($mode == 'SQL_view') && (!$preview))
 	$formatted_sql = array();
 	$sql_warnings = array();
 	$error = '';
-	if( count($sql) > 0 )
+	if( count_safe($sql) > 0 )
 	{
 		// Use the old SQL Parser for MS-Access, support for which has been dropped
 		if( SQL_LAYER == 'msaccess' )
 		{
 			// turn the psuedo mysql into SQL for this user's DB type
 			require($phpbb_root_path . 'admin/em_includes/em_schema.' . $phpEx);
-			for( $i = 0; $i < count($sql); $i++ )
+			for( $i = 0; $i < count_safe($sql); $i++ )
 			{
 				$return_sql = handle_db_alteration($sql[$i], $error);
 				if (!empty($error))
@@ -3297,7 +3297,7 @@ else if (($mode == 'SQL_view') && (!$preview))
 					break;
 				}
 
-				for( $j = 0; $j < count($return_sql); $j++ )
+				for( $j = 0; $j < count_safe($return_sql); $j++ )
 				{
 					$formatted_sql[] = $return_sql[$j];
 				}
@@ -3333,7 +3333,7 @@ else if (($mode == 'SQL_view') && (!$preview))
 			{
 				$sql_warnings = $sql_parser->warnings;
 			}
-			for( $j = 0; $j < count($sql_parser->sql_output); $j++ )
+			for( $j = 0; $j < count_safe($sql_parser->sql_output); $j++ )
 			{
 				$formatted_sql[] = $sql_parser->sql_output[$j];
 			}
@@ -3355,7 +3355,7 @@ else if (($mode == 'SQL_view') && (!$preview))
 	if (empty($error))
 	{
 		// Display warnings generated by the SQL Parser, if any
-		$sql_warnings_count = count($sql_warnings);
+		$sql_warnings_count = count_safe($sql_warnings);
 		if ($sql_warnings_count > 0)
 		{
 			$template->assign_block_vars('warnings_block', array(
@@ -3372,7 +3372,7 @@ else if (($mode == 'SQL_view') && (!$preview))
 		// Show the mark/unmark commands
 		$template->assign_block_vars('sql_rows', array());
 
-		for( $i = 0; $i < count($formatted_sql); $i++ )
+		for( $i = 0; $i < count_safe($formatted_sql); $i++ )
 		{
 			$row_class = ( !($i % 2) ) ? $theme['td_class1'] : $theme['td_class2'];
 
@@ -3491,7 +3491,7 @@ else if ( $mode == 'SQL_execute' )
 	$hidden .= '<input type="hidden" name="num_command_steps" value="' . $i . "\" />\n";
 
 	// put DIY instructions in hidden vars
-	for( $i = 0; $i < count($diy); $i++ )
+	for( $i = 0; $i < count_safe($diy); $i++ )
 	{
 		$hidden .= '<input type="hidden" name="diy_array[]" value="' . stripslashes(htmlspecialchars($diy[$i])) . "\" />\n";
 	}
@@ -3555,7 +3555,7 @@ else if ( $mode == 'SQL_execute' )
 
 	// display the list of SQL to generate and give use the option to not run them; display warnings if needed
 	$steps = 0;
-	for( $i = 0; $i < count($sql); $i++ )
+	for( $i = 0; $i < count_safe($sql); $i++ )
 	{
 		$row_class = ( !($i % 2) ) ? $theme['td_class1'] : $theme['td_class2'];
 		$template->assign_block_vars( 'sql_row', array(
@@ -3609,7 +3609,7 @@ else if (($mode == 'post_process') || ($preview))
 	$hidden = '';
 
 	// explode each new line so they can have their own bullet
-	if ( count($diy) )
+	if ( count_safe($diy) )
 	{
 		$template->assign_block_vars('diy_switch', array(
 			'MODE'		=> 'diy_process',
@@ -3618,12 +3618,12 @@ else if (($mode == 'post_process') || ($preview))
 		);
 
 		$diy_process = array();
-		for( $i = 0; $i < count($diy); $i++ )
+		for( $i = 0; $i < count_safe($diy); $i++ )
 		{
 			$diy_process = array_merge($diy_process, explode("\n", $diy[$i]));
 		}
 
-		for( $i = 0; $i < count($diy_process); $i++ )
+		for( $i = 0; $i < count_safe($diy_process); $i++ )
 		{
 			$diy_process[$i] = trim($diy_process[$i]);
 			if ( !empty($diy_process[$i]) )
@@ -3893,7 +3893,7 @@ else if (($mode == 'post_process') || ($preview))
 			// get the ID of the just installed MOD.
 			$mod_id = $db->sql_nextid();
 
-			for( $i = 0; $i < count($processed_files); $i++ )
+			for( $i = 0; $i < count_safe($processed_files); $i++ )
 			{
 				$sql = 'INSERT INTO ' . EASYMOD_PROCESSED_FILES_TABLE . " (mod_processed_file, mod_id)
 					VALUES ('" . $processed_files[$i] . "', $mod_id)";
@@ -3916,12 +3916,12 @@ else if ( $mode == 'diy_process' )
 
 	// explode each new line so they can have their own bullet
 	$diy_process = array();
-	for( $i = 0; $i < count($diy); $i++ )
+	for( $i = 0; $i < count_safe($diy); $i++ )
 	{
 		$diy_process = array_merge($diy_process, explode("\n", $diy[$i]));
 	}
 
-	for( $i = 0; $i < count($diy_process); $i++ )
+	for( $i = 0; $i < count_safe($diy_process); $i++ )
 	{
 		$diy_process[$i] = trim($diy_process[$i]);
 		if ( !empty($diy_process[$i]) )

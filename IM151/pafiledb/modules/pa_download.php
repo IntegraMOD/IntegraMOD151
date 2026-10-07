@@ -90,7 +90,7 @@ class pafiledb_download extends pafiledb_public
 
 			$errored = TRUE;
 
-			for ($i = 0; $i < count($good_referers); $i++)
+			for ($i = 0; $i < count_safe($good_referers); $i++)
 			{
 				$good_referers[$i] = trim($good_referers[$i]);
 
@@ -271,32 +271,32 @@ function send_file_to_browser($real_filename, $mimetype, $physical_filename, $up
 	//
 	$user_agent = (!empty($_SERVER['HTTP_USER_AGENT'])) ? $_SERVER['HTTP_USER_AGENT'] : ((!empty($_SERVER['HTTP_USER_AGENT'])) ? $_SERVER['HTTP_USER_AGENT'] : '');
 
-	if (ereg('Opera(/| )([0-9].[0-9]{1,2})', $user_agent, $log_version))
+	if (preg_match('~Opera(/| )([0-9].[0-9]{1,2})~D', $user_agent, $log_version))
 	{
 		$browser_version = $log_version[2];
 		$browser_agent = 'opera';
 	}
-	else if (ereg('MSIE ([0-9].[0-9]{1,2})', $user_agent, $log_version))
+	else if (preg_match('~MSIE ([0-9].[0-9]{1,2})~D', $user_agent, $log_version))
 	{
 		$browser_version = $log_version[1];
 		$browser_agent = 'ie';
 	}
-	else if (ereg('OmniWeb/([0-9].[0-9]{1,2})', $user_agent, $log_version))
+	else if (preg_match('~OmniWeb/([0-9].[0-9]{1,2})~D', $user_agent, $log_version))
 	{
 		$browser_version = $log_version[1];
 		$browser_agent = 'omniweb';
     }
-	else if (ereg('(Konqueror/)(.*)(;)', $user_agent, $log_version))
+	else if (preg_match('~(Konqueror/)(.*)(;)~D', $user_agent, $log_version))
 	{
 		$browser_version = $log_version[2];
 		$browser_agent = 'konqueror';
     }
-	else if (ereg('Mozilla/([0-9].[0-9]{1,2})', $user_agent, $log_version) && ereg('Safari/([0-9]*)', $user_agent, $log_version2))
+	else if (preg_match('~Mozilla/([0-9].[0-9]{1,2})~D', $user_agent, $log_version) && preg_match('~Safari/([0-9]*)~D', $user_agent, $log_version2))
 	{
 		$browser_version = $log_version[1] . '.' . $log_version2[1];
 		$browser_agent = 'safari';
     }
-	else if (ereg('Mozilla/([0-9].[0-9]{1,2})', $user_agent, $log_version))
+	else if (preg_match('~Mozilla/([0-9].[0-9]{1,2})~D', $user_agent, $log_version))
 	{
 		$browser_version = $log_version[1];
 		$browser_agent = 'mozilla';

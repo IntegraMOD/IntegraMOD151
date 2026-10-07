@@ -76,7 +76,7 @@ if(defined('DEMO_MODE') && substr($current_dir, 0, 9) !== 'templates')
 	$current_dir = 'templates';
 }
 $dirs = explode('/', $current_dir);
-for($i=0; $i<count($dirs); $i++)
+for($i=0; $i<count_safe($dirs); $i++)
 {
 	if(!$dirs[$i] || $dirs[$i] === '.')
 	{
@@ -179,7 +179,7 @@ if(isset($_POST['edit']) && !defined('DEMO_MODE'))
 	// generate ftp actions
 	$actions = array();
 	// chdir to template directory
-	for($i=0; $i<count($dirs); $i++)
+	for($i=0; $i<count_safe($dirs); $i++)
 	{
 		$actions[] = array(
 				'command'	=> 'chdir',
@@ -268,11 +268,11 @@ if(isset($_GET['edit']))
 		'SEPARATOR'	=> '',
 		));
 	$back_dir = '';
-	for($i=0; $i<count($dirs); $i++)
+	for($i=0; $i<count_safe($dirs); $i++)
 	{
 		$arr[] = $dirs[$i];
 		$str = implode('/', $arr);
-		if(count($dirs) > ($i + 1))
+		if(count_safe($dirs) > ($i + 1))
 		{
 			$back_dir = $str;
 		}
@@ -332,7 +332,7 @@ if(isset($_GET['edit']))
 	}
 	closedir($res);
 	sort($backups);
-	for($i=0; $i<count($backups); $i++)
+	for($i=0; $i<count_safe($backups); $i++)
 	{
 		$template->assign_block_vars('backup', array(
 			'TIME'		=> create_date($board_config['default_dateformat'], $backups[$i], $board_config['board_timezone']),
@@ -363,11 +363,11 @@ $template->assign_block_vars('tree', array(
 	'SEPARATOR'	=> '',
 	));
 $back_dir = '';
-for($i=0; $i<count($dirs); $i++)
+for($i=0; $i<count_safe($dirs); $i++)
 {
 	$arr[] = $dirs[$i];
 	$str = implode('/', $arr);
-	if(count($dirs) > ($i + 1))
+	if(count_safe($dirs) > ($i + 1))
 	{
 		$back_dir = $str;
 	}
@@ -429,14 +429,14 @@ while(($file = readdir($res)) !== false)
 }
 closedir($res);
 
-$list_dirs_count = count($list_dirs);
-$list_files_count = count($list_files) + count($list_files_editable);
+$list_dirs_count = count_safe($list_dirs);
+$list_files_count = count_safe($list_files) + count_safe($list_files_editable);
 
-if($current_dir || count($list_dirs))
+if($current_dir || count_safe($list_dirs))
 {
 	$template->assign_block_vars('begin_dirs', array(
-		'COUNT'		=> count($list_dirs),
-		'L_COUNT'	=> str_replace('{COUNT}', count($list_dirs), $lang['xs_fileman_dircount'])
+		'COUNT'		=> count_safe($list_dirs),
+		'L_COUNT'	=> str_replace('{COUNT}', count_safe($list_dirs), $lang['xs_fileman_dircount'])
 		));
 }
 else
@@ -455,7 +455,7 @@ if($current_dir)
 
 // show subdirectories
 sort($list_dirs);
-for($i=0; $i<count($list_dirs); $i++)
+for($i=0; $i<count_safe($list_dirs); $i++)
 {
 	$dir = $list_dirs[$i];
 	$str = $current_dir_root . $dir;
@@ -468,18 +468,18 @@ for($i=0; $i<count($list_dirs); $i++)
 }
 
 // show editable files
-if(count($list_files_editable))
+if(count_safe($list_files_editable))
 {
-	$template->assign_block_vars('begin_files', array('COUNT' => count($list_files_editable)));
+	$template->assign_block_vars('begin_files', array('COUNT' => count_safe($list_files_editable)));
 }
 else
 {
-	$template->assign_block_vars('begin_nofiles', array('COUNT' => count($list_files_editable)));
+	$template->assign_block_vars('begin_nofiles', array('COUNT' => count_safe($list_files_editable)));
 }
 sort($list_files_editable);
 // get today start
 $today = floor((time() + 3600 * $board_config['board_timezone']) / 86400) * 86400 - (3600 * $board_config['board_timezone']);
-for($i=0; $i<count($list_files_editable); $i++)
+for($i=0; $i<count_safe($list_files_editable); $i++)
 {
 	$file = $list_files_editable[$i];
 	$fullfile = $current_dir_root . $file;

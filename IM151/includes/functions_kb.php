@@ -196,7 +196,7 @@ function get_kb_nav( $parent )
 
 	$i = 0;
 	$path_kb = '';
-	while ( $i < count( $path_kb_array2 ) )
+	while ( $i < count_safe( $path_kb_array2 ) )
 	{
 		$path_kb .= $path_kb_array2[$i];
 		$i++;
@@ -1613,7 +1613,7 @@ function get_kb_comments( $topic_id = '', $start = -1, $show_num_comments = 0 )
 		}
 		while ( $row = $db->sql_fetchrow( $result ) );
 		$db->sql_freeresult( $result );
-		$total_posts = count( $postrow );
+		$total_posts = count_safe( $postrow );
 	}
 	else
 	{
@@ -1921,7 +1921,7 @@ function ns_auth_item( $cat_id, $item_type = 0 )
 
 	$ii = 0;
 	$item_types_list = '(';
-	for( $z = 0; $z < ( count( $item_types_array[0] ) ); $z++ )
+	for( $z = 0; $z < ( count_safe( $item_types_array[0] ) ); $z++ )
 	{
 		if ( $news_type_select_data[$cat_id][$item_types_array[0][$z]] )
 		{
@@ -1977,21 +1977,43 @@ function kb_magic_url( $url )
 		// relative urls for this board
 		$match[] = '#(^|[\n ])' . $server_protocol . trim( $board_config['server_name'] ) . $server_port . preg_replace( '/^\/?(.*?)(\/)?$/', '$1', trim( $board_config['script_path'] ) ) . '/([^ \t\n\r <"\']+)#i';
 		$replace[] = '<a href="$1" target="_blank">$1</a>'; 
+		$url = preg_replace( $match, $replace, $url );
 		// matches a xxxx://aaaaa.bbb.cccc. ...
-		$match[] = '#(^|[\n ])([\w]+?://.*?[^ \t\n\r<"]*)#ie';
-		$replace[] = "'\$1<a href=\"\$2\" target=\"_blank\">' . ((strlen('\$2') > 25) ? substr(str_replace('http://','','\$2'), 0, 17) . '...' : '\$2') . '</a>'"; 
-		// $replace[] = "'\$1<a href=\"\$2\" target=\"_blank\">' . ((strlen('\$2') > 25) ? substr(str_replace('http://','','\$2'), 0, 12) . ' ... ' . substr('\$2', -3) : '\$2') . '</a>'";
+		$url = preg_replace_callback( '#(^|[\n ])([\w]+?://.*?[^ \t\n\r<"]*)#i', function ($matches) {
+			$label = $matches[2];
+			if (strlen($label) > 25)
+			{
+				$label = substr(str_replace('http://', '', $label), 0, 17) . '...';
+			}
+			return $matches[1] . '<a href="' . $matches[2] . '" target="_blank">' . $label . '</a>';
+		}, $url );
 		// matches a "www.xxxx.yyyy[/zzzz]" kinda lazy URL thing
-		$match[] = '#(^|[\n ])(www\.[\w\-]+\.[\w\-.\~]+(?:/[^ \t\n\r<"]*)?)#ie';
-		$replace[] = "'\$1<a href=\"http://\$2\" target=\"_blank\">' . ((strlen('\$2') > 25) ? substr(str_replace(' ', '%20', str_replace('http://','', '\$2')), 0, 17) . '...' : '\$2') . '</a>'"; 
-		// $replace[] = "'\$1<a href=\"http://\$2\" target=\"_blank\">' . ((strlen('\$2') > 25) ? substr(str_replace(' ', '%20', str_replace('http://','', '\$2')), 0, 12) . ' ... ' . substr('\$2', -3) : '\$2') . '</a>'";
+		$url = preg_replace_callback( '#(^|[\n ])(www\.[\w\-]+\.[\w\-.\~]+(?:/[^ \t\n\r<"]*)?)#i', function ($matches) {
+			$label = $matches[2];
+			if (strlen($label) > 25)
+			{
+				$label = substr(str_replace(' ', '%20', str_replace('http://', '', $label)), 0, 17) . '...';
+			}
+			return $matches[1] . '<a href="http://' . $matches[2] . '" target="_blank">' . $label . '</a>';
+		}, $url );
 		// matches an email@domain type address at the start of a line, or after a space.
-		$match[] = '#(^|[\n ])([a-z0-9&\-_.]+?@[\w\-]+\.([\w\-\.]+\.)?[\w]+)#ie';
-		$replace[] = "'\$1<a href=\"mailto:\$2\">' . ((strlen('\$2') > 25) ? substr('\$2', 0, 15) . ' ... ' . substr('\$2', -5) : '\$2') . '</a>'";
-
-		$url = preg_replace( $match, $replace, $url ); 
+		$url = preg_replace_callback( '#(^|[\n ])([a-z0-9&\-_.]+?@[\w\-]+\.([\w\-\.]+\.)?[\w]+)#i', function ($matches) {
+			$label = $matches[2];
+			if (strlen($label) > 25)
+			{
+				$label = substr($label, 0, 15) . ' ... ' . substr($label, -5);
+			}
+			return $matches[1] . '<a href="mailto:' . $matches[2] . '">' . $label . '</a>';
+		}, $url );
 		// Also fix already tagged links
-		$url = preg_replace( "/<a href=(.*?)>(.*?)<\/a>/ie", "(strlen(\"\\2\") > 25 && !eregi(\"<\", \"\\2\") ) ? '<a href='.stripslashes(\"\\1\").'>'.substr(str_replace(\"http://\",\"\",\"\\2\"), 0, 17) . '...</a>' : '<a href='.stripslashes(\"\\1\").'>'.\"\\2\".'</a>'", $url );
+		$url = preg_replace_callback( '/<a href=(.*?)>(.*?)<\/a>/i', function ($matches) {
+			$text = $matches[2];
+			if (strlen($text) > 25 && stripos($text, '<') === false)
+			{
+				$text = substr(str_replace('http://', '', $text), 0, 17) . '...';
+			}
+			return '<a href=' . $matches[1] . '>' . $text . '</a>';
+		}, $url );
 		// $url = preg_replace("/<a href=(.*?)>(.*?)<\/a>/ie", "(strlen(\"\\2\") > 25 && !eregi(\"<\", \"\\2\") ) ? '<a href='.stripslashes(\"\\1\").'>'.substr(str_replace(\"http://\",\"\",\"\\2\"), 0, 12) . ' ... ' . substr(\"\\2\", -3).'</a>' : '<a href='.stripslashes(\"\\1\").'>'.\"\\2\".'</a>'", $url);
 		return $url;
 	}

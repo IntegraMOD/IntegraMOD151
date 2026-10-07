@@ -172,7 +172,7 @@ class pafiledb_search extends pafiledb_public
 					}
 					$db->sql_freeresult($result);
 
-					$total_match_count = count($search_ids);					
+					$total_match_count = count_safe($search_ids);					
 				}
 				else if ( $search_keywords != '' )
 				{
@@ -188,7 +188,7 @@ class pafiledb_search extends pafiledb_public
 					$word_match = array();
 					$result_list = array();
 
-					for($i = 0; $i < count($split_search); $i++)
+					for($i = 0; $i < count_safe($split_search); $i++)
 					{
 						switch ( $split_search[$i] )
 						{
@@ -312,7 +312,7 @@ class pafiledb_search extends pafiledb_public
 					}	
 			
 					unset($result_list);
-					$total_match_count = count($search_ids);
+					$total_match_count = count_safe($search_ids);
 				}
 			//
 			// Author name search 
@@ -390,7 +390,7 @@ class pafiledb_search extends pafiledb_public
 						$delete_search_ids[] = "'" . $row['session_id'] . "'";
 					}
 
-					if ( count($delete_search_ids) )
+					if ( count_safe($delete_search_ids) )
 					{
 						$sql = "DELETE FROM " . SEARCH_TABLE . " 
 							WHERE session_id NOT IN (" . implode(", ", $delete_search_ids) . ")";
@@ -408,7 +408,7 @@ class pafiledb_search extends pafiledb_public
 	
 				$store_search_data = array();
 			
-				for($i = 0; $i < count($store_vars); $i++)
+				for($i = 0; $i < count_safe($store_vars); $i++)
 				{
 					$store_search_data[$store_vars[$i]] = $$store_vars[$i];
 				}
@@ -416,7 +416,7 @@ class pafiledb_search extends pafiledb_public
 				$result_array = serialize($store_search_data);
 				unset($store_search_data);
 
-				mt_srand ((double) microtime() * 1000000);
+				mt_srand ((float) microtime() * 1000000);
 				$search_id = mt_rand();
 
 				$sql = "UPDATE " . SEARCH_TABLE . " 
@@ -449,7 +449,7 @@ class pafiledb_search extends pafiledb_public
 					if ( $row = $db->sql_fetchrow($result) )
 					{
 						$search_data = unserialize($row['search_array']);
-						for($i = 0; $i < count($store_vars); $i++)
+						for($i = 0; $i < count_safe($store_vars); $i++)
 						{
 							$$store_vars[$i] = $search_data[$store_vars[$i]];
 						}
@@ -510,7 +510,7 @@ class pafiledb_search extends pafiledb_public
 					'L_SEARCH_MATCHES' => $l_search_matches)
 				);
 
-				for($i = 0; $i < count($searchset); $i++)
+				for($i = 0; $i < count_safe($searchset); $i++)
 				{
 					$cat_url = append_sid('dload.'.$phpEx.'?action=category&cat_id=' . $searchset[$i]['cat_id']);
 					$file_url = append_sid('dload.'.$phpEx.'?action=file&file_id=' . $searchset[$i]['file_id']);

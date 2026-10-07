@@ -219,7 +219,7 @@ if ($delete_all_before_date)
 }
 else
 {
-	if (count($_POST))
+	if (count_safe($_POST))
 	{
 		foreach($_POST as $key => $val)
 		{

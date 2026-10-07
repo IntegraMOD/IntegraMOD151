@@ -420,7 +420,7 @@ else
 			//
 			// Redirect to the open report
 			//
-			else if (count($reports) == 1)
+			else if (count_safe($reports) == 1)
 			{
 				$redirect_url = append_sid("report.$phpEx?" . POST_REPORT_URL . '=' . $reports[0]['report_id'], true);
 				redirect($redirect_url);

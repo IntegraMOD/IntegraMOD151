@@ -67,7 +67,7 @@ if(!@file_exists($filename))
 $style_config = array();
 include($filename);
 $data = $template->get_config($tpl, false);
-for($i=0; $i<count($style_config); $i++)
+for($i=0; $i<count_safe($style_config); $i++)
 {
 	if(!isset($data[$style_config[$i]['var']]))
 	{
@@ -79,7 +79,7 @@ for($i=0; $i<count($style_config); $i++)
 // check submitted form
 if(isset($_POST['tpl']) && !defined('DEMO_MODE'))
 {
-	for($i=0; $i<count($style_config); $i++)
+	for($i=0; $i<count_safe($style_config); $i++)
 	{
 		$item = &$style_config[$i];
 		$var = $style_config[$i]['var'];
@@ -122,7 +122,7 @@ if(isset($_POST['tpl']) && !defined('DEMO_MODE'))
 
 // show form
 $last_cat = '';
-for($i=0; $i<count($style_config); $i++)
+for($i=0; $i<count_safe($style_config); $i++)
 {
 	$item = &$style_config[$i];
 	$var = $style_config[$i]['var'];
@@ -151,7 +151,7 @@ for($i=0; $i<count($style_config); $i++)
 		foreach($item['selection'] as $var => $value)
 		{
 			$selected = false;
-			for($j=0; $j<count($values); $j++)
+			for($j=0; $j<count_safe($values); $j++)
 			{
 				if($values[$j] === $var)
 				{

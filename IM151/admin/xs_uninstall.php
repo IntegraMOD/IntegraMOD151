@@ -194,7 +194,7 @@ if(!$result = $db->sql_query($sql))
 $style_rowset = $db->sql_fetchrowset($result);
 
 $tpl = array();
-for($i=0; $i<count($style_rowset); $i++)
+for($i=0; $i<count_safe($style_rowset); $i++)
 {
 	$item = $style_rowset[$i];
 	$tpl[$item['template_name']][] = $item;
@@ -208,12 +208,12 @@ foreach($tpl as $tpl => $styles)
 	$template->assign_block_vars('styles', array(
 			'ROW_CLASS'	=> $row_class,
 			'TPL'		=> htmlspecialchars($tpl),
-			'ROWS'		=> count($styles),
+			'ROWS'		=> count_safe($styles),
 		)
 	);
-	if(count($styles) > 1)
+	if(count_safe($styles) > 1)
 	{
-		for($i=0; $i<count($styles); $i++)
+		for($i=0; $i<count_safe($styles); $i++)
 		{
 			$template->assign_block_vars('styles.item', array(
 					'ID'		=> $styles[$i]['themes_id'],

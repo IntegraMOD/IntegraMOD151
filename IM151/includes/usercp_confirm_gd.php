@@ -113,8 +113,8 @@ else
 	}
 }
 
-srand((double)microtime()*1000000);
-mt_srand((double)microtime()*1000000);
+srand((float)microtime()*1000000);
+mt_srand((float)microtime()*1000000);
 #include($phpbb_root_path.'includes/functions_captcha.'.$phpEx);
 
 // Define allowed bg-image types
@@ -189,7 +189,7 @@ if ($bg_image_active)
 		closedir($img_dir);
 	}
 	// Grab a random Background Image or set Error if none was found
-	$bg_img = rand(0, (count($bg_imgs)-1));
+	$bg_img = rand(0, (count_safe($bg_imgs)-1));
 	$bg_err = ($bg_imgs[$bg_img] != '') ? false : true;
 
 	if (!$bg_err)
@@ -268,7 +268,7 @@ if ($fonts_dir = opendir($phpbb_root_path.'captcha/fonts/'))
 	}
 	closedir($fonts_dir);
 }
-$font = rand(0, (count($fonts)-1));
+$font = rand(0, (count_safe($fonts)-1));
 
 // Generate image
 $image = (gdVersion() >= 2) ? imagecreatetruecolor($total_width, $total_height) : imagecreate($total_width, $total_height);
@@ -364,11 +364,11 @@ $tc_dark = mt_rand(55, 85);
 
 for ($i = 0; $i < strlen($code); $i++)
 {
-	mt_srand((double)microtime()*1000000);
+	mt_srand((float)microtime()*1000000);
 
 	$char = $code[$i];
 	$size = mt_rand($min_char_size, $max_char_size);
-	$font = ($rnd_font) ? mt_rand(0, (count($fonts)-1)) : $font;
+	$font = ($rnd_font) ? mt_rand(0, (count_safe($fonts)-1)) : $font;
 	$angle = mt_rand(-35, 30);
 
 	$x_char_position = rand( round((($code_area_width - (strlen($code) * 2)) / strlen($code))), round((($code_area_width - (strlen($code) * 4)) / strlen($code))) );
@@ -388,7 +388,7 @@ for ($i = 0; $i < strlen($code); $i++)
 	{
 		$pre_angle = $angle + mt_rand(-20, 20);
 
-		$text_color = $pre_text_color_array[mt_rand(0, count($pre_text_color_array)-1)];
+		$text_color = $pre_text_color_array[mt_rand(0, count_safe($pre_text_color_array)-1)];
 		$text_color = explode(",", $text_color);
 		$textcolor = imagecolorallocate($image, $text_color[0], $text_color[1], $text_color[2]);
 		$textcolor_light = imagecolorallocate($image, $tc_light, $tc_light, $tc_light);
@@ -402,7 +402,7 @@ for ($i = 0; $i < strlen($code); $i++)
 	}
 
 //	Final letters
-	$text_color = $text_color_array[mt_rand(0, count($text_color_array)-1)];
+	$text_color = $text_color_array[mt_rand(0, count_safe($text_color_array)-1)];
 	$text_color = explode(",", $text_color);
 	$textcolor = imagecolorallocate($image, $text_color[0], $text_color[1], $text_color[2]);
 	$textcolor_light = imagecolorallocate($image, $tc_light, $tc_light, $tc_light);
@@ -445,16 +445,16 @@ if ($foreground_lattice_x)
 // Font debug
 if (!empty($font_debug) && !$rnd_font)
 {
-	imagestring($image, 4, 2, 0, ($font + 1).'/'.count($fonts).': '.$fonts[$font], $white);
-	imagestring($image, 4, 5, 0, ($font + 1).'/'.count($fonts).': '.$fonts[$font], $white);
-	imagestring($image, 4, 3, 3, ($font + 1).'/'.count($fonts).': '.$fonts[$font], $white);
-	imagestring($image, 4, 4, 2, ($font + 1).'/'.count($fonts).': '.$fonts[$font], $gray);
-	imagestring($image, 4, 3, 1, ($font + 1).'/'.count($fonts).': '.$fonts[$font], $black);
+	imagestring($image, 4, 2, 0, ($font + 1).'/'.count_safe($fonts).': '.$fonts[$font], $white);
+	imagestring($image, 4, 5, 0, ($font + 1).'/'.count_safe($fonts).': '.$fonts[$font], $white);
+	imagestring($image, 4, 3, 3, ($font + 1).'/'.count_safe($fonts).': '.$fonts[$font], $white);
+	imagestring($image, 4, 4, 2, ($font + 1).'/'.count_safe($fonts).': '.$fonts[$font], $gray);
+	imagestring($image, 4, 3, 1, ($font + 1).'/'.count_safe($fonts).': '.$fonts[$font], $black);
 }
 // Bg-image debug
 if (!empty($bg_img_debug) && $bg_image_active)
 {
-	$lang['AVC_bg-error'][0] = ($bg_img + 1).'/'.count($bg_imgs).': '.$bg_imgs[$bg_img];
+	$lang['AVC_bg-error'][0] = ($bg_img + 1).'/'.count_safe($bg_imgs).': '.$bg_imgs[$bg_img];
 	$lang['AVC_bg-error'][1] = 'No picture available';
 	$lang['AVC_bg-error'][2] = 'Wrong datatype';
 	$lang['AVC_bg-error'][3] = $bg_imgs[$bg_img].' corrupt';

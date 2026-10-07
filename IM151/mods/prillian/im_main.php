@@ -189,7 +189,7 @@ if( $im_userdata['user_allow_network'] && $im_userdata['admin_allow_network'] &&
 	}
 }
 
-$msgs_total = (!empty($all_msgs)) ? count($all_msgs): false;
+$msgs_total = (!empty($all_msgs)) ? count_safe($all_msgs): false;
 if( $msgs_total )
 {
 	sort($all_msgs);
@@ -406,7 +406,7 @@ if( $msgs_total )
 			$orig_word = array();
 			$replacement_word = array();
 			obtain_word_list($orig_word, $replacement_word);
-			if ( count($orig_word) )
+			if ( count_safe($orig_word) )
 			{
 				$post_subject = preg_replace($orig_word, $replacement_word, $post_subject);
 			}
@@ -654,7 +654,7 @@ elseif( $im_userdata['list_all_online'] == 2 || $im_userdata['list_all_online'] 
 		'L_USERS_ONLINE' => $lang['Buddies_Online']
 	));
 
-	if ( empty($prillian_online) || !count($contact_list->buddy) )
+	if ( empty($prillian_online) || !count_safe($contact_list->buddy) )
 	{
 		// Either the user has no buddies, or no users are online at all!
 		$template->assign_block_vars('switch_users_online.switch_user_list',	array(

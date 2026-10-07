@@ -190,7 +190,7 @@ function create_thumbnail($source, $new_file, $mimetype, $thumbtype=1)
 		$old_file = $new_file;
 
 		$tmp_path = explode('/', $source);
-		$tmp_path[count($tmp_path)-1] = '';
+		$tmp_path[count_safe($tmp_path)-1] = '';
 		$tmp_path = implode('/', $tmp_path);
 
 		if ($tmp_path == '')

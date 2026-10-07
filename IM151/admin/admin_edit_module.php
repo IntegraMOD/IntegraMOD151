@@ -145,7 +145,7 @@ if ($submit && $mode == 'mod_edit')
 	$update_sql = '';
 	$perm_array = array('perm_all', 'perm_reg', 'perm_mod', 'perm_admin');
 
-	for ($i = 0; $i < count($perm_array); $i++)
+	for ($i = 0; $i < count_safe($perm_array); $i++)
 	{
 		if (isset($_POST[$perm_array[$i]]))
 		{
@@ -297,14 +297,14 @@ if ($mode == 'mod_edit')
 	$module_langs = get_module_languages(trim($mod_info['short_name']));
 	$module_languages = '';
 	
-	for ($i = 0; $i < count($module_langs); $i++)
+	for ($i = 0; $i < count_safe($module_langs); $i++)
 	{
 		$module_languages .= ( ($module_languages == '') ? $module_langs[$i] : ', ' . $module_langs[$i]);
 	}
 
 	$yes_no_switches = array('perm_all', 'perm_reg', 'perm_mod', 'perm_admin');
 
-	for ($i = 0; $i < count($yes_no_switches); $i++)
+	for ($i = 0; $i < count_safe($yes_no_switches); $i++)
 	{
 		eval("\$" . $yes_no_switches[$i] . " = ( intval(\$mod_info['" . $yes_no_switches[$i] . "']) != 0 ) ? 'checked=\"checked\"' : '';");
 	}
@@ -374,11 +374,11 @@ if ($mode == 'mod_edit')
 	{
 		$group_select = '<select name="group">';
 
-		for($i = 0; $i < count($group_name); $i++)
+		for($i = 0; $i < count_safe($group_name); $i++)
 		{
 			$add = FALSE;
 
-			if (count($added_groups['group_id']) == 0)
+			if (count_safe($added_groups['group_id']) == 0)
 			{
 				$add = TRUE;
 			}
@@ -415,7 +415,7 @@ if ($mode == 'mod_edit')
 		$template->assign_block_vars('switch_groups_selected', array());
 		$group_added_select = '<select name="added_group">';
 
-		for($i = 0; $i < count($added_groups['group_id']); $i++)
+		for($i = 0; $i < count_safe($added_groups['group_id']); $i++)
 		{
 			$selected = ($i == 0) ? ' selected="selected"' : '';
 			$group_added_select .= '<option value="' . $added_groups['group_id'][$i] . '"' . $selected . '>' . $added_groups['group_name'][$i] . '</option>';
@@ -581,7 +581,7 @@ if ($mode == 'mod_edit')
 			{
 				if( !@is_dir($phpbb_root_path . 'modules/pakfiles' . '/' . $file) )
 				{
-					if ( eregi('.pak$', $file) )
+					if ( preg_match('~.pak$~iD', $file) )
 					{
 						$module_paks[] = $file;
 					}
@@ -591,11 +591,11 @@ if ($mode == 'mod_edit')
 			@closedir($dir);
 		}
 
-		if (count($module_paks) > 0)
+		if (count_safe($module_paks) > 0)
 		{
 			$module_select_field = '<select name="selected_pak_file">';
 
-			for ($i = 0; $i < count($module_paks); $i++)
+			for ($i = 0; $i < count_safe($module_paks); $i++)
 			{
 				$selected = ($i == 0) ? ' selected="selected"' : '';
 
@@ -654,7 +654,7 @@ else if ($mode == 'select_module')
 	
 	$module_select_field = '<select name="module">';
 
-	for ($i = 0; $i < count($rows); $i++)
+	for ($i = 0; $i < count_safe($rows); $i++)
 	{
 		$selected = ($i == 0) ? ' selected="selected"' : '';
 

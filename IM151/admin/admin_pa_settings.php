@@ -102,7 +102,7 @@ $auth_select = array();
 foreach($global_auth as $auth)
 {
 	$auth_select[$auth]	= '&nbsp;<select name="' . $auth . '">';
-	for($k = 0; $k < count($cat_auth_levels); $k++)
+	for($k = 0; $k < count_safe($cat_auth_levels); $k++)
 	{
 		$selected = ( $new[$auth] == $cat_auth_const[$k] ) ? ' selected="selected"' : '';
 		$auth_select[$auth] .= '<option value="' . $cat_auth_const[$k] . '"' . $selected . '>' . $lang['Category_' . $cat_auth_levels[$k]] . '</option>';
@@ -299,7 +299,7 @@ function pa_size_select($select_name, $size_compare)
 
 	$select_field = '<select name="' . $select_name . '">';
 
-	for ($i = 0; $i < count($size_types_text); $i++)
+	for ($i = 0; $i < count_safe($size_types_text); $i++)
 	{
 		$selected = ($size_compare == $size_types[$i]) ? ' selected="selected"' : '';
 

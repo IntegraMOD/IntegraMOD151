@@ -147,7 +147,7 @@ class ct_database
 		$db->sql_freeresult($result);
 
 		// How much entrys do we have?
-		$this->blocklist_count = count($this->blocklist);
+		$this->blocklist_count = count_safe($this->blocklist);
 	}
 
 

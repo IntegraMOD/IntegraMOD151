@@ -83,7 +83,7 @@ foreach($params as $var => $default)
 	}
 }
 
-if (count($_POST))
+if (count_safe($_POST))
 {
 	foreach($_POST as $key => $valx)
 	{

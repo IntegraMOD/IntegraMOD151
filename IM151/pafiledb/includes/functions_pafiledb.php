@@ -133,7 +133,7 @@ class pafiledb
 
 		$this->auth($cat_rowset);
 
-		for( $i = 0; $i < count($cat_rowset); $i++ )
+		for( $i = 0; $i < count_safe($cat_rowset); $i++ )
 		{
 			if($this->auth[$cat_rowset[$i]['cat_id']]['auth_view'])
 			{
@@ -547,7 +547,7 @@ class pafiledb
 
 		$is_admin = ( $userdata['user_level'] == ADMIN && $userdata['session_logged_in'] ) ? TRUE : 0;
 
-		for($i = 0; $i < count($auth_fields); $i++)
+		for($i = 0; $i < count_safe($auth_fields); $i++)
 		{
 			$key = $auth_fields[$i];
 
@@ -562,7 +562,7 @@ class pafiledb
 			// and admin automatically have access to an ACL forum, similarly we assume admins meet an
 			// auth requirement of MOD
 			//
-			for($k = 0; $k < count($c_access); $k++)
+			for($k = 0; $k < count_safe($c_access); $k++)
 			{
 				$value = $c_access[$k][$key];
 				$c_cat_id = $c_access[$k]['cat_id'];
@@ -601,13 +601,13 @@ class pafiledb
 				}
 			}
 		}
-		for($k = 0; $k < count($c_access); $k++)
+		for($k = 0; $k < count_safe($c_access); $k++)
 		{
 			$c_cat_id = $c_access[$k]['cat_id'];
 			$this->auth[$c_cat_id]['auth_mod'] = ( $userdata['session_logged_in'] ) ? $this->auth_check_user(AUTH_MOD, 'auth_mod', ( isset($u_access[$c_cat_id]) ? $u_access[$c_cat_id] : null ), $is_admin) : 0;
 		}
 
-		for($i = 0; $i < count($auth_fields_global); $i++)
+		for($i = 0; $i < count_safe($auth_fields_global); $i++)
 		{
 			$key = $auth_fields_global[$i];
 			$value = $pafiledb_config[$auth_fields_global[$i]];
@@ -653,7 +653,7 @@ class pafiledb
 
 		if ( count_safe($u_access) )
 		{
-			for($j = 0; $j < count($u_access); $j++)
+			for($j = 0; $j < count_safe($u_access); $j++)
 			{
 				$result = 0;
 				switch($type)
@@ -992,7 +992,7 @@ class pafiledb
 		$total_file = $row['total_file'];
 		unset($row);
 
-		for ($i = 0; $i < count($file_rowset); $i++)
+		for ($i = 0; $i < count_safe($file_rowset); $i++)
 		{
 			//===================================================
 			// Format the date for the given file

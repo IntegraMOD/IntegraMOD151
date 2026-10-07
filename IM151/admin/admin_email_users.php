@@ -90,7 +90,7 @@ else if ( $send )
 	}
 	$targets = $db->sql_fetchrowset($result);
 
-	for ( $i = 0; $i < count ( $targets ) ; $i++ )
+	for ( $i = 0; $i < count_safe ( $targets ) ; $i++ )
 	{
 		$template->assign_block_vars('send.targets',array(
 			'USER_NAME' => $targets[$i]['username'],
@@ -147,7 +147,7 @@ else if ( $send_pm_action )
 	}
 	$dests = $db->sql_fetchrowset($result);
 
-	for ( $i = 0 ; $i < count($dests) ; $i++ )
+	for ( $i = 0 ; $i < count_safe($dests) ; $i++ )
 	{	
 		$dest_user = $dests[$i]['user_id'];
 	    $msg_time = time();
@@ -360,7 +360,7 @@ else if ( $send_action )
 			$emailer->from($board_config['board_email']);
 			$emailer->replyto($board_config['board_email']);
 
-			for ($i = 0; $i < count($bcc_list); $i++)
+			for ($i = 0; $i < count_safe($bcc_list); $i++)
 			{
 				$emailer->bcc($bcc_list[$i]);
 			}
@@ -417,7 +417,7 @@ else
 	$targets = $db->sql_fetchrowset($result);
 
 	$ever = '(';
-	for ( $i = 0; $i < count ( $targets ) ; $i++ )
+	for ( $i = 0; $i < count_safe ( $targets ) ; $i++ )
 	{
 		$template->assign_block_vars('userlist.targets',array(
 			'USER_ID' => $targets[$i]['user_id'],
@@ -457,7 +457,7 @@ else
 	$mode_types = array( 'username', 'posts', 'email', );
 
 	$select_sort_mode = '<select name="sort_mode">';
-	for($i = 0; $i < count($mode_types_text); $i++)
+	for($i = 0; $i < count_safe($mode_types_text); $i++)
 	{
 		$selected = ( $sort_mode == $mode_types[$i] ) ? ' selected="selected"' : '';
 		$select_sort_mode .= '<option value="' . $mode_types[$i] . '"' . $selected . '>' . $mode_types_text[$i] . '</option>';
@@ -500,7 +500,7 @@ else
 	}
 	$users = $db->sql_fetchrowset($result);
 
-	for ( $i = 0; $i < count ( $users ) ; $i++ )
+	for ( $i = 0; $i < count_safe ( $users ) ; $i++ )
 	{
 		$row_class = ( !($i % 2) ) ? $theme['td_class1'] : $theme['td_class2'];
 
@@ -523,7 +523,7 @@ else
 		}
 		$groups = $db->sql_fetchrowset($result);
 
-		for ( $k = 0 ; $k < count($groups) ; $k ++ )
+		for ( $k = 0 ; $k < count_safe($groups) ; $k ++ )
 		{
 			$template->assign_block_vars('userlist.users.groups',array(
 				'GROUP_NAME' => $groups[$k]['group_name'],
@@ -539,7 +539,7 @@ else
 		message_die(GENERAL_ERROR, 'Could not obtain user list', '', __LINE__, __FILE__, $sql);
 	}
 	$users = $db->sql_fetchrowset($result);
-	$total_members = count($users);
+	$total_members = count_safe($users);
 	$pagination = generate_pagination("admin_email_users.$phpEx?sort_mode=$sort_mode&amp;order=$sort_order", $total_members, $board_config['topics_per_page'], $start). '&nbsp;';
 }
 

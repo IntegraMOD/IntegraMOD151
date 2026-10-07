@@ -35,7 +35,7 @@ if (!empty($setmodules) || !empty($navbar))
 	);
 
 	$class = 0;
-	for ( $i = 0; $i < count($menu); $i++ )
+	for ( $i = 0; $i < count_safe($menu); $i++ )
 	{
 		$template->assign_block_vars("navcat",array(	"L_CATEGORY" => $menu[$i]->category,
 														"WIDTH" => $menu[$i]->num()));
@@ -73,7 +73,7 @@ $template->set_filenames(array(
 	"body" => "admin/cash_menu.tpl")
 );
 
-for ( $i = 0; $i < count($menu); $i++ )
+for ( $i = 0; $i < count_safe($menu); $i++ )
 {
 	$template->assign_block_vars("menucat",array("L_CATEGORY" => $menu[$i]->category));
 	for ( $j = 0; $j < $menu[$i]->num(); $j++ )

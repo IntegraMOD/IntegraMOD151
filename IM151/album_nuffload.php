@@ -70,17 +70,17 @@ if (isset($_REQUEST['psid']))
 	{
 		$qstr = "";
 		$key_names = array_keys($_GET);
-		for($a=0;$a<count($key_names);$a++)
+		for($a=0;$a<count_safe($key_names);$a++)
 		{
 			$qstr .= "&" . $key_names[$a] . "=" . $_GET[$key_names[$a]];
 		}
 		$key_names = array_keys($_POST);
-		for($a=0;$a<count($key_names);$a++)
+		for($a=0;$a<count_safe($key_names);$a++)
 		{
 			$qstr .= "&" . $key_names[$a] . "=" . $_POST[$key_names[$a]];
 		}
 		$key_names = array_keys($_FILES);
-		for($a=0;$a<count($key_names);$a++)
+		for($a=0;$a<count_safe($key_names);$a++)
 		{
 			$qstr .= "&file[field][$a]=" . $key_names[$a];
 			$qstr .= "&file[name][$a]=" . $_FILES[$key_names[$a]][name];
@@ -113,7 +113,7 @@ if (isset($_REQUEST['psid']))
 	$qstr = @join("",@file($path_to_bin . "tmp/{$psid}_qstring"));
 	parse_str($qstr);
 	$qstr_array = explode("&",$qstr);
-	for($i=0; $i < count($qstr_array); $i++)
+	for($i=0; $i < count_safe($qstr_array); $i++)
 	{
 		$temp = explode("=",$qstr_array[$i]);
 			if (!preg_match("/^file\[/", $qstr_array[$i]))
@@ -128,7 +128,7 @@ if (isset($_REQUEST['psid']))
 
 	// Find the total number of file inputs from the form
 	$multi_max = 0;
-	$k = count($file['name']);
+	$k = count_safe($file['name']);
 	for($i=0 ; $i < $k ; $i++)
 	{
 		$multi_array = explode("-",$file['field'][$i]);
@@ -158,7 +158,7 @@ if (isset($_REQUEST['psid']))
 				$file['size'][$i] = $list[0]['size'];
 				$file['name'][$i] = basename($list[0]['stored_filename']);
 				$file['tmp_name'][$i] = $original_filename . "0";
-				for($j=1 ; $j < count($list) ; $j++)
+				for($j=1 ; $j < count_safe($list) ; $j++)
 				{
 					rename($path_to_bin . "tmp/" . basename($list[$j]['filename']), $path_to_bin . $original_filename . $j);
 					$file['size'][$k] = $list[$j]['size'];
@@ -181,7 +181,7 @@ if (isset($_REQUEST['psid']))
 		// Strip "file" from the qstring file so we can rebuild it.
 		$qstr_array = explode("&",$qstr);
 		$qstr = "";
-		for($i=0 ; $i < count($qstr_array) ; $i++)
+		for($i=0 ; $i < count_safe($qstr_array) ; $i++)
 		{
 			if (!preg_match("/^file\[/", $qstr_array[$i]))
 			{
@@ -212,7 +212,7 @@ if (isset($_REQUEST['psid']))
 			$thumb_type_error = false;
 			$_FILES['pic_thumbnail']['tmp_name'] = $path_to_bin . $file['tmp_name'][$i];
 			$split_name = explode("\\",$file['name'][$i]);
-			$file_name = $split_name[count($split_name)-1];
+			$file_name = $split_name[count_safe($split_name)-1];
 			$_FILES['pic_thumbnail']['name'] = $file_name;
 			$_FILES['pic_thumbnail']['size'] = $file['size'][$i];
 			// Find image type and check if allowed
@@ -250,7 +250,7 @@ if (isset($_REQUEST['psid']))
 			$pic_type_error = false;
 			$_FILES['pic_file']['tmp_name'] = $path_to_bin . $file['tmp_name'][$i];
 			$split_name = explode("\\",$file['name'][$i]);
-			$file_name = $split_name[count($split_name)-1];
+			$file_name = $split_name[count_safe($split_name)-1];
 			$_FILES['pic_file']['name'] = $file_name;
 			$_FILES['pic_file']['size'] = $file['size'][$i];
 			// Find image type and check if allowed

@@ -574,7 +574,7 @@ if ( !empty($modevar['d']) && $modevar['d'] == true )
 			$rank_image = '';
 			if ( intval($profiledata['user_rank']) != 0 )
 			{
-				for($i = 0; $i < count($ranksrow); $i++)
+				for($i = 0; $i < count_safe($ranksrow); $i++)
 				{
 					if ( $profiledata['user_rank'] == $ranksrow[$i]['rank_id'] && $ranksrow[$i]['rank_special'] )
 					{
@@ -585,7 +585,7 @@ if ( !empty($modevar['d']) && $modevar['d'] == true )
 			}
 			else
 			{
-				for($i = 0; $i < count($ranksrow); $i++)
+				for($i = 0; $i < count_safe($ranksrow); $i++)
 				{
 					if ( $profiledata['user_posts'] >= $ranksrow[$i]['rank_min'] && !$ranksrow[$i]['rank_special'] )
 					{
@@ -782,7 +782,7 @@ if ( !empty($modevar['d']) && $modevar['d'] == true )
 					if ( $vote_info = $db->sql_fetchrowset($result) )
 					{
 						$db->sql_freeresult($result);
-						$vote_options = count($vote_info);
+						$vote_options = count_safe($vote_info);
 						$vote_id = $vote_info[0]['vote_id'];
 						$vote_title = $vote_info[0]['vote_text'];
 
@@ -792,7 +792,7 @@ if ( !empty($modevar['d']) && $modevar['d'] == true )
 
 						for($i = 0; $i < $vote_options; $i++)
 						{
-							if ( count($orig_word) )
+							if ( count_safe($orig_word) )
 							{
 								$vote_info[$i]['vote_option_text'] = preg_replace($orig_word, $replacement_word, $vote_info[$i]['vote_option_text']);
 							}
@@ -813,7 +813,7 @@ if ( !empty($modevar['d']) && $modevar['d'] == true )
 						$s_hidden_fields = '<input type="hidden" name="topic_id" value="' . $topic_id . '" /><input type="hidden" name="mode" value="vote" />';
 
 
-						if ( count($orig_word) )
+						if ( count_safe($orig_word) )
 						{
 							$vote_title = preg_replace($orig_word, $replacement_word, $vote_title);
 						}
@@ -863,7 +863,7 @@ if ( !empty($modevar['d']) && $modevar['d'] == true )
 				}
 				else if ( $postrow['user_rank'] )
 				{
-					for($j = 0; $j < count($ranksrow); $j++)
+					for($j = 0; $j < count_safe($ranksrow); $j++)
 					{
 						if ( $postrow['user_rank'] == $ranksrow[$j]['rank_id'] && $ranksrow[$j]['rank_special'] )
 						{
@@ -874,7 +874,7 @@ if ( !empty($modevar['d']) && $modevar['d'] == true )
 				}
 				else
 				{
-					for($j = 0; $j < count($ranksrow); $j++)
+					for($j = 0; $j < count_safe($ranksrow); $j++)
 					{
 						if ( $postrow['user_posts'] >= $ranksrow[$j]['rank_min'] && !$ranksrow[$j]['rank_special'] )
 						{
@@ -1073,7 +1073,7 @@ if ( !empty($modevar['d']) && $modevar['d'] == true )
 				//
 				// Replace naughty words
 				//
-				if ( count($orig_word) )
+				if ( count_safe($orig_word) )
 				{
 					$post_subject = preg_replace($orig_word, $replacement_word, $post_subject);
 
@@ -1343,7 +1343,7 @@ if ( !empty($modevar['u']) && $modevar['u'] == true )
 				{
 					$approve_sql = "SELECT username, user_id 
 						FROM " . USERS_TABLE . " 
-						WHERE username = '" . ( get_magic_quotes_gpc() ? $_POST['username'] : addslashes($_POST['username']) ) . "'";
+						WHERE username = '" . ( (function_exists('get_magic_quotes_gpc') && get_magic_quotes_gpc()) ? $_POST['username'] : addslashes($_POST['username']) ) . "'";
 					if ( !($approve_result = $db->sql_query($approve_sql)) ) 
 					{ 
 						message_die(GENERAL_ERROR, $lang['approve_posts_error_obtain'], '', __LINE__, __FILE__, $approve_sql); 
@@ -1393,7 +1393,7 @@ if ( !empty($modevar['u']) && $modevar['u'] == true )
 				{
 					$approve_sql = "SELECT username, user_id 
 						FROM " . USERS_TABLE . " 
-						WHERE username = '" . ( get_magic_quotes_gpc() ? $_POST['username'] : addslashes($_POST['username']) ) . "'";
+						WHERE username = '" . ( (function_exists('get_magic_quotes_gpc') && get_magic_quotes_gpc()) ? $_POST['username'] : addslashes($_POST['username']) ) . "'";
 					if ( !($approve_result = $db->sql_query($approve_sql)) ) 
 					{ 
 						message_die(GENERAL_ERROR, $lang['approve_posts_error_obtain'], '', __LINE__, __FILE__, $approve_sql); 

@@ -89,7 +89,7 @@ function album_user_access($cat_id, $passed_auth, $view_check, $upload_check, $r
 	// --------------------------------
 	if ($userdata['user_level'] == ADMIN)
 	{
-		for ($i = 0; $i < count($album_user_access); $i++)
+		for ($i = 0; $i < count_safe($album_user_access); $i++)
 		{
 			$album_user_access[$album_user_access_keys[$i]] = 1; // Authorised All
 		}
@@ -194,7 +194,7 @@ function album_user_access($cat_id, $passed_auth, $view_check, $upload_check, $r
 		$sql = 'SELECT cat_id, cat_user_id';
 
 
-	for ($i = 0; $i < count($access_type); $i++)
+	for ($i = 0; $i < count_safe($access_type); $i++)
 	{
 		$sql .= ', cat_'. $access_type[$i] .'_level, cat_'. $access_type[$i] .'_groups';
 	}
@@ -238,7 +238,7 @@ function album_user_access($cat_id, $passed_auth, $view_check, $upload_check, $r
 	// ... so we can skip some queries ;)
 	// --------------------------------
 	$groups_access = array();
-	for ($i = 0; $i < count($access_type); $i++)
+	for ($i = 0; $i < count_safe($access_type); $i++)
 	{
 		switch ($thiscat['cat_'. $access_type[$i] .'_level'])
 		{
@@ -304,7 +304,7 @@ function album_user_access($cat_id, $passed_auth, $view_check, $upload_check, $r
 	// upto (6 + 1) loops maximum when this user logged in and All Levels
 	// are set to PRIVATE and this function was called to check all.
 	// So avoiding PRIVATE will speed up your album. However, these queries are very fast
-	for ($i = 0; $i < count($groups_access); $i++)
+	for ($i = 0; $i < count_safe($groups_access); $i++)
 	{
 		$sql = "SELECT group_id, user_id
 				FROM ". USER_GROUP_TABLE ."
@@ -331,7 +331,7 @@ function album_user_access($cat_id, $passed_auth, $view_check, $upload_check, $r
 	// --------------------------------
 	if( ($album_user_access['moderator'] == 1) && ($moderator_check == 1) )
 	{
-		for ($i = 0; $i < count($album_user_access); $i++)
+		for ($i = 0; $i < count_safe($album_user_access); $i++)
 		{
 			if( $thiscat['cat_'. $album_user_access_keys[$i] .'_level'] != ALBUM_ADMIN )
 			{

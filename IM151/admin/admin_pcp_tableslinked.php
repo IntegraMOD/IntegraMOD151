@@ -164,14 +164,14 @@ if ($mode == 'edit')
 			$error = true;
 			$error_msg .= ( empty($error_msg) ? '' : '<br /><br />') . $lang['PCP_err_tableslinked_already_exists'];
 		}
-		if ( empty($name) || !ereg("^[A-Z0-9_]+", $name) )
+		if ( empty($name) || !preg_match('~^[A-Z0-9_]+~D', $name) )
 		{
 			$error = true;
 			$error_msg .= ( empty($error_msg) ? '' : '<br /><br />') . $lang['PCP_err_tableslinked_name_not_valid'];
 		}
 
 		// sql_id
-		if ( empty($sql_id) || !ereg("^[a-z0-9_]+", $sql_id) )
+		if ( empty($sql_id) || !preg_match('~^[a-z0-9_]+~D', $sql_id) )
 		{
 			$error = true;
 			$error_msg .= ( empty($error_msg) ? '' : '<br /><br />') . $lang['PCP_err_tableslinked_sql_id_not_valid'];

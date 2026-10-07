@@ -231,7 +231,7 @@ function make_exif($xkey, $xval)
 
 	while (!empty($xkey[$i]) )
 	{
-		if ( ereg("([0-9]{1,})/([0-9]{1,})", $xval[$i], $num) )
+		if ( preg_match('~([0-9]{1,})/([0-9]{1,})~D', $xval[$i], $num) )
 		{
 			if ( $num[1] > 1 ) $xval[$i] = round( ($num[1] / $num[2]), 6);
 		}

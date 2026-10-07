@@ -64,7 +64,7 @@ else if ( $action == 'chk' )
 		$table_class    = !$table_class;
 
 		$current_hash 	= '';
-		$current_hash = @filesize($row['filepath']) . '-' . count(@file($row['filepath']));
+		$current_hash = @filesize($row['filepath']) . '-' . count_safe(@file($row['filepath']));
 
 		if ( $current_hash == '-1' )
     {

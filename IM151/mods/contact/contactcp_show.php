@@ -42,7 +42,7 @@ switch($type)
 		break;
 	case 'buddy_of':
 		$contact_list->get_list('buddy_of', true, $start, $sort_order);
-		$num = count($contact_list->buddy_of);
+		$num = count_safe($contact_list->buddy_of);
 	    $total_num = $contact_list->get_count($userdata['user_id'], 'buddy_of');
 		$type_title = $lang['Users_buddy_you'];
 		$l_no_list = ( !$total_num ) ? $lang['None_buddy_you'] : '';
@@ -50,7 +50,7 @@ switch($type)
 		break;
 	case 'disallow':
 		$contact_list->get_list('disallow', true, $start, $sort_order);
-		$num = count($contact_list->disallow);
+		$num = count_safe($contact_list->disallow);
 	    $total_num = $contact_list->get_count($userdata['user_id'], 'disallow');
 		$type_title = $lang['Users_you_disallow'];
 		$l_no_list = ( !$total_num ) ? $lang['None_you_disallow'] : '';
@@ -65,7 +65,7 @@ switch($type)
 		break;
 	case 'ignore':
 		$contact_list->get_list('ignore', true, $start, $sort_order);
-		$num = count($contact_list->ignore);
+		$num = count_safe($contact_list->ignore);
 	    $total_num = $contact_list->get_count($userdata['user_id'], 'ignore');
 		$type_title = $lang['Users_you_ignore'];
 		$l_no_list = ( !$total_num ) ? $lang['None_you_ignore'] : '';
@@ -80,7 +80,7 @@ switch($type)
 		break;
 	case 'buddy':
 		$contact_list->get_list('buddy', true, $start, $sort_order);
-		$num = count($contact_list->buddy);
+		$num = count_safe($contact_list->buddy);
 	    $total_num = $contact_list->get_count($userdata['user_id'], 'buddy');
 		$confirm_msg = $lang['Buddy_add_msg'];
 		$type_title = $lang['Users_you_buddy'];
@@ -97,7 +97,7 @@ switch($type)
 		break;
 	case 'alert':
 		$contact_list->get_list('buddy', true, $start, $sort_order);
-		$num = count($contact_list->buddy);
+		$num = count_safe($contact_list->buddy);
 	    $total_num = $contact_list->get_count($userdata['user_id'], 'buddy');
 		$type_title = $lang['Users_you_buddy'];
 		$l_no_list = ( !$total_num ) ? $lang['None_you_buddy'] : '';

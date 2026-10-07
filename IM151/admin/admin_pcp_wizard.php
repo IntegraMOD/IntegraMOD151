@@ -290,7 +290,7 @@ function get_input_maps()
 {
 	global $user_maps;
 	global $input_maps;
-	if(!count($input_maps))
+	if(!count_safe($input_maps))
 	{
 		$input_maps = rebuild_array(array_filter(array_keys($user_maps),"is_input_map"));
 	}
@@ -324,7 +324,7 @@ function get_all_maps(){
 	global $output_maps, $input_maps, $all_maps;
 	get_input_maps();
 	get_output_maps();
-	if(!count($all_maps)){
+	if(!count_safe($all_maps)){
 		$all_maps = array_merge($input_maps,$output_maps);
 	}
 }
@@ -367,7 +367,7 @@ function get_map_title($map,$type=1){
 	$level = 0;
 	$iLevel = 0;
 	// loop trough the map and fetch all languages
-	for($imap=0; $imap < count($mapitems); $imap++){
+	for($imap=0; $imap < count_safe($mapitems); $imap++){
 		$extra = "";
 		$tmpname = ($tmpname) ? $tmpname.'.'.$mapitems[$imap] : $mapitems[$imap];
 		$tmptitle = isset($user_maps[$tmpname]['title']) && !is_array($user_maps[$tmpname]['title']) && array_key_exists($user_maps[$tmpname]['title'], $lang) ? $lang[$user_maps[$tmpname]['title']] : '';
@@ -588,7 +588,7 @@ function correctimages($text){
 function set_demouserdata(){
 	global $demouserdata;
 	// make sure all fields are filled so that examples work
-	if(!count($demouserdata)){
+	if(!count_safe($demouserdata)){
 		global $userdata;
 		$demouserdata = $userdata;
 		preProcessUserConfig($demouserdata); // used for pcp_output!
@@ -926,7 +926,7 @@ function outputlistupdate(){
 		// destroy the field
 		$user_maps[$posted['map']]['fields'][$field] = array(); 
 		// reset old value
-	    for ($i = 0; $i < count($keynotupdated); $i++) {
+	    for ($i = 0; $i < count_safe($keynotupdated); $i++) {
 	        $key = $keynotupdated[$i];
 	        if (isset($oldfield[$key]) && strlen($oldfield[$key])) {
 	            $user_maps[$posted['map']]['fields'][$field][$key] = $oldfield[$key];
@@ -1157,7 +1157,7 @@ function inputlistupdate(){
 		// destroy the field
 		$user_fields[$field] = array(); 
 		// reset old values
-		for($i=0; $i<count($keynotupdated); $i++){
+		for($i=0; $i<count_safe($keynotupdated); $i++){
 			$key = $keynotupdated[$i];
 			if(strlen($oldfield[$key])){
 				$user_fields[$field][$key] = $oldfield[$key];
@@ -1251,7 +1251,7 @@ function validate($autocorrect=false){
 				$map2alter = "";
 				foreach ($mapsplit as $idxCorr => $submap)
 				{
-					$map2alter .= count($map2alter) ? '.'.$submap : $submap;
+					$map2alter .= count_safe($map2alter) ? '.'.$submap : $submap;
 					$title = ucfirst($submap);
 					$user_maps[$map2alter]['title'] = $title;
 				}
@@ -1740,7 +1740,7 @@ function pageimportupdate(){
 								$newfields = array_merge($newfields,$data['fields']);
 							} 
 						}
-						if(!count($newfields)){
+						if(!count_safe($newfields)){
 							// searchfield not found
 							$newfields = $data['fields'];
 						}
@@ -1781,7 +1781,7 @@ if (!function_exists('pcp_sort_usermaps')) {
 				// verify parents
 				$keys = explode('.', $w_map_name);
 				$w_keys = array();
-				for ($i=0; $i < count($keys)-1; $i++)
+				for ($i=0; $i < count_safe($keys)-1; $i++)
 				{
 					$w_keys[] = $keys[$i];
 				}
@@ -1811,13 +1811,13 @@ if (!function_exists('pcp_sort_usermaps')) {
 			// get the parent name
 			$w_keys = explode('.', $map_name);
 			$new_keys = array();
-			for ( $i = 0; $i < (count($w_keys)-1); $i++)
+			for ( $i = 0; $i < (count_safe($w_keys)-1); $i++)
 			{
 				$new_keys[] = $w_keys[$i];
 			}
 			$maps[$map_name]['parent'] = implode( '.', $new_keys);
 			// get the local order (order+name)
-			$local_order[$map_name] = implode('.', array( sprintf('%09d', intval($map_data['order'])), $w_keys[ count($w_keys)-1 ] ) );
+			$local_order[$map_name] = implode('.', array( sprintf('%09d', intval($map_data['order'])), $w_keys[ count_safe($w_keys)-1 ] ) );
 		}
 		@array_multisort($names, $maps);
 		// sort : get the full order expression
@@ -1844,7 +1844,7 @@ if (!function_exists('pcp_affect_order')) {
 			// get parent
 			$w_keys = explode('.', $map_name);
 			$new_keys = array();
-			for ($i=0; $i < (count($w_keys)-1); $i++)
+			for ($i=0; $i < (count_safe($w_keys)-1); $i++)
 			{
 				$new_keys[] = $w_keys[$i];
 			}
@@ -1857,7 +1857,7 @@ if (!function_exists('pcp_affect_order')) {
 					// get parent
 					$w_keys = explode('.', $w_map_name);
 					$new_keys = array();
-					for ($i=0; $i < (count($w_keys)-1); $i++)
+					for ($i=0; $i < (count_safe($w_keys)-1); $i++)
 					{
 						$new_keys[] = $w_keys[$i];
 					}
@@ -1986,13 +1986,13 @@ function correctrequired(){
 	get_input_maps();
 	foreach ($input_maps as $idxmap => $map)
 	{
-		if (!count($requiredfields)) break;
+		if (!count_safe($requiredfields)) break;
 
 		$mapfields = array();
 		if( is_array($user_maps[$map]['fields'])){
 			$mapfields = array_keys($user_maps[$map]['fields']);
 		}
-		for($i=0; $i<count($requiredfields); $i++){
+		for($i=0; $i<count_safe($requiredfields); $i++){
 			if(in_array($requiredfields[$i],$mapfields)){
 				array_splice($requiredfields,$i,1);
 				$i--;
@@ -2000,7 +2000,7 @@ function correctrequired(){
 		}
 	}
 	// now $requiredfields contains only fields that are not on input maps so delete the prop
-	for($i=0; $i<count($requiredfields); $i++){
+	for($i=0; $i<count_safe($requiredfields); $i++){
 		unset($user_fields[$requiredfields[$i]]['required']);
 	}
 	

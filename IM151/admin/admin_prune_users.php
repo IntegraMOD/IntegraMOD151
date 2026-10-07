@@ -125,7 +125,7 @@ while ( !empty($sql[$n]) )
 	if(!($result = $db->sql_query('SELECT user_id , username, user_level FROM '. USERS_TABLE .' WHERE user_id<>"'.ANONYMOUS.'"'.$sql[$n].' AND user_regdate<"'.(time()-(86400*$days [$n])).'" ORDER BY username LIMIT 800')))
 		message_die(GENERAL_ERROR, 'Error obtaining userdata'.$sql[$n], '', __LINE__, __FILE__, $sql[$n]);
 	$user_list = $db->sql_fetchrowset($result);
-	$user_count=count($user_list);
+	$user_count=count_safe($user_list);
 	for($i = 0; $i < $user_count; $i++) 
 	{ 
 		$style_color = ($user__list[$i]['user_level'] == ADMIN )?'style="color:#' . $theme['fontcolor3'] . '"':(( $user__list[$i]['user_level'] == MOD )?'style="color:#' . $theme['fontcolor2'] . '"':''); 

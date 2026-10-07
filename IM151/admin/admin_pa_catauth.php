@@ -87,7 +87,7 @@ if( isset($_POST['submit']) )
 {
 	$temp_sql = array();
 
-	for($i = 0; $i < count($cat_auth_fields); $i++)
+	for($i = 0; $i < count_safe($cat_auth_fields); $i++)
 	{
 		foreach($_POST[$cat_auth_fields[$i]] as $temp_cat_id => $value)
 		{
@@ -113,7 +113,7 @@ if( isset($_POST['submit']) )
 	unset($temp_sql);
 
 
-	if ( is_array($sql) && (count($sql) > 0) )
+	if ( is_array($sql) && (count_safe($sql) > 0) )
 	{
 		foreach($sql as $do_sql)
 		{
@@ -157,7 +157,7 @@ foreach($permissions_menu as $url => $l_name)
 // Output values of individual
 // fields
 //
-for($j = 0; $j < count($cat_auth_fields); $j++)
+for($j = 0; $j < count_safe($cat_auth_fields); $j++)
 {
 	$cell_title = $field_names[$cat_auth_fields[$j]];	
 	$pafiledb_template->assign_block_vars('cat_auth_titles', array(
@@ -177,11 +177,11 @@ elseif(!empty($cat_id))
 		'U_CAT' => append_sid("admin_pa_catauth.$phpEx?cat_parent={$pafiledb->cat_rowset[$cat_id]['cat_parent']}"))
 	);
 
-	for($j = 0; $j < count($cat_auth_fields); $j++)
+	for($j = 0; $j < count_safe($cat_auth_fields); $j++)
 	{
 		$custom_auth[$j] = '&nbsp;<select name="' . $cat_auth_fields[$j] . '[' . $cat_id . ']' . '">';
 
-		for($k = 0; $k < count($cat_auth_levels); $k++)
+		for($k = 0; $k < count_safe($cat_auth_levels); $k++)
 		{
 			$selected = ( $pafiledb->cat_rowset[$cat_id][$cat_auth_fields[$j]] == $cat_auth_const[$k] ) ? ' selected="selected"' : '';
 			$custom_auth[$j] .= '<option value="' . $cat_auth_const[$k] . '"' . $selected . '>' . $lang['Category_' . $cat_auth_levels[$k]] . '</option>';
@@ -195,7 +195,7 @@ elseif(!empty($cat_id))
 	$s_hidden_fields = '<input type="hidden" name="cat_id" value="' . $cat_id . '">';
 	$cat_name = $pafiledb->cat_rowset[$cat_id]['cat_name'];
 }
-$s_column_span = count($cat_auth_fields) + 2;
+$s_column_span = count_safe($cat_auth_fields) + 2;
 
 $pafiledb_template->assign_vars(array(
 	'CATEGORY_NAME' => $cat_name,
@@ -240,11 +240,11 @@ function admin_display_cat_auth($cat_parent = 0, $depth = 0)
 				'U_CAT' => append_sid("admin_pa_catauth.$phpEx?cat_parent=$sub_cat_id"))
 			);
 
-			for($j = 0; $j < count($cat_auth_fields); $j++)
+			for($j = 0; $j < count_safe($cat_auth_fields); $j++)
 			{
 				$custom_auth[$j] = '&nbsp;<select name="' . $cat_auth_fields[$j] . '[' . $sub_cat_id . ']' . '">';
 
-				for($k = 0; $k < count($cat_auth_levels); $k++)
+				for($k = 0; $k < count_safe($cat_auth_levels); $k++)
 				{
 					$selected = ( $cat_data[$cat_auth_fields[$j]] == $cat_auth_const[$k] ) ? ' selected="selected"' : '';
 					$custom_auth[$j] .= '<option value="' . $cat_auth_const[$k] . '"' . $selected . '>' . $lang['Category_' . $cat_auth_levels[$k]] . '</option>';

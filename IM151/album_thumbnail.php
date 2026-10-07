@@ -124,7 +124,7 @@ if( ($album_config['hotlink_prevent'] == 1) && (isset($_SERVER['HTTP_REFERER']))
 
 	$errored = TRUE;
 
-	for ($i = 0; $i < count($good_referers); $i++)
+	for ($i = 0; $i < count_safe($good_referers); $i++)
 	{
 		$good_referers[$i] = trim($good_referers[$i]);
 
@@ -158,14 +158,14 @@ if( ($pic_filetype != '.jpg') && ($pic_filetype != '.png') && ($pic_filetype != 
 	if ($album_config['show_img_no_gd'] == 1)
 	{
 		header('Content-type: image/gif');
-		header("Content-Disposition: filename=thumb_" . ereg_replace("[^A-Za-z0-9]", "_", $thispic['pic_title']) . $pic_filetype);
+		header("Content-Disposition: filename=thumb_" . preg_replace('~[^A-Za-z0-9]~D', "_", $thispic['pic_title']) . $pic_filetype);
 		readfile(ALBUM_UPLOAD_PATH . $pic_filename);
 		exit;
 	}
 	else
 	{
 		header('Content-type: image/jpeg');
-		header("Content-Disposition: filename=thumb_" . ereg_replace("[^A-Za-z0-9]", "_", $thispic['pic_title']) . $pic_filetype);
+		header("Content-Disposition: filename=thumb_" . preg_replace('~[^A-Za-z0-9]~D', "_", $thispic['pic_title']) . $pic_filetype);
 		readfile($images['no_thumbnail']);
 		exit;
 	}
@@ -183,11 +183,11 @@ else
 			case '.gif':
 			case '.jpg':
 				header('Content-type: image/jpeg');
-				header("Content-Disposition: filename=thumb_" . ereg_replace("[^A-Za-z0-9]", "_", $thispic['pic_title']) . $pic_filetype);
+				header("Content-Disposition: filename=thumb_" . preg_replace('~[^A-Za-z0-9]~D', "_", $thispic['pic_title']) . $pic_filetype);
 				break;
 			case '.png':
 				header('Content-type: image/png');
-				header("Content-Disposition: filename=thumb_" . ereg_replace("[^A-Za-z0-9]", "_", $thispic['pic_title']) . $pic_filetype);
+				header("Content-Disposition: filename=thumb_" . preg_replace('~[^A-Za-z0-9]~D', "_", $thispic['pic_title']) . $pic_filetype);
 				break;
 		}
 
@@ -326,14 +326,14 @@ else
 			if ($album_config['show_img_no_gd'] == 1)
 			{
 				header('Content-type: image/jpeg');
-				header("Content-Disposition: filename=thumb_" . ereg_replace("[^A-Za-z0-9]", "_", $thispic['pic_title']) . $pic_filetype);
+				header("Content-Disposition: filename=thumb_" . preg_replace('~[^A-Za-z0-9]~D', "_", $thispic['pic_title']) . $pic_filetype);
 				readfile(ALBUM_UPLOAD_PATH . $pic_filename);
 				exit;
 			}
 			else
 			{
 				header('Content-type: image/jpeg');
-				header("Content-Disposition: filename=thumb_" . ereg_replace("[^A-Za-z0-9]", "_", $thispic['pic_title']) . $pic_filetype);
+				header("Content-Disposition: filename=thumb_" . preg_replace('~[^A-Za-z0-9]~D', "_", $thispic['pic_title']) . $pic_filetype);
 				readfile($images['no_thumbnail']);
 				exit;
 			}
@@ -343,14 +343,14 @@ else
 			if ($album_config['show_img_no_gd'] == 1)
 			{
 				header('Content-type: image/png');
-				header("Content-Disposition: filename=thumb_" . ereg_replace("[^A-Za-z0-9]", "_", $thispic['pic_title']) . $pic_filetype);
+				header("Content-Disposition: filename=thumb_" . preg_replace('~[^A-Za-z0-9]~D', "_", $thispic['pic_title']) . $pic_filetype);
 				readfile(ALBUM_UPLOAD_PATH . $pic_filename);
 				exit;
 			}
 			else
 			{
 				header('Content-type: image/jpeg');
-				header("Content-Disposition: filename=thumb_" . ereg_replace("[^A-Za-z0-9]", "_", $thispic['pic_title']) . $pic_filetype);
+				header("Content-Disposition: filename=thumb_" . preg_replace('~[^A-Za-z0-9]~D', "_", $thispic['pic_title']) . $pic_filetype);
 				readfile($images['no_thumbnail']);
 				exit;
 			}
@@ -360,14 +360,14 @@ else
 			if ($album_config['show_img_no_gd'] == 1)
 			{
 				header('Content-type: image/gif');
-				header("Content-Disposition: filename=thumb_" . ereg_replace("[^A-Za-z0-9]", "_", $thispic['pic_title']) . $pic_filetype);
+				header("Content-Disposition: filename=thumb_" . preg_replace('~[^A-Za-z0-9]~D', "_", $thispic['pic_title']) . $pic_filetype);
 				readfile(ALBUM_UPLOAD_PATH . $pic_filename);
 				exit;
 			}
 			else
 			{
 				header('Content-type: image/jpeg');
-				header("Content-Disposition: filename=thumb_" . ereg_replace("[^A-Za-z0-9]", "_", $thispic['pic_title']) . $pic_filetype);
+				header("Content-Disposition: filename=thumb_" . preg_replace('~[^A-Za-z0-9]~D', "_", $thispic['pic_title']) . $pic_filetype);
 				readfile($images['no_thumbnail']);
 				exit;
 			}
@@ -375,7 +375,7 @@ else
 		else
 		{
 			header('Content-type: image/jpeg');
-			header("Content-Disposition: filename=thumb_" . ereg_replace("[^A-Za-z0-9]", "_", $thispic['pic_title']) . $pic_filetype);
+			header("Content-Disposition: filename=thumb_" . preg_replace('~[^A-Za-z0-9]~D', "_", $thispic['pic_title']) . $pic_filetype);
 			readfile($images['no_thumbnail']);
 			exit;
 		}

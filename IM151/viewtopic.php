@@ -153,7 +153,7 @@ if ( $download )
 		$message = preg_replace('/&#41;/', ')', $message);
 		$message = preg_replace('/&#58;/', ':', $message);
 
-		if (count($orig_word))
+		if (count_safe($orig_word))
 		{
 			$post_subject = preg_replace($orig_word, $replacement_word, $post_subject);
 
@@ -728,7 +728,7 @@ else
 }
 
 $select_post_days = '<select name="postdays">';
-for($i = 0; $i < count($previous_days); $i++)
+for($i = 0; $i < count_safe($previous_days); $i++)
 {
 	$selected = ($post_days == $previous_days[$i]) ? ' selected="selected"' : '';
 	$select_post_days .= '<option value="' . $previous_days[$i] . '"' . $selected . '>' . $previous_days_text[$i] . '</option>';
@@ -797,7 +797,7 @@ if ($row = $db->sql_fetchrow($result))
 	while ($row = $db->sql_fetchrow($result));
 	$db->sql_freeresult($result);
 
-	$total_posts = count($postrow);
+	$total_posts = count_safe($postrow);
 }
 else 
 { 
@@ -808,19 +808,19 @@ else
 } 
 
 $resync = FALSE; 
-if ($forum_topic_data['topic_replies'] + 1 < $start + count($postrow)) 
+if ($forum_topic_data['topic_replies'] + 1 < $start + count_safe($postrow)) 
 { 
    $resync = TRUE; 
 } 
 elseif ($start + $board_config['posts_per_page'] > $forum_topic_data['topic_replies']) 
 { 
    $row_id = intval($forum_topic_data['topic_replies']) % intval($board_config['posts_per_page']); 
-   if ($postrow[$row_id]['post_id'] != $forum_topic_data['topic_last_post_id'] || $start + count($postrow) < $forum_topic_data['topic_replies']) 
+   if ($postrow[$row_id]['post_id'] != $forum_topic_data['topic_last_post_id'] || $start + count_safe($postrow) < $forum_topic_data['topic_replies']) 
    { 
       $resync = TRUE; 
    } 
 } 
-elseif (count($postrow) < $board_config['posts_per_page']) 
+elseif (count_safe($postrow) < $board_config['posts_per_page']) 
 { 
    $resync = TRUE; 
 } 
@@ -863,7 +863,7 @@ obtain_word_list($orig_word, $replacement_word);
 //
 // Censor topic title
 //
-if ( count($orig_word) )
+if ( count_safe($orig_word) )
 {
 	$topic_title = preg_replace($orig_word, $replacement_word, $topic_title);
 }
@@ -1748,7 +1748,7 @@ if ( !empty($forum_topic_data['topic_vote']) && empty($approve_mod['topics_await
 	if ( $vote_info = $db->sql_fetchrowset($result) )
 	{
 		$db->sql_freeresult($result);
-		$vote_options = count($vote_info);
+		$vote_options = count_safe($vote_info);
 
 		$vote_id = $vote_info[0]['vote_id'];
 		$vote_title = $vote_info[0]['vote_text'];
@@ -1794,7 +1794,7 @@ if ( !empty($forum_topic_data['topic_vote']) && empty($approve_mod['topics_await
 			}
 
 			$vote_graphic = 0;
-			$vote_graphic_max = count($images['voting_graphic']);
+			$vote_graphic_max = count_safe($images['voting_graphic']);
 
 			for($i = 0; $i < $vote_options; $i++)
 			{
@@ -1807,7 +1807,7 @@ if ( !empty($forum_topic_data['topic_vote']) && empty($approve_mod['topics_await
 				$vote_graphic_img = $images['voting_graphic'][$vote_graphic];
 				$vote_graphic = ($vote_graphic < $vote_graphic_max - 1) ? $vote_graphic + 1 : 0;
 
-				if ( count($orig_word) )
+				if ( count_safe($orig_word) )
 				{
 					$vote_info[$i]['vote_option_text'] = preg_replace($orig_word, $replacement_word, $vote_info[$i]['vote_option_text']);
 				}
@@ -1896,7 +1896,7 @@ if ( !empty($forum_topic_data['topic_vote']) && empty($approve_mod['topics_await
 			else 	$vote_box = 'radio';
 			for($i = 0; $i < $vote_options; $i++)
 			{
-				if ( count($orig_word) )
+				if ( count_safe($orig_word) )
 				{
 					$vote_info[$i]['vote_option_text'] = preg_replace($orig_word, $replacement_word, $vote_info[$i]['vote_option_text']);
 				}
@@ -1930,7 +1930,7 @@ if ( !empty($forum_topic_data['topic_vote']) && empty($approve_mod['topics_await
 					$lang['Max_voting_3_explain'] = '';
 					$max_vote_nb = '';
 				}
-		if ( count($orig_word) )
+		if ( count_safe($orig_word) )
 		{
 			$vote_title = preg_replace($orig_word, $replacement_word, $vote_title);
 		}
@@ -2334,7 +2334,7 @@ if ( $userdata['user_allowsignature'] != 2 && $board_config['sig_allow_font_size
 	//
 	// Replace naughty words
 	//
-	if (count($orig_word))
+	if (count_safe($orig_word))
 	{
 		$post_subject = preg_replace($orig_word, $replacement_word, $post_subject);
 

@@ -104,7 +104,7 @@ if( $delete && $mark_list )
 		$s_hidden_fields = '<input type="hidden" name="mode" value="' . $mode . '" /><input type="hidden" name="type" value="' . $type . '" />';
 		$s_hidden_fields .= ( $delete ) ? '<input type="hidden" name="delete" value="true" />' : '<input type="hidden" name="deleteall" value="true" />';
 
-		$mark_count = count($mark_list);
+		$mark_count = count_safe($mark_list);
 		for($i = 0; $i < $mark_count; $i++)
 		{
 			$s_hidden_fields .= '<input type="hidden" name="mark[]" value="' . intval($mark_list[$i]) . '" />';
@@ -119,7 +119,7 @@ if( $delete && $mark_list )
 
 		$template->assign_vars(array(
 			'MESSAGE_TITLE' => $lang['Information'],
-			'MESSAGE_TEXT' => ( count($mark_list) == 1 ) ? $lang['Confirm_delete_pm'] : $lang['Confirm_delete_pms'], 
+			'MESSAGE_TEXT' => ( count_safe($mark_list) == 1 ) ? $lang['Confirm_delete_pm'] : $lang['Confirm_delete_pms'], 
 
 			'L_YES' => $lang['Yes'],
 			'L_NO' => $lang['No'],
@@ -153,7 +153,7 @@ if( $delete && $mark_list )
 				$mark_list = array();
 			}
 
-			if( count($mark_list) )
+			if( count_safe($mark_list) )
 			{
 				foreach($mark_list as $key=>$val)
 				{
@@ -262,7 +262,7 @@ if ( !$result=$db->sql_query($sql) )
 $all_msgs = $db->sql_fetchrowset($result);
 $db->sql_freeresult($result);
 
-$msgs_total = (!empty($all_msgs)) ? count($all_msgs): false;
+$msgs_total = (!empty($all_msgs)) ? count_safe($all_msgs): false;
 if( $msgs_total )
 {
 	sort($all_msgs);
@@ -354,7 +354,7 @@ if( $msgs_total )
 		{
 			$post_subject = $default_im_subject;
 		}
-		elseif ( count($orig_word) )
+		elseif ( count_safe($orig_word) )
 		{
 			$post_subject = preg_replace($orig_word, $replacement_word, $post_subject);
 		}

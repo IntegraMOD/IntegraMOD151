@@ -177,7 +177,7 @@ switch( $mode )
 			// show message
 			$i = 0;
 			$hidden_fields = '';
-			while( $i < count($user_ids) )
+			while( $i < count_safe($user_ids) )
 			{
 				$user_id = intval($user_ids[$i]);
 				$hidden_fields .= '<input type="hidden" name="' . POST_USERS_URL . '[]" value="' . $user_id . '">';
@@ -207,7 +207,7 @@ switch( $mode )
 		{
 			// delete users
 			$i = 0;
-			while( $i < count($user_ids) )
+			while( $i < count_safe($user_ids) )
 			{
 				$user_id = intval($user_ids[$i]);
 
@@ -260,7 +260,7 @@ switch( $mode )
 					$group_moderator[] = $row_group['group_id'];
 				}
 				
-				if ( count($group_moderator) )
+				if ( count_safe($group_moderator) )
 				{
 					$update_moderator_id = implode(', ', $group_moderator);
 					
@@ -353,7 +353,7 @@ switch( $mode )
 					$mark_list[] = $row_privmsgs['privmsgs_id'];
 				}
 				
-				if ( count($mark_list) )
+				if ( count_safe($mark_list) )
 				{
 					$delete_sql_id = implode(', ', $mark_list);
 					
@@ -406,7 +406,7 @@ switch( $mode )
 		{
 			$i = 0;
 			$hidden_fields = '';
-			while( $i < count($user_ids) )
+			while( $i < count_safe($user_ids) )
 			{
 				$user_id = intval($user_ids[$i]);
 				$hidden_fields .= '<input type="hidden" name="' . POST_USERS_URL . '[]" value="' . $user_id . '">';
@@ -436,7 +436,7 @@ switch( $mode )
 		{
 			// ban users
 			$i = 0;
-			while( $i < count($user_ids) )
+			while( $i < count_safe($user_ids) )
 			{
 				$user_id = intval($user_ids[$i]);
 	
@@ -463,7 +463,7 @@ switch( $mode )
 		// activate or deactive the seleted users
 		//
 		$i = 0;
-		while( $i < count($user_ids) )
+		while( $i < count_safe($user_ids) )
 		{
 			$user_id = intval($user_ids[$i]);
 			$sql = "SELECT user_active FROM " . USERS_TABLE . "
@@ -504,7 +504,7 @@ switch( $mode )
 			// show form to select which group to add users to
 			$i = 0;
 			$hidden_fields = '';
-			while( $i < count($user_ids) )
+			while( $i < count_safe($user_ids) )
 			{
 				$user_id = intval($user_ids[$i]);
 				$hidden_fields .= '<input type="hidden" name="' . POST_USERS_URL . '[]" value="' . $user_id . '">';
@@ -558,7 +558,7 @@ switch( $mode )
 			$emailer = new emailer($board_config['smtp_delivery']);
 
 			$i = 0;
-			while( $i < count($user_ids) )
+			while( $i < count_safe($user_ids) )
 			{
 				$user_id = intval($user_ids[$i]);
 
@@ -716,7 +716,7 @@ switch( $mode )
 		$alpha_range = array_merge($alpha_start, $alpha_letters);
 
 		$i = 0;
-		while( $i < count($alpha_range) )
+		while( $i < count_safe($alpha_range) )
 		{
 			
 			if ( $alpha_range[$i] != $lang['All'] )
@@ -742,7 +742,7 @@ switch( $mode )
 			}
 
 			$template->assign_block_vars('alphanumsearch', array(
-				'SEARCH_SIZE' => floor(100/count($alpha_range)) . '%',
+				'SEARCH_SIZE' => floor(100/count_safe($alpha_range)) . '%',
 				'SEARCH_TERM' => $alpha_range[$i],
 				'SEARCH_LINK' => $alphanum_search_url)
 			);
@@ -860,7 +860,7 @@ switch( $mode )
 	
 			if ( $row['user_rank'] )
 			{
-				for($ji = 0; $ji < count($ranksrow); $ji++)
+				for($ji = 0; $ji < count_safe($ranksrow); $ji++)
 				{
 					if ( $row['user_rank'] == $ranksrow[$ji]['rank_id'] && $ranksrow[$ji]['rank_special'] )
 					{
@@ -872,7 +872,7 @@ switch( $mode )
 			}
 			else
 			{
-				for($ji = 0; $ji < count($ranksrow); $ji++)
+				for($ji = 0; $ji < count_safe($ranksrow); $ji++)
 				{
 					if ( $row['user_posts'] >= $ranksrow[$ji]['rank_min'] && !$ranksrow[$ji]['rank_special'] )
 					{

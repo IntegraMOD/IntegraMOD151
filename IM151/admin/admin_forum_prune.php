@@ -80,7 +80,7 @@ if( isset($_GET[POST_FORUM_URL]) || isset($_POST[POST_FORUM_URL]) )
 	$tkeys = array();
 	$tkeys = get_auth_keys($fid, true);
 	$forum_rows = array();
-	for ($i=0; $i < count($tkeys['id']); $i++)
+	for ($i=0; $i < count_safe($tkeys['id']); $i++)
 	{
 		if (isset($tree['type'][$tkeys['idx'][$i]]) && $tree['type'][$tkeys['idx'][$i]] == POST_FORUM_URL)
 		{
@@ -135,7 +135,7 @@ if( isset($_POST['doprune']) )
 		'body' => 'admin/forum_prune_result_body.tpl')
 	);
 
-	for($i = 0; $i < count($forum_rows); $i++)
+	for($i = 0; $i < count_safe($forum_rows); $i++)
 	{
 		$p_result = prune($forum_rows[$i]['forum_id'], $prunedate);
 		sync('forum', $forum_rows[$i]['forum_id']);

@@ -82,7 +82,7 @@ if( $userdata['user_level'] != ADMIN)
 			while( $row = $db->sql_fetchrow($result) );
 		}
 		
-		for($i = 0; $i < count($user_infos); $i++ )
+		for($i = 0; $i < count_safe($user_infos); $i++ )
 		{
 			//update every user's expiration date
 			$sql = "SELECT ug.*, g.* FROM " . USER_GROUP_TABLE . " ug, " . GROUPS_TABLE . " g " . " WHERE g.group_type = " . GROUP_PAYMENT . " AND g.group_amount > 0 AND g.group_id = ug.group_id AND ug.user_id = " . $user_infos[$i]['user_id'];
@@ -102,7 +102,7 @@ if( $userdata['user_level'] != ADMIN)
 			$paygrpids = "";
 			$paygrpids .= "(";
 			$countflag = 0;
-			for($j = 0; $j < count($ug_infos); $j++ )
+			for($j = 0; $j < count_safe($ug_infos); $j++ )
 			{
 				if($j > 0)
 				{

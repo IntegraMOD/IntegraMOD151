@@ -680,11 +680,11 @@ class NewsModule
 				message_die(GENERAL_ERROR, "Couldn't obtain smilies data", "", __LINE__, __FILE__, $sql);
 			}
 			$smilies = $db->sql_fetchrowset($result);
-			if (count($smilies))
+			if (count_safe($smilies))
 			{
 				usort($smilies, 'smiley_sort');
 			}
-			for ($i = 0; $i < count($smilies); $i++)
+			for ($i = 0; $i < count_safe($smilies); $i++)
 			{
 				$orig[] = "/(?<=.\W|\W.|^\W)" . phpbb_preg_quote($smilies[$i]['code'], "/") . "(?=.\W|\W.|\W$)/";
 				$repl[] = '<img src="'. $board_config['smilies_path'] . '/' . $smilies[$i]['smile_url'] . '" alt="' . $smilies[$i]['emoticon'] . '" border="0" />';
@@ -705,11 +705,11 @@ class NewsModule
 				message_die(GENERAL_ERROR, "Couldn't obtain smilies data", "", __LINE__, __FILE__, $sql);
 			}
 			$smilies = $db->sql_fetchrowset($result);
-			if (count($smilies))
+			if (count_safe($smilies))
 			{
 				usort($smilies, 'smiley_sort');
 			}
-			for ($i = 0; $i < count($smilies); $i++)
+			for ($i = 0; $i < count_safe($smilies); $i++)
 			{
 				$orig[] = "/(?<=.\W|\W.|^\W)" . phpbb_preg_quote($smilies[$i]['code'], "/") . "(?=.\W|\W.|\W$)/";
 				$repl[] = '<img src="'. $board_config['smilies_path'] . '/' . $smilies[$i]['smile_url'] . '" alt="' . $smilies[$i]['emoticon'] . '" border="0" />';
@@ -719,7 +719,7 @@ class NewsModule
 		}
     }
 
-	if (count($orig))
+	if (count_safe($orig))
 	{
 		$message = preg_replace($orig, $repl, ' ' . $message . ' ');
 		$message = substr($message, 1, -1);

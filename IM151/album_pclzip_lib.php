@@ -2207,7 +2207,7 @@
 		//--(MAGIC-PclTrace)--//PclTraceFctMessage(__FILE__, __LINE__, 4, "Before add, list have $v_nb elements");
 
 		// ----- Loop on the files
-		for ($j=0; ($j<count($p_list)) && ($v_result==1); $j++)
+		for ($j=0; ($j<count_safe($p_list)) && ($v_result==1); $j++)
 		{
 			// ----- Recuperate the filename
 			$p_filename = PclZipUtilTranslateWinPath($p_list[$j], false);
@@ -3025,7 +3025,7 @@
 			{
 				//--(MAGIC-PclTrace)--//PclTraceFctMessage(__FILE__, __LINE__, 3, "Extract by ereg '".$p_options[PCLZIP_OPT_BY_EREG]."'");
 
-				if (ereg($p_options[PCLZIP_OPT_BY_EREG], $v_header['stored_filename']))
+				if (preg_match(im160_posix_pattern($p_options[PCLZIP_OPT_BY_EREG], false), $v_header['stored_filename']))
 				{
 					//--(MAGIC-PclTrace)--//PclTraceFctMessage(__FILE__, __LINE__, 3, "Filename match the regular expression");
 					$v_extract = true;
@@ -4529,7 +4529,7 @@
 			{
 				//--(MAGIC-PclTrace)--//PclTraceFctMessage(__FILE__, __LINE__, 3, "Extract by ereg '".$p_options[PCLZIP_OPT_BY_EREG]."'");
 
-				if (ereg($p_options[PCLZIP_OPT_BY_EREG], $v_header_list[$v_nb_extracted]['stored_filename']))
+				if (preg_match(im160_posix_pattern($p_options[PCLZIP_OPT_BY_EREG], false), $v_header_list[$v_nb_extracted]['stored_filename']))
 				{
 					//--(MAGIC-PclTrace)--//PclTraceFctMessage(__FILE__, __LINE__, 3, "Filename match the regular expression");
 					$v_found = true;

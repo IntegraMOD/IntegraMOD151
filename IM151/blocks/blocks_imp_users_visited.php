@@ -49,7 +49,7 @@ if(!function_exists('imp_users_visited_block_func'))
 		$not_day_userlist = '';
 		$not_day_users = 0;
 
-		$counter = count($day_users_array);
+		$counter = count_safe($day_users_array);
 
 		for ($i = 0; $i < $counter; $i++)
 		{

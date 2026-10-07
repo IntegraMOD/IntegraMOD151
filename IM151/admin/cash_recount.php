@@ -40,7 +40,7 @@ if ( isset($_POST['cids']) )
 {
 	$cids = explode(",",$_POST['cids']);
 	$cash_check = array();
-	for ( $i = 0; $i < count($cids);$i++ )
+	for ( $i = 0; $i < count_safe($cids);$i++ )
 	{
 		$cash_check[$cids[$i]] = 1;
 	}
@@ -73,7 +73,7 @@ if ( isset($_POST['cids']) )
 	{ 
 		message_die(GENERAL_ERROR, 'Error setting config data', '', __LINE__, __FILE__, $sql); 
 	} 
-	for ( $i = 0; $i < count($userlist); $i++ )
+	for ( $i = 0; $i < count_safe($userlist); $i++ )
 	{
 		if ( $userlist['user_id'] != ANONYMOUS )
 		{
@@ -125,7 +125,7 @@ if ( isset($_POST['cids']) )
 				{
 					$cash_counts = array(CASH_POSTS => 0,CASH_BONUS => 0,CASH_REPLIES => 0);
 					$cash_amount[$c_cur->id()] = $c_cur->data('cash_default');
-					for ( $j = 0; $j < count($forum_list); $j++ )
+					for ( $j = 0; $j < count_safe($forum_list); $j++ )
 					{
 						$forum_id = $forum_list[$j];
 						if ( $c_cur->forum_active($forum_id) )

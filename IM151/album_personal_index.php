@@ -72,7 +72,7 @@ $mode_types_text = array($lang['Sort_Joined'], $lang['Sort_Username'], $lang['Pi
 $mode_types = array('joindate', 'username', 'pics', 'last_pic');
 
 $select_sort_mode = '<select name="mode">';
-for($i = 0; $i < count($mode_types_text); $i++)
+for($i = 0; $i < count_safe($mode_types_text); $i++)
 {
 	$selected = ( $mode == $mode_types[$i] ) ? ' selected="selected"' : '';
 	$select_sort_mode .= '<option value="' . $mode_types[$i] . '"' . $selected . '>' . $mode_types_text[$i] . '</option>';
@@ -156,7 +156,7 @@ while( $row = $db->sql_fetchrow($result) )
 	$memberrow[] = $row;
 }
 
-for ($i = 0; $i < count($memberrow); $i++)
+for ($i = 0; $i < count_safe($memberrow); $i++)
 {
 	$template->assign_block_vars('memberrow', array(
 		'ROW_CLASS' => ( !($i % 2) ) ? $theme['td_class1'] : $theme['td_class2'],

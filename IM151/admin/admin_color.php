@@ -107,7 +107,7 @@ if ( ( isset($_POST['edit']) || isset($_GET['edit']) ) && !empty($style_id ) )
 	}
 
 	$groups = $db->sql_fetchrowset($result);
-    $count_groups = count($groups); // we may add $groups[-1] later as a fake group
+    $count_groups = count_safe($groups); // we may add $groups[-1] later as a fake group
 	$db->sql_freeresult($result);
 
 	// V: try to find out if every style uses shared values for COLOR_TABLE, and use them as base

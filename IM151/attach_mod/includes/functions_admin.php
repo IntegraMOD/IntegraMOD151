@@ -271,9 +271,9 @@ function collect_attachments()
 			message_die(GENERAL_ERROR, 'Unable to get Raw File Listing. Please be sure the LIST command is enabled at your FTP Server.');
 		}
 
-		for ($i = 0; $i < count($file_listing); $i++)
+		for ($i = 0; $i < count_safe($file_listing); $i++)
 		{
-			if (ereg("([-d])[rwxst-]{9}.* ([0-9]*) ([a-zA-Z]+[0-9: ]*[0-9]) ([0-9]{2}:[0-9]{2}) (.+)", $file_listing[$i], $regs))
+			if (preg_match('~([-d])[rwxst-]{9}.* ([0-9]*) ([a-zA-Z]+[0-9: ]*[0-9]) ([0-9]{2}:[0-9]{2}) (.+)~D', $file_listing[$i], $regs))
 			{
 				if ($regs[1] == 'd') 
 				{	
@@ -339,9 +339,9 @@ function get_formatted_dirsize()
 			return $upload_dir_size;
 		}
 
-		for ($i = 0; $i < count($file_listing); $i++)
+		for ($i = 0; $i < count_safe($file_listing); $i++)
 		{
-			if (ereg("([-d])[rwxst-]{9}.* ([0-9]*) ([a-zA-Z]+[0-9: ]*[0-9]) ([0-9]{2}:[0-9]{2}) (.+)", $file_listing[$i], $regs))
+			if (preg_match('~([-d])[rwxst-]{9}.* ([0-9]*) ([a-zA-Z]+[0-9: ]*[0-9]) ([0-9]{2}:[0-9]{2}) (.+)~D', $file_listing[$i], $regs))
 			{
 				if ($regs[1] == 'd') 
 				{	
@@ -501,7 +501,7 @@ function search_attachments($order_by, &$total_rows)
 	$sql = 'SELECT a.*, t.post_id, p.post_time, p.topic_id
 		FROM ' . ATTACHMENTS_TABLE . ' t, ' . ATTACHMENTS_DESC_TABLE . ' a, ' . POSTS_TABLE . ' p WHERE ';
 	
-	if (count($where_sql) > 0)
+	if (count_safe($where_sql) > 0)
 	{
 		$sql .= implode('AND', $where_sql) . ' AND ';
 	}
@@ -543,7 +543,7 @@ function limit_array($array, $start, $pagelimit)
 	//
 	// array from start - start+pagelimit
 	//
-	$limit = ( count($array) < $start + $pagelimit ) ? count($array) : $start + $pagelimit;
+	$limit = ( count_safe($array) < $start + $pagelimit ) ? count_safe($array) : $start + $pagelimit;
 
 	$limit_array = array();
 

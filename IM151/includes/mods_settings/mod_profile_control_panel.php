@@ -50,20 +50,20 @@ foreach ((array)$user_maps as $map_name => $map_data)
         // get this map
         $map_tree = explode('.', $map_name);
         $w_maps['name'][] = $map_name;
-        $w_maps['depth'][] = count($map_tree)-1;
+        $w_maps['depth'][] = count_safe($map_tree)-1;
     }
 }
 
 // second pass : get sub maps
 foreach ((array)$user_maps as $map_name => $map_data)
 {
-	for ( $i=0; $i < count($w_maps['name']); $i++ )
+	for ( $i=0; $i < count_safe($w_maps['name']); $i++ )
 	{
 		if ( substr($map_name, 0, strlen($w_maps['name'][$i])) == $w_maps['name'][$i] )
 		{
 			// we must stay within 3 sub levels
 			$map_tree = explode('.', $map_name);
-			if ( ( (count($map_tree) - 1 - $w_maps['depth'][$i]) < 3 ) && ( (count($map_tree) - 1 - $w_maps['depth'][$i]) > 0 ) )
+			if ( ( (count_safe($map_tree) - 1 - $w_maps['depth'][$i]) < 3 ) && ( (count_safe($map_tree) - 1 - $w_maps['depth'][$i]) > 0 ) )
 			{
 				// map name
 				$start = $w_maps['depth'][$i];
@@ -138,7 +138,7 @@ if (!function_exists('mods_settings_get_datefmt'))
 		$s_time = '<select name="timeformat" onChange="' . $field . '.value=this.options[this.selectedIndex].value;">';
 		$time = time();
 		$found = false;
-		for ($i=0; $i < count($timeset); $i++)
+		for ($i=0; $i < count_safe($timeset); $i++)
 		{
 			$selected = ($value == $timeset[$i]) ? ' selected="selected"' : '';
 			if ($selected != '') $found = true;
@@ -540,7 +540,7 @@ if (!function_exists('mods_settings_check_delete_user'))
 			{
 				$group_moderator[] = $row_group['group_id'];
 			}
-			if ( count($group_moderator) )
+			if ( count_safe($group_moderator) )
 			{
 				$update_moderator_id = implode(', ', $group_moderator);
 				
@@ -596,7 +596,7 @@ if (!function_exists('mods_settings_check_delete_user'))
 			{
 				$privmsg_list[] = $row_privmsgs['privmsgs_id'];
 			}
-			if ( count($privmsg_list) > 0 )
+			if ( count_safe($privmsg_list) > 0 )
 			{
 				$delete_sql_id = implode(', ', $privmsg_list);
 

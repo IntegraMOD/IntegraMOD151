@@ -121,12 +121,12 @@ if( $mode == 'edit')
 	$usergroups = $db->sql_fetchrowset($result);
 	
 	
-	for($i = 0; $i < count($paymentgroups); $i++)
+	for($i = 0; $i < count_safe($paymentgroups); $i++)
 	{
 		$userinthisgrp = 0;
 		$expiretime = '0';
 		$expiretimeinint = 0;
-		for($j = 0; $j < count($usergroups); $j++)
+		for($j = 0; $j < count_safe($usergroups); $j++)
 		{
 			if($paymentgroups[$i]['group_id'] == $usergroups[$j]['group_id'])
 			{

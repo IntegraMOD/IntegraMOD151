@@ -404,7 +404,7 @@ $template->assign_vars(array(
 	'S_ACTION_ADD' => append_sid("admin_forum_tour.$phpEx?mode=edit"))
 );
 
-if ( count($ids) <= 0 )
+if ( count_safe($ids) <= 0 )
 
 {
 	$template->assign_block_vars('no_forum_pages', array(
@@ -413,7 +413,7 @@ if ( count($ids) <= 0 )
 }
 else
 {
-	for ( $i=0; $i < count($ids); $i++ )
+	for ( $i=0; $i < count_safe($ids); $i++ )
 	{
 		$access = '';
 		switch ($page_access[$i])

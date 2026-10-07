@@ -59,7 +59,7 @@ function icons_read()
 
 	// build a map
 	$map_icon = array();
-	for ($i=0; $i < count($icones); $i++)
+	for ($i=0; $i < count_safe($icones); $i++)
 	{
 		$map_icon[ $icones[$i]['ind'] ] = $i;
 	}
@@ -73,7 +73,7 @@ function icons_write()
 
 	// rebuild the map
 	$map_icon = array();
-	for ($i=0; $i < count($icones); $i++)
+	for ($i=0; $i < count_safe($icones); $i++)
 	{
 		$map_icon[ $icones[$i]['ind'] ] = $i;
 	}
@@ -84,7 +84,7 @@ function icons_write()
 	);
 
 	// process the icones
-	for ($i=0; $i < count($icones); $i++)
+	for ($i=0; $i < count_safe($icones); $i++)
 	{
 		$auth = "''";
 		switch ($icones[$i]['auth'])
@@ -205,7 +205,7 @@ if ($mode == 'del')
 	{
 		// builded a new icones array
 		$tmp = array();
-		for ($i=0; $i < count($icones); $i++)
+		for ($i=0; $i < count_safe($icones); $i++)
 		{
 			if ($icones[$i]['ind'] != $icon)
 			{
@@ -317,7 +317,7 @@ if ($mode == 'del')
 
 				// builded a new icones array without the one to replace
 				$tmp = array();
-				for ($i=0; $i < count($icones); $i++)
+				for ($i=0; $i < count_safe($icones); $i++)
 				{
 					if ($icones[$i]['ind'] != $icon)
 					{
@@ -327,12 +327,12 @@ if ($mode == 'del')
 
 				// display the icons
 				$template->assign_block_vars('replace',array());
-				$nb_row = intval( (count($tmp)-1) / $icon_per_row )+1;
+				$nb_row = intval( (count_safe($tmp)-1) / $icon_per_row )+1;
 				$offset = 0;
 				for ($i=0; $i < $nb_row; $i++)
 				{
 					$template->assign_block_vars('replace.row',array());
-					for ($j=0; ( ($j < $icon_per_row) && ($offset < count($tmp)) ); $j++)
+					for ($j=0; ( ($j < $icon_per_row) && ($offset < count_safe($tmp)) ); $j++)
 					{
 						// send to cell or cell_none
 						$template->assign_block_vars('replace.row.cell', array(
@@ -382,7 +382,7 @@ if ( ($mode == 'up') || ($mode == 'dw') )
 	$moveto = $map + $inc;
 
 	// in the limits
-	if ( ($moveto >= 0) && ($moveto < count($icones)) )
+	if ( ($moveto >= 0) && ($moveto < count_safe($icones)) )
 	{
 		// swap
 		$dst = $icones[$moveto];
@@ -461,7 +461,7 @@ if ($mode == 'edit')
 		{
 			// find the last ind
 			$last = -1;
-			for ($i=0; $i < count($icones); $i++)
+			for ($i=0; $i < count_safe($icones); $i++)
 			{
 				if ($icones[$i]['ind'] > $last)
 				{
@@ -469,7 +469,7 @@ if ($mode == 'edit')
 				}
 			}
 			$icon = $last + 1;
-			$map = count($icones);
+			$map = count_safe($icones);
 		}
 		else
 		{
@@ -674,7 +674,7 @@ if ($mode == '')
 	);
 
 	// display icons
-	for ($i=0; $i < count($icones); $i++)
+	for ($i=0; $i < count_safe($icones); $i++)
 	{
 		$template->assign_block_vars('row', array(
 			'ICON'		=> get_icon_title($icones[$i]['ind'], 1, -1, true),

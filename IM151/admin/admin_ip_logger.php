@@ -67,7 +67,7 @@ else if($mode == "d_backup")
 	      $count++; 
 	closedir($fh); 	
 	
-	for ($i = 0 ; $i < count($dirdata) ; $i++) 
+	for ($i = 0 ; $i < count_safe($dirdata) ; $i++) 
 	{ 
 		if ($dirdata[$i] != "." && $dirdata[$i] != ".." && strstr(strtolower($dirdata[$i]),".bak")) 
 		{ 

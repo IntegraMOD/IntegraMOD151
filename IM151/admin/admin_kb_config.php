@@ -154,7 +154,7 @@ $news_sort_options = array();
 $news_sort_options = array( "Latest", "Creation", "Id", "Userrank", "Alphabetic" );
 
 $news_sort_list = '<select name="news_sort">';
-for( $j = 0; $j < count( $news_sort_options ); $j++ )
+for( $j = 0; $j < count_safe( $news_sort_options ); $j++ )
 {
 	if ( $new['news_sort'] == $news_sort_options[$j] )
 	{
@@ -172,7 +172,7 @@ $news_sort_par_options = array();
 $news_sort_par_options = array( "DESC", "ASC" );
 
 $news_sort_par_list = '<select name="news_sort_par">';
-for( $j = 0; $j < count( $news_sort_par_options ); $j++ )
+for( $j = 0; $j < count_safe( $news_sort_par_options ); $j++ )
 {
 	if ( $new['news_sort_par'] == $news_sort_par_options[$j] )
 	{

@@ -190,7 +190,7 @@ if( !$auth_data['view'] )
 $subcats = array();
 $allowed_cat = $cat_id;
 album_get_sub_cat_ids($cat_id, $subcats);
-for ($i = 0; $i < count($subcats); $i++)
+for ($i = 0; $i < count_safe($subcats); $i++)
 {
 	$allowed_cat .= ',' . $subcats[$i];
 }
@@ -234,9 +234,9 @@ if ($album_user_id == ALBUM_PUBLIC_GALLERY && $thiscat['cat_moderator_groups'] !
 		$grouprows[] = $row;
 	}
 
-	if( count($grouprows) > 0 )
+	if( count_safe($grouprows) > 0 )
 	{
-		for ($j = 0; $j < count($grouprows); $j++)
+		for ($j = 0; $j < count_safe($grouprows); $j++)
 		{
 			$group_link = '<a href="'. append_sid("groupcp.$phpEx?". POST_GROUPS_URL .'='. $grouprows[$j]['group_id']) .'">'. $grouprows[$j]['group_name'] .'</a>';
 

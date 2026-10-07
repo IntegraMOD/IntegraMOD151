@@ -277,7 +277,7 @@ else
 	}
 
 	$bp_rows = $db->sql_fetchrowset($result);
-	$bp_count = count($bp_rows);
+	$bp_count = count_safe($bp_rows);
 
 	$template->assign_vars(array(
 		"L_BP_TITLE" => $lang['BP_Title'],

@@ -341,7 +341,7 @@ else
 
 
 	$bv_rows = $db->sql_fetchrowset($result);
-	$bv_count = count($bv_rows);
+	$bv_count = count_safe($bv_rows);
 
 	$template->assign_vars(array(
 		"L_BV_TITLE" => $lang['BV_Title'],

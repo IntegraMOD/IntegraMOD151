@@ -204,7 +204,7 @@ else
 	}
 
 	$word_rows = $db->sql_fetchrowset($result);
-	$word_count = count($word_rows);
+	$word_count = count_safe($word_rows);
 
 	$template->assign_vars(array(
 		'L_ACRONYMS_TITLE' => $lang['Acronyms_title'],

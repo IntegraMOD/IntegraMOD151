@@ -473,13 +473,13 @@ else
 	// article pages table of contents
 	$kb_custom_field->display_data( $article_id );
 	
-	if ( count( $art_pages ) > 1 )
+	if ( count_safe( $art_pages ) > 1 )
 	{
 		$template->assign_block_vars( 'switch_toc', array() );
 
 		$i = 0;
 
-		while ( $i < count( $art_pages ) )
+		while ( $i < count_safe( $art_pages ) )
 		{
 			$page_number = $i + 1;
 
@@ -507,7 +507,7 @@ else
 			
 			// Replace naughty words
 			
-			if ( count( $orig_word ) )
+			if ( count_safe( $orig_word ) )
 			{
 				$article_toc = str_replace('\"', '"', substr(preg_replace_callback('#(\>(((? >([^><]+|(?R)))*)\<))#s', function ($matches) use ($highlight_match, $theme) {
 					return preg_replace('#\b(' . $highlight_match . ')\b#i', '<span style="color:#"' . $theme['fontcolor3'] . '"><b>\\1</b></span>', $matches[0]);
@@ -548,7 +548,7 @@ else
 				$page_link = $page_number . ' - ' . $article_toc ;
 			}
 
-			if ( $i < count( $art_pages ) - 1 )
+			if ( $i < count_safe( $art_pages ) - 1 )
 			{
 				$page_link .= '<br />';
 			}
@@ -561,7 +561,7 @@ else
 	
 	// article pages TOC navigation
 	
-	if ( count( $art_pages ) > 1 )
+	if ( count_safe( $art_pages ) > 1 )
 	{
 		$template->assign_block_vars( 'switch_pages', array() );
 
@@ -576,7 +576,7 @@ else
 
 		$i = 0;
 		
-		while ( $i < count( $art_pages ) )
+		while ( $i < count_safe( $art_pages ) )
 		{
 			$page_number = $i + 1;
 			
@@ -597,7 +597,7 @@ else
 				$page_link = $page_number;
 			}
 
-			if ( $i < count( $art_pages ) - 1 )
+			if ( $i < count_safe( $art_pages ) - 1 )
 			{
 				$page_link .= ', ';
 			}

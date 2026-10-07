@@ -227,15 +227,15 @@ if (isset($_POST['rating_form_submitted']))
 					$rating_config = get_rating_config('8,9,10');
 
 					// UPDATE AFFECTED RATINGS
-					if ( count($postlist) > 0 )
+					if ( count_safe($postlist) > 0 )
 					{
 						update_post_rating($rating_config[8], $postlist);
 					}
-					if ( count($topiclist) > 0 )
+					if ( count_safe($topiclist) > 0 )
 					{
 						update_topic_rating($rating_config[9], $topiclist);
 					}
-					if ( count($userlist) > 0 )
+					if ( count_safe($userlist) > 0 )
 					{
 						update_user_rating($rating_config[10], $userlist);
 					}
@@ -320,15 +320,15 @@ if (isset($_POST['rating_form_submitted']))
 		}
 
 		// UPDATE AFFECTED RATINGS
-		if ( count($postlist) > 0 )
+		if ( count_safe($postlist) > 0 )
 		{
 			update_post_rating($rating_config[8], $postlist);
 		}
-		if ( count($topiclist) > 0 )
+		if ( count_safe($topiclist) > 0 )
 		{
 			update_topic_rating($rating_config[9], $topiclist);
 		}
-		if ( count($userlist) > 0 )
+		if ( count_safe($userlist) > 0 )
 		{
 			update_user_rating($rating_config[10], $userlist);
 		}

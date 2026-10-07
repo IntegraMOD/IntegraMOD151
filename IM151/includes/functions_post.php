@@ -321,11 +321,11 @@ if ( !empty($topic_desc) )
 			}
 			$option_text = $temp_option_text;
 
-			if (count($poll_options) < 2)
+			if (count_safe($poll_options) < 2)
 			{
 				$error_msg .= (!empty($error_msg)) ? '<br />' . $lang['To_few_poll_options'] : $lang['To_few_poll_options'];
 			}
-			else if (count($poll_options) > $board_config['max_poll_options']) 
+			else if (count_safe($poll_options) > $board_config['max_poll_options']) 
 			{
 				$error_msg .= (!empty($error_msg)) ? '<br />' . $lang['To_many_poll_options'] : $lang['To_many_poll_options'];
 			}
@@ -452,7 +452,7 @@ if ($mode != 'newtopic') {
 
 	if ($mode == 'newtopic' || ($mode == 'editpost' && $post_data['first_post']))
 	{
-		$topic_vote = (!empty($poll_title) && count($poll_options) >= 2) ? 1 : 0;
+		$topic_vote = (!empty($poll_title) && count_safe($poll_options) >= 2) ? 1 : 0;
 
 //-- mod : announces -------------------------------------------------------------------------------
 // here we added 
@@ -557,7 +557,7 @@ if($old_forcetime > time()){
 	//
 	// Add poll
 	// 
-	if (($mode == 'newtopic' || ($mode == 'editpost' && $post_data['edit_poll'])) && !empty($poll_title) && count($poll_options) >= 2)
+	if (($mode == 'newtopic' || ($mode == 'editpost' && $post_data['edit_poll'])) && !empty($poll_title) && count_safe($poll_options) >= 2)
 	{
     $hide_vote = intval($hide_vote);
     $tothide_vote = intval($tothide_vote);
@@ -1012,13 +1012,13 @@ function user_notification($mode, &$post_data, &$topic_title, &$forum_id, &$topi
 					$emailer->from($board_config['board_email']);
 					$emailer->replyto($board_config['board_email']);
 
-					$topic_title = (count($orig_word)) ? preg_replace($orig_word, $replacement_word, unprepare_message($topic_title)) : unprepare_message($topic_title);
+					$topic_title = (count_safe($orig_word)) ? preg_replace($orig_word, $replacement_word, unprepare_message($topic_title)) : unprepare_message($topic_title);
 
           foreach ($bcc_list_ary as $user_lang => $bcc_list)
 					{
 						$emailer->use_template('topic_notify', $user_lang);
 		
-						for ($i = 0; $i < count($bcc_list); $i++)
+						for ($i = 0; $i < count_safe($bcc_list); $i++)
 						{
 							$emailer->bcc($bcc_list[$i]);
 						}

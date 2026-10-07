@@ -110,10 +110,10 @@ if ($submit || $preview)
 		// Number of lines control
 		if ( $board_config['sig_max_lines'] )
 		{
-			if ( count(explode("\n", $signature)) > $board_config['sig_max_lines'] ) 
+			if ( count_safe(explode("\n", $signature)) > $board_config['sig_max_lines'] ) 
 			{ 
 				$error = TRUE;
-				$sig_error_list .= '<br />' . sprintf($lang['sig_error_max_lines'], count(explode("\n", $signature)), $board_config['sig_max_lines']);
+				$sig_error_list .= '<br />' . sprintf($lang['sig_error_max_lines'], count_safe(explode("\n", $signature)), $board_config['sig_max_lines']);
 			}
 		}
 
@@ -133,10 +133,10 @@ if ($submit || $preview)
 				}
 			}
 
-			if ( count($words) ) 
+			if ( count_safe($words) ) 
 			{ 
 				$error = TRUE;
-				$sig_error_list .= '<br />' . sprintf($lang['sig_error_wordwrap'], count($words), $board_config['sig_wordwrap']);
+				$sig_error_list .= '<br />' . sprintf($lang['sig_error_wordwrap'], count_safe($words), $board_config['sig_wordwrap']);
 			}
 		}
 
@@ -169,13 +169,13 @@ if ($submit || $preview)
 		$board_config['sig_allow_images'] && preg_match_all("#\[img=justify\]((http|ftp|https|ftps)://)([^\r\n\t<\"]*?)\[/img\]#si", $signature, $sig_images_list)
 		)
 		{
-			if( count($sig_images_list[0]) > $board_config['sig_max_images'] && $board_config['sig_max_images'] != 0 )
+			if( count_safe($sig_images_list[0]) > $board_config['sig_max_images'] && $board_config['sig_max_images'] != 0 )
 			{
 				$error = TRUE;
-				$sig_error_list .= '<br />' . sprintf($lang['sig_error_num_images'], count($sig_images_list[0]), $board_config['sig_max_images']);
+				$sig_error_list .= '<br />' . sprintf($lang['sig_error_num_images'], count_safe($sig_images_list[0]), $board_config['sig_max_images']);
 			}
 
-			for( $i = 0; $i < count($sig_images_list[0]); $i++ )
+			for( $i = 0; $i < count_safe($sig_images_list[0]); $i++ )
 			{
 				$image_url = $sig_images_list[1][$i].$sig_images_list[3][$i];
 

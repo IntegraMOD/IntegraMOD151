@@ -360,7 +360,7 @@ if ($t=='sub_pages')
 	$mode_types = array('link_hits', 'link_joined', 'link_title', 'link_desc');
 
 	$select_sort_mode = '<select name="mode">';
-	for($i = 0; $i < count($mode_types_text); $i++)
+	for($i = 0; $i < count_safe($mode_types_text); $i++)
 	{
 		$selected = ( $mode == $mode_types[$i] ) ? ' selected="selected"' : '';
 		$select_sort_mode .= '<option value="' . $mode_types[$i] . '"' . $selected . '>' . $mode_types_text[$i] . '</option>';

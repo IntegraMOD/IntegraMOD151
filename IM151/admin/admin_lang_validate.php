@@ -39,7 +39,7 @@ function validate_language(){
 	@closedir($dir);
 	// get all language files
 	$language_files = array();
-	for($i = 0; $i < count($installed_languages); $i++){
+	for($i = 0; $i < count_safe($installed_languages); $i++){
 		$dir = @opendir($phpbb_root_path . 'language/lang_'.$installed_languages[$i]);
 		while( $file = @readdir($dir) )
 		{
@@ -55,11 +55,11 @@ function validate_language(){
 	/* loop trough the lang files, 
 			make a big array of each key found in each language
 			include each file again and find the missing links compared to the big array */
-	for($l = 0; $l < count($language_files); $l++){
+	for($l = 0; $l < count_safe($language_files); $l++){
 		$language_file = $language_files[$l];
 		// make union of each lang file
 		$lang_union = array();
-		for($i = 0; $i < count($installed_languages); $i++){
+		for($i = 0; $i < count_safe($installed_languages); $i++){
 			$file = $phpbb_root_path . 'language/lang_'.$installed_languages[$i].'/'.$language_file;
 			if(! file_exists($file)){
 				echo '<hr> <font color="red">The file '.$language_file.' does not exist in language '.$installed_languages[$i].'</font>';
@@ -71,7 +71,7 @@ function validate_language(){
 			}
 		}
 		// compare the union with each file in each language
-		for($i = 0; $i < count($installed_languages); $i++){
+		for($i = 0; $i < count_safe($installed_languages); $i++){
 			$lang_diff=array();
 			$file = $phpbb_root_path . 'language/lang_'.$installed_languages[$i].'/'.$language_file;
 			if(! file_exists($file)){
@@ -87,7 +87,7 @@ function validate_language(){
 						$lang_diff[] = $key;
 					}
 				}
-				if(count($lang_diff)){
+				if(count_safe($lang_diff)){
 					echo '<hr><b>language keys missing for file '.$file.' :</b>';
 					echo '<pre>';
 					print_r($lang_diff);

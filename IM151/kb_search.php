@@ -191,7 +191,7 @@ switch ( $mode )
 				$word_match = array();
 				$result_list = array();
 
-				for( $i = 0; $i < count( $split_search ); $i++ )
+				for( $i = 0; $i < count_safe( $split_search ); $i++ )
 				{
 					switch ( $split_search[$i] )
 					{
@@ -284,7 +284,7 @@ switch ( $mode )
 				}
 
 				unset( $result_list );
-				$total_match_count = count( $search_ids );
+				$total_match_count = count_safe( $search_ids );
 			
 				// Store new result data
 				
@@ -309,7 +309,7 @@ switch ( $mode )
 				    }
 					*/
 	
-				for( $i = 0; $i < count( $store_vars ); $i++ )
+				for( $i = 0; $i < count_safe( $store_vars ); $i++ )
 				{
 					$store_search_data[$store_vars[$i]] = isset(${$store_vars[$i]}) ? ${$store_vars[$i]} : '';
 				}
@@ -350,7 +350,7 @@ switch ( $mode )
 					if ( $kb_row = $db->sql_fetchrow( $result ) )
 					{
 						$search_data = unserialize( $kb_row['search_array'] );
-						for( $i = 0; $i < count( $store_vars ); $i++ )
+						for( $i = 0; $i < count_safe( $store_vars ); $i++ )
 						{
 							$$store_vars[$i] = $search_data[$store_vars[$i]];
 						}
@@ -413,7 +413,7 @@ switch ( $mode )
 
 			$highlight_active = '';
 			$highlight_match = array();
-			for( $j = 0; $j < count( $split_search ); $j++ )
+			for( $j = 0; $j < count_safe( $split_search ); $j++ )
 			{
 				$split_word = $split_search[$j];
 
@@ -422,7 +422,7 @@ switch ( $mode )
 					$highlight_match[] = '#\b(' . str_replace( "*", "([\w]+)?", $split_word ) . ')\b#is';
 					$highlight_active .= " " . $split_word;
 
-					for ( $k = 0; $k < count( $synonym_array ); $k++ )
+					for ( $k = 0; $k < count_safe( $synonym_array ); $k++ )
 					{
 						$results = explode( ' ', trim( strtolower( $synonym_array[$k] ) ) );
 						$replace_synonym = $results[0];
@@ -439,7 +439,7 @@ switch ( $mode )
 
 			$highlight_active = urlencode( trim( $highlight_active ) );
 
-			for( $i = 0; $i < count( $searchset ); $i++ )
+			for( $i = 0; $i < count_safe( $searchset ); $i++ )
 			{
 				$article_url = append_sid( this_kb_mxurl( "mode=article&amp;k=" . $searchset[$i]['article_id'] . "&amp;highlight=$highlight_active", true ) );
 
@@ -457,7 +457,7 @@ switch ( $mode )
 
 				$message = '';
 
-				if ( count( $orig_word ) )
+				if ( count_safe( $orig_word ) )
 				{
 					$article_title = preg_replace( $orig_word, $replacement_word, $searchset[$i]['article_title'] );
 				}

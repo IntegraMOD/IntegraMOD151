@@ -1443,7 +1443,7 @@ class NuffImage
 					$newb += $colour & 0xFF;
 				}
 
-				$numelements = count($colours);
+				$numelements = count_safe($colours);
 				$newr /= $numelements;
 				$newg /= $numelements;
 				$newb /= $numelements;

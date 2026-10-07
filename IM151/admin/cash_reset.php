@@ -51,7 +51,7 @@ switch ( $mode )
 		{
 			$cids = explode(",",$_POST['cids']);
 			$cash_check = array();
-			for ( $i = 0; $i < count($cids);$i++ )
+			for ( $i = 0; $i < count_safe($cids);$i++ )
 			{
 				if ( isset($_POST['cash_amount'][$cids[$i]]) )
 				{
@@ -66,7 +66,7 @@ switch ( $mode )
 					$update_clause[] = $c_cur->db() . ' = ' . $cash_check[$c_cur->id()];
 				}
 			}
-			if ( count($update_clause) )
+			if ( count_safe($update_clause) )
 			{
 				$sql = "UPDATE " . USERS_TABLE . "
 						SET " . implode(", ", $update_clause);
@@ -97,7 +97,7 @@ switch ( $mode )
 								$s_hidden_fields .= '<input type="hidden" name="cash_amount[' . $c_cur->id() . ']" value="' . floatval($_POST['cash_amount'][$c_cur->id()]) . '" />';
 							}
 						}
-						if ( count($c_ids) )
+						if ( count_safe($c_ids) )
 						{
 							$s_hidden_fields .= '<input type="hidden" name="cids" value="' . implode(',',$c_ids) . '" />';
 							$s_hidden_fields .= '<input type="hidden" name="mode" value="reset" />';
@@ -127,7 +127,7 @@ switch ( $mode )
 							$c_ids[] = $c_cur->id();
 						}
 					}
-					if ( count($c_ids) )
+					if ( count_safe($c_ids) )
 					{
 						$s_hidden_fields = '<input type="hidden" name="cids" value="' . implode(',',$c_ids) . '" />';
 						$l_confirm = sprintf($lang['Cash_confirm_recount'],'<a href="' . append_sid("admin_board.$phpEx") . '">','</a>');

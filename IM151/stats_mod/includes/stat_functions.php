@@ -165,7 +165,7 @@ function get_modules($activated = true, $module_id = -1)
 	
 		if (!$authed)
 		{
-			for ($j = 0; $j < count($authed_groups[$rows[$i]['module_id']]) && !$authed; $j++)
+			for ($j = 0; $j < count_safe($authed_groups[$rows[$i]['module_id']]) && !$authed; $j++)
 			{
 				if (user_is_within_group($userdata['user_id'], $authed_groups[$rows[$i]['module_id']][$j]))
 				{
@@ -453,7 +453,7 @@ function parse_lang_file($content, $only_languages = array())
 	$block_name = '';
 	$content = explode("\n", $content);
 
-	$choose_lang = (count($only_languages) == 0) ? FALSE : TRUE;
+	$choose_lang = (count_safe($only_languages) == 0) ? FALSE : TRUE;
 
 	while (list($key, $data) = @each($content))
 	{

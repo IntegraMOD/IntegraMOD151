@@ -123,7 +123,7 @@ if ( !function_exists('box_buddy_list') )
 			}
 		}
 		// re-add offlines
-		for ($i=0; $i < count($offlines); $i++)
+		for ($i=0; $i < count_safe($offlines); $i++)
 		{
 			$buddy_rowset[]	= $offlines[$i];
 		}
@@ -154,7 +154,7 @@ if ( !function_exists('box_buddy_list') )
 		}
 
 		// list
-		for ($i=0; $i < count($buddy_rowset); $i++)
+		for ($i=0; $i < count_safe($buddy_rowset); $i++)
 		{
 			$w_user_id = $buddy_rowset[$i]['user_user_id'];
 			if ( ($last_status != $buddy_rowset[$i]['online']) || ($i == 0) )

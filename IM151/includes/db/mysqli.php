@@ -217,7 +217,7 @@ if(!defined("SQL_LAYER"))
 		{
 			if ($query_id instanceof sql_cache_fake_key && $this->cached)
 			{
-				return count($this->cache);
+				return count_safe($this->cache);
 			}
 			if ($query_id == false)
 			{
@@ -240,7 +240,7 @@ if(!defined("SQL_LAYER"))
 		{
 			if ($query_id instanceof sql_cache_fake_key && $this->cached)
 			{
-				return count($this->cache) > 0 ? count($this->cache[0]) : 0;
+				return count_safe($this->cache) > 0 ? count_safe($this->cache[0]) : 0;
 			}
 			if ($query_id === false)
 			{
@@ -278,7 +278,7 @@ if(!defined("SQL_LAYER"))
 		{
 			if ($query_id instanceof sql_cache_fake_key && $this->cached)
 			{
-				return count($this->cache) ? array_shift($this->cache) : false;
+				return count_safe($this->cache) ? array_shift($this->cache) : false;
 			}
 
 			if ($query_id === false)

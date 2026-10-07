@@ -328,7 +328,7 @@ function select_field($import = false)
     }
     if ($import) {
         $s_hidden_fields .= '<input type="hidden" name="import_field" value="1" />';
-        for ($i = 0; $i < count($field_ids); $i++) {
+        for ($i = 0; $i < count_safe($field_ids); $i++) {
             $ids = explode('x', $field_ids[$i]);
             if (($ids[0] != $panel_id) && !isset($open_ids[ intval($ids[0]) ])) {
                 $s_hidden_fields .= '<input type="hidden" name="field_ids[]" value="' . $field_ids[$i] . '" />';
@@ -760,7 +760,7 @@ if (($mode == 'edit') && (!empty($field_id) || $create_field)) {
             if (!empty($field_ids)) {
                 // get the imported field ref
                 ksort($field_ids);
-                for ($i = 0; (($i == 0) && empty($sav_mode)) || (($i < count($field_ids)) && !empty($sav_mode)); $i++) {
+                for ($i = 0; (($i == 0) && empty($sav_mode)) || (($i < count_safe($field_ids)) && !empty($sav_mode)); $i++) {
                     $id_combined = $field_ids[$i];
                     $ids = explode('x', $id_combined);
                     $from_panel_id = intval($ids[0]);

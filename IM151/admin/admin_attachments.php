@@ -261,13 +261,13 @@ if (false && $search_imagick)
 {
 	$imagick = '';
 	
-	if (eregi('convert', $imagick)) 
+	if (preg_match('~convert~iD', $imagick)) 
 	{
 		return (TRUE);
 	} 
 	else if ($imagick != 'none') 
 	{
-		if (!eregi('WIN', PHP_OS)) 
+		if (!preg_match('~WIN~iD', PHP_OS)) 
 		{
 			$retval = @exec('whereis convert');
 			$paths = explode(' ', $retval);
@@ -285,7 +285,7 @@ if (false && $search_imagick)
 				}
 			}
 		}
-		else if (eregi('WIN', PHP_OS))
+		else if (preg_match('~WIN~iD', PHP_OS))
 		{
 			$path = 'c:/imagemagick/convert.exe';
 
@@ -478,7 +478,7 @@ if ($mode == 'manage')
 
 	$yes_no_switches = array('disable_mod', 'allow_pm_attach', 'allow_ftp_upload', 'attachment_topic_review', 'display_order', 'show_apcp', 'ftp_pasv_mode');
 
-	for ($i = 0; $i < count($yes_no_switches); $i++)
+	for ($i = 0; $i < count_safe($yes_no_switches); $i++)
 	{
 		eval("\$" . $yes_no_switches[$i] . "_yes = ( \$new_attach['" . $yes_no_switches[$i] . "'] != '0' ) ? 'checked=\"checked\"' : '';");
 		eval("\$" . $yes_no_switches[$i] . "_no = ( \$new_attach['" . $yes_no_switches[$i] . "'] == '0' ) ? 'checked=\"checked\"' : '';");
@@ -600,7 +600,7 @@ if ($submit && $mode == 'shadow')
 	//
 	$attach_file_list = ( isset($_POST['attach_file_list']) ) ?  $_POST['attach_file_list'] : array();
 	
-	for ($i = 0; $i < count($attach_file_list); $i++)
+	for ($i = 0; $i < count_safe($attach_file_list); $i++)
 	{
 		unlink_attach($attach_file_list[$i]);
 		unlink_attach($attach_file_list[$i], MODE_THUMBNAIL);
@@ -722,7 +722,7 @@ if ($mode == 'shadow')
 	//
 	
 	// Go through all Files on the filespace and see if all are stored within the DB
-	for ($i = 0; $i < count($file_attachments); $i++)
+	for ($i = 0; $i < count_safe($file_attachments); $i++)
 	{
 		if (!empty($table_attachments['attach_id']))
 		{
@@ -781,7 +781,7 @@ if ($mode == 'shadow')
 	}
 
 	// Now look for Attachment ID's defined for posts or topics but not defined at the Attachments Description Table
-	for ($i = 0; $i < count($assign_attachments); $i++)
+	for ($i = 0; $i < count_safe($assign_attachments); $i++)
 	{
 		if (!in_array($assign_attachments[$i], $table_attachments['attach_id']))
 		{
@@ -791,7 +791,7 @@ if ($mode == 'shadow')
 		}
 	}
 
-	for ($i = 0; $i < count($shadow_attachments); $i++)
+	for ($i = 0; $i < count_safe($shadow_attachments); $i++)
 	{
 		$template->assign_block_vars('file_shadow_row', array(
 			'ATTACH_ID' => $shadow_attachments[$i],
@@ -845,7 +845,7 @@ if ($mode == 'cats')
 
 	$row = $db->sql_fetchrowset($result);
 
-	for ($i = 0; $i < count($row); $i++)
+	for ($i = 0; $i < count_safe($row); $i++)
 	{
 		if ($row[$i]['cat_id'] == IMAGE_CAT)
 		{
@@ -1252,7 +1252,7 @@ if ($submit && $mode == 'quota')
 
 	$allowed_list = array();
 
-	for ($i = 0; $i < count($quota_change_list); $i++)
+	for ($i = 0; $i < count_safe($quota_change_list); $i++)
 	{
 		$filesize_list[$i] = ( $size_select_list[$i] == 'kb' ) ? round($filesize_list[$i] * 1024) : ( ($size_select_list[$i] == 'mb') ? round($filesize_list[$i] * 1048576) : $filesize_list[$i] );
 
@@ -1407,7 +1407,7 @@ if ($mode == 'quota')
 	
 	$rows = $db->sql_fetchrowset($result);
 
-	for ($i = 0; $i < count($rows); $i++)
+	for ($i = 0; $i < count_safe($rows); $i++)
 	{
 		$size_format = ($rows[$i]['quota_limit'] >= 1048576) ? 'mb' : ( ($rows[$i]['quota_limit'] >= 1024) ? 'kb' : 'b' );
 

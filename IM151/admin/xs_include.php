@@ -101,7 +101,7 @@ function xs_admin_override($modded = false)
 	if(isset($module['Styles']))
 	{
 		$unset = array('Add_new', 'Create_new', 'Manage', 'Export');
-		for($i=0; $i<count($unset); $i++)
+		for($i=0; $i<count_safe($unset); $i++)
 		{
 			if(isset($module['Styles'][$unset[$i]]))
 			{
@@ -231,7 +231,7 @@ function get_ftp_config($action, $post = array(), $allow_local = false, $show_er
 	if(!empty($_POST['get_ftp_config']))
 	{
 		$vars = array('xs_ftp_host', 'xs_ftp_login', 'xs_ftp_path');
-		for($i=0; $i<count($vars); $i++)
+		for($i=0; $i<count_safe($vars); $i++)
 		{
 			$var = $vars[$i];
 			if($board_config[$var] !== $_POST[$var])
@@ -356,16 +356,16 @@ function xs_ftp_connect($action, $post = array(), $allow_local = false)
 	// check current directory
 	$current_dir = @ftp_pwd($ftp);
 	$list = @ftp_nlist($ftp, $current_dir);
-	for($i=0; $i<count($list); $i++)
+	for($i=0; $i<count_safe($list); $i++)
 	{
 		$list[$i] = strtolower(basename($list[$i]));
 	}
 	// check few files
 	$check = array('extension.inc', 'templates', 'xs_mod');
 	$found = array(false, false, false);
-	for($i=0; $i<count($list); $i++)
+	for($i=0; $i<count_safe($list); $i++)
 	{
-		for($j=0; $j<count($check); $j++)
+		for($j=0; $j<count_safe($check); $j++)
 		{
 			if($list[$i] === $check[$j])
 			{
@@ -374,7 +374,7 @@ function xs_ftp_connect($action, $post = array(), $allow_local = false)
 		}
 	}
 	$error = false;
-	for($i=0; $i<count($check); $i++)
+	for($i=0; $i<count_safe($check); $i++)
 	{
 		if(!$found[$i])
 		{
@@ -518,8 +518,8 @@ function xs_check_cache($filename)
 			{
 				$str .= sprintf($lang['xs_check_dir'] , $path) . "<br />\n";
 			}
-			if(count($dirs) > 0)
-			for($i=0; $i<count($dirs)-1; $i++)
+			if(count_safe($dirs) > 0)
+			for($i=0; $i<count_safe($dirs)-1; $i++)
 			{
 				if($i>0)
 				{
@@ -612,7 +612,7 @@ function ftp_remove_all($ftp)
 	// get list of files
 	$files = @ftp_nlist($ftp, $root_dir);
 	// remove files/directories
-	for($i=0; $i<count($files); $i++)
+	for($i=0; $i<count_safe($files); $i++)
 	{
 		$res = @ftp_chdir($ftp, $files[$i]);
 		if($res)
@@ -646,7 +646,7 @@ function ftp_myexec2($ftp, $list)
 	}
 	$current_dir = strlen($root_dir) ? $root_dir . '/' : '';
 	// run commands
-	for($i=0; $i<count($list); $i++)
+	for($i=0; $i<count_safe($list); $i++)
 	{
 		$item=$list[$i];
 		if($item['command'] == 'mkdir')
@@ -863,7 +863,7 @@ function xs_generate_themeinfo($theme_rowset, $export, $exportas, $total)
 	$vars = array('template_name', 'style_name', 'head_stylesheet', 'body_background', 'body_bgcolor', 'body_text', 'body_link', 'body_vlink', 'body_alink', 'body_hlink', 'tr_color1', 'tr_color2', 'tr_color3', 'tr_class1', 'tr_class2', 'tr_class3', 'th_color1', 'th_color2', 'th_color3', 'th_class1', 'th_class2', 'th_class3', 'td_color1', 'td_color2', 'td_color3', 'td_class1', 'td_class2', 'td_class3', 'fontface1', 'fontface2', 'fontface3', 'fontsize1', 'fontsize2', 'fontsize3', 'fontcolor1', 'fontcolor2', 'fontcolor3', 'span_class1', 'span_class2', 'span_class3', 'img_size_poll', 'img_size_privmsg');
 	$theme_data = '<?php'."\n\n";
 	$theme_data .= "//\n// eXtreme Styles mod (compatible with phpBB 2.0.x) auto-generated theme config file for $exportas\n// Do not change anything in this file unless you know exactly what you are doing!\n//\n\n";
-	for($i = 0; $i < count($theme_rowset); $i++)
+	for($i = 0; $i < count_safe($theme_rowset); $i++)
 	{
 		$id = $theme_rowset[$i]['themes_id'];
 		$theme_name = $theme_rowset[$i]['style_name'];
@@ -875,7 +875,7 @@ function xs_generate_themeinfo($theme_rowset, $export, $exportas, $total)
 				$theme_rowset[$i]['style_name'] = $theme_name;
 			}
 		}
-		for($j=0; $j<count($vars); $j++)
+		for($j=0; $j<count_safe($vars); $j++)
 		{
 			$key = $vars[$j];
 			$val = $theme_rowset[$i][$key];
@@ -1049,7 +1049,7 @@ function pack_style($name, $newname, $themes, $comment)
 	$data = gzcompress(pack_dir($phpbb_root_path . $template_dir . $name, '', $name, $newname));
 	$items_data = chr(strlen($newname)) . chr(strlen($comment));
 	$items_str = $newname . $comment;
-	for($i=0; $i<count($themes); $i++)
+	for($i=0; $i<count_safe($themes); $i++)
 	{
 		$str = $themes[$i]['style_name'];
 		$items_data .= chr(strlen($str));
@@ -1127,7 +1127,7 @@ function pack_dir($dir1, $dir2, $search, $replace)
 	$extra_str = '';
 	$str .= $header_str . $file_str . $extra_str;
 	// add all files
-	for($i=0; $i<count($files); $i++)
+	for($i=0; $i<count_safe($files); $i++)
 	{
 		$file = $files[$i];
 		$header['filename'] = $base_dir . $file;
@@ -1191,7 +1191,7 @@ function pack_dir($dir1, $dir2, $search, $replace)
 		$str .= $header_str . $file_str . $extra_str;
 	}
 	// add all directories
-	for($i=0; $i<count($subdir); $i++)
+	for($i=0; $i<count_safe($subdir); $i++)
 	{
 		$str .= pack_dir($dir1, $dir2 ? $dir2 . '/' . $subdir[$i] : $subdir[$i], $search, $replace);
 	}

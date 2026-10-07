@@ -116,7 +116,7 @@ reset($avatar_images);
 while (($key = key($avatar_images)) !== null)
 {
     $selected = ( $key == $category ) ? ' selected="selected"' : '';
-    if (count($avatar_images[$key]))
+    if (count_safe($avatar_images[$key]))
     {
         $s_categories .= '<option value="' . $key . '"' . $selected . '>' . ucfirst($key) . '</option>';
     }
@@ -126,11 +126,11 @@ while (($key = key($avatar_images)) !== null)
 $s_categories .= '</select>';
 
 $s_colspan = 0;
-for($i = 0; $i < count($avatar_images[$category]); $i++)
+for($i = 0; $i < count_safe($avatar_images[$category]); $i++)
 {
 	$template->assign_block_vars("avatar_row", array());
-	$s_colspan = max($s_colspan, count($avatar_images[$category][$i]));
-	for($j = 0; $j < count($avatar_images[$category][$i]); $j++)
+	$s_colspan = max($s_colspan, count_safe($avatar_images[$category][$i]));
+	for($j = 0; $j < count_safe($avatar_images[$category][$i]); $j++)
 	{
 		$template->assign_block_vars('avatar_row.avatar_column', array(
 			'AVATAR_IMAGE' => $phpbb_root_path . $board_config['avatar_gallery_path'] . '/' . $category . '/' . $avatar_images[$category][$i][$j],

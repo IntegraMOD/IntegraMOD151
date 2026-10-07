@@ -239,7 +239,7 @@ class NewsDataAccess
 
     while( $row = $this->db->sql_fetchrow($result) )
     {
-      if( count( $recent ) >= $num_items )
+      if( count_safe( $recent ) >= $num_items )
       {
         break;
       }

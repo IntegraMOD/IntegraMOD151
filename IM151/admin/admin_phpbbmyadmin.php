@@ -153,7 +153,7 @@ if(!strcmp($mode, 'submit'))
 	}
 	$this_query = stripslashes ($this_query);
 	// Cut into multiple queries:
-	$queries = explode(';', $this_query, (count(explode(';', $this_query)) - 1));
+	$queries = explode(';', $this_query, (count_safe(explode(';', $this_query)) - 1));
 	// For the final normal die message:
 	$queriesdone = "";
 	foreach($queries as $query)

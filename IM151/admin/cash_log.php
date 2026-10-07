@@ -123,11 +123,11 @@ if ( $stime != "all" )
 
 }
 
-$numactionfilters = count($ar_action);
-$numtimefilters = count($ar_time);
+$numactionfilters = count_safe($ar_action);
+$numtimefilters = count_safe($ar_time);
 
 $sql_clause = "";
-if ( count($clause) != 0 )
+if ( count_safe($clause) != 0 )
 {
 	$sql_clause = "WHERE " . implode(" AND ", $clause);
 }
@@ -244,7 +244,7 @@ while ( $row = $db->sql_fetchrow($result) )
 
 $i = 0;
 
-for ( $i = 0; $i < count($data_log); $i++ )
+for ( $i = 0; $i < count_safe($data_log); $i++ )
 {
 	$entry = $data_log[$i];
 	$entry['log_time'] = create_date($board_config['default_dateformat'], $entry['log_time'], $board_config['board_timezone']);

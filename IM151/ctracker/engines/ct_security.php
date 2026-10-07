@@ -30,6 +30,8 @@ if( !defined('IN_PHPBB') )
  */
 define('CT_DEBUG_MODE', defined('DEV_MODE') ? DEV_MODE : false);
 
+if (!defined('CT_SECLEVEL')) { define('CT_SECLEVEL', 'NORMAL');}
+
 /*
  * DO NOT CHANGE ANYTHING BELOW!
  * CHANGING STUFF BELOW CAN DRAMATICALLY DECREASE

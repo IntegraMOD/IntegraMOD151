@@ -422,7 +422,7 @@ function reorder_tree()
 
 	// update with new order
 	$order = 0;
-	for ($i = 0; $i < count($tree['data']); $i++ )
+	for ($i = 0; $i < count_safe($tree['data']); $i++ )
 	{
 		if ( !empty($tree['id'][$i]) )
 		{
@@ -577,13 +577,13 @@ if ( ($mode == 'moveup') || ($mode == 'movedw') )
 	$prec = '';
 	$next = '';
 	$main = $tree['main'][ $tree['keys'][$fid] ];
-	for ( $i = 0; $i < count($tree['sub'][$main]); $i++ )
+	for ( $i = 0; $i < count_safe($tree['sub'][$main]); $i++ )
 	{
 		$prec = ( $i == 0 ) ? $main : $tree['sub'][$main][$i-1];
 		$found = ( $tree['sub'][$main][$i] == $fid );
 		if ( $found )
 		{
-			$next = ( ($i+1) < count($tree['sub'][$main]) ) ? $tree['sub'][$main][$i+1] : $tree['sub'][$main][$i];
+			$next = ( ($i+1) < count_safe($tree['sub'][$main]) ) ? $tree['sub'][$main][$i+1] : $tree['sub'][$main][$i];
 			break;
 		}
 	}
@@ -638,7 +638,7 @@ if ( $mode == 'resync' )
 {
 	$tkeys = array();
 	$tkeys = get_auth_keys($fid, true);
-	for ( $i = 0; $i < count($tkeys['id']); $i++ )
+	for ( $i = 0; $i < count_safe($tkeys['id']); $i++ )
 	{
 		$wid = $tkeys['id'][$i];
 		if ( substr($wid, 0, 1) == POST_FORUM_URL )
@@ -708,7 +708,7 @@ if ( ($mode == 'edit') || ($mode == 'create') || ($mode == 'delete') )
 	$found = false;
 	if ( !empty($this_key) )
 	{
-		for ( $i = 0; isset($tree['sub'][ $item['main'] ]) && $i < count($tree['sub'][ $item['main'] ]); $i++ )
+		for ( $i = 0; isset($tree['sub'][ $item['main'] ]) && $i < count_safe($tree['sub'][ $item['main'] ]); $i++ )
 		{
 			$item['position'] = ( $i == 0 ) ? $item['main'] : $tree['sub'][ $item['main'] ][$i-1];
 			$found = ( $tree['sub'][ $item['main'] ][$i] == $fid );
@@ -720,7 +720,7 @@ if ( ($mode == 'edit') || ($mode == 'create') || ($mode == 'delete') )
 	}
 	if ( !$found && !empty($tree['sub'][ $item['main'] ]) )
 	{
-		$i = count($tree['sub'][ $item['main'] ]);
+		$i = count_safe($tree['sub'][ $item['main'] ]);
 		$item['position'] = $tree['sub'][ $item['main'] ][$i-1];
 	}
 
@@ -1067,7 +1067,7 @@ if ( ($mode == 'edit') || ($mode == 'create') || ($mode == 'delete') )
 			{
 				// check if forum attached
 				$found = false;
-				for ( $i = 0; $i < count($tree['sub'][ $fid ]); $i++ )
+				for ( $i = 0; $i < count_safe($tree['sub'][ $fid ]); $i++ )
 				{
 					$found = ( $tree['type'][ $tree['keys'][ $tree['sub'][$fid][$i] ] ] == POST_FORUM_URL );
 					if ( $found )
@@ -1360,7 +1360,7 @@ if ( ($mode == 'edit') || ($mode == 'create') || ($mode == 'delete') )
 		// position list
 		$selected = ($item['position'] == $item['main']) ? ' selected="selected"' : '';
 		$s_pos_opt = '<option value="' . $item['main'] . '"' . $selected . '>' . get_object_lang($item['main'], 'name', true) . '</option>';
-		for ( $i = 0; isset($tree['sub'][ $item['main'] ]) && $i < count($tree['sub'][ $item['main'] ]); $i++ )
+		for ( $i = 0; isset($tree['sub'][ $item['main'] ]) && $i < count_safe($tree['sub'][ $item['main'] ]); $i++ )
 		{
 			if ( $tree['sub'][ $item['main'] ][$i] != $fid )
 			{
@@ -1475,7 +1475,7 @@ if ( ($mode == 'edit') || ($mode == 'create') || ($mode == 'delete') )
 				if ( ($item['type'] == POST_FORUM_URL) || ($key == 'auth_view') )
 				{
 					$s_auth_opt = '';
-					for ( $i = 0; $i < count($forum_auth_const); $i++)
+					for ( $i = 0; $i < count_safe($forum_auth_const); $i++)
 					{
 						$auth_key = $forum_auth_const[$i];
 						$auth_value = $forum_auth_levels[$i];
@@ -1601,7 +1601,7 @@ if ( $mode == '' )
 	}
 
 	$color = false;
-	for ($i=0; isset($tree['sub'][$selected_id]) && $i < count($tree['sub'][$selected_id]); $i++)
+	for ($i=0; isset($tree['sub'][$selected_id]) && $i < count_safe($tree['sub'][$selected_id]); $i++)
 	{
 		$this_key = $tree['sub'][$selected_id][$i];
 		$idx = $tree['keys'][$this_key];
@@ -1633,7 +1633,7 @@ if ( $mode == '' )
 		// is there some sub-levels for this level ?
 		$sub = isset($tree['sub'][$this_key]);
 		$links = '';
-		for ($j = 0; isset($tree['sub'][$this_key]) && $j < count($tree['sub'][$this_key]); $j++ )
+		for ($j = 0; isset($tree['sub'][$this_key]) && $j < count_safe($tree['sub'][$this_key]); $j++ )
 		{
 			$sub_this = $tree['sub'][$this_key][$j];
 			$sub_idx = $tree['keys'][$sub_this];

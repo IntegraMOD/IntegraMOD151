@@ -388,7 +388,7 @@ if ( $preview )
 		$preview_text = bbencode_second_pass( $preview_text, $bbcode_uid );
 	}
 
-	if ( count( $orig_word ) )
+	if ( count_safe( $orig_word ) )
 	{
 		$preview_title = preg_replace( $orig_word, $replacement_word, $preview_title );
 		$preview_desc = preg_replace( $orig_word, $replacement_word, $preview_desc );

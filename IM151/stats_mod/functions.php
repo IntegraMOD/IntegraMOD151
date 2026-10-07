@@ -30,7 +30,7 @@ class StatisticsFUNCTIONS
 	// Sort multi-dimensional array
 	function sort_data ($sort_array, $key, $sort_order, $pre_string_sort = -1) 
 	{
-		$last_element = count($sort_array) - 1;
+		$last_element = count_safe($sort_array) - 1;
 
 		if ($pre_string_sort == -1)
 		{
@@ -190,7 +190,7 @@ class StatisticsFUNCTIONS
 			{
 				$if_eval = '';
 				$pattern = explode($split, $auth_condition);
-				for ($i = 0; $i < count($pattern); $i++)
+				for ($i = 0; $i < count_safe($pattern); $i++)
 				{
 					$if_eval .= ($i == 0) ? '($this->auth_data_sql[$auth_type][$forum_id][\'' . trim($pattern[$i]) . '\'])' : ' ' . $split_cond . ' ($this->auth_data_sql[$auth_type][$forum_id][\'' . trim($pattern[$i]) . '\'])';
 				}

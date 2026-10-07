@@ -303,7 +303,7 @@ function build_module($info_array, $lang_array, $php_file, $module_id = -1)
 		$keys = explode(', ', $keys);
 		$values = explode(', ', $values);
 		
-		for ($i = 0; $i < count($keys); $i++)
+		for ($i = 0; $i < count_safe($keys); $i++)
 		{
 			if ( (trim($keys[$i]) != '') && (trim($values[$i]) != '') )
 			{
@@ -359,12 +359,12 @@ function build_module($info_array, $lang_array, $php_file, $module_id = -1)
 
 		$entries = explode("\n", trim($info_array['admin_panel']));
 
-		for ($i = 0; $i < count($entries); $i++)
+		for ($i = 0; $i < count_safe($entries); $i++)
 		{
 			$config_array = array();
 
 			$vars = explode(' ', $entries[$i]);
-			for ($j = 0; $j < count($vars); $j++)
+			for ($j = 0; $j < count_safe($vars); $j++)
 			{
 				$values = explode(':', $vars[$j]);
 				$config_array[trim($values[0])] = trim($values[1]);

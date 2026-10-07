@@ -678,7 +678,7 @@ function pcp_output_sig($field_name, $view_userdata, $map_name='')
 		{
 			$user_sig = smilies_pass($user_sig);
 		}
-		if (count($orig_word) > 0)
+		if (count_safe($orig_word) > 0)
 		{
 			$user_sig = str_replace('\"', '"', substr(preg_replace_callback('#(\>(((? >([^><]+|(?R)))*)\<))#s', function ($matches) use ($orig_word, $replacement_word) {
 				return preg_replace($orig_word, $replacement_word, $matches[0]);
@@ -808,7 +808,7 @@ function pcp_output_topics_stat($field_name, $view_userdata, $map_name='')
 
 				// get the info
 				$most_active_topic_id = $row['topic_id'];
-				$most_active_topic_title = ( count($orig_word) ) ? preg_replace($orig_word, $replacement_word, $row['topic_title']) : $row['topic_title'];
+				$most_active_topic_title = ( count_safe($orig_word) ) ? preg_replace($orig_word, $replacement_word, $row['topic_title']) : $row['topic_title'];
 				$most_active_topic_posts = $row['posts_count'];
 				$most_active_topic_posts_total = $row['topic_posts'];
 				$most_active_topic_posts_total_forum = $row['forum_posts'];
@@ -958,10 +958,10 @@ function pcp_output_usergroups($field_name, $view_userdata, $map_name='')
 			)
 		);
 		$nb = 0;
-		if (count($groups) > 0)
+		if (count_safe($groups) > 0)
 		{
 			$class = false;
-			for ($i=0; $i < count($groups); $i++)
+			for ($i=0; $i < count_safe($groups); $i++)
 			{
 				$is_ok = false;
 

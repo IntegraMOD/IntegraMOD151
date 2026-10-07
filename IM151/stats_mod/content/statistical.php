@@ -90,7 +90,7 @@ class Content_statistical
 		global $core, $stats_template, $phpbb_root_path, $phpEx, $stat_functions, $lang;
 
 		// make global...
-		if (count($core->global_array) > 0)
+		if (count_safe($core->global_array) > 0)
 		{
 			eval('global ' . implode(', ', $core->global_array) . ';');
 		}
@@ -106,7 +106,7 @@ class Content_statistical
 			$authed = TRUE;
 		}
 
-		for ($i = 0; $i < count($core->calculation_data); $i++)
+		for ($i = 0; $i < count_safe($core->calculation_data); $i++)
 		{
 			$rank_column = array();
 

@@ -339,7 +339,7 @@ if (!defined('IN_INSTALL'))
 		if ( isset($last_posts[ $row['topic_last_post_id'] ]) )
 		{
 			// topic title censor
-			if ( count($orig_word) )
+			if ( count_safe($orig_word) )
 			{
 				$row['topic_title'] = preg_replace($orig_word, $replacement_word, $row['topic_title']);
 			}
@@ -367,7 +367,7 @@ if (!defined('IN_INSTALL'))
 //-- fin mod : keep unread -------------------------------------------------------------------------
 	// set the unread flag
 	$tree['unread_topics'] = array();
-	for ($i=0; $i < count($tree['data']); $i++)
+	for ($i=0; $i < count_safe($tree['data']); $i++)
 	{
 		if ( $tree['type'][$i] == POST_FORUM_URL )
 		{
@@ -436,7 +436,7 @@ function set_tree_user_auth()
 	global $tree;
 
 	// read the tree from the bottom
-	for ($i = count($tree['data']) - 1; $i >= 0; $i--)
+	for ($i = count_safe($tree['data']) - 1; $i >= 0; $i--)
 	{
 		//---------------------
 		// full ids
@@ -661,7 +661,7 @@ function get_auth_keys($cur='Root', $all=false, $level=-1, $max=-1, $auth_key='a
 				$tkeys = get_auth_keys($tree['sub'][$cur][$i], $all, $orig_level+1, $max, $auth_key, $align_level);
 
 				// add sub-levels
-				for ($j=0; isset($tkeys['id']) && $j < count($tkeys['id']); $j++)
+				for ($j=0; isset($tkeys['id']) && $j < count_safe($tkeys['id']); $j++)
 				{
 					$last_i++;
 					$keys['keys'][$tkeys['id'][$j]] = $last_i;
@@ -692,7 +692,7 @@ function get_max_depth($cur='Root', $all=false, $level=-1, &$keys=[], $max=-1)
 	}
 
 	$max_level = 0;
-	for ($i=0; $i < count($keys['id']); $i++)
+	for ($i=0; $i < count_safe($keys['id']); $i++)
 	{
 		if ($keys['level'][$i] > $max_level)
 		{
@@ -758,7 +758,7 @@ function get_tree_option($cur='', $all=false, $disable_non_forum = false)
 	// if we only want the user to select a forum (i.e. for KB), disable the rest
 	$disabled = $disable_non_forum ? ' disabled="disabled"' : '';
 	$res = '';
-	for ($i=0; $i < count($keys['id']); $i++)
+	for ($i=0; $i < count_safe($keys['id']); $i++)
 	{
 		// only get object that are not forum links type
 		// V: skip -1, that's Root
@@ -870,7 +870,7 @@ function build_index($cur='Root', $cat_break=false, &$forum_moderators=[], $real
 			// the array is sorted
 			$start = false;
 			$stop = false;
-			for ($i=0; ($i < count($keys['id']) && !$stop); $i++)
+			for ($i=0; ($i < count_safe($keys['id']) && !$stop); $i++)
 			{
 				if ( $start && ($tree['main'][$keys['idx'][$i]] == $tree['main'][$this_key]))
 				{
@@ -1004,9 +1004,9 @@ function build_index($cur='Root', $cat_break=false, &$forum_moderators=[], $real
 			$moderator_list = '';
 			if ($type == POST_FORUM_URL)
 			{
-				if ( !empty($forum_moderators[$id]) && count($forum_moderators[$id]) > 0 )
+				if ( !empty($forum_moderators[$id]) && count_safe($forum_moderators[$id]) > 0 )
 				{
-					$l_moderators = ( count($forum_moderators[$id]) == 1 ) ? $lang['Moderator'] : $lang['Moderators'];
+					$l_moderators = ( count_safe($forum_moderators[$id]) == 1 ) ? $lang['Moderator'] : $lang['Moderators'];
 					$moderator_list = implode(', ', $forum_moderators[$id]);
 				}
 			}
@@ -1036,7 +1036,7 @@ function build_index($cur='Root', $cat_break=false, &$forum_moderators=[], $real
 			$links = '';
 			if ( $sub && ( !$pull_down || ( ($type == POST_FORUM_URL) && ($sub_forum > 0) ) ) && (intval($board_config['sub_level_links']) > 0) )
 			{
-				for ($j=0; $j < count($tree['sub'][$cur]); $j++) if ($tree['auth'][ $tree['sub'][$cur][$j] ]['auth_view'])
+				for ($j=0; $j < count_safe($tree['sub'][$cur]); $j++) if ($tree['auth'][ $tree['sub'][$cur][$j] ]['auth_view'])
 				{
 					$wcur	= $tree['sub'][$cur][$j];
 					$wthis	= $tree['keys'][$wcur];
@@ -1276,7 +1276,7 @@ function build_index($cur='Root', $cat_break=false, &$forum_moderators=[], $real
 	}
 
 	// display sub-levels
-  $tree_count = !empty($tree['sub'][$cur]) ? count($tree['sub'][$cur]) : 0;
+  $tree_count = !empty($tree['sub'][$cur]) ? count_safe($tree['sub'][$cur]) : 0;
 	for ($i=0; $i < $tree_count; $i++) if (!empty($keys['keys'][$tree['sub'][$cur][$i]]))
 	{
 		$wdisplay = build_index($tree['sub'][$cur][$i], $cat_break, $forum_moderators, $level+1, $max_level, $keys);
@@ -1343,11 +1343,11 @@ function display_index($cur='Root')
 	{
 		if ( $tree['type'][$idx] == POST_FORUM_URL )
 		{
-			for ( $i = 0; $i < count($data['user_id']); $i++ )
+			for ( $i = 0; $i < count_safe($data['user_id']); $i++ )
 			{
 				$forum_moderators[ $tree['id'][$idx] ][] = '<a href="' . append_sid("profile.$phpEx?mode=viewprofile&amp;" . POST_USERS_URL . "=" . $data['user_id'][$i]) . '" class="' . $agcm_color->get_user_color($data['user_group_id'][$i], $data['user_session_time'][$i]) . '">' . $data['username'][$i] . '</a>';
 			}
-			for ( $i = 0; $i < count($data['group_id']); $i++ )
+			for ( $i = 0; $i < count_safe($data['group_id']); $i++ )
 			{
 				$forum_moderators[ $tree['id'][$idx] ][] = '<a href="' . append_sid("./groupcp.$phpEx?" . POST_GROUPS_URL . "=" . $data['group_id'][$i]) . '">' . $agcm_color->get_group_color($data['group_id'][$i], $data['group_name'][$i]) . '</a>';
 			}
@@ -1423,7 +1423,7 @@ function make_cat_nav_tree($cur, $pgm='', $nav_class='nav', $topic_title='', $fo
 				$orig_word = array();
 				$replacement_word = array();
 				obtain_word_list($orig_word, $replacement_word);
-				if ( count($orig_word) )
+				if ( count_safe($orig_word) )
 				{
 					$topic_title = preg_replace($orig_word, $replacement_word, $topic_title);
 				}
@@ -1454,7 +1454,7 @@ function make_cat_nav_tree($cur, $pgm='', $nav_class='nav', $topic_title='', $fo
 				$orig_word = array();
 				$replacement_word = array();
 				obtain_word_list($orig_word, $replacement_word);
-				if ( count($orig_word) )
+				if ( count_safe($orig_word) )
 				{
 					$topic_title = preg_replace($orig_word, $replacement_word, $topic_title);
 				}

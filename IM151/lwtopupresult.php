@@ -95,7 +95,7 @@ $postvars = array();
                    $postipn = 'cmd=_notify-validate'; // Now we ADD "cmd=_notify-validate" for Post back Validation
                    $orgipn = '<b>Posted IPN variables in order received:</b><br><br>';
 				// Prepare for validation
-            for ($x=0; $x < count($postvars); $x++) 
+            for ($x=0; $x < count_safe($postvars); $x++) 
             { 
             	$y=$x+1; $postkey = $postvars[$x]; $postval = $$postvars[$x]; $postipn.= "&" . $postkey . "=" . urlencode($postval);  $orgipn.= "<b>#" . $y . "</b> Key: " . $postkey . " <b>=</b> " . $postval . "<br>";  
             }

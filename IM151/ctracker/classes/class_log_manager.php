@@ -230,13 +230,13 @@ class log_manager
 		if ($file_id != 6)
 		{
       $data = @file($path);
-			$logsize  = $data == null ? 0 : count($data) - 1;
+			$logsize  = $data == null ? 0 : count_safe($data) - 1;
 		}
 		else
 		{
 			$debug_array = file($path);
 			$debug_delimiter = ( isset($debug_array[0]) ? $debug_array[0] : '' );
-			$logsize  = count($debug_array) - count(array_diff($debug_array, (array) $debug_delimiter));
+			$logsize  = count_safe($debug_array) - count_safe(array_diff($debug_array, (array) $debug_delimiter));
 		}
 
 		return $logsize;

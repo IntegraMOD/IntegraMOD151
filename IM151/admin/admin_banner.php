@@ -370,7 +370,7 @@ if( $mode!= "")
 
 		$forum_select_list = '<select name="' . POST_FORUM_URL . '">';
 		$forum_select_list .= '<option value="0">' . ( isset($lang['All_available']) ? $lang['All_available'] : 'All_available' ) . '</option>';
-		for($i = 0; $i < count($forum_rows); $i++)
+		for($i = 0; $i < count_safe($forum_rows); $i++)
 		{
 			$forum_select_list .= '<option value="' . $forum_rows[$i]['forum_id'] . '">' . $forum_rows[$i]['forum_name'] . '</option>';
 		}

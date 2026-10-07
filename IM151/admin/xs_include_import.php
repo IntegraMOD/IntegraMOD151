@@ -36,7 +36,7 @@ function generate_actions_files($dir)
 	$pos = strrpos($dir, '/');
 	$dir = $pos === strlen($dir) - 1 ? substr($dir, 0, $pos) : $dir;
 	$arr = array('processing: '.$dir);
-	for($i=0; $i<count($items); $i++)
+	for($i=0; $i<count_safe($items); $i++)
 	{
 		if($items[$i]['dir'] === $dir)
 		{
@@ -82,7 +82,7 @@ function generate_actions_dirs($dir = '')
 		);
 	// create subdirectories
 	$len = strlen($dir);
-	for($i=0; $i<count($dirs); $i++)
+	for($i=0; $i<count_safe($dirs); $i++)
 	{
 		$str = $dirs[$i];
 		if(substr($str, 0, $len) === $dir)

@@ -19,7 +19,7 @@ $total_num = 0;
 // This should be in the admin panel later or something
 $limit_max = 5;
 
-$total_num = count($contact_list->buddy);
+$total_num = count_safe($contact_list->buddy);
 $contact_list->get_list('buddy', true, $start, $sort_order, $limit_max);
 
 $template->set_filenames(array(

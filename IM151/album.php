@@ -150,7 +150,7 @@ if ($album_nav_cat_desc != '')
 // $catrows array now stores all categories which this user can view.
 // --------------------------------
 $allowed_cat = '-99999'; // For Recent Public Pics below
-for ($i = 0; $i < (isset($catrows) ? count($catrows) : 0); $i ++)
+for ($i = 0; $i < (isset($catrows) ? count_safe($catrows) : 0); $i ++)
 {
 	// --------------------------------
 	// build list of allowd category id's

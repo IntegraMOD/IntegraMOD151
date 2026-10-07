@@ -175,7 +175,7 @@ function qbar_sub_template_select($style, $select)
 
 	// add the sub-templates
 	ksort($subtpl);
-	for ($i=0; $i < count($subtpl); $i++)
+	for ($i=0; $i < count_safe($subtpl); $i++)
 	{
 		$selected = ($select == $subtpl[$i]) ? ' selected="selected"' : '';
 		$res .= '<option value="' . $subtpl[$i] . '"' . $selected . '>' . $subtpl[$i] . '</option>';
@@ -267,7 +267,7 @@ function qbar_get_image_style($key, $row, $sub_template)
 	// get the base template image file
 	$filename = $phpbb_root_path . './templates/' . $row['style_name'] . '/' . $row['style_name'] . '.cfg';
 	@include($filename);
-	if (count($images) > 0)
+	if (count_safe($images) > 0)
 	{
 		// do we use a sub_template ?
 		if (!empty($sub_template))
@@ -287,7 +287,7 @@ function qbar_get_image_style($key, $row, $sub_template)
 			// get the sub-template config file
 			$filename = $phpbb_root_path . './templates/' . $row['style_name'] . '/sub_templates.cfg';
 			@include($filename);
-			if (count($sub_templates) > 0)
+			if (count_safe($sub_templates) > 0)
 			{
 				$found = false;
 				foreach ($sub_templates as $key => $data)
@@ -409,7 +409,7 @@ function qbar_read_tree_options($select, $cur='Root', $level = -1)
 	$res = '<option value="' . $cur . '"' . $selected . '>' . $value . '</option>';
 
 	// get sub-levels
-	for ($i=0; $i < count($tree['sub'][$cur]); $i++)
+	for ($i=0; $i < count_safe($tree['sub'][$cur]); $i++)
 	{
 		$res .= qbar_read_tree_options($select, $tree['sub'][$cur][$i], ($level+1));
 	}

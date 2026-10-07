@@ -131,9 +131,9 @@ function check_auth($type, $key, $u_access, $is_admin)
 {
 	$auth_user = 0;
 
-	if( count($u_access) )
+	if( count_safe($u_access) )
 	{
-		for($j = 0; $j < count($u_access); $j++)
+		for($j = 0; $j < count_safe($u_access); $j++)
 		{
 			$result = 0;
 			switch($type)
@@ -291,11 +291,11 @@ else
 				}
 				$db->sql_freeresult($result);
 
-				for($i = 0; $i < count($forum_access); $i++)
+				for($i = 0; $i < count_safe($forum_access); $i++)
 				{
 					$forum_id = $forum_access[$i]['forum_id'];
 
-					for($j = 0; $j < count($forum_auth_fields); $j++)
+					for($j = 0; $j < count_safe($forum_auth_fields); $j++)
 					{
 						$forum_auth_level_fields[$forum_id][$forum_auth_fields[$j]] = $forum_access[$i][$forum_auth_fields[$j]] == AUTH_ACL;
 					}
@@ -315,7 +315,7 @@ else
 			else
 			{
 				$change_acl_list = array();
-				for($j = 0; $j < count($forum_auth_fields); $j++)
+				for($j = 0; $j < count_safe($forum_auth_fields); $j++)
 				{
 					$auth_field = $forum_auth_fields[$j];
 
@@ -353,7 +353,7 @@ else
 
 			// extract forums
 			$forum_access = array();
-			for ($i=0; $i < count($keys['id']); $i++)
+			for ($i=0; $i < count_safe($keys['id']); $i++)
 			{
 				if (isset($tree['type'][ $keys['idx'][$i] ]) && $tree['type'][ $keys['idx'][$i] ] == POST_FORUM_URL)
 				{
@@ -379,7 +379,7 @@ else
 			$update_acl_status = array();
 			$update_mod_status = array();
 
-			for($i = 0; $i < count($forum_access); $i++)
+			for($i = 0; $i < count_safe($forum_access); $i++)
 			{
 				$forum_id = $forum_access[$i]['forum_id'];
 
@@ -404,7 +404,7 @@ else
 					}
 				}
 
-				for($j = 0; $j < count($forum_auth_fields); $j++)
+				for($j = 0; $j < count_safe($forum_auth_fields); $j++)
 				{
 					$auth_field = $forum_auth_fields[$j];
 
@@ -691,14 +691,14 @@ else if ( ( $mode == 'user' && ( isset($_POST['username']) || $user_id ) ) || ( 
 
 	// get the maximum level
 	$max_level = 0;
-	for ($i=0; $i < count($keys['id']); $i++)
+	for ($i=0; $i < count_safe($keys['id']); $i++)
 	{
 		if ($keys['real_level'][$i] > $max_level) $max_level = $keys['real_level'][$i];
 	}
 
 	// extract forums
 	$forum_access = array();
-	for ($i=0; $i < count($keys['id']); $i++)
+	for ($i=0; $i < count_safe($keys['id']); $i++)
 	{
 		if (isset($tree['type'][ $keys['idx'][$i] ]) && $tree['type'][ $keys['idx'][$i] ] == POST_FORUM_URL)
 		{
@@ -710,13 +710,13 @@ else if ( ( $mode == 'user' && ( isset($_POST['username']) || $user_id ) ) || ( 
 
 	if( empty($adv) )
 	{
-		for($i = 0; $i < count($forum_access); $i++)
+		for($i = 0; $i < count_safe($forum_access); $i++)
 		{
 			$forum_id = $forum_access[$i]['forum_id'];
 
 			$forum_auth_level[$forum_id] = AUTH_ALL;
 
-			for($j = 0; $j < count($forum_auth_fields); $j++)
+			for($j = 0; $j < count_safe($forum_auth_fields); $j++)
 			{
 				$forum_access[$i][$forum_auth_fields[$j]] . ' :: ';
 				if ( $forum_access[$i][$forum_auth_fields[$j]] == AUTH_ACL )
@@ -758,12 +758,12 @@ else if ( ( $mode == 'user' && ( isset($_POST['username']) || $user_id ) ) || ( 
 
 	$is_admin = ( $mode == 'user' ) ? ( ( $ug_info[0]['user_level'] == ADMIN && $ug_info[0]['user_id'] != ANONYMOUS ) ? 1 : 0 ) : 0;
 	
-	for($i = 0; $i < count($forum_access); $i++)
+	for($i = 0; $i < count_safe($forum_access); $i++)
 	{
 		$forum_id = $forum_access[$i]['forum_id'];
 
 		unset($prev_acl_setting);
-		for($j = 0; $j < count($forum_auth_fields); $j++)
+		for($j = 0; $j < count_safe($forum_auth_fields); $j++)
 		{
 			$key = $forum_auth_fields[$j];
 			$value = $forum_access[$i][$key];
@@ -818,10 +818,10 @@ else if ( ( $mode == 'user' && ( isset($_POST['username']) || $user_id ) ) || ( 
 //	{
 //-- add
 	$s_column_span = 2 + $max_level; // Two columns always present
-	if( $adv ) $s_column_span = $s_column_span + count($forum_auth_fields)-1;
+	if( $adv ) $s_column_span = $s_column_span + count_safe($forum_auth_fields)-1;
 
 	// read the objects without the index forum (i=0)
-	for ($i=1; $i < count($keys['id']); $i++)
+	for ($i=1; $i < count_safe($keys['id']); $i++)
 	{
 		$this_key	= $keys['idx'][$i];
 		$level	= $keys['real_level'][$i];
@@ -838,7 +838,7 @@ else if ( ( $mode == 'user' && ( isset($_POST['username']) || $user_id ) ) || ( 
 			for ($k=1; $k <= $level; $k++) $template->assign_block_vars('row.cat.inc', array());
 			if ($adv)
 			{
-				for ($j=0; $j < count($forum_auth_fields); $j++)
+				for ($j=0; $j < count_safe($forum_auth_fields); $j++)
 				{
 					$template->assign_block_vars('row.cat.aclvalues', array());
 				}
@@ -860,7 +860,7 @@ else if ( ( $mode == 'user' && ( isset($_POST['username']) || $user_id ) ) || ( 
 			{
 				$allowed = 1;
 
-				for($j = 0; $j < count($forum_auth_level_fields[$forum_id]); $j++)
+				for($j = 0; $j < count_safe($forum_auth_level_fields[$forum_id]); $j++)
 				{
 					if ( !$auth_ug[$forum_id][$forum_auth_level_fields[$forum_id][$j]] )
 					{
@@ -892,11 +892,11 @@ else if ( ( $mode == 'user' && ( isset($_POST['username']) || $user_id ) ) || ( 
 		}
 		else
 		{
-			for($j = 0; $j < count($forum_access); $j++)
+			for($j = 0; $j < count_safe($forum_access); $j++)
 			{
 				if ( $forum_access[$j]['forum_id'] == $forum_id )
 				{
-					for($k = 0; $k < count($forum_auth_fields); $k++)
+					for($k = 0; $k < count_safe($forum_auth_fields); $k++)
 					{
 						$field_name = $forum_auth_fields[$k];
 
@@ -983,7 +983,7 @@ else if ( ( $mode == 'user' && ( isset($_POST['username']) || $user_id ) ) || ( 
 		}
 		else
 		{
-			for($j = 0; $j < count($forum_auth_fields); $j++)
+			for($j = 0; $j < count_safe($forum_auth_fields); $j++)
 			{
 //-- mod : categories hierarchy --------------------------------------------------------------------
 //-- delete
@@ -1018,7 +1018,7 @@ else if ( ( $mode == 'user' && ( isset($_POST['username']) || $user_id ) ) || ( 
 
 	$name = array();
 	$id = array();
-	for($i = 0; $i < count($ug_info); $i++)
+	for($i = 0; $i < count_safe($ug_info); $i++)
 	{
 		if( ( $mode == 'user' ) || $mode == 'group' )
 		{
@@ -1028,9 +1028,9 @@ else if ( ( $mode == 'user' && ( isset($_POST['username']) || $user_id ) ) || ( 
 	}
 
 	$t_usergroup_list = $t_pending_list = '';
-	if( count($name) )
+	if( count_safe($name) )
 	{
-		for($i = 0; $i < count($ug_info); $i++)
+		for($i = 0; $i < count_safe($ug_info); $i++)
 		{
 			if (!$ug_info[$i]['group_single_user'] ){
 			$ug = ( $mode == 'user' ) ? 'group&amp;' . POST_GROUPS_URL : 'user&amp;' . POST_USERS_URL;
@@ -1058,7 +1058,7 @@ else if ( ( $mode == 'user' && ( isset($_POST['username']) || $user_id ) ) || ( 
 	}
 	else
 	{
-		for($i = 0; $i < count($forum_auth_fields); $i++)
+		for($i = 0; $i < count_safe($forum_auth_fields); $i++)
 		{
 			$cell_title = $field_names[$forum_auth_fields[$i]];
 

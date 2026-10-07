@@ -78,7 +78,7 @@ switch( $mode )
 			$template_name = $$install_to;
 			$found = FALSE; 
 			
-			for($i = 0; $i < count($template_name) && !$found; $i++)
+			for($i = 0; $i < count_safe($template_name) && !$found; $i++)
 			{
 				if( $template_name[$i]['style_name'] == $style_name )
 				{
@@ -92,10 +92,10 @@ switch( $mode )
 					
 			$sql = "INSERT INTO " . THEMES_TABLE . " (";
 
-			for($i = 0; $i < count($db_fields); $i++)
+			for($i = 0; $i < count_safe($db_fields); $i++)
 			{
 				$sql .= $db_fields[$i];
-				if($i != (count($db_fields) - 1))
+				if($i != (count_safe($db_fields) - 1))
 				{
 					$sql .= ", ";
 				}
@@ -104,10 +104,10 @@ switch( $mode )
 
 			$sql .= ") VALUES (";
 
-			for($i = 0; $i < count($db_values); $i++)
+			for($i = 0; $i < count_safe($db_values); $i++)
 			{
 				$sql .= "'" . $db_values[$i] . "'";
-				if($i != (count($db_values) - 1))
+				if($i != (count_safe($db_values) - 1))
 				{
 					$sql .= ", ";
 				}
@@ -143,7 +143,7 @@ switch( $mode )
 						{
 							include($phpbb_root_path. "templates/" . $sub_dir . "/theme_info.cfg");
 							
-							for($i = 0; $i < count($$sub_dir); $i++)
+							for($i = 0; $i < count_safe($$sub_dir); $i++)
 							{
 								$working_data = $$sub_dir;
 								
@@ -179,7 +179,7 @@ switch( $mode )
 					"L_ACTION" => $lang['Action'])
 				);
 					
-				for($i = 0; $i < count($installable_themes); $i++)
+				for($i = 0; $i < count_safe($installable_themes); $i++)
 				{
 					$row_color = ( !($i % 2) ) ? $theme['td_color1'] : $theme['td_color2'];
 					$row_class = ( !($i % 2) ) ? $theme['td_class1'] : $theme['td_class2'];
@@ -355,7 +355,7 @@ switch( $mode )
 						$vals[] = str_replace("\'", "''", $val);
 					}
 
-					for($i = 0; $i < count($fields); $i++)
+					for($i = 0; $i < count_safe($fields); $i++)
 					{
 						if($i > 0)
 						{
@@ -365,7 +365,7 @@ switch( $mode )
 					}
 					
 					$sql .= ") VALUES ($style_id, ";
-					for($i = 0; $i < count($vals); $i++)
+					for($i = 0; $i < count_safe($vals); $i++)
 					{
 						if($i > 0)
 						{
@@ -424,7 +424,7 @@ switch( $mode )
 				
 				$sql = "INSERT 
 					INTO " . THEMES_TABLE . " (";
-				for($i = 0; $i < count($field_names); $i++)
+				for($i = 0; $i < count_safe($field_names); $i++)
 				{
 					if($i != 0)
 					{
@@ -434,7 +434,7 @@ switch( $mode )
 				}
 				
 				$sql .= ") VALUES (";
-				for($i = 0; $i < count($values); $i++)
+				for($i = 0; $i < count_safe($values); $i++)
 				{
 					if($i != 0)
 					{
@@ -461,7 +461,7 @@ switch( $mode )
 					$vals[] = $val;
 				}
 
-				for($i = 0; $i < count($fields); $i++)
+				for($i = 0; $i < count_safe($fields); $i++)
 				{
 					if($i > 0)
 					{
@@ -471,7 +471,7 @@ switch( $mode )
 				}
 				
 				$sql .= ") VALUES ($style_id, ";
-				for($i = 0; $i < count($vals); $i++)
+				for($i = 0; $i < count_safe($vals); $i++)
 				{
 					if($i > 0)
 					{
@@ -726,7 +726,7 @@ switch( $mode )
 			
 			$theme_rowset = $db->sql_fetchrowset($result);
 			
-			if( count($theme_rowset) == 0 )
+			if( count_safe($theme_rowset) == 0 )
 			{
 				message_die(GENERAL_MESSAGE, $lang['No_themes']);
 			}
@@ -734,7 +734,7 @@ switch( $mode )
 			$theme_data = '<?php'."\n\n";
 			$theme_data .= "//\n// phpBB 2.x auto-generated theme config file for $template_name\n// Do not change anything in this file!\n//\n\n";
 
-			for($i = 0; $i < count($theme_rowset); $i++)
+			for($i = 0; $i < count_safe($theme_rowset); $i++)
 			{
 				while(list($key, $val) = each($theme_rowset[$i]))
 				{
@@ -947,7 +947,7 @@ switch( $mode )
 			"L_DELETE" => $lang['Delete'])
 		);
 					
-		for($i = 0; $i < count($style_rowset); $i++)
+		for($i = 0; $i < count_safe($style_rowset); $i++)
 		{
 			$row_color = ( !($i % 2) ) ? $theme['td_color1'] : $theme['td_color2'];
 			$row_class = ( !($i % 2) ) ? $theme['td_class1'] : $theme['td_class2'];

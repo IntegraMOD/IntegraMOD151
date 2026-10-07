@@ -74,11 +74,11 @@ function popup_buddy_alert($offline, $online)
 	$online_str = '';
 	if( $offline_ids != '0' )
 	{
-		$offline_str = ( count($offline) >= 2 ) ? $lang['Buddies_offline'] . ': ' : $lang['Buddy_offline'] . ': ';
+		$offline_str = ( count_safe($offline) >= 2 ) ? $lang['Buddies_offline'] . ': ' : $lang['Buddy_offline'] . ': ';
 	}
 	if( $online_ids != '0' )
 	{
-		$online_str = ( count($online) >= 2 ) ? $lang['Buddies_online'] . ': ' : $lang['Buddy_online'] . ': ';
+		$online_str = ( count_safe($online) >= 2 ) ? $lang['Buddies_online'] . ': ' : $lang['Buddy_online'] . ': ';
 	}
 
 	$gen_simple_header = true;

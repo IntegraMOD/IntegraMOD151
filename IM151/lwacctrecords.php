@@ -102,7 +102,7 @@ else
 }
 
 $select_topic_days = '<select name="topicdays">';
-for($i = 0; $i < count($previous_days); $i++)
+for($i = 0; $i < count_safe($previous_days); $i++)
 {
 	$selected = ($topic_days == $previous_days[$i]) ? ' selected="selected"' : '';
 	$select_topic_days .= '<option value="' . $previous_days[$i] . '"' . $selected . '>' . $previous_days_text[$i] . '</option>';

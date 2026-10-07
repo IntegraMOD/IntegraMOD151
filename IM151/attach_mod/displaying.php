@@ -63,7 +63,7 @@ function init_complete_extensions_data()
 	$extension_informations = get_extension_informations();
 	$allowed_extensions = array();
 
-	for ($i = 0; $i < count($extension_informations); $i++)
+	for ($i = 0; $i < count_safe($extension_informations); $i++)
 	{
 		$extension = strtolower(trim($extension_informations[$i]['extension']));
 		$allowed_extensions[] = $extension;
@@ -225,13 +225,13 @@ function init_display_post_attachments($switch_attachment)
 		}
 	}
 
-	if (count($post_id_array) == 0)
+	if (count_safe($post_id_array) == 0)
 	{
 		return;
 	}
 
 	$rows = get_attachments_from_post($post_id_array);
-	$num_rows = count($rows);
+	$num_rows = count_safe($rows);
 
 	if ($num_rows == 0)
 	{
@@ -353,7 +353,7 @@ function init_display_pm_attachments($switch_attachment)
     
    @reset($attachments); 
    $attachments['_' . $privmsgs_id] = get_attachments_from_pm($privmsgs_id); 
-   if (count($attachments['_' . $privmsgs_id]) == 0) 
+   if (count_safe($attachments['_' . $privmsgs_id]) == 0) 
    { 
       return; 
    } 
@@ -392,7 +392,7 @@ function init_display_track_pms_attachments($switch_attachment, $privmsg_ids)
 
 	@reset($attachments);
 	$fetched_attachments = get_attachments_from_pm($privmsg_ids);
-	if (count($fetched_attachments) == 0)
+	if (count_safe($fetched_attachments) == 0)
 	{
 		return;
 	}
@@ -433,7 +433,7 @@ function display_review_attachments($post_id, $switch_attachment, $is_auth)
 	@reset($attachments);
 	$attachments['_' . $post_id] = get_attachments_from_post($post_id);
 
-	if (count($attachments['_' . $post_id]) == 0)
+	if (count_safe($attachments['_' . $post_id]) == 0)
 	{
 		return;
 	}
@@ -470,7 +470,7 @@ function display_attachments_preview($attachment_list, $attachment_filesize_list
 {
 	global $attach_config, $is_auth, $allowed_extensions, $lang, $userdata, $display_categories, $upload_dir, $upload_icons, $template, $db, $theme;
 
-	if (count($attachment_list) != 0)
+	if (count_safe($attachment_list) != 0)
 	{
 		init_display_template('preview', '{ATTACHMENTS}');
 			
@@ -484,7 +484,7 @@ function display_attachments_preview($attachment_list, $attachment_filesize_list
 			'T_TR_COLOR3' => '#'.$theme['tr_color3'])
 		);
 
-		for ($i = 0; $i < count($attachment_list); $i++)
+		for ($i = 0; $i < count_safe($attachment_list); $i++)
 		{
 			$filename = $upload_dir . '/' . $attachment_list[$i];
 			$thumb_filename = $upload_dir . '/' . THUMB_DIR . '/t_' . $attachment_list[$i];
@@ -701,7 +701,7 @@ function display_attachments($post_id)
 {
 	global $template, $upload_dir, $userdata, $allowed_extensions, $display_categories, $download_modes, $db, $lang, $phpEx, $attachments, $upload_icons, $attach_config;
 
-	$num_attachments = count($attachments['_' . $post_id]);
+	$num_attachments = count_safe($attachments['_' . $post_id]);
 	
 	if ($num_attachments == 0)
 	{

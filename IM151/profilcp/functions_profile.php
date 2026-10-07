@@ -191,7 +191,7 @@ if ( $is_called == FALSE )
 			if ( $userrow['user_rank'] )
 			{
 				$found = false;
-				for ($i = 0; ( ($i < count($all_ranks)) && !$found); $i++)
+				for ($i = 0; ( ($i < count_safe($all_ranks)) && !$found); $i++)
 				{
 					$found = ( ($userrow['user_rank'] == $all_ranks[$i]['rank_id']) && $all_ranks[$i]['rank_special']);
 					if ($found)
@@ -204,7 +204,7 @@ if ( $is_called == FALSE )
 			}
 			else
 			{
-				for($i = 0; $i < count($all_ranks); $i++)
+				for($i = 0; $i < count_safe($all_ranks); $i++)
 				{
 					if ( $userrow['user_posts'] >= $all_ranks[$i]['rank_min'] && !$all_ranks[$i]['rank_special'] )
 					{
@@ -867,7 +867,7 @@ function pcp_user_photo_upload($photo_mode, &$current_photo, &$current_type, &$e
 		global $user_maps;
 
 		// get the menu idx
-		$count_mode = $idx = ( isset($module['mode']) ? $module['mode'] : 0) ? count($module['mode']) : 0;
+		$count_mode = $idx = ( isset($module['mode']) ? $module['mode'] : 0) ? count_safe($module['mode']) : 0;
 		$new = false;
 		$found = false;
 		for ( $i = 0; $i < $count_mode; $i++ )
@@ -931,7 +931,7 @@ function pcp_user_photo_upload($photo_mode, &$current_photo, &$current_type, &$e
 		$idx = pcp_set_menu($mode);
 
 		// check if the sub_menu exists
-		$sub_count = $sub_idx = ( isset($module['sub'][$idx]['mode']) ? $module['sub'][$idx]['mode'] : 0) ? count($module['sub'][$idx]['mode']) : 0;
+		$sub_count = $sub_idx = ( isset($module['sub'][$idx]['mode']) ? $module['sub'][$idx]['mode'] : 0) ? count_safe($module['sub'][$idx]['mode']) : 0;
 		$found = false;
 		for ( $i = 0; $i < $sub_count; $i++ )
 		{
@@ -969,9 +969,9 @@ function pcp_user_photo_upload($photo_mode, &$current_photo, &$current_type, &$e
 	function find_input_maps($var){
 		global $user_maps;
 		if (substr($var,0,10) == 'PCP.profil' || substr($var,0,12) == 'PCP.register'){
-			if (count($user_maps[$var]['fields'])){
+			if (count_safe($user_maps[$var]['fields'])){
 				$filter_override = array_filter(array_keys($user_maps[$var]['fields']),"find_non_override_map_fields");
-				if (count($filter_override)){
+				if (count_safe($filter_override)){
 					return 1;
 				}
 			}
@@ -1010,7 +1010,7 @@ function pcp_user_photo_upload($photo_mode, &$current_photo, &$current_type, &$e
 				// get the input maps 
 				$inputfieldmaps = array_filter(array_keys($user_maps),"find_input_maps");
 				$missing = array_filter(array_keys($user_fields),"find_required");
-				if(count($missing)){
+				if(count_safe($missing)){
 					foreach ($missing as $id =>$field_name)
 					{
 						$mod = -1;

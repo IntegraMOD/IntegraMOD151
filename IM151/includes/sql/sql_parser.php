@@ -374,7 +374,7 @@ class sql_parser
 				'keywords'	=> array()
 			);
 			$keywords_ary = preg_split("/\r?\n|\r/", $data['keywords']);
-			$list_count = count($keywords_ary);
+			$list_count = count_safe($keywords_ary);
 			for( $i = 0; $i < $list_count; $i++ )
 			{
 				$keyword = &$keywords_ary[$i];
@@ -625,14 +625,14 @@ class sql_parser
 
 		foreach( $this->data_dictionary as $column_name => $datatypes )
 		{
-			$datatypes_count = count($datatypes);
+			$datatypes_count = count_safe($datatypes);
 			$table_count = 0;
 			if( $datatypes_count > 1 )
 			{
 				$datatype_items = array();
 				foreach( $datatypes as $datatype => $table_names )
 				{
-					$table_count += count($table_names);
+					$table_count += count_safe($table_names);
 					$table_names = implode(', ', $table_names);
 					$datatype_items[] = sprintf($lang['SQL_warn_column_type_tb'], $datatype, $table_names);
 				}
@@ -678,10 +678,10 @@ class sql_parser
 		$index_attributes = $this->split_elements_list($index_attributes);
 		$index_keys = array();
 
-		for( $i = 0; $i < count($index_attributes); $i++ )
+		for( $i = 0; $i < count_safe($index_attributes); $i++ )
 		{
 			$key_items = explode(' ', $index_attributes[$i]);
-			$key_items_count = count($key_items);
+			$key_items_count = count_safe($key_items);
 			if( $key_items_count > 2 )
 			{
 				$this->format_error(sprintf($lang['SQL_invalid_index'], $this->column_definition), $this->sql_count+1, true);
@@ -833,7 +833,7 @@ class sql_parser
 				}
 
 				// Only one primary key, please
-				if( count($this->sql_data['primary_keys']) > 0 )
+				if( count_safe($this->sql_data['primary_keys']) > 0 )
 				{
 					$this->format_error(sprintf($lang['SQL_already_primary'], $this->column_definition), $this->sql_count+1, true);
 					return false;
@@ -893,7 +893,7 @@ class sql_parser
 		// each word is a single column attribute, except DEFAULT value
 		$column_attributes = explode(' ', $column_attributes);
 
-		if( count($column_attributes) < 2 )
+		if( count_safe($column_attributes) < 2 )
 		{
 			$this->format_error(sprintf($lang['SQL_unknown_datatype'], '?'), $this->sql_count+1, true);
 			return false;
@@ -932,7 +932,7 @@ class sql_parser
 
 		// Parse column attributes
 		$attribute_words = array('AUTO_INCREMENT', 'BINARY', 'NOT_NULL', 'NULL', 'UNSIGNED', 'ZEROFILL');
-		for( $i = 0; $i < count($attribute_words); $i++ )
+		for( $i = 0; $i < count_safe($attribute_words); $i++ )
 		{
 			$attribute = &$attribute_words[$i];
 			if( ($j = array_search($attribute, $column_attributes)) !== false )
@@ -962,7 +962,7 @@ class sql_parser
 		}
 
 		// Anything else is unsupported or, err, unknown?
-		if( count($column_attributes) > 0 )
+		if( count_safe($column_attributes) > 0 )
 		{
 			$this->format_error(sprintf($lang['SQL_unknown_attribute'], implode(' ', $column_attributes), $this->column_definition), $this->sql_count+1, true);
 			return false;
@@ -971,7 +971,7 @@ class sql_parser
 		// Trying to understand the datatype...
 		$datatype_argv = explode('(', str_replace(',', '(', rtrim($column_data['datatype'], ')')));
 		$datatype_name = array_shift($datatype_argv);
-		$datatype_argc = count($datatype_argv);
+		$datatype_argc = count_safe($datatype_argv);
 		$datatype_error = '';
 
 		// Deal with data type aliases
@@ -1215,7 +1215,7 @@ class sql_parser
 		$column_definitions = $this->split_elements_list($match[3]);
 
 		// Time to parse each column definition.
-		for( $i = 0; $i < count($column_definitions); $i++ )
+		for( $i = 0; $i < count_safe($column_definitions); $i++ )
 		{
 			// Make current column definition easilly available to all methods
 			$this->column_definition = &$column_definitions[$i];
@@ -1231,7 +1231,7 @@ class sql_parser
 		//
 
 		// Primary keys should exist as columns and have the not null attribute
-		for( $i = 0; $i < count($this->sql_data['primary_keys']); $i++ )
+		for( $i = 0; $i < count_safe($this->sql_data['primary_keys']); $i++ )
 		{
 			$key_data = &$this->sql_data['primary_keys'][$i];
 			if( !isset($this->sql_data['columns'][$key_data['name']]) )
@@ -1251,7 +1251,7 @@ class sql_parser
 		// Index keys should exist as columns, also checking index length consistency.
 		foreach( $this->sql_data['indexes'] as $index_name => $index_data )
 		{
-			for( $i = 0; $i < count($index_data['keys']); $i++ )
+			for( $i = 0; $i < count_safe($index_data['keys']); $i++ )
 			{
 				$key_data = &$index_data['keys'][$i];
 				if( !isset($this->sql_data['columns'][$key_data['name']]) )
@@ -1555,7 +1555,7 @@ class sql_parser
 
 		// Obtain first two words of the statement
 		$command = explode(' ', $sql_statement);
-		if( count($command) < 3 )
+		if( count_safe($command) < 3 )
 		{
 			$command = ( empty($command[0]) ? ';' : implode(' ', $command) );
 			$this->format_error(sprintf($lang['SQL_unknown_command'], $command), $this->sql_count+1);
@@ -1729,7 +1729,7 @@ class sql_parser
 
 		for( $i = 0; $i < $input_length; $i++ )
 		{
-			$char = $input{$i};
+			$char = $input[$i];
 
 			// If we were inside a string constant, $quote would contain the delimiter.
 			if( empty($quote) )
@@ -1742,7 +1742,7 @@ class sql_parser
 				else
 				{
 					// If this is a simple SQL comment mark, ignore the rest of the input
-					$next = ( ($i+1) >= $input_length ? '' : $input{$i+1} );
+					$next = ( ($i+1) >= $input_length ? '' : $input[$i+1] );
 					if( $char == '#' || ( $char == '-' && $next == '-' ) )
 					{
 						break;
@@ -1756,7 +1756,7 @@ class sql_parser
 				if( $char == '\\' || $char == $quote )
 				{
 					// Is this is an escape character or is it a delimiter escaping itself?
-					$next = ( ($i+1) >= $input_length ? '' : $input{$i+1} );
+					$next = ( ($i+1) >= $input_length ? '' : $input[$i+1] );
 					if( $char == '\\' || ( $char == $quote && $char == $next ) )
 					{
 						// If so, current char and next one are both part of the string constant.
@@ -1835,7 +1835,7 @@ class sql_parser
 
 		// Split string into an array of lines (dealing with LF, CRLF and CR).
 		$tmp_array = preg_split("/\r?\n|\r/", $sql_string);
-		$tmp_array_count = count($tmp_array);
+		$tmp_array_count = count_safe($tmp_array);
 		$sql_string = '';
 
 		// Clean up the input
@@ -1885,7 +1885,7 @@ class sql_parser
 		$this->sql_input = $this->restore_all_constants($sql_array);
 
 		// Save total number of SQL statements and quit.
-		$this->sql_total = count($sql_array);
+		$this->sql_total = count_safe($sql_array);
 		return true;
 	}
 
@@ -1901,14 +1901,14 @@ class sql_parser
 	{
 		if( !$this->initialize() )
 		{
-			return SQL_PARSER_ERROR | (count($this->warnings) > 0 ? SQL_PARSER_WARNINGS : 0);
+			return SQL_PARSER_ERROR | (count_safe($this->warnings) > 0 ? SQL_PARSER_WARNINGS : 0);
 		}
 		$this->table_prefix = ( $table_prefix !== false ? $table_prefix : $this->phpbb_prefix );
 
 		// Split string into an array of SQL statements
 		if( !$this->split_string($sql_stream, $sql_array) )
 		{
-			return SQL_PARSER_ERROR | (count($this->warnings) > 0 ? SQL_PARSER_WARNINGS : 0);
+			return SQL_PARSER_ERROR | (count_safe($this->warnings) > 0 ? SQL_PARSER_WARNINGS : 0);
 		}
 		// Free up memory used by our local copy of the input string
 		unset($sql_stream);
@@ -1918,7 +1918,7 @@ class sql_parser
 		{
 			if( !$this->parse_statement($sql_array[$this->sql_count]) )
 			{
-				return SQL_PARSER_ERROR | (count($this->warnings) > 0 ? SQL_PARSER_WARNINGS : 0);
+				return SQL_PARSER_ERROR | (count_safe($this->warnings) > 0 ? SQL_PARSER_WARNINGS : 0);
 			}
 		}
 
@@ -1928,7 +1928,7 @@ class sql_parser
 		// Free up a bit of memory
 		unset($sql_array, $this->constant_tokens, $this->reserved_keywords, $this->cached_keywords);
 
-		return ( count($this->warnings) > 0 ? SQL_PARSER_WARNINGS : SQL_PARSER_SUCCESS );
+		return ( count_safe($this->warnings) > 0 ? SQL_PARSER_WARNINGS : SQL_PARSER_SUCCESS );
 	}
 
 	/**
@@ -1946,7 +1946,7 @@ class sql_parser
 	{
 		if( !($sql_stream = $this->read_file($filename)) )
 		{
-			return SQL_PARSER_ERROR | (count($this->warnings) > 0 ? SQL_PARSER_WARNINGS : 0);
+			return SQL_PARSER_ERROR | (count_safe($this->warnings) > 0 ? SQL_PARSER_WARNINGS : 0);
 		}
 		return $this->parse_stream($sql_stream, $table_prefix);
 	}

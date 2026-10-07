@@ -138,8 +138,8 @@ function test_ftp($ftp_user, $ftp_pass, $ftp_dir, $ftp_host, $ftp_port, $ftp_deb
 //////
 
 		$list = $emftp->ftp_nlist();
-		echo sprintf($lang['EM_dir_nlist'], count($list)) . '<br />' . "\n";
-		for( $i = 0; $i < count($list); $i++ )
+		echo sprintf($lang['EM_dir_nlist'], count_safe($list)) . '<br />' . "\n";
+		for( $i = 0; $i < count_safe($list); $i++ )
 		{
 			echo '[' . $list[$i] . ']<br />' . "\n";
 		}
@@ -201,13 +201,13 @@ function test_ftp($ftp_user, $ftp_pass, $ftp_dir, $ftp_host, $ftp_port, $ftp_deb
 			echo $lang['EM_fail_cd_nlist'] . '<br />' . "\n";
 		}
 		// if there are no files then indicate there are none to print
-		elseif( count($list) == 0 )
+		elseif( count_safe($list) == 0 )
 		{
 			echo '--' . $lang['EM_fail_cd_nlist_no'] . '--<br />' . "\n";
 		}
 		else
 		{
-			for( $i = 0; $i < count($list); $i++ )
+			for( $i = 0; $i < count_safe($list); $i++ )
 			{
 				echo $list[$i] . '<br />' . "\n";
 			}
@@ -425,7 +425,7 @@ class ftp
 			return FALSE;
 		}
 
-		return ereg_replace("^[0-9]{3} \"(.+)\" .+\r\n", "\\1", $this->_resp);
+		return preg_replace("~^[0-9]{3} \"(.+)\" .+\\r\\n~D", "\\1", $this->_resp);
 	}
 
 	function ftp_size($pathname)
@@ -436,7 +436,7 @@ class ftp
 			return -1;
 		}
 
-		return ereg_replace("^[0-9]{3} ([0-9]+)\r\n", "\\1", $this->_resp);
+		return preg_replace("~^[0-9]{3} ([0-9]+)\\r\\n~D", "\\1", $this->_resp);
 	}
 
 	function ftp_mdtm($pathname)
@@ -446,7 +446,7 @@ class ftp
 			$this->_debug_print("Error : MDTM command failed\n");
 			return -1;
 		}
-		$mdtm = ereg_replace("^[0-9]{3} ([0-9]+)\r\n", "\\1", $this->_resp);
+		$mdtm = preg_replace("~^[0-9]{3} ([0-9]+)\\r\\n~D", "\\1", $this->_resp);
 		$date = sscanf($mdtm, "%4d%2d%2d%2d%2d%2d");
 		$timestamp = mktime($date[3], $date[4], $date[5], $date[1], $date[2], $date[0]);
 
@@ -572,7 +572,7 @@ class ftp
 		$this->_debug_print("Connected to remote host\n");
 
 		while (!feof($sock_data)) {
-			$list[] = ereg_replace("[\r\n]", "", fgets($sock_data, 512)) ;
+			$list[] = preg_replace('~[\r\n]~D', "", fgets($sock_data, 512)) ;
 		}
 		$this->_close_data_connection($sock_data);
 		$this->_debug_print(implode("\n", $list));
@@ -603,7 +603,7 @@ class ftp
 		$this->_debug_print("Connected to remote host\n");
 
 		while (!feof($sock_data)) {
-			$list[] = ereg_replace("[\r\n]", "", fgets($sock_data, 512));
+			$list[] = preg_replace('~[\r\n]~D', "", fgets($sock_data, 512));
 		}
 		$this->_debug_print(implode("\n", $list));
 		$this->_close_data_connection($sock_data);
@@ -762,7 +762,7 @@ class ftp
 		$this->_debug_print("Storing local file \"".$localfile."\" to remote file \"".$remotefile."\"\n");
 
 		// dump the array into the file
-		for ($count=0; $count<count($lines); $count++)
+		for ($count=0; $count<count_safe($lines); $count++)
 		{
 			fwrite($sock_data, $lines[$count]);
 		}
@@ -843,7 +843,7 @@ class ftp
 			return FALSE;
 		}
 
-		$ip_port = ereg_replace("^.+ \\(?([0-9]{1,3},[0-9]{1,3},[0-9]{1,3},[0-9]{1,3},[0-9]+,[0-9]+)\\)?.*\r\n$", "\\1", $this->_resp);
+		$ip_port = preg_replace("~^.+ \\(?([0-9]{1,3},[0-9]{1,3},[0-9]{1,3},[0-9]{1,3},[0-9]+,[0-9]+)\\)?.*\\r\\n\$~D", "\\1", $this->_resp);
 		return $ip_port;
 	}
 
@@ -869,7 +869,7 @@ class ftp
 
 		$this->_debug_print(str_replace("\r\n", "\n", $this->_resp));
 
-		if (!ereg("^[123]", $this->_resp)) {
+		if (!preg_match('~^[123]~D', $this->_resp)) {
 			return FALSE;
 		}
 
@@ -884,7 +884,7 @@ class ftp
 
 	function _open_data_connection($ip_port)
 	{
-		if (!ereg("[0-9]{1,3},[0-9]{1,3},[0-9]{1,3},[0-9]{1,3},[0-9]+,[0-9]+", $ip_port)) {
+		if (!preg_match('~[0-9]{1,3},[0-9]{1,3},[0-9]{1,3},[0-9]{1,3},[0-9]+,[0-9]+~D', $ip_port)) {
 			$this->_debug_print("Error : Illegal ip-port format(".$ip_port.")\n");
 			return FALSE;
 		}
@@ -1157,7 +1157,7 @@ class emftp
 
 			@unlink($tmpfname); // unlink for safety on php4.0.3+
 			$fp = @fopen($tmpfname, 'wb');
-			for ($i=0; $i<count($array_lines); $i++)
+			for ($i=0; $i<count_safe($array_lines); $i++)
 			{
 				@fwrite($fp, $array_lines[$i]);
 			}
@@ -1276,7 +1276,7 @@ class emftp
 
 		// loop through the path structure and create dirs as needed
 		$splitarray = explode('/', $path_to_build) ;
-		for ($idir=0; $idir<count($splitarray)-1; $idir++)
+		for ($idir=0; $idir<count_safe($splitarray)-1; $idir++)
 		{
 			$prev_path = $ftp_path ;
 			$ftp_path = trim($splitarray[$idir]) ;
@@ -1364,7 +1364,7 @@ class emftp
 
 		// loop through the path structure and create dirs as needed
 		$splitarray = explode('/', $path_to_build) ;
-		for ($idir=0; $idir<count($splitarray)-1; $idir++)
+		for ($idir=0; $idir<count_safe($splitarray)-1; $idir++)
 		{
 			$prev_path = $ftp_path ;
 			$ftp_path = trim($splitarray[$idir]) ;

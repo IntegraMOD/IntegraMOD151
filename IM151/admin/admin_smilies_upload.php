@@ -172,7 +172,7 @@ while ( false !== ($smilies = readdir($smilies_dir)) )
 		$smilies_files[] = $smilies;
 	}
 }
-$smilies_count = count($smilies_files);
+$smilies_count = count_safe($smilies_files);
 if( $smilies_count )
 {
 	sort($smilies_files);
@@ -348,7 +348,7 @@ function smilies_auto_add($new_filename)
 
 	// First, build the code and emotion for the new smiley
 	$smilies_name = explode('.', $new_filename);
-	$name_count = count($smilies_name);
+	$name_count = count_safe($smilies_name);
 	$code = '';
 	$emotion = '';
 	if( $name_count > 2 )

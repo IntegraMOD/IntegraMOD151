@@ -36,21 +36,47 @@ define('COLOR_TABLE', $table_prefix.'color');
 
 //
 // Default Group Values
+// PHP 8 fatals on undefined constants; always define these, using config IDs
+// when numeric and falling back to groups.group_name lookup.
 //
-if ( !defined('GROUP_REGISTERED') && !empty($board_config['group_registered']) )
+function agcm_define_group_id($const_name, $config_key, $group_name)
 {
-	define('GROUP_REGISTERED', $board_config['group_registered']);
+	global $db, $board_config;
+
+	if ( defined($const_name) )
+	{
+		return;
+	}
+
+	$group_id = 0;
+	if ( !empty($board_config[$config_key]) && is_numeric($board_config[$config_key]) )
+	{
+		$group_id = intval($board_config[$config_key]);
+	}
+	else if ( isset($db) && is_object($db) && defined('GROUPS_TABLE') )
+	{
+		$sql = "SELECT group_id
+			FROM " . GROUPS_TABLE . "
+			WHERE group_name = '" . str_replace("'", "''", $group_name) . "'
+			LIMIT 1";
+		$result = $db->sql_query($sql);
+		if ( $result )
+		{
+			$row = $db->sql_fetchrow($result);
+			if ( $row )
+			{
+				$group_id = intval($row['group_id']);
+			}
+			$db->sql_freeresult($result);
+		}
+	}
+
+	define($const_name, $group_id);
 }
 
-if ( !defined('GROUP_ANONYMOUS') && !empty($board_config['group_anonymous']) )
-{
-	define('GROUP_ANONYMOUS', $board_config['group_anonymous']);
-}
-
-if ( !empty($board_config['group_session']) )
-{
-	define('GROUP_SESSION', $board_config['group_session']);
-}
+agcm_define_group_id('GROUP_REGISTERED', 'group_registered', 'Group_registered');
+agcm_define_group_id('GROUP_ANONYMOUS', 'group_anonymous', 'Group_anonymous');
+agcm_define_group_id('GROUP_SESSION', 'group_session', 'Group_session');
 
 //
 // AGCM URL Paramerters
@@ -64,7 +90,7 @@ if ( empty($installed_mods) )
 }
 else
 {
-	$count_installed_mods = count($installed_mods);
+	$count_installed_mods = count_safe($installed_mods);
 	$installed_mods[$count_installed_mods] = array('name' => 'advanced_group_color_management', 'installed' => AGCM_CURRENT_VERSION);
 }
 
@@ -346,7 +372,7 @@ $data = %s;
 
 		$group_color_select = '<select name="user_group_id">';
 
-		for ($i = 0; $i < count($user_group_color); $i++)
+		for ($i = 0; $i < count_safe($user_group_color); $i++)
 		{
 			$selected = ( $group_id == $user_group_color[$i]['group_id'] ) ? ' selected="selected"' : '';
 			$group_color_select .= '<option value="' . $user_group_color[$i]['group_id'] . '"' . $selected . '>' . _lang_check($user_group_color[$i]['group_name']) . '</option>';
@@ -362,7 +388,7 @@ $data = %s;
 		global $template, $phpEx, $phpbb_root_path;
 
 		$prefixes = ['disable_viewonline.', '']; // V: our block is nested
-		for ($i = 0; $i < count($this->data); $i++)
+		for ($i = 0; $i < count_safe($this->data); $i++)
 		{
 			foreach ($prefixes as $prefix)
 			{
@@ -391,11 +417,19 @@ class agcm_color
 
 	function set_vars()
 	{
-		$this->group_ids = array(
-			GROUP_REGISTERED => true,
-			GROUP_ANONYMOUS => true,
-			GROUP_SESSION => true,
-		);
+		$this->group_ids = array();
+		if ( defined('GROUP_REGISTERED') )
+		{
+			$this->group_ids[GROUP_REGISTERED] = true;
+		}
+		if ( defined('GROUP_ANONYMOUS') )
+		{
+			$this->group_ids[GROUP_ANONYMOUS] = true;
+		}
+		if ( defined('GROUP_SESSION') )
+		{
+			$this->group_ids[GROUP_SESSION] = true;
+		}
 	}
 
 	function add_group($group_id)
@@ -729,7 +763,7 @@ class agcm_color
 
 		$inactive_select = '<select name="agcm_value">';
 
-		for ($i = 0; $i < count($inactive); $i++)
+		for ($i = 0; $i < count_safe($inactive); $i++)
 		{
 			$selected = ( $board_config['agcm_value'] == $inactive[$i]['value'] ) ? ' selected="selected"' : '';
 			$inactive_select .= '<option value="' . $inactive[$i]['value'] . '"' . $selected . '>' . $inactive[$i]['length'] . '</option>';
@@ -747,7 +781,7 @@ class agcm_color
 		$color_css = "<style type=\"text/css\">\n";
 		$color_css .= "<!--\n";
 
-		for ( $i = 0; $i < count($this->color_data); $i++ )
+		for ( $i = 0; $i < count_safe($this->color_data); $i++ )
 		{
 			$group_id = $this->color_data[$i]['group_id'];
 			$color_code = $this->color_data[$i]['color_code'];

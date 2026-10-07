@@ -134,7 +134,7 @@ $style_default = $board_config['default_style'];
 $num_users = 0;
 $style_ids = array();
 
-for($i=0; $i<count($style_rowset); $i++)
+for($i=0; $i<count_safe($style_rowset); $i++)
 {
 	$id = $style_rowset[$i]['themes_id'];
 	$style_ids[] = $id;
@@ -258,7 +258,7 @@ if(isset($_GET['list']))
 		xs_error('Could not get users list!', __LINE__, __FILE__);
 	}
 	$rowset = $db->sql_fetchrowset($result);
-	for($i=0; $i<count($rowset); $i++)
+	for($i=0; $i<count_safe($rowset); $i++)
 	{
 		$template->assign_block_vars('list_users.user', array(
 			'NUM'		=> $i + 1,

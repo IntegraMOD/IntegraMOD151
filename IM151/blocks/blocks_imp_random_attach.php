@@ -38,7 +38,7 @@ if(!function_exists('imp_random_attach_block_func'))
 			$sqlexcl = "AND p.forum_id not in (".$portal_config['md_ran_att_forums_excl'].")";
 		}
 		$flist = '';
-		for ($i=0; $i < count($tree['keys']); $i++)
+		for ($i=0; $i < count_safe($tree['keys']); $i++)
 		{
 			if ( ($tree['type'][$i] == POST_FORUM_URL) && $tree['auth'][POST_FORUM_URL.$tree['id'][$i]]['auth_download'] )
 			{

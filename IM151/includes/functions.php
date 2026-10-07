@@ -23,6 +23,26 @@
 
 // Security update 02 September 2006 starts // 
 if (!defined('IN_PHPBB'))	die("Hack Attemp# 25");
+
+if (!function_exists('each'))
+{
+	function each(&$arr)
+	{
+		if (!is_array($arr))
+		{
+			return false;
+		}
+		$key = key($arr);
+		if ($key === null)
+		{
+			return false;
+		}
+		$val = current($arr);
+		next($arr);
+		return array(1 => $val, 'value' => $val, 0 => $key, 'key' => $key);
+	}
+}
+
 // Assume IN_PHPBB is set before calling any function in functions.php (include...) //
 // then the next line is all that is needed to stop hacks //
 /*
@@ -53,10 +73,18 @@ include_once( $phpbb_root_path . './includes/functions_categories_hierarchy.' . 
 /**
  * A count function that's null-safe.
  * Added for migration of Integramod to PHP7.
+ * Non-arrays return 0 so PHP 7.2+ warnings and PHP 8 TypeErrors are avoided.
  */
-function count_safe($o)
+if (!function_exists('count_safe'))
 {
-  return $o ? count($o) : 0;
+    function count_safe($value, $mode = 0)
+    {
+        if (is_array($value) || (is_object($value) && ($value instanceof Countable)))
+        {
+            return count($value, $mode);
+        }
+        return 0;
+    }
 }
 
 //-- mod : post icon -------------------------------------------------------------------------------
@@ -88,7 +116,7 @@ function get_icon_title($icon, $empty=0, $topic_type=-1, $admin=false)
 	// find the icon
 	$found = false;
 	$icon_map = -1;
-	for ($i=0; ($i < count($icones)) && !$found; $i++)
+	for ($i=0; ($i < count_safe($icones)) && !$found; $i++)
 	{
 		if ($icones[$i]['ind'] == $icon)
 		{
@@ -138,7 +166,7 @@ function get_icon_title($icon, $empty=0, $topic_type=-1, $admin=false)
 			// find the icon
 			$found = false;
 			$icon_map = -1;
-			for ($i=0; ($i < count($icones)) && !$found; $i++)
+			for ($i=0; ($i < count_safe($icones)) && !$found; $i++)
 			{
 				if ($icones[$i]['ind'] == $icon)
 				{
@@ -249,8 +277,8 @@ function read_cookies($userdata)
 		{
 			// we don't use serialized data to gain some digits
 			$w_unreads = empty($userdata['user_unread_topics']) ? array() : explode(';', $userdata['user_unread_topics']);
-			$tracking_floor = count($w_unreads) > 0 ? intval($w_unreads[0]) : 0;
-			for ( $i = 1; $i < count($w_unreads); $i++ )
+			$tracking_floor = count_safe($w_unreads) > 0 ? intval($w_unreads[0]) : 0;
+			for ( $i = 1; $i < count_safe($w_unreads); $i++ )
 			{
 				$topic_data = explode(':', $w_unreads[$i]);
 				$board_config['tracking_unreads'][ intval($topic_data[0]) ] = intval($topic_data[1]) + $tracking_floor;
@@ -299,10 +327,10 @@ function write_cookies($userdata)
 	$base_name = $board_config['cookie_name'] . '_' . $user_id;
 
 	// check cookie sizes
-	if ( count($board_config['tracking_topics']) > MAX_COOKIE_ITEM )
+	if ( count_safe($board_config['tracking_topics']) > MAX_COOKIE_ITEM )
 	{
 		asort($board_config['tracking_topics']);
-		$nb = count($board_config['tracking_topics']) - MAX_COOKIE_ITEM;
+		$nb = count_safe($board_config['tracking_topics']) - MAX_COOKIE_ITEM;
     if ($nb > 0)
     {
       foreach ($board_config['tracking_topics'] as $id => $time)
@@ -318,9 +346,9 @@ function write_cookies($userdata)
 		{
 			asort($board_config['tracking_unreads']);
 		}
-		if ( count($board_config['tracking_unreads']) > MAX_COOKIE_ITEM )
+		if ( count_safe($board_config['tracking_unreads']) > MAX_COOKIE_ITEM )
 		{
-			$nb = count($board_config['tracking_unreads']) - MAX_COOKIE_ITEM;
+			$nb = count_safe($board_config['tracking_unreads']) - MAX_COOKIE_ITEM;
       if ($nb > 0)
       {
         foreach ($board_config['tracking_unreads'] as $id => $time)
@@ -600,7 +628,7 @@ function make_jumpbox($action, $match_forum_id = 0)
 		$category_rows[] = $row;
 	}
 
-	if ( $total_categories = count($category_rows) )
+	if ( $total_categories = count_safe($category_rows) )
 	{
 		$sql = "SELECT *
 			FROM " . FORUMS_TABLE . "
@@ -618,7 +646,7 @@ function make_jumpbox($action, $match_forum_id = 0)
 			$forum_rows[] = $row;
 		}
 
-		if ( $total_forums = count($forum_rows) )
+		if ( $total_forums = count_safe($forum_rows) )
 		{
 			for($i = 0; $i < $total_categories; $i++)
 			{
@@ -1002,7 +1030,7 @@ function init_userprefs($userdata)
 			}
 			$db->sql_freeresult($result);
 
-			if ( $total_posts = count($post_rows) )
+			if ( $total_posts = count_safe($post_rows) )
 			{
 				//
 				// Define censored word matches
@@ -1013,7 +1041,7 @@ function init_userprefs($userdata)
 
 				for($i = 0; $i < min($total_posts, $board_config['max_link_bookmarks']); $i++)
 				{
-					$topic_title = ( count($orig_word) ) ? preg_replace($orig_word, $replacement_word, $post_rows[$i]['topic_title']) : $post_rows[$i]['topic_title'];
+					$topic_title = ( count_safe($orig_word) ) ? preg_replace($orig_word, $replacement_word, $post_rows[$i]['topic_title']) : $post_rows[$i]['topic_title'];
 					//
 					// Add an array to $nav_links for the Mozilla navigation bar.
 					// 'bookmarks' can create multiple items, therefore we are using a nested array.
@@ -1713,7 +1741,7 @@ function message_die($msg_code, $msg_text = '', $msg_title = '', $err_line = '',
 			$custom_error_message = sprintf($custom_error_message, '', '');
 		}
 		echo "<html>\n<body>\n<b>Critical Error!</b><br />\nmessage_die() was called multiple times.<br />&nbsp;<hr />";
-		for( $i = 0; $i < count($msg_history); $i++ )
+		for( $i = 0; $i < count_safe($msg_history); $i++ )
 		{
 			echo '<b>Error #' . ($i+1) . "</b>\n<br />\n";
 			if( !empty($msg_history[$i]['msg_title']) )
@@ -2229,14 +2257,14 @@ function lw_check_membership(&$userinfo)
 			while( $group_info = $db->sql_fetchrow($result) );
 		}
 		$groupwhere = '';
-		for($i = 0; $i < count($group_infos); $i++)
+		for($i = 0; $i < count_safe($group_infos); $i++)
 		{
 			if($i == 0)
 			{
 				$groupwhere .= "(";
 			}
 			$groupwhere .= "group_id = " . $group_infos[$i]['group_id'];
-			if($i < (count($group_infos) - 1))
+			if($i < (count_safe($group_infos) - 1))
 			{
 				$groupwhere .= " OR ";
 			}
@@ -2491,7 +2519,7 @@ function SelectQueries()
 		$row 	= $db -> sql_fetchrow($r);		
 		$top_1 	= $row['total'];
 		$top_d 	= $row['day'];
-		$set	= strftime("%b. %d, %Y @ %H:%M:%S", $top_d);
+		$set	= date("M. d, Y @ H:i:s", $top_d);
 		$top_q 	= number_format($top_1); 				
 						
 		$show_in_footer_today 	= "Todays DB Queries: $otq";
@@ -2692,13 +2720,13 @@ function bbcode_box()
  */
 function get_key_all_same($xs, $key, $default = '', $ignore_empty = false)
 {
-	if (count($xs) === 0)
+	if (count_safe($xs) === 0)
 	{
 		return $default;
 	}
 
 	$start = $xs[0][$key];
-	if (count($xs) === 1)
+	if (count_safe($xs) === 1)
 	{
 		return $start;
 	}
@@ -2812,7 +2840,7 @@ function pm_track_all_history($id_for_pm_track, $pm_pass_id = 0, $pass = 0)
 			init_display_template('pm_tracker', '{ATTACHMENTS}');
 		}
 
-		$counter_list_row = count($list_row);
+		$counter_list_row = count_safe($list_row);
 
 		if ( ( $counter_list_row > $pass ) && ( $pm_track_id != 0 ) )
 		{
@@ -2846,7 +2874,7 @@ function pm_track_all_history($id_for_pm_track, $pm_pass_id = 0, $pass = 0)
 				$replacement_word = array();
 				obtain_word_list($orig_word, $replacement_word);
 
-				if ( count($orig_word) )
+				if ( count_safe($orig_word) )
 				{
 					$reply_subject = preg_replace($orig_word, $replacement_word, $reply_subject);
 					$reply_message = preg_replace($orig_word, $replacement_word, $reply_message);

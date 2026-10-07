@@ -74,12 +74,12 @@ function include_update_txt($filename, $dir = false)
 {
 	$update = array();
 	$list = @file($filename);
-	for($i=0; $i<count($list); $i++)
+	for($i=0; $i<count_safe($list); $i++)
 	{
 		if(substr($list[$i], 0, 10) === 'xs_update_')
 		{
 			$list2 = explode(' = ', trim(substr($list[$i], 10)), 2);
-			if(count($list2) === 2)
+			if(count_safe($list2) === 2)
 			{
 				$update[$list2[0]] = $list2[1];
 			}
@@ -172,7 +172,7 @@ if(($dir = @opendir('.')) !== false)
 
 
 // nothing to update
-if(!count($updates))
+if(!count_safe($updates))
 {
 	xs_error($lang['xs_update_nothing']);
 }
@@ -183,7 +183,7 @@ if(!isset($_GET['doupdate']))
 	$template->set_filenames(array('body' => XS_TPL_PATH . 'update.tpl'));
 	$template->assign_vars(array(
 		'UPDATE_URL'			=> append_sid('xs_update.'.$phpEx.'?doupdate=1'),
-		'L_XS_UPDATE_TOTAL1'	=> str_replace('{NUM}', count($updates), $lang['xs_update_total1']),
+		'L_XS_UPDATE_TOTAL1'	=> str_replace('{NUM}', count_safe($updates), $lang['xs_update_total1']),
 		)
 	);
 	$counter = 0;
@@ -235,7 +235,7 @@ foreach($updates as $var1 => $item)
 			$items[] = $var1;
 			$found = false;
 			$url = $updates[$item]['update_url'];
-			for($j=0; $j<count($urls) && !$found; $j++)
+			for($j=0; $j<count_safe($urls) && !$found; $j++)
 			{
 				if($urls[$j] === $url)
 				{
@@ -255,7 +255,7 @@ foreach($updates as $var1 => $item)
 }
 
 // showing error message if there is nothing to update
-if(!count($urls))
+if(!count_safe($urls))
 {
 	xs_error($lang['xs_update_nothing']);
 }
@@ -263,14 +263,14 @@ if(!count($urls))
 @set_time_limit(intval($_POST['timeout']));
 
 // getting data
-for($i=0; $i<count($urls); $i++)
+for($i=0; $i<count_safe($urls); $i++)
 {
 	$arr = @file($urls[$i]);
 	if(empty($arr))
 	{
 		// cannot connect. show it as error message
 		@reset($items);
-		for($j=0; $j<count($items); $j++)
+		for($j=0; $j<count_safe($items); $j++)
 		{
 			$item = $updates[$items[$j]];
 			if($item['update_url'] === $urls[$i])
@@ -281,12 +281,12 @@ for($i=0; $i<count($urls); $i++)
 	}
 	else
 	{
-		for($j=0; $j<count($arr); $j++)
+		for($j=0; $j<count_safe($arr); $j++)
 		{	// trim all lines and replace tab with space
 			$arr[$j] = trim(str_replace("\t", ' ', $arr[$j]));
 		}
 		// checking all items to see which ones are for this url
-		for($j=0; $j<count($items); $j++)
+		for($j=0; $j<count_safe($items); $j++)
 		{
 			$item = $updates[$items[$j]];
 			if($item['update_url'] === $urls[$i])
@@ -297,12 +297,12 @@ for($i=0; $i<count($urls); $i++)
 				$begin_pos = -1;
 				$end_pos = -1;
 				// getting begin and end tags for it
-				for($k=0; ($k<count($arr)-1) && ($begin_pos < 0); $k++)
+				for($k=0; ($k<count_safe($arr)-1) && ($begin_pos < 0); $k++)
 				{
 					if($arr[$k] === $begin_text)
 					{
 						$begin_pos = $k;
-						for(; ($k<count($arr)) && ($end_pos < 0); $k++)
+						for(; ($k<count_safe($arr)) && ($end_pos < 0); $k++)
 						{
 							if($arr[$k] === $end_text)
 							{
@@ -311,7 +311,7 @@ for($i=0; $i<count($urls); $i++)
 						}
 						if($end_pos < 0)
 						{
-							$end_pos = count($arr);
+							$end_pos = count_safe($arr);
 						}
 					}
 				}
@@ -323,7 +323,7 @@ for($i=0; $i<count($urls); $i++)
 					for($k=$begin_pos+1; $k<$end_pos; $k++)
 					{
 						$arr2 = explode(' ', $arr[$k], 2);
-						if(count($arr2) == 2)
+						if(count_safe($arr2) == 2)
 						{
 							$data[trim($arr2[0])] = trim($arr2[1]);
 						}

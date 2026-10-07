@@ -317,7 +317,7 @@ if ($filter_to != '')
 	$filter_to_text = (!empty($filter_to_user)) ? "AND pm.privmsgs_to_userid = $filter_to_user" : '';
 }
 
-if (count($_POST))
+if (count_safe($_POST))
 {
 	foreach($_POST as $key => $val)
 	{

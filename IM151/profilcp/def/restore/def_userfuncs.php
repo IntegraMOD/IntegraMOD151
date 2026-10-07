@@ -44,9 +44,9 @@ function pcp_parse_def($sql_def, $view_userdata, &$tables_used)
 	// change the [view.field_name] by its value $view_userdata[$field_name]
 	$sql_ids = array();
 	preg_match_all("|\[view.([^\]].*)\]|U", $sql_def, $sql_ids );
-	if (count($sql_ids) > 0)
+	if (count_safe($sql_ids) > 0)
 	{
-		for ($i = 0; $i < count($sql_ids[1]); $i++)
+		for ($i = 0; $i < count_safe($sql_ids[1]); $i++)
 		{
 			$sql_def = str_replace( '[view.' . $sql_ids[1][$i] . ']', $view_userdata[ $sql_ids[1][$i] ], $sql_def );
 		}
@@ -55,9 +55,9 @@ function pcp_parse_def($sql_def, $view_userdata, &$tables_used)
 	// change the [user.field_name] by its value $userdata[$field_name]
 	$sql_ids = array();
 	preg_match_all("|\[user.([^\]].*)\]|U", $sql_def, $sql_ids );
-	if (count($sql_ids) > 0)
+	if (count_safe($sql_ids) > 0)
 	{
-		for ($i = 0; $i < count($sql_ids[1]); $i++)
+		for ($i = 0; $i < count_safe($sql_ids[1]); $i++)
 		{
 			$sql_def = str_replace( '[user.' . $sql_ids[1][$i] . ']', $userdata[ $sql_ids[1][$i] ], $sql_def );
 		}
@@ -66,9 +66,9 @@ function pcp_parse_def($sql_def, $view_userdata, &$tables_used)
 	// change the [cst.constant] by its value constant(constant)
 	$sql_ids = array();
 	preg_match_all("|\[cst.([^\]].*)\]|U", $sql_def, $sql_ids );
-	if (count($sql_ids) > 0)
+	if (count_safe($sql_ids) > 0)
 	{
-		for ($i = 0; $i < count($sql_ids[1]); $i++)
+		for ($i = 0; $i < count_safe($sql_ids[1]); $i++)
 		{
 			$sql_def = str_replace( '[cst.' . $sql_ids[1][$i] . ']', constant($sql_ids[1][$i]), $sql_def );
 		}
@@ -77,9 +77,9 @@ function pcp_parse_def($sql_def, $view_userdata, &$tables_used)
 	// change [board.$config_name] by its value $board_config[$config_name]
 	$sql_ids = array();
 	preg_match_all("|\[board.([^\]].*)\]|U", $sql_def, $sql_ids );
-	if (count($sql_ids) > 0)
+	if (count_safe($sql_ids) > 0)
 	{
-		for ($i = 0; $i < count($sql_ids[1]); $i++)
+		for ($i = 0; $i < count_safe($sql_ids[1]); $i++)
 		{
 			$sql_def = str_replace( '[board.' . $sql_ids[1][$i] . ']', $board_config[ $sql_ids[1][$i] ], $sql_def );
 		}
@@ -98,9 +98,9 @@ function pcp_parse_def($sql_def, $view_userdata, &$tables_used)
 	// parse the table identifiers
 	$sql_ids = array();
 	preg_match_all("|\[([^\]].*)\]|U", $sql_def, $sql_ids );
-	if (count($sql_ids) > 0)
+	if (count_safe($sql_ids) > 0)
 	{
-		for ($i = 0; $i < count($sql_ids[1]); $i++)
+		for ($i = 0; $i < count_safe($sql_ids[1]); $i++)
 		{
 			$sql_def = str_replace( '[' . $sql_ids[1][$i] . ']', $tables_linked[ $sql_ids[1][$i] ]['sql_id'], $sql_def );
 

@@ -75,7 +75,7 @@ if ($process == 'pre')
 		if ( isset($_POST['select_unwatch']) )
 		{
 			$w_unwatched = $_POST['select_unwatch'];
-			for ($i=0; $i < count($w_unwatched); $i++)
+			for ($i=0; $i < count_safe($w_unwatched); $i++)
 			{
 				$type = substr($w_unwatched[$i], 0, 1);
 				$id = intval(substr($w_unwatched[$i], 1));
@@ -93,7 +93,7 @@ if ($process == 'pre')
 		if ( $submit_unwatched && !empty($select_unwatched) )
 		{
 			$s_topic_ids = '';
-			for ($i=0; $i < count($select_unwatched); $i++)
+			for ($i=0; $i < count_safe($select_unwatched); $i++)
 			{
 				$s_topic_ids .= ( empty($s_topic_ids) ? '' : ', ' ) . intval(substr($select_unwatched[$i], 1));
 			}
@@ -200,7 +200,7 @@ if ( ($process == 'post') && ($topics_watched_page_size > 0) )
 
 	// Build select box
 	$select_msg_days = '';
-	for($i = 0; $i < count($previous_days); $i++)
+	for($i = 0; $i < count_safe($previous_days); $i++)
 	{
 		$selected = ( $msg_days == $i ) ? ' selected="selected"' : '';
 		$select_msg_days .= '<option value="' . $i . '"' . $selected . '>' . $previous_days_text[$i] . '</option>';

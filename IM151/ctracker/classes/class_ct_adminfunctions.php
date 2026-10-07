@@ -207,7 +207,7 @@ class ct_adminfunctions
 				// Fill it in our File Array if the found file is matching the extension
 				if( preg_match("/^.*?\." . $extension . "$/", $temp_path) && !preg_match('/cache\\//m', $temp_path) )
 				{
-					$filehash = @filesize($temp_path) . '-' . count(@file($temp_path));
+					$filehash = @filesize($temp_path) . '-' . count_safe(@file($temp_path));
 					$filehash = md5($filehash);
 
 		            $sql = 'INSERT INTO ' . CTRACKER_FILECHK . " (`filepath`, `hash`) VALUES ('$temp_path', '$filehash')";
@@ -278,7 +278,7 @@ class ct_adminfunctions
 			$filename        = file($row['filepath']);
 			$file_db_id      = intval($row['id']);
 
-			for ($i = 0; $i <= count($filename)-1; $i++)
+			for ($i = 0; $i <= count_safe($filename)-1; $i++)
 	    	{
 				$scanline = $filename[$i];
 				$scanline = strtolower($scanline);

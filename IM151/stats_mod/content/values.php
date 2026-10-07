@@ -98,9 +98,9 @@ class Content_values
 	{
 		$data_return = array();
 		
-		for ($i = 0; $i < count($data); $i++)
+		for ($i = 0; $i < count_safe($data); $i++)
 		{
-			for ($j = 0; $j < count($data[$i]); $j++)
+			for ($j = 0; $j < count_safe($data[$i]); $j++)
 			{
 				$data_return[$j][$i] = $data[$i][$j];
 			}
@@ -114,16 +114,16 @@ class Content_values
 		global $core, $stats_template, $phpbb_root_path, $phpEx, $stat_functions, $lang;
 
 		// make global...
-		if (count($core->global_array) > 0)
+		if (count_safe($core->global_array) > 0)
 		{
 			eval('global ' . implode(', ', $core->global_array) . ';');
 		}
 
 		if ($this->value_order == 'up_down')
 		{
-			$one_block = count($core->calculation_data) / $this->num_blocks;
+			$one_block = count_safe($core->calculation_data) / $this->num_blocks;
 			$one_block = intval($one_block);
-			$one_block += count($core->calculation_data) % $this->num_blocks;
+			$one_block += count_safe($core->calculation_data) % $this->num_blocks;
 		}
 		else if ($this->value_order == 'left_right')
 		{
@@ -132,7 +132,7 @@ class Content_values
 
 		$iteration = 0;
 
-		for ($i = 0; $i < count($core->calculation_data); $i = $i + $this->num_blocks)
+		for ($i = 0; $i < count_safe($core->calculation_data); $i = $i + $this->num_blocks)
 		{
 			$w_iteration = 0;
 			

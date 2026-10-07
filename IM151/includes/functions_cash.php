@@ -50,7 +50,7 @@ function preversion($ver)
 {
 	$version = explode('.',phpversion());
 	$ver = explode('.',$ver);
-	for($i = 0; $i < count($ver); $i++ )
+	for($i = 0; $i < count_safe($ver); $i++ )
 	{
 		if ( intval($version[$i]) < intval($ver[$i]) )
 		{
@@ -97,7 +97,7 @@ function quoteslash($text,$quotes)
 { 
 	if ( is_array($quotes) )
 	{
-		for ($i = 0; $i < count($quotes); $i++ )
+		for ($i = 0; $i < count_safe($quotes); $i++ )
 		{
 			if ( $quotes[$i] == '\'' )
 			{
@@ -180,7 +180,7 @@ function cash_event_unpack($string)
 	if ( strlen($string) )
 	{
 		$cash_entries = explode(CASH_EVENT_DELIM1,$string);
-		for ( $i = 0; $i < count($cash_entries); $i++ )
+		for ( $i = 0; $i < count_safe($cash_entries); $i++ )
 		{
 			if ( strlen($cash_entries[$i]) )
 			{
@@ -220,14 +220,14 @@ function cash_quotematch(&$message,$bbcode_uid)
 		$current_position = strpos($message,$endtag,$locater);
 	}
 	$endarray[] = $length + 10;
-	if ( count($startarray) > 1 )
+	if ( count_safe($startarray) > 1 )
 	{
 		$start = 0;
 		$end = 0;
 		$stack = 0;
 		$startpos = 0;
 		$endpos = 0;
-		for ( $i = 0; $i < (count($startarray) + count($endarray) - 2); $i++ )
+		for ( $i = 0; $i < (count_safe($startarray) + count_safe($endarray) - 2); $i++ )
 		{
 			if ( $stack == 0 )
 			{
@@ -447,7 +447,7 @@ class cash_menucat
 	}
 	function num()
 	{
-		return count($this->items);
+		return count_safe($this->items);
 	}
 }
 
@@ -561,7 +561,7 @@ class cash_table
 		global $db;
 		$bad_ordering = false;
 		$sql = array();
-		for ( $i = 0; !empty($this->ordered_list) && $i < count($this->ordered_list); $i++ )
+		for ( $i = 0; !empty($this->ordered_list) && $i < count_safe($this->ordered_list); $i++ )
 		{
 			if ( $this->currencies[$this->ordered_list[$i]]->data('cash_order') != ($i + 1) )
 			{
@@ -571,7 +571,7 @@ class cash_table
 		}
 		if ( $bad_ordering )
 		{
-			for ( $i = 0; $i < count($sql); $i++ )
+			for ( $i = 0; $i < count_safe($sql); $i++ )
 			{
 				if ( !$db->sql_query($sql[$i]) )
 				{
@@ -595,7 +595,7 @@ class cash_table
 		{
 			$iterater = 0;
 		}
-		if ( empty($this->ordered_list) || $iterater >= count($this->ordered_list))
+		if ( empty($this->ordered_list) || $iterater >= count_safe($this->ordered_list))
 		{
 			$iterater = 0;
 			return null;
@@ -611,7 +611,7 @@ class cash_table
 		while ( !$this->currencies[$cash_id]->mask($mask,$forum_id) )
 		{
 			$iterater++;
-			if ( !($iterater < count($this->ordered_list)) )
+			if ( !($iterater < count_safe($this->ordered_list)) )
 			{
 				$iterater = 0;
 				return false;
@@ -664,7 +664,7 @@ class cash_currency
 			if ( strlen($data['cash_forumlist']) )
 			{
 				$templist = explode(',',$data['cash_forumlist']);
-				for ( $i = 0; $i < count($templist); $i++ )
+				for ( $i = 0; $i < count_safe($templist); $i++ )
 				{
 					$this->forumlist[$templist[$i]] = 1;
 				}
@@ -818,7 +818,7 @@ class cash_groups
 				$currencies_array[] = $c_cur->id();
 			}
 		}
-		if ( count($currencies_array) || $all_entries )
+		if ( count_safe($currencies_array) || $all_entries )
 		{
 			if ( !$all_entries )
 			{
@@ -865,26 +865,26 @@ class cash_groups
 	{
 		if ( isset($this->groups[CASH_GROUPS_LEVEL][$level]) )
 		{
-			for ( $j = 0; $j < count($this->groups[CASH_GROUPS_LEVEL][$level]); $j++ )
+			for ( $j = 0; $j < count_safe($this->groups[CASH_GROUPS_LEVEL][$level]); $j++ )
 			{
 				$returnarray[$this->groups[CASH_GROUPS_LEVEL][$level][$j]->id()][] = &$this->groups[CASH_GROUPS_LEVEL][$level][$j];
 			}
 		}
-		for ( $i = 0; $i < count($this->ranks); $i++ )
+		for ( $i = 0; $i < count_safe($this->ranks); $i++ )
 		{
 			if ( isset($this->groups[CASH_GROUPS_RANK][$this->ranks[$i]['rank_id']]) && ($this->ranks[$i]['rank_min'] <= $postcount ) )
 			{
-				for ( $j = 0; $j < count($this->groups[CASH_GROUPS_RANK][$this->ranks[$i]['rank_id']]); $j++ )
+				for ( $j = 0; $j < count_safe($this->groups[CASH_GROUPS_RANK][$this->ranks[$i]['rank_id']]); $j++ )
 				{
 					$returnarray[$this->groups[CASH_GROUPS_RANK][$this->ranks[$i]['rank_id']][$j]->id()][] = &$this->groups[CASH_GROUPS_RANK][$this->ranks[$i]['rank_id']][$j];
 				}
 			}
 		}
-		for ( $i = 0; $i < count($usergroups); $i++ )
+		for ( $i = 0; $i < count_safe($usergroups); $i++ )
 		{
 			if ( isset($this->groups[CASH_GROUPS_USERGROUP][$usergroups[$i]]) )
 			{
-				for ( $j = 0; $j < count($this->groups[CASH_GROUPS_USERGROUP][$usergroups[$i]]); $j++ )
+				for ( $j = 0; $j < count_safe($this->groups[CASH_GROUPS_USERGROUP][$usergroups[$i]]); $j++ )
 				{
 					$returnarray[$this->groups[CASH_GROUPS_USERGROUP][$usergroups[$i]][$j]->id()][] = &$this->groups[CASH_GROUPS_USERGROUP][$usergroups[$i]][$j];
 				}
@@ -895,7 +895,7 @@ class cash_groups
 	{
 		if ( isset($this->groups[$type]) && is_array($this->groups[$type]) && isset($this->groups[$type][$id]) && is_array($this->groups[$type][$id]) )
 		{
-			for ( $i = 0; $i < count($this->groups[$type][$id]); $i++ )
+			for ( $i = 0; $i < count_safe($this->groups[$type][$id]); $i++ )
 			{
 				$returnarray[$this->groups[$type][$id][$i]->id()] = &$this->groups[$type][$id][$i];
 				$this->groups[$type][$id][$i]->load();
@@ -907,15 +907,15 @@ class cash_groups
 		global $db;
 		$clause_1 = array();
 		$types = array(CASH_GROUPS_LEVEL,CASH_GROUPS_RANK,CASH_GROUPS_USERGROUP);
-		for ( $pre_i = 0; $pre_i < count($types); $pre_i++ )
+		for ( $pre_i = 0; $pre_i < count_safe($types); $pre_i++ )
 		{
 			$clause_2 = array();
 			$i = $types[$pre_i];
-			for ( $pre_j = 0; $pre_j < count($this->groups_ordered_list[$i]); $pre_j++ )
+			for ( $pre_j = 0; $pre_j < count_safe($this->groups_ordered_list[$i]); $pre_j++ )
 			{
 				$clause_3 = array();
 				$j = $this->groups_ordered_list[$i][$pre_j];
-				for ( $pre_k = 0; $pre_k < count($this->groups[$i][$j]); $pre_k++ )
+				for ( $pre_k = 0; $pre_k < count_safe($this->groups[$i][$j]); $pre_k++ )
 				{
 					if( !$this->groups[$i][$j][$pre_k]->is_loaded() )
 					{
@@ -923,13 +923,13 @@ class cash_groups
 						$clause_3[] = 'cash_id = ' . $k;
 					}
 				}
-				if ( count($clause_3) )
+				if ( count_safe($clause_3) )
 				{
-					if ( count($clause_3) == count($this->groups[$i][$j]) )
+					if ( count_safe($clause_3) == count_safe($this->groups[$i][$j]) )
 					{
 						$clause_2[] = 'group_id = ' . $j;
 					}
-					else if ( count($clause_3) == 1 )
+					else if ( count_safe($clause_3) == 1 )
 					{
 						$clause_2[] = 'group_id = ' . $j . ' AND ' . $clause_3[0];
 					}
@@ -939,9 +939,9 @@ class cash_groups
 					}
 				}
 			}
-			if ( count($clause_2) )
+			if ( count_safe($clause_2) )
 			{
-				if ( count($clause_2) == 1 )
+				if ( count_safe($clause_2) == 1 )
 				{
 					$clause_1[] = 'group_type = ' . $i . ' AND ' . $clause_2[0];
 				}
@@ -951,10 +951,10 @@ class cash_groups
 				}
 			}
 		}
-		if ( count($clause_1) )
+		if ( count_safe($clause_1) )
 		{
 			$whereclause = '';
-			if ( count($clause_1) == 1 )
+			if ( count_safe($clause_1) == 1 )
 			{
 				$whereclause = $clause_1[0];
 			}
@@ -994,7 +994,7 @@ class cash_forumgroup
 	}
 	function has_entries()
 	{
-		return (count($this->currency_settings) > 0 );
+		return (count_safe($this->currency_settings) > 0 );
 	}
 }
 
@@ -1111,7 +1111,7 @@ class cash_user
 		}
 		$this->get_cashgroups();
 		$sum = 0;
-		for ( $i = 0; $i < count($this->cashgroups[$cash_id]); $i++ )
+		for ( $i = 0; $i < count_safe($this->cashgroups[$cash_id]); $i++ )
 		{
 			$sum += intval($this->cashgroups[$cash_id][$i]->data($attribute));
 		}
@@ -1136,7 +1136,7 @@ class cash_user
 				$this->userdata[$c_cur->db()] += $sum;
 			}
 		}
-		if ( count($clause) )
+		if ( count_safe($clause) )
 		{
 			$sql = "UPDATE " . USERS_TABLE . "
 					SET " . implode(',',$clause) . "
@@ -1165,7 +1165,7 @@ class cash_user
 				$this->userdata[$c_cur->db()] += $sum;
 			}
 		}
-		if ( count($clause) )
+		if ( count_safe($clause) )
 		{
 			$sql = "UPDATE " . USERS_TABLE . "
 					SET " . implode(',',$clause) . "
@@ -1207,7 +1207,7 @@ class cash_user
 				}
 			}
 		}
-		if ( count($sql_update) )
+		if ( count_safe($sql_update) )
 		{
 			$sql = "UPDATE " . USERS_TABLE . "
 					SET " . implode(', ',$sql_update) . "
@@ -1237,7 +1237,7 @@ class cash_user
 				}
 			}
 		}
-		if ( count($sql_update) )
+		if ( count_safe($sql_update) )
 		{
 			$sql = "UPDATE " . USERS_TABLE . "
 					SET " . implode(', ',$sql_update) . "
@@ -1267,7 +1267,7 @@ class cash_user
 				}
 			}
 		}
-		if ( count($sql_update) )
+		if ( count_safe($sql_update) )
 		{
 			$sql = "UPDATE " . USERS_TABLE . "
 					SET " . implode(', ',$sql_update) . "

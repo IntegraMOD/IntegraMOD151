@@ -133,7 +133,7 @@ function parse_hl_file($file_data)
 {
 	$data_array = array();
 	//Remove commented lines (##) from data
-	for ($i=0; $i < count($file_data); $i++)
+	for ($i=0; $i < count_safe($file_data); $i++)
 	{
 		if(substr(trim($file_data[$i]), 0, 2) == '##')
 		{
@@ -164,7 +164,7 @@ function parse_hl_file($file_data)
 		$found = false;
 		$continue = true;
 		$i = 0;
-		while ($i < count($file_data) && !$found)
+		while ($i < count_safe($file_data) && !$found)
 		{
 			//Our preg_xxxx pattern
 			$pattern = '/'.$search_item.'?[ ]=?[ ]/';

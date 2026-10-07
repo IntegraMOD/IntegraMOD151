@@ -86,7 +86,7 @@ function display_comments(&$file_data)
 
 		$comments_text = make_clickable($comments_text);
 
-	   	if ( count($orig_word) )
+	   	if ( count_safe($orig_word) )
 		{
 			if ( $comments_text != '' )
 			{
@@ -137,7 +137,7 @@ function display_comments(&$file_data)
 		}
 		else if ( $comments_row['user_rank'] )
 		{
-			for($j = 0; $j < count($ranksrow); $j++)
+			for($j = 0; $j < count_safe($ranksrow); $j++)
 			{
 				if ( $comments_row['user_rank'] == $ranksrow[$j]['rank_id'] && $ranksrow[$j]['rank_special'] )
 				{
@@ -148,7 +148,7 @@ function display_comments(&$file_data)
 		}
 		else
 		{
-			for($j = 0; $j < count($ranksrow); $j++)
+			for($j = 0; $j < count_safe($ranksrow); $j++)
 			{
 				if ( $comments_row['user_posts'] >= $ranksrow[$j]['rank_min'] && !$ranksrow[$j]['rank_special'] )
 				{

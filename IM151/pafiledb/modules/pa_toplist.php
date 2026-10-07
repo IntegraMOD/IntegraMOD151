@@ -95,7 +95,7 @@ class pafiledb_toplist extends pafiledb_public
 				//get number of files in the last week
 				$file_num_week = 0;
 				$day_time = (time()-(86400 * 7));
-				for($i = 0; $i < (isset($rowset) ? count($rowset) : 0); $i++)
+				for($i = 0; $i < (isset($rowset) ? count_safe($rowset) : 0); $i++)
 				{
 					if( ($rowset[$i]['file_time']) >= $day_time )
 					{
@@ -107,7 +107,7 @@ class pafiledb_toplist extends pafiledb_public
 				$file_num_month = 0;
 
 				$day_time = (time()-(86400 * 30));
-				for($i = 0; $i < (isset($rowset) ? count($rowset) : 0); $i++)
+				for($i = 0; $i < (isset($rowset) ? count_safe($rowset) : 0); $i++)
 				{
 					if( ($rowset[$i]['file_time']) >= $day_time )
 					{
@@ -143,7 +143,7 @@ class pafiledb_toplist extends pafiledb_public
 						$day_time = (time()-(86400 * $j));
 						$day_date = Date('Y-m-d', $day_time);
 						$file_num = 0;
-						for($i = 0; $i < (isset($rowset) ? count($rowset) : 0); $i++)
+						for($i = 0; $i < (isset($rowset) ? count_safe($rowset) : 0); $i++)
 						{
 							$file_date = Date('Y-m-d', $rowset[$i]['file_time']);
 							if( $file_date == $day_date )
@@ -175,7 +175,7 @@ class pafiledb_toplist extends pafiledb_public
 					);
 					
 					$file_ids = array();
-					for($i = 0; $i < count($rowset); $i++)
+					for($i = 0; $i < count_safe($rowset); $i++)
 					{
 						$formated_date = Date('Y-m-d', $selected_date);
 						$file_date = Date('Y-m-d', $rowset[$i]['file_time']); 
@@ -235,7 +235,7 @@ class pafiledb_toplist extends pafiledb_public
 
 					
 
-					for ($i = 0; $i < count($file_rowset); $i++) 
+					for ($i = 0; $i < count_safe($file_rowset); $i++) 
 					{
 
 						$cat_url = append_sid('dload.'.$phpEx.'?action=category&cat_id=' . $file_rowset[$i]['file_catid']);
@@ -425,7 +425,7 @@ class pafiledb_toplist extends pafiledb_public
 					$searchset[] = $row;
 				}
 				
-				for($i = 0; $i < count($searchset); $i++)
+				for($i = 0; $i < count_safe($searchset); $i++)
 				{
 					if($mode == 'rating')
 					{

@@ -158,7 +158,7 @@ if( ($group_info = $db->sql_fetchrow($result)) )
 	}
 	while( $group_info = $db->sql_fetchrow($result) );
 }
-if($group_id <= 0 && count($user_group_id) > 0)
+if($group_id <= 0 && count_safe($user_group_id) > 0)
 {
 	$group_id = $user_group_id[0];	
 }
@@ -182,7 +182,7 @@ $group_second_trial_period_basis = '';
 $optiongroups = "";
 $optiongroups .= "<form name=\"SelectGroup\" method=\"post\" action=\"lwtopup.$phpEx\"><input type=\"HIDDEN\" name=\"UpdateGroupBtn\" value=\"true\"><label for=\"group_id\" ><select onChange=\"document.SelectGroup.submit();\" id=\"group_id\" name=\"group_id\" class=\"droplist\" size=\"1\">";
 $optiongroups .= "<option value=\"-1\">" . $lang['LW_SELECT_A_GROUP'] . "</option>";
-for($i = 0; $i < count($group_infos); $i++)
+for($i = 0; $i < count_safe($group_infos); $i++)
 {
 	//get group subscription period + basis, convert from M to Month(s), D to Day(s) and etc
 	$grp_period_basis = lw_convert_period_basis($group_infos[$i]['group_period_basis']);
@@ -285,7 +285,7 @@ $lw_submit = '';
 $lw_submit_hidden_fields = '';
 
 $user_in_grp_flag = 0;
-for($j = 0; $j < count($user_group_id); $j++)
+for($j = 0; $j < count_safe($user_group_id); $j++)
 {
 if($user_group_id[$j] == $group_id) //if already subscribed to a group
 {

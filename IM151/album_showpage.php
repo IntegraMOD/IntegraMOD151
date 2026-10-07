@@ -639,7 +639,7 @@ if( !isset($_POST['comment']) && !isset($_POST['rating']) )
 			}
 
 
-			for ($i = 0; $i < count($commentrow); $i++)
+			for ($i = 0; $i < count_safe($commentrow); $i++)
 			{
 				if( ($commentrow[$i]['user_id'] == ALBUM_GUEST) || ($commentrow[$i]['username'] == '') )
 				{

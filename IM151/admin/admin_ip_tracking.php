@@ -119,7 +119,12 @@ require('pagestart.' . $phpEx);
 	$q1 = "SELECT *
 		   FROM ". $table_prefix ."ip_tracking
 		   WHERE $search_query";
-	$r1			= $db -> sql_query($q1) or die("q1: Error Retrieving Search Data.".mysql_error());
+	$r1			= $db -> sql_query($q1);
+	if (!$r1)
+	{
+		$sql_error = $db -> sql_error();
+		die("q1: Error Retrieving Search Data." . $sql_error['message']);
+	}
 	while($row1	= $db -> sql_fetchrow($r1))
 		{
 	$view_ip			= $row1['ip'];
@@ -415,7 +420,12 @@ require('pagestart.' . $phpEx);
 		   FROM ". $table_prefix ."ip_tracking
 		   WHERE username = '". $who ."'
 		   ORDER BY time DESC";
-	$r1	= $db -> sql_query($q1) or die("q1: Error Retrieving Ip Data.".mysql_error());
+	$r1	= $db -> sql_query($q1);
+	if (!$r1)
+	{
+		$sql_error = $db -> sql_error();
+		die("q1: Error Retrieving Ip Data." . $sql_error['message']);
+	}
 	while($row1	= $db -> sql_fetchrow($r1))
 		{
 	$view_ip			= $row1['ip'];

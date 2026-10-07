@@ -135,7 +135,7 @@ if (($mode == 'import_new_lang') && ($submit))
 			}
 		}
 
-		if (count($inst_langs) == 0)
+		if (count_safe($inst_langs) == 0)
 		{
 			message_die(GENERAL_ERROR, 'All Languages enclosed within this Language Pack are already installed.');
 		}
@@ -221,7 +221,7 @@ if (($mode == 'import_new_lang') && ($submit))
 		}
 	}
 
-	if (count($inst_langs) == 0)
+	if (count_safe($inst_langs) == 0)
 	{
 		message_die(GENERAL_ERROR, 'All Languages enclosed within this Language Pack are already installed.');
 	}
@@ -282,7 +282,7 @@ if (($mode == 'import_new_lang') && (!$submit))
 		{
 			if( !@is_dir($phpbb_root_path . 'modules/pakfiles' . '/' . $file) )
 			{
-				if ( eregi('.pak$', $file) )
+				if ( preg_match('~.pak$~iD', $file) )
 				{
 					$lang_paks[] = $file;
 				}
@@ -291,13 +291,13 @@ if (($mode == 'import_new_lang') && (!$submit))
 
 		@closedir($dir);
 
-		if (count($lang_paks) > 0)
+		if (count_safe($lang_paks) > 0)
 		{
 			$template->assign_block_vars('switch_select_lang', array());
 
 			$module_select_field = '<select name="selected_pak_file">';
 
-			for ($i = 0; $i < count($module_paks); $i++)
+			for ($i = 0; $i < count_safe($module_paks); $i++)
 			{
 				$selected = ($i == 0) ? ' selected="selected"' : '';
 

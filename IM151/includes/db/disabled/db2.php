@@ -102,9 +102,9 @@ class sql_db
 		{
 			$this->num_queries++;
 
-			if(!eregi("^INSERT ",$query))
+			if(!preg_match('~^INSERT ~iD',$query))
 			{
-				if(eregi("LIMIT", $query))
+				if(preg_match('~LIMIT~iD', $query))
 				{
 					preg_match("/^(.*)LIMIT ([0-9]+)[, ]*([0-9]+)*/s", $query, $limits);
 
@@ -136,7 +136,7 @@ class sql_db
 				}
 
 				$result_id = $this->query_result;
-				if($this->query_result && eregi("^SELECT", $query))
+				if($this->query_result && preg_match('~^SELECT~iD', $query))
 				{
 
 					for($i = 1; $i < odbc_num_fields($result_id)+1; $i++)
@@ -149,7 +149,7 @@ class sql_db
 					while(odbc_fetch_row($result_id, $i) && $k < $this->result_numrows[$result_id])
 					{
 
-						for($j = 1; $j < count($this->result_field_names[$result_id])+1; $j++)
+						for($j = 1; $j < count_safe($this->result_field_names[$result_id])+1; $j++)
 						{
 							$this->result_rowset[$result_id][$k][$this->result_field_names[$result_id][$j-1]] = odbc_result($result_id, $j);
 						}
@@ -168,7 +168,7 @@ class sql_db
 			}
 			else
 			{
-				if(eregi("^(INSERT|UPDATE) ", $query))
+				if(preg_match('~^(INSERT|UPDATE) ~iD', $query))
 				{
 					$query = preg_replace("/\\\'/s", "''", $query);
 				}
@@ -245,7 +245,7 @@ class sql_db
 		}
 		if($query_id)
 		{
-			$result = count($this->result_field_names[$query_id]);
+			$result = count_safe($this->result_field_names[$query_id]);
 			return $result;
 		}
 		else

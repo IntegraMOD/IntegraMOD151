@@ -25,7 +25,7 @@ if ( !defined('IN_PHPBB') || !defined('CTRACKER_ACP') )
 if( isset($_POST['submit']) )
 {
 	// Update new config
-	for($i = 0; $i < count($ctracker_config->fieldnames_set); $i++)
+	for($i = 0; $i < count_safe($ctracker_config->fieldnames_set); $i++)
 	{
 		isset($_POST[$ctracker_config->fieldnames_set[$i]])? $ctracker_config->change_configuration($ctracker_config->fieldnames_set[$i], str_replace("'", "\'", $_POST[$ctracker_config->fieldnames_set[$i]])) : null;	
 		isset($_POST[$ctracker_config->fieldnames_set[$i]])? $ctracker_config->settings[$ctracker_config->fieldnames_set[$i]] = str_replace("'", "\'", $_POST[$ctracker_config->fieldnames_set[$i]]) : null;

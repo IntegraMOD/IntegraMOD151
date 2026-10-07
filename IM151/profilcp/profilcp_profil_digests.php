@@ -210,7 +210,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
 	}
 	$db->sql_freeresult($result);
 
-	if ( !($total_forums = count($forum_data)) ){
+	if ( !($total_forums = count_safe($forum_data)) ){
 		$error = true;
 		$error_msg .= ( ( !empty($error_msg) ) ? '<br />' : '' ) . $lang['No_forums'];
 	}

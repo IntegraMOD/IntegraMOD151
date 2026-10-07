@@ -183,7 +183,7 @@ function topic_list($box, $tpl='', $topic_rowset=[], $list_title='', $split_type
 	{
 		// get all the topic ids to display
 		$topic_ids = array();
-		for ($i = 0; $i < count($topic_rowset); $i++)
+		for ($i = 0; $i < count_safe($topic_rowset); $i++)
 		{
 			$topic_item_type	= substr($topic_rowset[$i]['topic_id'], 0, 1);
 			$topic_id			= intval(substr($topic_rowset[$i]['topic_id'], 1));
@@ -220,7 +220,7 @@ function topic_list($box, $tpl='', $topic_rowset=[], $list_title='', $split_type
 
 	// spanning of the first column (list name)
 	$span_left = 1;
-	if ( count($topic_rowset) > 0 )
+	if ( count_safe($topic_rowset) > 0 )
 	{
 		// add folder image
 		$span_left++;
@@ -237,7 +237,7 @@ function topic_list($box, $tpl='', $topic_rowset=[], $list_title='', $split_type
 	}
 	// spanning of the whole line (bottom row and/or empty list)
 	$span_all = $span_left + 4;
-	if ( $select_multi && (count($topic_rowset) >0) )
+	if ( $select_multi && (count_safe($topic_rowset) >0) )
 	{
 		$span_all++;
 	}
@@ -247,11 +247,11 @@ function topic_list($box, $tpl='', $topic_rowset=[], $list_title='', $split_type
 	$prec_topic_type = '';
 	$header_sent = false;
 	if (!isset($box_id)) $box_id = -1;
-	for ($i=0; $i < count($topic_rowset); $i++)
+	for ($i=0; $i < count_safe($topic_rowset); $i++)
 	{
 		$topic_item_type	= substr($topic_rowset[$i]['topic_id'], 0, 1);
 		$topic_id			= intval(substr($topic_rowset[$i]['topic_id'], 1));
-		$topic_title		= ( count($orig_word) ) ? preg_replace($orig_word, $replacement_word, $topic_rowset[$i]['topic_title']) : $topic_rowset[$i]['topic_title'];
+		$topic_title		= ( count_safe($orig_word) ) ? preg_replace($orig_word, $replacement_word, $topic_rowset[$i]['topic_title']) : $topic_rowset[$i]['topic_title'];
 		//Parse smilies to show the title
 		//This is where you would put the code to disable certain smilies
 		$topic_title = smilies_pass($topic_title);
@@ -836,7 +836,7 @@ $approve_mod['moderators'] = explode('|', get_moderators_user_id_of_forum($forum
 		// send topic to template
 		$selected = (!empty($select_values) && in_array($topic_rowset[$i]['topic_id'], $select_values));
 		$color = !$color;
-		$topic_rating = ( (isset($topic_rank_set) ? count($topic_rank_set) : 0) > 0 && $topic_rowset[$i]['rating_rank_id'] > 0 ) ?  $topic_rank_set[$topic_rowset[$i]['rating_rank_id']] : '';
+		$topic_rating = ( (isset($topic_rank_set) ? count_safe($topic_rank_set) : 0) > 0 && $topic_rowset[$i]['rating_rank_id'] > 0 ) ?  $topic_rank_set[$topic_rowset[$i]['rating_rank_id']] : '';
 //		$topic_rating = ( count($topic_rank_set) > 0 && $topic_rowset[$i]['rating_rank_id'] > 0 ) ?  $topic_rank_set[$topic_rowset[$i]['rating_rank_id']] : '';
 		$template->assign_block_vars( $tpl . '.row', array(
 			'RATING'				=> $topic_rating,
@@ -929,7 +929,7 @@ $approve_mod['moderators'] = explode('|', get_moderators_user_id_of_forum($forum
 	}
 
 	// no data
-	if (count($topic_rowset) == 0)
+	if (count_safe($topic_rowset) == 0)
 	{
 		// send no topics notice
 		$template->assign_block_vars( $tpl . '.row', array(

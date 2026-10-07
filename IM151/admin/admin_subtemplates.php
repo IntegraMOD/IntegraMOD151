@@ -72,7 +72,7 @@ function board_front_end( &$board, $main='Root', $level=0, $cur_stpl='c0' )
 	$board[] = $row;
 
 	// get sub-levels
-	for ($i=0; $i < count($tree['data']); $i++)
+	for ($i=0; $i < count_safe($tree['data']); $i++)
 	{
 		if ( $tree['main'][$i] == $main )
 		{
@@ -163,7 +163,7 @@ if ( in_array( $mode, array('stpl', 'edit', 'delete') ) )
 
 		// search if already present
 		$found = false;
-		for ($i=0; ( ($i < count($subtpls)) && !$found ); $i++)
+		for ($i=0; ( ($i < count_safe($subtpls)) && !$found ); $i++)
 		{
 			$found = ( 
 						($row['name'] == $subtpls[$i]['name']) && 
@@ -175,7 +175,7 @@ if ( in_array( $mode, array('stpl', 'edit', 'delete') ) )
 		}
 		if (!$found)
 		{
-			$i = count($subtpls);
+			$i = count_safe($subtpls);
 			$subtpls[$i] = $row;
 
 			// prepare the sort
@@ -186,12 +186,12 @@ if ( in_array( $mode, array('stpl', 'edit', 'delete') ) )
 		}
 
 		// search the key
-		$found = ( (count($subtpls[$i]['keys']) > 0) && in_array($key, $subtpls[$i]['keys']) );
+		$found = ( (count_safe($subtpls[$i]['keys']) > 0) && in_array($key, $subtpls[$i]['keys']) );
 		if ( !$found ) $subtpls[$i]['keys'][] = $key;
 	}
 	array_multisort( $name, $dir, $head_stylesheet, $imagefile, $subtpls );
 
-	if ($subtpl_id >= count($subtpls)) $subtpl_id = -1;
+	if ($subtpl_id >= count_safe($subtpls)) $subtpl_id = -1;
 
 	// get data
 	if (!$cat_hierarchy)
@@ -205,7 +205,7 @@ if ( in_array( $mode, array('stpl', 'edit', 'delete') ) )
 		{
 			if ( !isset($row['cat_main']) ) $row['cat_main'] = 0;
 			if ( $row['cat_main'] == $row['cat_id'] ) $row['cat_main'] = 0;
-			$tree['keys'][ POST_CAT_URL . $row['cat_id'] ] = count($tree['data']);
+			$tree['keys'][ POST_CAT_URL . $row['cat_id'] ] = count_safe($tree['data']);
 			$tree['type'][] = POST_CAT_URL;
 			$tree['id'][]	= $row['cat_id'];
 			$tree['data'][] = $row;
@@ -217,7 +217,7 @@ if ( in_array( $mode, array('stpl', 'edit', 'delete') ) )
 		if (!$result = $db->sql_query($sql)) message_die(GENERAL_ERROR, "Could not get forums informations !", "", __LINE__, __FILE__, $sql);
 		while ($row = $db->sql_fetchrow($result)) 
 		{
-			$tree['keys'][ POST_FORUM_URL . $row['forum_id'] ] = count($tree['data']);
+			$tree['keys'][ POST_FORUM_URL . $row['forum_id'] ] = count_safe($tree['data']);
 			$tree['type'][] = POST_FORUM_URL;
 			$tree['id'][]	= $row['forum_id'];
 			$tree['data'][] = $row;
@@ -231,7 +231,7 @@ if ( in_array( $mode, array('stpl', 'edit', 'delete') ) )
 
 	// get the number of inc
 	$max_inc = 0;
-	for ($i=0; $i < count($board); $i++) if ($board[$i]['level'] > $max_inc) $max_inc = $board[$i]['level'];
+	for ($i=0; $i < count_safe($board); $i++) if ($board[$i]['level'] > $max_inc) $max_inc = $board[$i]['level'];
 }
 
 // edit/create sub-template
@@ -257,21 +257,21 @@ if ($mode == 'edit')
 			// control
 			if ($name == '') message_die(GENERAL_ERROR, $lang['subtpl_error_name_missing'] );
 			if ($dir == '') message_die(GENERAL_ERROR, $lang['subtpl_error_dir_missing'] );
-			if (count($board_ids) == 0) message_die(GENERAL_ERROR, $lang['subtpl_error_no_selection'] );
+			if (count_safe($board_ids) == 0) message_die(GENERAL_ERROR, $lang['subtpl_error_no_selection'] );
 
 			// update the array
-			if ($subtpl_id == -1) $subtpl_id = count($subtpls);
+			if ($subtpl_id == -1) $subtpl_id = count_safe($subtpls);
 			$subtpls[$subtpl_id]['name']				= $name;
 			$subtpls[$subtpl_id]['dir']					= $dir;
 			$subtpls[$subtpl_id]['head_stylesheet']		= $head_stylesheet;
 			$subtpls[$subtpl_id]['imagefile']			= $imagefile;
 			$subtpls[$subtpl_id]['keys']				= array();
-			for ($i=0; $i < count($board_ids); $i++ ) $subtpls[$subtpl_id]['keys'][] = $board[$board_ids[$i]]['type'] . $board[$board_ids[$i]]['id'];
+			for ($i=0; $i < count_safe($board_ids); $i++ ) $subtpls[$subtpl_id]['keys'][] = $board[$board_ids[$i]]['type'] . $board[$board_ids[$i]]['id'];
 		}
 
 		// build an array per nature and id and add to subtpls the main template if missing
 		$sub_templates = array();
-		for ($i=0; $i < count($subtpls); $i++ )
+		for ($i=0; $i < count_safe($subtpls); $i++ )
 		{
 			if (!$delete || ($i != $subtpl_id) )
 			{
@@ -279,7 +279,7 @@ if ($mode == 'edit')
 				$row['dir']					= $subtpls[$i]['dir'];
 				$row['head_stylesheet']		= $subtpls[$i]['head_stylesheet'];
 				$row['imagefile']			= $subtpls[$i]['imagefile'];
-				for ($j=0; $j < count($subtpls[$i]['keys']); $j++)
+				for ($j=0; $j < count_safe($subtpls[$i]['keys']); $j++)
 				{
 					$sub_templates[$subtpls[$i]['keys'][$j]]['name']			= $subtpls[$i]['name'];
 					$sub_templates[$subtpls[$i]['keys'][$j]]['dir']				= $subtpls[$i]['dir'];
@@ -313,7 +313,7 @@ if ($mode == 'edit')
 			$id		= intval( substr( $key, 1) );
 			$name	= '';
 			$found	= false;
-			for ($i=0; ( ($i < count($board)) && !$found); $i++)
+			for ($i=0; ( ($i < count_safe($board)) && !$found); $i++)
 			{
 				$found = ( ($board[$i]['type'] == $nat) && ($board[$i]['id'] == $id) );
 				if ($found) $name = $board[$i]['name'];
@@ -392,7 +392,7 @@ if ($mode == 'edit')
 		// build the list
 		$select = ( $subtpl_id == -1 ) ? ' selected="selected"' : '';
 		$s_dir = '<select name="dir"><option value=""' . $select . '>' . $lang['Select_dir'] . '</option>';
-		for ($i=0; $i < count($dirs); $i++) 
+		for ($i=0; $i < count_safe($dirs); $i++) 
 		{
 			$select = ( $subtpl_id != -1 && $subtpls[$subtpl_id]['dir'] == $dirs[$i] ) ? ' selected="selected"' : '';
 			$s_dir .= '<option value="' . $dirs[$i] . '"' . $select . '>' . $dirs[$i] . '</option>';
@@ -409,7 +409,7 @@ if ($mode == 'edit')
 		);
 
 		// display
-		for ($i=0; $i < count($board); $i++)
+		for ($i=0; $i < count_safe($board); $i++)
 		{
 			$checked = '';
 			if ( $subtpl_id != -1 && @in_array($board[$i]['type'] . $board[$i]['id'], $subtpls[$subtpl_id]['keys']) ) $checked = ' checked="checked"';
@@ -471,7 +471,7 @@ if ($mode == 'stpl')
 	);
 
 	// sub-templates
-	for ($i=0; $i < count( $subtpls ); $i++)
+	for ($i=0; $i < count_safe( $subtpls ); $i++)
 	{
 		$row_class = ( !($i % 2) ) ? 'row1' : 'row2';
 		$template->assign_block_vars('subtpl', array(
@@ -489,7 +489,7 @@ if ($mode == 'stpl')
 	// usage report
 
 	// display
-	for ($i=0; $i < count($board); $i++)
+	for ($i=0; $i < count_safe($board); $i++)
 	{
 		$template->assign_block_vars('boardrow', array(
 			'ROW_CLASS'		=> ( $board[$i]['type'] == POST_CAT_URL ) ? 'cat' : 'row1',
@@ -519,7 +519,7 @@ if ($mode == 'stpl')
 				)
 			);
 		}
-		for ($j=0; $j < count($subtpls); $j++ )
+		for ($j=0; $j < count_safe($subtpls); $j++ )
 		{
 			$template->assign_block_vars('boardrow.tpl', array(
 				'SUBTEMPLATE' => (in_array($board[$i]['stpl'], $subtpls[$j]['keys'])) ? $subtemplate : '',
@@ -527,7 +527,7 @@ if ($mode == 'stpl')
 			);
 		}
 	}
-	$span = count($subtpls);
+	$span = count_safe($subtpls);
 	if (!isset($sub_templates['c0']))
 	{
 		$span++;
@@ -537,7 +537,7 @@ if ($mode == 'stpl')
 		'L_FORUM'			=> $lang['Forum'],
 		'L_TEMPLATE'		=> ( isset($lang['Style']) ? $lang['Style'] : 'Style' ),
 		'MAX_SPAN'			=> $max_inc+1,
-		'MAX_SPAN_FULL'		=> $max_inc+1+count($subtpls)+1,
+		'MAX_SPAN_FULL'		=> $max_inc+1+count_safe($subtpls)+1,
 		'TPL_SPAN'			=> $span,
 		'S_CONFIG_ACTION'	=> append_sid("admin_subtemplates.$phpEx"),
 		)

@@ -128,7 +128,7 @@ if ( MXBB_MODULE )
 {
 	// Newssuite operation mode?
 	//-------------------------------------------------------------------------
-	$total_blockk = count( $_SESSION['mx_pages']['page_' . $page_id]['blocks'] );
+	$total_blockk = count_safe( $_SESSION['mx_pages']['page_' . $page_id]['blocks'] );
 	
 	$kb_config['news_operate_mode'] = '';
 	for( $blockk = 0; $blockk < $total_blockk; $blockk++ )

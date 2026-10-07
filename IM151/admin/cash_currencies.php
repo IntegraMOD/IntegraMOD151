@@ -125,7 +125,7 @@ if ( isset($_POST['set']) )
 				$sql[] = "UPDATE " . CASH_TABLE . "
 						SET cash_name = '" . str_replace("\'", "''", $newname) . "', cash_default = '" . $newdefault . "', cash_decimals = '" . $newdecimal . "'
 						WHERE cash_id = " . $c_cur->id();
-				for( $i = 0; $i < count($sql); $i++ )
+				for( $i = 0; $i < count_safe($sql); $i++ )
 				{
 					if ( !($db->sql_query($sql[$i])) )
 					{
@@ -198,7 +198,7 @@ if ( isset($_POST['set']) )
 							$sql[] = "ALTER TABLE " . USERS_TABLE . " DROP " . $c_cur->db();
 							break;
 					}
-					for ($i = 0; $i < count($sql); $i++ )
+					for ($i = 0; $i < count_safe($sql); $i++ )
 					{
 						if ( !$db->sql_query($sql[$i]) )
 						{

@@ -221,7 +221,7 @@ if ($total_pics > 0)
 		$DLpics[] = $row;
 	}
 
-	for ($num = 0; $num < count($DLpics); $num++)
+	for ($num = 0; $num < count_safe($DLpics); $num++)
 	{
 		$archive->add_files(ALBUM_UPLOAD_PATH . $DLpics[$num]['pic_filename']);
 	}

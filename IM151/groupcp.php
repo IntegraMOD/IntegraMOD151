@@ -459,14 +459,14 @@ else if ( $group_id )
 			if ( isset($_POST['grant_ungrant']) )
 			{
 				$members = $_POST['members'];
-				if (count($members) > 0)
+				if (count_safe($members) > 0)
 				{
 					$s_members = implode( ', ', $members);
 					$group_owner = $group_info['group_moderator'];
 					$sql = "select * from " . USER_GROUP_TABLE . " where group_id = $group_id and user_id in ($s_members) and user_id <> $group_owner and group_moderator = 1";
 					if ( !($result = $db->sql_query($sql)) ) message_die(GENERAL_ERROR, 'Could not get user/group information', '', __LINE__, __FILE__, $sql);
 					while ( $row = $db->sql_fetchrow($result) ) $moderators[] = $row['user_id'];
-					$s_mod = (count($moderators) > 0) ? implode( ', ', $moderators) : '';
+					$s_mod = (count_safe($moderators) > 0) ? implode( ', ', $moderators) : '';
 					if ($s_mod != '')
 					{
 						$sql = "update " . USER_GROUP_TABLE . " set group_moderator = 0 where group_id = $group_id and user_id <> $group_owner and user_id in ($s_mod)";
@@ -604,7 +604,7 @@ else if ( $group_id )
 					$members = ( isset($_POST['approve']) || isset($_POST['deny']) ) ? $_POST['pending_members'] : $_POST['members'];
 
 					$sql_in = '';
-					for($i = 0; $i < count($members); $i++)
+					for($i = 0; $i < count_safe($members); $i++)
 					{
 						$sql_in .= ( ( $sql_in != '' ) ? ', ' : '' ) . intval($members[$i]);
 					}
@@ -660,7 +660,7 @@ else if ( $group_id )
 
 								foreach ($group_check as $user_id => $group_list)
 								{
-									if ( count($group_list) == 1 )
+									if ( count_safe($group_list) == 1 )
 									{
 										$remove_mod_sql .= ( ( $remove_mod_sql != '' ) ? ', ' : '' ) . $user_id;
 									}
@@ -741,7 +741,7 @@ else if ( $group_id )
 						$emailer->replyto($board_config['board_email']);
                                                 $emailer->extra_headers($email_headers);
 
-						for ($i = 0; $i < count($bcc_list); $i++)
+						for ($i = 0; $i < count_safe($bcc_list); $i++)
 						{
 							$emailer->bcc($bcc_list[$i]);
 						}
@@ -807,7 +807,7 @@ else if ( $group_id )
 						$emailer->from($board_config['board_email']);
 						$emailer->replyto($board_config['board_email']);
 
-						for ($i = 0; $i < count($bcc_list); $i++)
+						for ($i = 0; $i < count_safe($bcc_list); $i++)
 						{
 							$emailer->bcc($bcc_list[$i]);
 						}
@@ -883,7 +883,7 @@ else if ( $group_id )
 	}
 
 	$group_members = $db->sql_fetchrowset($result); 
-	$members_count = count($group_members);
+	$members_count = count_safe($group_members);
 	$db->sql_freeresult($result);
 
 	$sql = "SELECT u.*
@@ -899,7 +899,7 @@ else if ( $group_id )
 	}
 
 	$modgroup_pending_list = $db->sql_fetchrowset($result);
-	$modgroup_pending_count = count($modgroup_pending_list);
+	$modgroup_pending_count = count_safe($modgroup_pending_list);
 	$db->sql_freeresult($result);
 
 	$is_group_member = 0;
@@ -1021,7 +1021,7 @@ if ( $modgroup_pending_count )
 	$user_id = $group_moderator['user_id'];
 	
 	// set the column names and the moderator!
-	$rowcount = count($user_maps['PHPBB.groupcp']['fields'])+1;
+	$rowcount = count_safe($user_maps['PHPBB.groupcp']['fields'])+1;
 	$width = 100/$rowcount;
 	$width .= '%';
 	preProcessUserConfig($group_moderator);
@@ -1315,7 +1315,7 @@ else
 	//
 	// Select all other groups i.e. groups that this user is not a member of
 	//
-	$ignore_group_sql =	( count($in_group) ) ? "AND group_id NOT IN (" . implode(', ', $in_group) . ")" : ''; 
+	$ignore_group_sql =	( count_safe($in_group) ) ? "AND group_id NOT IN (" . implode(', ', $in_group) . ")" : ''; 
 	$sql = "SELECT group_id, group_name, group_type, group_count , group_count_max 
 		FROM " . GROUPS_TABLE . " g 
 		WHERE group_single_user <> " . TRUE . " 

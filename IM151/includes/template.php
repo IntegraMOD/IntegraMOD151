@@ -227,7 +227,7 @@ class Template {
 			}
 		}
 		// checking if there are any outdated variables that should be deleted
-		for($i=0; $i<count($outdated); $i++)
+		for($i=0; $i<count_safe($outdated); $i++)
 		{
 			if(isset($board_config[$outdated[$i]]))
 			{
@@ -257,7 +257,7 @@ class Template {
 			}
 		}
 		// install/upgrade
-		if($edit_db && ((count($add) > 0) || (count($up) > 0) || (count($del) > 0)))
+		if($edit_db && ((count_safe($add) > 0) || (count_safe($up) > 0) || (count_safe($del) > 0)))
 		{
 			$board_config['xs_template_time'] = time();
 			if(!in_array('xs_template_time', $up))
@@ -268,19 +268,19 @@ class Template {
 			if(!empty($db))
 			{
 				// adding new config values
-				for($i=0; $i<count($add); $i++)
+				for($i=0; $i<count_safe($add); $i++)
 				{
 					$sql = "INSERT INTO " . CONFIG_TABLE . " (config_name, config_value) VALUES ('" . $add[$i] . "', '" . str_replace('\\\'', '\'\'', addslashes($board_config[$add[$i]])) . "')";
 					$db->sql_query($sql);
 				}
 				// removing old configuration variables that aren't used
-				for($i=0; $i<count($del); $i++)
+				for($i=0; $i<count_safe($del); $i++)
 				{
 					$sql = "DELETE FROM " . CONFIG_TABLE . " WHERE config_name='" . $del[$i] . "'";
 					$db->sql_query($sql);
 				}
 				// updating variables that should be overwritten
-				for($i=0; $i<count($up); $i++)
+				for($i=0; $i<count_safe($up); $i++)
 				{
 					$sql = "UPDATE " . CONFIG_TABLE . " SET config_value='" . str_replace('\\\'', '\'\'', addslashes($board_config[$up[$i]])) . "' WHERE config_name='" . $up[$i] . "'";
 					$db->sql_query($sql);
@@ -593,7 +593,7 @@ class Template {
 			if (substr($filename, 0, 1) != '/')
 			{
 				$found = false;
-				$num_fids = count($fids);
+				$num_fids = count_safe($fids);
 				for ($i = 0; !$found && ($i < $num_fids); $i++)
 				{
 					$key = $fids[$i];
@@ -622,7 +622,7 @@ class Template {
 
 				// set the css file name
 				$found = false;
-				$num_fids = count($fids);
+				$num_fids = count_safe($fids);
 				for ($i = 0; !$found && ($i < $num_fids); $i++)
 				{
 					$key = $fids[$i];
@@ -649,7 +649,7 @@ class Template {
 
 				// set the img file name
 				$found = false;
-				$num_fids = count($fids);
+				$num_fids = count_safe($fids);
 				for ($i = 0; !$found && ($i < $num_fids); $i++)
 				{
 					$key = $fids[$i];
@@ -1271,7 +1271,7 @@ class Template {
 
 		// Break it up into lines and put " -->" back.
 		$code_lines = explode(' -->', $code);
-		$count = count($code_lines);
+		$count = count_safe($code_lines);
 		for ($i = 0; $i < ($count - 1); $i++)
 		{
 			$code_lines[$i] .= ' -->';
@@ -1285,14 +1285,14 @@ class Template {
 
 		// prepare array for compiled code
 		$compiled = array();
-		$count_bugs = count($this->bugs);
+		$count_bugs = count_safe($this->bugs);
 
 		// array of switches
 		$sw = array();
 
 		// replace all short php tags
 		$new_code = array();
-		$line_count = count($code_lines);
+		$line_count = count_safe($code_lines);
 		for($i=0; $i<$line_count; $i++)
 		{
 			$line = $code_lines[$i];
@@ -1318,7 +1318,7 @@ class Template {
 		$code_lines = $new_code;
 
 		// main loop
-		$line_count = count($code_lines);
+		$line_count = count_safe($code_lines);
 		for($i=0; $i<$line_count; $i++)
 		{
 			$line = $code_lines[$i];
@@ -1410,7 +1410,7 @@ class Template {
 			if($keyword_type == XS_TAG_BEGIN)
 			{
 				$params = explode(' ', $params_str);
-				$num_params = count($params);
+				$num_params = count_safe($params);
 				// get variable name
 				if($num_params == 1)
 				{
@@ -1564,7 +1564,7 @@ class Template {
 			if($keyword_type == XS_TAG_END)
 			{
 				$params = explode(' ', $params_str);
-				$num_params = count($params);
+				$num_params = count_safe($params);
 				if($num_params == 1)
 				{
 					$var = $params[0];
@@ -1633,7 +1633,7 @@ class Template {
 			if($keyword_type == XS_TAG_INCLUDE)
 			{
 				$params = explode(' ', $params_str);
-				$num_params = count($params);
+				$num_params = count_safe($params);
 				if($num_params != 1)
 				{
 					$compiled[] = $keyword_str;
@@ -1757,7 +1757,7 @@ class Template {
 			$search[] = $varrefs[0][$i];
 			$replace[] = $new;
 		}
-		if(count($search) > 0)
+		if(count_safe($search) > 0)
 		{
 			$code = str_replace($search, $replace, $code);
 		}
@@ -1783,7 +1783,7 @@ class Template {
         $tokens = $match[0];
         $is_arg_stack = array();
 
-        for ($i = 0; $i < count($tokens); $i++)
+        for ($i = 0; $i < count_safe($tokens); $i++)
 		{
 			$token = &$tokens[$i];
 
@@ -1870,7 +1870,7 @@ class Template {
 
 					$new_tokens	= $this->_parse_is_expr($is_arg, array_slice($tokens, $i+1));
 
-					array_splice($tokens, $is_arg_start, count($tokens), $new_tokens);
+					array_splice($tokens, $is_arg_start, count_safe($tokens), $new_tokens);
 
 					$i = $is_arg_start;
 
@@ -2076,7 +2076,7 @@ class Template {
 					@chmod($path, 0777);
 				}
 			}
-			$count = count($dirs);
+			$count = count_safe($dirs);
 			if($count > 0)
 			for($i=0; $i<$count-1; $i++)
 			{
@@ -2252,10 +2252,10 @@ class Template {
 		{
 			$style_config = array();
 			include($phpbb_root_path . 'templates/' . $tpl . '/xs_config.cfg');
-			if(count($style_config))
+			if(count_safe($style_config))
 			{
 				global $board_config, $db;
-				for($i=0; $i<count($style_config); $i++)
+				for($i=0; $i<count_safe($style_config); $i++)
 				{
 					$this->style_config[$style_config[$i]['var']] = $style_config[$i]['default'];
 					if($add_vars)
@@ -2299,10 +2299,10 @@ class Template {
 		{
 			$style_config = array();
 			include($phpbb_root_path . 'templates/' . $tpl . '/xs_config.cfg');
-			if(count($style_config))
+			if(count_safe($style_config))
 			{
 				global $board_config, $db;
-				for($i=0; $i<count($style_config); $i++)
+				for($i=0; $i<count_safe($style_config); $i++)
 				{
 					if(!isset($this->style_config[$style_config[$i]['var']]))
 					{
@@ -2417,10 +2417,10 @@ class Template {
 	{
 		$array = array();
 		$list = explode('|', $str);
-		for($i=0; $i<count($list); $i++)
+		for($i=0; $i<count_safe($list); $i++)
 		{
 			$row = explode('=', $list[$i], 2);
-			if(count($row) == 2)
+			if(count_safe($row) == 2)
 			{
 				$array[$row[0]] = $row[1];
 			}
@@ -2432,7 +2432,7 @@ class Template {
 
 function xs_switch($tpl, $name)
 {
-	return (isset($tpl->_tpldata[$name.'.']) && count($tpl->_tpldata[$name.'.']) > 0);
+	return (isset($tpl->_tpldata[$name.'.']) && count_safe($tpl->_tpldata[$name.'.']) > 0);
 }
 
 ?>

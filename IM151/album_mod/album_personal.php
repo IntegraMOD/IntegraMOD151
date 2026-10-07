@@ -85,7 +85,7 @@ if ( !album_check_permission($auth_data, ALBUM_AUTH_VIEW) )
 // ------------------------------------------------------------------------
 // Check personal gallery creation/upload permission
 // ------------------------------------------------------------------------
-if ( !album_check_permission($auth_data, ALBUM_AUTH_UPLOAD) && (count($album_data['data']) <= 1) )
+if ( !album_check_permission($auth_data, ALBUM_AUTH_UPLOAD) && (count_safe($album_data['data']) <= 1) )
 {
 	if ($album_user_id == $userdata['user_id'])
 	{

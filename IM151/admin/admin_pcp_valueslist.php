@@ -154,7 +154,7 @@ if ($mode == 'edit')
 		$w_item_imgs = array();
 		$w_item_chks = array();
 		$offset = -1;
-		for ($i=0; $i < count($item_rows); $i++)
+		for ($i=0; $i < count_safe($item_rows); $i++)
 		{
 			$offset++;
 			$w_item_keys[] = $_POST['item_key_' . $item_rows[$i] ];
@@ -182,7 +182,7 @@ if ($mode == 'edit')
 		$offset = -1;
 		$move_id = -1;
 		$move_dir = 0;
-		for ($i = 0; $i < count($w_item_keys); $i++)
+		for ($i = 0; $i < count_safe($w_item_keys); $i++)
 		{
 			if ( ( !isset($_POST['delete_selection']) || !$w_item_chks[$i] ) && ( ($w_item_keys[$i] != '') || ($w_item_txts[$i] != '') || ($w_item_imgs[$i] != '') ) )
 			{
@@ -200,7 +200,7 @@ if ($mode == 'edit')
 		}
 
 		// move
-		if ( ( ($move_id > 0) && ($move_dir == -1) ) || ( ($move_id < (count($item_keys)-1)) && ($move_dir == +1) ) )
+		if ( ( ($move_id > 0) && ($move_dir == -1) ) || ( ($move_id < (count_safe($item_keys)-1)) && ($move_dir == +1) ) )
 		{
 			if ( $move_dir == -1 )
 			{
@@ -272,14 +272,14 @@ if ($mode == 'edit')
 			$error = true;
 			$error_msg .= ( empty($error_msg) ? '' : '<br /><br />') . $lang['PCP_err_valueslist_already_exists'];
 		}
-		if ( empty($name) || !ereg("^[a-zA-Z0-9_]+", $name) )
+		if ( empty($name) || !preg_match('~^[a-zA-Z0-9_]+~D', $name) )
 		{
 			$error = true;
 			$error_msg .= ( empty($error_msg) ? '' : '<br /><br />') . $lang['PCP_err_valueslist_name_not_valid'];
 		}
 
 		// func
-		if ( !empty($func) && !ereg("^[a-zA-Z0-9_]+", $func) )
+		if ( !empty($func) && !preg_match('~^[a-zA-Z0-9_]+~D', $func) )
 		{
 			$error = true;
 			$error_msg .= ( empty($error_msg) ? '' : '<br /><br />') . $lang['PCP_err_valueslist_func_not_valid'];
@@ -300,7 +300,7 @@ if ($mode == 'edit')
 
 		// update
 		$values = array();
-		for ($i = 0; $i < count($item_keys); $i++)
+		for ($i = 0; $i < count_safe($item_keys); $i++)
 		{
 			$values[ $item_keys[$i] ] = array( 'txt' => $item_txts[$i], 'img' => $item_imgs[$i] );
 		}
@@ -410,7 +410,7 @@ if ($mode == 'edit')
 		else
 		{
 			$color = false;
-			for ($i=0; $i < count($item_keys); $i++)
+			for ($i=0; $i < count_safe($item_keys); $i++)
 			{
 				$color = !$color;
 				$template->assign_block_vars('row', array(

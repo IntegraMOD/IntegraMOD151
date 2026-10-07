@@ -288,7 +288,7 @@ function jr_admin_secure($file)
 		//The user has access for sure by module_id security from GET vars only
 		return true;
 	}
-	elseif (!isset($_GET['module']) && count($_POST))
+	elseif (!isset($_GET['module']) && count_safe($_POST))
 	{
 		//This user likely entered a post form, so let's use some checking logic
 		//to make sure they are doing it from where they should be!
@@ -349,7 +349,7 @@ function jr_admin_make_left_pane()
 		$template->assign_block_vars("catrow", array(
 			//+MOD: DHTML Menu for ACP
 			'MENU_CAT_ID' => $menu_cat_id,
-			'MENU_CAT_ROWS' => count($module_array),
+			'MENU_CAT_ROWS' => count_safe($module_array),
 			//-MOD: DHTML Menu for ACP
 			'ADMIN_CATEGORY' => (isset($lang[$cat])) ? $lang[$cat] : preg_replace("/_/", ' ', $cat)
 		));

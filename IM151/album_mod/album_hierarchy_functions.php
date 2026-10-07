@@ -184,7 +184,7 @@ function album_display_admin_index($cur = ALBUM_ROOT_CATEGORY, $level = 0, $max_
 	} // if we are above the root level
 
 	// display the sub-level
-	for ($i = 0; isset($album_data['sub'][$cur]) && $i < count($album_data['sub'][$cur]); $i++)
+	for ($i = 0; isset($album_data['sub'][$cur]) && $i < count_safe($album_data['sub'][$cur]); $i++)
 	{
 		$column_offset = album_display_admin_index($album_data['sub'][$cur][$i], $level + 1, $max_level, $column_offset);
 	}
@@ -272,7 +272,7 @@ function album_build_index($user_id, &$keys, $cur_cat_id = ALBUM_ROOT_CATEGORY, 
 		album_get_sub_cat_ids($cat_id, $cats, ALBUM_AUTH_VIEW, ALBUM_INCLUDE_PARENT_ID);
 
 		// we got the cat_id, we now need to get the value for the next sub category for this category
-		for ($j = 0; isset($album_data['sub'][$cur_cat_id]) && $j < count($album_data['sub'][$cur_cat_id]); $j++)
+		for ($j = 0; isset($album_data['sub'][$cur_cat_id]) && $j < count_safe($album_data['sub'][$cur_cat_id]); $j++)
 		{
 			$link = '';
 
@@ -303,7 +303,7 @@ function album_build_index($user_id, &$keys, $cur_cat_id = ALBUM_ROOT_CATEGORY, 
 			// get the number of pictures in current sub category and its sub categories
 			$sub_total_pics = album_get_total_pics($sub_cats);
 			$new_images_flag = false;
-			for ($i = 0; $i < count($sub_cats); $i++)
+			for ($i = 0; $i < count_safe($sub_cats); $i++)
 			{
 				$total_new = $total_new + $newestpic[$sub_cats[$i]];
 			}
@@ -330,7 +330,7 @@ function album_build_index($user_id, &$keys, $cur_cat_id = ALBUM_ROOT_CATEGORY, 
 			{
 				$total = 0;
 				// calculate for all the subcats in this branch
-				for ($i = 0; $i < count($sub_cats); $i++)
+				for ($i = 0; $i < count_safe($sub_cats); $i++)
 				{
 					$total = $total + $newestpic[ $sub_cats[$i] ];
 				}
@@ -559,7 +559,7 @@ function album_build_index($user_id, &$keys, $cur_cat_id = ALBUM_ROOT_CATEGORY, 
 	} // if ($level == 0)...
 
 	// display sub-levels
-	for ($i = 0; isset($album_data['sub'][$cur_cat_id]) && $i < count($album_data['sub'][$cur_cat_id]); $i++)
+	for ($i = 0; isset($album_data['sub'][$cur_cat_id]) && $i < count_safe($album_data['sub'][$cur_cat_id]); $i++)
 	{
 		if (!empty($keys['keys'][$album_data['sub'][$cur_cat_id][$i]]))
 		{
@@ -592,7 +592,7 @@ function album_build_tree(&$cats, &$parents, $level = ALBUM_ROOT_CATEGORY, $pare
 	);
 
 	// add the categories of this level
-	for ($i = 0; isset($parents[$parent]) && $i < count($parents[$parent]); $i++)
+	for ($i = 0; isset($parents[$parent]) && $i < count_safe($parents[$parent]); $i++)
 	{
 		$idx = $parents[$parent][$i];
 
@@ -625,9 +625,9 @@ function album_build_tree(&$cats, &$parents, $level = ALBUM_ROOT_CATEGORY, $pare
 	// add the tree_level to the tree
 	$level++;
 	if (empty($album_data['data'])) $album_data['data'] = [];
-	for ($i = 0; $i < count($album_data_level['data']); $i++)
+	for ($i = 0; $i < count_safe($album_data_level['data']); $i++)
 	{
-		$AH_this = count($album_data['data']);
+		$AH_this = count_safe($album_data['data']);
 		$key = $album_data_level['id'][$i];
 		$album_data['sub'][$parent][] = $key;
 		$album_data['keys'][$key]     = $AH_this;
@@ -718,7 +718,7 @@ function album_get_max_depth(&$keys, $cur_cat_id = ALBUM_ROOT_CATEGORY, $auth_ke
 	}
 
 	// loop through the keys to find the maximum level.. aka max level
-	for ($i = 0; $i < count($keys['id']); $i++)
+	for ($i = 0; $i < count_safe($keys['id']); $i++)
 	{
 		if ($keys['level'][$i] > $max_level)
 		{
@@ -745,7 +745,7 @@ function album_get_sub_cat_ids($cur_cat_id = ALBUM_ROOT_CATEGORY, &$cats = [], $
 	}
 
 	// get all the sub category id for current sub category
-	for ($j=0; isset($album_data['sub'][$cur_cat_id]) && $j < count($album_data['sub'][$cur_cat_id]); $j++)
+	for ($j=0; isset($album_data['sub'][$cur_cat_id]) && $j < count_safe($album_data['sub'][$cur_cat_id]); $j++)
 	{
 		$subcur = $album_data['sub'][$cur_cat_id][$j];
 		$subthis = $album_data['keys'][$subcur];
@@ -897,7 +897,7 @@ function album_get_tree_option($selected_cat_id = ALBUM_ROOT_CATEGORY, $auth_key
 	$public_res = '';
 	$personal_res = '';
 
-	for ($i = $offset; $i < count($keys['id']); $i++)
+	for ($i = $offset; $i < count_safe($keys['id']); $i++)
 	{
 		// should we include the 'Root' cat id, or substitude it with a -1 ?
 		if ( ($keys['id'][$i] == ALBUM_ROOT_CATEGORY) && (!$include_root) )
@@ -991,7 +991,7 @@ function album_get_simple_tree_option($selected_cat_id = ALBUM_ROOT_CATEGORY, $a
 	$public_res = '';
 	$personal_res = '';
 
-	for ($i = $offset; $i < count($keys['id']); $i++)
+	for ($i = $offset; $i < count_safe($keys['id']); $i++)
 	{
 		// should we include the 'Root' cat id, or substitude it with a -1 ?
 		if ( ($keys['id'][$i] == ALBUM_ROOT_CATEGORY) && (!$include_root) )
@@ -1080,7 +1080,7 @@ function album_build_jumpbox($cat_id, $user_id = ALBUM_PUBLIC_GALLERY, $auth_key
 {
 	global $phpEx, $lang, $album_data , $userdata;
 
-	if ( count($album_data['data']) == 0 )
+	if ( count_safe($album_data['data']) == 0 )
 	{
 		// if $user_id != 0 then it's a personal gallery
 			album_read_tree($user_id);
@@ -1216,7 +1216,7 @@ function album_display_index($user_id, $cur_cat_id = ALBUM_ROOT_CATEGORY, $show_
 	$keys = album_get_auth_keys($cur_cat_id, ALBUM_AUTH_VIEW);
 	$display = album_build_index($user_id, $keys, $cur_cat_id, ALBUM_ROOT_CATEGORY, ALBUM_ROOT_CATEGORY);
 
-	if ( ($force_display) && (!$is_personal_gallery) && (count($album_data) == 0) )
+	if ( ($force_display) && (!$is_personal_gallery) && (count_safe($album_data) == 0) )
 	{
 		$template->assign_block_vars('catmain', array());
 		$template->assign_block_vars('catmain.catrow', array(

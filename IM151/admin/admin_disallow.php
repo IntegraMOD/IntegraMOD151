@@ -103,14 +103,14 @@ $disallowed = $db->sql_fetchrowset($result);
 //
 $disallow_select = '<select name="disallowed_id">';
 
-if( count($disallowed) == 0 )
+if( count_safe($disallowed) == 0 )
 {
 	$disallow_select .= '<option value=""></option>';
 }
 else 
 {
 	$user = array();
-	for( $i = 0; $i < count($disallowed); $i++ )
+	for( $i = 0; $i < count_safe($disallowed); $i++ )
 	{
 		$disallow_select .= '<option value="' . $disallowed[$i]['disallow_id'] . '">' . $disallowed[$i]['disallow_username'] . '</option>';
 	}

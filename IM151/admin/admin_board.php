@@ -200,7 +200,7 @@ while( $file = @readdir($dir) )
 @closedir($dir);
 // Logo ListBox
 $logo_list = "";
-for( $i = 0; $i < count($logo); $i++ )
+for( $i = 0; $i < count_safe($logo); $i++ )
 {
 	if ($logo[$i] == $new['logo_image'])
 		$logo_list .= '<option value="' . $logo[$i] . '" selected="selected">' . $logo[$i] . '</option>'; 
@@ -365,7 +365,7 @@ $report_forum_rows = $db->sql_fetchrowset($result);
 $db->sql_freeresult($result);
 $report_forum_select_list = '<select name="report_forum">';
 $report_forum_select_list .= '<option value="0">' . $lang['None'] . '</option>';
-for($i = 0; $i < count($report_forum_rows); $i++)
+for($i = 0; $i < count_safe($report_forum_rows); $i++)
 {
 	$report_forum_select_list .= '<option value="' . $report_forum_rows[$i]['forum_id'] . '">' . $report_forum_rows[$i]['forum_name'] . '</option>';
 }

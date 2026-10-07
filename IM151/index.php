@@ -137,7 +137,7 @@ if( $mark_read == 'forums' )
 		$keys = get_auth_keys($viewcatkey);
 
 		// mark each forums
-		for ($i=0; $i < count($keys['id']); $i++)
+		for ($i=0; $i < count_safe($keys['id']); $i++)
 		{
 			if ($tree['type'][ $keys['idx'][$i] ] == POST_FORUM_URL)
 			{

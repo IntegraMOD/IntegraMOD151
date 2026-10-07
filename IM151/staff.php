@@ -52,7 +52,7 @@ $level_cat[] = $lang['Staff_level'][0];
 $level_cat[] = $lang['Staff_level'][2];
 $level_cat[] = $lang['Staff_level'][1];
 $user_id_ary = '\'temp\'';
-for( $i = 0; $i < count($level_cat); $i++ )
+for( $i = 0; $i < count_safe($level_cat); $i++ )
 {
 	$user_level = $level_cat[$i];
 	$template->assign_block_vars('user_level', array(

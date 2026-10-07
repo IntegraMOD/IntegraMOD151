@@ -51,7 +51,7 @@ function xs_empty_name()
 		$data = array();
 	}
 	$data = $db->sql_fetchrow($result);
-	if($data === false || !@count($data))
+	if($data === false || !@count_safe($data))
 	{
 		$data = array(
 			'themes_id'	=> 0,
@@ -285,7 +285,7 @@ if(!empty($_GET['edit']))
 		$item_name = array();
 	}
 	$item_name = $db->sql_fetchrow($result);
-	if($item_name === false || !@count($item_name))
+	if($item_name === false || !@count_safe($item_name))
 	{
 		$item_name = xs_empty_name();
 	}
@@ -374,7 +374,7 @@ if(!$result = $db->sql_query($sql))
 $style_rowset = $db->sql_fetchrowset($result);
 
 $template->set_filenames(array('body' => XS_TPL_PATH . 'edit_data_list.tpl'));
-for($i=0; $i<count($style_rowset); $i++)
+for($i=0; $i<count_safe($style_rowset); $i++)
 {
 	$item = $style_rowset[$i];
 	$row_class = $xs_row_class[$i % 2];

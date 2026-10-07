@@ -329,7 +329,7 @@ function get_table_statistic()
 			$stat['advanced']['records'] += intval($row['Rows']);
 			$stat['advanced']['size'] += intval($row['Data_length']) + intval($row['Index_length']);
 		}
-		for ($i = 0; $i < count($tables); $i++)
+		for ($i = 0; $i < count_safe($tables); $i++)
 		{
 			if ($table_prefix . $tables[$i] == $row['Name'])
 			{
@@ -708,7 +708,7 @@ function language_select($default, $select_name = "language", $file_to_check = "
 	@asort($lg);
 	@reset($lg);
 
-	if ( count($lg) )
+	if ( count_safe($lg) )
 	{
 		$lang_select = '<select name="' . $select_name . '">';
 		while ( list($displayname, $filename) = @each($lg) )

@@ -110,7 +110,7 @@ if(!empty($layout_row['pgroup']))
 {
 	$not_group_allowed = TRUE;
 	$group_content = explode(",",$layout_row['pgroup']);
-	for ($i = 0; $i < count($group_content); $i++)
+	for ($i = 0; $i < count_safe($group_content); $i++)
 	{
 		if(in_array(intval($group_content[$i]), portal_groups($userdata['user_id'])))
 		{

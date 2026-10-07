@@ -256,8 +256,8 @@ function display_debug_html( $variables, $access, $values)
 	$variables['PHP_config'] = htmlspecialchars(em_get_phpinfo_data('configure command'));
 	$variables['PHP_version'] = phpversion();
 	$variables['PHP_register_globals'] = (@ini_get('register_globals') == '1' || strtolower(@ini_get('register_globals')) == 'on' ? $lang['EM_on'] : $lang['EM_off']);
-	$variables['PHP_magic_quotes_gpc'] = (get_magic_quotes_gpc() ? $lang['EM_on'] : $lang['EM_off']);
-	$variables['PHP_magic_quotes_runtime'] = (get_magic_quotes_runtime() ? $lang['EM_on'] : $lang['EM_off']);
+	$variables['PHP_magic_quotes_gpc'] = ((function_exists('get_magic_quotes_gpc') && get_magic_quotes_gpc()) ? $lang['EM_on'] : $lang['EM_off']);
+	$variables['PHP_magic_quotes_runtime'] = ((function_exists('get_magic_quotes_runtime') && get_magic_quotes_runtime()) ? $lang['EM_on'] : $lang['EM_off']);
 	$variables['PHP_allow_url_fopen'] = (@ini_get('allow_url_fopen') == '1' || strtolower(@ini_get('allow_url_fopen')) == 'on' ? $lang['EM_on'] : $lang['EM_off']);
 	$variables['PHP_sockets_support'] = htmlspecialchars(em_get_phpinfo_data('sockets support'));
 
@@ -383,7 +383,7 @@ function handle_error($result, $file_list, $close_files, $error = '', $skip_debu
 		}
 
 		// loop through all files; print errors
-		for ($err=0; $err<count($file_list); $err++)
+		for ($err=0; $err<count_safe($file_list); $err++)
 		{
 			// if there is an error message for this file then print it
 			if ($file_list[$err]->err_msg != '')
@@ -674,7 +674,7 @@ function check_installablity()
 	////
 	//// make sure EM is in the right directory
 	////
-	if (($dirs[count($dirs)-3] != 'admin') || ($dirs[count($dirs)-2] != 'mods') || (strtolower($dirs[count($dirs)-1]) != 'easymod'))
+	if (($dirs[count_safe($dirs)-3] != 'admin') || ($dirs[count_safe($dirs)-2] != 'mods') || (strtolower($dirs[count_safe($dirs)-1]) != 'easymod'))
 	{
 		handle_error( OPEN_FAIL_CRITICAL, $file_list, false, $lang['EM_err_install_dir'] );
 	}

@@ -62,7 +62,7 @@ else
 	$except_forum_id = $CFG['exceptional_forums'];
 }
 
-for ($i = 0; $i < count($forum_data); $i++)
+for ($i = 0; $i < count_safe($forum_data); $i++)
 {
 	if ((!$is_auth_ary[$forum_data[$i]['forum_id']]['auth_read']) or (!$is_auth_ary[$forum_data[$i]['forum_id']]['auth_view']))
 	{

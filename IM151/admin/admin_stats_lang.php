@@ -108,7 +108,7 @@ if (($new_lang_submit) && ($new_language != ''))
 
 	$installed_languages = get_all_installed_languages();
 
-	if (count($installed_languages) > 0)
+	if (count_safe($installed_languages) > 0)
 	{
 		if (in_array($new_language, $installed_languages))
 		{
@@ -142,7 +142,7 @@ if (($new_lang_submit) && ($new_language != ''))
 	$m_mode = 'edit';
 	$_GET['lang'] = $new_language;
 }
-else if (count($delete_complete_lang) > 0)
+else if (count_safe($delete_complete_lang) > 0)
 {
 	@reset($delete_complete_lang);
 	list($language, $value) = each($delete_complete_lang);
@@ -153,7 +153,7 @@ else if (count($delete_complete_lang) > 0)
 	$m_mode = '';
 }
 
-if (count($update_list) > 0)
+if (count_safe($update_list) > 0)
 {
 	@reset($update_list);
 	list($language, $v_array) = each($update_list);
@@ -183,7 +183,7 @@ else if ($update_all_lang)
 		}
 	}
 }
-else if (($add_key != '') && (count($add_new_key) > 0))
+else if (($add_key != '') && (count_safe($add_new_key) > 0))
 {
 	@reset($add_new_key);
 	list($language, $v_array) = each($add_new_key);
@@ -191,7 +191,7 @@ else if (($add_key != '') && (count($add_new_key) > 0))
 	
 	lang_add_new_key($language, $module_id, $add_key, $add_value);
 }
-else if (count($delete_list) > 0)
+else if (count_safe($delete_list) > 0)
 {
 	@reset($delete_list);
 	list($language, $v_array) = each($delete_list);
@@ -241,7 +241,7 @@ if ($mode == 'select')
 
 	$modules = $db->sql_fetchrowset($result);
 
-	for ($i = 0; $i < count($provided_languages); $i++)
+	for ($i = 0; $i < count_safe($provided_languages); $i++)
 	{
 		if ($lang_decollapse == $provided_languages[$i])
 		{
@@ -264,7 +264,7 @@ if ($mode == 'select')
 
 		if ($lang_decollapse == $provided_languages[$i])
 		{
-			for ($j = 0; $j < count($modules); $j++)
+			for ($j = 0; $j < count_safe($modules); $j++)
 			{
 				$informations = ( intval($modules[$j]['active']) == 1) ? 'Active' : 'Not Active';
 
@@ -299,7 +299,7 @@ if ($mode == 'select')
 
 		if ($module_id != -1)
 		{
-			for ($i = 0; $i < count($modules); $i++)
+			for ($i = 0; $i < count_safe($modules); $i++)
 			{
 				if (intval($modules[$i]['module_id']) == $module_id)
 				{
@@ -317,7 +317,7 @@ if ($mode == 'select')
 			'LANGUAGE' => $language)
 		);
 
-		for ($i = 0; $i < count($current_modules); $i++)
+		for ($i = 0; $i < count_safe($current_modules); $i++)
 		{
 			$template->assign_block_vars('modules', array(
 				'MODULE_NAME' => $current_modules[$i]['long_name'],
@@ -326,7 +326,7 @@ if ($mode == 'select')
 
 			$lang_entries = get_lang_entries($current_modules[$i]['short_name'], $language);
 		
-			for ($j = 0; $j < count($lang_entries); $j++)
+			for ($j = 0; $j < count_safe($lang_entries); $j++)
 			{
 				$template->assign_block_vars('modules.language_entries', array(
 					'KEY' => $lang_entries[$j]['key'],

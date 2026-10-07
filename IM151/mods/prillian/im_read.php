@@ -241,7 +241,7 @@ $orig_word = array();
 $replacement_word = array();
 obtain_word_list($orig_word, $replacement_word);
 
-if ( count($orig_word) )
+if ( count_safe($orig_word) )
 {
 	$post_subject = preg_replace($orig_word, $replacement_word, $post_subject);
 	$instant_message = preg_replace($orig_word, $replacement_word, $instant_message);

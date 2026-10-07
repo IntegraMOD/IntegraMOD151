@@ -62,7 +62,7 @@ if ( $group_page == '1' )
 	$group_name = ( isset($gid_auths[0]['group_name']) ? $gid_auths[0]['group_name'] : '' ) ;
 	$group_desc = ( isset($gid_auths[0]['group_description']) ? $gid_auths[0]['group_description'] : '' ) ;
 
-	for ( $l=0 ; $l < count($gid_auths); $l++)
+	for ( $l=0 ; $l < count_safe($gid_auths); $l++)
 	{
 		if ( $gid_auths[$l]['auth_mod']) 
 		{
@@ -116,7 +116,7 @@ else if ( $group_page == '2' )
 	}
 	$auth_user_gid = get_userdata($gid);
 
-	for ( $l=0 ; $l < count($forums); $l++)
+	for ( $l=0 ; $l < count_safe($forums); $l++)
 	{
 		$forum_id = $forums[$l]['forum_id'];
 		$sql = "SELECT * 
@@ -183,7 +183,7 @@ else
 $mode_types_text = array($lang['Group_extend_sort1'], $lang['Group_extend_sort2']);
 $mode_types = array('name', 'id');
 $select_sort_mode = '<select name="mode">';
-for($i = 0; $i < count($mode_types_text); $i++)
+for($i = 0; $i < count_safe($mode_types_text); $i++)
 {
 	$selected = ( $mode == $mode_types[$i] ) ? ' selected="selected"' : '';
 	$select_sort_mode .= '<option value="' . $mode_types[$i] . '"' . $selected . '>' . $mode_types_text[$i] . '</option>';
@@ -202,7 +202,7 @@ $select_sort_order .= '</select>';
 $mode_group_extend_number = array($lang['Group_extend_type1'], $lang['Group_extend_type2']);
 $mode_group_extend_types = array('group_disp1', 'group_disp2');
 $select_group_extend_number = '<select name="mode2">';
-for($i = 0; $i < count($mode_group_extend_number); $i++)
+for($i = 0; $i < count_safe($mode_group_extend_number); $i++)
 {
 	$selected = ( $mode2 == $mode_group_extend_types[$i] ) ? ' selected="selected"' : '';
 	$select_group_extend_number .= '<option value="' . $mode_group_extend_types[$i] . '"' . $selected . '>' . $mode_group_extend_number[$i] . '</option>';
@@ -242,7 +242,7 @@ switch( $mode2 )
 		{
 			$user_groups2[] = $ssrow;
 		}
-		for($m = 0; $m < count($user_groups2);$m++)
+		for($m = 0; $m < count_safe($user_groups2);$m++)
 		{
 
 			$group_iden = $user_groups2[$m]['user_id'];
@@ -267,7 +267,7 @@ switch( $mode2 )
 			$pprow = $db->sql_fetchrowset($ppresult);
 			$gcount2 ='<br />';
 
-				for($y = 0; $y < count($pprow);$y++)
+				for($y = 0; $y < count_safe($pprow);$y++)
 				{
 					$name = $pprow[$y]['group_name'];
 					$gcount2 .= $name.'<br />';
@@ -322,7 +322,7 @@ switch( $mode2 )
 			$user_groups[] = $srow;
 		}
 
-		for($i = 0; $i < count($user_groups);$i++)
+		for($i = 0; $i < count_safe($user_groups);$i++)
 		{
 			$group_iden = $user_groups[$i]['group_id'];
 			$psql = "SELECT u.username , u.user_id , g.group_name , g.group_id
@@ -343,7 +343,7 @@ switch( $mode2 )
 			$prow = $db->sql_fetchrowset($presult);
 			$gcount ='<br />';
 
-				for($h = 0; $h < count($prow);$h++)
+				for($h = 0; $h < count_safe($prow);$h++)
 				{
 					$name = $prow[$h]['username'];
 					$gcount .= $name.'<br />';
@@ -401,7 +401,7 @@ switch( $mode2 )
 				$prow = $db->sql_fetchrowset($presult);
 				$gcount ='<br />';
 
-					for($h = 0; $h < count($prow);$h++)
+					for($h = 0; $h < count_safe($prow);$h++)
 					{
 						$name = $prow[$h]['username'];
 						$gcount .= $name.'<br />';

@@ -93,7 +93,7 @@ $spe_ranks = array();
 $sql = "SELECT * FROM " . RANKS_TABLE . " WHERE rank_special = 1 ORDER BY rank_title";
 if ( !($result = $db->sql_query($sql)) ) message_die(GENERAL_ERROR, 'Couldn\'t read special ranks', '', __LINE__, __FILE__, $sql);
 while ($row = $db->sql_fetchrow($result) ) $spe_ranks[] = $row;
-for ($i=0; $i < count($spe_ranks); $i++ )
+for ($i=0; $i < count_safe($spe_ranks); $i++ )
 {
 	$rank = $spe_ranks[$i]['rank_id'];
 	$rank_title = $spe_ranks[$i]['rank_title'];
@@ -141,7 +141,7 @@ if ( !($result = $db->sql_query($sql)) ) message_die(GENERAL_ERROR, 'Couldn\'t r
 while ($row = $db->sql_fetchrow($result) ) $ranks[] = $row;
 
 $rank_max = 99999999;
-for ($i=count($ranks)-1; $i >=0; $i--)
+for ($i=count_safe($ranks)-1; $i >=0; $i--)
 {
 	$ranks[$i]['rank_max'] = $rank_max;
 	$rank_title = $ranks[$i]['rank_title'];
@@ -216,7 +216,7 @@ if ($std_rank_max_users != 0)
 }
 else $template->assign_block_vars('no_std_userlist', array());
 
-for ($i=0; $i < count($ranks); $i++)
+for ($i=0; $i < count_safe($ranks); $i++)
 {
 	$template->assign_block_vars('ranks', array(
 		'RANK_TITLE' => get_rank_title($ranks[$i]['rank_title']),
@@ -242,7 +242,7 @@ if ($spe_rank_max_users != 0)
 }
 else $template->assign_block_vars('no_spe_userlist', array());
 
-for ($i=0; $i < count($spe_ranks); $i++)
+for ($i=0; $i < count_safe($spe_ranks); $i++)
 {
 	$template->assign_block_vars('spe_ranks', array(
 		'RANK_TITLE' => get_rank_title($spe_ranks[$i]['rank_title']),

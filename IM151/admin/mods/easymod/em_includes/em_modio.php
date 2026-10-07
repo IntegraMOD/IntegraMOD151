@@ -120,7 +120,7 @@ class mod_io
 		{
 			$dir_path = '' ;
 			$splitarray = explode('/', $copy_path) ;
-			for ($idir=0; $idir<count($splitarray); $idir++)
+			for ($idir=0; $idir<count_safe($splitarray); $idir++)
 			{
 				$dir_path .= trim($splitarray[$idir]) ;
 				// don't bother making ../  ;-)
@@ -175,7 +175,7 @@ class mod_io
 		{
 			$dir_path = '' ;
 			$splitarray = explode('/', $new_path) ;
-			for ($idir=0; $idir<count($splitarray)-1; $idir++)
+			for ($idir=0; $idir<count_safe($splitarray)-1; $idir++)
 			{
 				$dir_path .= trim($splitarray[$idir]) ;
 				if (!file_exists($dir_path))
@@ -205,7 +205,7 @@ class mod_io
 		{
 			$dir_path = '' ;
 			$splitarray = explode('/', $backup_path) ;
-			for ($idir=0; $idir<count($splitarray)-1; $idir++)
+			for ($idir=0; $idir<count_safe($splitarray)-1; $idir++)
 			{
 				$dir_path .= trim($splitarray[$idir]) ;
 				if (!file_exists($dir_path))
@@ -389,7 +389,7 @@ class mod_io
 			// leave some breadcrumbs so we can cd back to phpbb_root
 			$return_path = '' ;
 			$split_array = explode('/', $to_dir) ;
-			for ($count=0; $count<count($split_array); $count++)
+			for ($count=0; $count<count_safe($split_array); $count++)
 			{
 				if (($split_array[$count] != '.') && ($split_array[$count] != ''))
 				{
@@ -535,7 +535,7 @@ class mod_io
 //////////////////////
 //////////////////////
 			$split=explode('/', $from) ;
-			if ($split[count($split)-1] == '*.*')
+			if ($split[count_safe($split)-1] == '*.*')
 			{
 				return '<b>' . $lang['EM_pp_manual'] . '</b>' ;
 			}
@@ -571,7 +571,7 @@ class mod_io
 //////////////////////
 //////////////////////
 			$split=explode('/', $from) ;
-			if ($split[count($split)-1] == '*.*')
+			if ($split[count_safe($split)-1] == '*.*')
 			{
 				return '<b>' . $lang['EM_pp_manual'] . '</b>' ;
 			}
@@ -581,7 +581,7 @@ class mod_io
 			$return_path = '' ;
 			$to_dir = '' ;
 			$split_array = explode('/', $to) ;
-			for ($count=0; $count<count($split_array)-1; $count++)
+			for ($count=0; $count<count_safe($split_array)-1; $count++)
 			{
 				if ($split_array[$count] != '')
 				{
@@ -591,7 +591,7 @@ class mod_io
 			}
 
 			$to_dir = substr($to_dir, 0, strlen($to_dir)-1) ;       // remove trailing slash
-			$to_file = $split_array[count($split_array)-1] ;
+			$to_file = $split_array[count_safe($split_array)-1] ;
 
 
 

@@ -83,9 +83,9 @@ if(!empty($_POST['total']) && !defined('DEMO_MODE'))
 			$num[] = intval($_POST['install_'.$i.'_num']);
 		}
 	}
-	if(count($tpl))
+	if(count_safe($tpl))
 	{
-		for($i=0; $i<count($tpl); $i++)
+		for($i=0; $i<count_safe($tpl); $i++)
 		{
 			xs_install_style($tpl[$i], $num[$i]);
 		}
@@ -120,14 +120,14 @@ while(($file = readdir($res)) !== false)
 	if($file !== '.' && $file !== '..' && @file_exists('../templates/'.$file.'/theme_info.cfg') && @file_exists('../templates/'.$file.'/'.$file.'.cfg'))
 	{
 		$arr = xs_get_themeinfo($file);
-		for($i=0; $i<count($arr); $i++)
+		for($i=0; $i<count_safe($arr); $i++)
 		{
 			if(isset($arr[$i]['template_name']) && $arr[$i]['template_name'] === $file)
 			{
 				$arr[$i]['num'] = $i;
 				$style = $arr[$i]['style_name'];
 				$found = false;
-				for($j=0; $j<count($style_rowset); $j++)
+				for($j=0; $j<count_safe($style_rowset); $j++)
 				{
 					if($style_rowset[$j]['style_name'] == $style)
 					{
@@ -144,7 +144,7 @@ while(($file = readdir($res)) !== false)
 }
 closedir($res);
 
-if(!count($styles))
+if(!count_safe($styles))
 {
 	xs_message($lang['Information'], $lang['xs_install_none'] . '<br /><br />' . $lang['xs_goto_default']);
 }
@@ -169,7 +169,7 @@ foreach($styles as $var => $value)
 
 $template->assign_vars(array(
 	'U_INSTALL'		=> append_sid('xs_install.'.$phpEx),
-	'TOTAL'			=> count($styles)
+	'TOTAL'			=> count_safe($styles)
 	));
 
 $template->set_filenames(array('body' => XS_TPL_PATH . 'install.tpl'));

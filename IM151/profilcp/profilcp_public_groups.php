@@ -72,10 +72,10 @@ $template->assign_vars(array(
 	)
 );
 $nb = 0;
-if (count($groups) > 0)
+if (count_safe($groups) > 0)
 {
 	$class = false;
-	for ($i=0; $i < count($groups); $i++)
+	for ($i=0; $i < count_safe($groups); $i++)
 	{
 		$is_ok = false;
 

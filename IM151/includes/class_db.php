@@ -210,7 +210,7 @@ class class_db extends sql_db
 				return $this->sql_query($sql, $transaction, $line, $file, $break_on_error);
 				break;
 			default:
-				$count_sql_stack_values = empty($id) ? count($this->sql_stack_values) : count($this->sql_stack_values[$id]);
+				$count_sql_stack_values = empty($id) ? count_safe($this->sql_stack_values) : count_safe($this->sql_stack_values[$id]);
 				$result = !empty($count_sql_stack_values);
 				for ( $i = 0; $i < $count_sql_stack_values; $i++ )
 				{

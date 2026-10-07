@@ -160,7 +160,7 @@ function announces_from_forums($cur='Root', $force_prune=false)
 		$cid = $type . $id;
 
 		// get the list of authorized forums except the current one
-		for ($i=0; $i < count($tree['id']); $i++)
+		for ($i=0; $i < count_safe($tree['id']); $i++)
 		{
 			$fid = $tree['type'][$i] . $tree['id'][$i];
 			if ( ($fid != $cid) && ($tree['type'][$i] == POST_FORUM_URL) && $tree['auth'][$fid]['auth_read'] )
@@ -177,7 +177,7 @@ function announces_from_forums($cur='Root', $force_prune=false)
             $keys = array();
             $keys = get_auth_keys($cur, true, -1, -1, 'auth_read');
             $tree_forum_ids = array();
-            for ($i=1; $i < count($keys['id']); $i++)
+            for ($i=1; $i < count_safe($keys['id']); $i++)
             {
                 $idx = $keys['idx'][$i];
                 $fid = $keys['id'][$i];
@@ -215,7 +215,7 @@ function announces_from_forums($cur='Root', $force_prune=false)
 
     $current_time = time(); 
     $limit_topics_time = 'AND ('; 
-    for ($i=0; $i < count($auth_forum_ids); $i++) { 
+    for ($i=0; $i < count_safe($auth_forum_ids); $i++) { 
         $is_auth = $tree['auth'][POST_FORUM_URL . $auth_forum_ids[$i]]; 
         if ($i<>0){ 
             $limit_topics_time .= ' OR  '; 
@@ -246,7 +246,7 @@ function announces_from_forums($cur='Root', $force_prune=false)
 		$topic_rowset[] = $row;
 	}
 	$db->sql_freeresult($result);
-	if (!$topic_rowset || count($topic_rowset) <= 0) return false;
+	if (!$topic_rowset || count_safe($topic_rowset) <= 0) return false;
 
 	// send the list
 	$footer = '';

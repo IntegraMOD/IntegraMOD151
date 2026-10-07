@@ -65,14 +65,14 @@ function build_subtab_box($config_data) //, $selected_subtab)
 	
 	$selected_subtab = get_selected_tab_from_config($config_data);
 	
-	if (0 == count($selected_subtab))
+	if (0 == count_safe($selected_subtab))
 	{
 		return;
 	}
 	
 	build_sub_config_box($config_data);
 	
-	for ($i = 0; $i < count($config_data['sub_config']); $i++)
+	for ($i = 0; $i < count_safe($config_data['sub_config']); $i++)
 	{
 		if ($config_data['sub_config'][$i]['selection'] == $selected_subtab['selection'])
 		{
@@ -104,7 +104,7 @@ function get_config_table($selection)
 {
 	global $album_config_tabs;
 
-	for ($i = 0; $i < count($album_config_tabs); $i++)
+	for ($i = 0; $i < count_safe($album_config_tabs); $i++)
 	{
 		if ( 0 == strcasecmp($album_config_tabs[$i]['selection'],$selection) )
 		{
@@ -124,12 +124,12 @@ function is_valid_config_tab($config_array)
 
 	$valid_sub_config_keys = array(	0 => 'order',1 => 'selection',2=> 'title',3 => 'detail',4 => 'template_file');
 								
-	if (count($config_array) == 0)
+	if (count_safe($config_array) == 0)
 	{
 		return false;
 	}
 					
-	for ($outer = 0; $outer < count($valid_config_keys); $outer++)
+	for ($outer = 0; $outer < count_safe($valid_config_keys); $outer++)
 	{
 		// does the key exists ?	
 		if (@!array_key_exists($valid_config_keys[$outer],$config_array))
@@ -140,10 +140,10 @@ function is_valid_config_tab($config_array)
 		if (strcasecmp($valid_config_keys[$outer], 'sub_config') == 0)
 		{
 			// check each sub_config in the config array
-			for ($inner = 0; $inner < count($config_array['sub_config']); $inner++)
+			for ($inner = 0; $inner < count_safe($config_array['sub_config']); $inner++)
 			{
 				// and check eacj key in each sub_config array
-				for ($i = 0; $i < count($valid_sub_config_keys); $i++)
+				for ($i = 0; $i < count_safe($valid_sub_config_keys); $i++)
 				{
 					// does the key exists ?
 					if (@!array_key_exists($valid_sub_config_keys[$i],$config_array['sub_config'][$inner]))
@@ -161,7 +161,7 @@ function is_valid_config_tab($config_array)
 function remove_config_array($config_array, $index)
 {
 	$temp_array = array();
-	for($i = 0; $i < count($config_array); $i++)
+	for($i = 0; $i < count_safe($config_array); $i++)
 	{
 		if ($i != $index)
 		{

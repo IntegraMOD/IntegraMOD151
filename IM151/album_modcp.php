@@ -351,7 +351,7 @@ if ($mode == '')
 			$picrow[] = $row;
 		}
 
-		for ($i = 0; $i <count($picrow); $i++)
+		for ($i = 0; $i <count_safe($picrow); $i++)
 		{
 			if( ($picrow[$i]['user_id'] == ALBUM_GUEST) || ($picrow[$i]['username'] == '') )
 			{
@@ -527,7 +527,7 @@ else
 			}
 
 			// We must send out the $pic_id_array to store data between page changing
-			for ($i = 0; $i < count($pic_id_array); $i++)
+			for ($i = 0; $i < count_safe($pic_id_array); $i++)
 			{
 				$template->assign_block_vars('pic_id_array', array(
 					'VALUE' => $pic_id_array[$i])
@@ -920,7 +920,7 @@ else
 
 			// We must send out the $pic_id_array to store data between page changing
 			$hidden_field = '';
-			for ($i = 0; $i < count($pic_id_array); $i++)
+			for ($i = 0; $i < count_safe($pic_id_array); $i++)
 			{
 				$hidden_field .= '<input name="pic_id[]" type="hidden" value="'. $pic_id_array[$i] .'" />' . "\n";
 			}
@@ -1018,7 +1018,7 @@ else
 			{
 				$filerow[] = $row;
 			}
-			for ($i = 0; $i < count($filerow); $i++)
+			for ($i = 0; $i < count_safe($filerow); $i++)
 			{
 				if( ($filerow[$i]['pic_thumbnail'] != '') && (@file_exists(ALBUM_CACHE_PATH . $filerow[$i]['pic_thumbnail'])) )
 				{

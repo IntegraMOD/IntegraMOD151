@@ -196,18 +196,18 @@ $view_types = array('stats', 'search', 'username', 'attachments');
 
 $select_view = '<select name="view">';
 
-for($i = 0; $i < count($view_types_text); $i++)
+for($i = 0; $i < count_safe($view_types_text); $i++)
 {
 	$selected = ($view == $view_types[$i]) ? ' selected="selected"' : '';
 	$select_view .= '<option value="' . $view_types[$i] . '"' . $selected . '>' . $view_types_text[$i] . '</option>';
 }
 $select_view .= '</select>';
 
-if (count($mode_types_text) > 0)
+if (count_safe($mode_types_text) > 0)
 {
 	$select_sort_mode = '<select name="mode">';
 
-	for($i = 0; $i < count($mode_types_text); $i++)
+	for($i = 0; $i < count_safe($mode_types_text); $i++)
 	{
 		$selected = ($mode == $mode_types[$i]) ? ' selected="selected"' : '';
 		$select_sort_mode .= '<option value="' . $mode_types[$i] . '"' . $selected . '>' . $mode_types_text[$i] . '</option>';
@@ -241,7 +241,7 @@ if ($confirm && sizeof($delete_id_list) > 0)
 
 	delete_attachment(0, $delete_id_list);
 }
-else if ( ($delete) && (count($delete_id_list)) > 0 )
+else if ( ($delete) && (count_safe($delete_id_list)) > 0 )
 {
 	//
 	// Not confirmed, show confirmation message
@@ -252,7 +252,7 @@ else if ( ($delete) && (count($delete_id_list)) > 0 )
 	$hidden_fields .= '<input type="hidden" name="u_id" value="' . $uid . '" />';
 	$hidden_fields .= '<input type="hidden" name="start" value="' . $start . '" />';
 
-	for($i = 0; $i < count($delete_id_list); $i++)
+	for($i = 0; $i < count_safe($delete_id_list); $i++)
 	{
 		$hidden_fields .= '<input type="hidden" name="delete_id_list[]" value="' . $delete_id_list[$i] . '" />';
 	}
@@ -303,7 +303,7 @@ if ($submit_change && $view == 'attachments')
 	//
 	$attachments = array();
 
-	for ($i = 0; $i < count($attach_change_list); $i++)
+	for ($i = 0; $i < count_safe($attach_change_list); $i++)
 	{
 		$attachments['_' . $attach_change_list[$i]]['comment'] = stripslashes(htmlspecialchars($attach_comment_list[$i]));
 		$attachments['_' . $attach_change_list[$i]]['download_count'] = intval($attach_download_count_list[$i]);
@@ -611,7 +611,7 @@ if ($view == 'username')
 			$members = limit_array($members, $start, $board_config['topics_per_page']);
 		}
 		
-		for ($i = 0; $i < count($members); $i++)
+		for ($i = 0; $i < count_safe($members); $i++)
 		{
 			$username = $members[$i]['username'];
 			$total_attachments = $members[$i]['total_attachments'];
@@ -765,13 +765,13 @@ if ($view == 'attachments')
 		$num_attach = $db->sql_numrows($result);
 	}
 	
-	if (count($attachments) > 0)
+	if (count_safe($attachments) > 0)
 	{
-		for ($i = 0; $i < count($attachments); $i++)
+		for ($i = 0; $i < count_safe($attachments); $i++)
 		{
 			$delete_box = '<input type="checkbox" name="delete_id_list[]" value="' . intval($attachments[$i]['attach_id']) . '" />';
 
-			for ($j = 0; $j < count($delete_id_list); $j++)
+			for ($j = 0; $j < count_safe($delete_id_list); $j++)
 			{
 				if ($delete_id_list[$j] == $attachments[$i]['attach_id'])
 				{

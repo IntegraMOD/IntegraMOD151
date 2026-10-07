@@ -143,7 +143,7 @@ if ( ($set == 'remove') && ($buddy_id > 0) ) $remove = true;
 if ($remove)
 {
 	$user_ids = ( $set == 'remove' ) ? array($buddy_id) : $_POST['user_ids'];
-	if ( count($user_ids) > 0 )
+	if ( count_safe($user_ids) > 0 )
 	{
 		$s_user_ids = implode(', ', $user_ids);
 		$sql = "DELETE FROM " . BUDDYS_TABLE . " WHERE user_id = " . $view_userdata['user_id'] . " and buddy_id in ($s_user_ids)";
@@ -289,7 +289,7 @@ else
 		$last = $row['rank_min'];
 		$ranks[] = $row;
 	}
-	for ($i = 0; $i < count($ranks); $i++)
+	for ($i = 0; $i < count_safe($ranks); $i++)
 	{
 		$sql = "UPDATE " . RANKS_TABLE . " 
 				SET rank_max = " . $ranks[$i]['rank_max'] . "
@@ -408,7 +408,7 @@ else
 		}
 
 		// process the field inds choosen
-		for ($i = 0; $i < count($field_inds); $i++)
+		for ($i = 0; $i < count_safe($field_inds); $i++)
 		{
 			$ind = $field_inds[$i];
 			$option[$ind] = '1';
@@ -453,7 +453,7 @@ else
 		}
 	}
 
-	$count = count($ord_fields) - 1;
+	$count = count_safe($ord_fields) - 1;
 	$offset = 0;
 	$color_row = false;
 	for ($j=0; $j <= intval($count / $nb_cell); $j++)
@@ -670,7 +670,7 @@ else
 	// classes fields used
 	$sql_classes_fields = '';
 	@sort($classes_used);
-	for ($i = 0; $i < count($classes_used); $i++)
+	for ($i = 0; $i < count_safe($classes_used); $i++)
 	{
 		$class_name = $classes_used[$i];
 		$class_data = $classes_fields[ $classes_used[$i] ];
@@ -936,7 +936,7 @@ else
 	}
 	// display the users
 	$color = false;
-	for ($i=0; $i < count($users); $i++ )
+	for ($i=0; $i < count_safe($users); $i++ )
 	{
 		$color = !$color;
 		$template->assign_block_vars('userrow', array(
@@ -966,7 +966,7 @@ else
 	}
 
 	// friend or ignore list : add select column
-	$col = count($field_ids) + 1;
+	$col = count_safe($field_ids) + 1;
 	if ($friend_list || $ignore_list)
 	{
 		$col++;

@@ -143,7 +143,7 @@ if( isset($_GET['import_pack']) || isset($_POST['import_pack']) )
 
 			$cur_smilies = $db->sql_fetchrowset($result);
 
-			for( $i = 0; $i < count($cur_smilies); $i++ )
+			for( $i = 0; $i < count_safe($cur_smilies); $i++ )
 			{
 				$k = $cur_smilies[$i]['code'];
 				$smiles[$k] = 1;
@@ -157,11 +157,11 @@ if( isset($_GET['import_pack']) || isset($_POST['import_pack']) )
 			message_die(GENERAL_ERROR, "Couldn't read smiley pak file", "", __LINE__, __FILE__, $sql);
 		}
 
-		for( $i = 0; $i < count($fcontents); $i++ )
+		for( $i = 0; $i < count_safe($fcontents); $i++ )
 		{
 			$smile_data = explode($delimeter, trim(addslashes($fcontents[$i])));
 
-			for( $j = 2; $j < count($smile_data); $j++)
+			for( $j = 2; $j < count_safe($smile_data); $j++)
 			{
 				//
 				// Replace > and < with the proper html_entities for matching.
@@ -267,7 +267,7 @@ else if( isset($_POST['export_pack']) || isset($_GET['export_pack']) )
 		$resultset = $db->sql_fetchrowset($result);
 
 		$smile_pak = "";
-		for($i = 0; $i < count($resultset); $i++ )
+		for($i = 0; $i < count_safe($resultset); $i++ )
 		{
 			$smile_pak .= $resultset[$i]['smile_url'] . $delimeter;
 			$smile_pak .= $resultset[$i]['emoticon'] . $delimeter;
@@ -298,7 +298,7 @@ else if( isset($_POST['add']) || isset($_GET['add']) )
 	);
 
 	$filename_list = "";
-	for( $i = 0; $i < count($smiley_images); $i++ )
+	for( $i = 0; $i < count_safe($smiley_images); $i++ )
 	{
 		$filename_list .= '<option value="' . $smiley_images[$i] . '">' . $smiley_images[$i] . '</option>';
 	}
@@ -400,7 +400,7 @@ else if ( $mode != "" )
 			$smile_data = $db->sql_fetchrow($result);
 
 			$filename_list = "";
-			for( $i = 0; $i < count($smiley_images); $i++ )
+			for( $i = 0; $i < count_safe($smiley_images); $i++ )
 			{
 				if( $smiley_images[$i] == $smile_data['smile_url'] )
 				{
@@ -585,7 +585,7 @@ else
 	//
 	// Loop throuh the rows of smilies setting block vars for the template.
 	//
-	for($i = 0; $i < count($smilies); $i++)
+	for($i = 0; $i < count_safe($smilies); $i++)
 	{
 		//
 		// Replace htmlentites for < and > with actual character.

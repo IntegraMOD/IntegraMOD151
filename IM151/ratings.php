@@ -82,7 +82,7 @@ $r_auth_level = ( !$userdata['session_logged_in'] ) ? 0 : 1;
 // FORUM DROPDOWN BOX
 $forums = array(0 => array('title'=>$lang['Rating_all_forums'], 'selected'=>''));
 $flist = '';
-for ($i=0; $i < count($tree['keys']); $i++)
+for ($i=0; $i < count_safe($tree['keys']); $i++)
 {
 	if ( ($tree['type'][$i] == POST_FORUM_URL) && $tree['auth'][POST_FORUM_URL.$tree['id'][$i]]['auth_download'] )
 	{
@@ -412,7 +412,7 @@ if( !empty($total_rows) && $is_anonymous != 'y' )
 
 	for($i = 0; $i < $total_rows; $i++) 
 	{ 
-		$topic_title = ( count($orig_word) > 0 ) ? preg_replace($orig_word, $replacement_word, $rowset[$i]['topic_title']) : 	$rowset[$i]['topic_title']; 
+		$topic_title = ( count_safe($orig_word) > 0 ) ? preg_replace($orig_word, $replacement_word, $rowset[$i]['topic_title']) : 	$rowset[$i]['topic_title']; 
 
 		$poster = ( $rowset[$i]['user_id'] != ANONYMOUS ) ? '<a href="' . append_sid($phpbb_root_path . 'profile.' . $phpEx . '?mode=viewprofile&amp;' . POST_USERS_URL . '=' . $rowset[$i]['user_id']) . '">' . $rowset[$i]['username'] . '</a>' : $lang['Guest']; 
 

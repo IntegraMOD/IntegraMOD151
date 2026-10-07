@@ -493,7 +493,7 @@ else
 	}
 
 	$l_rows = $db->sql_fetchrowset($result);
-	$l_count = count($l_rows);
+	$l_count = count_safe($l_rows);
 
 	$template->assign_vars(array(
 		"L_LAYOUT_TITLE" => $lang['Layout_Title'],

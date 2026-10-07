@@ -121,7 +121,7 @@
 				} 
 			}
 			
-			for ( $i = 0; $i < count( $userdata[$userdata_key] ); $i++ )
+			for ( $i = 0; $i < count_safe( $userdata[$userdata_key] ); $i++ )
 			{
 				if ( in_array( $userdata[$userdata_key][$i]['group_id'], $group_ids_array ) )
 				{
@@ -174,7 +174,7 @@
 				$word_insert_sql[$word_in] = '';
 				if ( !empty($search_matches) )
 				{
-					for ($i = 0; $i < count($search_matches); $i++)
+					for ($i = 0; $i < count_safe($search_matches); $i++)
 					{ 
 						$search_matches[$i] = trim($search_matches[$i]);
 		
@@ -190,14 +190,14 @@
 				}
 			}
 		
-			if ( count($word) )
+			if ( count_safe($word) )
 			{
 				sort($word);
 		
 				$prev_word = '';
 				$word_text_sql = '';
 				$temp_word = array();
-				for($i = 0; $i < count($word); $i++)
+				for($i = 0; $i < count_safe($word); $i++)
 				{
 					if ( $word[$i] != $prev_word )
 					{
@@ -233,7 +233,7 @@
 		
 				$value_sql = '';
 				$match_word = array();
-				for ($i = 0; $i < count($word); $i++)
+				for ($i = 0; $i < count_safe($word); $i++)
 				{ 
 					$new_match = true;
 					if ( isset($check_words[$word[$i]]) )

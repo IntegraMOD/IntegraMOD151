@@ -340,7 +340,7 @@ class Stats_template {
 		// plain text
 		preg_match_all('#<!-- (.*?) (.*?)?[ ]?-->#s', $code, $blocks);
 		$text_blocks = preg_split('#<!-- (.*?) (.*?)?[ ]?-->#s', $code);
-		for($i = 0; $i < count($text_blocks); $i++)
+		for($i = 0; $i < count_safe($text_blocks); $i++)
 		{
 			$this->compile_var_tags($text_blocks[$i]);
 		}
@@ -348,7 +348,7 @@ class Stats_template {
 		$compile_blocks = array();
 
     // This is technically $curr_tb < count($text_blocks - 1), because templates will almost always end with HTML
-		for ($curr_tb = 0; $curr_tb < count($text_blocks) && $curr_tb < count($blocks[1]); $curr_tb++)
+		for ($curr_tb = 0; $curr_tb < count_safe($text_blocks) && $curr_tb < count_safe($blocks[1]); $curr_tb++)
 		{
 			switch ($blocks[1][$curr_tb])
 			{
@@ -387,7 +387,7 @@ class Stats_template {
 		}
 
 		$template_php = '';
-		for ($i = 0; $i < count($text_blocks); $i++)
+		for ($i = 0; $i < count_safe($text_blocks); $i++)
 		{
 			$trim_check_text = trim($text_blocks[$i]);
 			$trim_check_block = isset($compile_blocks[$i]) ? trim($compile_blocks[$i]) : '';
@@ -474,7 +474,7 @@ class Stats_template {
         $tokens = $match[0];
         $is_arg_stack = array();
 
-        for ($i = 0; $i < count($tokens); $i++)
+        for ($i = 0; $i < count_safe($tokens); $i++)
 		{
 			$token = &$tokens[$i];
 
@@ -533,7 +533,7 @@ class Stats_template {
 
 					$new_tokens	= $this->_parse_is_expr($is_arg, array_slice($tokens, $i+1));
 
-					array_splice($tokens, $is_arg_start, count($tokens), $new_tokens);
+					array_splice($tokens, $is_arg_start, count_safe($tokens), $new_tokens);
 
 					$i = $is_arg_start;
 
@@ -804,13 +804,13 @@ class Stats_template {
 		}
 		closedir($dp);
 		
-		for ($i = 0; $i < count($template_cache); $i++)
+		for ($i = 0; $i < count_safe($template_cache); $i++)
 		{
 			if ($decompile)
 			{
 				$contents = file($this->cachedir . '/' . $template_cache[$i]);
 				$str = '';
-				for ($j = 0; $j < count($contents); $j++)
+				for ($j = 0; $j < count_safe($contents); $j++)
 				{
 					$str .= $contents[$j];
 				}

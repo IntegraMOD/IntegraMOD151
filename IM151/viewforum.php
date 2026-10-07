@@ -262,7 +262,7 @@ if ( ($this_key > -1) && !empty($tree['data'][$this_key]['forum_link']))
 	if ($tree['data'][$this_key]['forum_link_internal'])
 	{
 		$part = explode( '?', $url);
-		$url .= ((count($part) > 1) ? '&' : '?') . 'sid=' . $userdata['session_id'];
+		$url .= ((count_safe($part) > 1) ? '&' : '?') . 'sid=' . $userdata['session_id'];
 		$url = append_sid($url);
 
 		// redirect to url
@@ -485,10 +485,10 @@ if ( $is_auth['auth_mod'] && $board_config['prune_enable'] )
 // moderators list
 $moderators = array(); 
 $idx = $tree['keys'][ POST_FORUM_URL . $forum_id ]; 
-for ( $i = 0; !empty($tree['mods'][$idx]['user_id']) && $i < count($tree['mods'][$idx]['user_id']); $i++ ) { 
+for ( $i = 0; !empty($tree['mods'][$idx]['user_id']) && $i < count_safe($tree['mods'][$idx]['user_id']); $i++ ) { 
     $moderators[] = '<a href="' . append_sid("./profile.$phpEx?mode=viewprofile&amp;" . POST_USERS_URL . "=" . $tree['mods'][$idx]['user_id'][$i]) . '" class="'.$agcm_color->get_user_color($tree['mods'][$idx]['user_group_id'][$i], $tree['mods'][$idx]['user_session_time'][$i]).'">' . $tree['mods'][$idx]['username'][$i] . '</a>'; 
 } 
-for ( $i = 0; !empty($tree['mods'][$idx]['group_id']) && $i < count($tree['mods'][$idx]['group_id']); $i++ ) { 
+for ( $i = 0; !empty($tree['mods'][$idx]['group_id']) && $i < count_safe($tree['mods'][$idx]['group_id']); $i++ ) { 
   // V: AGCM is not doing this properly, add it myself
     $moderators[] = '<a href="' . append_sid("./groupcp.$phpEx?" . POST_GROUPS_URL . "=" . $tree['mods'][$idx]['group_id'][$i]) . '" class="' . $agcm_color->get_user_color($data['group_id'][$i]) . '">' . $tree['mods'][$idx]['group_name'][$i] . '</a>'; 
 }
@@ -512,8 +512,8 @@ if (($userdata['user_level'] != ADMIN && !$is_auth['auth_mod']) || !$is_auth['au
 
 // MOD: Delayed Topics {end} 
 //-----------------------------------------------------------------------------	
-$l_moderators = ( count($moderators) == 1 ) ? $lang['Moderator'] : $lang['Moderators'];
-$forum_moderators = ( count($moderators) ) ? implode(', ', $moderators) : $lang['None'];
+$l_moderators = ( count_safe($moderators) == 1 ) ? $lang['Moderator'] : $lang['Moderators'];
+$forum_moderators = ( count_safe($moderators) ) ? implode(', ', $moderators) : $lang['None'];
 unset($moderators);
 
 //
@@ -559,7 +559,7 @@ else
 }
 
 $select_topic_days = '<select name="topicdays">';
-for($i = 0; $i < count($previous_days); $i++)
+for($i = 0; $i < count_safe($previous_days); $i++)
 {
 	$selected = ($topic_days == $previous_days[$i]) ? ' selected="selected"' : '';
 	$select_topic_days .= '<option value="' . $previous_days[$i] . '"' . $selected . '>' . $previous_days_text[$i] . '</option>';
@@ -782,7 +782,7 @@ $template->assign_vars(array(
 //-- mod : split topic type ------------------------------------------------------------------------
 //-- add
 // adjust the item id
-for ($i=0; $i < count($topic_rowset); $i++)
+for ($i=0; $i < count_safe($topic_rowset); $i++)
 {
 	$topic_rowset[$i]['topic_id'] = POST_TOPIC_URL . $topic_rowset[$i]['topic_id'];
 }
@@ -841,7 +841,7 @@ if( $total_topics )
 	{
 		$topic_id = $topic_rowset[$i]['topic_id'];
 
-		$topic_title = ( count($orig_word) ) ? preg_replace($orig_word, $replacement_word, $topic_rowset[$i]['topic_title']) : $topic_rowset[$i]['topic_title'];
+		$topic_title = ( count_safe($orig_word) ) ? preg_replace($orig_word, $replacement_word, $topic_rowset[$i]['topic_title']) : $topic_rowset[$i]['topic_title'];
 
 		$replies = $topic_rowset[$i]['topic_replies'];
 

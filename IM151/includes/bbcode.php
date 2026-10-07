@@ -910,12 +910,12 @@ function bbencode_first_pass_pda($text, $uid, $open_tag, $close_tag, $close_tag_
 
 	if (is_array($open_tag))
 	{
-		if (0 == count($open_tag))
+		if (0 == count_safe($open_tag))
 		{
 			// No opening tags to match, so return.
 			return $text;
 		}
-		$open_tag_count = count($open_tag);
+		$open_tag_count = count_safe($open_tag);
 	}
 	else
 	{
@@ -1409,12 +1409,12 @@ function bbcode_array_push(&$stack, $value)
  */
 function bbcode_array_pop(&$stack)
 {
-   $arrSize = count($stack);
+   $arrSize = count_safe($stack);
    $x = 1;
 
    while(list($key, $val) = each($stack))
    {
-      if($x < count($stack))
+      if($x < count_safe($stack))
       {
 	 		$tmpArr[] = $val;
       }
@@ -1478,12 +1478,12 @@ function smilies_pass($message)
 	}
 //-- fin mod : cache -------------------------------------------------------------------------------
 
-			if (count($smilies))
+			if (count_safe($smilies))
 			{
 				usort($smilies, 'smiley_sort');
 			}
 
-			for ($i = 0; $i < count($smilies); $i++)
+			for ($i = 0; $i < count_safe($smilies); $i++)
 			{
 				$orig[] = "/(?<=.\W|\W.|^\W)" . preg_quote($smilies[$i]['code'], "/") . "(?=.\W|\W.|\W$)/";
 				$repl[] = '<img src="'. $board_config['smilies_path'] . '/' . $smilies[$i]['smile_url'] . '" alt="' . $smilies[$i]['emoticon'] . '" border="0" />';
@@ -1526,12 +1526,12 @@ function acronym_pass($message)
 
 		$acronyms = $db->sql_fetchrowset($result);
 
-		if( count($acronyms) )
+		if( count_safe($acronyms) )
 		{
 			usort( $acronyms, 'acronym_sort' );
 		}
 
-		for ($i = 0; $i < count($acronyms); $i++)
+		for ($i = 0; $i < count_safe($acronyms); $i++)
 		{
 			$orig[] = '#\b(' . preg_quote( $acronyms[$i]['acronym'], "/") . ')\b#';
 			//$orig[] = "/(?<=.\W|\W.|^\W)" . phpbb_preg_quote($acronyms[$i]['acronym'], "/") . "(?=.\W|\W.|\W$)/";
@@ -1539,7 +1539,7 @@ function acronym_pass($message)
 		}
 	}
 
-	if( count( $orig ) )
+	if( count_safe( $orig ) )
 	{
 		$segments = preg_split( '#(<acronym.+?>.+?</acronym>|<.+?>)#s' , $message, -1, PREG_SPLIT_NO_EMPTY | PREG_SPLIT_DELIM_CAPTURE);
 

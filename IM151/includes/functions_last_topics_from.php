@@ -61,7 +61,7 @@ function last_topics_from($view_userdata, $last_started_box='', $last_replied_bo
 
 	// ACP config says : do not display - who am I to say the contrary ? ;)
 	$sum = 0;
-	for ($k=0; $k < count($to_display); $k++)
+	for ($k=0; $k < count_safe($to_display); $k++)
 	{
 		$sum = $sum + $to_display[$k];
 	}
@@ -74,7 +74,7 @@ function last_topics_from($view_userdata, $last_started_box='', $last_replied_bo
 	$keys = array();
 	$keys = get_auth_keys('Root', true, -1, -1, 'auth_read');
 	$allowed_delayedpost_ids = array();
-	for ($i=1; $i < count($keys['id']); $i++)
+	for ($i=1; $i < count_safe($keys['id']); $i++)
 	{
 		if ( ($tree['type'][$keys['idx'][$i]] == POST_FORUM_URL) && ($tree['auth'][ $keys['id'][$i] ]['auth_read']) )
 		{
@@ -88,14 +88,14 @@ function last_topics_from($view_userdata, $last_started_box='', $last_replied_bo
 	}
 
 	// no forums allowed to the viewer, say goodbye :)
-	if (count($forum_ids) <= 0) return false;
+	if (count_safe($forum_ids) <= 0) return false;
 
 	// get the list of forum for selection
 	$sql_forums = 't.forum_id IN (' . implode(', ', $forum_ids) . ')';
 
 	// ok, process the last replied topics
 	$topic_rowset = array();
-	for ($k = 0; $k < count($to_display); $k++) if ($to_display[$k] > 0)
+	for ($k = 0; $k < count_safe($to_display); $k++) if ($to_display[$k] > 0)
 	{
 		$title = '??';
 		switch ( $k )

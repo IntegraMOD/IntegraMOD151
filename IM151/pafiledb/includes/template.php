@@ -298,14 +298,14 @@ class pafiledb_Template
 
 		preg_match_all('#<!-- (.*?) (.*?)?[ ]?-->#s', $code, $blocks);
 		$text_blocks = preg_split('#<!-- (.*?) (.*?)?[ ]?-->#s', $code);
-		for($i = 0; $i < count($text_blocks); $i++)
+		for($i = 0; $i < count_safe($text_blocks); $i++)
 		{
 			$this->compile_var_tags($text_blocks[$i]);
 		}
 
 		$compile_blocks = [];
 
-		for ($curr_tb = 0; $curr_tb < count($text_blocks) && $curr_tb < count($blocks[1]); $curr_tb++)
+		for ($curr_tb = 0; $curr_tb < count_safe($text_blocks) && $curr_tb < count_safe($blocks[1]); $curr_tb++)
 		{
 			switch ($blocks[1][$curr_tb])
 			{
@@ -314,7 +314,7 @@ class pafiledb_Template
 					$compile_blocks[] = '<?php ' . $this->compile_tag_block($blocks[2][$curr_tb]) . ' ?>';
 					break;
 				case 'BEGINELSE':
-					$this->block_else_level[count($this->block_else_level) - 1] = true;
+					$this->block_else_level[count_safe($this->block_else_level) - 1] = true;
 					$compile_blocks[] = '<?php }} else { ?>';
 					break;
 
@@ -363,7 +363,7 @@ class pafiledb_Template
 			}
 		}
 		$template_php = '';
-		for ($i = 0; $i < count($text_blocks); $i++)
+		for ($i = 0; $i < count_safe($text_blocks); $i++)
 		{
 			$trim_check_text = trim($text_blocks[$i]);
 			$trim_check_block = !empty($compile_blocks[$i]) ? trim($compile_blocks[$i]) : '';
@@ -476,7 +476,7 @@ class pafiledb_Template
         $tokens = $match[0];
         $is_arg_stack = [];
 
-        for ($i = 0; $i < count($tokens); $i++)
+        for ($i = 0; $i < count_safe($tokens); $i++)
 		{
 			$token = &$tokens[$i];
 
@@ -563,7 +563,7 @@ class pafiledb_Template
 
 					$new_tokens	= $this->_parse_is_expr($is_arg, array_slice($tokens, $i+1));
 
-					array_splice($tokens, $is_arg_start, count($tokens), $new_tokens);
+					array_splice($tokens, $is_arg_start, count_safe($tokens), $new_tokens);
 
 					$i = $is_arg_start;
 

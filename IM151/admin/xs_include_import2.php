@@ -270,7 +270,7 @@ if($list_only)
 	$str .= $lang['xs_import_list_comment'] . $header['comment'] . '<br />';
 	$str .= $lang['xs_import_list_styles'] . implode(', ', $header['styles']) . '<br />';
 	ksort($list_data);
-	$str .= '<br />' . str_replace('{NUM}', count($list_data), $lang['xs_import_list_files']) . '<br />';
+	$str .= '<br />' . str_replace('{NUM}', count_safe($list_data), $lang['xs_import_list_files']) . '<br />';
 	$str .= '<table border="0" cellspacing="0" cellpadding="1" align="left">';
 	foreach($list_data as $var => $value)
 	{
@@ -328,7 +328,7 @@ if(!$write_local)
 	print_r($ftp_log);
 	echo "\n\n -->"; */
 	// remove temporary files
-	for($i=0; $i<count($items); $i++)
+	for($i=0; $i<count_safe($items); $i++)
 	{
 		if(!empty($items[$i]['tmp']))
 		{
@@ -369,7 +369,7 @@ for($i=0; $i<$total; $i++)
 		}
 	}
 }
-if(!count($install))
+if(!count_safe($install))
 {
 	if(defined('XS_CLONING'))
 	{
@@ -393,7 +393,7 @@ if(!$result = $db->sql_query($sql))
 $style_rowset = $db->sql_fetchrowset($result);
 // run theme_info.cfg
 $data = xs_get_themeinfo($tpl);
-if(!@count($data))
+if(!@count_safe($data))
 {
 	if(defined('XS_CLONING'))
 	{
@@ -403,12 +403,12 @@ if(!@count($data))
 }
 // install styles
 $default_id = 0;
-for($i=0; $i<count($install); $i++)
+for($i=0; $i<count_safe($install); $i++)
 {
 	$style_name = $install[$i];
 	$style_data = false;
 	// find entry in theme_info.cfg
-	for($j=0; $j<count($data); $j++)
+	for($j=0; $j<count_safe($data); $j++)
 	{
 		if($data[$j]['style_name'] === $style_name)
 		{
@@ -417,7 +417,7 @@ for($i=0; $i<count($install); $i++)
 	}
 	// check if already installed
 	$installed = 0;
-	for($j=0; $j<count($style_rowset); $j++)
+	for($j=0; $j<count_safe($style_rowset); $j++)
 	{
 		if($style_rowset[$j]['style_name'] === $style_name)
 		{
@@ -508,7 +508,7 @@ if(defined('XS_CLONING'))
 {
 	@unlink($tmp_filename);
 }
-if(count($install) && defined('XS_MODS_CATEGORY_HIERARCHY210'))
+if(count_safe($install) && defined('XS_MODS_CATEGORY_HIERARCHY210'))
 {
 	// recache themes table
 	if ( empty($themes) )
@@ -520,7 +520,7 @@ if(count($install) && defined('XS_MODS_CATEGORY_HIERARCHY210'))
 		$themes->read(true);
 	}
 }
-if(count($install) && defined('XS_MODS_CATEGORY_HIERARCHY'))
+if(count_safe($install) && defined('XS_MODS_CATEGORY_HIERARCHY'))
 {
 	cache_themes();
 }

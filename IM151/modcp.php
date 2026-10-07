@@ -297,7 +297,7 @@ switch( $mode )
 			$topics = ( isset($_POST['topic_id_list']) ) ? $_POST['topic_id_list'] : array($topic_id);
 
 			$topic_id_sql = '';
-			for($i = 0; $i < count($topics); $i++)
+			for($i = 0; $i < count_safe($topics); $i++)
 			{
 				$topic_id_sql .= ( ( $topic_id_sql != '' ) ? ', ' : '' ) . intval($topics[$i]);
 			}
@@ -536,7 +536,7 @@ if ( sizeof($user_updated) )
 			if ( isset($_POST['topic_id_list']) )
 			{
 				$topics = $_POST['topic_id_list'];
-				for($i = 0; $i < count($topics); $i++)
+				for($i = 0; $i < count_safe($topics); $i++)
 				{
 					$hidden_fields .= '<input type="hidden" name="topic_id_list[]" value="' . intval($topics[$i]) . '" />';
 				}
@@ -628,7 +628,7 @@ if ( sizeof($user_updated) )
 				$topics = ( isset($_POST['topic_id_list']) ) ?  $_POST['topic_id_list'] : array($topic_id);
 
 				$topic_list = '';
-				for($i = 0; $i < count($topics); $i++)
+				for($i = 0; $i < count_safe($topics); $i++)
 				{
 					$topic_list .= ( ( $topic_list != '' ) ? ', ' : '' ) . intval($topics[$i]);
 				}
@@ -646,7 +646,7 @@ if ( sizeof($user_updated) )
 				$row = $db->sql_fetchrowset($result);
 				$db->sql_freeresult($result);
 
-				for($i = 0; $i < count($row); $i++)
+				for($i = 0; $i < count_safe($row); $i++)
 				{
 					$topic_id = $row[$i]['topic_id'];
 					
@@ -723,7 +723,7 @@ if ( sizeof($user_updated) )
 			{
 				$topics = $_POST['topic_id_list'];
 
-				for($i = 0; $i < count($topics); $i++)
+				for($i = 0; $i < count_safe($topics); $i++)
 				{
 					$hidden_fields .= '<input type="hidden" name="topic_id_list[]" value="' . intval($topics[$i]) . '" />';
 				}
@@ -774,7 +774,7 @@ if ( sizeof($user_updated) )
 		$topics = ( isset($_POST['topic_id_list']) ) ?  $_POST['topic_id_list'] : array($topic_id);
 
 		$topic_id_sql = '';
-		for($i = 0; $i < count($topics); $i++)
+		for($i = 0; $i < count_safe($topics); $i++)
 		{
 			$topic_id_sql .= ( ( $topic_id_sql != '' ) ? ', ' : '' ) . intval($topics[$i]);
 		}
@@ -819,7 +819,7 @@ if ( sizeof($user_updated) )
 		$topics = ( isset($_POST['topic_id_list']) ) ?  $_POST['topic_id_list'] : array($topic_id);
 
 		$topic_id_sql = '';
-		for($i = 0; $i < count($topics); $i++)
+		for($i = 0; $i < count_safe($topics); $i++)
 		{
 			$topic_id_sql .= ( ( $topic_id_sql != "") ? ', ' : '' ) . intval($topics[$i]);
 		}
@@ -865,7 +865,7 @@ if ( sizeof($user_updated) )
 		{
 			$posts = $_POST['post_id_list'];
 
-			for ($i = 0; $i < count($posts); $i++)
+			for ($i = 0; $i < count_safe($posts); $i++)
 			{
 				$post_id_sql .= (($post_id_sql != '') ? ', ' : '') . intval($posts[$i]);
 			}
@@ -1098,7 +1098,7 @@ if ( sizeof($user_updated) )
 						$message = ( $board_config['allow_bbcode'] ) ? bbencode_second_pass($message, $bbcode_uid) : preg_replace('/\:[0-9a-z\:]+\]/si', ']', $message);
 					}
 
-					if ( count($orig_word) )
+					if ( count_safe($orig_word) )
 					{
 						$post_subject = preg_replace($orig_word, $replacement_word, $post_subject);
 						$message = preg_replace($orig_word, $replacement_word, $message);
@@ -1402,7 +1402,7 @@ if ( sizeof($user_updated) )
 			}
 	
 			$topic_title = $row['topic_title'];
-			if ( count($orig_word) )
+			if ( count_safe($orig_word) )
 			{
 				$topic_title = preg_replace($orig_word, $replacement_word, $topic_title);
 			}

@@ -60,7 +60,7 @@ if (!function_exists('admin_display_cat_auth')) {
 					'S_MOD_SELECT' => $optionlist_mod[$sub_cat_id])
 				);
 
-				for($j = 0; $j < count($cat_auth_fields); $j++)
+				for($j = 0; $j < count_safe($cat_auth_fields); $j++)
 				{
 					$pafiledb_template->assign_block_vars('cat_row.aclvalues', array(
 						'S_ACL_SELECT' => ( isset($optionlist_acl_adv[$sub_cat_id][$j]) ? $optionlist_acl_adv[$sub_cat_id][$j] : false )
@@ -202,7 +202,7 @@ if ( isset($_POST['submit']) && ( ( $mode == 'user' && $user_id ) || ( $mode == 
 	$change_mod_list = ( isset($_POST['moderator']) ) ? $_POST['moderator'] : array();
 
 	$change_acl_list = array();
-	for($j = 0; $j < count($cat_auth_fields); $j++)
+	for($j = 0; $j < count_safe($cat_auth_fields); $j++)
 	{
 		$auth_field = $cat_auth_fields[$j];
 
@@ -252,7 +252,7 @@ if ( isset($_POST['submit']) && ( ( $mode == 'user' && $user_id ) || ( $mode == 
 			}
 		}
 
-		for($j = 0; $j < count($cat_auth_fields); $j++)
+		for($j = 0; $j < count_safe($cat_auth_fields); $j++)
 		{
 			$auth_field = $cat_auth_fields[$j];
 
@@ -370,7 +370,7 @@ elseif ( isset($_POST['submit']) && ( ( $mode == 'global_user' && $user_id ) || 
 	}
 
 	$change_acl_list = array();
-	for($j = 0; $j < count($global_auth_fields); $j++)
+	for($j = 0; $j < count_safe($global_auth_fields); $j++)
 	{
 		$auth_field = $global_auth_fields[$j];
 		$change_acl_list[$auth_field] = $_POST['private_' . $auth_field];
@@ -393,7 +393,7 @@ elseif ( isset($_POST['submit']) && ( ( $mode == 'global_user' && $user_id ) || 
 	$global_auth_action = array();
 	$update_acl_status = array();
 
-	for($j = 0; $j < count($global_auth_fields); $j++)
+	for($j = 0; $j < count_safe($global_auth_fields); $j++)
 	{
 		$auth_field = $global_auth_fields[$j];
 
@@ -534,7 +534,7 @@ elseif ( ( $mode == 'user' && ( isset($_POST['username']) || $user_id ) ) || ( $
 
 	foreach($pafiledb->cat_rowset as $cat_id => $cat_data)
 	{
-		for($j = 0; $j < count($cat_auth_fields); $j++)
+		for($j = 0; $j < count_safe($cat_auth_fields); $j++)
 		{
 			$key = $cat_auth_fields[$j];
 			$value = $cat_data[$key];
@@ -576,7 +576,7 @@ elseif ( ( $mode == 'user' && ( isset($_POST['username']) || $user_id ) ) || ( $
 
 	foreach($auth_ug as $cat_id => $user_ary)
 	{
-		for($k = 0; $k < count($cat_auth_fields); $k++)
+		for($k = 0; $k < count_safe($cat_auth_fields); $k++)
 		{
 			$field_name = $cat_auth_fields[$k];
 
@@ -630,7 +630,7 @@ elseif ( ( $mode == 'user' && ( isset($_POST['username']) || $user_id ) ) || ( $
 
 	$name = array();
 	$id = array();
-	for($i = 0; $i < count($ug_info); $i++)
+	for($i = 0; $i < count_safe($ug_info); $i++)
 	{
 		if( ( $mode == 'user' && !$ug_info[$i]['group_single_user'] ) || $mode == 'group' )
 		{
@@ -639,10 +639,10 @@ elseif ( ( $mode == 'user' && ( isset($_POST['username']) || $user_id ) ) || ( $
 		}
 	}
 
-	if( count($name) )
+	if( count_safe($name) )
 	{
 		$t_usergroup_list = '';
-		for($i = 0; $i < count($ug_info); $i++)
+		for($i = 0; $i < count_safe($ug_info); $i++)
 		{
 			$ug = ( $mode == 'user' ) ? 'group&amp;' . POST_GROUPS_URL : 'user&amp;' . POST_USERS_URL;
 
@@ -655,7 +655,7 @@ elseif ( ( $mode == 'user' && ( isset($_POST['username']) || $user_id ) ) || ( $
 	}
 
 	$s_column_span = 0;
-	for($i = 0; $i < count($cat_auth_fields); $i++)
+	for($i = 0; $i < count_safe($cat_auth_fields); $i++)
 	{
 		$cell_title = $field_names[$cat_auth_fields[$i]];
 
@@ -776,7 +776,7 @@ elseif(( $mode == 'global_user' && ( isset($_POST['username']) || $user_id ) ) |
 
 	$is_admin = ( $mode == 'global_user' ) ? ( ( $ug_info[0]['user_level'] == ADMIN && $ug_info[0]['user_id'] != ANONYMOUS ) ? 1 : 0 ) : 0;
 
-	for($j = 0; $j < count($global_auth_fields); $j++)
+	for($j = 0; $j < count_safe($global_auth_fields); $j++)
 	{
 		$key = $global_auth_fields[$j];
 		$value = $pafiledb_config[$key];
@@ -808,7 +808,7 @@ elseif(( $mode == 'global_user' && ( isset($_POST['username']) || $user_id ) ) |
 	}
 
 
-	for($k = 0; $k < count($global_auth_fields); $k++)
+	for($k = 0; $k < count_safe($global_auth_fields); $k++)
 	{
 		$field_name = $global_auth_fields[$k];
 
@@ -852,7 +852,7 @@ elseif(( $mode == 'global_user' && ( isset($_POST['username']) || $user_id ) ) |
 		'U_CAT' => append_sid("admin_pa_settings.$phpEx"))
 	);
 
-	for($j = 0; $j < count($global_auth_fields); $j++)
+	for($j = 0; $j < count_safe($global_auth_fields); $j++)
 	{
 		$pafiledb_template->assign_block_vars('cat_row.aclvalues', array(
 			'S_ACL_SELECT' => $optionlist_acl_adv[$j])
@@ -870,7 +870,7 @@ elseif(( $mode == 'global_user' && ( isset($_POST['username']) || $user_id ) ) |
 
 	$name = array();
 	$id = array();
-	for($i = 0; $i < count($ug_info); $i++)
+	for($i = 0; $i < count_safe($ug_info); $i++)
 	{
 		if( ( $mode == 'global_user' && !$ug_info[$i]['group_single_user'] ) || $mode == 'global_group' )
 		{
@@ -879,10 +879,10 @@ elseif(( $mode == 'global_user' && ( isset($_POST['username']) || $user_id ) ) |
 		}
 	}
 
-	if( count($name) )
+	if( count_safe($name) )
 	{
 		$t_usergroup_list = '';
-		for($i = 0; $i < count($ug_info); $i++)
+		for($i = 0; $i < count_safe($ug_info); $i++)
 		{
 			$ug = ( $mode == 'global_user' ) ? 'global_group&amp;' . POST_GROUPS_URL : 'global_user&amp;' . POST_USERS_URL;
 
@@ -894,7 +894,7 @@ elseif(( $mode == 'global_user' && ( isset($_POST['username']) || $user_id ) ) |
 		$t_usergroup_list = $lang['None'];
 	}
 
-	for($i = 0; $i < count($global_auth_fields); $i++)
+	for($i = 0; $i < count_safe($global_auth_fields); $i++)
 	{
 		$cell_title = $global_fields_names[$global_auth_fields[$i]];
 

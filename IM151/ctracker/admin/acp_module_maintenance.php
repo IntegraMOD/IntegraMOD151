@@ -72,7 +72,7 @@ for ( $i = 0; $i <= 4; $i++ )
 ( defined('protection_unit_one') )  ? $testvalue[1] = $lang['ctracker_ma_active'] : $testvalue[1] = $lang['ctracker_ma_inactive'];
 ( defined('protection_unit_two') )  ? $testvalue[2] = $lang['ctracker_ma_active'] : $testvalue[2] = $lang['ctracker_ma_inactive'];
 ( defined('protection_unit_three') )? $testvalue[3] = $lang['ctracker_ma_active'] : $testvalue[3] = $lang['ctracker_ma_inactive'];
-( count($ct_rules) >= 260 )         ? $testvalue[4] = $lang['ctracker_ma_active'] : $testvalue[4] = $lang['ctracker_ma_inactive'];
+( count_safe($ct_rules) >= 260 )         ? $testvalue[4] = $lang['ctracker_ma_active'] : $testvalue[4] = $lang['ctracker_ma_inactive'];
 
 ($uplink_values[2] <= @phpversion())? $testvalue[5] = $lang['ctracker_ma_secure'] : $testvalue[5] = $lang['ctracker_ma_warning'];
 
@@ -173,7 +173,7 @@ else if ( $mode == '2' )
 	$sql[] = "INSERT INTO " . CTRACKER_IPBLOCKER . " (`id`, `ct_blocker_value`) VALUES (31, 'lwp-*');";
 	$sql[] = "INSERT INTO " . CTRACKER_IPBLOCKER . " (`id`, `ct_blocker_value`) VALUES (32, '*anonym*');";
 
-	for ( $i = 0; $i < count($sql); $i++ )
+	for ( $i = 0; $i < count_safe($sql); $i++ )
 	{
 		if ( !$operation_err && !($result = $db->sql_query($sql[$i])) )
 		{
@@ -249,7 +249,7 @@ $template->assign_vars(array(
 		'L_NAME_1'		 => $lang['ctracker_ma_name_1'],
 		'L_NAME_2'		 => $lang['ctracker_ma_name_2'],
 		'L_NAME_3'		 => $lang['ctracker_ma_name_3'],
-		'L_NAME_4'		 => sprintf($lang['ctracker_ma_name_4'], count($ct_rules) + count($ct_spammer_def) + count($ct_mailscn_def) + count($ct_userspm_def) + $ctracker_config->blocklist_count),
+		'L_NAME_4'		 => sprintf($lang['ctracker_ma_name_4'], count_safe($ct_rules) + count_safe($ct_spammer_def) + count_safe($ct_mailscn_def) + count_safe($ct_userspm_def) + $ctracker_config->blocklist_count),
 		'L_VAL_1'		 => $testvalue[1],
 		'L_VAL_2'		 => $testvalue[2],
 		'L_VAL_3'		 => $testvalue[3],

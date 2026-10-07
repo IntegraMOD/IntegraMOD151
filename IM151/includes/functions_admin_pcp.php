@@ -429,7 +429,7 @@ function pcp_input_type($name, $value)
 	}
 
 	$res = '<select name="' . $name . '">';
-	for ( $i = 0; $i < count($type_list); $i++ )
+	for ( $i = 0; $i < count_safe($type_list); $i++ )
 	{
 		$selected = ( $value == $type_list[$i] ) ? ' selected="selected"' : '';
 		$res .= '<option value="' . $type_list[$i] . '"' . $selected . '>' . pcp_format_lang($type_list[$i]) . '</option>';
@@ -445,7 +445,7 @@ function pcp_input_get_mode($name, $value)
 	$res = '<select name="' . $name . '">';
 	$selected = empty($value) ? ' selected="selected"' : '';
 	$res .= '<option value=""' . $selected . '>' . $lang['None'] . '</option>';
-	for ( $i = 0; $i < count($get_mode_list); $i++ )
+	for ( $i = 0; $i < count_safe($get_mode_list); $i++ )
 	{
 		$selected = ( $value == $get_mode_list[$i] ) ? ' selected="selected"' : '';
 		$res .= '<option value="' . $get_mode_list[$i] . '"' . $selected . '>' . pcp_format_lang($get_mode_list[$i]) . '</option>';

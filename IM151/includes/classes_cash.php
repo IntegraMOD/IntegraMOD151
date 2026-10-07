@@ -608,7 +608,7 @@ if ( defined('CM_POSTING') )
                 if ( !$all_active )
                 {
                     $sum = 0;
-                    for ( $i = 0; $i < count($forumlist); $i++ )
+                    for ( $i = 0; $i < count_safe($forumlist); $i++ )
                     {
                         if ( $c_cur->forum_active($forumlist[$i]) )
                         {
@@ -645,7 +645,7 @@ if ( defined('CM_POSTING') )
             {
                 return $board_config['cash_disable_spam_message'];
             }
-            if ( count($sql_clause) > 0 )
+            if ( count_safe($sql_clause) > 0 )
             {
                 $sql = "UPDATE " . USERS_TABLE . "
                     SET " . implode(', ',$sql_clause) . "

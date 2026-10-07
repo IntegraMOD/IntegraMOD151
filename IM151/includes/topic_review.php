@@ -274,7 +274,7 @@ function topic_review($topic_id, $is_inline_review)
 
 			$message = make_clickable($message);
 
-			if ( count($orig_word) )
+			if ( count_safe($orig_word) )
 			{
 				$post_subject = preg_replace($orig_word, $replacement_word, $post_subject);
 				$message = preg_replace($orig_word, $replacement_word, $message);

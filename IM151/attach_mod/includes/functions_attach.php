@@ -350,7 +350,7 @@ function attachment_exists($filename)
 
 		for ($i = 0; $i < sizeof($file_listing); $i++)
 		{
-			if (ereg("([-d])[rwxst-]{9}.* ([0-9]*) ([a-zA-Z]+[0-9: ]*[0-9]) ([0-9]{2}:[0-9]{2}) (.+)", $file_listing[$i], $regs))
+			if (preg_match('~([-d])[rwxst-]{9}.* ([0-9]*) ([a-zA-Z]+[0-9: ]*[0-9]) ([0-9]{2}:[0-9]{2}) (.+)~D', $file_listing[$i], $regs))
 			{
 				if ($regs[1] == 'd') 
 				{	
@@ -405,7 +405,7 @@ function thumbnail_exists($filename)
 
 		for ($i = 0; $i < sizeof($file_listing); $i++)
 		{
-			if (ereg("([-d])[rwxst-]{9}.* ([0-9]*) ([a-zA-Z]+[0-9: ]*[0-9]) ([0-9]{2}:[0-9]{2}) (.+)", $file_listing[$i], $regs))
+			if (preg_match('~([-d])[rwxst-]{9}.* ([0-9]*) ([a-zA-Z]+[0-9: ]*[0-9]) ([0-9]{2}:[0-9]{2}) (.+)~D', $file_listing[$i], $regs))
 			{
 				if ($regs[1] == 'd')
 				{	
@@ -774,7 +774,7 @@ function attachment_sync_topic($topic_id)
 		message_die(GENERAL_ERROR, 'Couldn\'t update Topics Table', '', __LINE__, __FILE__, $sql);
 	}
 		
-	for ($i = 0; $i < count($post_ids); $i++)
+	for ($i = 0; $i < count_safe($post_ids); $i++)
 	{
 		$sql = 'SELECT attach_id 
 			FROM ' . ATTACHMENTS_TABLE . ' 

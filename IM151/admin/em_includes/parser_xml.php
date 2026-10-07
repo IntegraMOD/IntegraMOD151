@@ -74,9 +74,8 @@ class mod_parser_xml
 		$XML = $this->mod_contents;
 
 		$this->parser = xml_parser_create();
-		xml_set_object($this->parser, $this);
-		xml_set_element_handler($this->parser, '_tag_open', '_tag_closed');
-		xml_set_character_data_handler($this->parser, '_tag_data');
+		xml_set_element_handler($this->parser, array($this, '_tag_open'), array($this, '_tag_closed'));
+		xml_set_character_data_handler($this->parser, array($this, '_tag_data'));
 
 		//$XML = str_replace('&lt;', '<![CDATA[&lt;]]>', $XML);
 		//$XML = str_replace('&gt;', '<![CDATA[&gt;]]>', $XML);
@@ -118,20 +117,20 @@ class mod_parser_xml
 	{
 		if(!empty($tag_data))
 		{
-			if(isset($this->data[count($this->data)-1]['data']))
+			if(isset($this->data[count_safe($this->data)-1]['data']))
 			{
-				$this->data[count($this->data)-1]['data'] .= $tag_data;
+				$this->data[count_safe($this->data)-1]['data'] .= $tag_data;
 			}
 			else
 			{
-				$this->data[count($this->data)-1]['data'] = $tag_data;
+				$this->data[count_safe($this->data)-1]['data'] = $tag_data;
 			}
 		}
 	}
 
 	function _tag_closed($parser, $name)
 	{
-		$this->data[count($this->data)-2]['children'][$name][] = $this->data[count($this->data)-1];
+		$this->data[count_safe($this->data)-2]['children'][$name][] = $this->data[count_safe($this->data)-1];
 		array_pop($this->data);
 	}
 

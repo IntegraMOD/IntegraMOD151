@@ -114,7 +114,7 @@ class sql_builder_mssql extends sql_builder
 	function build_primary_key(&$sql_data)
 	{
 		$keys = array();
-		for( $i = 0; $i < count($sql_data['primary_keys']); $i++ )
+		for( $i = 0; $i < count_safe($sql_data['primary_keys']); $i++ )
 		{
 			$key_data = &$sql_data['primary_keys'][$i];
 			$key_order = ( $key_data['order'] != 'ASC' ? ' DESC' : '' );
@@ -132,7 +132,7 @@ class sql_builder_mssql extends sql_builder
 		$table_name = $sql_data['table_name'];
 		$index_name = $this->get_identifier($sql_data['table_name'] . '_' . $index_data['name']);
 		$keys = array();
-		for( $i = 0; $i < count($index_data['keys']); $i++ )
+		for( $i = 0; $i < count_safe($index_data['keys']); $i++ )
 		{
 			$key_data = &$index_data['keys'][$i];
 			$key_order = ( $key_data['order'] != 'ASC' ? ' DESC' : '' );
@@ -163,7 +163,7 @@ class sql_builder_mssql extends sql_builder
 			}
 			$lines[] = $this->indent . $this->build_column_definition($column_data);
 		}
-		if( count($sql_data['primary_keys']) > 0 )
+		if( count_safe($sql_data['primary_keys']) > 0 )
 		{
 			$lines[] = $this->indent . $this->build_primary_key($sql_data);
 		}

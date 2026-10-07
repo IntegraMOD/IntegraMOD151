@@ -105,7 +105,7 @@ if ($mode == 'export_module')
 	$content .= '// [' . $language . ']' . "\n";
 	$content .= '// [module:' . $short_name . ']' . "\n";
 
-	for ($i = 0; $i < count($language_content); $i++)
+	for ($i = 0; $i < count_safe($language_content); $i++)
 	{
 		$content .= '$lang[\'' . $language_content[$i]['key'] . '\'] = \'' . $language_content[$i]['value'] . '\';' . "\n";
 	}
@@ -176,7 +176,7 @@ else if ($mode == 'export_lang')
 	
 		$content .= '// [module:' . $short_name . ']' . "\n";
 
-		for ($j = 0; $j < count($language_content); $j++)
+		for ($j = 0; $j < count_safe($language_content); $j++)
 		{
 			$content .= '$lang[\'' . $language_content[$j]['key'] . '\'] = \'' . $language_content[$j]['value'] . '\';' . "\n";
 		}
@@ -247,7 +247,7 @@ else if ($mode == 'export_everything')
 	
 			$content .= '// [module:' . $short_name . ']' . "\n";
 
-			for ($j = 0; $j < count($language_content); $j++)
+			for ($j = 0; $j < count_safe($language_content); $j++)
 			{
 				$content .= '$lang[\'' . $language_content[$j]['key'] . '\'] = \'' . $language_content[$j]['value'] . '\';' . "\n";
 			}

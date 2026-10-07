@@ -166,7 +166,7 @@ while (isset($user_list[$i]['user_id']))
 		$group_moderator[] = $row_group['group_id'];
 	}
 		
-	if ( count($group_moderator) )
+	if ( count_safe($group_moderator) )
 	{
 		$update_moderator_id = implode(', ', $group_moderator);
 		$sql = "UPDATE " . GROUPS_TABLE . "
@@ -262,7 +262,7 @@ while (isset($user_list[$i]['user_id']))
 		$mark_list[] = $row_privmsgs['privmsgs_id'];
 	}
 			
-	if ( count($mark_list) )
+	if ( count_safe($mark_list) )
 	{
 		$delete_sql_id = implode(', ', $mark_list);
 			

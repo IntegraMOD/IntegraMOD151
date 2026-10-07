@@ -118,9 +118,9 @@ switch($mode_id)
 		}
 		$warning_message_defined = FALSE;
 
-		for($i = 0; $i < count($mtnc); $i++)
+		for($i = 0; $i < count_safe($mtnc); $i++)
 		{
-			if ( count($mtnc[$i]) && $mtnc[$i][0] == $function )
+			if ( count_safe($mtnc[$i]) && $mtnc[$i][0] == $function )
 			{
 				$warning_message = $mtnc[$i];
 				$warning_message_defined = TRUE;
@@ -539,7 +539,7 @@ switch($mode_id)
 					$result_array[] = $row['group_id'];
 				}
 				$db->sql_freeresult($result);
-				if ( count($result_array) )
+				if ( count_safe($result_array) )
 				{
 					$db_updated = TRUE;
 					$record_list = implode(',', $result_array);
@@ -584,7 +584,7 @@ switch($mode_id)
 				}
 				$db->sql_freeresult($result);
 				// Check for multiple records
-				if ( count($multiple_groups) )
+				if ( count_safe($multiple_groups) )
 				{
 					$db_updated = TRUE;
 					$record_list = implode(',', $multiple_groups);
@@ -643,12 +643,12 @@ switch($mode_id)
 					$list_open = FALSE;
 				}
 				// Create single user groups
-				if ( count($missing_groups) )
+				if ( count_safe($missing_groups) )
 				{
 					$db_updated = TRUE;
 					$record_list = implode(',', $missing_groups);
 					echo("<p class=\"gen\">" . $lang['Recreating_SUG'] . ": $record_list</p>\n");
-					for($i = 0; $i < count($missing_groups); $i++)
+					for($i = 0; $i < count_safe($missing_groups); $i++)
 					{
 						$group_name = ($missing_groups[$i] == ANONYMOUS) ? 'Anonymous' : '';
 						$sql = "INSERT INTO " . GROUPS_TABLE . " (group_type, group_name, group_description, group_moderator, group_single_user)
@@ -802,7 +802,7 @@ switch($mode_id)
 					$result_array[] = $row['user_id'];
 				}
 				$db->sql_freeresult($result);
-				if ( count($result_array) )
+				if ( count_safe($result_array) )
 				{
 					$record_list = implode(',', $result_array);
 					$sql = "DELETE FROM " . USER_GROUP_TABLE . "
@@ -845,7 +845,7 @@ switch($mode_id)
 					$result_array[] = $row['group_id'];
 				}
 				$db->sql_freeresult($result);
-				if ( count($result_array) )
+				if ( count_safe($result_array) )
 				{
 					$record_list = implode(',', $result_array);
 					$sql = "DELETE FROM " . GROUPS_TABLE . "
@@ -888,7 +888,7 @@ switch($mode_id)
 					$result_array[] = $row['group_id'];
 				}
 				$db->sql_freeresult($result);
-				if ( count($result_array) )
+				if ( count_safe($result_array) )
 				{
 					$record_list = implode(',', $result_array);
 					$sql = "DELETE FROM " . USER_GROUP_TABLE . "
@@ -942,7 +942,7 @@ switch($mode_id)
 					echo("</ul></font>\n");
 					$list_open = FALSE;
 				}
-				if ( count($result_array) )
+				if ( count_safe($result_array) )
 				{
 					echo("<p class=\"gen\">" . $lang['Removing_invalid_ranks'] . "</p>\n");
 					$record_list = implode(',', $result_array);
@@ -995,7 +995,7 @@ switch($mode_id)
 					}
 				}
 				$db->sql_freeresult($result);
-				if ( count($result_array) )
+				if ( count_safe($result_array) )
 				{
 					$new_style = 0;
 					$record_list = implode(',', $result_array);
@@ -1066,7 +1066,7 @@ switch($mode_id)
 					$result_array[] = $row['themes_id'];
 				}
 				$db->sql_freeresult($result);
-				if ( count($result_array) )
+				if ( count_safe($result_array) )
 				{
 					echo("<p class=\"gen\">" . $lang['Removing_invalid_theme_names'] . "</p>\n");
 					$record_list = implode(',', $result_array);
@@ -1112,7 +1112,7 @@ switch($mode_id)
 					}
 				}
 				$db->sql_freeresult($result);
-				if ( count($result_array) )
+				if ( count_safe($result_array) )
 				{
 					// Getting default board_language as long as the original one was changed in functions.php
 					$sql = "SELECT config_value
@@ -1158,7 +1158,7 @@ switch($mode_id)
 					echo("<font class=\"gen\"><ul>\n");
 					$list_open = TRUE;
 
-					for($i = 0; $i < count($result_array); $i++)
+					for($i = 0; $i < count_safe($result_array); $i++)
 					{
 						echo("<li>" . sprintf($lang['Changing_language'], $result_array[$i], $default_lang) . "</li>\n");
 						$sql = "UPDATE " . USERS_TABLE . "
@@ -1199,7 +1199,7 @@ switch($mode_id)
 					$result_array[] = $row['ban_userid'];
 				}
 				$db->sql_freeresult($result);
-				if ( count($result_array) )
+				if ( count_safe($result_array) )
 				{
 					$record_list = implode(',', $result_array);
 					$sql = "DELETE FROM " . BANLIST_TABLE . "
@@ -1250,7 +1250,7 @@ switch($mode_id)
 					$result_array[] = $row['post_id'];
 				}
 				$db->sql_freeresult($result);
-				if ( count($result_array) )
+				if ( count_safe($result_array) )
 				{
 					$record_list = implode(',', $result_array);
 					echo("<p class=\"gen\">" . $lang['Invalid_poster_found'] . ": $record_list</p>\n");
@@ -1342,7 +1342,7 @@ switch($mode_id)
 					echo("</ul></font>\n");
 					$list_open = FALSE;
 				}
-				if ( count($result_array) )
+				if ( count_safe($result_array) )
 				{
 					$record_list = implode(',', $result_array);
 					$new_cat = create_cat();
@@ -1392,7 +1392,7 @@ switch($mode_id)
 					echo("</ul></font>\n");
 					$list_open = FALSE;
 				}
-				if ( count($result_array) )
+				if ( count_safe($result_array) )
 				{
 					$record_list = implode(',', $result_array);
 					echo("<p class=\"gen\">" . $lang['Deleting_Posts'] . " </p>\n");
@@ -1440,7 +1440,7 @@ switch($mode_id)
 					echo("</ul></font>\n");
 					$list_open = FALSE;
 				}
-				if ( count($result_array) )
+				if ( count_safe($result_array) )
 				{
 					$record_list = implode(',', $result_array);
 					echo("<p class=\"gen\">" . $lang['Deleting_topics'] . " </p>\n");
@@ -1487,7 +1487,7 @@ switch($mode_id)
 					echo("</ul></font>\n");
 					$list_open = FALSE;
 				}
-				if ( count($result_array) )
+				if ( count_safe($result_array) )
 				{
 					$record_list = implode(',', $result_array);
 					$new_forum = create_forum();
@@ -1530,11 +1530,11 @@ switch($mode_id)
 					throw_error("Couldn't get post and topic data!", __LINE__, __FILE__, $sql);
 				}
 				$row = $db->sql_fetchrow($result); // We need to do it outside the while-condition to prevent endless loops
-				while ( $row || count($result_array) )
+				while ( $row || count_safe($result_array) )
 				{
 					if ( $current_topic != $row['topic_id'] || !$row )
 					{
-						if ( count($result_array) )
+						if ( count_safe($result_array) )
 						{
 							// Restoring topic
 							if (!$list_open)
@@ -1547,7 +1547,7 @@ switch($mode_id)
 							$new_forum = create_forum();
 							$first_post = implode(',', array_slice($result_array, 0, 1));
 							$last_post = implode(',', array_slice($result_array, -1, 1));
-							$post_replies = count($result_array) - 1;
+							$post_replies = count_safe($result_array) - 1;
 							// Get title for new topic
 							$sql2 = "SELECT post_subject
 								FROM " . POSTS_TEXT_TABLE . "
@@ -1733,7 +1733,7 @@ switch($mode_id)
 					$result_array[] = $row['topic_id'];
 				}
 				$db->sql_freeresult($result);
-				if ( count($result_array) )
+				if ( count_safe($result_array) )
 				{
 					$record_list = implode(',', $result_array);
 					echo("<p class=\"gen\">" . $lang['Deleting_invalid_moved_topics'] . "</p>\n");
@@ -1816,7 +1816,7 @@ switch($mode_id)
 					$result_array[] = $row['forum_id'];
 				}
 				$db->sql_freeresult($result);
-				if ( count($result_array) )
+				if ( count_safe($result_array) )
 				{
 					echo("<p class=\"gen\">" . $lang['Removing_invalid_prune_settings'] . "</p>\n");
 					$record_list = implode(',', $result_array);
@@ -1855,7 +1855,7 @@ switch($mode_id)
 					$result_array[] = $row['forum_id'];
 				}
 				$db->sql_freeresult($result);
-				if ( count($result_array) )
+				if ( count_safe($result_array) )
 				{
 					$record_list = implode(',', $result_array);
 					$sql = "UPDATE " . FORUMS_TABLE . "
@@ -1915,14 +1915,14 @@ switch($mode_id)
 					$topic_array[] = $row['topic_id'];
 				}
 				$db->sql_freeresult($result);
-				if ( count($user_array) || count($topic_array) )
+				if ( count_safe($user_array) || count_safe($topic_array) )
 				{
 					$sql_query = '';
-					if ( count($user_array) )
+					if ( count_safe($user_array) )
 					{
 						$sql_query = 'user_id IN (' . implode(',', $user_array) . ') ';
 					}
-					if ( count($topic_array) )
+					if ( count_safe($topic_array) )
 					{
 						$sql_query .= (($sql_query == '') ? '' : ' OR ') . 'topic_id IN (' . implode(',', $topic_array) . ') ';
 					}
@@ -1982,14 +1982,14 @@ switch($mode_id)
 					$forum_array[] = $row['forum_id'];
 				}
 				$db->sql_freeresult($result);
-				if ( count($group_array) || count($forum_array) )
+				if ( count_safe($group_array) || count_safe($forum_array) )
 				{
 					$sql_query = '';
-					if ( count($group_array) )
+					if ( count_safe($group_array) )
 					{
 						$sql_query = 'group_id IN (' . implode(',', $group_array) . ') ';
 					}
-					if ( count($forum_array) )
+					if ( count_safe($forum_array) )
 					{
 						$sql_query .= (($sql_query == '') ? '' : ' OR ') . 'forum_id IN (' . implode(',', $forum_array) . ') ';
 					}
@@ -2064,7 +2064,7 @@ switch($mode_id)
 					echo("</ul></font>\n");
 					$list_open = FALSE;
 				}
-				if ( count($result_array) )
+				if ( count_safe($result_array) )
 				{
 					$record_list = implode(',', $result_array);
 					echo("<p class=\"gen\">" . $lang['Deleting_Votes'] . " </p>\n");
@@ -2126,7 +2126,7 @@ switch($mode_id)
 					echo("</ul></font>\n");
 					$list_open = FALSE;
 				}
-				if ( count($result_array) )
+				if ( count_safe($result_array) )
 				{
 					$record_list = implode(',', $result_array);
 					echo("<p class=\"gen\">" . $lang['Deleting_Votes'] . " </p>\n");
@@ -2176,7 +2176,7 @@ switch($mode_id)
 					$result_array[] = $row['topic_id'];
 				}
 				$db->sql_freeresult($result);
-				if ( count($result_array) )
+				if ( count_safe($result_array) )
 				{
 					$record_list = implode(',', $result_array);
 					echo("<p class=\"gen\">" . $lang['Updating_topics_wo_vote'] . "</p>\n");
@@ -2227,7 +2227,7 @@ switch($mode_id)
 					$result_array[] = $row['topic_id'];
 				}
 				$db->sql_freeresult($result);
-				if ( count($result_array) )
+				if ( count_safe($result_array) )
 				{
 					$record_list = implode(',', $result_array);
 					echo("<p class=\"gen\">" . $lang['Updating_topics_w_vote'] . "</p>\n");
@@ -2331,14 +2331,14 @@ switch($mode_id)
 					$vote_array[] = $row['vote_id'];
 				}
 				$db->sql_freeresult($result);
-				if ( count($user_array) || count($vote_array) )
+				if ( count_safe($user_array) || count_safe($vote_array) )
 				{
 					$sql_query = '';
-					if ( count($user_array) )
+					if ( count_safe($user_array) )
 					{
 						$sql_query = 'vote_user_id IN (' . implode(',', $user_array) . ') ';
 					}
-					if ( count($vote_array) )
+					if ( count_safe($vote_array) )
 					{
 						$sql_query .= (($sql_query == '') ? '' : ' OR ') . 'vote_id IN (' . implode(',', $vote_array) . ') ';
 					}
@@ -2401,7 +2401,7 @@ switch($mode_id)
 					echo("</ul></font>\n");
 					$list_open = FALSE;
 				}
-				if ( count($result_array) )
+				if ( count_safe($result_array) )
 				{
 					$record_list = implode(',', $result_array);
 					echo("<p class=\"gen\">" . $lang['Deleting_Pms'] . " </p>\n");
@@ -2435,7 +2435,7 @@ switch($mode_id)
 					$result_array[] = $row['privmsgs_text_id'];
 				}
 				$db->sql_freeresult($result);
-				if ( count($result_array) )
+				if ( count_safe($result_array) )
 				{
 					echo("<p class=\"gen\">" . $lang['Deleting_pm_texts'] . "</p>\n");
 					$record_list = implode(',', $result_array);
@@ -2478,7 +2478,7 @@ switch($mode_id)
 					$result_array[] = $row['privmsgs_id'];
 				}
 				$db->sql_freeresult($result);
-				if ( count($result_array) )
+				if ( count_safe($result_array) )
 				{
 					$record_list = implode(',', $result_array);
 					echo("<p class=\"gen\">" . $lang['Invalid_pm_senders_found'] . ": $record_list</p>\n");
@@ -2514,7 +2514,7 @@ switch($mode_id)
 					$result_array[] = $row['privmsgs_id'];
 				}
 				$db->sql_freeresult($result);
-				if ( count($result_array) )
+				if ( count_safe($result_array) )
 				{
 					$record_list = implode(',', $result_array);
 					echo("<p class=\"gen\">" . $lang['Invalid_pm_recipients_found'] . ": $record_list</p>\n");
@@ -2550,7 +2550,7 @@ switch($mode_id)
 					$result_array[] = $row['privmsgs_id'];
 				}
 				$db->sql_freeresult($result);
-				if ( count($result_array) )
+				if ( count_safe($result_array) )
 				{
 					$record_list = implode(',', $result_array);
 					echo("<p class=\"gen\">" . $lang['Invalid_pm_users_found'] . ": $record_list</p>\n");
@@ -2626,7 +2626,7 @@ switch($mode_id)
 				}
 				$db->sql_freeresult($result);
 				// All other users
-				if ( count($result_array) )
+				if ( count_safe($result_array) )
 				{
 					$sql_string = 'user_id NOT IN (' . implode(',', $result_array) . ') AND';
 				}
@@ -2722,7 +2722,7 @@ switch($mode_id)
 				}
 				$db->sql_freeresult($result);
 				// All other users
-				if ( count($result_array) )
+				if ( count_safe($result_array) )
 				{
 					$sql_string = 'user_id NOT IN (' . implode(',', $result_array) . ') AND';
 				}
@@ -2808,14 +2808,14 @@ switch($mode_id)
 					$word_array[] = $row['word_id'];
 				}
 				$db->sql_freeresult($result);
-				if ( count($post_array) || count($word_array) )
+				if ( count_safe($post_array) || count_safe($word_array) )
 				{
 					$sql_query = '';
-					if ( count($post_array) )
+					if ( count_safe($post_array) )
 					{
 						$sql_query = 'post_id IN (' . implode(',', $post_array) . ') ';
 					}
-					if ( count($word_array) )
+					if ( count_safe($word_array) )
 					{
 						$sql_query .= (($sql_query == '') ? '' : ' OR ') . 'word_id IN (' . implode(',', $word_array) . ') ';
 					}
@@ -2864,7 +2864,7 @@ switch($mode_id)
 				while ( $row = $db->sql_fetchrow($result) )
 				{
 					$result_array[] = $row['word_id'];
-					if ( count($result_array) >= 100 )
+					if ( count_safe($result_array) >= 100 )
 					{
 						echo("<p class=\"gen\">" . $lang['Removing_part_invalid_words'] . "...</p>\n");
 						$record_list = implode(',', $result_array);
@@ -2880,7 +2880,7 @@ switch($mode_id)
 					}
 				}
 				$db->sql_freeresult($result);
-				if ( count($result_array) )
+				if ( count_safe($result_array) )
 				{
 					echo("<p class=\"gen\">" . $lang['Removing_invalid_words'] . "</p>\n");
 					$record_list = implode(',', $result_array);
@@ -3097,12 +3097,12 @@ switch($mode_id)
 						}
 						$empty_array = array(); // We'll need this array for passing it to the clean_words function
 						// Convert arrays
-						for ($i = 0; $i < count($stopword_array); $i++)
+						for ($i = 0; $i < count_safe($stopword_array); $i++)
 						{
 							$stopword_array[$i] = trim(strtolower($stopword_array[$i]));
 						}
 						$result_array = array(array(), array());
-						for ($i = 0; $i < count($synonym_array); $i++)
+						for ($i = 0; $i < count_safe($synonym_array); $i++)
 						{
 							list($replace_synonym, $match_synonym) = explode(' ', trim(strtolower($synonym_array[$i])));
 							$result_array[0][] = trim($replace_synonym);
@@ -3148,7 +3148,7 @@ switch($mode_id)
 						$cache_word_id = 0;
 						$insert_values = '';
 						$word_array = array();
-						$array_count = count($result_array[0]);
+						$array_count = count_safe($result_array[0]);
 						for ($i = 0; $i < $array_count; $i++)
 						{
 							if ( $result_array[2][$i] !== $cache_word ) // We have a new word (don't allow type conversions)
@@ -3428,7 +3428,7 @@ switch($mode_id)
 					$result_array[] = $row['forum_id'];
 				}
 				$db->sql_freeresult($result);
-				if ( count($result_array) )
+				if ( count_safe($result_array) )
 				{
 					$record_list = implode(',', $result_array);
 					$sql = "UPDATE " . FORUMS_TABLE . "
@@ -3529,7 +3529,7 @@ switch($mode_id)
 					$result_array[] = $row['forum_id'];
 				}
 				$db->sql_freeresult($result);
-				if ( count($result_array) )
+				if ( count_safe($result_array) )
 				{
 					$record_list = implode(',', $result_array);
 					$sql = "UPDATE " . FORUMS_TABLE . "
@@ -3626,7 +3626,7 @@ switch($mode_id)
 				}
 				$db->sql_freeresult($result);
 				// All other users
-				if ( count($result_array) )
+				if ( count_safe($result_array) )
 				{
 					$sql_string = 'user_id NOT IN (' . implode(',', $result_array) . ') AND';
 				}
@@ -3708,7 +3708,7 @@ switch($mode_id)
 					$result_array[] = $row['user_id'];
 				}
 				$db->sql_freeresult($result);
-				if ( count($result_array) )
+				if ( count_safe($result_array) )
 				{
 					$moderator_list = implode(',', $result_array);
 				}
@@ -3934,7 +3934,7 @@ switch($mode_id)
 				echo("<font class=\"gen\"><ul>\n");
 				$list_open = TRUE;
 
-				for($i = 0; $i < count($tables); $i++)
+				for($i = 0; $i < count_safe($tables); $i++)
 				{
 					$tablename = $table_prefix . $tables[$i];
 					$sql = "CHECK TABLE $tablename";
@@ -3985,7 +3985,7 @@ switch($mode_id)
 				echo("<font class=\"gen\"><ul>\n");
 				$list_open = TRUE;
 
-				for($i = 0; $i < count($tables); $i++)
+				for($i = 0; $i < count_safe($tables); $i++)
 				{
 					$tablename = $table_prefix . $tables[$i];
 					$sql = "REPAIR TABLE $tablename";
@@ -4037,7 +4037,7 @@ switch($mode_id)
 				echo("<font class=\"gen\"><ul>\n");
 				$list_open = TRUE;
 
-				for($i = 0; $i < count($tables); $i++)
+				for($i = 0; $i < count_safe($tables); $i++)
 				{
 					$tablename = $table_prefix . $tables[$i];
 					$sql = "OPTIMIZE TABLE $tablename";
@@ -4153,9 +4153,9 @@ switch($mode_id)
 		// OK, let's list the functions
 		//
 
-		for($i = 0; $i < count($mtnc); $i++)
+		for($i = 0; $i < count_safe($mtnc); $i++)
 		{
-			if ( count($mtnc[$i]) && check_condition($mtnc[$i][4]))
+			if ( count_safe($mtnc[$i]) && check_condition($mtnc[$i][4]))
 			{
 				if ($mtnc[$i][0] == '--')
 				{

@@ -81,7 +81,7 @@ switch ( $mode )
 					}
 				}
 			}
-			if ( count($updates) )
+			if ( count_safe($updates) )
 			{
 				$updated_data = implode(CASH_EVENT_DELIM1,$updates);
 			}
@@ -195,11 +195,11 @@ switch ( $mode )
 			"L_NO_EVENTS" => $lang['No_events'])
 		);
 
-		for ( $i = 0; $i < count($events); $i++ )
+		for ( $i = 0; $i < count_safe($events); $i++ )
 		{
 			$template->assign_block_vars('eventrow',array(	"NAME" => $events[$i]['event_name'] ) );
 		}
-		if ( !count($events) )
+		if ( !count_safe($events) )
 		{
 			$template->assign_block_vars('switch_noevents',array() );
 		}

@@ -77,7 +77,7 @@ switch($mode)
 		else
 		{
 			$message .= $lang['ND_connected'];
-			$first_line = trim(fgetss($remote, 1024));
+			$first_line = trim(strip_tags(fgets($remote, 1024)));
 			if( $first_line == 'Disabled' )
 			{
 				$message .= '<br /><br />' . $lang['ND_disabled'];
@@ -89,7 +89,7 @@ switch($mode)
 				$f_contents = array();
 				while ( !feof($remote) )
 				{
-					$f_contents[] = trim(fgetss($remote, 1024));
+					$f_contents[] = trim(strip_tags(fgets($remote, 1024)));
 					$num_lines++;
 				}
 				fclose ($remote);
@@ -312,7 +312,7 @@ switch($mode)
 			'S_FORM_ACTION' => append_sid('admin_im_network.'.$phpEx))
 		);
 
-		for($i = 0; $i < count($sites); $i++)
+		for($i = 0; $i < count_safe($sites); $i++)
 		{
 			$row_color = ( !($i % 2) ) ? $theme['td_color1'] : $theme['td_color2'];
 			$row_class = ( !($i % 2) ) ? $theme['td_class1'] : $theme['td_class2'];

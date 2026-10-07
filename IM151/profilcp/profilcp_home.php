@@ -60,14 +60,14 @@ $right_part = false;
 
 // pre process : global init
 $process = 'pre';
-for ($home_module=0; $home_module < count($home_modules['url']); $home_module++)
+for ($home_module=0; $home_module < count_safe($home_modules['url']); $home_module++)
 {
 	include( $phpbb_root_path . './profilcp/' . $home_modules['url'][$home_module] );
 }
 
 // post process : display, paginations and so
 $process = 'post';
-for ($home_module=0; $home_module < count($home_modules['url']); $home_module++)
+for ($home_module=0; $home_module < count_safe($home_modules['url']); $home_module++)
 {
 	include( $phpbb_root_path . './profilcp/' . $home_modules['url'][$home_module] );
 }

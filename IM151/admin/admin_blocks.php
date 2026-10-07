@@ -61,7 +61,7 @@ function fix_weight_blocks($l_id)
 		message_die(GENERAL_ERROR, "Could not query blocks table", $lang['Error'], __LINE__, __FILE__, $sql);
 	}
 	$rows = $db->sql_fetchrowset($result);
-	$count = count($rows);
+	$count = count_safe($rows);
 
 	for($i = 0; $i < $count; $i++)
 	{
@@ -876,7 +876,7 @@ else if ($mode == "blocks")
 	}
 
 	$b_rows = $db->sql_fetchrowset($result);
-	$b_count = count($b_rows);
+	$b_count = count_safe($b_rows);
 	
 	$s_hidden_fields .= '<input type="hidden" name="lid" value="' . $l_id . '" />';
 
@@ -1057,7 +1057,7 @@ else
 	}
 
 	$l_rows = $db->sql_fetchrowset($result);
-	$l_count = count($l_rows);
+	$l_count = count_safe($l_rows);
 
 	$template->assign_vars(array(
 		"L_BLOCKS_TITLE" => $lang['Blocks_Title'],

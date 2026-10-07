@@ -56,7 +56,7 @@ include_once($phpbb_root_path .'includes/phpbb_security.'. $phpEx);
 		{
 	$start			= isset($_GET['start']) ? intval($_GET['start']) : 0;
 	$caught_data 	= phpBBSecurity_Caught($start, $board_config['phpBBSecurity_per_page']);
-	$caught_count	= count($caught_data);
+	$caught_count	= count_safe($caught_data);
 	$total 			= phpBBSecurity_Total();
 	$pagination 	= generate_pagination("login_security.$phpEx?phpBBSecurity=caught", $total, $board_config['phpBBSecurity_per_page'], $start). '&nbsp;';
 	$page_number 	= sprintf($lang['Page_of'], (floor($start / $board_config['phpBBSecurity_per_page']) + 1 ), ceil($total / $board_config['phpBBSecurity_per_page']));		

@@ -105,7 +105,7 @@ if( !isset($_POST['mode']) )
 			$catrow[] = $row;
 		}
 
-		for( $i = 0; $i < count($catrow); $i++ )
+		for( $i = 0; $i < count_safe($catrow); $i++ )
 		{
 			$template->assign_block_vars('catrow', array(
 				'COLOR' => ($i % 2) ? 'row1' : 'row2',
@@ -197,7 +197,7 @@ if( !isset($_POST['mode']) )
 			}
 
 			$select_to = '<select name="target"><option value="0">'. $lang['Delete_all'] .'</option>';
-			for ($i = 0; $i < count($catrow); $i++)
+			for ($i = 0; $i < count_safe($catrow); $i++)
 			{
 				$select_to .= '<option value="'. $catrow[$i]['cat_id'] .'">'. $catrow[$i]['cat_title'] .'</option>';
 			}
@@ -348,7 +348,7 @@ else
 				$cat_id_row[] = $row['link_id'];
 			}
 
-			if( count($catrow) != 0 ) // if this category is not empty
+			if( count_safe($catrow) != 0 ) // if this category is not empty
 			{
 
 				// Delete pic entries in db

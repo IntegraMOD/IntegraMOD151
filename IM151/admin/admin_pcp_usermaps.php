@@ -82,7 +82,7 @@ function pcp_affect_order(&$maps)
 		// get parent
 		$w_keys = explode('.', $map_name);
 		$new_keys = array();
-		for ($i=0; $i < (count($w_keys)-1); $i++)
+		for ($i=0; $i < (count_safe($w_keys)-1); $i++)
 		{
 			$new_keys[] = $w_keys[$i];
 		}
@@ -96,7 +96,7 @@ function pcp_affect_order(&$maps)
 				// get parent
 				$w_keys = explode('.', $w_map_name);
 				$new_keys = array();
-				for ($i=0; $i < (count($w_keys)-1); $i++)
+				for ($i=0; $i < (count_safe($w_keys)-1); $i++)
 				{
 					$new_keys[] = $w_keys[$i];
 				}
@@ -133,7 +133,7 @@ function pcp_sort_usermaps($user_maps)
 			// verify parents
 			$keys = explode('.', $w_map_name);
 			$w_keys = array();
-			for ($i=0; $i < count($keys)-1; $i++)
+			for ($i=0; $i < count_safe($keys)-1; $i++)
 			{
 				$w_keys[] = $keys[$i];
 			}
@@ -168,14 +168,14 @@ function pcp_sort_usermaps($user_maps)
 		// get the parent name
 		$w_keys = explode('.', $map_name);
 		$new_keys = array();
-		for ( $i = 0; $i < (count($w_keys)-1); $i++)
+		for ( $i = 0; $i < (count_safe($w_keys)-1); $i++)
 		{
 			$new_keys[] = $w_keys[$i];
 		}
 		$maps[$map_name]['parent'] = implode( '.', $new_keys);
 
 		// get the local order (order+name)
-		$local_order[$map_name] = implode('.', array( sprintf('%09d', intval(isset($map_data['order']) ? $map_data['order'] : 0)), $w_keys[ count($w_keys)-1 ] ) );
+		$local_order[$map_name] = implode('.', array( sprintf('%09d', intval(isset($map_data['order']) ? $map_data['order'] : 0)), $w_keys[ count_safe($w_keys)-1 ] ) );
 	}
 	@array_multisort($names, $maps);
 
@@ -221,15 +221,15 @@ function pcp_get_tree_options($maps, $cur='')
 	foreach ($maps as $map_name => $map_data)
 	{
 		$w_keys = explode('.', $map_name);
-		$inc = count($w_keys);
+		$inc = count_safe($w_keys);
 		$indent = '';
-		for ( $i = 1; $i < count($w_keys); $i++ )
+		for ( $i = 1; $i < count_safe($w_keys); $i++ )
 		{
 			$indent .= '|&nbsp;&nbsp;&nbsp;';
 		}
 		$indent .= '|--&nbsp;';
 		$selected = ($cur == $map_name) ? ' selected="selected"' : '';
-		$res .= '<option value="' . $map_name . '"' . $selected . '>' . $indent . $w_keys[ count($w_keys)-1 ] . '</option>';
+		$res .= '<option value="' . $map_name . '"' . $selected . '>' . $indent . $w_keys[ count_safe($w_keys)-1 ] . '</option>';
 	}
 
 	return $res;
@@ -332,7 +332,7 @@ if ($mode == 'move')
 	$mode = '';
 	$w_keys = explode('.', $map);
 	$new_keys = array();
-	for ( $i = 0; $i < (count($w_keys)-1); $i++ )
+	for ( $i = 0; $i < (count_safe($w_keys)-1); $i++ )
 	{
 		$new_keys[] = $w_keys[$i];
 	}
@@ -352,7 +352,7 @@ $map_nav_desc = '<a href="' . append_sid("./admin_pcp_usermaps.$phpEx") . '" cla
 if ( !empty($cur_map) )
 {
 	$cur_lvl = '';
-	for ($i=0; $i < count($keys); $i++)
+	for ($i=0; $i < count_safe($keys); $i++)
 	{
 		$cur_lvl .= ( empty($cur_lvl) ? '' : '.' ) . $keys[$i];
 		$map_nav_desc .= $nav_separator . '<a href="' . append_sid("./admin_pcp_usermaps.$phpEx?map=" . $cur_lvl) . '" class="nav">' . $keys[$i] . '</a>';
@@ -364,9 +364,9 @@ if ( $mode == 'edit' )
 {
 	// get back information from memory
 	$w_keys = explode('.', $map);
-	$name = $w_keys[ count($w_keys)-1 ];
+	$name = $w_keys[ count_safe($w_keys)-1 ];
 	$new_keys = array();
-	for ($i = 0; $i < (count($w_keys)-1); $i++)
+	for ($i = 0; $i < (count_safe($w_keys)-1); $i++)
 	{
 		$new_keys[] = $w_keys[$i];
 	}
@@ -695,7 +695,7 @@ if ( $mode == 'edit' )
 		if ( isset($_POST['suggest']) && empty($field_det['ind']) )
 		{
 			$last_ind = 0;
-			for ( $i = 0; $i < count($fields['ind']); $i++ )
+			for ( $i = 0; $i < count_safe($fields['ind']); $i++ )
 			{
 				if ( $fields['ind'][$i] > $last_ind )
 				{
@@ -721,7 +721,7 @@ if ( $mode == 'edit' )
 			if ( $is_title )
 			{
 				$new_title_fields = array();
-				for ($i = 0; $i < count($title_fields['field_name']); $i++)
+				for ($i = 0; $i < count_safe($title_fields['field_name']); $i++)
 				{
 					if ( $i != $title_id )
 					{
@@ -732,12 +732,12 @@ if ( $mode == 'edit' )
 					}
 				}
 				$title_fields = $new_title_fields;
-				$nb_title_fields = count($title_fields['field_name']);
+				$nb_title_fields = count_safe($title_fields['field_name']);
 			}
 			else
 			{
 				$new_fields = array();
-				for ($i = 0; $i < count($fields['field_name']); $i++)
+				for ($i = 0; $i < count_safe($fields['field_name']); $i++)
 				{
 					if ( $i != $field_id )
 					{
@@ -748,7 +748,7 @@ if ( $mode == 'edit' )
 					}
 				}
 				$fields = $new_fields;
-				$nb_fields = count($fields['field_name']);
+				$nb_fields = count_safe($fields['field_name']);
 			}
 
 			// back to list
@@ -786,7 +786,7 @@ if ( $mode == 'edit' )
 			if ( $is_title )
 			{
 				$found = false;
-				for ($i = 0; $i < count($title_fields['field_name']); $i++)
+				for ($i = 0; $i < count_safe($title_fields['field_name']); $i++)
 				{
 					$found = ( ($title_fields['field_name'][$i] == $field_det['field_name']) && ($title_id != $i) );
 					if ( $found )
@@ -800,7 +800,7 @@ if ( $mode == 'edit' )
 			else
 			{
 				$found = false;
-				for ($i = 0; $i < count($fields['field_name']); $i++)
+				for ($i = 0; $i < count_safe($fields['field_name']); $i++)
 				{
 					$found = ( ($fields['field_name'][$i] == $field_det['field_name']) && ($field_id != $i) );
 					if ( $found )
@@ -871,7 +871,7 @@ if ( $mode == 'edit' )
 			{
 				if ( $title_id < 0 )
 				{
-					$nb_title_fields = count($title_fields['field_name'])+1;
+					$nb_title_fields = count_safe($title_fields['field_name'])+1;
 					$title_id = $nb_title_fields-1;
 				}
 				$id = $title_id;
@@ -880,7 +880,7 @@ if ( $mode == 'edit' )
 			{
 				if ( $field_id < 0 )
 				{
-					$nb_fields = count($fields['field_name'])+1;
+					$nb_fields = count_safe($fields['field_name'])+1;
 					$field_id = $nb_fields-1;
 				}
 				$id = $field_id;
@@ -919,7 +919,7 @@ if ( $mode == 'edit' )
 				'L_TITLE'				=> $is_title ? $lang['PCP_usermaps_title_edit'] : $lang['PCP_usermaps_field_edit'],
 				'L_TITLE_EXPLAIN'		=> $is_title ? $lang['PCP_usermaps_title_edit_explain'] : $lang['PCP_usermaps_field_edit_explain'],
 
-				'SPAN'					=> count($field_cat)+1,
+				'SPAN'					=> count_safe($field_cat)+1,
 
 				'L_SUBMIT'				=> $lang['Submit'],
 				'L_REFRESH'				=> $lang['Refresh'],
@@ -1104,7 +1104,7 @@ if ( $mode == 'edit' )
 			// get the parent map
 			$w_keys = explode('.', $map);
 			$new_keys = array();
-			for ($i=0; $i < (count($w_keys)-1); $i++)
+			for ($i=0; $i < (count_safe($w_keys)-1); $i++)
 			{
 				$new_keys[] = $w_keys[$i];
 			}
@@ -1136,7 +1136,7 @@ if ( $mode == 'edit' )
 			}
 
 			// is the map name ok ?
-			if ( empty($name) || !ereg("^[a-zA-Z0-9_]+", $name) )
+			if ( empty($name) || !preg_match('~^[a-zA-Z0-9_]+~D', $name) )
 			{
 				$error = true;
 				$error_msg .= ( empty($error_msg) ? '' : '<br />' ) . $lang['PCP_err_usermaps_name_not_valid'];
@@ -1178,7 +1178,7 @@ if ( $mode == 'edit' )
 			if ( !empty($title_fields['field_name']) )
 			{
 				$lf_count = -1;
-				for ( $i = 0; $i < count($title_fields['field_name']); $i++ )
+				for ( $i = 0; $i < count_safe($title_fields['field_name']); $i++ )
 				{
 					$field_name = $title_fields['field_name'][$i];
 					if ( !empty($field_name) )
@@ -1220,7 +1220,7 @@ if ( $mode == 'edit' )
 			// fields
 			$wfields = array();
 			$lf_count = -1;
-			for ( $i = 0; $i < count($fields['field_name']); $i++ )
+			for ( $i = 0; $i < count_safe($fields['field_name']); $i++ )
 			{
 				$field_name = $fields['field_name'][$i];
 				if ( substr($field_name, 0, 4) == '[lf]' )
@@ -1326,7 +1326,7 @@ if ( $mode == 'edit' )
 				'L_BUTTON'			=> $lang['PCP_usermaps_add_titlefield'],
 				'BUTTON'			=> 'title',
 
-				'SPAN'				=> count($list_field)+1,
+				'SPAN'				=> count_safe($list_field)+1,
 				)
 			);
 			if ( empty($title_fields['field_name']) )
@@ -1341,7 +1341,7 @@ if ( $mode == 'edit' )
 			{
 				$template->assign_block_vars('block.multi', array());
 				// header
-				for ( $j = 0; $j < count($list_field); $j++ )
+				for ( $j = 0; $j < count_safe($list_field); $j++ )
 				{
 					$template->assign_block_vars('block.multi.col', array(
 						'TITLE'	=> pcp_format_lang($field_def[ $list_field[$j] ]['short']),
@@ -1349,7 +1349,7 @@ if ( $mode == 'edit' )
 					);
 				}
 				$color = false;
-				for ( $i = 0; $i < count($title_fields['field_name']); $i++ )
+				for ( $i = 0; $i < count_safe($title_fields['field_name']); $i++ )
 				{
 					$color = !$color;
 					$template->assign_block_vars('block.multi.row', array(
@@ -1357,7 +1357,7 @@ if ( $mode == 'edit' )
 						'ROW_ID'	=> $i,
 						)
 					);
-					for ( $j = 0; $j < count($list_field); $j++ )
+					for ( $j = 0; $j < count_safe($list_field); $j++ )
 					{
 						$template->assign_block_vars('block.multi.row.col', array(
 							'ALIGN'	=> empty($types_list[ $field_def[ $list_field[$j] ]['type'] ]['align']) ? 'left' : $types_list[ $field_def[ $list_field[$j] ]['type'] ]['align'],
@@ -1367,7 +1367,7 @@ if ( $mode == 'edit' )
 					}
 				}
 				// empty
-				if ( count($title_fields['field_name']) == 0 )
+				if ( count_safe($title_fields['field_name']) == 0 )
 				{
 					$template->assign_block_vars('block.multi.none', array());
 				}
@@ -1382,12 +1382,12 @@ if ( $mode == 'edit' )
 				'L_BUTTON'			=> $lang['PCP_usermaps_add_field'],
 				'BUTTON'			=> 'field',
 
-				'SPAN'				=> count($list_field)+1,
+				'SPAN'				=> count_safe($list_field)+1,
 				)
 			);
 			$template->assign_block_vars('block.multi', array());
 			// header
-			for ( $j = 0; $j < count($list_field); $j++ )
+			for ( $j = 0; $j < count_safe($list_field); $j++ )
 			{
 				$template->assign_block_vars('block.multi.col', array(
 					'TITLE'	=> pcp_format_lang($field_def[ $list_field[$j] ]['short']),
@@ -1395,7 +1395,7 @@ if ( $mode == 'edit' )
 				);
 			}
 			$color = false;
-			for ( $i = 0; isset($fields['field_name']) && $i < count($fields['field_name']); $i++ )
+			for ( $i = 0; isset($fields['field_name']) && $i < count_safe($fields['field_name']); $i++ )
 			{
 				$color = !$color;
 				$template->assign_block_vars('block.multi.row', array(
@@ -1403,7 +1403,7 @@ if ( $mode == 'edit' )
 					'ROW_ID'	=> $i,
 					)
 				);
-				for ( $j = 0; $j < count($list_field); $j++ )
+				for ( $j = 0; $j < count_safe($list_field); $j++ )
 				{
 					$cur_field = $list_field[$j];
 					$style = ( isset($field_def[$cur_field]['style']) ? $field_def[$cur_field]['style'] : '' ) ;
@@ -1503,7 +1503,7 @@ if ($mode == '')
 		{
 			// map name
 			$keys = explode('.', $map_name);
-			$name = $keys[ count($keys)-1 ];
+			$name = $keys[ count_safe($keys)-1 ];
 
 			// map title
 			$title = '';
@@ -1557,7 +1557,7 @@ if ($mode == '')
 			'L_TITLE'	=> $lang['PCP_usermaps_title'],
 			'TITLE'		=> $text ? ( empty($maps[$map]['title']) ? $lang['None'] : pcp_format_lang($maps[$map]['title'], true) ) : '',
 
-			'SPAN'		=> count($list_field),
+			'SPAN'		=> count_safe($list_field),
 			)
 		);
 
@@ -1572,7 +1572,7 @@ if ($mode == '')
 		{
 			$template->assign_block_vars('details.block.multi', array());
 			// header
-			for ( $j = 0; $j < count($list_field); $j++ )
+			for ( $j = 0; $j < count_safe($list_field); $j++ )
 			{
 				$template->assign_block_vars('details.block.multi.col', array(
 					'TITLE'	=> '&nbsp;' . ( ($list_field[$j] != 'field_name') ? pcp_format_lang($field_def[ $list_field[$j] ]['short']) : $lang['PCP_usermaps_title'] ) . '&nbsp;',
@@ -1591,7 +1591,7 @@ if ($mode == '')
 					'COLOR'		=> $color ? 'row1' : 'row2',
 					)
 				);
-				for ( $j = 0; $j < count($list_field); $j++ )
+				for ( $j = 0; $j < count_safe($list_field); $j++ )
 				{
 					$value = $field_data[ $list_field[$j] ];
 					if ( empty($value) && !empty($user_fields[$field_name][ $list_field[$j] ]) )
@@ -1620,7 +1620,7 @@ if ($mode == '')
 			'L_TITLE'	=> $lang['PCP_usermaps_fields'],
 			'TITLE'		=> $text ? ( empty($maps[$map]['fields']) ? $lang['None'] : pcp_format_lang($maps[$map]['fields'], true) ) : '',
 
-			'SPAN'		=> count($list_field),
+			'SPAN'		=> count_safe($list_field),
 			)
 		);
 
@@ -1635,7 +1635,7 @@ if ($mode == '')
 		{
 			$template->assign_block_vars('details.block.multi', array());
 			// header
-			for ( $j = 0; $j < count($list_field); $j++ )
+			for ( $j = 0; $j < count_safe($list_field); $j++ )
 			{
 				$template->assign_block_vars('details.block.multi.col', array(
 					'TITLE'	=> '&nbsp;' . ( ($list_field[$j] != 'field_name') ? pcp_format_lang($field_def[ $list_field[$j] ]['short']) : $lang['PCP_usermaps_fields'] ) . '&nbsp;',
@@ -1654,7 +1654,7 @@ if ($mode == '')
 					'COLOR'		=> $color ? 'row1' : 'row2',
 					)
 				);
-				for ( $j = 0; $j < count($list_field); $j++ )
+				for ( $j = 0; $j < count_safe($list_field); $j++ )
 				{
 					$value = isset($field_data[ $list_field[$j] ]) ? $field_data[ $list_field[$j] ] : null;
 					if ( empty($value) && !empty($user_fields[$field_name][ $list_field[$j] ]) )

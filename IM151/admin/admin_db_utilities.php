@@ -210,7 +210,7 @@ function get_table_def_postgresql($table, $crlf)
 
 		$schema_create .= '	' . $row['field'] . ' ' . $row['type'];
 
-		if (eregi('char', $row['type']))
+		if (preg_match('~char~iD', $row['type']))
 		{
 			if ($row['lengthvar'] > 0)
 			{
@@ -218,7 +218,7 @@ function get_table_def_postgresql($table, $crlf)
 			}
 		}
 
-		if (eregi('numeric', $row['type']))
+		if (preg_match('~numeric~iD', $row['type']))
 		{
 			$schema_create .= '(';
 			$schema_create .= sprintf("%s,%s", (($row['lengthvar'] >> 16) & 0xffff), (($row['lengthvar'] - 4) & 0xffff));
@@ -288,7 +288,7 @@ function get_table_def_postgresql($table, $crlf)
 	{
 		while(list($idx_name, $props) = each($index_rows))
 		{
-			$props['column_names'] = ereg_replace(", $", "" , $props['column_names']);
+			$props['column_names'] = preg_replace('~, $~D', "" , $props['column_names']);
 			$index_create .= 'CREATE ' . $props['unique'] . " INDEX $idx_name ON $table (" . $props['column_names'] . ");$crlf";
 		}
 	}
@@ -328,8 +328,8 @@ function get_table_def_postgresql($table, $crlf)
 		$schema_create .= '	CONSTRAINT ' . $row['index_name'] . ' CHECK ' . $row['rcsrc'] . ",$crlf";
 	}
 
-	$schema_create = ereg_replace(',' . $crlf . '$', '', $schema_create);
-	$index_create = ereg_replace(',' . $crlf . '$', '', $index_create);
+	$schema_create = preg_replace(im160_posix_pattern(',' . $crlf . '$', false), '', $schema_create);
+	$index_create = preg_replace(im160_posix_pattern(',' . $crlf . '$', false), '', $index_create);
 
 	$schema_create .= "$crlf);$crlf";
 
@@ -400,7 +400,7 @@ function get_table_def_mysql($table, $crlf)
 	//
 	// Drop the last ',$crlf' off ;)
 	//
-	$schema_create = ereg_replace(',' . $crlf . '$', "", $schema_create);
+	$schema_create = preg_replace(im160_posix_pattern(',' . $crlf . '$', false), "", $schema_create);
 
 	//
 	// Get any Indexed fields from the database...
@@ -448,7 +448,7 @@ function get_table_def_mysql($table, $crlf)
 
 	$schema_create .= "$crlf);";
 
-	if(get_magic_quotes_runtime())
+	if(function_exists('get_magic_quotes_runtime') && get_magic_quotes_runtime())
 	{
 		return(stripslashes($schema_create));
 	}
@@ -509,13 +509,13 @@ function get_table_content_postgresql($table, $handler)
 		for($i = 0; $i < $i_num_fields; $i++)
 		{
 			$strVal = $row[$aryName[$i]];
-			if (eregi("char|text|bool", $aryType[$i]))
+			if (preg_match('~char|text|bool~iD', $aryType[$i]))
 			{
 				$strQuote = "'";
 				$strEmpty = "";
 				$strVal = addslashes($strVal);
 			}
-			elseif (eregi("date|timestamp", $aryType[$i]))
+			elseif (preg_match('~date|timestamp~iD', $aryType[$i]))
 			{
 				if (empty($strVal))
 				{
@@ -542,10 +542,10 @@ function get_table_content_postgresql($table, $handler)
 
 		}
 
-		$schema_vals = ereg_replace(",$", "", $schema_vals);
-		$schema_vals = ereg_replace("^ ", "", $schema_vals);
-		$schema_fields = ereg_replace(",$", "", $schema_fields);
-		$schema_fields = ereg_replace("^ ", "", $schema_fields);
+		$schema_vals = preg_replace('~,$~D', "", $schema_vals);
+		$schema_vals = preg_replace('~^ ~D', "", $schema_vals);
+		$schema_fields = preg_replace('~,$~D', "", $schema_fields);
+		$schema_fields = preg_replace('~^ ~D', "", $schema_fields);
 
 		//
 		// Take the ordered fields and their associated data and build it
@@ -1000,7 +1000,7 @@ $i++;
 
 			$i=1;
 			foreach ($_POST["selected_tbl"] as $var => $value){
-				if($i<count($_POST["selected_tbl"])){
+				if($i<count_safe($_POST["selected_tbl"])){
 					$sql .= "`$value`, ";
 					} else {
 					$sql .= "`$value`";
@@ -1116,11 +1116,11 @@ $i++;
 
 			if(!empty($additional_tables))
 			{
-				if(ereg(",", $additional_tables))
+				if(preg_match('~,~D', $additional_tables))
 				{
 					$additional_tables = explode(",", $additional_tables);
 
-					for($i = 0; $i < count($additional_tables); $i++)
+					for($i = 0; $i < count_safe($additional_tables); $i++)
 					{
 						$tables[] = trim($additional_tables[$i]);
 					}
@@ -1226,7 +1226,7 @@ $i++;
 			{
 				 echo "\n" . pg_get_sequences("\n", $backup_type);
 			}
-			for($i = 0; $i < count($tables); $i++)
+			for($i = 0; $i < count_safe($tables); $i++)
 			{
 				$table_name = $tables[$i];
 
@@ -1372,7 +1372,7 @@ $i++;
 					$sql_query = remove_remarks($sql_query);
 					$pieces = split_sql_file($sql_query, ";");
 
-					$sql_count = count($pieces);
+					$sql_count = count_safe($pieces);
 					for($i = 0; $i < $sql_count; $i++)
 					{
 						$sql = trim($pieces[$i]);
@@ -1387,7 +1387,7 @@ $i++;
 
 							$result = $db->sql_query($sql);
 
-							if(!$result && ( !(SQL_LAYER == 'postgresql' && eregi("drop table", $sql) ) ) )
+							if(!$result && ( !(SQL_LAYER == 'postgresql' && preg_match('~drop table~iD', $sql) ) ) )
 							{
 								message_die(GENERAL_ERROR, "Error importing backup file", "", __LINE__, __FILE__, $sql);
 							}

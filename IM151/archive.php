@@ -32,7 +32,7 @@ include ("includes/archive/archive_functions.".$phpEx);
   $url = substr ( strchr ($_SERVER['REQUEST_URI'], 'archive.'.$phpEx.'/'), 12 );
   $urlpieces = explode ("__", $url);
   $urlpiecesold = explode ("/", $url);
-  if ( count ($urlpieces) < 2 ) {
+  if ( count_safe ($urlpieces) < 2 ) {
   	    $urlpieces = $urlpiecesold;
   }
   foreach ($urlpieces as $val) {

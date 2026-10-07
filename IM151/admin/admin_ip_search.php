@@ -52,9 +52,9 @@ if( $submit )
 				$strip_num += 2;
 			}
 		}
-		if( count($ip_sep) < 4 )
+		if( count_safe($ip_sep) < 4 )
 		{
-			$strip_num += 2 * (4 - count($ip_sep));
+			$strip_num += 2 * (4 - count_safe($ip_sep));
 		}
 	}
 

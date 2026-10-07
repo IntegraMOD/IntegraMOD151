@@ -40,7 +40,7 @@ $core->set_header($lang['module_name']);
 $current_modules = get_modules();
 $link_array = array();
 
-for ($i = 0; $i < count($current_modules); $i++)
+for ($i = 0; $i < count_safe($current_modules); $i++)
 {
 	$module_id = intval($current_modules[$i]['module_id']);
 	$module_short_name = trim($current_modules[$i]['short_name']);

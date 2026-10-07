@@ -33,7 +33,7 @@ define('CF_INCLUDED', true);
 // dimension in which $needle was found.
 function in_m_array($needle, $haystack)
 { 
-	$haystack_size = count($haystack);
+	$haystack_size = count_safe($haystack);
 	if( !$haystack_size )
 	{
 		return false;
@@ -45,7 +45,7 @@ function in_m_array($needle, $haystack)
 			return true;
 		}
 /*		// Search all of second dimension
-		$i_size = count($haystack[$i]);
+		$i_size = count_safe($haystack[$i]);
 		for( $j = 0; $j < $i_size; $j++ )
 		{ 
 			if ( $haystack[$i][$j] == $needle )

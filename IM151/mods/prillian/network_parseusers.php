@@ -33,7 +33,7 @@ $num_lines = 0;
 $num_errors = 0;
 $network_list = $db->sql_fetchrowset($result);
 $db->sql_freeresult($result);
-$num_sites = count($network_list);
+$num_sites = count_safe($network_list);
 $num_sites = ( $num_sites < 0 ) ? 0 : $num_sites;
 
 $template->set_filenames(array(
@@ -57,7 +57,7 @@ for($ii=0; $ii<$num_sites; $ii++)
 	{
 		while ( !feof($fp) )
 		{
-			$f_contents[] = trim(fgetss($fp, 1024));
+			$f_contents[] = trim(strip_tags(fgets($fp, 1024)));
 			$num_lines++;
 		}
 		fclose ($fp);

@@ -172,11 +172,11 @@ switch($mode)
 // 
 // Set select fields 
 // 
-if (count($mode_types_text) > 0) 
+if (count_safe($mode_types_text) > 0) 
 { 
    $select_sort_mode = '<select name="mode">'; 
 
-   for($i = 0; $i < count($mode_types_text); $i++) 
+   for($i = 0; $i < count_safe($mode_types_text); $i++) 
    { 
       $selected = ($mode == $mode_types[$i]) ? ' selected="selected"' : ''; 
       $select_sort_mode .= '<option value="' . $mode_types[$i] . '"' . $selected . '>' . $mode_types_text[$i] . '</option>'; 
@@ -203,11 +203,11 @@ $delete_id_list = ( isset($_POST['delete_id_list']) ) ?  $_POST['delete_id_list'
 
    $confirm = isset($_POST['confirm']) ? (bool)$_POST['confirm'] : FALSE; 
 
-if ( ($confirm) && (count($delete_id_list) > 0) ) 
+if ( ($confirm) && (count_safe($delete_id_list) > 0) ) 
 { 
    $attachments = array(); 
 
-   for ($i = 0; $i < count($delete_id_list); $i++) 
+   for ($i = 0; $i < count_safe($delete_id_list); $i++) 
    { 
       $sql = "SELECT post_id 
          FROM " . ATTACHMENTS_TABLE . " 
@@ -229,7 +229,7 @@ if ( ($confirm) && (count($delete_id_list) > 0) )
     
 
 } 
-else if ($delete && count($delete_id_list) > 0) 
+else if ($delete && count_safe($delete_id_list) > 0) 
 { 
    // Not confirmed, show confirmation message 
    $hidden_fields = '<input type="hidden" name="view" value="' . $view . '" />'; 
@@ -239,7 +239,7 @@ else if ($delete && count($delete_id_list) > 0)
    $hidden_fields .= '<input type="hidden" name="start" value="' . $start . '" />'; 
    $hidden_fields .= '<input type="hidden" name="sid" value="' . $userdata['session_id'] . '" />'; 
 
-   for($i = 0; $i < count($delete_id_list); $i++) 
+   for($i = 0; $i < count_safe($delete_id_list); $i++) 
    { 
       $hidden_fields .= '<input type="hidden" name="delete_id_list[]" value="' . $delete_id_list[$i] . '" />'; 
    } 
@@ -349,9 +349,9 @@ else
    $attachments = array(); 
 } 
 
-if (count($attachments) > 0) 
+if (count_safe($attachments) > 0) 
 { 
-   for ($i = 0; $i < count($attachments); $i++) 
+   for ($i = 0; $i < count_safe($attachments); $i++) 
    { 
       $row_color = ( !($i % 2) ) ? $theme['td_color1'] : $theme['td_color2']; 
       $row_class = ( !($i % 2) ) ? $theme['td_class1'] : $theme['td_class2']; 
@@ -456,11 +456,11 @@ if (count($attachments) > 0)
       } 
 
       // Iron out those Attachments assigned to us, but not more controlled by us. ;) (PM's) 
-      if (count($post_titles) > 0) 
+      if (count_safe($post_titles) > 0) 
       { 
          $delete_box = '<input type="checkbox" name="delete_id_list[]" value="' . $attachments[$i]['attach_id'] . '" />'; 
 
-         for ($j = 0; $j < count($delete_id_list); $j++) 
+         for ($j = 0; $j < count_safe($delete_id_list); $j++) 
          { 
             if ($delete_id_list[$j] == $attachments[$i]['attach_id']) 
             { 

@@ -186,10 +186,10 @@ function smtpmail($mail_to, $subject, $message, $headers = '')
 	server_parse($socket, "354", __LINE__);
 
 	// Send the Subject Line...
-	if (!eregi ('Subject:',$subject)) fputs($socket, "Subject: $subject\r\n");
+	if (!preg_match ('~Subject:~iD',$subject)) fputs($socket, "Subject: $subject\r\n");
 
 	// Now the To Header.
-	if (!eregi ('To:',$headers)) fputs($socket, "To: $mail_to\r\n");
+	if (!preg_match ('~To:~iD',$headers)) fputs($socket, "To: $mail_to\r\n");
 
 	// Now any custom headers....
 	fputs($socket, "$headers\r\n\r\n");

@@ -65,7 +65,7 @@ if(!empty($export) && @file_exists($phpbb_root_path . $template_dir . $export . 
 		xs_error($lang['xs_no_theme_data'] . '<br /><br />' . $lang['xs_export_back']);
 	}
 	$theme_rowset = $db->sql_fetchrowset($result);
-	if(count($theme_rowset) == 0)
+	if(count_safe($theme_rowset) == 0)
 	{
 		xs_error($lang['xs_no_themes'] . '<br /><br />' . $lang['xs_export_back']);
 	}
@@ -78,7 +78,7 @@ if(!empty($export) && @file_exists($phpbb_root_path . $template_dir . $export . 
 			'EXPORT_TEMPLATE'	=> htmlspecialchars($export),
 			'STYLE_ID'			=> $theme_rowset[0]['themes_id'],
 			'STYLE_NAME'		=> htmlspecialchars($theme_rowset[0]['style_name']),
-			'TOTAL'				=> count($theme_rowset),
+			'TOTAL'				=> count_safe($theme_rowset),
 			'SEND_METHOD_'.strtoupper($xs_send_method)	=> ' checked="checked"',
 			'SEND_DATA_DIR'		=> isset($xs_send['dir']) ? htmlspecialchars($xs_send['dir']) : '',
 			'SEND_DATA_HOST'	=> isset($xs_send['host']) ? htmlspecialchars($xs_send['host']) : '',
@@ -86,14 +86,14 @@ if(!empty($export) && @file_exists($phpbb_root_path . $template_dir . $export . 
 			'SEND_DATA_FTPDIR'	=> isset($xs_send['ftpdir']) ? htmlspecialchars($xs_send['ftpdir']) : '',
 			'L_TITLE'			=> str_replace('{TPL}', $export, $lang['xs_export_style_title']),
 			));
-	if(count($theme_rowset) == 1)
+	if(count_safe($theme_rowset) == 1)
 	{
 		$template->assign_block_vars('switch_select_nostyle', array());
 	}
 	else
 	{
 		$template->assign_block_vars('switch_select_style', array());
-		for($i=0; $i<count($theme_rowset); $i++)
+		for($i=0; $i<count_safe($theme_rowset); $i++)
 		{
 			$template->assign_block_vars('switch_select_style.style', array(
 				'NUM'		=> $i,
@@ -123,7 +123,7 @@ if(!empty($export) && @file_exists($phpbb_root_path . $template_dir . $export . 
 			$list[] = intval($_POST['export_style_id_'.$i]);
 		}
 	}
-	if(!count($list))
+	if(!count_safe($list))
 	{
 		xs_error($lang['xs_export_noselect_themes'] . '<br /><br /> ' . $lang['xs_export_back']);
 	}
@@ -137,7 +137,7 @@ if(!empty($export) && @file_exists($phpbb_root_path . $template_dir . $export . 
 		xs_error($lang['xs_no_theme_data'] . $lang['xs_export_back']);
 	}
 	$theme_rowset = $db->sql_fetchrowset($result);
-	if(count($theme_rowset) == 0)
+	if(count_safe($theme_rowset) == 0)
 	{
 		xs_error($lang['xs_no_themes']  . '<br /><br />' . $lang['xs_export_back']);
 	}
@@ -149,7 +149,7 @@ if(!empty($export) && @file_exists($phpbb_root_path . $template_dir . $export . 
 	$pack_replace = array('./theme_info.cfg' => $theme_data);
 
 	// pack style
-	for($i=0; $i<count($theme_rowset); $i++)
+	for($i=0; $i<count_safe($theme_rowset); $i++)
 	{
 		$id = $theme_rowset[$i]['themes_id'];
 		$theme_name = $theme_rowset[$i]['style_name'];
@@ -270,7 +270,7 @@ $prev_id = -1;
 $prev_tpl = '';
 $style_names = array();
 $j = 0;
-for($i=0; $i<count($style_rowset); $i++)
+for($i=0; $i<count_safe($style_rowset); $i++)
 {
 	$item = $style_rowset[$i];
 	if($item['template_name'] === $prev_tpl)

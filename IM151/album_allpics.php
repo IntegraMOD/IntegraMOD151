@@ -64,7 +64,7 @@ $catrows = album_read_tree($album_user_id, $options);
 
 album_read_tree($album_user_id);
 $allowed_cat = ''; // For Recent Public Pics below
-for ($i = 0; $i < count($catrows); $i ++)
+for ($i = 0; $i < count_safe($catrows); $i ++)
 {
 	$allowed_cat .= ($allowed_cat == '') ? $catrows[$i]['cat_id'] : ',' . $catrows[$i]['cat_id'];
 }
@@ -373,13 +373,13 @@ if ($total_pics > 0 && !empty($allowed_cat))
 	$album_rate_pic_url = $album_show_pic_url;
 	$album_comment_pic_url = $album_show_pic_url;
 
-	for ($i = 0; $i < count($picrow); $i += $album_config['cols_per_page'])
+	for ($i = 0; $i < count_safe($picrow); $i += $album_config['cols_per_page'])
 	{
 		$template->assign_block_vars('picrow', array());
 
 		for ($j = $i; $j < ($i + $album_config['cols_per_page']); $j++)
 		{
-			if( $j >= count($picrow) )
+			if( $j >= count_safe($picrow) )
 			{
 				break;
 			}

@@ -287,7 +287,7 @@ if( !isset($_POST['pic_title']) ) // is it not submitted?
 
 		//for($idx=0; $idx < count($userinfo); $idx++)
 		//Replaced to fix slowdown
-		$count = count($userinfo);
+		$count = count_safe($userinfo);
 		for($idx=0; $idx < $count; $idx++)
 		//End Replace
 		{
@@ -486,7 +486,7 @@ else
 	$thumb_count = 0;
 	$upload_files = $_FILES['pic_file'];
 	$thumbnail_upload_files = ( isset($_FILES['pic_thumbnail']) ? $_FILES['pic_thumbnail'] : '' );
-	for($index = 0; $index < count($upload_files['name']);$index++)
+	for($index = 0; $index < count_safe($upload_files['name']);$index++)
 	{
 		if (was_file_uploaded($upload_files,$index) == true)
 		{
@@ -518,7 +518,7 @@ else
 
 	// check if we are uploading ONLY one picture, if so, then check for picture title
 	/*
-	if ( (count($_FILES['pic_file']['name']) == 1 || $pic_count == 1) && empty($pic_title) )
+	if ( (count_safe($_FILES['pic_file']['name']) == 1 || $pic_count == 1) && empty($pic_title) )
 	{
 		message_die(GENERAL_ERROR, $lang['Missed_pic_title']);
 	}
@@ -609,7 +609,7 @@ else
 	{
 		$timeout = 29 - $time;
 	}
-	for($index = 0; $index < count($upload_files['name']);$index++)
+	for($index = 0; $index < count_safe($upload_files['name']);$index++)
 	{
 		// ----------------------------------------------------------------
 		// check the file exceeds the upload_max_filesize directive in php.ini
@@ -678,7 +678,7 @@ else
 		if ($timeout < 2)
 		{
 			$upload_error_msg = "";
-			for($inner_index = $index; $inner_index < count($upload_files['name']); $inner_index++)
+			for($inner_index = $index; $inner_index < count_safe($upload_files['name']); $inner_index++)
 			{
 				if ($album_config['gd_version'] == 0)
 				{
@@ -835,7 +835,7 @@ else
 		// Generate filename
 		// --------------------------------
 
-		srand((double)microtime()*1000000); // for older than version 4.2.0 of PHP
+		srand((float)microtime()*1000000); // for older than version 4.2.0 of PHP
 
 		do
 		{
@@ -1285,9 +1285,9 @@ else
 	// Complete... now send a message to user
 	// --------------------------------
 
-	if (count($upload_errors) > 0)
+	if (count_safe($upload_errors) > 0)
 	{
-		if ($pic_count == count($upload_errors))
+		if ($pic_count == count_safe($upload_errors))
 		{
 			$message = $lang['Album_upload_not_successful'];
 		}
@@ -1296,7 +1296,7 @@ else
 			$message = $lang['Album_upload_partially_successful'];
 		}
 
-		for ($index = 0; $index < count($upload_errors); $index++)
+		for ($index = 0; $index < count_safe($upload_errors); $index++)
 		{
 			$message .= $upload_errors[$index];
 		}
@@ -1310,7 +1310,7 @@ else
 		$message = $lang['Album_upload_need_approval'];
 	}
 
-	if ($thiscat['cat_approval'] == 0 && count($upload_errors) == 0)
+	if ($thiscat['cat_approval'] == 0 && count_safe($upload_errors) == 0)
 	{
 		if (album_is_debug_enabled() == false)
 		{

@@ -67,7 +67,7 @@ if(!function_exists('imp_album_block_func'))
 		//
 		// $catrows now stores all categories which this user can view. Dump them out!
 		//
-		for ($i = 0; $i < count($catrows); $i++)
+		for ($i = 0; $i < count_safe($catrows); $i++)
 		{
 			// Build allowed category-list (for recent pics after here)
 			$allowed_cat .= ($allowed_cat == '') ? $catrows[$i]['cat_id'] : ',' . $catrows[$i]['cat_id'];
@@ -180,15 +180,15 @@ if(!function_exists('imp_album_block_func'))
 				$recentrow[] = $row;
 			}
 
-			if (count($recentrow) > 0)
+			if (count_safe($recentrow) > 0)
 			{
-				for ($i = 0; $i < count($recentrow); $i += $album_config['cols_per_page'])
+				for ($i = 0; $i < count_safe($recentrow); $i += $album_config['cols_per_page'])
 				{
 					$template->assign_block_vars('recent_pics', array());
 
 					for ($j = $i; $j < ($i + $album_config['cols_per_page']); $j++)
 					{
-						if ( $j >= count($recentrow) )
+						if ( $j >= count_safe($recentrow) )
 						{
 							break;
 						}

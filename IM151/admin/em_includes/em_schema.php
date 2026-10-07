@@ -216,7 +216,7 @@ auto_inc must be primary keys in mysql
 	// PRIMARY KEY (SSN) - for primary key
 
 	$params = explode(" ", $line) ;
-	$numparams = count($params) ;
+	$numparams = count_safe($params) ;
 	// if there are less than 5 parameters, we automatically know it won't fly
 	if ( $numparams < 2)
 	{
@@ -368,7 +368,7 @@ auto_inc must be primary keys in mysql
 		{
 			// Make the default string (combine array, split by spaces)
 			$default_string = '';
-			while($parampos++ < count( $params ))
+			while($parampos++ < count_safe( $params ))
  			{
  				if(substr( $params[$parampos], -1 ) == "'")
 				{
@@ -409,7 +409,7 @@ auto_inc must be primary keys in mysql
 		{
 			// Make the default string (combine array, split by spaces)
 			$default_string = '';
-			while($parampos++ < count( $params ))
+			while($parampos++ < count_safe( $params ))
  			{
  				if(substr( $params[$parampos], -1 ) == "'")
 				{
@@ -747,7 +747,7 @@ function assemble_sql_lines( $params, $command, $line_start, $create)
 	}
 
 	// loop through our parameter list and build the create table SQL
-	$num_params = count($params) ;
+	$num_params = count_safe($params) ;
 	for ($i=0; $i<$num_params; $i++)
 	{
 		$formatted_line = assemble_line( $params[$i], $command) ;
@@ -773,7 +773,7 @@ function assemble_sql_lines( $params, $command, $line_start, $create)
 				else if ($params[$i]['key_type'] == PRIMARY_KEY)
 				{
 					// search for the line we need to append this to
-					for ($j=0; $j<count($sql_lines); $j++)
+					for ($j=0; $j<count_safe($sql_lines); $j++)
 					{
 						$line_splits = explode(' ', $sql_lines[$j]) ;
 						// kind of weird but the key name is stored in the length
@@ -795,7 +795,7 @@ function assemble_sql_lines( $params, $command, $line_start, $create)
 				else
 				{
 					$sql_lines[] = $formatted_line ;
-					$num_lines = count($sql_lines)-2 ;
+					$num_lines = count_safe($sql_lines)-2 ;
 					if (($create) && ($num_lines >= 0 ))
 					{
 						$sql_lines[$num_lines] .= ', ' ;
@@ -848,7 +848,7 @@ function assemble_sql_lines( $params, $command, $line_start, $create)
 					}
 
 					$sql_lines[] = $formatted_line ;
-					$num_lines = count($sql_lines)-2 ;
+					$num_lines = count_safe($sql_lines)-2 ;
 					if (($create) && ($num_lines >= 0 ))
 					{
 						$sql_lines[$num_lines] .= ', ' ;
@@ -866,7 +866,7 @@ function assemble_sql_lines( $params, $command, $line_start, $create)
 	if ($create)
 	{
 		$sql_line = $line_start ;
-		for ($i=0; $i<count($sql_lines); $i++)
+		for ($i=0; $i<count_safe($sql_lines); $i++)
 		{
 			$sql_line .= $sql_lines[$i] ;
 		}
@@ -874,14 +874,14 @@ function assemble_sql_lines( $params, $command, $line_start, $create)
 	}
 	else
 	{
-		for ($i=0; $i<count($sql_lines); $i++)
+		for ($i=0; $i<count_safe($sql_lines); $i++)
 		{
 			$sql[] = $line_start . ' ' . $sql_lines[$i] ;
 		}
 	}
 
 
-	for ($i=0; $i<count($sql_post); $i++)
+	for ($i=0; $i<count_safe($sql_post); $i++)
 	{
 		$sql[] = $sql_post[$i] ;
 	}
@@ -911,7 +911,7 @@ function handle_create_table( $command, &$error)
 
 	// loop through all the columns and assemble our paramaters
 	$params = array() ;
-	for ($i=0; $i<count($fields); $i++)
+	for ($i=0; $i<count_safe($fields); $i++)
 	{
 		// store the column data for each column
 		$field = trim($fields[$i]) ;
@@ -943,7 +943,7 @@ function handle_column_add( $command, &$error)
 
 	// loop through all the columns and assemble our paramaters
 	$params = array() ;
-	for ($i=0; $i<count($fields); $i++)
+	for ($i=0; $i<count_safe($fields); $i++)
 	{
 		// need to stip off leading ADD on additional lines
 		$field = trim($fields[$i]) ;
@@ -992,7 +992,7 @@ function handle_column_modify( $command, &$error)
 	$fields = explode(',', $command['params']) ;
 
 	$params = array() ;
-	for ($i=0; $i<count($fields); $i++)
+	for ($i=0; $i<count_safe($fields); $i++)
 	{
 		// store the column data for each column
 		$field = trim($fields[$i]) ;
@@ -1090,7 +1090,7 @@ function handle_db_alteration( $message, &$error )
 	$lines = explode("\n", trim(stripslashes($message))) ;
 	$command_list = array() ;
 	$command_line = '' ;
-	for ($i=0; $i<count($lines); $i++)
+	for ($i=0; $i<count_safe($lines); $i++)
 	{
 		// if this is an empty line then don't do anything with it
 		$line = trim($lines[$i]) ;
@@ -1119,7 +1119,7 @@ function handle_db_alteration( $message, &$error )
 
 
 	// loop through the commands and build DB specific SQL
-	for ($comm=0; $comm<count($command_list); $comm++)
+	for ($comm=0; $comm<count_safe($command_list); $comm++)
 	{
 		$sql = array();
 		$message = trim($command_list[$comm]) ;
@@ -1232,7 +1232,7 @@ function handle_db_alteration( $message, &$error )
 		// drop a table
 		else if ($action == 'DROP')
 		{
-			if ( count($attributes) > 3)
+			if ( count_safe($attributes) > 3)
 			{
 				$error = FATAL_ERROR_MSG . $lang['EM_malformed_DROP2'] ;
 			}
@@ -1244,7 +1244,7 @@ function handle_db_alteration( $message, &$error )
 		{
 			// we need to rebuild the line with the correct table name
 			$line = '' ;
-			for ($i=0; $i<count($attributes); $i++)
+			for ($i=0; $i<count_safe($attributes); $i++)
 			{
 				if ((($action == 'INSERT') && ($i == 2)) || (($action == 'UPDATE') && ($i == 1)))
 				{
@@ -1274,7 +1274,7 @@ function handle_db_alteration( $message, &$error )
 		}
 
 		// add the sql lines for this command into the overall list
-		for ($i=0; $i<count($sql); $i++)
+		for ($i=0; $i<count_safe($sql); $i++)
 		{
 			$return_sql[] = $sql[$i] ;
 		}

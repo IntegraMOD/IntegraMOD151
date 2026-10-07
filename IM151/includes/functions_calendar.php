@@ -319,7 +319,7 @@ function get_event_topics(&$events, &$number, $start_date, $end_date, $limit=fal
 		// get auth key
 		$keys = array();
 		$keys = get_auth_keys($fid, true, -1, -1, 'auth_read');
-		for ($i=0; $i < count($keys['id']); $i++)
+		for ($i=0; $i < count_safe($keys['id']); $i++)
 		{
 			$idx = $keys['idx'][$i];
 			// V: skip -1, that's Root
@@ -437,7 +437,7 @@ function get_event_topics(&$events, &$number, $start_date, $end_date, $limit=fal
 		$topic_link					= append_sid($phpbb_root_path . "./viewtopic.$phpEx?" . POST_TOPIC_URL . "=" . $row['topic_id']);
 
 		// censor topic_title
-		if ( count($orig_word) )
+		if ( count_safe($orig_word) )
 		{
 			$topic_title = preg_replace($orig_word, $replacement_word, $topic_title);
 			$message = str_replace('\"', '"', substr(preg_replace_callback('#(\>(((?>([^><]+|(?R)))*)\<))#s',function ($matches) use ($orig_word, $replacement_word) {
@@ -837,7 +837,7 @@ function get_recurring_events(&$events, &$number, $start_date, $end_date, $limit
 		// get auth key
 		$keys = array();
 		$keys = get_auth_keys($fid, true, -1, -1, 'auth_read');
-		for ($i=0; $i < count($keys['id']); $i++)
+		for ($i=0; $i < count_safe($keys['id']); $i++)
 		{
 			$idx = $keys['idx'][$i];
 			// V: skip -1, that's Root
@@ -927,7 +927,7 @@ function get_recurring_events(&$events, &$number, $start_date, $end_date, $limit
 		$topic_link					= append_sid($phpbb_root_path . "./viewtopic.$phpEx?" . POST_TOPIC_URL . "=" . $row['topic_id']);
  
  		// censor topic_title
-		if ( count($orig_word) )
+		if ( count_safe($orig_word) )
 		{
 			$topic_title = preg_replace($orig_word, $replacement_word, $topic_title);
 			$message = str_replace('\"', '"', substr(preg_replace_callback('#(\>(((?>([^><]+|(?R)))*)\<))#s',function ($matches) use ($orig_word, $replacement_word) {
@@ -1143,7 +1143,7 @@ function get_recurring_events(&$events, &$number, $start_date, $end_date, $limit
 				if( date( 'g:ia', $event_time ) != '12:00am' ) $calendar_event .= ", at ".date( 'g:ia', $event_time );
 
 // replace {yyyy} with the actual number of years between now and yyyy
-				$search = eregi("{(.*)}", $message1, $message2);
+				$search = preg_match('~{(.*)}~iD', $message1, $message2);
 				$repl = intval($event_year) - intval($message2[1]);
 				$message1 = str_replace( "{".$message2[1]."}", $repl , $message1);
 
@@ -1390,7 +1390,7 @@ function display_calendar($main_template, $nb_days=0, $start=0, $fid='')
 
 	// build a list per date
 	$map = array();
-	for ($i=0; $i < count($events); $i++)
+	for ($i=0; $i < count_safe($events); $i++)
 	{
 		$event_time = $events[$i]['event_calendar_time'];
 		board2usertime($event_time);
@@ -1411,9 +1411,9 @@ function display_calendar($main_template, $nb_days=0, $start=0, $fid='')
 		// search a free day map offset in the start day
 		$event_id = $events[$i]['event_id'];
 		$offset_date = $event_start;
-		$map_offset = count($map[$event_start]);
+		$map_offset = count_safe($map[$event_start]);
 		$found = false;
-		for ($k=0; ($k < count($map[$event_start])) && !$found; $k++)
+		for ($k=0; ($k < count_safe($map[$event_start])) && !$found; $k++)
 		{
 			if ($map[$event_start][$k] == -1)
 			{
@@ -1426,7 +1426,7 @@ function display_calendar($main_template, $nb_days=0, $start=0, $fid='')
 		$offset_date = $event_start;
 		while ($offset_date <= $event_end)
 		{
-			for ($l=count($map[$offset_date]); $l <= $map_offset; $l++)
+			for ($l=count_safe($map[$offset_date]); $l <= $map_offset; $l++)
 			{
 				$map[$offset_date][$l] = -1;
 			}
@@ -1443,7 +1443,7 @@ function display_calendar($main_template, $nb_days=0, $start=0, $fid='')
 	// buid select list for month
 	$month = intval(date('m', $start_date));
 	$s_month = '<select name="start_month" onchange="forms[\'_calendar\'].submit();" }>';
-	for ($i=1; $i < count($months); $i++)
+	for ($i=1; $i < count_safe($months); $i++)
 	{
 		$selected = ($month == $i) ? ' selected="selected"' : '';
 		$s_month .= '<option value="' . $i . '"' . $selected . '>' . $months[$i] . '</option>';
@@ -1500,7 +1500,7 @@ function display_calendar($main_template, $nb_days=0, $start=0, $fid='')
 		$offset = $cfg_week_day_start;
 		for ($j=0; $j < $nb_cells; $j++)
 		{
-			if ($offset >= count($day_of_week)) $offset = 0;
+			if ($offset >= count_safe($day_of_week)) $offset = 0;
 			$template->assign_block_vars('_calendar_box.switch_full_month._cell', array(
 				'WIDTH'		=> floor(100 / $nb_cells),
 				'L_DAY'		=> $day_of_week[$offset],
@@ -1561,7 +1561,7 @@ function display_calendar($main_template, $nb_days=0, $start=0, $fid='')
 
 				// send events
 				$more = false;
-		        $map_offset_date = isset($map[$offset_date]) ? count($map[$offset_date]) : 0;
+		        $map_offset_date = isset($map[$offset_date]) ? count_safe($map[$offset_date]) : 0;
 				$over = $map_offset_date > $nb_row_per_cell;
 				for ($k=0; $k < $map_offset_date; $k++)
 				{
@@ -1607,7 +1607,7 @@ function display_calendar($main_template, $nb_days=0, $start=0, $fid='')
 						}
 					}
 
-					if (($k == count($map[$offset_date])-1) && $more)
+					if (($k == count_safe($map[$offset_date])-1) && $more)
 					{
 						$template->assign_block_vars('_calendar_box._row._cell.switch_filled._event._more_footer', array());
 					}

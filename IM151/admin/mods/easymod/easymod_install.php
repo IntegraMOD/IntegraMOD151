@@ -117,7 +117,7 @@ function wrapper_find(&$file_list, &$find_array, $search_array)
 	global $lang;
 
 	echo '<b>' . $lang['EM_finding'] . ':</b> ';
-	for ( $i=0; $i<count($search_array); $i++)
+	for ( $i=0; $i<count_safe($search_array); $i++)
 	{
 		echo htmlspecialchars($search_array[$i]) . "<br />";
 	}
@@ -134,7 +134,7 @@ function wrapper_insert(&$file_list, &$find_array, $insert, $before)
 	echo '<b>' . $lang['EM_insert'] . ' ' . (($before) ? $lang['EM_before'] : $lang['EM_after']) . ":</b></br>";
 
 	$insert_string = '';
-	for ($i=0; $i<count($insert); $i++)
+	for ($i=0; $i<count_safe($insert); $i++)
 	{
 		echo htmlspecialchars($insert[$i]) . "<br />\n";
 		$insert_string .= $insert[$i] . "\r\n";
@@ -311,7 +311,7 @@ if ($mode == 'help')
 			echo '<img src="' . $phpbb_root_path . 'templates/Default/images/spacer.gif" alt="" width="1" height="30" />' . "<hr />\n";
 		}
 		echo '<p><a name="' . $name . '" /></a><b style="font-size:larger;">' . $paragraphs[0] . "</b></p>\n";
-		for( $i = 1; $i < count($paragraphs); $i++ )
+		for( $i = 1; $i < count_safe($paragraphs); $i++ )
 		{
 			echo '<p>' . $paragraphs[$i] . "</p>\n";
 		}
@@ -799,7 +799,7 @@ else if ( $install_step == 3)
 //////////////
 	$lang_path =  $phpbb_root_path . 'language/';
 	$lang_files = get_lang_files( 'lang_main.' . $phpEx, 'language/lang_english/', $lang_path);
-	for ($i=0; $i<count($lang_files); $i++)
+	for ($i=0; $i<count_safe($lang_files); $i++)
 	{
 		if ( file_exists(@phpbb_realpath($phpbb_root_path . $script_path . 'languages/lang_easymod_' . preg_replace("/language\/lang_(.*)\//", "\\1", $lang_files[$i]['path']) . '.' .$phpEx)) )
 		{
@@ -814,7 +814,7 @@ else if ( $install_step == 3)
 
 	$files = get_theme_files( 'index_body.tpl', 'templates/Default/admin/');
 	$pics = get_theme_files( 'cellpic.gif', 'templates/Default/images/');
-	for ($i=0; $i<count($files); $i++)
+	for ($i=0; $i<count_safe($files); $i++)
 	{
 		$command_file->afile[] = 'copy includes/mod_complete.tpl ../../../' . $files[$i]['path'] . 'mod_complete.tpl';
 		$command_file->afile[] = 'copy includes/mod_header.tpl ../../../' . $files[$i]['path'] . 'mod_header.tpl';
@@ -858,7 +858,7 @@ else if ( $install_step == 3)
 	$hidden .= _em_hidden_field('ftp_cache', $ftp_cache);
 
 	echo '<b>' . $lang['EM_build_post_desc'] . ":</b>\n";
-	for ($i=0; $i<count( $command_file->afile); $i++)
+	for ($i=0; $i<count_safe( $command_file->afile); $i++)
 	{
 		echo $command_file->afile[$i] . "<br />\n";
 		$hidden .= _em_hidden_field("command_step$i", $command_file->afile[$i]);
@@ -1104,7 +1104,7 @@ GO";
 
 
 	// if the EM tables already exist, then don't bother making them again
-	if ( count($sql) <= 0 )
+	if ( count_safe($sql) <= 0 )
 	{
 		echo '<p>' . $lang['EM_progress'] . ' :: <b class="ok">' . $lang['EM_done'] . '</b> - ' . $lang['EM_already_exist'] . "<br />\n";
 	}
@@ -1113,7 +1113,7 @@ GO";
 	else
 	{
 		echo '<b>' . $lang['EM_exec_sql'] . ": </b><br />\n";
-		for($i = 0; $i < count($sql); $i++)
+		for($i = 0; $i < count_safe($sql); $i++)
 		{
 			echo "$sql[$i]<br />\n";
 		}
@@ -1123,7 +1123,7 @@ GO";
 
 		$error_ary = array();
 		$errored = false;
-		for($i = 0; $i < count($sql); $i++)
+		for($i = 0; $i < count_safe($sql); $i++)
 		{
 			_sql($sql[$i], $errored, $error_ary);
 		}
@@ -1134,7 +1134,7 @@ GO";
 		{
 			echo ' <b>' . $lang['EM_failed_sql'] . "</b>\n<ul>";
 
-			for($i = 0; $i < count($error_ary['sql']); $i++)
+			for($i = 0; $i < count_safe($error_ary['sql']); $i++)
 			{
 				echo '<li>' . $lang['EM_err_error'] . ' :: <b>' . $error_ary['error_code'][$i]['message'] . "</b><br />\n";
 				echo "SQL &nbsp; :: <b>" . $error_ary['sql'][$i] . "</b><br /><br /></li>\n";
@@ -1277,7 +1277,7 @@ GO";
 	// print the backup list
 	echo '<table width="100%" cellpadding="2" cellspacing="1" border="0" class="forumline">' . "\n";
 	echo '<tr><th colspan="3">' . sprintf( $lang['EM_pp_backups'], $install_path . 'backups/') . '</th></tr>' . "\n";
-	for ($i=0; $i<count($bu_list); $i++)
+	for ($i=0; $i<count_safe($bu_list); $i++)
 	{
 		echo $bu_list[$i];
 	}
@@ -1286,7 +1286,7 @@ GO";
 	// print the move list
 	echo '<table width="100%" cellpadding="2" cellspacing="1" border="0" class="forumline">' . "\n";
 	echo '<tr><th>' . sprintf( $lang['EM_pp_from'], $install_path . 'processed/') . '</th><th>' . $lang['EM_pp_to'] . '</th><th>' . $lang['EM_pp_status'] . "</th></tr>\n";
-	for ($i=0; $i<count($mv_list); $i++)
+	for ($i=0; $i<count_safe($mv_list); $i++)
 	{
 		echo $mv_list[$i];
 	}
@@ -1450,8 +1450,8 @@ else if ( $install_step == 6)
 	// set up the redirects so we will download a file, the contents of which we will echo out
 	else
 	{
-		header('Content-Type: text/x-delimtext; name="' . $split[count($split)-1] . '"');
-		header('Content-disposition: attachment; filename="' . $split[count($split)-1] . '"');
+		header('Content-Type: text/x-delimtext; name="' . $split[count_safe($split)-1] . '"');
+		header('Content-disposition: attachment; filename="' . $split[count_safe($split)-1] . '"');
 	}
 
 
@@ -1507,7 +1507,7 @@ else if ( $install_step == 6)
 		complete_file_reproduction($file_list);
 
 		// make sure we have the right file
-		for ($file=0; $file<count($file_list); $file++)
+		for ($file=0; $file<count_safe($file_list); $file++)
 		{
 			// make sure this is what we are looking for, otherwise keep looking
 			if ($orig_file != ($file_list[$file]->path . $file_list[$file]->filename))
@@ -1516,7 +1516,7 @@ else if ( $install_step == 6)
 			}
 
 			// write out the lines
-			for ($i=0; $i<count($file_list[$file]->afile); $i++)
+			for ($i=0; $i<count_safe($file_list[$file]->afile); $i++)
 			{
 				if ($on_screen)
 				{
@@ -1748,7 +1748,7 @@ else if ($install_step == 7)
 	{
 		echo ' <b>' . $lang['EM_failed_sql'] . "</b>\n<ul>";
 
-		for($i = 0; $i < count($error_ary['sql']); $i++)
+		for($i = 0; $i < count_safe($error_ary['sql']); $i++)
 		{
 			echo '<li>' . $lang['EM_err_error'] . ' :: <b>' . $error_ary['error_code'][$i]['message'] . "</b><br />\n";
 			echo "SQL &nbsp; :: <b>" . $error_ary['sql'][$i] . "</b><br /><br /></li>\n";
@@ -1800,7 +1800,7 @@ else if ($install_step == 7)
 			handle_error(OPEN_FAIL_CRITICAL, $file_list, false, "<p>" . $lang['EM_err_em_info'] . "</p>\n");
 		}
 		$em_rows = $db->sql_fetchrowset($result);
-		$em_count = count($em_rows);
+		$em_count = count_safe($em_rows);
 
 		// for each MOD we'll read its 'post_process.bat' file to get
 		// its list of processed files from there.
@@ -1841,7 +1841,7 @@ else if ($install_step == 7)
 	}
 
 	echo '<b>' . $lang['EM_exec_sql'] . ": </b><br />\n";
-	for($i = 0; $i < count($sql); $i++)
+	for($i = 0; $i < count_safe($sql); $i++)
 	{
 		echo "$sql[$i]<br />\n";
 	}
@@ -1851,7 +1851,7 @@ else if ($install_step == 7)
 
 	$error_ary = array();
 	$errored = false;
-	for($i = 0; $i < count($sql); $i++)
+	for($i = 0; $i < count_safe($sql); $i++)
 	{
 		_sql($sql[$i], $errored, $error_ary);
 	}
@@ -1862,7 +1862,7 @@ else if ($install_step == 7)
 	{
 		echo ' <b>' . $lang['EM_failed_sql'] . "</b>\n<ul>";
 
-		for($i = 0; $i < count($error_ary['sql']); $i++)
+		for($i = 0; $i < count_safe($error_ary['sql']); $i++)
 		{
 			echo '<li>' . $lang['EM_err_error'] . ' :: <b>' . $error_ary['error_code'][$i]['message'] . "</b><br />\n";
 			echo "SQL &nbsp; :: <b>" . $error_ary['sql'][$i] . "</b><br /><br /></li>\n";

@@ -314,9 +314,9 @@ else
 	$attachments = array();
 }
 
-if (count($attachments) > 0)
+if (count_safe($attachments) > 0)
 {
-	for ($i = 0; $i < count($attachments); $i++)
+	for ($i = 0; $i < count_safe($attachments); $i++)
 	{
 		$row_color = ( !($i % 2) ) ? $theme['td_color1'] : $theme['td_color2'];
 		$row_class = ( !($i % 2) ) ? $theme['td_class1'] : $theme['td_class2'];
@@ -421,11 +421,11 @@ if (count($attachments) > 0)
 		}
 
 		// Iron out those Attachments assigned to us, but not more controlled by us. ;) (PM's)
-		if (count($post_titles) > 0)
+		if (count_safe($post_titles) > 0)
 		{
 			$delete_box = '<input type="checkbox" name="delete_id_list[]" value="' . (int) $attachments[$i]['attach_id'] . '" />';
 
-			for ($j = 0; $j < count($delete_id_list); $j++)
+			for ($j = 0; $j < count_safe($delete_id_list); $j++)
 			{
 				if ($delete_id_list[$j] == $attachments[$i]['attach_id'])
 				{

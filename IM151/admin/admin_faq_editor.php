@@ -45,7 +45,7 @@ function faq_to_array($faq)
 	$block_no = -1;
 	$quest_no = 0;
 
-	for($i = 0; $i < count($faq); $i++)
+	for($i = 0; $i < count_safe($faq); $i++)
 	{
 		if($faq[$i][0] == '--')
 		{
@@ -73,11 +73,11 @@ function array_to_faq($blocks, $quests)
 {
 	$lines = array();
 
-	for($i = 0; $i < count($blocks); $i++)
+	for($i = 0; $i < count_safe($blocks); $i++)
 	{
 		$lines[] = '$faq[] = array("--", "'.str_replace('"', '\"', $blocks[$i]).'");'."\n";
 
-		for($j = 0; $j < count($quests[$i]); $j++)
+		for($j = 0; $j < count_safe($quests[$i]); $j++)
 		{
 			if( !empty($quests[$i][$j][Q]) && !empty($quests[$i][$j][A]) )
 			{
@@ -214,13 +214,13 @@ if(isset($_GET['mode']) || isset($_POST['mode']))
 		case 'block_del_confirm':
 			if(isset($_GET['confirm']) || isset($_POST['confirm']))
 			{
-				for($i = $block_no; $i < count($blocks); $i++)
+				for($i = $block_no; $i < count_safe($blocks); $i++)
 				{
 					$blocks[$i] = $blocks[$i+1];
 					$quests[$i] = $quests[$i+1];
 				}
 
-				$last_id = count($blocks) - 1;
+				$last_id = count_safe($blocks) - 1;
 
 				unset($blocks[$last_id]);
 				unset($quests[$last_id]);
@@ -277,7 +277,7 @@ if(isset($_GET['mode']) || isset($_POST['mode']))
 
 		// re-arrange the blocks after someone presses an DOWN link
 		case 'block_dn':
-			if($block_no != (count($blocks) - 1))
+			if($block_no != (count_safe($blocks) - 1))
 			{
 				$block_temp = $blocks[$block_no + 1];
 				$quest_temp = $quests[$block_no + 1];
@@ -303,7 +303,7 @@ if(isset($_GET['mode']) || isset($_POST['mode']))
 			$s_block_list = '';
 			$s_selected_block = intval(isset($_GET['block']) ? $_GET['block'] : $_POST['block']);
 
-			for($i = 0; $i < count($blocks); $i++)
+			for($i = 0; $i < count_safe($blocks); $i++)
 			{
 				$is_selected = ($s_selected_block == $i) ? ' selected' : '';
 				$s_block_list .= '<option value="'.$i.'"'.$is_selected.'>' . $blocks[$i] . '</option>';
@@ -335,7 +335,7 @@ if(isset($_GET['mode']) || isset($_POST['mode']))
 			$question = isset($_GET['quest_title']) ? $_GET['quest_title'] : $_POST['quest_title'];
 			$answer = str_replace("\n", "<br />", isset($_GET['answer']) ? $_GET['answer'] : $_POST['answer']);
 
-			$new_id = count($quests[$block_no]);
+			$new_id = count_safe($quests[$block_no]);
 
 			$quests[$block_no][$new_id][Q] = stripslashes($question);
 			$quests[$block_no][$new_id][A] = stripslashes($answer);
@@ -351,7 +351,7 @@ if(isset($_GET['mode']) || isset($_POST['mode']))
 			$s_block_list = '';
 			$s_selected_block = intval(isset($_GET['block']) ? $_GET['block'] : $_POST['block']);
 
-			for($i = 0; $i < count($blocks); $i++)
+			for($i = 0; $i < count_safe($blocks); $i++)
 			{
 				$is_selected = ($s_selected_block == $i) ? ' selected' : '';
 				$s_block_list .= '<option value="'.$i.'"'.$is_selected.'>' . $blocks[$i] . '</option>';
@@ -395,14 +395,14 @@ if(isset($_GET['mode']) || isset($_POST['mode']))
 			{
 				// edit where we move blocks
 
-				for($i = $quest_no; $i < count($quests[$old_block_no]); $i++)
+				for($i = $quest_no; $i < count_safe($quests[$old_block_no]); $i++)
 				{
 					$quests[$old_block_no][$i] = $quests[$old_block_no][$i+1];
 				}
 
-				unset($quests[$old_block_no][count($quests[$old_block_no]) - 1]);
+				unset($quests[$old_block_no][count_safe($quests[$old_block_no]) - 1]);
 
-				$new_id = count($quests[$block_no]);
+				$new_id = count_safe($quests[$block_no]);
 
 				$quests[$block_no][$new_id][Q] = $question;
 				$quests[$block_no][$new_id][A] = $answer;
@@ -440,12 +440,12 @@ if(isset($_GET['mode']) || isset($_POST['mode']))
 		case 'quest_del_confirm':
 			if(isset($_GET['confirm']) || isset($_POST['confirm']))
 			{
-				for($i = $quest_no; $i < count($quests[$block_no]); $i++)
+				for($i = $quest_no; $i < count_safe($quests[$block_no]); $i++)
 				{
 					$quests[$block_no][$i] = $quests[$block_no][$i+1];
 				}
 
-				unset($quests[$block_no][count($quests[$block_no]) - 1]);
+				unset($quests[$block_no][count_safe($quests[$block_no]) - 1]);
 			}
 
 			break;
@@ -464,7 +464,7 @@ if(isset($_GET['mode']) || isset($_POST['mode']))
 
 		// move a question downwards
 		case 'quest_dn':
-			if($quest_no != (count($quests[$block_no]) - 1))
+			if($quest_no != (count_safe($quests[$block_no]) - 1))
 			{
 				$temp = $quests[$block_no][$quest_no + 1];
 				$quests[$block_no][$quest_no + 1] = $quests[$block_no][$quest_no];
@@ -485,7 +485,7 @@ if(isset($_GET['mode']) || isset($_POST['mode']))
 
 			$lines = array_to_faq($blocks, $quests);
 
-			for($i = 0; $i < count($lines); $i++)
+			for($i = 0; $i < count_safe($lines); $i++)
 			{
 				fwrite($fp, $lines[$i]);
 			}
@@ -524,9 +524,9 @@ $template->assign_vars(array(
 
 $k = 0;
 
-if(count($blocks) > 0)
+if(count_safe($blocks) > 0)
 {
-	for($i = 0; $i < count($blocks); $i++)
+	for($i = 0; $i < count_safe($blocks); $i++)
 	{
 		$template->assign_block_vars("blockrow", array( 
 			'BLOCK_TITLE' => $blocks[$i],
@@ -539,9 +539,9 @@ if(count($blocks) > 0)
 			'U_BLOCK_DELETE' => append_sid("admin_faq_editor.$phpEx?mode=block_del&block=$i&file=$file&language=$language")
 		));
 
-		if(count($quests[$i]) > 0)
+		if(count_safe($quests[$i]) > 0)
 		{
-			for($j = 0; $j < count($quests[$i]); $j++)
+			for($j = 0; $j < count_safe($quests[$i]); $j++)
 			{
 				$template->assign_block_vars("blockrow.questrow", array( 
 					'QUEST_TITLE' => $quests[$i][$j][Q],

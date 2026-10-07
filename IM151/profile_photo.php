@@ -84,7 +84,7 @@ $s_categories = '<select name="photocategory">';
 while( list($key) = each($photo_images) )
 {
 	$selected = ( $key == $category ) ? ' selected="selected"' : '';
-	if( count($photo_images[$key]) )
+	if( count_safe($photo_images[$key]) )
 	{
 		$s_categories .= '<option value="' . $key . '"' . $selected . '>' . ucfirst($key) . '</option>';
 	}
@@ -92,11 +92,11 @@ while( list($key) = each($photo_images) )
 $s_categories .= '</select>';
 
 $s_colspan = 0;
-for($i = 0; $i < count($photo_images[$category]); $i++)
+for($i = 0; $i < count_safe($photo_images[$category]); $i++)
 {
 	$template->assign_block_vars("photo_row", array());
-	$s_colspan = max($s_colspan, count($photo_images[$category][$i]));
-	for($j = 0; $j < count($photo_images[$category][$i]); $j++)
+	$s_colspan = max($s_colspan, count_safe($photo_images[$category][$i]));
+	for($j = 0; $j < count_safe($photo_images[$category][$i]); $j++)
 	{
 		$template->assign_block_vars('photo_row.photo_column', array(
 			'PHOTO_IMAGE' => $phpbb_root_path . $board_config['photo_gallery_path'] . '/' . $photo_images[$category][$i][$j],

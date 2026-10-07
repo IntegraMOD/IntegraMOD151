@@ -106,7 +106,7 @@ while ( $c_cur = $cash->currency_next($cm_i) )
 			$updates[] = 'cash_settings = ' . $settings;
 		}
 		reset ( $update_set );
-		if ( count($updates) > 0 )
+		if ( count_safe($updates) > 0 )
 		{
 			$sql = "UPDATE " . CASH_TABLE . "
 					SET " . implode(", ",$updates) . "

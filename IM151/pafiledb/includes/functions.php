@@ -128,7 +128,7 @@ class pafiledb_functions
 	{
 		global $pafiledb_config;
 	
-		srand((double)microtime()*1000000);	// for older than version 4.2.0 of PHP
+		srand((float)microtime()*1000000);	// for older than version 4.2.0 of PHP
 
 		do
 		{

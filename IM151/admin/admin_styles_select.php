@@ -128,7 +128,7 @@ switch( $mode )
 				"S_HIDDEN_FIELDS" => $s_hidden_fields )
 			);
 					
-			for($i = 0; $i < count($style_rowset); $i++)
+			for($i = 0; $i < count_safe($style_rowset); $i++)
 			{
 				$template->assign_vars(array(
 					"L_STYLE_TITLE" => $lang['Style'] . "&nbsp;::&nbsp;" . $style_rowset[$i]['style_name'],
@@ -219,7 +219,7 @@ switch( $mode )
 			"L_EDIT" => $lang['Edit'])
 		);
 		
-		for($i = 0; $i < count($style_rowset); $i++)
+		for($i = 0; $i < count_safe($style_rowset); $i++)
 		{
 			$row_color = ( !($i % 2) ) ? $theme['td_color1'] : $theme['td_color2'];
 			$row_class = ( !($i % 2) ) ? $theme['td_class1'] : $theme['td_class2'];

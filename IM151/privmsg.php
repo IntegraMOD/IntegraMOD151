@@ -52,7 +52,7 @@ if ( !empty($board_config['privmsg_disable']) )
 $get_vars = array('folder', 'sid', 'mode', 'start', 'msgdays', POST_POST_URL, POST_USERS_URL);
 $s_call = '';
 $newpm = false;
-for ($i = 0; $i < count($get_vars); $i++)
+for ($i = 0; $i < count_safe($get_vars); $i++)
 {
 	$key = $get_vars[$i];
 	$val = ( isset($_GET[$get_vars[$i]]) ? $_GET[$get_vars[$i]] : '');
@@ -666,7 +666,7 @@ $attachment_mod['pm']->duplicate_attachment_pm($privmsg['privmsgs_attachment'], 
 	$replacement_word = array();
 	obtain_word_list($orig_word, $replacement_word);
 
-	if ( count($orig_word) )
+	if ( count_safe($orig_word) )
 	{
 		$post_subject = preg_replace($orig_word, $replacement_word, $post_subject);
 		$private_message = preg_replace($orig_word, $replacement_word, $private_message);
@@ -737,7 +737,7 @@ else if ( ( $delete && $mark_list ) || $delete_all )
 		$s_hidden_fields .= ( isset($_POST['delete']) ) ? '<input type="hidden" name="delete" value="true" />' : '<input type="hidden" name="deleteall" value="true" />';
 		$s_hidden_fields .= '<input type="hidden" name="sid" value="' . $userdata['session_id'] . '" />';
 
-		for($i = 0; $i < count($mark_list); $i++)
+		for($i = 0; $i < count_safe($mark_list); $i++)
 		{
 			$s_hidden_fields .= '<input type="hidden" name="mark[]" value="' . intval($mark_list[$i]) . '" />';
 		}
@@ -752,7 +752,7 @@ else if ( ( $delete && $mark_list ) || $delete_all )
 		);
 		$template->assign_vars(array(
 			'MESSAGE_TITLE' => $lang['Information'],
-			'MESSAGE_TEXT' => ( count($mark_list) == 1 ) ? $lang['Confirm_delete_pm'] : $lang['Confirm_delete_pms'], 
+			'MESSAGE_TEXT' => ( count_safe($mark_list) == 1 ) ? $lang['Confirm_delete_pm'] : $lang['Confirm_delete_pms'], 
 
 			'L_YES' => $lang['Yes'],
 			'L_NO' => $lang['No'],
@@ -772,7 +772,7 @@ else if ( ( $delete && $mark_list ) || $delete_all )
 
 		if (!$delete_all)
 		{
-			 for ($i = 0; $i < count($mark_list); $i++)
+			 for ($i = 0; $i < count_safe($mark_list); $i++)
 			 {
 					$delete_sql_id .= (($delete_sql_id != '') ? ', ' : '') . intval($mark_list[$i]);
 			 }
@@ -820,7 +820,7 @@ else if ( ( $delete && $mark_list ) || $delete_all )
      	unset($delete_type);
 		$attachment_mod['pm']->delete_all_pm_attachments($mark_list);
 
-		if ( count($mark_list) )
+		if ( count_safe($mark_list) )
 		{
 			$delete_sql_id = '';
 			for ($i = 0; $i < sizeof($mark_list); $i++)
@@ -1674,7 +1674,7 @@ else if ( $submit || $refresh || $mode != '' )
 			$preview_message = $preview_message . '<br /><br />_________________<br />' . $user_sig;
 		}
 		
-		if ( count($orig_word) )
+		if ( count_safe($orig_word) )
 		{
 			$preview_subject = preg_replace($orig_word, $replacement_word, $privmsg_subject);
 			$preview_message = preg_replace($orig_word, $replacement_word, $preview_message);
@@ -2094,7 +2094,7 @@ $previous_days = array(0, 1, 7, 14, 30, 90, 180, 364);
 $previous_days_text = array($lang['All_Posts'], $lang['1_Day'], $lang['7_Days'], $lang['2_Weeks'], $lang['1_Month'], $lang['3_Months'], $lang['6_Months'], $lang['1_Year']);
 
 $select_msg_days = '';
-for($i = 0; $i < count($previous_days); $i++)
+for($i = 0; $i < count_safe($previous_days); $i++)
 {
 	$selected = ( $msg_days == $previous_days[$i] ) ? ' selected="selected"' : '';
 	$select_msg_days .= '<option value="' . $previous_days[$i] . '"' . $selected . '>' . $previous_days_text[$i] . '</option>';
@@ -2227,7 +2227,7 @@ if ( $row = $db->sql_fetchrow($result) )
 
 		$msg_subject = $row['privmsgs_subject'];
 
-		if ( count($orig_word) )
+		if ( count_safe($orig_word) )
 		{
 			$msg_subject = preg_replace($orig_word, $replacement_word, $msg_subject);
 		}

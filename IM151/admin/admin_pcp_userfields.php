@@ -230,7 +230,7 @@ function pcp_sql_query($field, $action, $field_def=array(), $old='')
 
 	if ( !empty($sql) && !$error )
 	{
-		for ($i=0; $i < count($sql); $i++)
+		for ($i=0; $i < count_safe($sql); $i++)
 		{
 			if ( !$result = $db->sql_query($sql[$i]) )
 			{
@@ -300,7 +300,7 @@ function pcp_get_sql_map($field, $field_data=array())
 									{
 										$parts = explode(',', $regs[1]);
 										$length = intval($parts[0]);
-										if (count($parts) > 1)
+										if (count_safe($parts) > 1)
 										{
 											$decimal = intval($parts[1]);
 										}
@@ -765,7 +765,7 @@ if ( ($mode == 'sqlcreate') || ($mode == 'sqledit') )
 
 		// list of sql types
 		$s_types = '<select name="type">';
-		for ( $i = 0; $i < count($sql_type_list); $i++ )
+		for ( $i = 0; $i < count_safe($sql_type_list); $i++ )
 		{
 			$selected = ( $type == $sql_type_list[$i] ) ? ' selected="selected"' : '';
 			$s_types .= '<option value="' . $sql_type_list[$i] . '"' . $selected . '>' . pcp_format_lang($sql_type_list[$i]) . '</option>';
@@ -1224,7 +1224,7 @@ if ( $mode == 'edit' )
 			'L_TITLE'				=> $lang['PCP_usermaps_title_edit'],
 			'L_TITLE_EXPLAIN'		=> $lang['PCP_usermaps_title_edit_explain'],
 
-			'SPAN'					=> count($field_cat)+1,
+			'SPAN'					=> count_safe($field_cat)+1,
 
 			'L_SUBMIT'				=> $lang['Submit'],
 			'L_REFRESH'				=> $lang['Refresh'],
@@ -1335,7 +1335,7 @@ if ( $mode == '' )
 
 	// build the sort list
 	$s_sort = '<select name="sort">';
-	for ( $i = 0; $i < count($sort_list); $i++ )
+	for ( $i = 0; $i < count_safe($sort_list); $i++ )
 	{
 		$selected = ( $sort == $sort_list[$i] ) ? ' selected="selected"' : '';
 		$s_sort .= '<option value="' . $sort_list[$i] . '"' . $selected . ' />' . $lang[ 'PCP_field_' . $sort_list[$i] ] . '</option>';
@@ -1344,7 +1344,7 @@ if ( $mode == '' )
 
 	// order list
 	$s_order = '<select name="order">';
-	for ( $i = 0; $i < count($order_list); $i++ )
+	for ( $i = 0; $i < count_safe($order_list); $i++ )
 	{
 		$selected = ( $order == $order_list[$i] ) ? ' selected="selected"' : '';
 		$s_order .= '<option value="' . $order_list[$i] . '"' . $selected . ' />' . ( ($order_list[$i] == 'DESC') ? $lang['Sort_Descending'] : $lang['Sort_Ascending'] ) . '</option>';

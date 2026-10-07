@@ -151,7 +151,7 @@ function kb_auth( $type, $cat_id, $userdata, $f_access = '', $f_access_group = '
 	}
 
 	$auth_user = array();
-	for( $i = 0; $i < count( $auth_fields ); $i++ )
+	for( $i = 0; $i < count_safe( $auth_fields ); $i++ )
 	{
 		$key = $auth_fields[$i]; 
 		$key_groups = $auth_fields_groups[$i];
@@ -209,7 +209,7 @@ function kb_auth( $type, $cat_id, $userdata, $f_access = '', $f_access_group = '
 		}
 		else 
 		{
-		 	for($k = 0; $k < count($f_access); $k++)
+		 	for($k = 0; $k < count_safe($f_access); $k++)
 			{
 				$value = $f_access[$k][$key];
 				$value_groups = $f_access_group[$k][$key_groups];
@@ -268,7 +268,7 @@ function kb_auth( $type, $cat_id, $userdata, $f_access = '', $f_access_group = '
 	}
 	else
 	{
-		for($k = 0; $k < count($f_access); $k++)
+		for($k = 0; $k < count_safe($f_access); $k++)
 		{
 			$f_cat_id = $f_access[$k]['category_id'];
 

@@ -87,7 +87,7 @@ $rows = $core->sql_fetchrowset($result);
 
 $index_smilies = array();
 
-for ($i = 0; $i < count($rows); $i++)
+for ($i = 0; $i < count_safe($rows); $i++)
 {
 	$index_s[$rows[$i]['smile_url']]['code'] = $rows[$i]['code'];
 	$index_smilies['smile_url'][] = $rows[$i]['smile_url'];
@@ -143,7 +143,7 @@ if ($num_smilie_rows > 0)
 { 
 	$smilies = $core->sql_fetchrowset($result); 
 
-	for ($i = 0; $i < count($smilies); $i++) 
+	for ($i = 0; $i < count_safe($smilies); $i++) 
 	{ 
 		$build_new_smilie = FALSE;
 		$update_smilie = FALSE;
@@ -195,7 +195,7 @@ if ($num_smilie_rows > 0)
 				$count = 0; 
 			}
 
-			for ($j = 0; $j < count($smile_codes); $j++) 
+			for ($j = 0; $j < count_safe($smile_codes); $j++) 
 			{
 				$plus_where = ($last_post_index == -1) ? '' : ' AND post_id > ' . $last_post_index;
 
@@ -236,7 +236,7 @@ if ($num_smilie_rows > 0)
 } 
 
 // Fill Index Table
-for ($i = 0; $i < count($all_smilies); $i++)
+for ($i = 0; $i < count_safe($all_smilies); $i++)
 {
 	if ($all_smilies[$i]['status'] == 'new')
 	{
@@ -257,7 +257,7 @@ if ( ($last_post_index != -1) && (!empty($last_post_update)) )
 
 // Sort array 
 $all_smilies = $core->sort_data($all_smilies, 'count', 'DESC');
-$limit = ( $core->return_limit > count($all_smilies) ) ? count($all_smilies) : $core->return_limit; 
+$limit = ( $core->return_limit > count_safe($all_smilies) ) ? count_safe($all_smilies) : $core->return_limit; 
 
 $content->init_math('count', $all_smilies[0]['count'], $total_smilies);
 $core->set_data($all_smilies, $limit);

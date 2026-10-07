@@ -49,7 +49,7 @@ if( !($result = $db->sql_query($sql)) )
 		message_die(GENERAL_ERROR, "Could not query database.", $lang['Error'], __LINE__, __FILE__, $sql);
 	}
 $baner_rows = $db->sql_fetchrowset($result);
-$baner_count = count($baner_rows);
+$baner_count = count_safe($baner_rows);
 
 
 for($i = 0; $i < $baner_count; $i++)
@@ -78,7 +78,7 @@ if( !($result2 = $db->sql_query($sql2)) )
 		message_die(GENERAL_ERROR, "Could not query database.", $lang['Error'], __LINE__, __FILE__, $sql2);
 	}
 $baner_rows2 = $db->sql_fetchrowset($result2);
-$baner_count2 = count($baner_rows2);
+$baner_count2 = count_safe($baner_rows2);
 
 
 for($i = 0; $i < $baner_count2; $i++)
@@ -109,7 +109,7 @@ if( !($result3 = $db->sql_query($sql3)) )
 		message_die(GENERAL_ERROR, "Could not query database.", $lang['Error'], __LINE__, __FILE__, $sql3);
 	}
 $baner_rows3 = $db->sql_fetchrowset($result3);
-$baner_count3 = count($baner_rows3);
+$baner_count3 = count_safe($baner_rows3);
 
 for($i = 0; $i < $baner_count3; $i++)
 {

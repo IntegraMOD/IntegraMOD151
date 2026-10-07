@@ -177,7 +177,7 @@ if ( $row = $db->sql_fetchrow($result) )
    while ( $row = $db->sql_fetchrow($result) ); 
    $db->sql_freeresult($result); 
 
-   $total_posts = count($postrow); 
+   $total_posts = count_safe($postrow); 
 } 
 else 
 { 

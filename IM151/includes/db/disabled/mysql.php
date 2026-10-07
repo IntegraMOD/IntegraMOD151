@@ -404,7 +404,7 @@ class sql_db
 	function sql_fetchrow($query_id = 0)
 	{
 		if ($query_id === 'cache' && $this->cached)
-			return count($this->cache) ? array_shift($this->cache) : false;
+			return count_safe($this->cache) ? array_shift($this->cache) : false;
 		$mtime = microtime();
 		$mtime = explode(" ",$mtime);
 		$mtime = $mtime[1] + $mtime[0];

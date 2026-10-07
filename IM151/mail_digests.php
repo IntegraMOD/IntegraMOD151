@@ -190,13 +190,13 @@ for ( $i = 0 ; $i < $total_subscriptions ; $i++)
 	$db->sql_freeresult($result);
 	
 	// If there are subscribed forums, we only want to see messages for these forums.
-	if ( count($subscribed_forums) == 0 ) 
+	if ( count_safe($subscribed_forums) == 0 ) 
 	{ 
 		// The subscribed forums table is empty, by design this means
 		// the user wants all auth forums.
 		$query_forums = $authed_forums;
 	}
-	else if ( count($subscribed_forums) > 0 )
+	else if ( count_safe($subscribed_forums) > 0 )
 	{
 		$query_forums = array_intersect($authed_forums, $subscribed_forums);
 	}
@@ -252,7 +252,7 @@ for ( $i = 0 ; $i < $total_subscriptions ; $i++)
 
 	// The emailer class does not have the equivalent of the assign_block_vars operation, so the
 	// entire digest must be placed inside a variable.
-	if ( !($total_topics = count($topic_data)) )
+	if ( !($total_topics = count_safe($topic_data)) )
 	{
 		$msg = "There are no new topics";
 	}
@@ -360,7 +360,7 @@ for ( $i = 0 ; $i < $total_subscriptions ; $i++)
 				$message = digest_smilies_pass($message, $siteURL);
 			}
 	
-			if ( count($orig_word) )
+			if ( count_safe($orig_word) )
 			{
 				$topic_title = preg_replace($orig_word, $replacement_word, $topic_title);
 				$post_subject = ( $topic_data[$j]['post_subject'] != "" ) ? preg_replace($orig_word, $replacement_word, $topic_data[$j]['post_subject']) : $topic_title;
@@ -553,7 +553,7 @@ for ( $i = 0 ; $i < $total_subscriptions ; $i++)
 			'SEND_DIGEST' => ($subscription_data[$i]['send_on_no_messages']) ? $lang['Yes'] : $lang['No'],						
 			'TEXT_LENGTH' => ( $subscription_data[$i]['text_length'] == -1 ? 'Full Posts' : $subscription_data[$i]['text_length'] ),
 			
-			'T_HEAD_THEME' => ereg_replace(".css", "", $theme['head_stylesheet']),
+			'T_HEAD_THEME' => preg_replace('~.css~D', "", $theme['head_stylesheet']),
 			'T_HEAD_STYLESHEET' => $theme['head_stylesheet'],
 			)
 		);

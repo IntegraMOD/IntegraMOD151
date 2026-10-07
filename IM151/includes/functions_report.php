@@ -756,7 +756,7 @@ function report_count_obtain()
 		
 		if (!empty($reports))
 		{
-			for ($i = 0, $count = count($reports); $i < $count; $i++)
+			for ($i = 0, $count = count_safe($reports); $i < $count; $i++)
 			{
 				if (isset($reports[$i]['report_subject_data']))
 				{
@@ -765,7 +765,7 @@ function report_count_obtain()
 			}
 			
 			reports_auth_check($reports);
-			$report_count = count($reports);
+			$report_count = count_safe($reports);
 		}
 		else
 		{
@@ -811,7 +811,7 @@ function reports_obtain($module_id = null, $auth_check = true, $reportee = null)
 		return array();
 	}
 	
-	for ($i = 0, $count = count($rows); $i < $count; $i++)
+	for ($i = 0, $count = count_safe($rows); $i < $count; $i++)
 	{
 		if (isset($rows[$i]['report_subject_data']))
 		{
@@ -874,7 +874,7 @@ function reports_open_obtain($module_id, $report_subject, $auth_check = true)
 		return array();
 	}
 	
-	for ($i = 0, $count = count($reports); $i < $count; $i++)
+	for ($i = 0, $count = count_safe($reports); $i < $count; $i++)
 	{
 		if (isset($reports[$i]['report_subject_data']))
 		{
@@ -921,7 +921,7 @@ function reports_deleted_obtain($auth_check = true)
 		return array();
 	}
 	
-	for ($i = 0, $count = count($reports); $i < $count; $i++)
+	for ($i = 0, $count = count_safe($reports); $i < $count; $i++)
 	{
 		if (isset($reports[$i]['report_subject_data']))
 		{
@@ -1383,7 +1383,7 @@ function reports_delete($report_ids, $auth_check = true, $module_action = true)
 		//
 		// Update reports without auth_delete
 		//
-		for ($i = 0, $count = count($update_ids); $i < $count; $i++)
+		for ($i = 0, $count = count_safe($update_ids); $i < $count; $i++)
 		{
 			if (in_array($update_ids[$i], $report_ids))
 			{
@@ -1473,7 +1473,7 @@ function report_statistics($mode)
 		case 'modules_count':
 			$report_modules = report_modules();
 			
-			return count($report_modules);
+			return count_safe($report_modules);
 		break;
 	}
 	

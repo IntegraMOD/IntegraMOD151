@@ -115,7 +115,7 @@ foreach ($mods as $menu_name => $menu)
 	// menu ok
 	if ( $found )
 	{
-		$i = count($menu_keys);
+		$i = count_safe($menu_keys);
 		$menu_keys[$i] = $menu_name;
 		$menu_sort[$i] = $menu['sort'];
 
@@ -140,7 +140,7 @@ foreach ($mods as $menu_name => $menu)
 			}
 			if ($found)
 			{
-				$j = count($mod_keys[$i]);
+				$j = count_safe($mod_keys[$i]);
 				$mod_keys[$i][$j] = $mod_name;
 				$mod_sort[$i][$j] = $mod['sort'];
 
@@ -179,19 +179,19 @@ foreach ($mods as $menu_name => $menu)
 @array_multisort($menu_sort, $menu_keys, $mod_sort, $mod_keys, $sub_sort, $sub_keys);
 
 // fix menu id
-if ( $menu_id > count($menu_keys) )
+if ( $menu_id > count_safe($menu_keys) )
 {
 	$menu_id = 0;
 }
 
 // fix mod id
-if ( $mod_id > count($mod_keys[$menu_id]) )
+if ( $mod_id > count_safe($mod_keys[$menu_id]) )
 {
 	$mod_id = 0;
 }
 
 // fix sub id
-if ( $sub_id > count($sub_keys[$menu_id][$mod_id]) )
+if ( $sub_id > count_safe($sub_keys[$menu_id][$mod_id]) )
 {
 	$sub_id = 0;
 }
@@ -335,26 +335,26 @@ $template->assign_vars(array(
 );
 
 // send menu
-for ($i = 0; $i < count($menu_keys); $i++)
+for ($i = 0; $i < count_safe($menu_keys); $i++)
 {
 	$l_menu = $menu_keys[$i];
-	if ( count($mod_keys[$i]) == 1 )
+	if ( count_safe($mod_keys[$i]) == 1 )
 	{
 		$l_menu = $mod_keys[$i][0];
-		if ( count($sub_keys[$i][0]) == 1 )
+		if ( count_safe($sub_keys[$i][0]) == 1 )
 		{
 			$l_menu = $sub_keys[$i][0][0];
 		}
 	}
 	$template->assign_block_vars('menu', array(
-		'CLASS'		=> ($menu_id == $i) ? ( (count($mod_keys[$i]) > 1) ? 'row3' : 'row1' ) : 'row2',
+		'CLASS'		=> ($menu_id == $i) ? ( (count_safe($mod_keys[$i]) > 1) ? 'row3' : 'row1' ) : 'row2',
 		'U_MENU'	=> append_sid("./admin_board_extend.$phpEx?menu=$i"),
 		'L_MENU'	=> sprintf( ( ($menu_id == $i) ? '<b>%s</b>' : '%s' ), mods_settings_get_lang($l_menu) ),
 		)
 	);
 	if ( $menu_id == $i )
 	{
-		if (count($mod_keys[$i]) > 1 )
+		if (count_safe($mod_keys[$i]) > 1 )
 		{
 			$template->assign_block_vars('menu.title_open', array());
 		}
@@ -365,26 +365,26 @@ for ($i = 0; $i < count($menu_keys); $i++)
 	}
 	if ($menu_id == $i)
 	{
-		for ($j = 0; $j < count($mod_keys[$i]); $j++ )
+		for ($j = 0; $j < count_safe($mod_keys[$i]); $j++ )
 		{
 			$l_mod = $mod_keys[$i][$j];
-			if ( count($sub_keys[$i][$j]) == 1 )
+			if ( count_safe($sub_keys[$i][$j]) == 1 )
 			{
 				$l_mod = $sub_keys[$i][$j][0];
 			}
 			$template->assign_block_vars('menu.mod', array(
 				'CLASS'	=> ( ($menu_id == $i) && ($mod_id == $j) ) ? 'row1' : 'row2',
-				'ALIGN'	=> ( ($menu_id == $i) && ($mod_id == $j) && (count($sub_keys[$i][$j]) > 1) ) ? 'left' : 'center',
+				'ALIGN'	=> ( ($menu_id == $i) && ($mod_id == $j) && (count_safe($sub_keys[$i][$j]) > 1) ) ? 'left' : 'center',
 				'U_MOD'	=> append_sid("./admin_board_extend.$phpEx?menu=$i&mod=$j"),
 				'L_MOD'	=> sprintf( ( ( ($menu_id == $i) && ($mod_id == $j) ) ? '<b>%s</b>' : '%s' ), mods_settings_get_lang($l_mod) ),
 				)
 			);
 			if ( ($menu_id == $i) && ($mod_id == $j) )
 			{
-				if ( count($sub_keys[$i][$j]) > 1 )
+				if ( count_safe($sub_keys[$i][$j]) > 1 )
 				{
 					$template->assign_block_vars('menu.mod.sub', array());
-					for ($k = 0; $k < count($sub_keys[$i][$j]); $k++)
+					for ($k = 0; $k < count_safe($sub_keys[$i][$j]); $k++)
 					{
 						$template->assign_block_vars('menu.mod.sub.row', array(
 							'CLASS'	=> ( ($menu_id == $i) && ($mod_id == $j) && ($sub_id == $k) ) ? 'row1' : 'row1',

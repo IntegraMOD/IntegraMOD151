@@ -122,7 +122,7 @@ if( ($album_config['hotlink_prevent'] == 1) && (isset($_SERVER['HTTP_REFERER']))
 
 	$errored = true;
 
-	for ($i = 0; $i < count($good_referers); $i++)
+	for ($i = 0; $i < count_safe($good_referers); $i++)
 	{
 		$good_referers[$i] = trim($good_referers[$i]);
 

@@ -231,7 +231,7 @@ function portal_parse_blocks($layout, $forum_wide = FALSE, $type='')
 		}
 	}
 
-	$block_count = count($block_info);
+	$block_count = count_safe($block_info);
 
 	for ($b_counter = 0; $b_counter < $block_count; $b_counter++)
 	{
@@ -241,7 +241,7 @@ function portal_parse_blocks($layout, $forum_wide = FALSE, $type='')
 			$is_group_allowed = FALSE;
 			$group_content = explode(",",$block_info[$b_counter]['groups']);
 
-			for ($i = 0; $i < count($group_content); $i++)
+			for ($i = 0; $i < count_safe($group_content); $i++)
 			{
 				if (in_array(intval($group_content[$i]), portal_groups($userdata['user_id'])))
 				{
@@ -326,11 +326,11 @@ function portal_parse_blocks($layout, $forum_wide = FALSE, $type='')
 					$template->assign_block_vars($position . '_blocks_row.border','');
 				}
 
-				if ($block_info[$b_counter]['openclose'] == 1)
+				if (($block_info[$b_counter]['openclose'] ?? 0) == 1)
 				{
-					$template->assign_block_vars($position . '_blocks_row.openclose',array(
-						'OPEN_IMG' => $images['block_open'],
-						'CLOSE_IMG' => $images['block_close']
+					$template->assign_block_vars($position . '_blocks_row.openclose', array(
+						'OPEN_IMG'  => $images['block_open'] ?? '',
+						'CLOSE_IMG' => $images['block_close'] ?? ''
 					));
 				}
 

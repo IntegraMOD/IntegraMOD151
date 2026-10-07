@@ -133,7 +133,7 @@ class attach_parent
 		$priority = explode(';', $priority);
 		$found = FALSE;
 
-		for ($i = 0; $i < count($priority); $i++)
+		for ($i = 0; $i < count_safe($priority); $i++)
 		{
 			if (($priority[$i] == 'group') && (!$found))
 			{
@@ -153,7 +153,7 @@ class attach_parent
 					$rows = $db->sql_fetchrowset($result);
 					$group_id = array();
 
-					for ($j = 0; $j < count($rows); $j++)
+					for ($j = 0; $j < count_safe($rows); $j++)
 					{
 						$group_id[] = $rows[$j]['group_id'];
 					}
@@ -342,7 +342,7 @@ class attach_parent
 				$auth = ( intval($attach_config['allow_pm_attach']) ) ? TRUE : FALSE;
 			}
 
-			if (count($attachments) == 1)
+			if (count_safe($attachments) == 1)
 			{
 				$template->assign_block_vars('switch_attachments',array());
 
@@ -350,7 +350,7 @@ class attach_parent
 					'L_DELETE_ATTACHMENTS' => $lang['Delete_attachment'])
 				);
 			}
-			else if (count($attachments) > 0)
+			else if (count_safe($attachments) > 0)
 			{
 				$template->assign_block_vars('switch_attachments',array());
 
@@ -368,7 +368,7 @@ class attach_parent
 		{
 			if ( (!$refresh) && (!$preview) && (!$error) && (!isset($_POST['del_poll_option'])) )
 			{
-				for ($i = 0; $i < count($attachments); $i++)
+				for ($i = 0; $i < count_safe($attachments); $i++)
 				{
 					$this->attachment_list[] = $attachments[$i]['physical_filename'];
 					$this->attachment_comment_list[] = $attachments[$i]['comment'];
@@ -383,7 +383,7 @@ class attach_parent
 			}
 		}
 
-		$this->num_attachments = count($this->attachment_list);
+		$this->num_attachments = count_safe($this->attachment_list);
 		
 		if( ($submit) && ($mode != 'vote') )
 		{
@@ -472,7 +472,7 @@ class attach_parent
 				// restore values :)
 				if( isset($_POST['attachment_list']) )
 				{
-					for ($i = 0; $i < count($actual_list); $i++)
+					for ($i = 0; $i < count_safe($actual_list); $i++)
 					{
 						$restore = FALSE;
 						$del_thumb = FALSE;
@@ -569,7 +569,7 @@ class attach_parent
 				
 					$this->attachment_comment_list = array();
 
-					for ($i = 0; $i < count($this->attachment_list); $i++)
+					for ($i = 0; $i < count_safe($this->attachment_list); $i++)
 					{
 						$this->attachment_comment_list[$i] = $actual_comment_list[$i];
 					}
@@ -597,7 +597,7 @@ class attach_parent
 						$attachment_id = 0;
 						$actual_element = 0;
 
-						for ($i = 0; $i < count($actual_id_list); $i++)
+						for ($i = 0; $i < count_safe($actual_id_list); $i++)
 						{
 							if (isset($_POST['update_attachment'][$actual_id_list[$i]]))
 							{
@@ -740,7 +740,7 @@ class attach_parent
 		if ($mode == 'attach_list')
 		{
 
-			for ($i = 0; $i < count($this->attachment_list); $i++)
+			for ($i = 0; $i < count_safe($this->attachment_list); $i++)
 			{
 				if ($this->attachment_id_list[$i])
 				{
@@ -889,14 +889,14 @@ class attach_parent
 
 		$attachments = array();
 
-		if ( count($this->attachment_list) > 0 )
+		if ( count_safe($this->attachment_list) > 0 )
 		{
 			if (intval($attach_config['show_apcp']))
 			{
 				$template->assign_block_vars('switch_posted_attachments', array());
 			}
 
-			for ($i = 0; $i < count($this->attachment_list); $i++)
+			for ($i = 0; $i < count_safe($this->attachment_list); $i++)
 			{
 				$this->attachment_filename_list[$i] = stripslashes($this->attachment_filename_list[$i]);
 
@@ -909,7 +909,7 @@ class attach_parent
 				$hidden .= '<input type="hidden" name="attach_id_list[]" value="' . $this->attachment_id_list[$i] . '" />';
 				$hidden .= '<input type="hidden" name="attach_thumbnail_list[]" value="' . $this->attachment_thumbnail_list[$i] . '" />';
 
-				if ((!$this->posted_attachments_body) || ( count($this->attachment_list) == 0 ) )
+				if ((!$this->posted_attachments_body) || ( count_safe($this->attachment_list) == 0 ) )
 				{
 					$hidden .= '<input type="hidden" name="comment_list[]" value="' . stripslashes(htmlspecialchars($this->attachment_comment_list[$i])) . '" />';
 				}
@@ -939,7 +939,7 @@ class attach_parent
 			);
 		}
 
-		if (($this->posted_attachments_body) && ( count($this->attachment_list) > 0 ) )
+		if (($this->posted_attachments_body) && ( count_safe($this->attachment_list) > 0 ) )
 		{
 			init_display_template('attachbody', '{POSTED_ATTACHMENTS_BODY}', 'posted_attachments_body.tpl');
 
@@ -952,7 +952,7 @@ class attach_parent
 				'L_OPTIONS' => $lang['Options'])
 			);
 
-			for ($i = 0; $i < count($this->attachment_list); $i++)
+			for ($i = 0; $i < count_safe($this->attachment_list); $i++)
 			{
 				if ( $this->attachment_id_list[$i] == '0' )
 				{
@@ -1604,7 +1604,7 @@ class attach_posting extends attach_parent
 			$this->do_insert_attachment('attach_list', 'post', $post_id);
 			$this->do_insert_attachment('last_attachment', 'post', $post_id);
 
-			if ( ( (count($this->attachment_list) > 0) || ($this->post_attach) ) && (!isset($_POST['update_attachment'])) )
+			if ( ( (count_safe($this->attachment_list) > 0) || ($this->post_attach) ) && (!isset($_POST['update_attachment'])) )
 			{
 				$sql = "UPDATE " . POSTS_TABLE . "
 				SET post_attachment = 1

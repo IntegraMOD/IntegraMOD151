@@ -484,7 +484,7 @@ if ( $board_config['allow_smilies'] && !$site_id )
 		$smiles_array[$row['emoticon']] = $row;
 	}
 
-	if( count($smiles_array) )
+	if( count_safe($smiles_array) )
 	{
 		$board_config['smilies_path'] = $phpbb_root_path . $board_config['smilies_path'];
 		$template->assign_block_vars('switch_smilies_dropdown', array());

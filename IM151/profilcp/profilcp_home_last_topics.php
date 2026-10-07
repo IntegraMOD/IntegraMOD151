@@ -164,7 +164,7 @@ if ( ($process == 'post') && ($topics_last_page_size > 0) )
 
 	// Build select box
 	$select_lt_msg_days = '';
-	for($i = 0; $i < count($topics_last_previous_days); $i++)
+	for($i = 0; $i < count_safe($topics_last_previous_days); $i++)
 	{
 		$selected = ( $lt_msg_days == $i ) ? ' selected="selected"' : '';
 		$select_lt_msg_days .= '<option value="' . $i . '"' . $selected . '>' . $topics_last_previous_days_text[$i] . '</option>';

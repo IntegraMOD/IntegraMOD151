@@ -95,7 +95,7 @@ if( isset($_POST['add']) || isset($_GET['add']) )
   );
 
   $filename_list = "";
-  for( $i = 0; $i < count($category_images); $i++ )
+  for( $i = 0; $i < count_safe($category_images); $i++ )
   {
     $filename_list .= '<option value="' . $category_images[$i] . '">' . $category_images[$i] . '</option>';
   }
@@ -173,7 +173,7 @@ else if ( $mode != "" )
       $category_data = $db->sql_fetchrow($result);
 
       $filename_list = "";
-      for( $i = 0; $i < count($category_images); $i++ )
+      for( $i = 0; $i < count_safe($category_images); $i++ )
       {
         if( $category_images[$i] == $category_data['news_image'] )
         {
@@ -319,7 +319,7 @@ else
   //
   // Loop throuh the rows of smilies setting block vars for the template.
   //
-  for($i = 0; $i < count($news_cats); $i++)
+  for($i = 0; $i < count_safe($news_cats); $i++)
   {
     //
     // Replace htmlentites for < and > with actual character.

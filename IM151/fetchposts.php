@@ -140,7 +140,7 @@ function phpbb_fetch_posts($forum_sql, $number_of_posts, $text_length)
 			//
 			// censor text and title
 			//
-			if (count($orig_word))
+			if (count_safe($orig_word))
 			{
 				$posts[$i]['topic_title'] = preg_replace($orig_word, $replacement_word, $posts[$i]['topic_title']);
 				$posts[$i]['post_text'] = preg_replace($orig_word, $replacement_word, 	$posts[$i]['post_text']);

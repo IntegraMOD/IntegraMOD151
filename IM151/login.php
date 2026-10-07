@@ -309,9 +309,9 @@ else
 				$forward_to = ( !empty($forward_matches[3]) ) ? $forward_matches[3] : $forward_matches[1];
 				$forward_match = preg_split('[\?|&]', $forward_to);
 
-				if(count($forward_match) > 1)
+				if(count_safe($forward_match) > 1)
 				{
-					for($i = 1; $i < count($forward_match); $i++)
+					for($i = 1; $i < count_safe($forward_match); $i++)
 					{
 						if( false === strpos($forward_match[$i], "sid=") )
 						{

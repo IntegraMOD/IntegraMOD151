@@ -521,7 +521,7 @@ function display_upload_attach_box_limits($user_id, $group_id = 0)
 		$attach_id[] = intval($attach_ids[$j]['attach_id']);
 	}
 
-	$upload_filesize = (count($attach_id) > 0) ? get_total_attach_filesize(implode(',', $attach_id)) : 0;
+	$upload_filesize = (count_safe($attach_id) > 0) ? get_total_attach_filesize(implode(',', $attach_id)) : 0;
 
 	$size_lang = ($upload_filesize >= 1048576) ? $lang['MB'] : ( ($upload_filesize >= 1024) ? $lang['KB'] : $lang['Bytes'] );
 

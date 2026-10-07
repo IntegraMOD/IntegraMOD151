@@ -956,9 +956,9 @@ if( $userdata['session_logged_in'] && $post_data['disp_news'] )
 		$boxstring .= '<option value="0">' . $lang['Regular_Post'] . '</option>';
 	} 
 
-	if( count( $news_cat ) > 0 )
+	if( count_safe( $news_cat ) > 0 )
 	{
-		for( $i = 0; $i < count( $news_cat ); $i++ )
+		for( $i = 0; $i < count_safe( $news_cat ); $i++ )
 		{
 			if( $news_cat[$i]['news_id'] != $post_data['news_id'] )
 			{
@@ -1037,7 +1037,7 @@ else if ( $mode == 'vote' )
 		{
 			$max_vote = $vote_info['vote_max'];
 		}
-		$max_voting=count($vote_id);
+		$max_voting=count_safe($vote_id);
 		if ($max_voting>$max_vote)
 		{
 			$max_voting=$max_vote;
@@ -2545,7 +2545,7 @@ if ($icon_per_row <= 1)
 
 // get the list of icon available to the user
 $icones_sort = array();
-for ($i = 0; $i < count($icones); $i++)
+for ($i = 0; $i < count_safe($icones); $i++)
 {
 	switch ($icones[$i]['auth'])
 	{
@@ -2575,7 +2575,7 @@ for ($i = 0; $i < count($icones); $i++)
 
 // check if the icon exists
 $found = false;
-for ($i=0; ( ($i < count($icones_sort)) && !$found );$i++)
+for ($i=0; ( ($i < count_safe($icones_sort)) && !$found );$i++)
 {
 	$found = ($icones[ $icones_sort[$i] ]['ind'] == $post_icon);
 }
@@ -2589,12 +2589,12 @@ $template->assign_vars(array(
 );
 
 // display the icons
-$nb_row = intval( (count($icones_sort)-1) / $icon_per_row )+1;
+$nb_row = intval( (count_safe($icones_sort)-1) / $icon_per_row )+1;
 $offset = 0;
 for ($i=0; $i < $nb_row; $i++)
 {
 	$template->assign_block_vars('switch_icon_checkbox.row',array());
-	for ($j=0; ( ($j < $icon_per_row) && ($offset < count($icones_sort)) ); $j++)
+	for ($j=0; ( ($j < $icon_per_row) && ($offset < count_safe($icones_sort)) ); $j++)
 	{
 		$icon_id  = $icones_sort[$offset];
 

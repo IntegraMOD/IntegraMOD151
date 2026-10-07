@@ -152,7 +152,7 @@ class ct_userfunctions
 
 		$first_ip_range  = explode('.', $userdata['ct_last_used_ip']);
 		$second_ip_range = explode('.', $userdata['ct_last_ip']);
-		$is_ipv4 = count($first_ip_range) > 1;
+		$is_ipv4 = count_safe($first_ip_range) > 1;
 		if (!$is_ipv4)
 		{ // V: no support for IP v6 as of yet...
 			return 'allclear';
@@ -254,14 +254,14 @@ class ct_userfunctions
 			$match2		= array();
 			$match1 	= preg_split('/\\[url=|www\\.|http:\/\//', $_POST['message']);
 			$match2		= preg_split('/\\[url=|www\\.|http:\/\//', $_POST['subject']);
-			$url_count  = count($match1) + count($match2) - 2;
+			$url_count  = count_safe($match1) + count_safe($match2) - 2;
 
 			$eur_count  = 0;
 			$match1		= array();
 			$match2		= array();
 			$match1     = preg_split('/US|\\$|€/m', $_POST['message']);
 			$match2     = preg_split('/US|\\$|€/m', $_POST['subject']);
-			$eur_count  = count($match1) + count($match2) - 2;
+			$eur_count  = count_safe($match1) + count_safe($match2) - 2;
 
 			if ( $url_count > 6 || $eur_count > 6 )
 			{
@@ -277,7 +277,7 @@ class ct_userfunctions
 
 				include_once($phpbb_root_path . 'ctracker/constants.' . $phpEx);
 
-				for($i = 0; $i < count($ct_spammer_def); $i++)
+				for($i = 0; $i < count_safe($ct_spammer_def); $i++)
 				{
 					$current_value = preg_quote($ct_spammer_def[$i]);
 		 			$current_value = str_replace('\*', '.*?', $current_value);
@@ -403,7 +403,7 @@ class ct_userfunctions
 		// Registration Scan blocked Mails
 		if ( isset($_POST['submit']) && intval($ctracker_config->settings['autoban_mails']) == 1 && $mode == 'register' )
 		{
-			for($i = 0; $i < count($ct_userspm_def); $i++)
+			for($i = 0; $i < count_safe($ct_userspm_def); $i++)
 			{
 				if ( $_POST['username'] == $ct_userspm_def[$i] )
 				{
@@ -411,7 +411,7 @@ class ct_userfunctions
 				}
 			}
 
-			for($i = 0; $i < count($ct_mailscn_def); $i++)
+			for($i = 0; $i < count_safe($ct_mailscn_def); $i++)
 			{
 				$current_value = preg_quote($ct_mailscn_def[$i]);
 		 		$current_value = str_replace('\*', '.*?', $current_value);

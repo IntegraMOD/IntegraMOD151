@@ -496,10 +496,10 @@ else
 				$pic_id_row[] = $row['pic_id'];
 			}
 
-			if( count($picrow) != 0 ) // if this category is not empty
+			if( count_safe($picrow) != 0 ) // if this category is not empty
 			{
 				// Delete all physical pic & cached thumbnail files
-				for ($i = 0; $i < count($picrow); $i++)
+				for ($i = 0; $i < count_safe($picrow); $i++)
 				{
 					@unlink('../' . ALBUM_CACHE_PATH . $picrow[$i]['pic_thumbnail']);
 

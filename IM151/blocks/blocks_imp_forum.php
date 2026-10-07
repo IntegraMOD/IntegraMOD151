@@ -51,7 +51,7 @@ if(!function_exists('imp_forum_block_func'))
 
 			$fetchposts = phpbb_fetch_posts($portal_config['md_news_forum_id'], $portal_config['md_num_news'], $portal_config['md_news_length']);
 
-			for ($i = 0; $i < count($fetchposts); $i++)
+			for ($i = 0; $i < count_safe($fetchposts); $i++)
 			{
 				if( $fetchposts[$i]['striped'] == 1 )
 				{

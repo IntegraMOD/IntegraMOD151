@@ -267,7 +267,7 @@ elseif( isset($_GET['pane']) && $_GET['pane'] == 'right' )
 				$tabledata_ary = $db->sql_fetchrowset($result);
 
 				$dbsize = 0;
-				for($i = 0; $i < count($tabledata_ary); $i++)
+				for($i = 0; $i < count_safe($tabledata_ary); $i++)
 				{
 					if( $table_prefix != "" )
 					{
@@ -385,11 +385,11 @@ elseif( isset($_GET['pane']) && $_GET['pane'] == 'right' )
 
 	$reg_userid_ary = array();
 
-	if( count($onlinerow_reg) )
+	if( count_safe($onlinerow_reg) )
 	{
 		$registered_users = 0;
 
-		for($i = 0; $i < count($onlinerow_reg); $i++)
+		for($i = 0; $i < count_safe($onlinerow_reg); $i++)
 		{
 			if( !inarray($onlinerow_reg[$i]['user_id'], $reg_userid_ary) )
 			{
@@ -592,11 +592,11 @@ elseif( isset($_GET['pane']) && $_GET['pane'] == 'right' )
 	// Guest users
 	//
 //	if( count($onlinerow_guest) )
-    if ( isset($onlinerow_guest) && count($onlinerow_guest) )
+    if ( isset($onlinerow_guest) && count_safe($onlinerow_guest) )
 	{
 		$guest_users = 0;
 
-		for($i = 0; $i < count($onlinerow_guest); $i++)
+		for($i = 0; $i < count_safe($onlinerow_guest); $i++)
 		{
 			$guest_userip_ary[] = $onlinerow_guest[$i]['session_ip'];
 			$guest_users++;

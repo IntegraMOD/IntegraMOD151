@@ -127,7 +127,7 @@ function gid_auth($type, $forum_id, $auth_user_gid, $f_access = '')
 		}
 
 	$auth_user = array();
-	for($i = 0; $i < count($auth_fields); $i++)
+	for($i = 0; $i < count_safe($auth_fields); $i++)
 	{
 		$key = $auth_fields[$i];
 
@@ -169,7 +169,7 @@ function gid_auth($type, $forum_id, $auth_user_gid, $f_access = '')
 		}
 		else
 		{
-			for($k = 0; $k < count($f_access); $k++)
+			for($k = 0; $k < count_safe($f_access); $k++)
 			{
 				$value = $f_access[$k][$key];
 				$f_forum_id = $f_access[$k]['forum_id'];
@@ -218,7 +218,7 @@ function gid_auth($type, $forum_id, $auth_user_gid, $f_access = '')
 	}
 	else
 	{
-		for($k = 0; $k < count($f_access); $k++)
+		for($k = 0; $k < count_safe($f_access); $k++)
 		{
 			$f_forum_id = $f_access[$k]['forum_id'];
 
@@ -233,9 +233,9 @@ function gid_auth_check_user($type, $key, $u_access, $is_admin)
 {
 	$auth_user = 0;
 
-	if ( count($u_access) )
+	if ( count_safe($u_access) )
 	{
-		for($j = 0; $j < count($u_access); $j++)
+		for($j = 0; $j < count_safe($u_access); $j++)
 		{
 			$result = 0;
 			switch($type)

@@ -90,11 +90,11 @@ $languages_to_include = array(
 	'modules/language/lang_xxx/lang_modules.' . $phpEx
 );
 
-for ($i = 0; $i < count($languages_to_include); $i++)
+for ($i = 0; $i < count_safe($languages_to_include); $i++)
 {
 	$found = FALSE;
 
-	for ($j = 0; $j < count($lang_failover) && !$found; $j++)
+	for ($j = 0; $j < count_safe($lang_failover) && !$found; $j++)
 	{
 		$language_file = $phpbb_root_path . str_replace('xxx', $lang_failover[$j], $languages_to_include[$i]);
 	
@@ -157,7 +157,7 @@ if ($development)
 }
 
 $iterate_index = 0;
-$iterate_end = count($modules);
+$iterate_end = count_safe($modules);
 
 while ($iterate_index < $iterate_end)
 {

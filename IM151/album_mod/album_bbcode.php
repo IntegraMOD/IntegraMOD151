@@ -629,7 +629,7 @@ class BBCode {
 				$table_class = 'empty-table';
 			}
 
-			for($i=0; $i<count($extras); $i++)
+			for($i=0; $i<count_safe($extras); $i++)
 			{
 				if(!empty($item['params'][$extras[$i]]))
 				{
@@ -690,7 +690,7 @@ class BBCode {
 			{
 				$params['src'] = $item['params']['src'];
 				$params['alt'] = isset($item['params']['alt']) ? $item['params']['alt'] : $content;
-				for($i=0; $i<count($extras); $i++)
+				for($i=0; $i<count_safe($extras); $i++)
 				{
 					if(!empty($item['params'][$extras[$i]]))
 					{
@@ -714,7 +714,7 @@ class BBCode {
 			{
 				$params['src'] = $content;
 				$params['alt'] = isset($item['params']['alt']) ? $item['params']['alt'] : (isset($params['title']) ? $params['title'] : '');
-				for($i=0; $i<count($extras); $i++)
+				for($i=0; $i<count_safe($extras); $i++)
 				{
 					if(!empty($item['params'][$extras[$i]]))
 					{
@@ -783,7 +783,7 @@ class BBCode {
 				$params['src'] = $item['params']['src'];
 				$pic_url = $item['params']['src'];
 				$params['alt'] = isset($item['params']['alt']) ? $item['params']['alt'] : $content;
-				for($i=0; $i<count($extras); $i++)
+				for($i=0; $i<count_safe($extras); $i++)
 				{
 					if(!empty($item['params'][$extras[$i]]))
 					{
@@ -808,7 +808,7 @@ class BBCode {
 				$params['src'] = $content;
 				$pic_url = $content;
 				$params['alt'] = isset($item['params']['alt']) ? $item['params']['alt'] : (isset($params['title']) ? $params['title'] : '');
-				for($i=0; $i<count($extras); $i++)
+				for($i=0; $i<count_safe($extras); $i++)
 				{
 					if(!empty($item['params'][$extras[$i]]))
 					{
@@ -877,7 +877,7 @@ class BBCode {
 			$extras = $this->allow_styling ? array('style', 'class') : array();
 			// check if nested tags are all [*]
 			$nested_count = 0;
-			for($i=0; $i<count($item['items']); $i++)
+			for($i=0; $i<count_safe($item['items']); $i++)
 			{
 				$tag2 = $item['items'][$i]['tag'];
 				if($tag2 === '*' || $tag2 === 'li')
@@ -904,7 +904,7 @@ class BBCode {
 			}
 			// valid tag. process subitems to make sure there are no extra items and remove all code between elements
 			$last_item = false;
-			for($i=0; $i<count($item['items']); $i++)
+			for($i=0; $i<count_safe($item['items']); $i++)
 			{
 				$item2 = &$item['items'][$i];
 				$tag2 = $item2['tag'];
@@ -1204,14 +1204,14 @@ class BBCode {
 			// check nested items
 			if(!$allow_nested)
 			{
-				for($i=0; $i<count($item['items']); $i++)
+				for($i=0; $i<count_safe($item['items']); $i++)
 				{
 					$item['items'][$i]['valid'] = false;
 				}
 			}
 			else
 			{
-				for($i=0; $i<count($item['next']); $i++)
+				for($i=0; $i<count_safe($item['next']); $i++)
 				{
 					$tag2 = $item['next'][$i]['tag'];
 					$is_html = $item['next'][$i]['item']['is_html'];
@@ -1241,7 +1241,7 @@ class BBCode {
 			// check if url is local
 			$url_local = false;
 			global $urls_local;
-			for($i=0; $i<count($urls_local); $i++)
+			for($i=0; $i<count_safe($urls_local); $i++)
 			{
 				if(strlen($url) > strlen($urls_local[$i]) && strpos($url, $urls_local[$i]) === 0)
 				{
@@ -1316,7 +1316,7 @@ class BBCode {
 				return $error;
 			}
 			// disable nested items
-			for($i=0; $i<count($item['items']); $i++)
+			for($i=0; $i<count_safe($item['items']); $i++)
 			{
 				$item['items'][$i]['valid'] = false;
 			}
@@ -1506,13 +1506,13 @@ class BBCode {
 				$items = array();
 				$str = $item['params']['highlight'];
 				$list = explode(',', $str);
-				for($i=0; $i<count($list); $i++)
+				for($i=0; $i<count_safe($list); $i++)
 				{
 					$str = trim($list[$i]);
 					if(strpos($str, '-'))
 					{
 						$row = explode('-', $str);
-						if(count($row) == 2)
+						if(count_safe($row) == 2)
 						{
 							$num1 = intval($row[0]);
 							if($num1 == 0)
@@ -1538,12 +1538,12 @@ class BBCode {
 						}
 					}
 				}
-				if(count($items))
+				if(count_safe($items))
 				{
 					// process all lines
 					$num = $start - 1;
 					$pos = strpos($html, $search);
-					$total = count($items);
+					$total = count_safe($items);
 					$found = 0;
 					while($pos !== false)
 					{
@@ -1903,7 +1903,7 @@ class BBCode {
 	function add_extras($params, $extras)
 	{
 		$html = '';
-		for($i=0; $i<count($extras); $i++)
+		for($i=0; $i<count_safe($extras); $i++)
 		{
 			if(isset($params[$extras[$i]]))
 			{
@@ -2211,7 +2211,7 @@ class BBCode {
 	// Debug fuction. Prints tree of bbcode
 	function debug($items)
 	{
-		for($i=0; $i<count($items); $i++)
+		for($i=0; $i<count_safe($items); $i++)
 		{
 			$item = $items[$i];
 			if($item['tag'])
@@ -2238,7 +2238,7 @@ class BBCode {
 	function add_pointers(&$items, $prev_tags)
 	{
 		$tags = array();
-		for($i=0; $i<count($items); $i++)
+		for($i=0; $i<count_safe($items); $i++)
 		{
 			$item = &$items[$i];
 			$tags[] = array(
@@ -2246,7 +2246,7 @@ class BBCode {
 				'item' => &$items[$i]
 				);
 			$iterations = 0;
-			for($j=0; $j<count($prev_tags); $j++)
+			for($j=0; $j<count_safe($prev_tags); $j++)
 			{
 				if($prev_tags[$j]['tag'] === $item['tag'])
 				{
@@ -2257,7 +2257,7 @@ class BBCode {
 			$item['prev'] = $prev_tags;
 			// todo: check if subitems are allowed
 			// parse sub-items
-			if(count($item['items']))
+			if(count_safe($item['items']))
 			{
 				$arr = array(
 					'tag' => $item['tag'],
@@ -2304,7 +2304,7 @@ class BBCode {
 	function process($start, $end, &$items)
 	{
 		$html = '';
-		for($i=0; $i<count($items); $i++)
+		for($i=0; $i<count_safe($items); $i++)
 		{
 			$item = &$items[$i];
 			// check code before item
@@ -2360,7 +2360,7 @@ class BBCode {
 			return;
 		}
 		$this->replaced_smilies = array();
-		for($i=0; $i<count($this->allowed_smilies); $i++)
+		for($i=0; $i<count_safe($this->allowed_smilies); $i++)
 		{
 			if(strpos($this->text, $this->allowed_smilies[$i]['code']) !== false)
 			{
@@ -2374,11 +2374,11 @@ class BBCode {
 	{
 		$valid_chars_prev = array('', ' ', "\n", "\r", "\t", '>');
 		$valid_chars_next = array('', ' ', "\n", "\r", "\t", '<');
-		if(!$this->allow_smilies && !count($this->replaced_smilies))
+		if(!$this->allow_smilies && !count_safe($this->replaced_smilies))
 		{
 			return;
 		}
-		for($i=0; $i<count($this->replaced_smilies); $i++)
+		for($i=0; $i<count_safe($this->replaced_smilies); $i++)
 		{
 			$code = $this->replaced_smilies[$i]['code'];
 			$text = $this->replaced_smilies[$i]['replace'];
@@ -2519,7 +2519,7 @@ if ( defined('SMILIES_TABLE') )
 	{
 		$smilies = $db->sql_fetchrowset($result);
 		$bbcode->allowed_smilies = array();
-		for($i=0; $i<count($smilies); $i++)
+		for($i=0; $i<count_safe($smilies); $i++)
 		{
 			$arr = array(
 				'code' => $smilies[$i]['code'],
@@ -2531,7 +2531,7 @@ if ( defined('SMILIES_TABLE') )
 }
 
 // Need to initialize the random numbers only ONCE
-mt_srand( (double) microtime() * 1000000);
+mt_srand( (float) microtime() * 1000000);
 
 function make_bbcode_uid_mg()
 {
@@ -2557,10 +2557,10 @@ function undo_htmlspecialchars_mg($input, $full_undo = false)
 
 	if($full_undo)
 	{
-		if(preg_match_all('/&\#([0-9]+);/', $input, $matches) && count($matches))
+		if(preg_match_all('/&\#([0-9]+);/', $input, $matches) && count_safe($matches))
 		{
 			$list = array();
-			for($i=0; $i<count($matches[1]); $i++)
+			for($i=0; $i<count_safe($matches[1]); $i++)
 			{
 				$list[$matches[1][$i]] = true;
 			}

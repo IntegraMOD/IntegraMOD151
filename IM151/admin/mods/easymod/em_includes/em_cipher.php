@@ -338,8 +338,8 @@ class Cipher_blowfish {
         $keyPos = 0;
         $keyXor = 0;
 
-        $iMax = count($this->p);
-        $keyLen = count($key);
+        $iMax = count_safe($this->p);
+        $keyLen = count_safe($key);
         for ($i = 0; $i < $iMax; $i++) {
             for ($t = 0; $t < 4; $t++) {
                 $keyXor = ($keyXor << 8) | (($key[$keyPos]) & 0x0ff);
@@ -357,28 +357,28 @@ class Cipher_blowfish {
           $this->p[$i + 1] = $encZero['R'];
         }
 
-        $iMax = count($this->s1);
+        $iMax = count_safe($this->s1);
         for ($i = 0; $i < $iMax; $i+=2) {
           $encZero = $this->_encryptBlock($encZero['L'], $encZero['R']);
           $this->s1[$i] = $encZero['L'];
           $this->s1[$i + 1] = $encZero['R'];
         }
 
-        $iMax = count($this->s2);
+        $iMax = count_safe($this->s2);
         for ($i = 0; $i < $iMax; $i+=2) {
           $encZero = $this->_encryptBlock($encZero['L'], $encZero['R']);
           $this->s2[$i] = $encZero['L'];
           $this->s2[$i + 1] = $encZero['R'];
         }
 
-        $iMax = count($this->s3);
+        $iMax = count_safe($this->s3);
         for ($i = 0; $i < $iMax; $i+=2) {
           $encZero = $this->_encryptBlock($encZero['L'], $encZero['R']);
           $this->s3[$i] = $encZero['L'];
           $this->s3[$i + 1] = $encZero['R'];
         }
 
-        $iMax = count($this->s4);
+        $iMax = count_safe($this->s4);
         for ($i = 0; $i < $iMax; $i+=2) {
           $encZero = $this->_encryptBlock($encZero['L'], $encZero['R']);
           $this->s4[$i] = $encZero['L'];

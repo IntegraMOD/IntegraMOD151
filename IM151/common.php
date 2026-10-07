@@ -62,34 +62,112 @@ if (@phpversion() >= '5.0.0' && (!@ini_get('register_long_arrays') || @ini_get('
 	}
 }
 
-if(!function_exists('ereg'))           
-{ 
-	function ereg($pattern, $subject, &$matches = []) { return preg_match('/'.$pattern.'/', $subject, $matches); } 
+if (!function_exists('im160_posix_pattern'))
+{
+	function im160_posix_pattern($pattern, $ignore_case = false)
+	{
+		$pattern = is_scalar($pattern) ? (string) $pattern : '';
+		$delim = chr(1);
+		return $delim . str_replace($delim, '\\' . $delim, $pattern) . $delim . ($ignore_case ? 'iD' : 'D');
+	}
 }
 
-if(!function_exists('eregi'))           
-{ 
-	function eregi($pattern, $subject, &$matches = []) { return preg_match('/'.$pattern.'/i', $subject, $matches); } 
+if (!function_exists('im160_posix_replacement'))
+{
+	function im160_posix_replacement($replacement)
+	{
+		$replacement = is_scalar($replacement) ? (string) $replacement : '';
+		$replacement = str_replace('$', '\\$', $replacement);
+		return preg_replace('/\\\\([0-9])/', '$$1', $replacement);
+	}
 }
 
-if(!function_exists('ereg_replace'))    
-{ 
-	function ereg_replace($pattern, $replacement, $string) { return preg_replace('/'.$pattern.'/', $replacement, $string); } 
+if (!function_exists('count_safe'))
+{
+	function count_safe($value, $mode = 0)
+	{
+		if (is_array($value) || (is_object($value) && ($value instanceof Countable)))
+		{
+			return count($value, $mode);
+		}
+		return 0;
+	}
 }
 
-if(!function_exists('eregi_replace'))   
-{ 
-	function eregi_replace($pattern, $replacement, $string) { return preg_replace('/'.$pattern.'/i', $replacement, $string); } 
+if (!function_exists('ereg'))
+{
+	function ereg($pattern, $subject, &$matches = null)
+	{
+		$found = array();
+		$subject = is_scalar($subject) ? (string) $subject : '';
+		$matched = preg_match(im160_posix_pattern($pattern, false), $subject, $found);
+		if (func_num_args() >= 3)
+		{
+			$matches = $found;
+		}
+		if ($matched === 1)
+		{
+			return strlen($found[0]);
+		}
+		return false;
+	}
 }
 
-if(!function_exists('split'))           
-{ 
-	function split($pattern, $subject, $limit = -1) { return preg_split('/'.$pattern.'/', $subject, $limit); } 
+if (!function_exists('eregi'))
+{
+	function eregi($pattern, $subject, &$matches = null)
+	{
+		$found = array();
+		$subject = is_scalar($subject) ? (string) $subject : '';
+		$matched = preg_match(im160_posix_pattern($pattern, true), $subject, $found);
+		if (func_num_args() >= 3)
+		{
+			$matches = $found;
+		}
+		if ($matched === 1)
+		{
+			return strlen($found[0]);
+		}
+		return false;
+	}
 }
 
-if(!function_exists('spliti'))          
-{ 
-	function spliti($pattern, $subject, $limit = -1) { return preg_split('/'.$pattern.'/i', $subject, $limit); } 
+if (!function_exists('ereg_replace'))
+{
+	function ereg_replace($pattern, $replacement, $string)
+	{
+		$string = is_scalar($string) ? (string) $string : '';
+		$result = preg_replace(im160_posix_pattern($pattern, false), im160_posix_replacement($replacement), $string);
+		return ($result === null) ? $string : $result;
+	}
+}
+
+if (!function_exists('eregi_replace'))
+{
+	function eregi_replace($pattern, $replacement, $string)
+	{
+		$string = is_scalar($string) ? (string) $string : '';
+		$result = preg_replace(im160_posix_pattern($pattern, true), im160_posix_replacement($replacement), $string);
+		return ($result === null) ? $string : $result;
+	}
+}
+
+if (!function_exists('split'))
+{
+	function split($pattern, $subject, $limit = -1)
+	{
+		$subject = is_scalar($subject) ? (string) $subject : '';
+		return preg_split(im160_posix_pattern($pattern, false), $subject, $limit);
+	}
+}
+
+if (!function_exists('spliti'))
+{
+	function spliti($pattern, $subject, $limit = -1)
+	{
+		$subject = is_scalar($subject) ? (string) $subject : '';
+		return preg_split(im160_posix_pattern($pattern, true), $subject, $limit);
+	}
 }
 
 if (!function_exists('each'))
@@ -321,7 +399,7 @@ if (!empty ($accept_language))
 	}
 	reset ($board_config); // Avoid nasty surprises for other coders
 
-	if (count ($supported_languages) > 0)
+	if (count_safe ($supported_languages) > 0)
 	{
 		$accepted_languages = explode (',', $accept_language);
 		reset ($accepted_languages);

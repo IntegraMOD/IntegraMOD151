@@ -130,7 +130,7 @@ function get_lang_files( $filename, $path, $lang_path)
 	while ( $file = readdir($dir) )
 	{
 		// make sure it is a valid lang dir
-		if ( ereg("^lang_", $file) && !is_file( $lang_path . $file) && !is_link( $lang_path . $file) )
+		if ( preg_match('~^lang_~D', $file) && !is_file( $lang_path . $file) && !is_link( $lang_path . $file) )
 		{
 			// replace lang_english with this language name; FYI 12 = number of letters in "lang_english"
 			$temp_path = substr_replace( $path, $file, strpos( $path, 'lang_english'), 12) ;
@@ -162,7 +162,7 @@ function open_files( $filename, $path, &$file_list, &$command_file)
 	{
 		// get a list of all related files and open them
 		$files = get_theme_files( $filename, $path) ;
-		for ($i=0; $i<count($files); $i++)
+		for ($i=0; $i<count_safe($files); $i++)
 		{
 			// prep the file
 			$edit = new mod_io( $files[$i]['filename'], $files[$i]['path'], $command_file->read_method, $command_file->write_method, $command_file->move_method, $command_file->ftp_user, $command_file->ftp_pass, $command_file->ftp_path, $command_file->ftp_host, $command_file->ftp_port, $command_file->ftp_type, $command_file->ftp_cache) ;
@@ -204,7 +204,7 @@ function open_files( $filename, $path, &$file_list, &$command_file)
 		$lang_path =  $phpbb_root_path . 'language/' ;
 		$files = get_lang_files( $filename, $path, $lang_path) ;
 
-		for ($i=0; $i<count($files); $i++)
+		for ($i=0; $i<count_safe($files); $i++)
 		{
 			// prep the file
 			$edit = new mod_io( $files[$i]['filename'], $files[$i]['path'], $command_file->read_method, $command_file->write_method, $command_file->move_method, $command_file->ftp_user, $command_file->ftp_pass, $command_file->ftp_path, $command_file->ftp_host, $command_file->ftp_port, $command_file->ftp_type, $command_file->ftp_cache) ;
@@ -284,7 +284,7 @@ function open_files( $filename, $path, &$file_list, &$command_file)
 // write the specified line to all the files we have open
 function write_files( &$file_list, $buffer)
 {
-	for ($i=0; $i<count($file_list); $i++)
+	for ($i=0; $i<count_safe($file_list); $i++)
 	{
 		$file_list[$i]->modio_write( $buffer ) ;
 	}
@@ -296,7 +296,7 @@ function complete_file_reproduction( &$file_list)
 {
 	// if other file is open, finish writing file and close it
 	$no_errors = true ;
-	for ($i=0; $i<count($file_list); $i++)
+	for ($i=0; $i<count_safe($file_list); $i++)
 	{
 		while (!feof($file_list[$i]->pread_file))
 		{
@@ -329,7 +329,7 @@ function complete_file_reproduction( &$file_list)
 function em_array_shift( $orig_array)
 {
 	$new_array = array() ;
-	for ($i=1; $i<count($orig_array); $i++)
+	for ($i=1; $i<count_safe($orig_array); $i++)
 	{
 		$new_array[] = $orig_array[$i] ;
 	}
@@ -345,7 +345,7 @@ function get_line_return( $line)
 	$line = str_replace('	', ' ', $line) ;
 	$line_array = explode(' ', $line) ;
 
-	return $line_array[count($line_array)-1] ;
+	return $line_array[count_safe($line_array)-1] ;
 }
 
 
@@ -359,7 +359,7 @@ function perform_find( &$file_list, &$find_array, $search_array)
 
 	$err_level = FIND_OK ;
 	// we'll be searching for this FIND block through all the files in the list
-	for ( $file_count=0; $file_count<count( $file_list); $file_count++)
+	for ( $file_count=0; $file_count<count_safe( $file_list); $file_count++)
 	{
 		// change Default to the current template as appropriate.
 		$cur_template = preg_replace('#templates/(.*?)/.*#i','$1',$file_list[$file_count]->path);
@@ -386,12 +386,12 @@ function perform_find( &$file_list, &$find_array, $search_array)
 				$line_return = ($line_return == '') ? get_line_return($current_line) : $line_return ;
 
 				// if there is something already in the find array, then add this whitespace line to it
-				if (count($potential_find) > 0)
+				if (count_safe($potential_find) > 0)
 				{
 //warning: tmp is throwing undefined
 //echo "in here<br />\n" ;
 //					$temp_array[] = $tmp ;
-					$potential_find[count($potential_find)-1]['trailing_whitespace']++ ;
+					$potential_find[count_safe($potential_find)-1]['trailing_whitespace']++ ;
 				}
 
 				// write it out b/c the find array is empty already
@@ -407,19 +407,19 @@ function perform_find( &$file_list, &$find_array, $search_array)
 
 			// if this new line fits in the correct order of the search array, then things are looking
 			//   more like this could be a match; we also know it's not a whitespace line
-			if (preg_match('#'.preg_replace('#\\\\\\{%\\\\\\:(\\d+)\\\\\\}#','(\\d+|\\{%\\:$1\\})', preg_quote(trim($search_array[count($potential_find)]), '#')).'#', $current_line))
+			if (preg_match('#'.preg_replace('#\\\\\\{%\\\\\\:(\\d+)\\\\\\}#','(\\d+|\\{%\\:$1\\})', preg_quote(trim($search_array[count_safe($potential_find)]), '#')).'#', $current_line))
 			{
 				// load the line into the find array
 				$potential_find[] = array( 'line' => $current_line, 'trailing_whitespace' => 0) ;
 
 				// all the lines in both arrays match, we're done!!!
-				if (count($potential_find) == count($search_array))
+				if (count_safe($potential_find) == count_safe($search_array))
 				{
 					// bust out of this loop!
 					$found_complete_match = true ;
 
 					// build the find_array for this file and be sure to add the whitespace lines
-					for ($count=0; $count<count($potential_find); $count++)
+					for ($count=0; $count<count_safe($potential_find); $count++)
 					{
 						$find_array[$file_count][] = $potential_find[$count]['line'] ;
 						for ($white=0; $white < $potential_find[$count]['trailing_whitespace']; $white++)
@@ -434,7 +434,7 @@ function perform_find( &$file_list, &$find_array, $search_array)
 			}
 
 			// this line doesn't match what we are looking for and so far nothing else does, so just write it out
-			else if (count($potential_find) == 0)
+			else if (count_safe($potential_find) == 0)
 			{
 				$file_list[$file_count]->modio_write( $current_line) ;
 			}
@@ -461,12 +461,12 @@ function perform_find( &$file_list, &$find_array, $search_array)
 				// now we see if we can salvage anything left in the find array that matches up with the search
 				//   array; compare the head with the start of the search_array; if it has potential keep it,
 				//   otherwise pop off the head and try the next element
-				while (count($potential_find) > 0)
+				while (count_safe($potential_find) > 0)
 				{
 					$got_match = true ;
 
 					// loop through, if we get a 100% match all for the potential, then this is the new potential
-					for ($find=0; $find<count($potential_find); $find++)
+					for ($find=0; $find<count_safe($potential_find); $find++)
 					{
 						// not a match so mark it as such so that we can pop it and try the next line
 						if (!strstr( $potential_find[$find]['line'], trim($search_array[$find])))
@@ -548,7 +548,7 @@ function perform_find( &$file_list, &$find_array, $search_array)
 
 
 			// append search string to message
-			for ($x=0; $x<count($search_array); $x++)
+			for ($x=0; $x<count_safe($search_array); $x++)
 			{
 				$file_list[$file_count]->err_msg .= htmlspecialchars($search_array[$x]) . "<br />\n" ;
 			}
@@ -569,16 +569,16 @@ function perform_find( &$file_list, &$find_array, $search_array)
 // dump the contents of the write array
 function write_find_array( $find_array, &$file_list, $do_preview = false)
 {
-	for ( $file_count=0; $file_count<count( $file_list); $file_count++)
+	for ( $file_count=0; $file_count<count_safe( $file_list); $file_count++)
 	{
 		// make sure there is something in the array
-		if (count($find_array) == 0)
+		if (count_safe($find_array) == 0)
 		{
 			continue ;
 		}
 
 		// write the contents of the find array and then reinit everything
-		for ($looper=0; $looper<count($find_array[$file_count]); $looper++)
+		for ($looper=0; $looper<count_safe($find_array[$file_count]); $looper++)
 		{
 			// if we are in preview mode then add the notation to make it standout
 			if ($do_preview)
@@ -600,7 +600,7 @@ function perform_inline_add( &$find_array, &$file_list, $search_fragment, $buffe
 	global $lang ;
 
 	$err_level = FIND_OK ;
-	for ( $file_count=0; $file_count<count( $file_list); $file_count++)
+	for ( $file_count=0; $file_count<count_safe( $file_list); $file_count++)
 	{
 		$cur_template = preg_replace('#templates/(.*?)/.*#i','$1',$file_list[$file_count]->path);
 //		$search_fragment = ($cur_template == '') ? $search_fragment : str_replace('Default',$cur_template,$search_fragment);
@@ -609,7 +609,7 @@ function perform_inline_add( &$find_array, &$file_list, $search_fragment, $buffe
 
 		$found_fragment = false ;
 		// search the find array for our fragment
-		for ($looper=0; $looper<count($find_array[$file_count]); $looper++)
+		for ($looper=0; $looper<count_safe($find_array[$file_count]); $looper++)
 		{
 			// found the fragment, cool!
 			if (preg_match('#'.preg_replace('#\\\\\\{%\\\\\\:(\\d+)\\\\\\}#','(\\d+|\\{%\\:$1\\})', preg_quote($search_fragment, '#')).'#', $find_array[$file_count][$looper]))
@@ -707,7 +707,7 @@ function perform_inline_add( &$find_array, &$file_list, $search_fragment, $buffe
 function increment_wildcard( $wildcard_identifier, $increment_value, $wildcard_search, $search_result )
 {
 	$parts = preg_split('#\{%\:\d+\}#',substr($wildcard_search,0,strpos($wildcard_search,$wildcard_identifier)));
-	for ($i=0;$i<count($parts);$i++)
+	for ($i=0;$i<count_safe($parts);$i++)
 	{
 		$parts[$i] = preg_quote($parts[$i],'#');
 	}
@@ -1077,7 +1077,7 @@ function get_languages( $lang_path)
 	while ( $file = readdir($dir) )
 	{
 		// make sure this is a lang dir
-		if ( ereg("^lang_", $file) && !is_file("$lang_path/$file") && !is_link("$lang_path/$file") )
+		if ( preg_match('~^lang_~D', $file) && !is_file("$lang_path/$file") && !is_link("$lang_path/$file") )
 		{
 			$langs = ( $langs == '') ? substr($file,5) : $langs . '; ' . substr($file,5) ;
 		}
@@ -1195,7 +1195,7 @@ function copy_check_basic_form( $line)
 	// clean the line from extra spaces and tabs
 	$line = str_replace( "\t", ' ', trim( $line) );
 	$split_line = explode(' ', $line);
-	$imax = count($split_line) ;
+	$imax = count_safe($split_line) ;
 	// loop through elements and keep only elements with text
 	for ( $i=0; $i<$imax; $i++ )
 	{
@@ -1213,7 +1213,7 @@ function copy_check_basic_form( $line)
 	$split_line = explode(' ', $line);
 
 	// let's go and analyse these
-	if ( (count($split_line) != 4) || (strtolower($split_line[0]) != 'copy') || (strtolower($split_line[2]) != 'to') )
+	if ( (count_safe($split_line) != 4) || (strtolower($split_line[0]) != 'copy') || (strtolower($split_line[2]) != 'to') )
 	{
 		return false ;
 	}
@@ -1314,7 +1314,7 @@ function final_formatting( $tmp_to_dir, $tmp_to_file, $tmp_from_dir, $tmp_file)
 	if (($split_path[0] == 'templates') && ($split_path[1] == 'Default'))
 	{
 		$files = get_theme_files( $tmp_to_file, $tmp_to_dir) ;
-		for ($x=0; $x<count($files); $x++)
+		for ($x=0; $x<count_safe($files); $x++)
 		{
 			// make any dirs we may need
 			$result_files[] = array('from_path' => $tmp_from_dir,
@@ -1329,7 +1329,7 @@ function final_formatting( $tmp_to_dir, $tmp_to_file, $tmp_from_dir, $tmp_file)
 	{
 		$lang_path =  $phpbb_root_path . 'language/' ;
 		$files = get_lang_files( $tmp_to_file, $tmp_to_dir, $lang_path) ;
-		for ($x=0; $x<count($files); $x++)
+		for ($x=0; $x<count_safe($files); $x++)
 		{
 			// make any dirs we may need
 			$result_files[] = array('from_path' => $tmp_from_dir,

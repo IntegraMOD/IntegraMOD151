@@ -221,17 +221,17 @@ else
 	{
 		$s_hidden_fields = '<input type="hidden" name="mode" value="' . $mode . '" /><input type="hidden" name="type" value="' . $type . '" /><input type="hidden" name="action" value="' . $action . '" /><input type="hidden" name="start" value="' . $start . '" /><input type="hidden" name="order" value="' . $sort_order . '" />';
 
-		for($i = 0; $i < count($mark_list); $i++)
+		for($i = 0; $i < count_safe($mark_list); $i++)
 		{
 			$s_hidden_fields .= '<input type="hidden" name="mark[]" value="' . intval($mark_list[$i]) . '" />';
 		}
 
-		for($i = 0; $i < count($users_list); $i++)
+		for($i = 0; $i < count_safe($users_list); $i++)
 		{
 			$s_hidden_fields .= '<input type="hidden" name="users[]" value="' . intval($users_list[$i]) . '" />';
 		}
 
-		if( !count($mark_list) && !count($users_list) )
+		if( !count_safe($mark_list) && !count_safe($users_list) )
 		{
 			$message = $lang['No_Contact_changes'];
 			message_die(GENERAL_MESSAGE, $message . $contact_list->append_msg);
@@ -268,7 +268,7 @@ else
 			$contact_list->get_list('all');
 			$update_list = array();
 			$new_list = array();
-			$mark_size = count($mark_list);
+			$mark_size = count_safe($mark_list);
 
 			if ( $mark_size )
 			{
@@ -308,7 +308,7 @@ else
 		elseif( $action == 'delete' )
 		{
 			// Remove all selected buddies
-			$mark_size = count($mark_list);
+			$mark_size = count_safe($mark_list);
 			if ( $mark_size )
 			{
 				$delete_list = array();

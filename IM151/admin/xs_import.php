@@ -274,13 +274,13 @@ if(!empty($_GET['importstyle']))
 		'DATE'					=> create_date($board_config['default_dateformat'], $header['date'], $board_config['board_timezone']),
 		'STYLE_SIZE'			=> $header['filesize'],
 		'STYLE_NAME'			=> htmlspecialchars($header['styles'][0]),
-		'TOTAL'					=> count($header['styles']),
+		'TOTAL'					=> count_safe($header['styles']),
 		'L_XS_IMPORT_TPL'		=> str_replace('{TPL}', htmlspecialchars($header['template']), $lang['xs_import_tpl'])
 		));
-	if(count($header['styles']) > 1)
+	if(count_safe($header['styles']) > 1)
 	{
 		$template->assign_block_vars('switch_select_style', array());
-		for($i=0; $i<count($header['styles']); $i++)
+		for($i=0; $i<count_safe($header['styles']); $i++)
 		{
 			$template->assign_block_vars('switch_select_style.style', array(
 				'NUM'		=> $i,
@@ -341,10 +341,10 @@ if($dir)
 	closedir($dir);
 }
 
-if(count($files))
+if(count_safe($files))
 {
 
-	for($i=0; $i<count($files); $i++)
+	for($i=0; $i<count_safe($files); $i++)
 	{
 		$item = $files[$i];
 		$row_class = $xs_row_class[$i % 2];
@@ -363,7 +363,7 @@ if(count($files))
 			));
 		if(empty($item['error']))
 		{
-			for($j=0; $j<count($item['styles']); $j++)
+			for($j=0; $j<count_safe($item['styles']); $j++)
 			{
 				$template->assign_block_vars('styles.list', array(
 					'STYLE'		=> $item['styles'][$j]

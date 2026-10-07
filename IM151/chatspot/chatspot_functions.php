@@ -122,7 +122,7 @@ function parse_message( $msg, $msg_type )
 	{
 		$match = array();
 
-		while( eregi( "\[size=[1-6]\]", $msg, $match ) )
+		while( preg_match('~\\[size=[1-6]\\]~iD', $msg, $match ) )
 		{
 			$found = $match[ 0 ];
 	
@@ -130,15 +130,15 @@ function parse_message( $msg, $msg_type )
 			{
 				$sub = substr( $match[ 0 ], 6, 1 );
 				if( $msg_type != 4 ) // don't allow 'size' in an action
-					$msg = eregi_replace( "\[size=$sub\]", "<font size=\"$sub\">", $msg );
+					$msg = preg_replace(im160_posix_pattern( "\[size=$sub\]", true), "<font size=\"$sub\">", $msg );
 				else
-					$msg = eregi_replace( "\[size=$sub\]", "", $msg );
+					$msg = preg_replace(im160_posix_pattern( "\[size=$sub\]", true), "", $msg );
 			}
 		}
 
 		$match[ 0 ] = "";
 
-		while( eregi( "\[color=.......\]", $msg, $match ) )
+		while( preg_match('~\\[color=.......\\]~iD', $msg, $match ) )
 		{
 			$found = $match[ 0 ];
 		
@@ -146,29 +146,29 @@ function parse_message( $msg, $msg_type )
 			{
 				$sub = substr( $match[ 0 ], 7, 7 );
 				if( $msg_type != 4 ) // don't allow 'color' in an action
-					$msg = eregi_replace( "\[color=$sub\]", "<font color=\"$sub\">", $msg );
+					$msg = preg_replace(im160_posix_pattern( "\[color=$sub\]", true), "<font color=\"$sub\">", $msg );
 				else
-					$msg = eregi_replace( "\[color=$sub\]", "", $msg );
+					$msg = preg_replace(im160_posix_pattern( "\[color=$sub\]", true), "", $msg );
 			}
 		}
 		
 		if( $msg_type != 4 )
 		{	
-			$msg = eregi_replace( "\[/color\]", "</font>", $msg );
-			$msg = eregi_replace( "\[/size\]", "</font>", $msg );
+			$msg = preg_replace('~\\[/color\\]~iD', "</font>", $msg );
+			$msg = preg_replace('~\\[/size\\]~iD', "</font>", $msg );
 		}
 		else
 		{
-			$msg = eregi_replace( "\[/color\]", "", $msg );
-			$msg = eregi_replace( "\[/size\]", "", $msg );
+			$msg = preg_replace('~\\[/color\\]~iD', "", $msg );
+			$msg = preg_replace('~\\[/size\\]~iD', "", $msg );
 		}
 
-		$msg = eregi_replace( "\[i\]", "<i>", $msg );
-		$msg = eregi_replace( "\[/i\]", "</i>", $msg );
-		$msg = eregi_replace( "\[b\]", "<b>", $msg );
-		$msg = eregi_replace( "\[/b\]", "</b>", $msg );
-		$msg = eregi_replace( "\[u\]", "<u>", $msg );
-		$msg = eregi_replace( "\[/u\]", "</u>", $msg );
+		$msg = preg_replace('~\\[i\\]~iD', "<i>", $msg );
+		$msg = preg_replace('~\\[/i\\]~iD', "</i>", $msg );
+		$msg = preg_replace('~\\[b\\]~iD', "<b>", $msg );
+		$msg = preg_replace('~\\[/b\\]~iD', "</b>", $msg );
+		$msg = preg_replace('~\\[u\\]~iD', "<u>", $msg );
+		$msg = preg_replace('~\\[/u\\]~iD', "</u>", $msg );
 	}
 
 		// make URLs clickable

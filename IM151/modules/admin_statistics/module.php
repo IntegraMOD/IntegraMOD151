@@ -161,7 +161,7 @@ if( preg_match("/^mysql/", SQL_LAYER) )
 				$tabledata_ary = $db->sql_fetchrowset($result);
 
 				$dbsize = 0;
-				for($i = 0; $i < count($tabledata_ary); $i++)
+				for($i = 0; $i < count_safe($tabledata_ary); $i++)
 				{
 					if( $tabledata_ary[$i]['Type'] != "MRG_MyISAM" )
 					{
@@ -251,7 +251,7 @@ $row = $core->sql_fetchrowset($result);
 $most_users_date = $lang['Not_available'];
 $most_users = $lang['Not_available'];
 
-for ($i = 0; $i < count($row); $i++)
+for ($i = 0; $i < count_safe($row); $i++)
 {
 	if ( (intval($row[$i]['config_value']) > 0) && ($row[$i]['config_name'] == 'record_online_date') )
 	{

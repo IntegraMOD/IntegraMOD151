@@ -139,7 +139,7 @@ if (($mode == 'mod_install') && ($submit))
 		$info_array = parse_info_file($info_file);
 		
 		$install_languages = ( isset($_POST['checked_languages']) ) ?  $_POST['checked_languages'] : array();
-		for ($i = 0; $i < count($install_languages); $i++)
+		for ($i = 0; $i < count_safe($install_languages); $i++)
 		{
 			$install_languages[$i] = 'lang_' . trim($install_languages[$i]);
 		}
@@ -331,7 +331,7 @@ if (($mode == 'mod_install') && (!$submit))
 			{
 				if( !@is_dir($phpbb_root_path . 'modules/pakfiles' . '/' . $file) )
 				{
-					if ( eregi('.pak$', $file) )
+					if ( preg_match('~.pak$~iD', $file) )
 					{
 						$module_paks[] = $file;
 					}
@@ -341,13 +341,13 @@ if (($mode == 'mod_install') && (!$submit))
 			@closedir($dir);
 		}
 
-		if (count($module_paks) > 0)
+		if (count_safe($module_paks) > 0)
 		{
 			$template->assign_block_vars('switch_select_module', array());
 
 			$module_select_field = '<select name="selected_pak_file">';
 
-			for ($i = 0; $i < count($module_paks); $i++)
+			for ($i = 0; $i < count_safe($module_paks); $i++)
 			{
 				$selected = ($i == 0) ? ' selected="selected"' : '';
 
@@ -541,7 +541,7 @@ if ($mode == 'mod_delete')
 		$new_language_data = array();
 
 		// Ok, go through all Languages and generate new Language Files
-		for ($i = 0; $i < count($languages); $i++)
+		for ($i = 0; $i < count_safe($languages); $i++)
 		{
 			$language_file = $phpbb_root_path . 'modules/language/' . $languages[$i] . '/lang_modules.php';
 			$file_content = implode('', file($language_file));
@@ -599,7 +599,7 @@ if ($mode == 'mod_delete')
 		// We are through successfully ? hmm... this was not intended. anyway, delete the Language Variables
 		if ($delete_language_folder)
 		{
-			for ($i = 0; $i < count($languages); $i++)
+			for ($i = 0; $i < count_safe($languages); $i++)
 			{
 				$language = trim($languages[$i]);
 				$language_dir = $phpbb_root_path . 'modules/language';
@@ -623,7 +623,7 @@ if ($mode == 'mod_delete')
 		}
 		else
 		{
-			for ($i = 0; $i < count($languages); $i++)
+			for ($i = 0; $i < count_safe($languages); $i++)
 			{
 				$language = trim($languages[$i]);
 				$language_dir = $phpbb_root_path . 'modules/language';

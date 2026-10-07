@@ -187,7 +187,7 @@ if ( $mode == 'removebm' )
 	if ( $delete && isset($_POST['topic_id_list']))
 	{
 		$topics = $_POST['topic_id_list'];
-		for($i = 0; $i < count($topics); $i++)
+		for($i = 0; $i < count_safe($topics); $i++)
 		{
 			$topic_list .= ( ( $topic_list != '' ) ? ', ' : '' ) . intval($topics[$i]);
 		}
@@ -458,7 +458,7 @@ else if ( $search_keywords != '' || $search_author != '' || $search_id )
 			}
 			$db->sql_freeresult($result);
 
-			$total_match_count = count($search_ids);
+			$total_match_count = count_safe($search_ids);
 
 		}
 		else if ( $search_keywords != '' )
@@ -479,7 +479,7 @@ else if ( $search_keywords != '' || $search_author != '' || $search_id )
 			$word_match = array();
 			$result_list = array();
 
-			for($i = 0; $i < count($split_search); $i++)
+			for($i = 0; $i < count_safe($split_search); $i++)
 			{
 			
 				if ( strlen(str_replace(array('*', '%'), '', trim($split_search[$i]))) < $board_config['search_min_chars'] )
@@ -584,7 +584,7 @@ else if ( $search_keywords != '' || $search_author != '' || $search_id )
 			}	
 			
 			unset($result_list);
-			$total_match_count = count($search_ids);
+			$total_match_count = count_safe($search_ids);
 		}
 
 		//
@@ -640,7 +640,7 @@ else if ( $search_keywords != '' || $search_author != '' || $search_id )
 		$keys = array();
 		$keys = get_auth_keys($search_where, true, -1, -1, 'auth_read');
 		$s_flist = '';
-		for ($i=0; $i < count($keys['id']); $i++)
+		for ($i=0; $i < count_safe($keys['id']); $i++)
 		{
 			if ( $keys['idx'][$i] > -1 && ($tree['type'][ $keys['idx'][$i] ] == POST_FORUM_URL) && $tree['auth'][ $keys['id'][$i] ]['auth_read'] )
 			{
@@ -682,9 +682,9 @@ else if ( $search_keywords != '' || $search_author != '' || $search_id )
 				$count = 0;
 				$chunk = 0;
 
-				if (count($search_ids) > $limiter)
+				if (count_safe($search_ids) > $limiter)
 				{
-					for ($i = 0; $i < count($search_ids); $i++) 
+					for ($i = 0; $i < count_safe($search_ids); $i++) 
 					{
 						if ($count == $limiter)
 						{
@@ -703,7 +703,7 @@ else if ( $search_keywords != '' || $search_author != '' || $search_id )
 
 				$search_ids = array();
 
-				for ($i = 0; $i < count($search_id_chunks); $i++)
+				for ($i = 0; $i < count_safe($search_id_chunks); $i++)
 				{
 					$where_sql = '';
 
@@ -764,9 +764,9 @@ else if ( $search_keywords != '' || $search_author != '' || $search_id )
 				$count = 0;
 				$chunk = 0;
 
-				if (count($search_ids) > $limiter)
+				if (count_safe($search_ids) > $limiter)
 				{
-					for ($i = 0; $i < count($search_ids); $i++) 
+					for ($i = 0; $i < count_safe($search_ids); $i++) 
 					{
 						if ($count == $limiter)
 						{
@@ -785,7 +785,7 @@ else if ( $search_keywords != '' || $search_author != '' || $search_id )
 
 				$search_ids = array();
 
-				for ($i = 0; $i < count($search_id_chunks); $i++)
+				for ($i = 0; $i < count_safe($search_id_chunks); $i++)
 				{
 					$where_sql = ( $search_author == '' && $auth_sql == '' ) ? 'post_id IN (' . implode(', ', $search_id_chunks[$i]) . ')' : 'p.post_id IN (' . implode(', ', $search_id_chunks[$i]) . ')';
 					$select_sql = ( $search_author == '' && $auth_sql == '' ) ? 'post_id' : 'p.post_id';
@@ -823,7 +823,7 @@ else if ( $search_keywords != '' || $search_author != '' || $search_id )
 					$db->sql_freeresult($result);
 				}
 
-				$total_match_count = count($search_ids);
+				$total_match_count = count_safe($search_ids);
 			}
 		}
 		else if ( $search_id == 'unanswered' )
@@ -857,7 +857,7 @@ else if ( $search_keywords != '' || $search_author != '' || $search_id )
 			}
 			$db->sql_freeresult($result);
 
-			$total_match_count = count($search_ids);
+			$total_match_count = count_safe($search_ids);
 
 			//
 			// Basic requirements
@@ -904,7 +904,7 @@ else if ( $search_keywords != '' || $search_author != '' || $search_id )
 			}
 			$db->sql_freeresult($result);
 
-			$total_match_count = count($search_ids);
+			$total_match_count = count_safe($search_ids);
 			if ($total_match_count <= $start) // No results for the selected page
 			{
 				$start = $total_match_count - 1;
@@ -960,7 +960,7 @@ else if ( $search_keywords != '' || $search_author != '' || $search_id )
 		}
 		*/
 
-		for($i = 0; $i < count($store_vars); $i++)
+		for($i = 0; $i < count_safe($store_vars); $i++)
 		{
 			$store_search_data[$store_vars[$i]] = ( isset(${$store_vars[$i]}) ? ${$store_vars[$i]} : '' );
 		}
@@ -1001,7 +1001,7 @@ else if ( $search_keywords != '' || $search_author != '' || $search_id )
 			if ( $row = $db->sql_fetchrow($result) )
 			{
 				$search_data = unserialize($row['search_array']);
-				for($i = 0; $i < count($store_vars); $i++)
+				for($i = 0; $i < count_safe($store_vars); $i++)
 				{
 					$$store_vars[$i] = $search_data[$store_vars[$i]];
 				}
@@ -1166,7 +1166,7 @@ else if ( $search_keywords != '' || $search_author != '' || $search_id )
 
 		$highlight_active = '';
 		$highlight_match = array();
-		for($j = 0; isset($split_search) && $j < count($split_search); $j++ )
+		for($j = 0; isset($split_search) && $j < count_safe($split_search); $j++ )
 		{
 			$split_word = $split_search[$j];
 
@@ -1175,7 +1175,7 @@ else if ( $search_keywords != '' || $search_author != '' || $search_id )
 				$highlight_match[] = '#\b(' . str_replace("*", "([\w]+)?", $split_word) . ')\b#is';
 				$highlight_active .= " " . $split_word;
 
-				for ($k = 0; $k < count($synonym_array); $k++)
+				for ($k = 0; $k < count_safe($synonym_array); $k++)
 				{ 
 					list($replace_synonym, $match_synonym) = explode(' ', trim(strtolower($synonym_array[$k]))); 
 
@@ -1196,7 +1196,7 @@ else if ( $search_keywords != '' || $search_author != '' || $search_id )
 //		$tracking_forums = ( isset($_COOKIE[$board_config['cookie_name'] . '_f']) ) ? unserialize($_COOKIE[$board_config['cookie_name'] . '_f']) : array();
 //-- fin mod : keep unread -------------------------------------------------------------------------
 
-		for($i = 0; $i < count($searchset); $i++)
+		for($i = 0; $i < count_safe($searchset); $i++)
 		{
 			// CrackerTracker v5.x
 			$sucheck = strtolower($highlight_active);
@@ -1331,7 +1331,7 @@ else if ( $search_keywords != '' || $search_author != '' || $search_id )
 						}
 					}
 
-					if ( count($orig_word) )
+					if ( count_safe($orig_word) )
 					{
 						$topic_title = preg_replace($orig_word, $replacement_word, $topic_title);
 						$post_subject = ( $searchset[$i]['post_subject'] != "" ) ? preg_replace($orig_word, $replacement_word, $searchset[$i]['post_subject']) : $topic_title;
@@ -1538,7 +1538,7 @@ else if ( $search_keywords != '' || $search_author != '' || $search_id )
 			{
 				$message = '';
 
-				if ( count($orig_word) )
+				if ( count_safe($orig_word) )
 				{
 					$topic_title = preg_replace($orig_word, $replacement_word, $searchset[$i]['topic_title']);
 				}
@@ -2004,7 +2004,7 @@ for($i = 100; $i < 1100 ; $i += 100)
 // Sorting
 //
 $s_sort_by = "";
-for($i = 0; $i < count($sort_by_types); $i++)
+for($i = 0; $i < count_safe($sort_by_types); $i++)
 {
 	$s_sort_by .= '<option value="' . $i . '">' . $sort_by_types[$i] . '</option>';
 }
@@ -2016,7 +2016,7 @@ $previous_days = array(0, 1, 7, 14, 30, 90, 180, 364);
 $previous_days_text = array($lang['All_Posts'], $lang['1_Day'], $lang['7_Days'], $lang['2_Weeks'], $lang['1_Month'], $lang['3_Months'], $lang['6_Months'], $lang['1_Year']);
 
 $s_time = '';
-for($i = 0; $i < count($previous_days); $i++)
+for($i = 0; $i < count_safe($previous_days); $i++)
 {
 	$selected = ( $topic_days == $previous_days[$i] ) ? ' selected="selected"' : '';
 	$s_time .= '<option value="' . $previous_days[$i] . '"' . $selected . '>' . $previous_days_text[$i] . '</option>';

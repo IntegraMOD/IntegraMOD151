@@ -117,10 +117,10 @@ if ( ($process == 'post') && ($privmsgs_page_size > 0) )
 		)
 	);
 
-	if (count($privmsgs_rowset) > 0 )
+	if (count_safe($privmsgs_rowset) > 0 )
 	{
 		$class = false;
-		for ($i=0; $i < count($privmsgs_rowset); $i++)
+		for ($i=0; $i < count_safe($privmsgs_rowset); $i++)
 		{
 			$class = !$class;
 			$template->assign_block_vars('new_pm', array(

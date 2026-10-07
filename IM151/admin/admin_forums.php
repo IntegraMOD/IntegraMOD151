@@ -389,7 +389,7 @@ $template->assign_block_vars("catrow", array(
     'CAT_DESC' => 'Root', 
     'U_VIEWCAT' => append_sid($phpbb_root_path."index.$phpEx?" . POST_CAT_URL . "=0")) 
 ); 
-for ($i=0; $i < count($keys['id']); $i++) { 
+for ($i=0; $i < count_safe($keys['id']); $i++) { 
     // only get object that are not forum links type 
     if ( ($tree['type'][ $keys['idx'][$i] ] != POST_FORUM_URL) || empty($tree['data'][ $keys['idx'][$i] ]['forum_link']) ) { 
         if($tree['type'][ $keys['idx'][$i] ] == POST_FORUM_URL){ 

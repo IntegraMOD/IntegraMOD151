@@ -174,7 +174,7 @@ class report_module
 			}
 		}
 		
-		$subjects_count = count($report_subjects);
+		$subjects_count = count_safe($report_subjects);
 		foreach ($report_subjects as $report_id => $report_subject)
 		{
 			if (!$this->subjects_auth[$user_id][$report_subject[0]])
@@ -183,7 +183,7 @@ class report_module
 			}
 		}
 	
-		return ($subjects_count == count($report_subjects));
+		return ($subjects_count == count_safe($report_subjects));
 	}
 }
 

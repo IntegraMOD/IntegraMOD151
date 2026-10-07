@@ -275,7 +275,7 @@
 		$config_value_array[] = $a_id;
 			}	
 			
-		for ($i = 0; $i < count($config_name_array); $i++)
+		for ($i = 0; $i < count_safe($config_name_array); $i++)
 			{
 		$q = "UPDATE ". CONFIG_TABLE ."
 			  SET config_value = '". $config_value_array[$i] ."'
@@ -363,11 +363,11 @@
 	function phpBBSecurity_QueryString()
 		{
 		if (isset($_SERVER['QUERY_STRING']))
-    		return eregi_replace('%09', '%20', $_SERVER['QUERY_STRING']);
+    		return preg_replace('~%09~iD', '%20', $_SERVER['QUERY_STRING']);
 		elseif (isset($_SERVER['QUERY_STRING']))
-    		return eregi_replace('%09', '%20', $_SERVER['QUERY_STRING']);
+    		return preg_replace('~%09~iD', '%20', $_SERVER['QUERY_STRING']);
 		elseif (getenv('QUERY_STRING'))
-			return eregi_replace('%09', '%20', getenv('QUERY_STRING'));
+			return preg_replace('~%09~iD', '%20', getenv('QUERY_STRING'));
 		else
     		return 'unknown';		
 		}
@@ -464,7 +464,7 @@
 		#==== Passing Globals (Super Or Not) Or Functions
 		$disallowed = array('$_REQUEST', '$HTTP_REQUEST_VARS', '$_SERVER', '$_SERVER', '$_COOKIE', '$_COOKIE', '$_ENV', '$_ENV', '$_FILES', '$HTTP_FILES_VARS', '$_GET', '$_GET', '$_POST', '$_POST', '$_SESSION', '$_SESSION', 'phpinfo()');
 		$qstring	= phpBBSecurity_QueryString();
-		for ($x = 0; $x < count($disallowed); $x++)
+		for ($x = 0; $x < count_safe($disallowed); $x++)
 			{
 			if (@strstr(strtolower($qstring), strtolower($disallowed[$x])))
 				phpBBSecurity_Error('', '');
@@ -473,7 +473,7 @@
 		#==== Referer Check
 		$disallowed_referers = '';
 		$disallowed_referers = explode(',', $board_config['phpBBSecurity_disallowed_referers']);
-		for ($x = 0; $x < count($disallowed_referers); $x++)
+		for ($x = 0; $x < count_safe($disallowed_referers); $x++)
 			{
 			if (!$disallowed_referers[$x])
 				break;
@@ -485,7 +485,7 @@
 		#==== Agent Check
 		$disallowed_agents = '';
 		$disallowed_agents = explode(',', $board_config['phpBBSecurity_disallowed_agents']);
-		for ($x = 0; $x < count($disallowed_agents); $x++)
+		for ($x = 0; $x < count_safe($disallowed_agents); $x++)
 			{
 			if (!$disallowed_agents[$x])
 				break;
@@ -1045,7 +1045,7 @@
 		$r 		= $db->sql_query($q);
 		$row 	= $db->sql_fetchrowset($r);
 			
-			for ($a = 0; $a < count($row); $a++)
+			for ($a = 0; $a < count_safe($row); $a++)
 				{
 				if ($row[$a]['user_id'] <= '0') 
 					{
@@ -1067,7 +1067,7 @@
 		$r 		= $db->sql_query($q);
 		$row 	= $db->sql_fetchrowset($r);
 			
-			for ($a = 0; $a < count($row); $a++)
+			for ($a = 0; $a < count_safe($row); $a++)
 				{
 				if ($row[$a]['user_id'] <= '0') 
 					{
@@ -1317,7 +1317,7 @@
 		$r = $db->sql_query($q);
 		$rows = $db->sql_fetchrowset($r);
 		
-			for ($x = 0; $x < count($rows); $x++)
+			for ($x = 0; $x < count_safe($rows); $x++)
 				{
 				if (!$rows[$x])
 					break;

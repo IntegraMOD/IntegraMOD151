@@ -150,7 +150,7 @@ else
 	{		
 		$smart_get_keys = array_keys($_GET);
 
-		for ($i = 0; $i < count($_GET); $i++)
+		for ($i = 0; $i < count_safe($_GET); $i++)
 		{
 			if ($smart_get_keys[$i] != 'sid')
 			{
@@ -301,7 +301,7 @@ if (defined('SHOW_ONLINE'))
 
 	// read buddy list
 	$buddys = array();
-	if (count($user_ids))
+	if (count_safe($user_ids))
 	{
 		$s_user_ids = implode(', ', $user_ids);
 
@@ -333,7 +333,7 @@ if (defined('SHOW_ONLINE'))
 	$user_level = $userdata['user_level'];
 	$is_admin = is_admin($userdata);
 
-	for ($i=0; $i < count($connected); $i++)
+	for ($i=0; $i < count_safe($connected); $i++)
 	{
 		$view_user_id = $connected[$i]['user_id'];
 		$view_is_admin = is_admin($connected[$i]);
@@ -779,7 +779,7 @@ if( ($userdata['user_id'] != ANONYMOUS) && defined('PRILLIAN_INSTALLED') && $use
 
 // Format Timezone. We are unable to use array_pop here, because of PHP3 compatibility
 $l_timezone = explode('.', $board_config['board_timezone']);
-$l_timezone = (count($l_timezone) > 1 && $l_timezone[count($l_timezone)-1] != 0) ? $lang[sprintf('%.1f', $board_config['board_timezone'])] : $lang[number_format($board_config['board_timezone'])];
+$l_timezone = (count_safe($l_timezone) > 1 && $l_timezone[count_safe($l_timezone)-1] != 0) ? $lang[sprintf('%.1f', $board_config['board_timezone'])] : $lang[number_format($board_config['board_timezone'])];
 
 /*
  * CrackerTracker IP Range Scanner
@@ -969,7 +969,7 @@ while ($possible_banner = $db->sql_fetchrow($result))
 }
 $db->sql_freeresult($result);
 shuffle($banners);
-$banner_count = count($banners);
+$banner_count = count_safe($banners);
 $last_spot = null;
 for ($i = 0; $i < $banner_count; $i++)
 {

@@ -37,7 +37,7 @@ if( !empty($_POST['mode']) && $_POST['mode'] == 'update' )
 	$vars = array('active_wpm');
 	$sql = array();
 
-	for( $i = 0; $i < count($vars); $i++ )
+	for( $i = 0; $i < count_safe($vars); $i++ )
 	{
 		$value = str_replace("\'", "''", $_POST[$vars[$i]]);
 		$value = trim($value);
@@ -47,7 +47,7 @@ if( !empty($_POST['mode']) && $_POST['mode'] == 'update' )
 			WHERE name = '" . $vars[$i] . "'";
 	}
 
-	for( $i = 0; $i < count($sql); $i++ )
+	for( $i = 0; $i < count_safe($sql); $i++ )
 	{
 		if ( !($result = $db->sql_query($sql[$i])) )
 		{
@@ -61,7 +61,7 @@ if( !empty($_POST['mode']) && $_POST['mode'] == 'update' )
 			message_die(GENERAL_ERROR, $lang['not_existing_user'], "", __LINE__, __FILE__, $sql[$i]);
 		}
 	$vars = array('wpm_username', 'wpm_userid');
-	for( $i = 0; $i < count($vars); $i++ )
+	for( $i = 0; $i < count_safe($vars); $i++ )
 	{
 		$value = str_replace("\'", "''", $_POST[$vars[$i]]);
 		$value = trim($value);
@@ -71,7 +71,7 @@ if( !empty($_POST['mode']) && $_POST['mode'] == 'update' )
 			WHERE name = '" . $vars[$i] . "'";
 	}
 
-	for( $i = 0; $i < count($sql); $i++ )
+	for( $i = 0; $i < count_safe($sql); $i++ )
 	{
 		if ( !($result = $db->sql_query($sql[$i])) )
 		{
@@ -79,7 +79,7 @@ if( !empty($_POST['mode']) && $_POST['mode'] == 'update' )
 		}
 	}
 	$vars = array('wpm_subject', 'wpm_message');
-	for( $i = 0; $i < count($vars); $i++ )
+	for( $i = 0; $i < count_safe($vars); $i++ )
 	{
 		$value = str_replace("\'", "'", $_POST[$vars[$i]]);
 		if(empty($value))
@@ -93,7 +93,7 @@ if( !empty($_POST['mode']) && $_POST['mode'] == 'update' )
 			WHERE name = '" . $vars[$i] . "'";
 	}
 
-	for( $i = 0; $i < count($sql); $i++ )
+	for( $i = 0; $i < count_safe($sql); $i++ )
 	{
 		if ( !($result = $db->sql_query($sql[$i])) )
 		{

@@ -164,7 +164,7 @@ if(!empty($_POST['clone_tpl']) && !defined('DEMO_MODE'))
 		xs_error($lang['xs_clone_no_select'] . '<br /><br />' . $lang['xs_clone_back']);
 	}
 	$request = array();
-	for($i=0; $i<count($vars); $i++)
+	for($i=0; $i<count_safe($vars); $i++)
 	{
 		$request[$vars[$i]] = stripslashes($_POST[$vars[$i]]);
 	}
@@ -190,7 +190,7 @@ if(!empty($_POST['clone_tpl']) && !defined('DEMO_MODE'))
 		xs_error($lang['xs_no_theme_data'] . $lang['xs_clone_back']);
 	}
 	$theme_rowset = $db->sql_fetchrowset($result);
-	if(count($theme_rowset) == 0)
+	if(count_safe($theme_rowset) == 0)
 	{
 		xs_error($lang['xs_no_themes']  . '<br /><br />' . $lang['xs_clone_back']);
 	}
@@ -200,7 +200,7 @@ if(!empty($_POST['clone_tpl']) && !defined('DEMO_MODE'))
 	$pack_list = array();
 	$pack_replace = array('./theme_info.cfg' => $theme_data);
 	// pack style
-	for($i = 0; $i < count($theme_rowset); $i++)
+	for($i = 0; $i < count_safe($theme_rowset); $i++)
 	{
 		$id = $theme_rowset[$i]['themes_id'];
 		$theme_name = $theme_rowset[$i]['style_name'];
@@ -257,7 +257,7 @@ if(!empty($_GET['clone']))
 		xs_error($lang['xs_no_theme_data'] . '<br /><br />' . $lang['xs_clone_back'], __LINE__, __FILE__);
 	}
 	$theme_rowset = $db->sql_fetchrowset($result);
-	if(count($theme_rowset) == 0)
+	if(count_safe($theme_rowset) == 0)
 	{
 		xs_error($lang['xs_no_themes'] . '<br /><br />' . $lang['xs_clone_back']);
 	}
@@ -268,11 +268,11 @@ if(!empty($_GET['clone']))
 			'CLONE_TEMPLATE'	=> htmlspecialchars($style),
 			'STYLE_ID'			=> $theme_rowset[0]['themes_id'],
 			'STYLE_NAME'		=> htmlspecialchars($theme_rowset[0]['style_name']),
-			'TOTAL'				=> count($theme_rowset),
+			'TOTAL'				=> count_safe($theme_rowset),
 			'L_CLONE_STYLE3'	=> str_replace('{STYLE}', htmlspecialchars($style), $lang['xs_clone_style3'])
 			));
 	// clone styles
-	for($i=0; $i<count($theme_rowset); $i++)
+	for($i=0; $i<count_safe($theme_rowset); $i++)
 	{
 		$template->assign_block_vars('styles', array(
 			'ID'		=> $theme_rowset[$i]['themes_id'],
@@ -281,7 +281,7 @@ if(!empty($_GET['clone']))
 			'L_CLONE'	=> str_replace('{STYLE}', htmlspecialchars($theme_rowset[$i]['style_name']), $lang['xs_clone_style2'])
 			));
 	}
-	if(count($theme_rowset) == 1)
+	if(count_safe($theme_rowset) == 1)
 	{
 		$template->assign_block_vars('switch_select_nostyle', array());
 		if($theme_rowset[0]['style_name'] === $style)
@@ -292,7 +292,7 @@ if(!empty($_GET['clone']))
 	else
 	{
 		$template->assign_block_vars('switch_select_style', array());
-		for($i=0; $i<count($theme_rowset); $i++)
+		for($i=0; $i<count_safe($theme_rowset); $i++)
 		{
 			$template->assign_block_vars('switch_select_style.style', array(
 				'NUM'		=> $i,
@@ -321,7 +321,7 @@ $prev_id = -1;
 $prev_tpl = '';
 $style_names = array();
 $j = 0;
-for($i=0; $i<count($style_rowset); $i++)
+for($i=0; $i<count_safe($style_rowset); $i++)
 {
 	$item = $style_rowset[$i];
 	if($item['template_name'] === $prev_tpl)

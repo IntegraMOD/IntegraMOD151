@@ -157,15 +157,15 @@ if (($mode == 'mod_pak') && (!$submit))
 		{
 			if( !@is_dir($phpbb_root_path . 'modules/pakfiles' . '/' . $file) )
 			{
-				if ( eregi('.info$', $file) )
+				if ( preg_match('~.info$~iD', $file) )
 				{
 					$info_files[] = $file;
 				}
-				else if ( eregi('.lang$', $file) )
+				else if ( preg_match('~.lang$~iD', $file) )
 				{
 					$lang_files[] = $file;
 				}
-				else if ( eregi('.php$', $file) )
+				else if ( preg_match('~.php$~iD', $file) )
 				{
 					$php_files[] = $file;
 				}
@@ -175,7 +175,7 @@ if (($mode == 'mod_pak') && (!$submit))
 		@closedir($dir);
 	}
 
-	if ((count($info_files) == 0) || (count($lang_files) == 0) || (count($php_files) == 0))
+	if ((count_safe($info_files) == 0) || (count_safe($lang_files) == 0) || (count_safe($php_files) == 0))
 	{
 		message_die(GENERAL_MESSAGE, 'Found no files to package up. Info/Lang/PHP Files have to be placed into \'modules/pakfiles\'.');
 	}
@@ -186,7 +186,7 @@ if (($mode == 'mod_pak') && (!$submit))
 	
 	$info_select_field = '<select name="info_file">';
 
-	for ($i = 0; $i < count($info_files); $i++)
+	for ($i = 0; $i < count_safe($info_files); $i++)
 	{
 		$selected = ($i == 0) ? ' selected="selected"' : '';
 
@@ -197,7 +197,7 @@ if (($mode == 'mod_pak') && (!$submit))
 
 	$lang_select_field = '<select name="lang_file">';
 
-	for ($i = 0; $i < count($lang_files); $i++)
+	for ($i = 0; $i < count_safe($lang_files); $i++)
 	{
 		$selected = ($i == 0) ? ' selected="selected"' : '';
 
@@ -208,7 +208,7 @@ if (($mode == 'mod_pak') && (!$submit))
 
 	$php_select_field = '<select name="php_file">';
 
-	for ($i = 0; $i < count($php_files); $i++)
+	for ($i = 0; $i < count_safe($php_files); $i++)
 	{
 		$selected = ($i == 0) ? ' selected="selected"' : '';
 

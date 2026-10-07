@@ -368,7 +368,7 @@ $sql = "UPDATE " . SHOUTBOX_TABLE . "
 				$mark_list[] = $row_privmsgs['privmsgs_id'];
 			}
 			
-			if ( count($mark_list) )
+			if ( count_safe($mark_list) )
 			{
 				$delete_sql_id = implode(', ', $mark_list);
 				
@@ -632,7 +632,7 @@ $user_allowsignature = ( !empty($_POST['user_allowsignature']) ) ? intval( $_POS
 
 			if( $user_avatar_loc != "" )
 			{
-				if( file_exists(@phpbb_realpath($user_avatar_loc)) && ereg(".jpg$|.gif$|.png$", $user_avatar_name) )
+				if( file_exists(@phpbb_realpath($user_avatar_loc)) && preg_match('~.jpg$|.gif$|.png$~D', $user_avatar_name) )
 				{
 					if( $user_avatar_size <= $board_config['avatar_filesize'] && $user_avatar_size > 0)
 					{
@@ -1125,20 +1125,20 @@ $user_allowsignature = $this_userdata['user_allowsignature'];
 			while( list($key) = each($avatar_images) )
 			{
 				$selected = ( $key == $category ) ? "selected=\"selected\"" : "";
-				if( count($avatar_images[$key]) )
+				if( count_safe($avatar_images[$key]) )
 				{
 					$s_categories .= '<option value="' . $key . '"' . $selected . '>' . ucfirst($key) . '</option>';
 				}
 			}
 
 			$s_colspan = 0;
-			for($i = 0; $i < count($avatar_images[$category]); $i++)
+			for($i = 0; $i < count_safe($avatar_images[$category]); $i++)
 			{
 				$template->assign_block_vars("avatar_row", array());
 
-				$s_colspan = max($s_colspan, count($avatar_images[$category][$i]));
+				$s_colspan = max($s_colspan, count_safe($avatar_images[$category][$i]));
 
-				for($j = 0; $j < count($avatar_images[$category][$i]); $j++)
+				for($j = 0; $j < count_safe($avatar_images[$category][$i]); $j++)
 				{
 					$template->assign_block_vars("avatar_row.avatar_column", array(
 						"AVATAR_IMAGE" => "../" . $board_config['avatar_gallery_path'] . '/' . $category . '/' . $avatar_images[$category][$i][$j])

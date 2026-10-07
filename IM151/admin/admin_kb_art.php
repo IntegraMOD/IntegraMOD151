@@ -272,7 +272,7 @@ switch ( $mode )
 						message_die( GENERAL_ERROR, 'Could not delete posts', '', __LINE__, __FILE__, $sql );
 					}
 
-					for ( $i = 0; $i < count( $post_array ); $i++ )
+					for ( $i = 0; $i < count_safe( $post_array ); $i++ )
 					{
 						$sql = "DELETE 
 						FROM " . POSTS_TEXT_TABLE . " 

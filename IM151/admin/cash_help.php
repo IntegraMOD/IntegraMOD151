@@ -54,7 +54,7 @@ $help[0]->additem(new cash_menuitem($j,	'Cmh_demo_boards',		'http://www.phpbb.co
 $help[0]->additem(new cash_menuitem($j,	'Cmh_translations',		'http://www.phpbb.com/phpBB/viewtopic.php?p=623226#662158',	$lang['Cmhe_translations']));
 $help[0]->additem(new cash_menuitem($j,	'Cmh_features',			'http://www.phpbb.com/phpBB/viewtopic.php?p=623226#664549',	$lang['Cmhe_features']));
 
-for ( $i = 0; $i < count($help); $i++ )
+for ( $i = 0; $i < count_safe($help); $i++ )
 {
 	$template->assign_block_vars("menucat",array("L_CATEGORY" => $help[$i]->category));
 	for ( $j = 0; $j < $help[$i]->num(); $j++ )

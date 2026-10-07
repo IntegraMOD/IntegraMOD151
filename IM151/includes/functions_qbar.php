@@ -79,7 +79,7 @@ function qbar_set_tree_user_auth($cur='Root')
 	}
 
 	// read sub-levels
-	$count = count($tree['sub'][$cur]);
+	$count = count_safe($tree['sub'][$cur]);
 	for ($i=0; $i < $count; $i++)
 	{
 		// climb up the tree
@@ -118,7 +118,7 @@ function qbar_get_tree()
 		{
 			if ( !isset($row['cat_main']) ) $row['cat_main'] = 0;
 			if ( $row['cat_main'] == $row['cat_id'] ) $row['cat_main'] = 0;
-			$tree['keys'][ POST_CAT_URL . $row['cat_id'] ] = count($tree['data']);
+			$tree['keys'][ POST_CAT_URL . $row['cat_id'] ] = count_safe($tree['data']);
 			$tree['type'][] = POST_CAT_URL;
 			$tree['id'][]	= $row['cat_id'];
 			$tree['data'][] = $row;
@@ -132,7 +132,7 @@ function qbar_get_tree()
 		if (!$result = $db->sql_query($sql)) message_die(GENERAL_ERROR, "Could not get forums informations !", "", __LINE__, __FILE__, $sql);
 		while ($row = $db->sql_fetchrow($result)) 
 		{
-			$q_this = count($tree['data']);
+			$q_this = count_safe($tree['data']);
 			$tree['keys'][ POST_FORUM_URL . $row['forum_id'] ] = $q_this;
 			$tree['type'][] = POST_FORUM_URL;
 			$tree['id'][]	= $row['forum_id'];
@@ -218,7 +218,7 @@ function qbar_init_tree_list($cur='Root', $level = 0)
 	$qbar_maps['default_tree']['fields'][$cur] = $row;
 
 	// get the sub-levels
-	$tree_count = isset($tree['sub'][$cur]) ? count($tree['sub'][$cur]) : 0;
+	$tree_count = isset($tree['sub'][$cur]) ? count_safe($tree['sub'][$cur]) : 0;
 	for ($i=0; $i < $tree_count; $i++)
 	{
 		qbar_init_tree_list( $tree['sub'][$cur][$i], ($level+1) );
@@ -424,7 +424,7 @@ function qbar_display_qbars($display=false)
 					if (!empty($fdata['internal']))
 					{
 						$part = explode( '?', $url);
-						$url .= ((count($part) > 1) ? '&' : '?') . 'sid=' . $userdata['session_id'];
+						$url .= ((count_safe($part) > 1) ? '&' : '?') . 'sid=' . $userdata['session_id'];
 						$url = append_sid($url);
 					}
 
@@ -443,7 +443,7 @@ function qbar_display_qbars($display=false)
 			}
 
 			// affect to the good place
-			if (count($options['url']) > 0)
+			if (count_safe($options['url']) > 0)
 			{
 				switch ($qdata['class'])
 				{
@@ -492,7 +492,7 @@ function qbar_display_qbars($display=false)
 	{
 		if ($obj == 0)
 		{
-			$obj_count = !empty($qbars['fields']) ? count($qbars['fields']) : 0;
+			$obj_count = !empty($qbars['fields']) ? count_safe($qbars['fields']) : 0;
 			if($obj_count){
 				$template->set_filenames(array(
 					'_qbars' => 'qbar_qbars.tpl')
@@ -503,7 +503,7 @@ function qbar_display_qbars($display=false)
 		if ($obj == 1)
 		{
 			// display the qmenus
-			$obj_count = count($qmenu['fields']);
+			$obj_count = count_safe($qmenu['fields']);
 			if($obj_count){
 			$template->set_filenames(array(
 				'_qmenus' => 'qbar_qmenus.tpl')
@@ -512,7 +512,7 @@ function qbar_display_qbars($display=false)
 		}elseif ($obj == 2)
 		{
 			// display the qnavs
-			$obj_count = count($qnav['fields']);
+			$obj_count = count_safe($qnav['fields']);
 			if($obj_count){
 			$template->set_filenames(array(
 				'_qnavs' => 'qbar_qnavs.tpl')
@@ -521,7 +521,7 @@ function qbar_display_qbars($display=false)
 		}elseif ($obj == 3)
 		{
 			// display the second qnavs
-			$obj_count = count($qnav2['fields']);
+			$obj_count = count_safe($qnav2['fields']);
 			if($obj_count){
 			$template->set_filenames(array(
 				'_qnavs2' => 'qbar_qnavs2.tpl')
@@ -530,7 +530,7 @@ function qbar_display_qbars($display=false)
 		}elseif ($obj == 4)
 		{ 
 			// display the qlist
-			$obj_count = count($qlist['fields']);
+			$obj_count = count_safe($qlist['fields']);
 			if($obj_count){
 				$template->set_filenames(array(
 					'_qlist' => 'qbar_qlist.tpl')
@@ -589,7 +589,7 @@ function qbar_display_qbars($display=false)
 			$options = array();
 
 			// process one qbar/qmenu
-			for ($j=0; $j < count($fields['url']); $j++)
+			for ($j=0; $j < count_safe($fields['url']); $j++)
 			{
 				// link
 				if ($fields['window'][$j])
@@ -633,7 +633,7 @@ function qbar_display_qbars($display=false)
 
 			// send it to template
 			$align = '';
-			if (count($options) > 0)
+			if (count_safe($options) > 0)
 			{
 				if ($obj == 0)
 				{
@@ -661,7 +661,7 @@ function qbar_display_qbars($display=false)
 //					$align = 'center';
 				}
 				if ($cells == 0) $cells = 1;
-				if ($cells > count($options)) $cells = count($options);
+				if ($cells > count_safe($options)) $cells = count_safe($options);
 				$width = ceil(100 / $cells);
 				$align = ($in_table) ? 'center' : $align;
 				$template->assign_block_vars($obj_root, array(
@@ -670,7 +670,7 @@ function qbar_display_qbars($display=false)
 					)
 				);
 				$pointer = -1;
-				for ($j = 0; $j < count($options); $j++)
+				for ($j = 0; $j < count_safe($options); $j++)
 				{
                     $inc = ($obj == 1) ? (isset($images['menu_delimeter']) ? $images['menu_delimeter'] : '') : '';
 					$pointer++;
@@ -696,7 +696,7 @@ function qbar_display_qbars($display=false)
 						if ($j == 0)
 						{
 							// number of cells to add to the first line
-							$n = $cells-((count($options)-1) % $cells)+1;
+							$n = $cells-((count_safe($options)-1) % $cells)+1;
 						}
 						if ($pointer == ($cells-$n+1))
 						{
@@ -716,35 +716,35 @@ function qbar_display_qbars($display=false)
 		// send it to main template
 		if ($obj == 0)
 		{
-			if (!empty($qbars['fields']) && count($qbars['fields']) > 0)
+			if (!empty($qbars['fields']) && count_safe($qbars['fields']) > 0)
 			{
 				$template->assign_var_from_handle('QBARS', '_qbars');
 			}
 		}
 		elseif ($obj == 1)
 		{
-			if (count($qmenu['fields']) > 0)
+			if (count_safe($qmenu['fields']) > 0)
 			{
 				$template->assign_var_from_handle('QMENUS', '_qmenus');
 			}
 		}
 		elseif ($obj == 2)
 		{
-			if (count($qnav['fields']) > 0)
+			if (count_safe($qnav['fields']) > 0)
 			{
 				$template->assign_var_from_handle('QNAVS', '_qnavs');
 			}
 		}
 		elseif ($obj == 3)
 		{
-			if (count($qnav2['fields']) > 0)
+			if (count_safe($qnav2['fields']) > 0)
 			{
 				$template->assign_var_from_handle('QNAVS2', '_qnavs2');
 			}
 		}
 		else
 		{
-			if (count($qlist['fields']) > 0)
+			if (count_safe($qlist['fields']) > 0)
 			{
 				$template->assign_var_from_handle('QLIST', '_qlist');
 			}

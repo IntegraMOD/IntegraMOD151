@@ -106,7 +106,7 @@ function get_module_languages($short_name)
 	$found_languages = array();
 
 	// Ok, go through all Languages and generate the Language Array
-	for ($i = 0; $i < count($languages); $i++)
+	for ($i = 0; $i < count_safe($languages); $i++)
 	{
 		$language_file = $phpbb_root_path . 'modules/language/' . $languages[$i] . '/lang_modules.php';
 		$file_content = implode('', file($language_file));
@@ -155,7 +155,7 @@ function get_all_installed_languages()
 	$found_languages = array();
 
 	// Ok, go through all Languages and generate the Language Array
-	for ($i = 0; $i < count($languages); $i++)
+	for ($i = 0; $i < count_safe($languages); $i++)
 	{
 		$language_file = $phpbb_root_path . 'modules/language/' . $languages[$i] . '/lang_modules.php';
 		if (file_exists($language_file))
@@ -288,7 +288,7 @@ function set_lang_entry($language, $module_id, $key, $value)
 
 	// Write Language File
 	$data = '';
-	for ($i = 0; $i < count($lang_entries); $i++)
+	for ($i = 0; $i < count_safe($lang_entries); $i++)
 	{
 		$data .= '$lang[\'' . $lang_entries[$i]['key'] . '\'] = \'' . $lang_entries[$i]['value'] . '\';';
 		$data .= "\n";
@@ -483,7 +483,7 @@ function lang_add_new_key($language, $module_id, $add_key, $add_value)
 
 	// Write Language File
 	$data = '';
-	for ($i = 0; $i < count($lang_entries); $i++)
+	for ($i = 0; $i < count_safe($lang_entries); $i++)
 	{
 		$data .= '$lang[\'' . $lang_entries[$i]['key'] . '\'] = \'' . $lang_entries[$i]['value'] . '\';';
 		$data .= "\n";
@@ -593,7 +593,7 @@ function delete_lang_key($language, $module_id, $key_name)
 
 	// Write Language File
 	$data = '';
-	for ($i = 0; $i < count($lang_entries); $i++)
+	for ($i = 0; $i < count_safe($lang_entries); $i++)
 	{
 		$data .= '$lang[\'' . $lang_entries[$i]['key'] . '\'] = \'' . $lang_entries[$i]['value'] . '\';';
 		$data .= "\n";

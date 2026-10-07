@@ -223,15 +223,15 @@ function getMonth($callDate) {
 		$this->makeTimestamp("$i $this->ext_dateMM $this->dateYYYY");
 		$this->day[] = array(
 												 "0" => "$i",
-												 "1" => (strftime('%a', $this->stamp)),
-												 "2" => (strftime('%A', $this->stamp)),
-												 "3" => (strftime("%B", $this->stamp)),
+												 "1" => (date('D', $this->stamp)),
+												 "2" => (date('l', $this->stamp)),
+												 "3" => (date("F", $this->stamp)),
 												 "4" => $this->dateMM,
-				 								 "5" => $this->dateYYYY,
+												 "5" => $this->dateYYYY,
 												 "6" => $this->stamp,
 												 "7" => (date('w', $this->stamp)),
-												 "8" => (strftime('%j', $this->stamp)),
-												 "9" => (strftime('%U', $this->stamp)),
+												 "8" => (sprintf('%03d', ((int) date('z', $this->stamp)) + 1)),
+												 "9" => (sprintf('%02d', (int) ((((int) date('z', $this->stamp)) - ((int) date('w', $this->stamp)) + 7) / 7))),
 												 "10" => $this->dateLinker($this->stamp),
 												 "11" => $this->formatDate($this->stamp, 99)
 												);
@@ -255,15 +255,15 @@ function getDayDetail($stamp) {
 
 		$this->day = array(
 												 "0" => (date("j",$stamp)),
-												 "1" => (strftime('%a', $stamp)),
-												 "2" => (strftime('%A', $stamp)),
+												 "1" => (date('D', $stamp)),
+												 "2" => (date('l', $stamp)),
 												 "3" => $this->ext_dateMM,
 												 "4" => $this->dateMM,
-				 								 "5" => $this->dateYYYY,
+												 "5" => $this->dateYYYY,
 												 "6" => $stamp,
 												 "7" => (date('w', $stamp)),
-												 "8" => strftime('%j', $stamp),
-												 "9" => strftime('%U', $stamp)
+												 "8" => sprintf('%03d', ((int) date('z', $stamp)) + 1),
+												 "9" => sprintf('%02d', (int) ((((int) date('z', $stamp)) - ((int) date('w', $stamp)) + 7) / 7))
 												);
 
 // end of function getDay

@@ -145,7 +145,7 @@ include($phpbb_root_path . 'language/lang_' . $board_config['default_lang'] . '/
 	$user	= $row1['user'];
 	$read	= $row1['read'];
 	$time	= $row1['time'];
-	$time 	= strftime("%b. %d, %Y @ %H:%M:%S", $time);	
+	$time 	= date("M. d, Y @ H:i:s", $time);	
 	
 	$q = "SELECT username
 		  FROM ". USERS_TABLE ."

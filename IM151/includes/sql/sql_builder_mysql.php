@@ -82,7 +82,7 @@ class sql_builder_mysql extends sql_builder
 	function build_primary_key(&$sql_data)
 	{
 		$keys = array();
-		for( $i = 0; $i < count($sql_data['primary_keys']); $i++ )
+		for( $i = 0; $i < count_safe($sql_data['primary_keys']); $i++ )
 		{
 			$key_data = &$sql_data['primary_keys'][$i];
 			$key_order = ( $key_data['order'] != 'ASC' ? ' DESC' : '' );
@@ -97,7 +97,7 @@ class sql_builder_mysql extends sql_builder
 	function build_index(&$sql_data, $index_data)
 	{
 		$keys = array();
-		for( $i = 0; $i < count($index_data['keys']); $i++ )
+		for( $i = 0; $i < count_safe($index_data['keys']); $i++ )
 		{
 			$key_data = &$index_data['keys'][$i];
 			$key_length = ( $key_data['length'] > 0 ? ('('.$key_data['length'].')') : '' );
@@ -124,7 +124,7 @@ class sql_builder_mysql extends sql_builder
 		{
 			$lines[] = $this->indent . $this->build_column_definition($column_data);
 		}
-		if( count($sql_data['primary_keys']) > 0 )
+		if( count_safe($sql_data['primary_keys']) > 0 )
 		{
 			$lines[] = $this->indent . $this->build_primary_key($sql_data);
 		}
@@ -151,15 +151,15 @@ class sql_builder_mysql extends sql_builder
 		switch( $sql_data['action'] )
 		{
 			case 'ADD':
-				if( count($sql_data['primary_keys']) > 0 )
+				if( count_safe($sql_data['primary_keys']) > 0 )
 				{
 					$line .= ' ' . $this->build_primary_key($sql_data);
 				}
-				elseif( count($sql_data['indexes']) > 0 )
+				elseif( count_safe($sql_data['indexes']) > 0 )
 				{
 					$line .= ' ' . $this->build_index($sql_data, array_shift($sql_data['indexes']));
 				}
-				elseif( count($sql_data['columns']) > 0 )
+				elseif( count_safe($sql_data['columns']) > 0 )
 				{
 					$line .= ' ' . $this->build_column_definition(array_shift($sql_data['columns']));
 				}

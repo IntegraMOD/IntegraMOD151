@@ -115,7 +115,7 @@ if (!isset($board_config[$use_key]))   $board_config[$use_key]   = 0;
 	unset($authed, $allowed_admins);
 	$allowed_admins = explode(',', $board_config['phpBBSecurity_allowed_admins']);
 	
-	for ($x = 0; $x < count($allowed_admins); $x++)
+	for ($x = 0; $x < count_safe($allowed_admins); $x++)
 		{
 		if ( ($userdata['user_id'] == $allowed_admins[$x]) && ($userdata['user_level'] == ADMIN) )
 			{
@@ -193,9 +193,9 @@ if (!isset($board_config[$use_key]))   $board_config[$use_key]   = 0;
 			'LIST_BANNED'	=> $lang['PS_search_banned'])
 				);
 				
-			for ($x = 0; $x < count($rows); $x++)
+			for ($x = 0; $x < count_safe($rows); $x++)
 				{
-				for ($y = 0; $y < count($ban_data); $y++)
+				for ($y = 0; $y < count_safe($ban_data); $y++)
 					{
 					if ($ban_data[$y]['ban_ip'] == $rows[$x]['ban_ip'])
 						{
@@ -275,7 +275,7 @@ if (!isset($board_config[$use_key]))   $board_config[$use_key]   = 0;
 		'LIST_DATE'		=> $lang['PS_users_date'])
 			);
 			
-		for ($x = 0; $x < count($posts_data); $x++)
+		for ($x = 0; $x < count_safe($posts_data); $x++)
 			{
 			if ($posts_data[$x]['poster_id'] == $who)
 				$user_ips[] = $posts_data[$x]['poster_ip'];
@@ -284,9 +284,9 @@ if (!isset($board_config[$use_key]))   $board_config[$use_key]   = 0;
 				break;
 			}
 			
-		for ($x = 0; $x < count($user_ips); $x++)
+		for ($x = 0; $x < count_safe($user_ips); $x++)
 			{
-			for ($y = 0; $y < count($caught_data); $y++)
+			for ($y = 0; $y < count_safe($caught_data); $y++)
 				{
 				if ($user_ips[$x] == $caught_data[$y]['ban_ip'])
 					{
@@ -306,7 +306,7 @@ if (!isset($board_config[$use_key]))   $board_config[$use_key]   = 0;
 				
 			}
 			
-		for ($x = 0; $x < count($ban_links); $x++)
+		for ($x = 0; $x < count_safe($ban_links); $x++)
 			{
 		$template->assign_block_vars('list_rows', array(
 			'LIST_ID'		=> $ban_id[$x] ,
@@ -324,9 +324,9 @@ if (!isset($board_config[$use_key]))   $board_config[$use_key]   = 0;
 	$bad_user_ids 	= array();
 	$bad_user_names	= array();
 
-		for ($a = 0; $a < count($caught_data); $a++)
+		for ($a = 0; $a < count_safe($caught_data); $a++)
 			{				
-			for ($b = 0; $b < count($posts_data); $b++)
+			for ($b = 0; $b < count_safe($posts_data); $b++)
 				{
 				if ($caught_data[$a]['ban_ip'] == $posts_data[$b]['poster_ip'])
 					{
@@ -340,9 +340,9 @@ if (!isset($board_config[$use_key]))   $board_config[$use_key]   = 0;
 				break;				
 			}
 			
-		for ($x = 0; $x < count($bad_user_ids); $x++)
+		for ($x = 0; $x < count_safe($bad_user_ids); $x++)
 			{
-			for ($y = 0; $y < count($users_data); $y++)
+			for ($y = 0; $y < count_safe($users_data); $y++)
 				{
 				if ($bad_user_ids[$x] == $users_data[$y]['user_id'])
 					{
@@ -354,7 +354,7 @@ if (!isset($board_config[$use_key]))   $board_config[$use_key]   = 0;
 				break;
 			}
 			
-		if (count($bad_user_names) > 0)
+		if (count_safe($bad_user_names) > 0)
 			$switch = $lang['PS_members_pt_check_yc'];
 		else
 			message_die(GENERAL_MESSAGE, $lang['PS_members_pt_check_nc']);
@@ -364,7 +364,7 @@ if (!isset($board_config[$use_key]))   $board_config[$use_key]   = 0;
 		'HEADER'	=> $switch)
 			);
 		
-		for ($x = 0; $x < count($bad_user_ids); $x++)
+		for ($x = 0; $x < count_safe($bad_user_ids); $x++)
 			{
 			if ($bad_user_ids[$x])
 				{
@@ -384,7 +384,7 @@ if (!isset($board_config[$use_key]))   $board_config[$use_key]   = 0;
 	unset($authed, $allowed_admins);
 	$allowed_admins = explode(',', $board_config['phpBBSecurity_allowed_admins']);
 	
-	for ($x = 0; $x < count($allowed_admins); $x++)
+	for ($x = 0; $x < count_safe($allowed_admins); $x++)
 		{
 		if ( ($userdata['user_id'] == $allowed_admins[$x]) && ($userdata['user_level'] == ADMIN) )
 			{
@@ -634,7 +634,7 @@ if (!isset($board_config[$use_key]))   $board_config[$use_key]   = 0;
 	unset($authed, $allowed_admins);
 	$allowed_admins = explode(',', $board_config['phpBBSecurity_allowed_admins']);
 	
-	for ($x = 0; $x < count($allowed_admins); $x++)
+	for ($x = 0; $x < count_safe($allowed_admins); $x++)
 		{
 		if ( ($userdata['user_id'] == $allowed_admins[$x]) && ($userdata['user_level'] == ADMIN) )
 			{
@@ -675,17 +675,17 @@ if (!isset($board_config[$use_key]))   $board_config[$use_key]   = 0;
 		
 		$no_access_list 	.= '<select name="grant_access">';
 		$no_access_list 	.= '<option class="post" value="">-----</option>';
-		for ($x = 0; $x < count($admin_users); $x++)
+		for ($x = 0; $x < count_safe($admin_users); $x++)
 			$no_access_list 	.= '<option class="post" value="'. $admin_users[$x]['user_id'] .'">'. $admin_users[$x]['username'] .'</option>';
 		$no_access_list 	.= '</select>';
 		
 		$has_access_list 	.= '<select name="deny_access">';
 		$has_access_list 	.= '<option class="post" value="">-----</option>';
-		for ($x = 0; $x < count($allowed_admins); $x++)
+		for ($x = 0; $x < count_safe($allowed_admins); $x++)
 			{
 			if (!$allowed_admins[$x])
 				break;
-			for ($y = 0; $y < count($admin_users); $y++)
+			for ($y = 0; $y < count_safe($admin_users); $y++)
 				{
 				if ($admin_users[$y]['user_id'] == $allowed_admins[$x])
 					{
@@ -699,7 +699,7 @@ if (!isset($board_config[$use_key]))   $board_config[$use_key]   = 0;
 		$disallowed_agents 	= '';
 		$disallowed_agents 	.= '<select name="allow_agents">';
 		$disallowed_agents 	.= '<option class="post" value="">-----</option>';
-		for ($x = 0; $x < count($get_agents); $x++)
+		for ($x = 0; $x < count_safe($get_agents); $x++)
 			$disallowed_agents 	.= '<option class="post" value="'. $get_agents[$x] .'">'. $get_agents[$x] .'</option>';
 		$disallowed_agents 	.= '</select>';
 		
@@ -707,7 +707,7 @@ if (!isset($board_config[$use_key]))   $board_config[$use_key]   = 0;
 		$disallowed_referers 	= '';
 		$disallowed_referers 	.= '<select name="allow_referers">';
 		$disallowed_referers 	.= '<option class="post" value="">-----</option>';
-		for ($x = 0; $x < count($get_referers); $x++)
+		for ($x = 0; $x < count_safe($get_referers); $x++)
 			$disallowed_referers .= '<option class="post" value="'. $get_referers[$x] .'">'. $get_referers[$x] .'</option>';
 		$disallowed_referers	.= '</select>';		
 		$time_select_arr = array(

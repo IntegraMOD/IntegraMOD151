@@ -359,7 +359,7 @@ return;
 				$rows[] = $row;
 			}
 
-			if( count($rows) )
+			if( count_safe($rows) )
 			{
 				$mod_admin_list = array();
 				foreach($rows as $v)
@@ -648,8 +648,8 @@ return;
 	{
 		global $db, $lang;
 
-		$mark_size = count($mark_list);
-		$user_size = count($users_list);
+		$mark_size = count_safe($mark_list);
+		$user_size = count_safe($users_list);
 
 		if ( $mark_size && $user_size )
 		{
@@ -747,7 +747,7 @@ return;
 	/* Checks list of online users to see if a buddy has just come online */
 	function alert_check()
 	{
-		if( !count($this->buddy) || defined('NO_CONTACTS') )
+		if( !count_safe($this->buddy) || defined('NO_CONTACTS') )
 		{
 			return 0;
 		}
