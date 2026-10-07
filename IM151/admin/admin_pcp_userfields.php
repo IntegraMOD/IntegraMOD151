@@ -296,7 +296,7 @@ function pcp_get_sql_map($field, $field_data=array())
 
 									// length & decimal
 									$regs = array();
-									if (ereg('\((.*)\)', $value, $regs))
+									if (preg_match('/\((.*)\)/', $value, $regs))
 									{
 										$parts = explode(',', $regs[1]);
 										$length = intval($parts[0]);
@@ -310,7 +310,7 @@ function pcp_get_sql_map($field, $field_data=array())
 										$length = 0;
 									}
 
-									$value = ereg_replace('(\(.*\))', '', $value);
+									$value = preg_replace('/(\(.*\))/', '', $value);
 
 									// type
 									$type = $value;
@@ -1059,7 +1059,7 @@ if ( $mode == 'edit' )
 		}
 
 		// is the field name ok ?
-		if ( empty($field_name) || !ereg("^[a-z0-9_]+", $field_name) )
+		if ( empty($field_name) || !preg_match('/^[a-z0-9_]+/', $field_name) )
 		{
 			$error = true;
 			$error_msg .= ( empty($error_msg) ? '' : '<br />' ) . $lang['PCP_err_field_name_not_valid'];
@@ -1108,17 +1108,17 @@ if ( $mode == 'edit' )
 		}
 
 		// funcs
-		if ( !empty($field_det['dsp_func']) && !ereg("^[a-zA-Z0-9_]+", $field_det['dsp_func']) )
+		if ( !empty($field_det['dsp_func']) && !preg_match('/^[a-zA-Z0-9_]+/', $field_det['dsp_func']) )
 		{
 			$error = true;
 			$error_msg .= ( empty($error_msg) ? '' : '<br />' ) . $lang['PCP_err_field_dsp_func_not_valid'];
 		}
-		if ( !empty($field_det['get_func']) && !ereg("^[a-zA-Z0-9_]+", $field_det['get_func']) )
+		if ( !empty($field_det['get_func']) && !preg_match('/^[a-zA-Z0-9_]+/', $field_det['get_func']) )
 		{
 			$error = true;
 			$error_msg .= ( empty($error_msg) ? '' : '<br />' ) . $lang['PCP_err_field_get_func_not_valid'];
 		}
-		if ( !empty($field_det['chk_func']) && !ereg("^[a-zA-Z0-9_]+", $field_det['chk_func']) )
+		if ( !empty($field_det['chk_func']) && !preg_match('/^[a-zA-Z0-9_]+/', $field_det['chk_func']) )
 		{
 			$error = true;
 			$error_msg .= ( empty($error_msg) ? '' : '<br />' ) . $lang['PCP_err_field_chk_func_not_valid'];
