@@ -41,6 +41,8 @@ body{background:#272727;color:#DD6901;}
 
 /* This is the border line & background color round the entire page */
 .bodyline{background:#303030;border:1px solid #D77700}
+.privmsg-limit{width:175px;height:8px;border:1px solid #D77700;background:#272727;overflow:hidden;}
+.privmsg-limit span{display:block;height:8px;background:#FFCC00;}
 
 /* This is the outline round the main forum tables */
 .forumline{background:#272727;border:1px solid #FFCC00}

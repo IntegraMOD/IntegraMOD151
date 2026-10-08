@@ -1260,16 +1260,19 @@ else
 
 // Work around for "current" Apache 2 + PHP module which seems to not
 // cope with private cache control setting
-if (!empty($_SERVER['SERVER_SOFTWARE']) && strstr($_SERVER['SERVER_SOFTWARE'], 'Apache/2'))
+if ( !headers_sent() )
 {
-	header ('Cache-Control: no-cache, pre-check=0, post-check=0');
+	if (!empty($_SERVER['SERVER_SOFTWARE']) && strstr($_SERVER['SERVER_SOFTWARE'], 'Apache/2'))
+	{
+		header ('Cache-Control: no-cache, pre-check=0, post-check=0');
+	}
+	else
+	{
+		header ('Cache-Control: private, pre-check=0, post-check=0, max-age=0');
+	}
+	header ('Expires: 0');
+	header ('Pragma: no-cache');
 }
-else
-{
-	header ('Cache-Control: private, pre-check=0, post-check=0, max-age=0');
-}
-header ('Expires: 0');
-header ('Pragma: no-cache');
 
 //-- mod : profile cp ------------------------------------------------------------------------------
 //-- add

@@ -393,7 +393,7 @@ else
 			{
         foreach ($user_maps[$map_name]['fields'] as $field_name => $map_field_data)
 				{
-					if ( ( $max < ($map_field_data['ind']+1) ) && ($map_field_data['dft'] || $map_field_data['rqd']) )
+					if ( ( $max < ($map_field_data['ind']+1) ) && ((!empty($map_field_data['dft'])) || (!empty($map_field_data['rqd']))) )
 					{
 						$field_inds[] = $map_field_data['ind'];
 					}
@@ -417,7 +417,7 @@ else
 		// force the required fields
     foreach ($user_maps[$map_name]['fields'] as $field_name => $map_field_data)
 		{
-			if ($map_field_data['rqd'])
+			if (!empty($map_field_data['rqd']))
 			{
 				$option[ $map_field_data['ind'] ] = '1';
 			}

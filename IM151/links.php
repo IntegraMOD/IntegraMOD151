@@ -309,12 +309,16 @@ if ($t=='pop' || $t=='new')
 	//
 	// Link categories dropdown list
 	//
-	foreach($link_categories as $cat_id => $cat_title)
+	$link_cat_option = '';
+	if ( !empty($link_categories) && is_array($link_categories) )
 	{
-		$link_cat_option .= "<option value=\"$cat_id\">$cat_title</option>";
+		foreach($link_categories as $cat_id => $cat_title)
+		{
+			$link_cat_option .= "<option value=\"$cat_id\">$cat_title</option>";
+		}
 	}
 
-	
+
 	$template->assign_vars(array(
 		'PAGINATION' => $pagination,
 		'PAGE_NUMBER' => sprintf($lang['Page_of'], ( floor( $start / $linkspp ) + 1 ), ceil( $total_links / $linkspp )),
@@ -489,9 +493,12 @@ if ($t=='sub_pages')
 	// Link categories dropdown list
 	//
 	$link_cat_option = '';
-	foreach($link_categories as $cat_id => $cat_title)
+	if ( !empty($link_categories) && is_array($link_categories) )
 	{
-		$link_cat_option .= "<option value=\"$cat_id\">$cat_title</option>";
+		foreach($link_categories as $cat_id => $cat_title)
+		{
+			$link_cat_option .= "<option value=\"$cat_id\">$cat_title</option>";
+		}
 	}
 
 	$template->assign_vars(array(
@@ -624,9 +631,21 @@ if ($t=='search')
 	//
 	// Link categories dropdown list
 	//
-	foreach($link_categories as $cat_id => $cat_title)
+	$link_cat_option = '';
+	if ( !isset($pagination) )
 	{
-		$link_cat_option .= "<option value=\"$cat_id\">$cat_title</option>";
+		$pagination = '&nbsp;';
+	}
+	if ( !isset($total_links) )
+	{
+		$total_links = 0;
+	}
+	if ( !empty($link_categories) && is_array($link_categories) )
+	{
+		foreach($link_categories as $cat_id => $cat_title)
+		{
+			$link_cat_option .= "<option value=\"$cat_id\">$cat_title</option>";
+		}
 	}
 
 	$template->assign_vars(array(
@@ -687,9 +706,12 @@ if ( $row = $db->sql_fetchrow($result) )
 // Link categories dropdown list
 //
 $link_cat_option = '';
-foreach($link_categories as $cat_id => $cat_title)
+if ( !empty($link_categories) && is_array($link_categories) )
 {
-	$link_cat_option .= "<option value=\"$cat_id\">$cat_title</option>";
+	foreach($link_categories as $cat_id => $cat_title)
+	{
+		$link_cat_option .= "<option value=\"$cat_id\">$cat_title</option>";
+	}
 }
 	
 $template->assign_vars(array(

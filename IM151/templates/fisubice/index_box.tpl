@@ -1,62 +1,65 @@
 <!-- BEGIN catrow -->
 <!-- BEGIN tablehead -->
-<div class="container-fluid forumline">
-  <div class="row d-flex justify-content-start th">
-	<div class="col-8 pt-1 d-flex justify-content-center">{catrow.tablehead.L_FORUM}</div>
-	<div class="col-1 pt-1 px-1 mw1 text-center topics">{L_TOPICS}</div>
-	<div class="col-1 pt-1 px-1 mw1 text-center posts">{L_POSTS}</div>
-	<div class="col pt-1 text-center iresp lastpost">{L_LASTPOST}</div>
-  </div>
+<table width="100%" cellpadding="2" cellspacing="1" border="0" class="forumline">
+<tr> 
+	<th colspan="{catrow.tablehead.INC_SPAN}" width="100%" nowrap="nowrap">&nbsp;{catrow.tablehead.L_FORUM}&nbsp;</th>
+	<th width="50" nowrap="nowrap">&nbsp;{L_TOPICS}&nbsp;</th>
+	<th width="50" nowrap="nowrap">&nbsp;{L_POSTS}&nbsp;</th>
+	<th width="150" nowrap="nowrap">&nbsp;{L_LASTPOST}&nbsp;</th>
+</tr>
 <!-- END tablehead -->
 <!-- BEGIN cat -->
-  <div class="row catHead d-flex justify-content-end">
+<tr> 
 	<!-- BEGIN inc -->
-	<div class="col-1 nb {catrow.cathead.inc.INC_CLASS}"></div>
+	<td width="46" class="{catrow.cat.inc.INC_CLASS}"><img src="{SPACER}" width="46" height="0" /></td>
 	<!-- END inc -->
-	<div class="col-8 nb pt-1 {catrow.cathead.CLASS_CAT}"><a href="{catrow.cathead.U_VIEWCAT}" class="cattitle" title="{catrow.cathead.CAT_DESC}">{catrow.cathead.CAT_TITLE}</a></div>
-	<div class="col nb align-right"></div>
-  </div>
+	<td class="{catrow.cat.CLASS_CAT}" width="100%" colspan="{catrow.cat.INC_SPAN}"><span class="cattitle"><a href="{catrow.cat.U_VIEWCAT}" class="cattitle" title="{catrow.cat.CAT_DESC}">{catrow.cat.CAT_TITLE}</a></span></td>
+	<td class="{catrow.cat.CLASS_ROWPIC}" colspan="3" align="right">&nbsp;</td> 
+</tr>
 <!-- END cat -->
 <!-- BEGIN forumrow -->
-  <div class="row row2 d-flex justify-content-start align-items-top" onMouseOver="this.className='row row1'" onMouseOut="this.className='row row2'">
- 	<!-- BEGIN inc -->
-	<div class="col-1 row2 mw2 {catrow.forumrow.inc.INC_CLASS}"><img src="{SPACER}" alt="" width="26" height="0" /></div>
+<tr> 
+	<!-- BEGIN inc -->
+	<td width="46" class="{catrow.forumrow.inc.INC_CLASS}"><img src="{SPACER}" width="46" height="0" /></td>
 	<!-- END inc -->
-	<div  class="col-1 row2 mw2 {catrow.forumrow.INC_CLASS} py-2"><img src="{catrow.forumrow.FORUM_FOLDER_IMG}" width="26" height="25" alt="{catrow.forumrow.L_FORUM_FOLDER_ALT}" title="{catrow.forumrow.L_FORUM_FOLDER_ALT}" /></div>
-	<div class="col-7 text-start pt-3">
+	<td class="{catrow.forumrow.INC_CLASS}" align="center" valign="middle" height="50"><img src="{catrow.forumrow.FORUM_FOLDER_IMG}" width="46" height="25" alt="{catrow.forumrow.L_FORUM_FOLDER_ALT}" title="{catrow.forumrow.L_FORUM_FOLDER_ALT}" /></td>
+	<td class="row1" width="100%" height="50" colspan="{catrow.forumrow.INC_SPAN}" valign="top"onMouseOver="this.className='row2'" onMouseOut="this.className='{catrow.forumrow.INC_CLASS}'">
 		<!-- BEGIN forum_icon -->
-  		<div class="row>
-			<a href="{catrow.forumrow.U_VIEWFORUM}"><img src="{catrow.forumrow.ICON_IMG}" alt=""  /></a>
-			<!-- END forum_icon -->
-			<span class="forumlink nav"><a href="{catrow.forumrow.U_VIEWFORUM}" class="forumlink">{catrow.forumrow.FORUM_NAME}</a><br /></span>
-			<span class="genmed">{catrow.forumrow.FORUM_DESC}</span>
-			<span class="gensmall">{catrow.forumrow.L_MODERATOR}{catrow.forumrow.MODERATORS}{catrow.forumrow.L_LINKS}{catrow.forumrow.LINKS}</span>
-			<!-- BEGIN forum_icon -->
-		</div>
+		<table cellpadding="2" cellspacing="0" border="0" width="100%" height="47">
+		<tr>
+			<td width="46" align="center"><a href="{catrow.forumrow.U_VIEWFORUM}"><img src="{catrow.forumrow.ICON_IMG}" border="0" /></a></td>
+			<td>
 		<!-- END forum_icon -->
-	</div>
+		<span class="forumlink"><a href="{catrow.forumrow.U_VIEWFORUM}" class="forumlink">{catrow.forumrow.FORUM_NAME}</a><br /></span>
+		<span class="genmed">{catrow.forumrow.FORUM_DESC}</span>
+		<span class="gensmall">{catrow.forumrow.L_MODERATOR}{catrow.forumrow.MODERATORS}{catrow.forumrow.L_LINKS}{catrow.forumrow.LINKS}</span>
+		<!-- BEGIN forum_icon -->
+			</td>
+		</tr>
+		</table>
+		<!-- END forum_icon -->
+	</td>
 	<!-- BEGIN forum_link_no -->
-	<div class="col-1 row3 gensmall d-flex justify-content-center pt-3 mw1 topics" onMouseOver="this.className='col-1 row1 gensmall d-flex justify-content-center pt-3 mw1 topics'" onMouseOut="this.className='col-1 row3 gensmall d-flex justify-content-center pt-3 mw1 topics'">{catrow.forumrow.TOPICS}</div>
-	<div class="col-1 row2 gensmall d-flex justify-content-center pt-3 mw1 posts" onMouseOver="this.className='col-1 row1 gensmall d-flex justify-content-center pt-3 mw1 posts'" onMouseOut="this.className='col-1 row2 gensmall d-flex justify-content-center pt-3 mw1 posts'">{catrow.forumrow.POSTS}</div>
-	<div class="col row3 gensmall pt-3 iresp lastpost" onMouseOver="this.className='col-2 row1 gensmall ctr pt-3 iresp lastpost'" onMouseOut="this.className='col-2 row3 gensmall pt-3 iresp lastpost'">{catrow.forumrow.LAST_POST}</div>
+	<td class="row3" align="center" valign="middle" height="50"><span class="gensmall">{catrow.forumrow.TOPICS}</span></td>
+	<td class="row2" align="center" valign="middle" height="50"><span class="gensmall">{catrow.forumrow.POSTS}</span></td>
+	<td class="row3" align="center" valign="middle" height="50" nowrap="nowrap"> <span class="gensmall">{catrow.forumrow.LAST_POST}</span></td>
 	<!-- END forum_link_no -->
 	<!-- BEGIN forum_link -->
-	<div class="col-1 row3 gensmall d-flex justify-content-center pt-3 mw1">{catrow.forumrow.forum_link.HIT_COUNT}</div>
+	<td class="row3" align="center" valign="middle" height="50" colspan="3"><span class="gensmall">{catrow.forumrow.forum_link.HIT_COUNT}</span></td>
 	<!-- END forum_link -->
-    <hr class=" w-100 p-0 m-0">
-
-  </div>
+</tr>
 <!-- END forumrow -->
 <!-- BEGIN catfoot -->
-  <div class="row">
+<tr>
 	<!-- BEGIN inc -->
-    <div class="{catrow.catfoot.inc.INC_CLASS} col catBottom"><img src="{SPACER}" alt="" width="26" height="0" /></div>
-	<!-- END inc --> 
-    <div class="col catBottom spaceRow"><img src="{SPACER}" alt="" width="1" height="1" /></div>
-  </div>
+	<td width="46" class="{catrow.catfoot.inc.INC_CLASS}"><img src="{SPACER}" width="46" height="0" /></td>
+	<!-- END inc -->
+	<td colspan="{catrow.catfoot.INC_SPAN}" height="1" class="spaceRow"><img src="{SPACER}" alt="" width="1" height="1" /></td>
+</tr>
 <!-- END catfoot -->
 <!-- BEGIN tablefoot -->
-</div>
+</table>
+<table border="0" cellpadding="0" cellspacing="0" class="tbl"><tr><td class="tbll"><img src="images/spacer.gif" alt="" width="8" height="4" /></td><td class="tblbot"><img src="images/spacer.gif" alt="" width="8" height="4" /></td><td class="tblr"><img src="images/spacer.gif" alt="" width="8" height="4" /></td></tr></table>
 <br class="gensmall" />
 <!-- END tablefoot -->
 <!-- END catrow -->

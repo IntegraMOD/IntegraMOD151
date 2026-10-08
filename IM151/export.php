@@ -21,7 +21,8 @@ include($phpbb_root_path . 'includes/bbcode.'.$phpEx);
 // 
 // Start session management 
 // 
-$userdata = session_pagestart($user_ip, $forum_id); 
+$forum_id = 0;
+$userdata = session_pagestart($user_ip, $forum_id);
 init_userprefs($userdata); 
 // 
 // End session management 
@@ -158,7 +159,7 @@ $soubor .= "--------\r\n";
 $sql = "SELECT u.username, u.user_id, u.user_posts, u.user_from, u.user_website, u.user_email, u.user_icq, u.user_aim, u.user_yim, u.user_regdate, u.user_msnm, u.user_viewemail, u.user_rank, u.user_sig, u.user_sig_bbcode_uid, u.user_avatar, u.user_avatar_type, u.user_allowavatar, u.user_allowsmile, p.*,  pt.post_text, pt.post_subject, pt.bbcode_uid 
    FROM " . POSTS_TABLE . " p, " . USERS_TABLE . " u, " . POSTS_TEXT_TABLE . " pt 
    WHERE p.topic_id = $topic_id 
-      $limit_posts_time 
+      " . (isset($limit_posts_time) ? $limit_posts_time : '') . "
       AND pt.post_id = p.post_id 
       AND u.user_id = p.poster_id 
    ORDER BY p.post_time $post_time_order"; 
@@ -263,7 +264,8 @@ for($i = 0; $i < $total_posts; $i++) {
    $soubor .= "$message\r\n"; 
 } 
 
-$attachment = (strstr($HTTP_USER_AGENT, "MSIE")) ? "" : " attachment"; // IE 5.5 fix. 
+$user_agent = isset($_SERVER['HTTP_USER_AGENT']) ? $_SERVER['HTTP_USER_AGENT'] : '';
+$attachment = (strstr($user_agent, "MSIE")) ? "" : " attachment"; // IE 5.5 fix.
 $file_name = $board_config['sitename']."_Topic_" . $topic_id . "_".date("Ymd",time()).".txt";
    header("Cache-control: private"); // another fix for IE 
    header("Content-Type: application/octet-stream"); 

@@ -53,7 +53,19 @@ if(!defined("SQL_LAYER"))
 			$this->dbname = $database;
 			$port = (!$port) ? NULL : $port;
 
-			$this->db_connect_id = @mysqli_connect($this->server, $this->user, $this->password, $this->dbname, $port);
+			$this->db_connect_id = false;
+			if ( function_exists('mysqli_report') )
+			{
+				mysqli_report(MYSQLI_REPORT_OFF);
+			}
+			try
+			{
+				$this->db_connect_id = @mysqli_connect($this->server, $this->user, $this->password, $this->dbname, $port);
+			}
+			catch (Exception $e)
+			{
+				$this->db_connect_id = false;
+			}
 
 			$this->row = new SplObjectStorage();
 			$this->rowset = new SplObjectStorage();
@@ -84,9 +96,14 @@ if(!defined("SQL_LAYER"))
 		// Other base methods
 		//
 		
+		function sql_is_connected()
+		{
+			return ($this->db_connect_id instanceof mysqli) && (@mysqli_ping($this->db_connect_id) !== false);
+		}
+
 		function sql_close()
 		{
-			if( $this->db_connect_id )
+			if( $this->sql_is_connected() )
 			{
 				//
 				// Commit any remaining transactions
@@ -96,12 +113,49 @@ if(!defined("SQL_LAYER"))
 					@mysqli_commit($this->db_connect_id);
 				}
 
-				return @mysqli_close($this->db_connect_id);
+				$closed = @mysqli_close($this->db_connect_id);
+				$this->db_connect_id = false;
+				$this->in_transaction = false;
+				return $closed;
 			}
 			else
 			{
+				$this->db_connect_id = false;
 				return false;
 			}
+		}
+
+		function sql_reconnect()
+		{
+			if ( $this->sql_is_connected() )
+			{
+				return true;
+			}
+			$this->db_connect_id = false;
+
+			$port = NULL;
+			try
+			{
+				$this->db_connect_id = @mysqli_connect($this->server, $this->user, $this->password, $this->dbname, $port);
+			}
+			catch (Exception $e)
+			{
+				$this->db_connect_id = false;
+			}
+			if ( !$this->db_connect_id )
+			{
+				return false;
+			}
+
+			@mysqli_query($this->db_connect_id, "SET NAMES 'utf8'");
+			if ( @mysqli_select_db($this->db_connect_id, $this->dbname) === false )
+			{
+				@mysqli_close($this->db_connect_id);
+				$this->db_connect_id = false;
+				return false;
+			}
+
+			return true;
 		}
 
 		//
@@ -144,6 +198,14 @@ if(!defined("SQL_LAYER"))
 			unset($this->query_result);
 			if( $query != "" )
 			{
+				if ( !$this->sql_is_connected() && !$this->sql_reconnect() )
+				{
+					return false;
+				}
+				if ( function_exists('mysqli_report') )
+				{
+					mysqli_report(MYSQLI_REPORT_OFF);
+				}
 				$this->num_queries++;
 				if( $transaction == BEGIN_TRANSACTION && !$this->in_transaction )
 				{
@@ -156,7 +218,14 @@ if(!defined("SQL_LAYER"))
 				}
 
 				$qstart = microtime(true);
-				$this->query_result = @mysqli_query($this->db_connect_id, $query);
+				try
+				{
+					$this->query_result = @mysqli_query($this->db_connect_id, $query);
+				}
+				catch (Exception $e)
+				{
+					$this->query_result = false;
+				}
 				$qend = microtime(true);
 				$this->sql_time += $qend - $qstart;
 
@@ -501,6 +570,10 @@ if(!defined("SQL_LAYER"))
 
 		function sql_escape($value)
 		{
+			if ( !$this->sql_is_connected() && !$this->sql_reconnect() )
+			{
+				return addslashes($value);
+			}
 			return mysqli_real_escape_string($this->db_connect_id, $value);
 		}
 	} // class sql_db

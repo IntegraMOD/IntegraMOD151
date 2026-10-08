@@ -1107,10 +1107,21 @@ class pafiledb
 			$pafiledb_template->assign_vars(array(
 				'NO_FILE' => $show_file_message,
 				'L_NO_FILES' => $lang['No_files'],
-        'L_NO_FILES_CAT' => $lang['No_files_cat'],
-        'FILELIST' => null,
-        'CAT_PARENT' => null,
-      ));
+		'L_NO_FILES_CAT' => $lang['No_files_cat'],
+		'FILELIST' => null,
+		'CAT_PARENT' => null,
+				'S_VIEWALL_ACTION' => '',
+				'START' => $start,
+				'SORT_NAME' => '',
+				'SORT_TIME' => '',
+				'SORT_RATING' => '',
+				'SORT_DOWNLOADS' => '',
+				'SORT_UPDATE_TIME' => '',
+				'SORT_ASC' => '',
+				'SORT_DESC' => '',
+				'PAGINATION' => '',
+				'PAGE_NUMBER' => '',
+	  ));
 		}
 	}
 

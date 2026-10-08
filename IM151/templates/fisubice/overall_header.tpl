@@ -5,14 +5,12 @@
 <meta http-equiv="Content-Style-Type" content="text/css">{META_HTTP_EQUIV_TAGS}
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<meta name="copyright" content="2001, 2024 Integramod Team" />
+<meta name="copyright" content="2001, 2026 Integramod Team" />
 
 <!-- Vendor CSS Files -->
 <link href="templates/assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 <link href="templates/assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
-<link href="templates/assets/vendor/aos/aos.css" rel="stylesheet">
-<link href="templates/assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
-<link href="templates/assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 <link href='https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
@@ -24,8 +22,6 @@
 <link rel="shortcut icon" href="./favicon.ico">
 <link rel="stylesheet" href="{TEMPLATE}{T_HEAD_STYLESHEET}" type="text/css" />
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.2.0/js/tether.min.js" integrity="sha384-Plbmg8JY28KFelvJVai01l8WyZzrYWG825m+cZ0eDDS1f7d/js6ikvy1+X+guPIB" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/js/bootstrap.min.js" integrity="sha512-ykZ1QQr0Jy/4ZkvKuqWn4iF3lqPZyij9iRv6sGqLRdTPkY69YX6+7wvVGmsdBbiIfN/8OdsI7HABjvEok6ZopQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script src="templates/assets/js/toggle_display.js"></script>
 <script src="templates/assets/js/importal.js"></script>

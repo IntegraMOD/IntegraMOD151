@@ -214,6 +214,7 @@ else
 	if ( $bypass )
 		{
 
+		}
 #====
 #==== Author: aUsTiN [austin@phpbb-amod.com] [http://phpbb-amod.com] === |
 #==== End: ==== Force Topic Read ======================================= |	
@@ -351,26 +352,36 @@ if ( $mark_read == 'topics' )
 //			}
 //		}
 //-- add
+		if ( !isset($board_config['tracking_forums']) || !is_array($board_config['tracking_forums']) )
+		{
+			$board_config['tracking_forums'] = array();
+		}
+		if ( !isset($board_config['tracking_unreads']) || !is_array($board_config['tracking_unreads']) )
+		{
+			$board_config['tracking_unreads'] = array();
+		}
+		if ( !isset($board_config['tracking_topics']) || !is_array($board_config['tracking_topics']) )
+		{
+			$board_config['tracking_topics'] = array();
+		}
 		$board_config['tracking_forums'][$forum_id] = time();
 
 		// clean cookies
-		$s_topics = '';
-
-		// unreads
-		@reset($board_config['tracking_unreads']);
-		while ( list($id, $time) = @each($board_config['tracking_unreads']) )
+		$topic_ids = array();
+		foreach ( $board_config['tracking_unreads'] as $id => $time )
 		{
-			$s_topics .= ( empty($s_topics) ? '' : ', ' ) . $id;
+			$topic_ids[] = intval($id);
 		}
-
-		// reads
-		@reset($board_config['tracking_topics']);
-		while ( list($id, $time) = @each($board_config['tracking_topics']) )
+		foreach ( $board_config['tracking_topics'] as $id => $time )
 		{
-			$s_topics .= ( empty($s_topics) ? '' : ', ' ) . $id;
+			$topic_ids[] = intval($id);
 		}
+		$topic_ids = array_unique($topic_ids);
+		$s_topics = implode(', ', $topic_ids);
 
 		// read the relevant topic ids
+		if ( $s_topics != '' )
+		{
 		$sql = "SELECT topic_id
 					FROM " . TOPICS_TABLE . "
 					WHERE topic_id IN ($s_topics)
@@ -392,6 +403,7 @@ if ( $mark_read == 'topics' )
 			{
 				unset($board_config['tracking_topics'][ $row['topic_id'] ]);
 			}
+		}
 		}
 
 		// except the cookies
@@ -1254,7 +1266,6 @@ include($phpbb_root_path . 'includes/page_tail.'.$phpEx);
 	if ( $active )
 		{
 	}
-		}
 #====
 #==== Author: aUsTiN [austin@phpbb-amod.com] [http://phpbb-amod.com] === |
 #==== End: ==== Force Topic Read ======================================= |	

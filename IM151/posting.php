@@ -1944,7 +1944,7 @@ else
 			$replacement_word = array();
 			obtain_word_list($orig_word, $replacement_word);
 
-			$msg_date =  create_date($board_config['default_dateformat'], $postrow['post_time'], $board_config['board_timezone']);
+			$msg_date =  create_date($board_config['default_dateformat'], (isset($postrow['post_time']) ? $postrow['post_time'] : time()), $board_config['board_timezone']);
 
 			// Use trim to get rid of spaces placed there by MS-SQL 2000
 			$quote_username = ( trim($post_info['post_username']) != '' ) ? $post_info['post_username'] : $post_info['username'];
@@ -1966,7 +1966,7 @@ else
 //
 // Begin Approve_Mod Block : 6
 //
-			if ( $approve_mod['enabled'] || $approve_mod['quoted_post_not_approved'] )
+			if ( !empty($approve_mod['enabled']) || !empty($approve_mod['quoted_post_not_approved']) )
 			{ 
 				$approve_sql = "SELECT * FROM " . APPROVE_POSTS_TABLE . " 
 					WHERE post_id = " . intval($post_id) . " 
@@ -2409,7 +2409,7 @@ bbcode_box();
 // if ( $board_config['allow_html'] && $userdata['user_allowhtml']) $message = unprepare_message($message);
 
 $template->assign_vars(array(
-	'USERNAME' => $username,
+	'USERNAME' => (isset($username) ? $username : ''),
 	'SUBJECT' => $subject,
 	'MESSAGE' => $message,
 	'HTML_STATUS' => $html_status,

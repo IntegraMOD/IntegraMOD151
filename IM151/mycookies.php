@@ -23,15 +23,15 @@ $cookiename = $board_config['cookie_name'];
 //
 if (!empty($_GET['confirm']))
 {
-     setcookie($board_config['cookie_name'] . '_f_all', time(), - 3600, $board_config['cookie_path'], $board_config['cookie_domain'], $board_config['cookie_secure']);
+     setcookie($board_config['cookie_name'] . '_f_all', '', time() - 3600, $board_config['cookie_path'], $board_config['cookie_domain'], $board_config['cookie_secure']);
 
-     setcookie($board_config['cookie_name'] . '_t', serialize($tracking_topics), - 3600, $board_config['cookie_path'], $board_config['cookie_domain'], $board_config['cookie_secure']);
+     setcookie($board_config['cookie_name'] . '_t', '', time() - 3600, $board_config['cookie_path'], $board_config['cookie_domain'], $board_config['cookie_secure']);
 
-     setcookie($board_config['cookie_name'] . '_f', serialize($tracking_forums), - 3600, $board_config['cookie_path'], $board_config['cookie_domain'], $board_config['cookie_secure']);
+     setcookie($board_config['cookie_name'] . '_f', '', time() - 3600, $board_config['cookie_path'], $board_config['cookie_domain'], $board_config['cookie_secure']);
 
-     setcookie($cookiename . '_data', serialize($sessiondata), - 3600, $cookiepath, $cookiedomain, $cookiesecure);
-	
-     setcookie($cookiename . '_sid', $session_id, - 3600, $cookiepath, $cookiedomain, $cookiesecure);
+     setcookie($cookiename . '_data', '', time() - 3600, $board_config['cookie_path'], $board_config['cookie_domain'], $board_config['cookie_secure']);
+
+     setcookie($cookiename . '_sid', '', time() - 3600, $board_config['cookie_path'], $board_config['cookie_domain'], $board_config['cookie_secure']);
 
 header("location: portal.$phpEx");
 }

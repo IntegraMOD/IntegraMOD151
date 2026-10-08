@@ -48,17 +48,9 @@
 					</tr>
 					<tr>
 						<td align="center">
-							<table width="175" cellspacing="0" cellpadding="0" border="1" class="bodyline">
-							<tr>
-								<td class="row2">
-									<table cellspacing="0" cellpadding="1" border="1">
-									<tr>
-										<td class="bodyline"><img src="{IMG_SPACER}" width="{INBOX_LIMIT_IMG_WIDTH}" height="8" alt="{INBOX_LIMIT_PERCENT}" /></td>
-									</tr>
-									</table>
-								</td>
-							</tr>
-							</table>
+							<div class="privmsg-limit" title="{INBOX_LIMIT_PERCENT}%">
+								<span style="width: {INBOX_LIMIT_PERCENT}%;"></span>
+							</div>
 						</td>
 					</tr>
 					</table>

@@ -144,9 +144,9 @@ class pafiledb_stats extends pafiledb_public
 		}
 		$db->sql_freeresult($result);
 
-		$avg = @round($total_rating/$total_votes);
+		$avg = ($total_votes > 0) ? round($total_rating / $total_votes) : 0;
 
-		$avgdls = @round($totaldls/$num['files']);
+		$avgdls = (!empty($num['files'])) ? round($totaldls / $num['files']) : 0;
 
 		require($phpbb_root_path . 'language/lang_' . $board_config['default_lang'] . '/lang_pafiledb.' . $phpEx);
 

@@ -101,11 +101,7 @@ masterdavid : 2004
 
 <!-- Vendor JS Files -->
 <script src="templates/assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-<script src="templates/assets/vendor/aos/aos.js"></script>
-<script src="templates/assets/vendor/glightbox/js/glightbox.min.js"></script>
-<script src="templates/assets/vendor/swiper/swiper-bundle.min.js"></script>
-<script src="templates/assets/vendor/imagesloaded/imagesloaded.pkgd.min.js"></script>
-<script src="templates/assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
+
 <script src="templates/assets/vendor/js/main.js"></script>
 </body>
 </html>

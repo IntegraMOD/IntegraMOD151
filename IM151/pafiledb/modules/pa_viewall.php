@@ -13,7 +13,7 @@ class pafiledb_viewall extends pafiledb_public
 {
 	function main($action)
 	{
-		global $pafiledb_template,$lang, $phpEx, $pafiledb_config, $_REQUEST, $userdata;
+		global $pafiledb_template,$lang, $phpEx, $pafiledb_config, $_REQUEST, $userdata, $board_config;
 		
 		$start = ( isset($_REQUEST['start']) ) ? intval($_REQUEST['start']) : 0;
 
